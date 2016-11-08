@@ -14,7 +14,7 @@ UnstuckME is a [MySQL](https://en.wikipedia.org/wiki/MySQL) Database, [WCF](http
 - *Client Connection*
 
 ##Technologies
-[C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language)), [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation), [WPF]((https://en.wikipedia.org/wiki/Windows_Presentation_Foundation)), and [MySQL](https://en.wikipedia.org/wiki/MySQL)
+[C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language), [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation), [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation), and [MySQL](https://en.wikipedia.org/wiki/MySQL)
 
 ##Credit, Inspiration, ALternatives
 Unstuck ME was conceived while brainstorming for an idea for a Junior project for the 2016-17 school year at [Oregon Institute of Technology](http://www.oit.edu/). The developers of this program realized some students may not be able to visit a tutoring center during tutoring hours, and there are not many services that handle tutoring of advanced subjects over an internet connection. Unstuck ME will allow students access to online tutors for advanced subjects whenever they want.
