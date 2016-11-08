@@ -1,6 +1,7 @@
 --UnstuckME Update/Delete Scripts
 --********Delete********
---!!!!!!!!!!!!MAKE SURE TO BE IN UNSTUCKME DATABASE!!!!!!!!!!!!!!!
+USE UnstuckME_DB
+GO
 /*********************************************************
 --Delete Server Information Procedure Creation Script
 *********************************************************/
