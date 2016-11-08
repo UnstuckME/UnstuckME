@@ -1,6 +1,6 @@
 # ![UnstuckME Logo](Media/UnstuckME_Logo.png)
 
-#### *Unified Network for Student, Teacher, and University Communication of Knowledge for a Meaningful Education*
+#### *Unified Network for Student, Teacher, and University Communication of Knowledge for a Meaningful Education*  
 A peer-to-peer mentoring program, connecting those who are the most willing to give their help to, to those most in need of it. 
 
 ##Problem Statement
