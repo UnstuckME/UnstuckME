@@ -33,7 +33,7 @@ IF OBJECT_ID('Server', 'U') IS NOT NULL
 
 --Create Server Table
 CREATE TABLE [Server]
-	(ServerID			INT					PRIMARY KEY IDENTITY(1,1),
+	(ServerID			INT				PRIMARY KEY IDENTITY(1,1),
 	ServerName			VARCHAR(75)			NOT NULL,
 	ServerIP			VARCHAR(15)			NOT NULL,	
 	ServerDomain			VARCHAR(50)			DEFAULT NULL,
