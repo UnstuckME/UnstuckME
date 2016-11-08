@@ -1,23 +1,23 @@
 # ![UnstuckME Logo](Media/UnstuckME_Logo.png)
 
-Unified Network for Student, Teacher, and University Communication of Knowledge for a Meaningful Education
+#### *Unified Network for Student, Teacher, and University Communication of Knowledge for a Meaningful Education*
 A peer-to-peer mentoring program, connecting those who are the most willing to give their help to, to those most in need of it. 
 
 ##Problem Statement
 Currently there is no reliable way of connecting students with the help they need for the classes they have. Similarly, many students want to give back and share some of the knowledge they have acquired. With no formalized system for doing so it makes this process very difficult; Unstuck ME is the solution to this problem. We would like to write a desktop application that would allow users quick, easy access to tutors that are willing to help.
 
 ##Usage
-UnstuckME is a [MySQL](https://en.wikipedia.org/wiki/MySQL) Database, [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation) Server, and [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation) Client dependent interfacing program. Please download and ServerSetup.exe and follow the on-screen setup, configuring it for your provided system. Then connect to or setup up your MySQL database using the provided '.sql' creation scripts. Finally, download the client application and connect it using the onscreen setup menu to connect to your configured WCF server and SQL database respectively.
+`UnstuckME is a [MySQL](https://en.wikipedia.org/wiki/MySQL) Database, [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation) Server, and [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation) Client dependent interfacing program. Please download and ServerSetup.exe and follow the on-screen setup, configuring it for your provided system. Then connect to or setup up your MySQL database using the provided '.sql' creation scripts. Finally, download the client application and connect it using the onscreen setup menu to connect to your configured WCF server and SQL database respectively.
 
-- Server Setup
-- Database Setup
-- Client Connection
+- *Server Setup*
+- *Database Setup*
+- *Client Connection*`
 
 ##Technologies
-C#, WCF, WPF, and  MySQL
+[C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language)), [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation), [WPF]((https://en.wikipedia.org/wiki/Windows_Presentation_Foundation)), and [MySQL](https://en.wikipedia.org/wiki/MySQL)
 
 ##Credit, Inspiration, ALternatives
-Unstuck ME was conceived while brainstorming for an idea for a Junior project for the 2016-17 school year at Oregon Institute of Technology. The developers of this program realized some students may not be able to visit a tutoring center during tutoring hours, and there are not many services that handle tutoring of advanced subjects over an internet connection. Unstuck ME will allow students access to online tutors for advanced subjects whenever they want.
+Unstuck ME was conceived while brainstorming for an idea for a Junior project for the 2016-17 school year at [Oregon Institute of Technology](http://www.oit.edu/). The developers of this program realized some students may not be able to visit a tutoring center during tutoring hours, and there are not many services that handle tutoring of advanced subjects over an internet connection. Unstuck ME will allow students access to online tutors for advanced subjects whenever they want.
 
 ##Team
 
