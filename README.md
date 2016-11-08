@@ -7,11 +7,11 @@ A peer-to-peer mentoring program, connecting those who are the most willing to g
 Currently there is no reliable way of connecting students with the help they need for the classes they have. Similarly, many students want to give back and share some of the knowledge they have acquired. With no formalized system for doing so it makes this process very difficult; Unstuck ME is the solution to this problem. We would like to write a desktop application that would allow users quick, easy access to tutors that are willing to help.
 
 ##Usage
-`UnstuckME is a [MySQL](https://en.wikipedia.org/wiki/MySQL) Database, [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation) Server, and [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation) Client dependent interfacing program. Please download and ServerSetup.exe and follow the on-screen setup, configuring it for your provided system. Then connect to or setup up your MySQL database using the provided '.sql' creation scripts. Finally, download the client application and connect it using the onscreen setup menu to connect to your configured WCF server and SQL database respectively.
+`UnstuckME is a [MySQL](https://en.wikipedia.org/wiki/MySQL) Database, [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation) Server, and [WPF](https://en.wikipedia.org/wiki/Windows_Presentation_Foundation) Client dependent interfacing program. Please download and ServerSetup.exe and follow the on-screen setup, configuring it for your provided system. Then connect to or setup up your MySQL database using the provided '.sql' creation scripts. Finally, download the client application and connect it using the onscreen setup menu to connect to your configured WCF server and SQL database respectively.`
 
-- *Server Setup*
+```- *Server Setup*
 - *Database Setup*
-- *Client Connection*`
+- *Client Connection*```
 
 ##Technologies
 [C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language)), [WCF](https://en.wikipedia.org/wiki/Windows_Communication_Foundation), [WPF]((https://en.wikipedia.org/wiki/Windows_Presentation_Foundation)), and [MySQL](https://en.wikipedia.org/wiki/MySQL)
