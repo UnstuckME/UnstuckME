@@ -39,7 +39,7 @@ CREATE TABLE [Server]
 	ServerDomain			VARCHAR(50)			DEFAULT NULL,
 	SchoolName			VARCHAR(75)			NOT NULL,
 	AdminUsername			VARCHAR(30)			DEFAULT 'Admin',	
-	AdminPassword			BINARY(64)			DEFAULT 'Password',
+	AdminPassword			VARCHAR(64)			DEFAULT 'Password',
 	EmailCredentials		NVARCHAR(50)			DEFAULT NULL)
 
 --Create Messages Table
@@ -106,13 +106,13 @@ CREATE TABLE UserToClass
 --Create Report Table
 CREATE TABLE Report
 	(ReportID			INT				PRIMARY KEY IDENTITY(1,1),
-	 FlaggerID			INT				NOT NULL	REFERENCES UserProfile(UserID))
+	 FlaggerID			INT				DEFAULT NULL	REFERENCES UserProfile(UserID))
 
 --Create Review Table
 CREATE TABLE Review
 	(ReviewID			INT				PRIMARY KEY IDENTITY(1,1),
-	ReportID			INT				NOT NULL	REFERENCES Report(ReportID),
-	StarRanking			TINYINT				NOT NULL,
+	ReportID			INT				DEFAULT NULL	REFERENCES Report(ReportID),
+	StarRanking			FLOAT				DEFAULT NULL,
 	[Description]			NVARCHAR(250)			NULL)
 
 --Create Sticker Table
@@ -124,5 +124,6 @@ CREATE TABLE Sticker
 	TutorID				INT				NOT NULL	REFERENCES UserProfile(UserID),
 	StudentReviewID			INT				NULL		REFERENCES Review(ReviewID),
 	TutorReviewID			INT				NULL		REFERENCES Review(ReviewID),
+	MinimumStarRanking		FLOAT				DEFAULT 0.0,
 	SubmitTime			DATETIME			NOT NULL,
 	[Timeout]			DATETIME2			NOT NULL)
