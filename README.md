@@ -21,7 +21,7 @@ Unstuck ME was conceived while brainstorming for an idea for a Junior project fo
 
 ##Team
 
-[![Ryan_Bell_Profile](http://gravatar.com/avatar/171f7ebc591cf55ef5dd6dcb6777be31?s=144)](https://github.com/RyanWBell) | [![Arthur_Clark_Profile](https://gravatar.com/avatar/5046f8e7dffe9ba3a4fa9a00d900e819?s=144)](https://github.com/Clarkmeister)| [![Matthew_Cole_Profile](http://gravatar.com/avatar/112849306/bd991a10a31ebaa7fe4fee0974909f52?s=144)](https://github.com/colematthew4) | [![Kyronn_Morgan_Profile](http://gravatar.com/avatar/112849306/bd991a10a31ebaa7fe4fee0974909f52?s=144)](https://github.com/kmorgan24)
+[![Ryan_Bell_Profile](http://gravatar.com/avatar/171f7ebc591cf55ef5dd6dcb6777be31?s=144)](https://github.com/RyanWBell) | [![Arthur_Clark_Profile](https://gravatar.com/avatar/5046f8e7dffe9ba3a4fa9a00d900e819?s=144)](https://github.com/Clarkmeister)| [![Matthew_Cole_Profile](https://s.gravatar.com/avatar/d4758a88e7de3c98b98d73ac984eda0f?s=144)](https://github.com/colematthew4) | [![Kyronn_Morgan_Profile](http://gravatar.com/avatar/112849306/bd991a10a31ebaa7fe4fee0974909f52?s=144)](https://github.com/kmorgan24)
 ---|---|---|---
 [Ryan Bell](https://github.com/RyanWBell) | [Arthur Clark](https://github.com/Clarkmeister) | [Matthew Cole](https://github.com/colematthew4) | [Kyronn Morgan](https://github.com/kmorgan24)
 
