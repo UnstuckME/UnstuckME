@@ -1,5 +1,10 @@
---USE THIS DATABASE
-use UnstuckME_DB
+USE UnstuckME_DB;
+GO
+
+--DROP TRIGGER ON UserPRofile UserPassword
+IF OBJECT_ID ('HashPassword', 'TR') IS NOT NULL  
+	DROP TRIGGER HashPassword;  
+	GO
 
 --DROP ANY PRE-EXISTING TABLES
 IF OBJECT_ID('Sticker', 'U') IS NOT NULL
@@ -65,12 +70,12 @@ CREATE TABLE OfficialMentor
 
 --Create UserProfile Table
 CREATE TABLE UserProfile
-	(UserID				INT				PRIMARY KEY IDENTITY(1,1),
+	(UserID					INT				PRIMARY KEY IDENTITY(1,1),
 	DisplayFName			VARCHAR(30)			NOT NULL,
 	DisplayLName			VARCHAR(30)			NOT NULL,
-	EmailAddress			VARCHAR(50)			NOT	NULL,
+	EmailAddress			VARCHAR(50)			NOT	NULL UNIQUE, 
 	UserPassword			NVARCHAR(32)		NOT NULL,
-	Privileges			BINARY(4)			NOT NULL)
+	Privileges				BINARY(4)			NOT NULL)
 
 --Create Official Mentor Table
 CREATE TABLE OmToUser
@@ -127,3 +132,17 @@ CREATE TABLE Sticker
 	MinimumStarRanking		FLOAT				DEFAULT 0.0,
 	SubmitTime			DATETIME			NOT NULL,
 	[Timeout]			DATETIME2			NOT NULL)
+
+GO
+
+--Create HashingPassword trigger on UserProfile Password
+CREATE 
+	TRIGGER HashPassword
+	ON UserProfile
+	AFTER INSERT, UPDATE
+	AS
+		Begin
+			UPDATE UserProfile
+			Set UserPassword = CONVERT(NVARCHAR(32),HashBytes('MD5', (SELECT UserPassword from UserProfile WHERE UserID IN (SELECT UserID from inserted))),2)
+		End;
+GO
