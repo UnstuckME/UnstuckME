@@ -776,3 +776,72 @@ AS
 
     END
 GO
+
+/******************************************************************
+--Update TutorID by TutorID and StickerID Procedure Creation Script
+******************************************************************/
+CREATE PROC [dbo].[UpdateTutorIDByTutorIDAndStickerID]
+    (
+	@TutorID	INT,
+    @StickerID	INT
+    )
+--RETURNS bit/* datatype */
+AS
+    BEGIN
+        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
+            return 1;
+        else
+            BEGIN
+				UPDATE Sticker
+				SET TutorID = @TutorID;
+                return 0;
+            END
+
+    END
+GO
+
+/******************************************************************************
+--Update TutorReviewID by TutorReviewID and StickerID Procedure Creation Script
+******************************************************************************/
+CREATE PROC [dbo].[UpdateTutorReviewIDByTutorReviewIDAndStickerID]
+    (
+	@TutorReviewID	INT,
+    @StickerID		INT
+    )
+--RETURNS bit/* datatype */
+AS
+    BEGIN
+        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
+            return 1;
+        else
+            BEGIN
+				UPDATE Sticker
+				SET TutorReviewID = @TutorReviewID;
+                return 0;
+            END
+
+    END
+GO
+
+/**********************************************************************************
+--Update StudentReviewID by StudentReviewID and StickerID Procedure Creation Script
+**********************************************************************************/
+CREATE PROC [dbo].[UpdateStudentReviewIDByStudentReviewIDAndStickerID]
+    (
+	@StudentReviewID	INT,
+    @StickerID		INT
+    )
+--RETURNS bit/* datatype */
+AS
+    BEGIN
+        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
+            return 1;
+        else
+            BEGIN
+				UPDATE Sticker
+				SET StudentReviewID = @StudentReviewID;
+                return 0;
+            END
+
+    END
+GO
