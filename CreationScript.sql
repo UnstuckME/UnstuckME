@@ -144,5 +144,6 @@ CREATE
 		Begin
 			UPDATE UserProfile
 			Set UserPassword = CONVERT(NVARCHAR(32),HashBytes('MD5', (SELECT UserPassword from UserProfile WHERE UserID IN (SELECT UserID from inserted))),2)
+			WHERE  UserID IN (SELECT UserID from inserted)
 		End;
 GO
