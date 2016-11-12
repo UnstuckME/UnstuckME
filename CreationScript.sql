@@ -27,12 +27,12 @@ IF OBJECT_ID('UserProfile', 'U') IS NOT NULL
 	DROP TABLE UserProfile;
 IF OBJECT_ID('OfficialMentor', 'U') IS NOT NULL
 	DROP TABLE OfficialMentor;
-IF OBJECT_ID('Chat', 'U') IS NOT NULL
-	DROP TABLE Chat;
-IF OBJECT_ID('Files', 'U') IS NOT NULL
-	DROP TABLE Files;
 IF OBJECT_ID('Messages', 'U') IS NOT NULL
 	DROP TABLE [Messages];
+IF OBJECT_ID('Files', 'U') IS NOT NULL
+	DROP TABLE Files;
+IF OBJECT_ID('Chat', 'U') IS NOT NULL
+	DROP TABLE Chat;
 IF OBJECT_ID('Server', 'U') IS NOT NULL
 	DROP TABLE [Server];
 
@@ -47,22 +47,22 @@ CREATE TABLE [Server]
 	AdminPassword			VARCHAR(64)			DEFAULT 'Password',
 	EmailCredentials		NVARCHAR(50)			DEFAULT NULL)
 
+--Create Chat Table
+CREATE TABLE Chat
+	(ChatID				INT				PRIMARY KEY IDENTITY(1,1))
+
 --Create Messages Table
 CREATE TABLE [Messages]
 	(MessageID			INT				PRIMARY KEY IDENTITY(1,1),
+	ChatID				INT				NOT NULL REFERENCES Chat(ChatID),
 	MessageData			NVARCHAR(500)			NOT NULL)
 
 --Create File Table
 CREATE TABLE Files
 	(FileID				INT				PRIMARY KEY IDENTITY(1,1),
+	ChatID				INT				NOT NULL REFERENCES Chat(ChatID),
 	FileData			VARBINARY(MAX) 			NOT NULL);
 
---Create Chat Table
-CREATE TABLE Chat
-	(ChatID				INT				PRIMARY KEY IDENTITY(1,1),
-	MessageID			INT				DEFAULT NULL REFERENCES [Messages](MessageID),
-	FileID				INT				DEFAULT NULL REFERENCES Files(FileID))
-		
 --Create Official Mentor Table
 CREATE TABLE OfficialMentor
 	(MentorID			INT				PRIMARY KEY IDENTITY(1,1),
@@ -70,12 +70,12 @@ CREATE TABLE OfficialMentor
 
 --Create UserProfile Table
 CREATE TABLE UserProfile
-	(UserID					INT				PRIMARY KEY IDENTITY(1,1),
+	(UserID				INT				PRIMARY KEY IDENTITY(1,1),
 	DisplayFName			VARCHAR(30)			NOT NULL,
 	DisplayLName			VARCHAR(30)			NOT NULL,
-	EmailAddress			VARCHAR(50)			NOT	NULL UNIQUE, 
-	UserPassword			NVARCHAR(32)		NOT NULL,
-	Privileges				BINARY(4)			NOT NULL)
+	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
+	UserPassword			NVARCHAR(32)			NOT NULL,
+	Privileges			BINARY(4)			NOT NULL)
 
 --Create Official Mentor Table
 CREATE TABLE OmToUser
