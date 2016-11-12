@@ -126,7 +126,7 @@ CREATE TABLE Sticker
 	ProblemDescription		NVARCHAR(500)			NOT NULL,
 	ClassID				INT				NOT NULL	REFERENCES Classes(ClassID),
 	StudentID			INT				NOT NULL	REFERENCES UserProfile(UserID),
-	TutorID				INT				NOT NULL	REFERENCES UserProfile(UserID),
+	TutorID				INT				DEFAULT NULL	REFERENCES UserProfile(UserID),
 	StudentReviewID			INT				NULL		REFERENCES Review(ReviewID),
 	TutorReviewID			INT				NULL		REFERENCES Review(ReviewID),
 	MinimumStarRanking		FLOAT				DEFAULT 0.0,
