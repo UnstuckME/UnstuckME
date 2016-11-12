@@ -111,7 +111,8 @@ CREATE TABLE UserToClass
 --Create Report Table
 CREATE TABLE Report
 	(ReportID			INT				PRIMARY KEY IDENTITY(1,1),
-	 FlaggerID			INT				DEFAULT NULL	REFERENCES UserProfile(UserID))
+	ReportDescription	NVARCHAR(200)	DEFAULT NULL,
+	FlaggerID			INT				DEFAULT NULL	REFERENCES UserProfile(UserID))
 
 --Create Review Table
 CREATE TABLE Review
