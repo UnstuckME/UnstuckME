@@ -38,14 +38,14 @@ IF OBJECT_ID('Server', 'U') IS NOT NULL
 
 --Create Server Table
 CREATE TABLE [Server]
-	(ServerID			INT				PRIMARY KEY IDENTITY(1,1),
+	(ServerID			INT					PRIMARY KEY IDENTITY(1,1),
 	ServerName			VARCHAR(75)			NOT NULL,
 	ServerIP			VARCHAR(15)			NOT NULL,	
-	ServerDomain			VARCHAR(50)			DEFAULT NULL,
+	ServerDomain		VARCHAR(50)			DEFAULT NULL,
 	SchoolName			VARCHAR(75)			NOT NULL,
-	AdminUsername			VARCHAR(30)			DEFAULT 'Admin',	
-	AdminPassword			VARCHAR(64)			DEFAULT 'Password',
-	EmailCredentials		NVARCHAR(50)			DEFAULT NULL)
+	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
+	AdminPassword		VARCHAR(64)			DEFAULT 'Password',
+	EmailCredentials	NVARCHAR(50)		DEFAULT NULL)
 
 --Create Chat Table
 CREATE TABLE Chat
@@ -66,16 +66,16 @@ CREATE TABLE Files
 --Create Official Mentor Table
 CREATE TABLE OfficialMentor
 	(MentorID			INT				PRIMARY KEY IDENTITY(1,1),
-	OrganizationName		NVARCHAR(50)			NOT NULL)
+	OrganizationName	NVARCHAR(50)			NOT NULL)
 
 --Create UserProfile Table
 CREATE TABLE UserProfile
-	(UserID				INT				PRIMARY KEY IDENTITY(1,1),
+	(UserID					INT					PRIMARY KEY IDENTITY(1,1),
 	DisplayFName			VARCHAR(30)			NOT NULL,
 	DisplayLName			VARCHAR(30)			NOT NULL,
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
-	UserPassword			NVARCHAR(32)			NOT NULL,
-	Privileges			BINARY(4)			NOT NULL)
+	UserPassword			NVARCHAR(32)		NOT NULL,
+	Privileges				BINARY(4)			NOT NULL)
 
 --Create Official Mentor Table
 CREATE TABLE OmToUser
@@ -116,23 +116,23 @@ CREATE TABLE Report
 
 --Create Review Table
 CREATE TABLE Review
-	(ReviewID			INT				PRIMARY KEY IDENTITY(1,1),
-	ReportID			INT				DEFAULT NULL	REFERENCES Report(ReportID),
+	(ReviewID			INT					PRIMARY KEY IDENTITY(1,1),
+	ReportID			INT					DEFAULT NULL	REFERENCES Report(ReportID),
 	StarRanking			FLOAT				DEFAULT NULL,
-	[Description]			NVARCHAR(250)			NULL)
+	[Description]		NVARCHAR(250)			NULL)
 
 --Create Sticker Table
 CREATE TABLE Sticker
-	(StickerID			INT				PRIMARY KEY IDENTITY(1,1),
-	ProblemDescription		NVARCHAR(500)			NOT NULL,
-	ClassID				INT				NOT NULL	REFERENCES Classes(ClassID),
-	StudentID			INT				NOT NULL	REFERENCES UserProfile(UserID),
+	(StickerID			INT								PRIMARY KEY IDENTITY(1,1),
+	ProblemDescription	NVARCHAR(500)	NOT NULL,
+	ClassID				INT				NOT NULL		REFERENCES Classes(ClassID),
+	StudentID			INT				NOT NULL		REFERENCES UserProfile(UserID),
 	TutorID				INT				DEFAULT NULL	REFERENCES UserProfile(UserID),
-	StudentReviewID			INT				NULL		REFERENCES Review(ReviewID),
-	TutorReviewID			INT				NULL		REFERENCES Review(ReviewID),
-	MinimumStarRanking		FLOAT				DEFAULT 0.0,
-	SubmitTime			DATETIME			NOT NULL,
-	[Timeout]			DATETIME2			NOT NULL)
+	StudentReviewID		INT				NULL			REFERENCES Review(ReviewID),
+	TutorReviewID		INT				NULL			REFERENCES Review(ReviewID),
+	MinimumStarRanking	FLOAT			DEFAULT 0.0,
+	SubmitTime			DATETIME		NOT NULL,
+	[Timeout]			DATETIME2		NOT NULL)
 
 GO
 
