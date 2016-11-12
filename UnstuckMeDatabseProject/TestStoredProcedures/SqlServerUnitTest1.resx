@@ -1,0 +1,588 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="dbo_ClearReviewDescriptionByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.ClearReviewDescriptionByReviewID
+DECLARE @RC AS INT
+DECLARE @ReviewID AS INT;
+
+SELECT @RC = 0,
+       @ReviewID = 0;
+
+EXECUTE @RC = [dbo].[ClearReviewDescriptionByReviewID] @ReviewID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteClassByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteClassByClassID
+DECLARE @RC AS INT, @ClassID AS INT;
+
+SELECT @RC = 0,
+       @ClassID = 0;
+
+EXECUTE @RC = [dbo].[DeleteClassByClassID] @ClassID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteFileByFileIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteFileByFileID
+DECLARE @RC AS INT, @FileID AS INT;
+
+SELECT @RC = 0,
+       @FileID = 0;
+
+EXECUTE @RC = [dbo].[DeleteFileByFileID] @FileID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteMentorOrganizationByMentorIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteMentorOrganizationByMentorID
+DECLARE @RC AS INT, @MentorID AS INT;
+
+SELECT @RC = 0,
+       @MentorID = 0;
+
+EXECUTE @RC = [dbo].[DeleteMentorOrganizationByMentorID] @MentorID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteMessageByMessageIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteMessageByMessageID
+DECLARE @RC AS INT, @MessageID AS INT;
+
+SELECT @RC = 0,
+       @MessageID = 0;
+
+EXECUTE @RC = [dbo].[DeleteMessageByMessageID] @MessageID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteReportByReportIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteReportByReportID
+DECLARE @RC AS INT, @ReportID AS INT;
+
+SELECT @RC = 0,
+       @ReportID = 0;
+
+EXECUTE @RC = [dbo].[DeleteReportByReportID] @ReportID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteReviewByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteReviewByReviewID
+DECLARE @RC AS INT, @ReviewID AS INT;
+
+SELECT @RC = 0,
+       @ReviewID = 0;
+
+EXECUTE @RC = [dbo].[DeleteReviewByReviewID] @ReviewID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteServerInformationTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteServerInformation
+DECLARE @RC AS INT, @ServerID AS INT;
+
+SELECT @RC = 0,
+       @ServerID = 0;
+
+EXECUTE @RC = [dbo].[DeleteServerInformation] @ServerID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteServerInformationByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteServerInformationByServerID
+DECLARE @RC AS INT, @ServerID AS INT;
+
+SELECT @RC = 0,
+       @ServerID = 0;
+
+EXECUTE @RC = [dbo].[DeleteServerInformationByServerID] @ServerID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteStickerByStickerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteStickerByStickerID
+DECLARE @RC AS INT, @StickerID AS INT;
+
+SELECT @RC = 0,
+       @StickerID = 0;
+
+EXECUTE @RC = [dbo].[DeleteStickerByStickerID] @StickerID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteUserPictureByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteUserPictureByUserID
+DECLARE @RC AS INT, @UserID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0;
+
+EXECUTE @RC = [dbo].[DeleteUserPictureByUserID] @UserID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteUserProfileByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteUserProfileByUserID
+DECLARE @RC AS INT, @UserID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0;
+
+EXECUTE @RC = [dbo].[DeleteUserProfileByUserID] @UserID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_MentorNameByMentorIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.MentorNameByMentorID
+DECLARE @RC AS INT, @MentorID AS INT, @OrganizationName AS NVARCHAR (50);
+
+SELECT @RC = 0,
+       @MentorID = 0,
+       @OrganizationName = NULL;
+
+EXECUTE @RC = [dbo].[MentorNameByMentorID] @MentorID, @OrganizationName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateAdminPasswordByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateAdminPasswordByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @AdminPassword AS BINARY (64);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @AdminPassword = NULL;
+
+EXECUTE @RC = [dbo].[UpdateAdminPasswordByServerID] @ServerID, @AdminPassword;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateAdminUsernameByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateAdminUsernameByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @AdminUsername AS VARCHAR (30);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @AdminUsername = NULL;
+
+EXECUTE @RC = [dbo].[UpdateAdminUsernameByServerID] @ServerID, @AdminUsername;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateCourseCodeByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateCourseCodeByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @CourseCode AS VARCHAR (5);
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @CourseCode = NULL;
+
+EXECUTE @RC = [dbo].[UpdateCourseCodeByClassID] @ClassID, @CourseCode;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateCourseNameByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateCourseNameByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @CourseName AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @CourseName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateCourseNameByClassID] @ClassID, @CourseName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateCourseNumberByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateCourseNumberByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @CourseNumber AS SMALLINT;
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @CourseNumber = 0;
+
+EXECUTE @RC = [dbo].[UpdateCourseNumberByClassID] @ClassID, @CourseNumber;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateDisplayFNameByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateDisplayFNameByUserID
+DECLARE @RC AS INT, @UserID AS INT, @DisplayFName AS VARCHAR (30);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @DisplayFName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateDisplayFNameByUserID] @UserID, @DisplayFName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateDisplayLNameByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateDisplayLNameByUserID
+DECLARE @RC AS INT, @UserID AS INT, @DisplayLName AS VARCHAR (30);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @DisplayLName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateDisplayLNameByUserID] @UserID, @DisplayLName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateEmailAddressByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateEmailAddressByUserID
+DECLARE @RC AS INT, @UserID AS INT, @EmailAddress AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @EmailAddress = NULL;
+
+EXECUTE @RC = [dbo].[UpdateEmailAddressByUserID] @UserID, @EmailAddress;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateEmailCredintialsByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateEmailCredintialsByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @EmailCredentials AS NVARCHAR (50);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @EmailCredentials = NULL;
+
+EXECUTE @RC = [dbo].[UpdateEmailCredintialsByServerID] @ServerID, @EmailCredentials;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateMessageByMessageIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateMessageByMessageID
+DECLARE @RC AS INT, @MessageID AS INT, @MessageData AS NVARCHAR (500);
+
+SELECT @RC = 0,
+       @MessageID = 0,
+       @MessageData = NULL;
+
+EXECUTE @RC = [dbo].[UpdateMessageByMessageID] @MessageID, @MessageData;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdatePrivilegesByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdatePrivilegesByUserID
+DECLARE @RC AS INT, @UserID AS INT, @Privileges AS BINARY (4);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @Privileges = NULL;
+
+EXECUTE @RC = [dbo].[UpdatePrivilegesByUserID] @UserID, @Privileges;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateReviewDescriptionByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateReviewDescriptionByReviewID
+DECLARE @RC AS INT, @ReviewID AS INT, @Description AS NVARCHAR (250);
+
+SELECT @RC = 0,
+       @ReviewID = 0,
+       @Description = NULL;
+
+EXECUTE @RC = [dbo].[UpdateReviewDescriptionByReviewID] @ReviewID, @Description;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateSchoolNameByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateSchoolNameByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @SchoolName AS VARCHAR (75);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @SchoolName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateSchoolNameByServerID] @ServerID, @SchoolName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateServerDomainByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateServerDomainByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @ServerDomain AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @ServerDomain = NULL;
+
+EXECUTE @RC = [dbo].[UpdateServerDomainByServerID] @ServerID, @ServerDomain;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateServerIPByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateServerIPByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @ServerIP AS VARCHAR (15);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @ServerIP = NULL;
+
+EXECUTE @RC = [dbo].[UpdateServerIPByServerID] @ServerID, @ServerIP;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateServerNameByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateServerNameByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @ServerName AS VARCHAR (75);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @ServerName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateServerNameByServerID] @ServerID, @ServerName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateStarRankingByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateStarRankingByReviewID
+DECLARE @RC AS INT, @ReviewID AS INT, @StarRanking AS TINYINT;
+
+SELECT @RC = 0,
+       @ReviewID = 0,
+       @StarRanking = NULL;
+
+EXECUTE @RC = [dbo].[UpdateStarRankingByReviewID] @ReviewID, @StarRanking;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateStickerProblemDescriptionByStickerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateStickerProblemDescriptionByStickerID
+DECLARE @RC AS INT, @StickerID AS INT, @ProblemDescription AS NVARCHAR (500);
+
+SELECT @RC = 0,
+       @StickerID = 0,
+       @ProblemDescription = NULL;
+
+EXECUTE @RC = [dbo].[UpdateStickerProblemDescriptionByStickerID] @StickerID, @ProblemDescription;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateTermsOfferedByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateTermsOfferedByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @TermOffered AS TINYINT;
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @TermOffered = NULL;
+
+EXECUTE @RC = [dbo].[UpdateTermsOfferedByClassID] @ClassID, @TermOffered;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateTimeoutByStickerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateTimeoutByStickerID
+DECLARE @RC AS INT, @StickerID AS INT, @Timeout AS DATETIME2 (7);
+
+SELECT @RC = 0,
+       @StickerID = 0,
+       @Timeout = NULL;
+
+EXECUTE @RC = [dbo].[UpdateTimeoutByStickerID] @StickerID, @Timeout;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateUserPasswordByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateUserPasswordByUserID
+DECLARE @RC AS INT, @UserID AS INT, @UserPassword AS BINARY (64);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @UserPassword = NULL;
+
+EXECUTE @RC = [dbo].[UpdateUserPasswordByUserID] @UserID, @UserPassword;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+</root>

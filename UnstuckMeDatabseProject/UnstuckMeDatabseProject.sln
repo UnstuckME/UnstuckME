@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "UnstuckMeDatabseProject", "UnstuckMeDatabseProject\UnstuckMeDatabseProject.sqlproj", "{65F3D25D-58BE-43A8-B584-CE9F9C38C18B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStoredProcedures", "TestStoredProcedures\TestStoredProcedures.csproj", "{52C2D1CB-8CCF-4E9D-86C9-2A6D1C7369EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65F3D25D-58BE-43A8-B584-CE9F9C38C18B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65F3D25D-58BE-43A8-B584-CE9F9C38C18B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65F3D25D-58BE-43A8-B584-CE9F9C38C18B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{65F3D25D-58BE-43A8-B584-CE9F9C38C18B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65F3D25D-58BE-43A8-B584-CE9F9C38C18B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65F3D25D-58BE-43A8-B584-CE9F9C38C18B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{52C2D1CB-8CCF-4E9D-86C9-2A6D1C7369EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C2D1CB-8CCF-4E9D-86C9-2A6D1C7369EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C2D1CB-8CCF-4E9D-86C9-2A6D1C7369EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C2D1CB-8CCF-4E9D-86C9-2A6D1C7369EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
