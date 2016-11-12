@@ -69,7 +69,7 @@ CREATE TABLE UserProfile
 	DisplayFName			VARCHAR(30)			NOT NULL,
 	DisplayLName			VARCHAR(30)			NOT NULL,
 	EmailAddress			VARCHAR(50)			NOT	NULL,
-	UserPassword			BINARY(64)			NOT NULL,
+	UserPassword			NVARCHAR(32)		NOT NULL,
 	Privileges			BINARY(4)			NOT NULL)
 
 --Create Official Mentor Table
