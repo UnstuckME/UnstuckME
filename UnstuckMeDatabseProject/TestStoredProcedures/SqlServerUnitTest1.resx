@@ -119,6 +119,8 @@
   </resheader>
   <data name="dbo_ClearReviewDescriptionByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
     <value>-- database unit test for dbo.ClearReviewDescriptionByReviewID
+-- RRC = Return Code
+
 DECLARE @RC AS INT
 DECLARE @ReviewID AS INT;
 

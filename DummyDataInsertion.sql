@@ -30,6 +30,7 @@ SELECT *
 FROM [dbo].[UserProfile]
 SELECT *
 FROM [dbo].[UserToChat]
+ORDER BY UserID
 SELECT *
 FROM [dbo].[UserToClass]
 --~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -256,13 +257,9 @@ INSERT INTO UserToClass (UserID, ClassID) VALUES (3, 5);
 INSERT INTO UserToClass (UserID, ClassID) VALUES (5, 7);
 INSERT INTO UserToClass (UserID, ClassID) VALUES (6, 9);
 
---Insert some stickers
-INSERT INTO Sticker
-VALUES ('I need help with creating my Array class for Data Structures', 7, 1, DEFAULT, NULL, NULL, 3.5, GETDATE(), DATEADD(hour, 3.5, GETDATE()))
-
-INSERT INTO Sticker --Description, ClassID, StudentID, TutorID, StudentReviewID, TutorReviewID, Min Star Rating, Submit Time, Timout
-VALUES ('I need help with EVERYTHING!', 2, 4, DEFAULT, NULL, NULL, 3.5, GETDATE(), DATEADD(hour, 3.5, GETDATE()))
-
+--Insert Report
+INSERT INTO Report (ReportDescription, FlaggerID)
+VALUES('I dont think this vulger langugae belongs on UnstuckME', 1)
 
 --Insert some reviews
 INSERT INTO Review
@@ -276,3 +273,48 @@ VALUES (DEFAULT, 3, 'The tutor was very nice, but did not know the subject very 
 
 INSERT INTO Review
 VALUES (DEFAULT, 1, 'Worst Tutor Ever!')
+
+INSERT INTO Review
+VALUES (DEFAULT, 1, 'Not a very goood Tutor!')
+
+INSERT INTO Review
+VALUES (DEFAULT, 5, 'I Loved working with this student. Such a quick learner!')
+
+INSERT INTO Review
+Values(1, 1, 'This tutor can go fuck himself, Literally JAKE is the worst human beiugn ever!!!!')
+
+--Insert some stickers  --Description, ClassID, StudentID, TutorID, StudentReviewID, TutorReviewID, Min Star Rating, Submit Time, Timout
+INSERT INTO Sticker
+VALUES ('I need help with creating my Array class for Data Structures', 7, 1, 3, 1, 5, 3.5, GETDATE(), DATEADD(hour, 3.5, GETDATE()))
+
+INSERT INTO Sticker
+VALUES ('I need help with EVERYTHING!', 2, 4, DEFAULT, 4, NULL, 3.5, GETDATE(), DATEADD(hour, 3.5, GETDATE()))
+
+INSERT INTO Sticker
+VALUES ('QUICK HELP RN DUE PPRETTY SOON!!!!', 1, 3, 5, NULL, NULL, NULL, GETDATE(), DATEADD(hour, 0.5, GETDATE()))
+
+INSERT INTO Sticker
+VALUES ('Any time this week would be great, just having a little trouble.', 5, 5, DEFAULT, 7, NULL, NULL, GETDATE(), DATEADD(hour, 168, GETDATE()))
+
+
+
+--INsert into UserTOChat (18)
+insert into UserToChat (UserID, ChatID) values (4, 8);
+insert into UserToChat (UserID, ChatID) values (2, 6);
+insert into UserToChat (UserID, ChatID) values (3, 4);
+insert into UserToChat (UserID, ChatID) values (2, 1);
+insert into UserToChat (UserID, ChatID) values (1, 4);
+insert into UserToChat (UserID, ChatID) values (5, 3);
+insert into UserToChat (UserID, ChatID) values (4, 1);
+insert into UserToChat (UserID, ChatID) values (4, 7);
+insert into UserToChat (UserID, ChatID) values (1, 8);
+insert into UserToChat (UserID, ChatID) values (2, 7);
+insert into UserToChat (UserID, ChatID) values (3, 2);
+insert into UserToChat (UserID, ChatID) values (6, 5);
+insert into UserToChat (UserID, ChatID) values (6, 1);
+insert into UserToChat (UserID, ChatID) values (1, 7);
+insert into UserToChat (UserID, ChatID) values (1, 5);
+insert into UserToChat (UserID, ChatID) values (4, 2);
+insert into UserToChat (UserID, ChatID) values (3, 8);
+insert into UserToChat (UserID, ChatID) values (2, 8);
+
