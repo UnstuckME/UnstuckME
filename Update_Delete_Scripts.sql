@@ -2,9 +2,90 @@
 --********Delete********
 USE UnstuckME_DB
 GO
-/*********************************************************
---Delete Server Information Procedure Creation Script
-*********************************************************/
+
+/***************************************************
+DROP STORED PROCEDURES
+***************************************************/
+DROP PROC [dbo].[DeleteServerInformationByServerID];
+GO
+DROP PROC [dbo].[DeleteUserProfileByUserID];
+GO
+DROP PROC [dbo].[DeleteUserPictureByUserID];
+GO
+DROP PROC [dbo].[DeleteFileByFileID];
+GO
+DROP PROC [dbo].[DeleteMessageByMessageID];
+GO
+DROP PROC [dbo].[DeleteMentorOrganizationByMentorID];
+GO
+DROP PROC [dbo].[DeleteClassByClassID];
+GO
+DROP PROC [dbo].[DeleteStickerByStickerID];
+GO
+DROP PROC [dbo].[DeleteReviewByReviewID];
+GO
+DROP PROC [dbo].[ClearReviewDescriptionByReviewID];
+GO
+DROP PROC [dbo].[DeleteReportByReportID];
+GO
+DROP PROC [dbo].[UpdateServerNameByServerID];
+GO
+DROP PROC [dbo].[UpdateServerIPByServerID];
+GO
+DROP PROC [dbo].[UpdateServerDomainByServerID];
+GO
+DROP PROC [dbo].[UpdateSchoolNameByServerID];
+GO
+DROP PROC [dbo].[UpdateAdminPasswordByServerID];
+GO
+DROP PROC [dbo].[UpdateAdminUsernameByServerID];
+GO
+DROP PROC [dbo].[UpdateEmailCredentialsByServerID];
+GO
+
+--Photo
+/********************************NEED MORE INFO ON HOW WE ARE STORING PHOTOS*******************************/
+
+
+DROP PROC [dbo].[UpdateMentorNameByMentorID];
+GO
+DROP PROC [dbo].[UpdateDisplayFNameByUserID];
+GO
+DROP PROC [dbo].[UpdateDisplayLNameByUserID];
+GO
+DROP PROC [dbo].[UpdateEmailAddressByUserID];
+GO
+DROP PROC [dbo].[UpdateUserPasswordByUserID];
+GO
+DROP PROC [dbo].[UpdatePrivilegesByUserID];
+GO
+DROP PROC [dbo].[UpdateStickerProblemDescriptionByStickerID];
+GO
+DROP PROC [dbo].[UpdateTimeoutByStickerID];
+GO
+DROP PROC [dbo].[UpdateCourseNameByClassID];
+GO
+DROP PROC [dbo].[UpdateCourseCodeByClassID];
+GO
+DROP PROC [dbo].[UpdateCourseNumberByClassID];
+GO
+DROP PROC [dbo].[UpdateTermsOfferedByClassID];
+GO
+DROP PROC [dbo].[UpdateStarRankingByReviewID];
+GO
+DROP PROC [dbo].[UpdateReviewDescriptionByReviewID];
+GO
+DROP PROC [dbo].[UpdateMessageByMessageID];
+GO
+DROP PROC [dbo].[UpdateTutorIDByTutorIDAndStickerID];
+GO
+DROP PROC [dbo].[UpdateTutorReviewIDByTutorReviewIDAndStickerID];
+GO
+DROP PROC [dbo].[UpdateStudentReviewIDByStudentReviewIDAndStickerID];
+GO
+
+--START CREATION SCRIPTS
+/*********************************************************/
 CREATE PROC [dbo].[DeleteServerInformationByServerID]
     (
     @ServerID INT
@@ -348,7 +429,7 @@ GO
 CREATE PROC [dbo].[UpdateAdminPasswordByServerID]
     (
     @ServerID INT,
-	@AdminPassword BINARY(64)
+	@AdminPassword NVARCHAR(32)
     )
 --RETURNS bit/* datatype */
 AS
@@ -393,7 +474,7 @@ GO
 /*********************************************************
 --Update Server Email Credentials
 *********************************************************/
-CREATE PROC [dbo].[UpdateEmailCredintialsByServerID]
+CREATE PROC [dbo].[UpdateEmailCredentialsByServerID]
     (
     @ServerID INT,
 	@EmailCredentials NVARCHAR(50)
@@ -420,7 +501,7 @@ GO
 /*********************************************************
 --Update Mentor Organization Name
 *********************************************************/
-CREATE PROC [dbo].[MentorNameByMentorID]
+CREATE PROC [dbo].[UpdateMentorNameByMentorID]
     (
     @MentorID INT,
 	@OrganizationName NVARCHAR(50)
@@ -519,7 +600,7 @@ GO
 CREATE PROC [dbo].[UpdateUserPasswordByUserID]
     (
     @UserID INT,
-	@UserPassword BINARY(64)
+	@UserPassword NVARCHAR(32)
     )
 --RETURNS bit/* datatype */
 AS
@@ -588,10 +669,10 @@ GO
 /*********************************************************
 --Update Timeout Time
 *********************************************************/
-CREATE PROC [dbo].[UpdateTimeoutByStickerID]
+CREATE PROC [dbo].[UpdateTimeoutByStickerIDAndSeconds]
     (
     @StickerID INT,
-	@Timeout DATETIME2
+	@Seconds INT
     )
 --RETURNS bit/* datatype */
 AS
@@ -601,7 +682,7 @@ AS
         else
             BEGIN
 				UPDATE Sticker
-				SET [Timeout] = @Timeout
+				SET [Timeout] = DATEADD(second, @Seconds, GETDATE())
 				WHERE StickerID = @StickerID;
                 return 0;
             END
@@ -793,7 +874,8 @@ AS
         else
             BEGIN
 				UPDATE Sticker
-				SET TutorID = @TutorID;
+				SET TutorID = @TutorID
+				WHERE StickerID = @StickeriD;
                 return 0;
             END
 
@@ -816,7 +898,8 @@ AS
         else
             BEGIN
 				UPDATE Sticker
-				SET TutorReviewID = @TutorReviewID;
+				SET TutorReviewID = @TutorReviewID
+				WHERE StickerID = @StickerID;
                 return 0;
             END
 
@@ -839,7 +922,8 @@ AS
         else
             BEGIN
 				UPDATE Sticker
-				SET StudentReviewID = @StudentReviewID;
+				SET StudentReviewID = @StudentReviewID
+				WHERE StickerID = @StickerID;
                 return 0;
             END
 
