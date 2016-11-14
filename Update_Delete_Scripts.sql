@@ -61,7 +61,7 @@ DROP PROC [dbo].[UpdatePrivilegesByUserID];
 GO
 DROP PROC [dbo].[UpdateStickerProblemDescriptionByStickerID];
 GO
-DROP PROC [dbo].[UpdateTimeoutByStickerID];
+DROP PROC [dbo].[UpdateTimeoutByStickerIDAndSeconds];
 GO
 DROP PROC [dbo].[UpdateCourseNameByClassID];
 GO
@@ -79,10 +79,6 @@ DROP PROC [dbo].[UpdateMessageByMessageID];
 GO
 DROP PROC [dbo].[UpdateTutorIDByTutorIDAndStickerID];
 GO
-DROP PROC [dbo].[UpdateTutorReviewIDByTutorReviewIDAndStickerID];
-GO
-DROP PROC [dbo].[UpdateStudentReviewIDByStudentReviewIDAndStickerID];
-GO
 
 --START CREATION SCRIPTS
 /*********************************************************/
@@ -90,7 +86,6 @@ CREATE PROC [dbo].[DeleteServerInformationByServerID]
     (
     @ServerID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -134,7 +129,6 @@ CREATE PROC [dbo].[DeleteUserPictureByUserID]
     (
     @UserID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select UserID from Picture where UserID = @UserID))
@@ -156,7 +150,6 @@ CREATE PROC [dbo].[DeleteFileByFileID]
     (
     @FileID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select FileID from Files where FileID = @FileID))
@@ -178,7 +171,6 @@ CREATE PROC [dbo].[DeleteMessageByMessageID]
     (
     @MessageID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select MessageID from [Messages] where MessageID = @MessageID))
@@ -200,7 +192,6 @@ CREATE PROC [dbo].[DeleteMentorOrganizationByMentorID]
     (
     @MentorID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select MentorID from OfficialMentor where MentorID = @MentorID))
@@ -222,7 +213,6 @@ CREATE PROC [dbo].[DeleteClassByClassID]
     (
     @ClassID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
@@ -244,7 +234,6 @@ CREATE PROC [dbo].[DeleteStickerByStickerID]
     (
     @StickerID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
@@ -266,7 +255,6 @@ CREATE PROC [dbo].[DeleteReviewByReviewID]
     (
     @ReviewID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
@@ -288,7 +276,6 @@ CREATE PROC [dbo].[ClearReviewDescriptionByReviewID]
     (
     @ReviewID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
@@ -311,7 +298,6 @@ CREATE PROC [dbo].[DeleteReportByReportID]
     (
     @ReportID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ReportID from Report where ReportID = @ReportID))
@@ -335,7 +321,6 @@ CREATE PROC [dbo].[UpdateServerNameByServerID]
     @ServerID INT,
 	@ServerName VARCHAR(75)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -359,7 +344,6 @@ CREATE PROC [dbo].[UpdateServerIPByServerID]
     @ServerID INT,
 	@ServerIP VARCHAR(15)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -383,7 +367,6 @@ CREATE PROC [dbo].[UpdateServerDomainByServerID]
     @ServerID INT,
 	@ServerDomain VARCHAR(50)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -407,7 +390,6 @@ CREATE PROC [dbo].[UpdateSchoolNameByServerID]
     @ServerID INT,
 	@SchoolName VARCHAR(75)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -431,7 +413,6 @@ CREATE PROC [dbo].[UpdateAdminPasswordByServerID]
     @ServerID INT,
 	@AdminPassword NVARCHAR(32)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -455,7 +436,6 @@ CREATE PROC [dbo].[UpdateAdminUsernameByServerID]
     @ServerID INT,
 	@AdminUsername VARCHAR(30)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -479,7 +459,6 @@ CREATE PROC [dbo].[UpdateEmailCredentialsByServerID]
     @ServerID INT,
 	@EmailCredentials NVARCHAR(50)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ServerID from [Server] where ServerID = @ServerID))
@@ -506,7 +485,6 @@ CREATE PROC [dbo].[UpdateMentorNameByMentorID]
     @MentorID INT,
 	@OrganizationName NVARCHAR(50)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select MentorID from OfficialMentor where MentorID = @MentorID))
@@ -530,7 +508,6 @@ CREATE PROC [dbo].[UpdateDisplayFNameByUserID]
     @UserID INT,
 	@DisplayFName VARCHAR(30)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
@@ -554,7 +531,6 @@ CREATE PROC [dbo].[UpdateDisplayLNameByUserID]
     @UserID INT,
 	@DisplayLName VARCHAR(30)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
@@ -578,7 +554,6 @@ CREATE PROC [dbo].[UpdateEmailAddressByUserID]
     @UserID INT,
 	@EmailAddress VARCHAR(50)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
@@ -602,7 +577,6 @@ CREATE PROC [dbo].[UpdateUserPasswordByUserID]
     @UserID INT,
 	@UserPassword NVARCHAR(32)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
@@ -626,7 +600,6 @@ CREATE PROC [dbo].[UpdatePrivilegesByUserID]
     @UserID INT,
 	@Privileges BINARY(4)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
@@ -650,7 +623,6 @@ CREATE PROC [dbo].[UpdateStickerProblemDescriptionByStickerID]
     @StickerID INT,
 	@ProblemDescription NVARCHAR(500)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
@@ -674,7 +646,6 @@ CREATE PROC [dbo].[UpdateTimeoutByStickerIDAndSeconds]
     @StickerID INT,
 	@Seconds INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
@@ -698,7 +669,6 @@ CREATE PROC [dbo].[UpdateCourseNameByClassID]
     @ClassID INT,
 	@CourseName VARCHAR(50)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
@@ -722,7 +692,6 @@ CREATE PROC [dbo].[UpdateCourseCodeByClassID]
     @ClassID INT,
 	@CourseCode VARCHAR(5)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
@@ -746,7 +715,6 @@ CREATE PROC [dbo].[UpdateCourseNumberByClassID]
     @ClassID INT,
 	@CourseNumber SMALLINT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
@@ -770,7 +738,6 @@ CREATE PROC [dbo].[UpdateTermsOfferedByClassID]
     @ClassID INT,
 	@TermOffered TINYINT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
@@ -794,7 +761,6 @@ CREATE PROC [dbo].[UpdateStarRankingByReviewID]
     @ReviewID INT,
 	@StarRanking TINYINT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
@@ -818,7 +784,6 @@ CREATE PROC [dbo].[UpdateReviewDescriptionByReviewID]
     @ReviewID INT,
 	@Description NVARCHAR(250)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
@@ -842,7 +807,6 @@ CREATE PROC [dbo].[UpdateMessageByMessageID]
     @MessageID INT,
 	@MessageData NVARCHAR(500)
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select MessageID from [Messages] where MessageID = @MessageID))
@@ -866,7 +830,6 @@ CREATE PROC [dbo].[UpdateTutorIDByTutorIDAndStickerID]
 	@TutorID	INT,
     @StickerID	INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
@@ -882,50 +845,3 @@ AS
     END
 GO
 
-/******************************************************************************
---Update TutorReviewID by TutorReviewID and StickerID Procedure Creation Script
-******************************************************************************/
-CREATE PROC [dbo].[UpdateTutorReviewIDByTutorReviewIDAndStickerID]
-    (
-	@TutorReviewID	INT,
-    @StickerID		INT
-    )
---RETURNS bit/* datatype */
-AS
-    BEGIN
-        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
-            return 1;
-        else
-            BEGIN
-				UPDATE Sticker
-				SET TutorReviewID = @TutorReviewID
-				WHERE StickerID = @StickerID;
-                return 0;
-            END
-
-    END
-GO
-
-/**********************************************************************************
---Update StudentReviewID by StudentReviewID and StickerID Procedure Creation Script
-**********************************************************************************/
-CREATE PROC [dbo].[UpdateStudentReviewIDByStudentReviewIDAndStickerID]
-    (
-	@StudentReviewID	INT,
-    @StickerID		INT
-    )
---RETURNS bit/* datatype */
-AS
-    BEGIN
-        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
-            return 1;
-        else
-            BEGIN
-				UPDATE Sticker
-				SET StudentReviewID = @StudentReviewID
-				WHERE StickerID = @StickerID;
-                return 0;
-            END
-
-    END
-GO
