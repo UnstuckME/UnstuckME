@@ -6,16 +6,16 @@ IF OBJECT_ID ('HashPassword', 'TR') IS NOT NULL
 	DROP TRIGGER HashPassword;  
 	GO
 IF OBJECT_ID ('HashPasswordAdmin', 'TR') IS NOT NULL  
-	DROP TRIGGER HashPassword;  
+	DROP TRIGGER HashPasswordAdmin;  
 	GO
 
 --DROP ANY PRE-EXISTING TABLES
-IF OBJECT_ID('Sticker', 'U') IS NOT NULL
-	DROP TABLE Sticker;
-IF OBJECT_ID('Review', 'U') IS NOT NULL
-	DROP TABLE Review;
 IF OBJECT_ID('Report', 'U') IS NOT NULL
 	DROP TABLE Report;
+IF OBJECT_ID('Review', 'U') IS NOT NULL
+	DROP TABLE Review;
+IF OBJECT_ID('Sticker', 'U') IS NOT NULL
+	DROP TABLE Sticker;
 IF OBJECT_ID('UserToClass', 'U') IS NOT NULL
 	DROP TABLE UserToClass;
 IF OBJECT_ID('Classes', 'U') IS NOT NULL
@@ -49,27 +49,32 @@ CREATE TABLE [Server]
 	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
 	AdminPassword		NVARCHAR(32)		DEFAULT 'Password',
 	EmailCredentials	NVARCHAR(50)		DEFAULT NULL)
+GO
 
 --Create Chat Table
 CREATE TABLE Chat
 	(ChatID				INT				PRIMARY KEY IDENTITY(1,1))
+GO
 
 --Create Messages Table
 CREATE TABLE [Messages]
 	(MessageID			INT				PRIMARY KEY IDENTITY(1,1),
 	ChatID				INT				NOT NULL REFERENCES Chat(ChatID),
 	MessageData			NVARCHAR(500)			NOT NULL)
+GO
 
 --Create File Table
 CREATE TABLE Files
 	(FileID				INT				PRIMARY KEY IDENTITY(1,1),
 	ChatID				INT				NOT NULL REFERENCES Chat(ChatID),
 	FileData			VARBINARY(MAX) 			NOT NULL);
+GO
 
 --Create Official Mentor Table
 CREATE TABLE OfficialMentor
 	(MentorID			INT				PRIMARY KEY IDENTITY(1,1),
 	OrganizationName	NVARCHAR(50)			NOT NULL)
+GO
 
 --Create UserProfile Table
 CREATE TABLE UserProfile
@@ -79,23 +84,27 @@ CREATE TABLE UserProfile
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
 	UserPassword			NVARCHAR(32)		NOT NULL,
 	Privileges				NVARCHAR(32)		NOT NULL)
+GO
 
 --Create Official Mentor Table
 CREATE TABLE OmToUser
 	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
 	MentorID			INT				NOT NULL	REFERENCES OfficialMentor(MentorID)
 	PRIMARY KEY(UserID, MentorID))
+GO
 
 --Create UserToChat Table
 CREATE TABLE UserToChat
 	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
 	 ChatID				INT				NOT NULL	REFERENCES Chat(ChatID)
 	PRIMARY KEY (UserID, ChatID))
+GO
 
 --Create Classes Table
 CREATE TABLE Picture
 	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
 	Photo				VARBINARY(MAX)			NULL)	
+GO
 
 --Create Classes Table
 CREATE TABLE Classes
@@ -104,25 +113,14 @@ CREATE TABLE Classes
 	CourseCode			VARCHAR(5)			NOT NULL,	--Ex. WRI
 	CourseNumber		SMALLINT			NOT NULL,	--Ex. 121
 	TermOffered			TINYINT				NOT NULL)
+GO
 
 --Create User To Class Table
 CREATE TABLE UserToClass
 	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
 	ClassID				INT				NOT NULL	REFERENCES Classes(ClassID)
 	PRIMARY KEY (UserID, ClassID))
-
---Create Report Table
-CREATE TABLE Report
-	(ReportID			INT				PRIMARY KEY IDENTITY(1,1),
-	ReportDescription	NVARCHAR(200)	DEFAULT NULL,
-	FlaggerID			INT				DEFAULT NULL	REFERENCES UserProfile(UserID))
-
---Create Review Table
-CREATE TABLE Review
-	(ReviewID			INT					PRIMARY KEY IDENTITY(1,1),
-	ReportID			INT					DEFAULT NULL	REFERENCES Report(ReportID),
-	StarRanking			FLOAT				DEFAULT NULL,
-	[Description]		NVARCHAR(250)			NULL)
+GO
 
 --Create Sticker Table
 CREATE TABLE Sticker
@@ -131,12 +129,29 @@ CREATE TABLE Sticker
 	ClassID				INT				NOT NULL		REFERENCES Classes(ClassID),
 	StudentID			INT				NOT NULL		REFERENCES UserProfile(UserID),
 	TutorID				INT				DEFAULT NULL	REFERENCES UserProfile(UserID),
-	StudentReviewID		INT				NULL			REFERENCES Review(ReviewID),
-	TutorReviewID		INT				NULL			REFERENCES Review(ReviewID),
+	--StudentReviewID		INT				NULL			REFERENCES Review(ReviewID),
+	--TutorReviewID		INT				NULL			REFERENCES Review(ReviewID),
 	MinimumStarRanking	FLOAT			DEFAULT 0.0,
 	SubmitTime			DATETIME		NOT NULL,
 	[Timeout]			DATETIME2		NOT NULL)
+GO
 
+	--Create Review Table
+CREATE TABLE Review
+	(ReviewID			INT					PRIMARY KEY IDENTITY(1,1),
+	--ReportID			INT					DEFAULT NULL	REFERENCES Report(ReportID),
+	StickerID			INT					NOT NULL	REFERENCES Sticker(StickerID),
+	ReviewerID			INT					NOT NULL	REFERENCES UserProfile(UserID),
+	StarRanking			FLOAT				DEFAULT NULL,
+	[Description]		NVARCHAR(250)		NULL)
+GO
+
+--Create Report Table
+CREATE TABLE Report
+	(ReportID			INT				PRIMARY KEY IDENTITY(1,1),
+	ReportDescription	NVARCHAR(200)	DEFAULT NULL,
+	FlaggerID			INT				DEFAULT NULL	REFERENCES UserProfile(UserID),
+	ReviewID			INT				NOT NULL		REFERENCES Review(ReviewID))
 GO
 
 --Create HashingPassword trigger on UserProfile Password
