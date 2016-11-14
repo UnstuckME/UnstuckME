@@ -40,7 +40,6 @@ namespace TestStoredProcedures
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_ClearReviewDescriptionByReviewIDTest_TestAction;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTest1));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_DeleteClassByClassIDTest_TestAction;
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition inconclusiveCondition2;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_DeleteFileByFileIDTest_TestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition inconclusiveCondition3;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_DeleteMentorOrganizationByMentorIDTest_TestAction;
@@ -64,7 +63,6 @@ namespace TestStoredProcedures
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_MentorNameByMentorIDTest_TestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition inconclusiveCondition13;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_UpdateAdminPasswordByServerIDTest_TestAction;
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition inconclusiveCondition14;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_UpdateAdminUsernameByServerIDTest_TestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition inconclusiveCondition15;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_UpdateCourseCodeByClassIDTest_TestAction;
@@ -109,6 +107,15 @@ namespace TestStoredProcedures
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_ClearReviewDescriptionByReviewIDTest_PretestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_DeleteClassByClassIDTest_PretestAction;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_DeleteClassByClassIDTest_PosttestAction;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition2;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition3;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_UpdateAdminPasswordByServerIDTest_PretestAction;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition4;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_UpdateAdminPasswordByServerIDTest_PosttestAction;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition5;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition6;
             this.dbo_ClearReviewDescriptionByReviewIDTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             this.dbo_DeleteClassByClassIDTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             this.dbo_DeleteFileByFileIDTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
@@ -145,7 +152,6 @@ namespace TestStoredProcedures
             this.dbo_UpdateUserPasswordByUserIDTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             dbo_ClearReviewDescriptionByReviewIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             dbo_DeleteClassByClassIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
-            inconclusiveCondition2 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition();
             dbo_DeleteFileByFileIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             inconclusiveCondition3 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition();
             dbo_DeleteMentorOrganizationByMentorIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
@@ -169,7 +175,6 @@ namespace TestStoredProcedures
             dbo_MentorNameByMentorIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             inconclusiveCondition13 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition();
             dbo_UpdateAdminPasswordByServerIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
-            inconclusiveCondition14 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition();
             dbo_UpdateAdminUsernameByServerIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             inconclusiveCondition15 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition();
             dbo_UpdateCourseCodeByClassIDTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
@@ -214,6 +219,15 @@ namespace TestStoredProcedures
             dbo_ClearReviewDescriptionByReviewIDTest_PretestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             rowCountCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            dbo_DeleteClassByClassIDTest_PretestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
+            dbo_DeleteClassByClassIDTest_PosttestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
+            rowCountCondition2 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            rowCountCondition3 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            dbo_UpdateAdminPasswordByServerIDTest_PretestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
+            rowCountCondition4 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            dbo_UpdateAdminPasswordByServerIDTest_PosttestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
+            rowCountCondition5 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            rowCountCondition6 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             // 
             // dbo_ClearReviewDescriptionByReviewIDTest_TestAction
             // 
@@ -221,13 +235,7 @@ namespace TestStoredProcedures
             // 
             // dbo_DeleteClassByClassIDTest_TestAction
             // 
-            dbo_DeleteClassByClassIDTest_TestAction.Conditions.Add(inconclusiveCondition2);
             resources.ApplyResources(dbo_DeleteClassByClassIDTest_TestAction, "dbo_DeleteClassByClassIDTest_TestAction");
-            // 
-            // inconclusiveCondition2
-            // 
-            inconclusiveCondition2.Enabled = true;
-            inconclusiveCondition2.Name = "inconclusiveCondition2";
             // 
             // dbo_DeleteFileByFileIDTest_TestAction
             // 
@@ -341,13 +349,8 @@ namespace TestStoredProcedures
             // 
             // dbo_UpdateAdminPasswordByServerIDTest_TestAction
             // 
-            dbo_UpdateAdminPasswordByServerIDTest_TestAction.Conditions.Add(inconclusiveCondition14);
+            dbo_UpdateAdminPasswordByServerIDTest_TestAction.Conditions.Add(rowCountCondition5);
             resources.ApplyResources(dbo_UpdateAdminPasswordByServerIDTest_TestAction, "dbo_UpdateAdminPasswordByServerIDTest_TestAction");
-            // 
-            // inconclusiveCondition14
-            // 
-            inconclusiveCondition14.Enabled = true;
-            inconclusiveCondition14.Name = "inconclusiveCondition14";
             // 
             // dbo_UpdateAdminUsernameByServerIDTest_TestAction
             // 
@@ -562,6 +565,13 @@ namespace TestStoredProcedures
             dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction.Conditions.Add(rowCountCondition1);
             resources.ApplyResources(dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction, "dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction");
             // 
+            // rowCountCondition1
+            // 
+            rowCountCondition1.Enabled = true;
+            rowCountCondition1.Name = "rowCountCondition1";
+            rowCountCondition1.ResultSet = 1;
+            rowCountCondition1.RowCount = 0;
+            // 
             // dbo_ClearReviewDescriptionByReviewIDTestData
             // 
             this.dbo_ClearReviewDescriptionByReviewIDTestData.PosttestAction = dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction;
@@ -570,8 +580,8 @@ namespace TestStoredProcedures
             // 
             // dbo_DeleteClassByClassIDTestData
             // 
-            this.dbo_DeleteClassByClassIDTestData.PosttestAction = null;
-            this.dbo_DeleteClassByClassIDTestData.PretestAction = null;
+            this.dbo_DeleteClassByClassIDTestData.PosttestAction = dbo_DeleteClassByClassIDTest_PosttestAction;
+            this.dbo_DeleteClassByClassIDTestData.PretestAction = dbo_DeleteClassByClassIDTest_PretestAction;
             this.dbo_DeleteClassByClassIDTestData.TestAction = dbo_DeleteClassByClassIDTest_TestAction;
             // 
             // dbo_DeleteFileByFileIDTestData
@@ -642,8 +652,8 @@ namespace TestStoredProcedures
             // 
             // dbo_UpdateAdminPasswordByServerIDTestData
             // 
-            this.dbo_UpdateAdminPasswordByServerIDTestData.PosttestAction = null;
-            this.dbo_UpdateAdminPasswordByServerIDTestData.PretestAction = null;
+            this.dbo_UpdateAdminPasswordByServerIDTestData.PosttestAction = dbo_UpdateAdminPasswordByServerIDTest_PosttestAction;
+            this.dbo_UpdateAdminPasswordByServerIDTestData.PretestAction = dbo_UpdateAdminPasswordByServerIDTest_PretestAction;
             this.dbo_UpdateAdminPasswordByServerIDTestData.TestAction = dbo_UpdateAdminPasswordByServerIDTest_TestAction;
             // 
             // dbo_UpdateAdminUsernameByServerIDTestData
@@ -766,12 +776,60 @@ namespace TestStoredProcedures
             this.dbo_UpdateUserPasswordByUserIDTestData.PretestAction = null;
             this.dbo_UpdateUserPasswordByUserIDTestData.TestAction = dbo_UpdateUserPasswordByUserIDTest_TestAction;
             // 
-            // rowCountCondition1
+            // dbo_DeleteClassByClassIDTest_PretestAction
             // 
-            rowCountCondition1.Enabled = true;
-            rowCountCondition1.Name = "rowCountCondition1";
-            rowCountCondition1.ResultSet = 1;
-            rowCountCondition1.RowCount = 0;
+            dbo_DeleteClassByClassIDTest_PretestAction.Conditions.Add(rowCountCondition3);
+            resources.ApplyResources(dbo_DeleteClassByClassIDTest_PretestAction, "dbo_DeleteClassByClassIDTest_PretestAction");
+            // 
+            // dbo_DeleteClassByClassIDTest_PosttestAction
+            // 
+            dbo_DeleteClassByClassIDTest_PosttestAction.Conditions.Add(rowCountCondition2);
+            resources.ApplyResources(dbo_DeleteClassByClassIDTest_PosttestAction, "dbo_DeleteClassByClassIDTest_PosttestAction");
+            // 
+            // rowCountCondition2
+            // 
+            rowCountCondition2.Enabled = true;
+            rowCountCondition2.Name = "rowCountCondition2";
+            rowCountCondition2.ResultSet = 1;
+            rowCountCondition2.RowCount = 0;
+            // 
+            // rowCountCondition3
+            // 
+            rowCountCondition3.Enabled = true;
+            rowCountCondition3.Name = "rowCountCondition3";
+            rowCountCondition3.ResultSet = 1;
+            rowCountCondition3.RowCount = 1;
+            // 
+            // dbo_UpdateAdminPasswordByServerIDTest_PretestAction
+            // 
+            dbo_UpdateAdminPasswordByServerIDTest_PretestAction.Conditions.Add(rowCountCondition4);
+            resources.ApplyResources(dbo_UpdateAdminPasswordByServerIDTest_PretestAction, "dbo_UpdateAdminPasswordByServerIDTest_PretestAction");
+            // 
+            // rowCountCondition4
+            // 
+            rowCountCondition4.Enabled = true;
+            rowCountCondition4.Name = "rowCountCondition4";
+            rowCountCondition4.ResultSet = 1;
+            rowCountCondition4.RowCount = 1;
+            // 
+            // dbo_UpdateAdminPasswordByServerIDTest_PosttestAction
+            // 
+            dbo_UpdateAdminPasswordByServerIDTest_PosttestAction.Conditions.Add(rowCountCondition6);
+            resources.ApplyResources(dbo_UpdateAdminPasswordByServerIDTest_PosttestAction, "dbo_UpdateAdminPasswordByServerIDTest_PosttestAction");
+            // 
+            // rowCountCondition5
+            // 
+            rowCountCondition5.Enabled = true;
+            rowCountCondition5.Name = "rowCountCondition5";
+            rowCountCondition5.ResultSet = 1;
+            rowCountCondition5.RowCount = 1;
+            // 
+            // rowCountCondition6
+            // 
+            rowCountCondition6.Enabled = true;
+            rowCountCondition6.Name = "rowCountCondition6";
+            rowCountCondition6.ResultSet = 1;
+            rowCountCondition6.RowCount = 0;
             // 
             // SqlServerUnitTest1
             // 

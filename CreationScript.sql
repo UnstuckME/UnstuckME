@@ -5,6 +5,9 @@ GO
 IF OBJECT_ID ('HashPassword', 'TR') IS NOT NULL  
 	DROP TRIGGER HashPassword;  
 	GO
+IF OBJECT_ID ('HashPasswordAdmin', 'TR') IS NOT NULL  
+	DROP TRIGGER HashPassword;  
+	GO
 
 --DROP ANY PRE-EXISTING TABLES
 IF OBJECT_ID('Sticker', 'U') IS NOT NULL
@@ -146,5 +149,17 @@ CREATE
 			UPDATE UserProfile
 			Set UserPassword = CONVERT(NVARCHAR(32),HashBytes('MD5', (SELECT UserPassword from UserProfile WHERE UserID IN (SELECT UserID from inserted))),2)
 			WHERE  UserID IN (SELECT UserID from inserted)
+		End;
+GO
+
+CREATE 
+	TRIGGER HashPasswordAdmin
+	ON Server
+	AFTER INSERT, UPDATE
+	AS
+		Begin
+			UPDATE Server
+			Set AdminPassword = CONVERT(NVARCHAR(32),HashBytes('MD5', (SELECT AdminPassword from [Server] WHERE ServerID IN (SELECT ServerID from inserted))),2)
+			WHERE ServerID IN (SELECT ServerID from inserted)
 		End;
 GO

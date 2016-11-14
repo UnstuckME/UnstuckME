@@ -136,13 +136,11 @@ SELECT @RC AS RC;</value>
 DECLARE @RC AS INT, @ClassID AS INT;
 
 SELECT @RC = 0,
-       @ClassID = 0;
+       @ClassID = 1;
 
 EXECUTE @RC = [dbo].[DeleteClassByClassID] @ClassID;
 
-SELECT @RC AS RC;
-
-</value>
+SELECT @RC AS RC;</value>
   </data>
   <data name="dbo_DeleteFileByFileIDTest_TestAction.SqlScript" xml:space="preserve">
     <value>-- database unit test for dbo.DeleteFileByFileID
@@ -290,24 +288,30 @@ SELECT @RC AS RC;
   </data>
   <data name="dbo_UpdateAdminPasswordByServerIDTest_TestAction.SqlScript" xml:space="preserve">
     <value>-- database unit test for dbo.UpdateAdminPasswordByServerID
-DECLARE @RC AS INT, @ServerID AS INT, @AdminPassword AS BINARY (64);
+DECLARE @RC AS INT, @ServerID AS INT, @AdminPassword AS NVARCHAR (32), @AdminOldPassword AS NVARCHAR(32), @testingServerId AS INT;
+
+SELECT @AdminOldPassword = (SELECT AdminPassword FROM [Server] WHERE ServerName = 'TestingServer');
+SELECT @testingServerID = (SELECT serverID FROM [Server] WHERE ServerName = 'TestingServer');
 
 SELECT @RC = 0,
-       @ServerID = 0,
-       @AdminPassword = NULL;
+       @ServerID = @testingServerID,
+       @AdminPassword = 'NewPassword';
 
 EXECUTE @RC = [dbo].[UpdateAdminPasswordByServerID] @ServerID, @AdminPassword;
 
-SELECT @RC AS RC;
-
-</value>
+SELECT *
+FROM [Server]
+WHERE 
+	ServerName = 'TestingServer'
+	AND
+	AdminPassword = 'D41BAE90B7EB980A3B42BD79538D3A9A';</value>
   </data>
   <data name="dbo_UpdateAdminUsernameByServerIDTest_TestAction.SqlScript" xml:space="preserve">
     <value>-- database unit test for dbo.UpdateAdminUsernameByServerID
 DECLARE @RC AS INT, @ServerID AS INT, @AdminUsername AS VARCHAR (30);
 
 SELECT @RC = 0,
-       @ServerID = 0,
+       @ServerID = 1,
        @AdminUsername = NULL;
 
 EXECUTE @RC = [dbo].[UpdateAdminUsernameByServerID] @ServerID, @AdminUsername;
@@ -602,7 +606,9 @@ whether the results of your SQL statements match what
 you expect.
 */
 
-</value>
+SELECT *
+FROM REVIEW 
+WHERE ReviewID = 1</value>
   </data>
   <data name="dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction.SqlScript" xml:space="preserve">
     <value>/*
@@ -616,7 +622,43 @@ you expect.
 
 SELECT * 
 FROM Review
-WHERE ReviewID = 1</value>
+WHERE ReviewID = 1 AND [Description] IS NULL;</value>
+  </data>
+  <data name="dbo_DeleteClassByClassIDTest_PosttestAction.SqlScript" xml:space="preserve">
+    <value>/*
+Add SQL statements here that you want to run after 
+the test script is run.
+
+In the lower pane, you can add test conditions that verify 
+whether the results of your SQL statements match what 
+you expect.
+*/
+
+SELECT *
+FROM Classes
+WHERE ClassID = 1</value>
+  </data>
+  <data name="dbo_DeleteClassByClassIDTest_PretestAction.SqlScript" xml:space="preserve">
+    <value>
+SELECT *
+FROM Classes
+WHERE ClassID = 1</value>
+  </data>
+  <data name="dbo_UpdateAdminPasswordByServerIDTest_PosttestAction.SqlScript" xml:space="preserve">
+    <value>DELETE Server
+WHERE ServerName = 'TestingServer'
+
+SELECT * 
+FROM Server
+WHERE ServerName = 'TestingServer'</value>
+  </data>
+  <data name="dbo_UpdateAdminPasswordByServerIDTest_PretestAction.SqlScript" xml:space="preserve">
+    <value>INSERT INTO [Server]
+VALUES ('TestingServer', '111.111.1.1', 'text.com', 'Testing Server', 'test', 'testpassword', '.test.test.com')
+
+SELECT *
+FROM [Server]
+WHERE ServerName = 'TestingServer'</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
