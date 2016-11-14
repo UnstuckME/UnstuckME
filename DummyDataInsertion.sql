@@ -281,20 +281,20 @@ INSERT INTO Review
 VALUES (DEFAULT, 5, 'I Loved working with this student. Such a quick learner!')
 
 INSERT INTO Review
-Values(1, 1, 'This tutor can go fuck himself, Literally JAKE is the worst human beiugn ever!!!!')
+Values(1, 1, 'This tutor can go fuck himself, Literally JAKE is the worst human being ever!!!!')
 
 --Insert some stickers  --Description, ClassID, StudentID, TutorID, StudentReviewID, TutorReviewID, Min Star Rating, Submit Time, Timout
-INSERT INTO Sticker
-VALUES ('I need help with creating my Array class for Data Structures', 7, 1, 3, 1, 5, 3.5, GETDATE(), DATEADD(hour, 3.5, GETDATE()))
+INSERT INTO Sticker ([ProblemDescription],[ClassID],[StudentID],[TutorID],[MinimumStarRanking],[SubmitTime],[Timeout])
+VALUES ('I need help with creating my Array class for Data Structures', 7, 2, 3, 1.5,GETDATE(), DATEADD(hour, 3.5, GETDATE()))
 
 INSERT INTO Sticker
-VALUES ('I need help with EVERYTHING!', 2, 4, DEFAULT, 4, NULL, 3.5, GETDATE(), DATEADD(hour, 3.5, GETDATE()))
+VALUES ('I need help with EVERYTHING!', 2, 4, DEFAULT, 3.5, GETDATE(), DATEADD(hour, 3.5, GETDATE()))
 
 INSERT INTO Sticker
-VALUES ('QUICK HELP RN DUE PPRETTY SOON!!!!', 1, 3, 5, NULL, NULL, NULL, GETDATE(), DATEADD(hour, 0.5, GETDATE()))
+VALUES ('QUICK HELP RN DUE PPRETTY SOON!!!!', 1, 3, DEFAULT, NULL, GETDATE(), DATEADD(hour, 0.5, GETDATE()))
 
 INSERT INTO Sticker
-VALUES ('Any time this week would be great, just having a little trouble.', 5, 5, DEFAULT, 7, NULL, NULL, GETDATE(), DATEADD(hour, 168, GETDATE()))
+VALUES ('Any time this week would be great, just having a little trouble.', 5, 5, DEFAULT, 1, GETDATE(), DATEADD(hour, 168, GETDATE()))
 
 
 
