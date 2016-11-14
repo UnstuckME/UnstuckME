@@ -119,19 +119,17 @@
   </resheader>
   <data name="dbo_ClearReviewDescriptionByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
     <value>-- database unit test for dbo.ClearReviewDescriptionByReviewID
--- RRC = Return Code
+-- RC = Return Code
 
 DECLARE @RC AS INT
 DECLARE @ReviewID AS INT;
 
 SELECT @RC = 0,
-       @ReviewID = 0;
+       @ReviewID = 1;
 
 EXECUTE @RC = [dbo].[ClearReviewDescriptionByReviewID] @ReviewID;
 
-SELECT @RC AS RC;
-
-</value>
+SELECT @RC AS RC;</value>
   </data>
   <data name="dbo_DeleteClassByClassIDTest_TestAction.SqlScript" xml:space="preserve">
     <value>-- database unit test for dbo.DeleteClassByClassID
@@ -583,6 +581,42 @@ EXECUTE @RC = [dbo].[UpdateUserPasswordByUserID] @UserID, @UserPassword;
 SELECT @RC AS RC;
 
 </value>
+  </data>
+  <data name="testInitializeAction.SqlScript" xml:space="preserve">
+    <value>/*
+Add SQL statements here that you want to run before 
+each test method (unit test) in this test class is run.
+
+In the lower pane, you can add test conditions that verify 
+whether the results of your SQL statements match what 
+you expect.
+*/</value>
+  </data>
+  <data name="dbo_ClearReviewDescriptionByReviewIDTest_PretestAction.SqlScript" xml:space="preserve">
+    <value>/*
+Add SQL statements here that you want to run before
+the test script is run.
+
+In the lower pane, you can add test conditions that verify 
+whether the results of your SQL statements match what 
+you expect.
+*/
+
+</value>
+  </data>
+  <data name="dbo_ClearReviewDescriptionByReviewIDTest_PosttestAction.SqlScript" xml:space="preserve">
+    <value>/*
+Add SQL statements here that you want to run after 
+the test script is run.
+
+In the lower pane, you can add test conditions that verify 
+whether the results of your SQL statements match what 
+you expect.
+*/
+
+SELECT * 
+FROM Review
+WHERE ReviewID = 1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
