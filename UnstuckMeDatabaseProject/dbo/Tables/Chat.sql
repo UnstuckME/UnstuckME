@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Chat] (
+    [ChatID] INT IDENTITY (1, 1) NOT NULL,
+    PRIMARY KEY CLUSTERED ([ChatID] ASC)
+);
+
