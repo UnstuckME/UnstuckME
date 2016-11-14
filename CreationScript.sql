@@ -44,7 +44,7 @@ CREATE TABLE [Server]
 	ServerDomain		VARCHAR(50)			DEFAULT NULL,
 	SchoolName			VARCHAR(75)			NOT NULL,
 	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
-	AdminPassword		VARCHAR(64)			DEFAULT 'Password',
+	AdminPassword		NVARCHAR(32)		DEFAULT 'Password',
 	EmailCredentials	NVARCHAR(50)		DEFAULT NULL)
 
 --Create Chat Table
@@ -75,7 +75,7 @@ CREATE TABLE UserProfile
 	DisplayLName			VARCHAR(30)			NOT NULL,
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
 	UserPassword			NVARCHAR(32)		NOT NULL,
-	Privileges				BINARY(4)			NOT NULL)
+	Privileges				NVARCHAR(32)		NOT NULL)
 
 --Create Official Mentor Table
 CREATE TABLE OmToUser
@@ -99,7 +99,7 @@ CREATE TABLE Classes
 	(ClassID			INT				PRIMARY KEY IDENTITY(1,1),
 	CourseName			VARCHAR(50)			NOT NULL,	--Common Name
 	CourseCode			VARCHAR(5)			NOT NULL,	--Ex. WRI
-	CourseNumber			SMALLINT			NOT NULL,	--Ex. 121
+	CourseNumber		SMALLINT			NOT NULL,	--Ex. 121
 	TermOffered			TINYINT				NOT NULL)
 
 --Create User To Class Table
