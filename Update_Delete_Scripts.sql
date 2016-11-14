@@ -107,7 +107,6 @@ CREATE PROC [dbo].[DeleteUserProfileByUserID]
     (
     @UserID INT
     )
---RETURNS bit/* datatype */
 AS
     BEGIN
         if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
