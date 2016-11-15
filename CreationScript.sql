@@ -8,7 +8,12 @@ IF OBJECT_ID ('HashPassword', 'TR') IS NOT NULL
 IF OBJECT_ID ('HashPasswordAdmin', 'TR') IS NOT NULL  
 	DROP TRIGGER HashPasswordAdmin;  
 	GO
-
+IF OBJECT_ID ('ForbidUser1Update', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidUser1Update;  
+	GO
+IF OBJECT_ID ('ForbidUser1Delete', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidUser1Delete;  
+	GO
 --DROP ANY PRE-EXISTING TABLES
 IF OBJECT_ID('Report', 'U') IS NOT NULL
 	DROP TABLE Report;
@@ -154,6 +159,12 @@ CREATE TABLE Report
 	ReviewID			INT				NOT NULL		REFERENCES Review(ReviewID))
 GO
 
+/*******************************************************************************
+INSERT DEFAULT USER
+*******************************************************************************/
+INSERT INTO UserProfile
+VALUES ('Unknown', 'User', 'Invalid Email Address', 'NO_PASSWORD', 'NO_PRIVILEGES');
+GO
 --Create HashingPassword trigger on UserProfile Password
 CREATE 
 	TRIGGER HashPassword
@@ -179,9 +190,28 @@ CREATE
 		End;
 GO
 
+CREATE
+	TRIGGER ForbidUser1Delete
+	ON UserProfile
+	AFTER DELETE
+	AS
+		BEGIN
+		IF exists(SELECT UserID FROM deleted WHERE UserID = 1 )
+			BEGIN
+				ROLLBACK TRANSACTION;
+			END;
+		END;
+GO
 
-/*******************************************************************************
-INSERT DEFAULT USER
-*******************************************************************************/
-INSERT INTO UserProfile
-VALUES ('Unknown', 'User', 'Invalid Email Address', 'Googenheimer1223144', 'no priviledges')
+CREATE
+	TRIGGER ForbidUser1Update
+	ON UserProfile
+	AFTER UPDATE
+	AS
+		BEGIN
+		IF exists(SELECT UserID FROM inserted WHERE UserID = 1 )
+			BEGIN
+				ROLLBACK TRANSACTION;
+			END;
+		END;
+GO
