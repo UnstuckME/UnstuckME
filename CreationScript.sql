@@ -178,3 +178,10 @@ CREATE
 			WHERE ServerID IN (SELECT ServerID from inserted)
 		End;
 GO
+
+
+/*******************************************************************************
+INSERT DEFAULT USER
+*******************************************************************************/
+INSERT INTO UserProfile
+VALUES ('Unknown', 'User', 'Invalid Email Address', 'Googenheimer1223144', 'no priviledges')

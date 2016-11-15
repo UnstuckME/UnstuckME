@@ -113,6 +113,14 @@ AS
             return 1;
         else
             BEGIN
+				DELETE FROM UserToClass
+				WHERE UserID = @UserID;
+				DELETE FROM Picture
+				WHERE UserID =@UserID;
+				DELETE FROM OmToUser
+				WHERE UserID = @UserID;
+				DELETE FROM UserToChat
+				WHERE UserID = @UserID;
                 DELETE FROM UserProfile
 				WHERE UserID = @UserID;
                 return 0;
