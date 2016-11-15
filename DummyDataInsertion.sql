@@ -74,8 +74,7 @@ insert into Picture (UserID, Photo) values (5, CONVERT(varbinary(MAX), 'elementu
 insert into Picture (UserID, Photo) values (6, CONVERT(varbinary(MAX), 'diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis'));
 
 --8 New chats
-INSERT INTO CHAT
-DEFAULT VALUES
+INSERT INTO CHAT DEFAULT VALUES
 INSERT INTO CHAT
 DEFAULT VALUES
 INSERT INTO CHAT
@@ -257,33 +256,9 @@ INSERT INTO UserToClass (UserID, ClassID) VALUES (3, 5);
 INSERT INTO UserToClass (UserID, ClassID) VALUES (5, 7);
 INSERT INTO UserToClass (UserID, ClassID) VALUES (6, 9);
 
---Insert Report
-INSERT INTO Report (ReportDescription, FlaggerID)
-VALUES('I dont think this vulger langugae belongs on UnstuckME', 1)
 
---Insert some reviews
-INSERT INTO Review
-VALUES (DEFAULT, 4, 'The tutor was amazing at explaining Data Structs!')
 
-INSERT INTO Review
-VALUES (DEFAULT, 5, 'The tutor was the coolest most helpful person!')
-
-INSERT INTO Review
-VALUES (DEFAULT, 3, 'The tutor was very nice, but did not know the subject very well.')
-
-INSERT INTO Review
-VALUES (DEFAULT, 1, 'Worst Tutor Ever!')
-
-INSERT INTO Review
-VALUES (DEFAULT, 1, 'Not a very goood Tutor!')
-
-INSERT INTO Review
-VALUES (DEFAULT, 5, 'I Loved working with this student. Such a quick learner!')
-
-INSERT INTO Review
-Values(1, 1, 'This tutor can go fuck himself, Literally JAKE is the worst human being ever!!!!')
-
---Insert some stickers  --Description, ClassID, StudentID, TutorID, StudentReviewID, TutorReviewID, Min Star Rating, Submit Time, Timout
+--Insert some stickers
 INSERT INTO Sticker ([ProblemDescription],[ClassID],[StudentID],[TutorID],[MinimumStarRanking],[SubmitTime],[Timeout])
 VALUES ('I need help with creating my Array class for Data Structures', 7, 2, 3, 1.5,GETDATE(), DATEADD(hour, 3.5, GETDATE()))
 
@@ -296,7 +271,24 @@ VALUES ('QUICK HELP RN DUE PPRETTY SOON!!!!', 1, 3, DEFAULT, NULL, GETDATE(), DA
 INSERT INTO Sticker
 VALUES ('Any time this week would be great, just having a little trouble.', 5, 5, DEFAULT, 1, GETDATE(), DATEADD(hour, 168, GETDATE()))
 
+--Insert some reviews
+INSERT INTO Review ([StickerID], [ReviewerID], [StarRanking], [Description])
+VALUES (1, 2, 5, 'Loved working with my tutor he was so great')
 
+INSERT INTO Review
+VALUES (1, 3, 5, 'The student was the coolest most well learned person!')
+
+INSERT INTO Review
+VALUES (2, 4, 3.5, 'The tutor was very nice, but did not know the subject very well.')
+
+INSERT INTO Review
+VALUES (2, 3, 1, 'Worst STUDENT Ever!')
+
+INSERT INTO Review
+VALUES (3, 3, 1, 'This review is not about anyone in particular')
+
+INSERT INTO Review
+Values(4, 5, 1, 'This tutor can go fuck himself, Literally JAKE is the worst human being ever!!!!')
 
 --INsert into UserTOChat (18)
 insert into UserToChat (UserID, ChatID) values (4, 8);
@@ -317,4 +309,9 @@ insert into UserToChat (UserID, ChatID) values (1, 5);
 insert into UserToChat (UserID, ChatID) values (4, 2);
 insert into UserToChat (UserID, ChatID) values (3, 8);
 insert into UserToChat (UserID, ChatID) values (2, 8);
+
+
+--Insert Report
+INSERT INTO Report ([ReportDescription],[FlaggerID],[ReviewID])
+VALUES('I dont think this vulger langugae belongs on UnstuckME', 1, 5)
 
