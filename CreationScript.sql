@@ -165,6 +165,12 @@ INSERT DEFAULT USER
 INSERT INTO UserProfile
 VALUES ('Unknown', 'User', 'Invalid Email Address', 'NO_PASSWORD', 'NO_PRIVILEGES');
 GO
+/*******************************************************************************
+INSERT DEFAULT CLASS
+*******************************************************************************/
+INSERT INTO Classes
+VALUES ('Class Unavailable', 'NA', 0, 0);
+GO
 --Create HashingPassword trigger on UserProfile Password
 CREATE 
 	TRIGGER HashPassword

@@ -217,8 +217,10 @@ AS
             return 1;
         else
             BEGIN
+				DELETE OmToUser
+				WHERE @MentorID = MentorID;
 				DELETE OfficialMentor
-				WHERE MentorID = @mentorID;
+				WHERE MentorID = @MentorID;
                 return 0;
             END
 
@@ -238,6 +240,9 @@ AS
             return 1;
         else
             BEGIN
+				
+				DELETE UserToClass
+				WHERE ClassID = @ClassID
 				DELETE Classes
 				WHERE ClassID = @classID;
                 return 0;
