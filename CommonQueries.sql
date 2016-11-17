@@ -1,52 +1,92 @@
-/*************************************
+/**************************************************************************
 * UnstuckME Common Queries
-*************************************/
+**************************************************************************/
 use UnstuckME_DB
 go
 
-/*************************************
+/**************************************************************************
 * Drop existing stored procedures
-*************************************/
+**************************************************************************/
 if object_id('GetServerInfo') is not null
-	drop GetServerInfo;
+	drop procedure GetServerName;
 if object_id('GetAdminInfo') is not null
-	drop GetAdminInfo;
+	drop procedure GetAdminInfo;
 if object_id('OpenProfilePage') is not null
-	drop OpenProfilePage;
+	drop procedure OpenProfilePage;
 if object_id('AdminPullReports') is not null
-	drop AdminPullReports;
+	drop procedure AdminPullReports;
 if object_id('AdminOnlyPullAllReports') is not null
-	drop AdminOnlyPullAllReports;
+	drop procedure AdminOnlyPullAllReports;
 if object_id('FilterUserReviewsByGreaterStarRank') is not null
-	drop FilterUserReviewsByGreaterStarRank;
+	drop procedure FilterUserReviewsByGreaterStarRank;
 if object_id('FilterUserReviewsByEqualStarRank') is not null
-	drop FilterUserReviewsByEqualStarRank;
+	drop procedure FilterUserReviewsByEqualStarRank;
 if object_id('RetrieveLogin') is not null
-	drop RetrieveLogin;
+	drop procedure RetrieveLogin;
 if object_id('PullClassSpecificStickers') is not null
-	drop PullClassSpecificStickers;
+	drop procedure PullClassSpecificStickers;
 if object_id('PullUserSpecificStickers') is not null
-	drop PullUserSpecificStickers;
+	drop procedure PullUserSpecificStickers;
 if object_id('GetUserAvgRating') is not null
-	drop GetUserAvgRating;
+	drop procedure GetUserAvgRating;
 if object_id('PullRankingSpecificStickers') is not null
-	drop PullRankingSpecificStickers;
+	drop procedure PullRankingSpecificStickers;
 if object_id('PullChatMessagesBetweenUsers') is not null
-	drop PullChatMessagesBetweenUsers;
+	drop procedure PullChatMessagesBetweenUsers;
 
-/*************************************
-* Gets server information
-*************************************/
+/**************************************************************************
+* Gets server name
+**************************************************************************/
 go
-create proc GetServerInfo as
+create proc GetServerName as
 begin
-	select ServerName, ServerIP, ServerDomain, SchoolName, EmailCredentials
+	select ServerName
 	from Server;
 end;
 
-/*************************************
+/**************************************************************************
+* Gets server IP address
+**************************************************************************/
+go
+create proc GetServerIP as
+begin
+	select ServerIP
+	from Server;
+end;
+
+/**************************************************************************
+* Gets server domain
+**************************************************************************/
+go
+create proc GetServerDomain as
+begin
+	select ServerDomain
+	from Server;
+end;
+
+/**************************************************************************
+* Gets school name
+**************************************************************************/
+go
+create proc GetSchoolName as
+begin
+	select SchoolName
+	from Server;
+end;
+
+/**************************************************************************
+* Gets email credentials
+**************************************************************************/
+go
+create proc GetEmailCredentials as
+begin
+	select EmailCredentials
+	from Server;
+end;
+
+/**************************************************************************
 * Gets Administrator information
-*************************************/
+**************************************************************************/
 go
 create proc GetAdminInfo as
 begin
@@ -54,93 +94,241 @@ begin
 	from Server;
 end;
 
-/*************************************
+/**************************************************************************
+* Gets all Stickers for Admin
+**************************************************************************/
+go
+create proc GetAllStickers as
+begin
+	select DisplayFName + ' ' + DisplayLName as Student, EmailAddress,
+		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
+		ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Classes				on Classes.ClassID = Sticker.ClassID
+end;
+
+/**************************************************************************
+* Gets all Student Reviews for Admin
+**************************************************************************/
+go
+--create proc GetAllStudentReviews as
+--begin
+--	select DisplayFName + ' ' + DisplayLName as Reviewer, StarRanking, Description
+--	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+--		join Review					on Review.ReviewerID = Sticker.StudentID
+--end;
+
+/**************************************************************************
+* Gets all Tutor Reviews for Admin
+**************************************************************************/
+go
+--create proc GetAllTutorReviews as
+--begin
+	
+--end;
+
+/**************************************************************************
+* Pull Reports for a specific user (Admins only)
+**************************************************************************/
+go
+create proc AdminPullReportsForUser
+(	@user varchar(61)	) as
+begin
+	select (select DisplayFName + ' ' + DisplayLName
+				from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
+					join Report					on Review.ReviewID = Report.ReviewID
+				where Report.FlaggerID is not null)
+			as 'Reported User',
+			(select DisplayFName + ' ' + DisplayLName
+				from UserProfile join Report	on UserProfile.UserID = Report.FlaggerID
+					join Review					on Report.ReviewID = Review.ReviewID)
+			as Reporter,
+			StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
+	from Report join Review		on Report.ReviewID = Review.ReviewID
+	where 'Reported User' = @user or Reporter = @user
+end;
+
+/**************************************************************************
+* Pull reports for all users (Admins only)
+**************************************************************************/
+go
+create proc AdminPullAllReports as
+begin
+	select (select DisplayFName + ' ' + DisplayLName
+				from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
+					join Report					on Review.ReviewID = Report.ReviewID
+				where Report.FlaggerID is not null)
+			as 'Reported User',
+			(select DisplayFName + ' ' + DisplayLName
+				from UserProfile join Report	on UserProfile.UserID = Report.FlaggerID
+					join Review					on Report.ReviewID = Review.ReviewID)
+			as Reporter,
+			StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
+	from Report join Review		on Report.ReviewID = Review.ReviewID
+end;
+
+/**************************************************************************
+* Admin wants to view all users
+**************************************************************************/
+go
+create proc ViewAllUsers as
+begin
+	select DisplayFName + ' ' + DisplayLName as 'User', EmailAddress, Privileges
+	from UserProfile
+end;
+
+/**************************************************************************
+* View all classes
+**************************************************************************/
+go
+create proc ViewAllClasses as 
+begin
+	select CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
+		TermOffered
+	from Classes
+end;
+
+/**************************************************************************
+* View all organizations
+**************************************************************************/
+go
+create proc GetAllOrganizations as
+begin
+	select OrganizationName
+	from OfficialMentor
+end;
+
+/**************************************************************************
+* Get Profile Picture
+**************************************************************************/
+go
+create proc GetProfilePicture
+(	@useremail varchar(50) ) as
+begin
+	select Photo
+	from Picture join UserProfile	on UserProfile.UserID = Picture.UserID
+	where EmailAddress = @useremail
+end;
+
+/**************************************************************************
+* Get username, email address
+**************************************************************************/
+go
+create proc GetUsernameAndEmail
+(	@useremail varchar(50),
+	@password nvarchar(30)
+) as
+begin
+	select DisplayFName + ' ' + DisplayLName, EmailAddress
+	from UserProfile
+	where EmailAddress = @useremail and UserPassword = @password;
+end;
+
+/**************************************************************************
+* Get user's classes
+**************************************************************************/
+go
+create proc GetUserClasses
+(	@useremail varchar(50),
+	@password nvarchar(30)
+) as
+begin
+	select Classes.CourseName, Classes.CourseCode, Classes.CourseNumber
+	from UserProfile join UserToClass	on UserProfile.UserID = UserToClass.UserID
+		join Classes					on UserToClass.ClassID = Classes.ClassID
+	where EmailAddress = @useremail and UserPassword = @password;
+end;
+
+/**************************************************************************
+* Get Stickers with reviews submitted by user
+**************************************************************************/
+go
+create proc GetUserStickersAndReviews
+(	@useremail varchar(50),
+	@password nvarchar(30)
+) as 
+begin
+		select Sticker.SubmitTime, Sticker.Timeout, Sticker.ProblemDescription,
+			Sticker.MinimumStarRanking, Review.StarRanking, Review.Description
+	from UserProfile join Sticker		on Sticker.StudentID = UserProfile.UserID
+		join Review						on Review.StickerID = Sticker.StickerID
+	where EmailAddress = @useremail and UserPassword = @password;
+end;
+
+/**************************************************************************
+* Get Organizations user is apart of
+**************************************************************************/
+go
+create proc GetUserOrganizations
+(	@useremail varchar(50),
+	@password nvarchar(30)
+) as
+begin
+	select OrganizationName
+	from UserProfile join OmToUser		on UserProfile.UserID = OmToUser.UserID
+		join OfficialMentor				on OfficialMentor.MentorID = OmToUser.MentorID
+	where EmailAddress = @useremail and UserPassword = @password;
+end;
+
+/**************************************************************************
 * User opens profile page
-*************************************/
+**************************************************************************/
 go
 create proc OpenProfilePage
 (	@useremail varchar(50),
-	@password binary(64)
+	@password nvarchar(30)
 ) as
 begin
-	select UserProfile.DisplayFName, UserProfile.DisplayLName, UserProfile.EmailAddress,
-		Classes.CourseName, Classes.CourseCode, Classes.CourseNumber, 
-		(select ClassID, SubmitTime, ProblemDescription
-			 from Sticker
-			 where TutorReviewID is not null) as "Resolved Stickers",
-		(select ClassID, SubmitTime, ProblemDescription
-			 from Sticker
-			 where TutorReviewID is null) as "Active Stickers",
-		Review.StarRanking, Review.Description as ReviewDescription, OrganizationName
-	from UserProfile join UserToClass	on UserProfile.UserID = UserToClass.UserID
-		join Classes					on UserToClass.ClassID = Classes.ClassID
-		join Sticker					on Sticker.StudentID = UserProfile.UserID
-		join Review						on Review.ReviewID = Sticker.TutorReviewID
-		join OmToUser					on UserProfile.UserID = OmToUser.UserID
-		join OfficialMentor				on OfficialMentor.MentorID = OmToUser.MentorID
-	where EmailAddress = @useremail and UserPassword = @password
-end
+	exec GetProfilePicture @useremail;
 
-/*************************************
-* Pull Reports for a specific user (Admins only)
-*************************************/
-go
-create proc AdminPullReports
-(	@user varchar(61)	) as
-begin
-	select DisplayFName, DisplayLName
-	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Sticker.StudentReviewID = Review.ReviewID
-		join Report					on Review.ReportID = Report.ReportID
-	where DisplayFName + DisplayLName = @user;
+	exec GetUserNameAndEmail @useremail, @password;
+
+	exec GetUserClasses @useremail, @password;
+
+	exec GetUserStickersAndReviews @useremail, @password;
+
+	exec GetUserOrganizations @useremail, @password;
 end;
 
-/*************************************
-* Pull reports for all users (Admins only)
-*************************************/
-go
-create proc AdminOnlyPullAllReports as
-begin
-	select DisplayFName, DisplayLName, FlaggerID
-	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Sticker.StudentReviewID = Review.ReviewID
-		join Report					on Review.ReportID = Report.ReportID
-	where UserProfile.UserID = Report.FlaggerID;
-end;
-
-/*************************************
+/**************************************************************************
 * Filter reviews based on a >= star ranking
-*************************************/
+**************************************************************************/
 go
-create proc FilterUserReviewsByGreaterStarRank
+create proc FilterUserReviewsByGreaterThanStarRank
 (	@starfilter float,
-	@user int
+	@displayname varchar(61) = null
 ) as
 begin
-	select StarRanking, Description
+	select DisplayFName + ' ' + DisplayLName as 'User', StarRanking, Description
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Review.ReviewID = Sticker.StudentReviewID
-	where StarRanking >= @starfilter and UserProfile.UserID = @user;
+		join Review					on Sticker.StickerID = Review.StickerID
+	where StarRanking >= @starfilter and 
+		@displayname = case when @displayname is not null
+						then 'User'
+					end
 end;
 
-/*************************************
+/**************************************************************************
 * Filter reviews based on a specific star ranking
-*************************************/
+**************************************************************************/
 go
 create proc FilterUserReviewsByEqualStarRank
 (	@starfilter float,
-	@user int
+	@displayname varchar(61) = null
 ) as	
 begin
-	select StarRanking, Description
+	select DisplayFName + ' ' + DisplayLName as 'User', StarRanking, Description
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Review.ReviewID = Sticker.StudentReviewID
-	where StarRanking = @starfilter;
+		join Review					on Sticker.StickerID = Review.StickerID
+	where StarRanking = @starfilter and
+		@displayname = case when @displayname is not null
+						then 'User'
+					end
 end;
 
-/*************************************
+/**************************************************************************
 * User forgot login information
-*************************************/
+**************************************************************************/
 go
 create proc RetrieveLogin
 (	@useremail varchar(50)	) as
@@ -150,85 +338,167 @@ begin
 	where EmailAddress = @useremail;
 end;
 
-/*************************************
-* Pull Stickers available for a certain class
-*************************************/
+/**************************************************************************
+* Pull all active Stickers (user specification is optional)
+**************************************************************************/
 go
-create proc PullClassSpecificStickers
+create proc GetAllActiveStickers
+(	@displayname varchar(61) = null	) as
+begin
+	select DisplayFName + ' ' + DisplayLName as Student,
+		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
+		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Classes				on Sticker.ClassID = Classes.ClassID
+	where datediff(minute, getdate(), Timeout) > 0 and
+		DisplayFName + ' ' + DisplayLName = case when @displayname is not null
+												then @displayname
+											end
+end;
+
+/**************************************************************************
+* Pull active Stickers available for a certain class a user may be associated
+* with (user specification is optional)
+**************************************************************************/
+go
+create proc PullActiveClassSpecificStickers
 (	@Name varchar(50),
 	@Code varchar(5),
 	@Number smallint,
-	@Term tinyint
+	@Term tinyint,
+	@displayname varchar(61) = null
 ) as
 begin
-	select DisplayFName + DisplayLName as "Poster", CourseCode + CourseNumber + ': ' + CourseName as Course,
-		TermOffered, ProblemDescription, SubmitTime, Timeout
+	select DisplayFName + ' ' + DisplayLName as Student,
+		CourseCode /*+ ' ' + convert(varchar, */,CourseNumber/*) + ' - ' + */,CourseName,-- as Course,
+		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
-	where CourseName = @Name
-		and CourseCode = @Code
-		and CourseNumber = @Number
-		and TermOffered = @Term;
+	where CourseName = @Name and CourseCode = @Code and CourseNumber = @Number
+		and TermOffered = @Term and
+		DisplayFName + ' ' + DisplayLName = case when @displayname is not null
+												then @displayname
+											end
 end;
 
-/*************************************
-* Pull Stickers available from a specific user
-*************************************/
+/**************************************************************************
+* Pull active Stickers available with a certain star ranking and/or a
+* specific mentor organization (star ranking, mentor specification, and user
+* specification is optional)
+**************************************************************************/
 go
-create proc PullUserSpecificStickers
-(	@Name varchar(61)	) as
-begin
-	select DisplayFName + DisplayLName as "Poster", CourseCode + CourseNumber + ': ' + CourseName as Course,
-		TermOffered, ProblemDescription, SubmitTime, Timeout
-	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Classes				on Sticker.ClassID = Classes.ClassID
-	where DisplayFName + DisplayLName = @Name;
-end;
-
-/*************************************
-* View a user's avg rating
-*************************************/
-go
-create proc GetUserAvgRating
-(	@user int	) as
-begin
-	select avg(StarRanking) as AverageRating
-	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Sticker.StudentReviewID = Review.ReviewID
-	where UserProfile.UserID = @user;
-end;
-
-/*************************************
-* Pull Stickers available to users with a specific ranking
-*************************************/
-go
-create proc PullRankingSpecificStickers
-(	@user int,
-	@avgrank float = null
+create proc GetActiveStickersWithStarRankOrMentorOrganization
+(	@displayname varchar(61) = null,
+	@starrank float = null,
+	@organization nvarchar(50) = null
 ) as
 begin
-	exec GetUserAvgRating @user;
-
-	select DisplayFName + DisplayLName as "Poster", CourseCode + CourseNumber + ': ' + CourseName as Course,
-		TermOffered, ProblemDescription, SubmitTime, Timeout
+	select DisplayFName + ' ' + DisplayLName as Student,
+		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
+		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
-	where MinimumStarRanking >= @avgrank;
+		join OmToUser				on UserProfile.UserID = OmToUser.UserID
+		join OfficialMentor			on OmToUser.MentorID = OfficialMentor.MentorID
+	where DisplayFName + ' ' + DisplayLName = case when @displayname is not null
+													then @displayname
+												end
+		and MinimumStarRanking >= case when @starrank is not null
+										then @starrank
+									end
+		and OrganizationName = case when @organization is not null
+									then @organization
+								end
 end;
 
-/*************************************
-* Pull chat messages between two users
-*************************************/
+/**************************************************************************
+* Pull all resolved Stickers (user specification is optional)
+**************************************************************************/
 go
-create proc PullChatMessagesBetweenUsers
-(	@user int,
-	@tutor int
+create proc GetAllResolvedStickers
+(	@displayname varchar(61) = null	) as
+begin
+	select DisplayFName + ' ' + DisplayLName as Student,
+		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
+		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Classes				on Sticker.ClassID = Classes.ClassID
+	where datediff(minute, getdate(), Timeout) < 0 and
+		DisplayFName + ' ' + DisplayLName = case when @displayname is not null
+												then @displayname
+											end
+end;
+
+/**************************************************************************
+* Get all users with a specific overall avg star ranking
+**************************************************************************/
+go
+create proc GetUsersWithOverallStarRank
+(	@starrank float	) as
+begin
+	declare @totalrank float;
+	set @totalrank = (select StarRanking
+			 from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+				join Review					on Sticker.StudentID = Review.ReviewerID)
+									+
+			(select StarRanking
+			 from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+				join Review					on Sticker.StudentID = Review.ReviewerID);
+
+	select DisplayFName + ' ' + DisplayLName as 'User', EmailAddress,
+		avg(@totalrank) as AvgStarRank
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Review					on Sticker.StudentID = Review.ReviewerID
+	group by DisplayFName + ' ' + DisplayLName, EmailAddress
+	having avg(@totalrank) >= 3--@starrank
+end;
+
+/**************************************************************************
+* View a user's avg student rating
+**************************************************************************/
+go
+create proc GetUserAvgStudentStarRank
+(	@displayname varchar(61)	) as
+begin
+	select avg(StarRanking) as AvgStarRank
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Review					on Sticker.StudentID = Review.ReviewerID
+	where DisplayFName + ' ' + DisplayLName = @displayname
+end;
+
+/**************************************************************************
+* View a user's avg tutor rating
+**************************************************************************/
+go
+create proc GetUserAvgTutorStarRank
+(	@displayname varchar(61)	) as
+begin
+	select avg(StarRanking) as AvgStarRank
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Review					on Sticker.StudentID = Review.ReviewerID
+	where DisplayFName + ' ' + DisplayLName = @displayname
+end;
+
+/**************************************************************************
+* Pull chat messages and files between two users
+**************************************************************************/
+go
+create proc PullChatMessagesAndFilesBetweenUsers
+(	@user varchar(61),
+	@tutor varchar(61)
 ) as
 begin
 	select MessageData, FileData
 	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
 		join Chat						on UserToChat.ChatID = Chat.ChatID
-		join Files						on Chat.FileID = Files.FileID
-		join Messages					on Chat.MessageID = Messages.MessageID
-	where UserProfile.UserID = @user or UserProfile.UserID = @tutor;
+		join Files						on Chat.ChatID = Files.ChatID
+		join Messages					on Chat.ChatID = Messages.ChatID
+	where DisplayFName + ' ' + DisplayLName = @user;
+
+		select MessageData, FileData
+	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
+		join Chat						on UserToChat.ChatID = Chat.ChatID
+		join Files						on Chat.ChatID = Files.ChatID
+		join Messages					on Chat.ChatID = Messages.ChatID
+	where DisplayFName + ' ' + DisplayLName = @tutor;
 end;
