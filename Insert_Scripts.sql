@@ -28,6 +28,14 @@ DROP PROC [dbo].[CreateServer];
 GO
 DROP PROC [dbo].[ChangeProfilePicture];
 GO
+DROP PROC [dbo].[CreateChat];
+GO
+DROP PROC [dbo].[InsertUserIntoChat];
+GO
+DROP PROC [dbo].[InsertMessage];
+GO
+DROP PROC [dbo].[InsertFile];
+GO
 /****************BEGIN CREATION SCRIPTS******************/
 --CREATE NEW USER
 CREATE PROC [dbo].[CreateNewUser]
@@ -44,6 +52,7 @@ AS
             return 1;
         else
             BEGIN
+				PRINT 'INSERT SUCCESS'
                 INSERT INTO UserProfile
 				VALUES(@FirstName, @LastName, @EmailAddress, @Password, @Privileges)
             END
@@ -239,4 +248,79 @@ AS
     END
 GO
 
+CREATE PROC [dbo].[CreateChat]
+    (
+	@UserID	INT
+    )
+AS
+	DECLARE @NewChatID INT;
+	BEGIN TRY
+		BEGIN TRAN;
+			INSERT INTO Chat
+			DEFAULT VALUES
+			SET @NewChatID = @@IDENTITY
+			INSERT INTO UserToChat
+			VALUES(@UserID, @NewChatID);
+		COMMIT TRAN;
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRAN;
+	END CATCH
+GO
 
+CREATE PROC [dbo].[InsertUserIntoChat]
+    (
+	@UserID	INT,
+	@ChatID	INT
+    )
+AS
+    BEGIN
+        if  (Exists(Select ChatID, UserID from UserToChat 
+					WHERE UserID = @UserID AND ChatID = @ChatID))
+            return 1;
+        else
+            BEGIN
+                INSERT INTO UserToChat
+				VALUES(@UserID, @ChatID)
+            END
+
+    END
+GO
+
+CREATE PROC [dbo].[InsertMessage]
+    (
+	@ChatID		INT,
+	@Message	NVARCHAR(500)
+    )
+AS
+    BEGIN
+        if  (NOT Exists(Select ChatID from Chat 
+					WHERE ChatID = @ChatID))
+            return 1;
+        else
+            BEGIN
+                INSERT INTO [Messages]
+				VALUES(@ChatID, @Message)
+            END
+
+    END
+GO
+
+CREATE PROC [dbo].[InsertFile]
+    (
+	@ChatID		INT,
+	@FileData	VARBINARY(MAX)
+    )
+AS
+    BEGIN
+        if  (NOT Exists(Select ChatID from Chat 
+					WHERE ChatID = @ChatID))
+            return 1;
+        else
+            BEGIN
+                INSERT INTO Files
+				VALUES(@ChatID, @FileData)
+            END
+
+    END
+GO

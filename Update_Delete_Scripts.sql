@@ -20,10 +20,10 @@ DROP PROC [dbo].[DeleteMentorOrganizationByMentorID];
 GO
 DROP PROC [dbo].[DeleteClassByClassID];
 GO
-DROP PROC [dbo].[DeleteStickerByStickerID];
-GO
-DROP PROC [dbo].[DeleteReviewByReviewID];
-GO
+--DROP PROC [dbo].[DeleteStickerByStickerID];	NOT NEEDED AS OF NOW
+--GO
+--DROP PROC [dbo].[DeleteReviewByReviewID];		NOT NEEDED AS OF NOW
+--GO
 DROP PROC [dbo].[ClearReviewDescriptionByReviewID];
 GO
 DROP PROC [dbo].[DeleteReportByReportID];
@@ -240,7 +240,9 @@ AS
             return 1;
         else
             BEGIN
-				
+				UPDATE Sticker
+				SET ClassID = 1
+				WHERE ClassID = @ClassID;
 				DELETE UserToClass
 				WHERE ClassID = @ClassID
 				DELETE Classes
@@ -252,46 +254,46 @@ AS
 GO
 
 /*********************************************************
---Delete Sticker Procedure Creation Script
+--Delete Sticker Procedure Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
-CREATE PROC [dbo].[DeleteStickerByStickerID]
-    (
-    @StickerID INT
-    )
-AS
-    BEGIN
-        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
-            return 1;
-        else
-            BEGIN
-				DELETE Sticker
-				WHERE StickerID = @stickerID;
-                return 0;
-            END
+--CREATE PROC [dbo].[DeleteStickerByStickerID]
+--    (
+--    @StickerID INT
+--    )
+--AS
+--    BEGIN
+--        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
+--            return 1;
+--        else
+--            BEGIN
+--				DELETE Sticker
+--				WHERE StickerID = @stickerID;
+--                return 0;
+--            END
 
-    END
-GO
+--    END
+--GO
 
 /*********************************************************
---Delete Review Procedure Creation Script
+--Delete Review Procedure Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
-CREATE PROC [dbo].[DeleteReviewByReviewID]
-    (
-    @ReviewID INT
-    )
-AS
-    BEGIN
-        if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
-            return 1;
-        else
-            BEGIN
-				DELETE Review
-				WHERE ReviewID = @reviewID;
-                return 0;
-            END
+--CREATE PROC [dbo].[DeleteReviewByReviewID]
+--    (
+--    @ReviewID INT
+--    )
+--AS
+--    BEGIN
+--        if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
+--            return 1;
+--        else
+--            BEGIN
+--				DELETE Review
+--				WHERE ReviewID = @reviewID;
+--                return 0;
+--            END
 
-    END
-GO
+--    END
+--GO
 
 /*********************************************************
 --Delete Review Description Procedure Creation Script
