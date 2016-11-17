@@ -14,6 +14,13 @@ IF OBJECT_ID ('ForbidUser1Update', 'TR') IS NOT NULL
 IF OBJECT_ID ('ForbidUser1Delete', 'TR') IS NOT NULL  
 	DROP TRIGGER ForbidUser1Delete;  
 	GO
+IF OBJECT_ID ('ForbidClass1Delete', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidClass1Delete;  
+	GO
+IF OBJECT_ID ('ForbidClass1Update', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidClass1Update;  
+	GO
+
 --DROP ANY PRE-EXISTING TABLES
 IF OBJECT_ID('Report', 'U') IS NOT NULL
 	DROP TABLE Report;
@@ -218,6 +225,33 @@ CREATE
 		IF exists(SELECT UserID FROM inserted WHERE UserID = 1 )
 			BEGIN
 				ROLLBACK TRANSACTION;
+			END;
+		END;
+GO
+
+
+CREATE
+	TRIGGER ForbidClass1Delete
+	ON Classes
+	AFTER DELETE
+	AS
+		BEGIN
+		IF exists(SELECT ClassID FROM deleted WHERE ClassID = 1)
+		BEGIN
+			ROLLBACK TRANSACTION
+			END;
+		END;
+GO
+
+CREATE
+	TRIGGER ForbidClass1Update
+	ON Classes
+	AFTER INSERT
+	AS
+		BEGIN
+		IF exists(SELECT ClassID FROM inserted WHERE ClassID = 1)
+		BEGIN
+			ROLLBACK TRANSACTION
 			END;
 		END;
 GO
