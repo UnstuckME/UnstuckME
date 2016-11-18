@@ -7,32 +7,68 @@ go
 /**************************************************************************
 * Drop existing stored procedures
 **************************************************************************/
-if object_id('GetServerInfo') is not null
+if object_id('GetServerName') is not null
 	drop procedure GetServerName;
+if object_id('GetServerIP') is not null
+	drop procedure GetServerIP;
+if object_id('GetServerDomain') is not null
+	drop procedure GetServerDomain;
+if object_id('GetSchoolName') is not null
+	drop procedure GetSchoolName;
+if object_id('GetEmailCredentials') is not null
+	drop procedure GetEmailCredentials;
 if object_id('GetAdminInfo') is not null
 	drop procedure GetAdminInfo;
+if object_id('GetAllStickers') is not null
+	drop procedure GetAllStickers;
+if object_id('GetAllStudentReviews') is not null
+	drop procedure GetAllStudentReviews;
+if object_id('GetAllTutorReviews') is not null
+	drop procedure GetAllTutorReviews;
+if object_id('AdminPullReportsForUser') is not null
+	drop procedure AdminPullReportsForUser;
+if object_id('AdminPullAllReports') is not null
+	drop procedure AdminPullAllReports;
+if object_id('ViewAllUsers') is not null
+	drop procedure ViewAllUsers;
+if object_id('ViewAllClasses') is not null
+	drop procedure ViewAllClasses;
+if object_id('GetAllOrganizations') is not null
+	drop procedure GetAllOrganizations;
+if object_id('GetProfilePicture') is not null
+	drop procedure GetProfilePicture;
+if object_id('GetDisplayNameAndEmail') is not null
+	drop procedure GetDisplayNameAndEmail;
+if object_id('GetUserClasses') is not null
+	drop procedure GetUserClasses;
+if object_id('GetUserStickersAndReviews') is not null
+	drop procedure GetUserStickersAndReviews;
+if object_id('GetUserOrganizations') is not null
+	drop procedure GetUserOrganizations;
 if object_id('OpenProfilePage') is not null
 	drop procedure OpenProfilePage;
-if object_id('AdminPullReports') is not null
-	drop procedure AdminPullReports;
-if object_id('AdminOnlyPullAllReports') is not null
-	drop procedure AdminOnlyPullAllReports;
-if object_id('FilterUserReviewsByGreaterStarRank') is not null
-	drop procedure FilterUserReviewsByGreaterStarRank;
+if object_id('FilterUserReviewsByGreaterThanStarRank') is not null
+	drop procedure FilterUserReviewsByGreaterThanStarRank;
 if object_id('FilterUserReviewsByEqualStarRank') is not null
 	drop procedure FilterUserReviewsByEqualStarRank;
 if object_id('RetrieveLogin') is not null
 	drop procedure RetrieveLogin;
-if object_id('PullClassSpecificStickers') is not null
-	drop procedure PullClassSpecificStickers;
-if object_id('PullUserSpecificStickers') is not null
-	drop procedure PullUserSpecificStickers;
-if object_id('GetUserAvgRating') is not null
-	drop procedure GetUserAvgRating;
-if object_id('PullRankingSpecificStickers') is not null
-	drop procedure PullRankingSpecificStickers;
-if object_id('PullChatMessagesBetweenUsers') is not null
-	drop procedure PullChatMessagesBetweenUsers;
+if object_id('GetAllActiveStickers') is not null
+	drop procedure GetAllActiveStickers;
+if object_id('PullActiveClassSpecificStickers') is not null
+	drop procedure PullActiveClassSpecificStickers;
+if object_id('GetActiveStickersWithStarRankOrMentorOrganization') is not null
+	drop procedure GetActiveStickersWithStarRankOrMentorOrganization;
+if object_id('GetAllResolvedStickers') is not null
+	drop procedure GetAllResolvedStickers;
+if object_id('GetUsersWithOverallStarRank') is not null
+	drop procedure GetUsersWithOverallStarRank;
+if object_id('GetUserAvgStudentStarRank') is not null
+	drop procedure GetUserAvgStudentStarRank;
+if object_id('GetUserAvgTutorStarRank') is not null
+	drop procedure GetUserAvgTutorStarRank;
+if object_id('PullChatMessagesAndFilesBetweenUsers') is not null
+	drop procedure PullChatMessagesAndFilesBetweenUsers;
 
 /**************************************************************************
 * Gets server name
@@ -214,7 +250,7 @@ end;
 * Get username, email address
 **************************************************************************/
 go
-create proc GetUsernameAndEmail
+create proc GetDisplayNameAndEmail
 (	@useremail varchar(50),
 	@password nvarchar(30)
 ) as
