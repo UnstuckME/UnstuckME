@@ -1,0 +1,933 @@
+1,Foundations of ABA II,ABA,512,Winter
+2,Behavioral Assessment,ABA,526,Winter
+3,Introduction to Accounting,ACC,101,Winter
+4,Prin of Accounting I,ACC,201,Winter
+5,Principles of Accounting I,ACC,201,Winter
+6,Prin of Accounting II,ACC,202,Winter
+7,Prin of Managerial Acct,ACC,203,Winter
+8,Prin of Managerial Acct,ACC,203,Winter
+9,Computerized Accounting,ACC,205,Winter
+10,Payroll Accounting,ACC,245,Winter
+11,Finance,ACC,325,Winter
+12,Finance,ACC,325,Winter
+13,Corporate Taxation,ACC,412,Winter
+14,Advanced Accounting I,ACC,431,Winter
+15,Senior Project,ACC,497,Winter
+16,Instructional Methods,AHED,450,Winter
+17,Sci Wri & Hthcr Leadership Lit,ALH,515,Winter
+18,Effective Healthcare Leaders,ALH,525,Winter
+19,Leadership Theory - HC Leaders,ALH,555,Winter
+20,Pop. Health Issues for the AHP,ALH,565,Winter
+21,Intro to Cultural Anthropology,ANTH,103,Winter
+22,Globalization,ANTH,452,Winter
+23,Mixed Media Art,ART,207,Winter
+24,Design Arts and Aesthetics,ART,207,Winter
+25,Basic Drawing,ART,220,Winter
+26,Basic Drawing,ART,220,Winter
+27,Digital Photography,ART,226,Winter
+28,Intro to Acrylic Painting,ART,282,Winter
+29,Diversity of Life,BIO,102,Winter
+30,Intro to Organismal Bio Lab,BIO,102,Winter
+31,Microbiology,BIO,105,Winter
+32,Microbiology Lab,BIO,105,Winter
+33,Microbiology Lab,BIO,105,Winter
+34,Microbiology Lab,BIO,105,Winter
+35,Intro to Medical Sciences,BIO,109,Winter
+36,Medical Terminology,BIO,200,Winter
+37,Medical Terminology,BIO,200,Winter
+38,Nutrition,BIO,205,Winter
+39,Biology of Companion Animals,BIO,207,Winter
+40,Current Research Tpc Med Sci I,BIO,209,Winter
+41,Principles of Biology,BIO,212,Winter
+42,Principles of Biology Lab,BIO,212,Winter
+43,Principles of Biology,BIO,212,Winter
+44,Principles of Biology Lab,BIO,212,Winter
+45,Principles of Biology Lab,BIO,212,Winter
+46,Human Anatomy & Physiology I,BIO,231,Winter
+47,Human Anatomy/Physiology II,BIO,232,Winter
+48,Human Anatomy/Phys II Lab,BIO,232,Winter
+49,Human Anatomy/Physiology II,BIO,232,Winter
+50,Human Anatomy & Physiology II,BIO,232,Winter
+51,Human Anatomy/Physiology II,BIO,232,Winter
+52,Human Anatomy/Phys II Lab,BIO,232,Winter
+53,Human Anatomy/Physiology II,BIO,232,Winter
+54,Human Anatomy/Phys II Lab,BIO,232,Winter
+55,Human Anatomy/Physiology II,BIO,232,Winter
+56,Human Anatomy/Phys II Lab,BIO,232,Winter
+57,Human Anatomy/Phys II Lab,BIO,232,Winter
+58,Human Anatomy/Phys II Lab,BIO,232,Winter
+59,Human Anatomy/Phys II Lab,BIO,232,Winter
+60,Human Anatomy/Phys II Lab,BIO,232,Winter
+61,Human Anatomy/Phys II Lab,BIO,232,Winter
+62,Human Anatomy/Physiology II Lb,BIO,232,Winter
+63,Human Anatomy/Physiology II Lb,BIO,232,Winter
+64,Human Anatomy & Physiology III,BIO,233,Winter
+65,Human Anatomy/Physiology II,BIO,332,Winter
+66,Human Anatomy/Physio II Lab,BIO,332,Winter
+67,Human Anatomy/Physio II Lab,BIO,332,Winter
+68,Cross-Sectional Anatomy,BIO,335,Winter
+69,Cross-Sectional Anatomy,BIO,335,Winter
+70,Essentials of Pathophysiology,BIO,336,Winter
+71,Medical Genetics,BIO,341,Winter
+72,Medical Microbiology,BIO,345,Winter
+73,Pathophysiology I,BIO,346,Winter
+74,Pathophysiology I,BIO,346,Winter
+75,Pathophysiology I,BIO,346,Winter
+76,Intro to Neuroscience,BIO,357,Winter
+77,Cross Sectional Anatomy II,BIO,375,Winter
+78,Cross Sectional Anatomy II,BIO,375,Winter
+79,Crnt Rsch Tpcs in Med Sci II,BIO,409,Winter
+80,Crnt Rsch Tpcs in Med Sci II,BIO,409,Winter
+81,Conservation Biology,BIO,446,Winter
+82,Human Cadaver Dissection,BIO,461,Winter
+83,Introduction to Business,BUS,101,Winter
+84,Principles of Management,BUS,215,Winter
+85,Principles of Management,BUS,215,Winter
+86,Marketing I,BUS,223,Winter
+87,Marketing I,BUS,223,Winter
+88,Business Law,BUS,226,Winter
+89,Business Law,BUS,226,Winter
+90,Business Communications,BUS,256,Winter
+91,Engineering Management,BUS,304,Winter
+92,Engineering Management,BUS,304,Winter
+93,Engineering Management,BUS,304,Winter
+94,Principles of Int'l Business,BUS,308,Winter
+95,Health Care Systems & Policy,BUS,313,Winter
+96,Total Quality Health Care,BUS,316,Winter
+97,Total Quality Health Care,BUS,316,Winter
+98,Total Quality in Health Care,BUS,316,Winter
+99,Total Quality Health Care,BUS,316,Winter
+100,Health Care Management,BUS,317,Winter
+101,Marketing II,BUS,318,Winter
+102,Sales/Sales Management,BUS,326,Winter
+103,Personal Finance,BUS,331,Winter
+104,Entrepreneurship II,BUS,335,Winter
+105,Princ of Health Care Marketing,BUS,337,Winter
+106,Fraud Examination,BUS,345,Winter
+107,Human Resource Management I,BUS,349,Winter
+108,Human Resource Management I,BUS,349,Winter
+109,Business Presentations,BUS,356,Winter
+110,Business Presentations,BUS,356,Winter
+111,Leadership I,BUS,441,Winter
+112,Controversial Issues in Mgmt,BUS,447,Winter
+113,Business Research Methods,BUS,456,Winter
+114,Service Management,BUS,467,Winter
+115,Strategic Management,BUS,478,Winter
+116,Senior Project Proposal,BUS,495,Winter
+117,Senior Project,BUS,496,Winter
+118,Senior Project,BUS,496,Winter
+119,Senior Project,BUS,496,Winter
+120,Senior Project,BUS,497,Winter
+121,Senior Project,BUS,497,Winter
+122,Engineering Graphics,CE,203,Winter
+123,Princ of Professional Practice,CE,308,Winter
+124,Elementary Structural Design,CE,341,Winter
+125,Elementary Structural Dsgn Lab,CE,341,Winter
+126,Elementary Structural Dsgn Lab,CE,341,Winter
+127,Intro to Transportation Engr,CE,351,Winter
+128,Intro to Transport Engr Lab,CE,351,Winter
+129,Intro to Transport Engr Lab,CE,351,Winter
+130,Closed Conduit Design,CE,371,Winter
+131,Closed Conduit Design Lab,CE,371,Winter
+132,Closed Conduit Design Lab,CE,371,Winter
+133,Civil Engineering Project II,CE,402,Winter
+134,Seepage & Earth Structures,CE,421,Winter
+135,Structural Matrix Analysis,CE,433,Winter
+136,Structural Matrix Analysis Lab,CE,433,Winter
+137,Seepage and Earth Structures,CE,511,Winter
+138,Structural Matrix Analysis,CE,533,Winter
+139,Structural Matrix Analysis,CE,533,Winter
+140,Structural Dynamics,CE,535,Winter
+141,Structural Dynamics Lab,CE,535,Winter
+142,Civil Engineering Grad Project,CE,590,Winter
+143,Civil Engineering Grad Project,CE,590,Winter
+144,Civil Engineering Grad Project,CE,590,Winter
+145,Civil Engineering Grad Project,CE,590,Winter
+146,Intro to General Chemistry,CHE,101,Winter
+147,Intro to General Chemistry,CHE,101,Winter
+148,Intro to General Chemistry,CHE,101,Winter
+149,Intro to Organic Chemistry,CHE,102,Winter
+150,Intro to General Chemistry Lab,CHE,104,Winter
+151,Intro to General Chemistry Lab,CHE,104,Winter
+152,Intro to General Chemistry Lab,CHE,104,Winter
+153,Intro to General Chemistry Lab,CHE,104,Winter
+154,Intro to Organic Chemistry Lab,CHE,105,Winter
+155,General Chemistry II,CHE,202,Winter
+156,General Chemistry II,CHE,202,Winter
+157,General Chemistry II,CHE,202,Winter
+158,General Chemistry II Lab,CHE,205,Winter
+159,General Chemistry II Lab,CHE,205,Winter
+160,General Chemistry II Lab,CHE,205,Winter
+161,General Chemistry II Lab,CHE,205,Winter
+162,General Chemistry II Lab,CHE,205,Winter
+163,General Chemistry II Lab,CHE,205,Winter
+164,General Chemistry II,CHE,222,Winter
+165,General Chemistry Lab,CHE,222,Winter
+166,General Chemistry II,CHE,222,Winter
+167,General Chemistry Lab,CHE,222,Winter
+168,General Chemistry Lab,CHE,222,Winter
+169,General Chemistry Lab,CHE,222,Winter
+170,Environmental Chem/Toxicology,CHE,315,Winter
+171,Organic Chemistry II,CHE,332,Winter
+172,Organic Chemistry II Lab,CHE,332,Winter
+173,Organic Chemistry II,CHE,332,Winter
+174,Organic Chemistry II Lab,CHE,332,Winter
+175,Organic Chemistry II Lab,CHE,332,Winter
+176,Clinical Pharmacology/Hlth Prf,CHE,360,Winter
+177,Clinical Pharm for Health Prof,CHE,360,Winter
+178,Biochemistry II,CHE,451,Winter
+179,Biochemistry II Lab,CHE,451,Winter
+180,Intro to Communication Theory,COM,105,Winter
+181,Intro to Mass Communication,COM,115,Winter
+182,Intercultural Communication,COM,205,Winter
+183,Intercultural Comm,COM,205,Winter
+184,Intercultural Comm,COM,205,Winter
+185,Intl Media Seminar in Paris,COM,207,Winter
+186,Interpers Communication,COM,225,Winter
+187,Nonverbal Communication,COM,226,Winter
+188,Intro to Visual Communication,COM,237,Winter
+189,Organization Comm I,COM,345,Winter
+190,Civil Engineering Project II,COM,402,Winter
+191,Senior Project II,COM,422,Winter
+192,Mediation,COM,425,Winter
+193,Communication & Leadership,COM,446,Winter
+194,Human Dev & Behav Health,CSH,201,Winter
+195,Sleep Therapies & Compliance,CSH,233,Winter
+196,Evaluation & Measurement Tools,CSH,242,Winter
+197,Learning Health Lit Comm Edu,CSH,268,Winter
+198,C++ Programming I,CST,116,Winter
+199,C++ Programming I Lab,CST,116,Winter
+200,C++ Programming I,CST,116,Winter
+201,C++ Programming I,CST,116,Winter
+202,C++ Programming I Lab,CST,116,Winter
+203,C++ Programming II,CST,126,Winter
+204,C++ Programming II Lab,CST,126,Winter
+205,C++ Programming II,CST,126,Winter
+206,C++ Programming II,CST,126,Winter
+207,C++ Programming II Lab,CST,126,Winter
+208,C++ Programming II,CST,126,Winter
+209,C++ Programming II Lab,CST,126,Winter
+210,Computer Organization,CST,130,Winter
+211,Computer Organization,CST,130,Winter
+212,Computer Organization,CST,130,Winter
+213,Computer Organization,CST,130,Winter
+214,OOP with C++,CST,136,Winter
+215,OOP with C++ Lab,CST,136,Winter
+216,Digital Logic I,CST,162,Winter
+217,Intro to Digital Logic Lab,CST,162,Winter
+218,Digital Logic I,CST,162,Winter
+219,Intro to Microcontrollers,CST,204,Winter
+220,Intro to Microcontrollers Lab,CST,204,Winter
+221,Data Structures,CST,211,Winter
+222,Data Structures Lab,CST,211,Winter
+223,Data Structures,CST,211,Winter
+224,Data Structures Lab,CST,211,Winter
+225,Digital Systems Design I,CST,231,Winter
+226,Digital Systems Design I Lab,CST,231,Winter
+227,Digital Systems Design I,CST,231,Winter
+228,UNIX,CST,240,Winter
+229,UNIX Lab,CST,240,Winter
+230,UNIX,CST,240,Winter
+231,UNIX,CST,240,Winter
+232,UNIX Lab,CST,240,Winter
+233,Computer Assembly Lang,CST,250,Winter
+234,Computer Assembly Lang Lab,CST,250,Winter
+235,Compiler Methods,CST,320,Winter
+236,Compiler Methods Lab,CST,320,Winter
+237,Compiler Methods,CST,320,Winter
+238,Compiler Methods Lab,CST,320,Winter
+239,JR Team-Based Proj Dev II,CST,326,Winter
+240,JR Team-Based Proj Dev II Lab,CST,326,Winter
+241,JR Team-Based Proj Dev II,CST,326,Winter
+242,JR Team-Based Proj Dev II Lab,CST,326,Winter
+243,Microproc Periph Interfacing,CST,331,Winter
+244,Micropro Periph Intrface Lab,CST,331,Winter
+245,Real Time Embedded Op Systems,CST,347,Winter
+246,Real Time Embedded Op Sys Lab,CST,347,Winter
+247,Real Time Embedded Op Systems,CST,347,Winter
+248,Embedded Systems Develop II,CST,372,Winter
+249,Embedded System Develop II Lab,CST,372,Winter
+250,Embedded Systems Develop II,CST,372,Winter
+251,Applied Cryptography,CST,407,Winter
+252,Applied Cryptography Lab,CST,407,Winter
+253,Crytography,CST,407,Winter
+254,Android Mobile Development,CST,407,Winter
+255,Data Comm & Networks,CST,418,Winter
+256,Sr Development Project,CST,422,Winter
+257,Sr Development Project Lab,CST,422,Winter
+258,Sr Development Project,CST,422,Winter
+259,Sr Development Project,CST,422,Winter
+260,Sr Development Project Lab,CST,422,Winter
+261,Sr Development Project,CST,422,Winter
+262,Sr Development Project,CST,422,Winter
+263,Sr Development Project Lab,CST,422,Winter
+264,Adv Comp Architecture,CST,442,Winter
+265,ASIC Design Using FPGAs,CST,451,Winter
+266,Embedded System Testing,CST,456,Winter
+267,Embedded System Testing Lab,CST,456,Winter
+268,Embedded System Testing,CST,456,Winter
+269,Co-op Field Practice,CST,490,Winter
+270,Co-op Field Practice,CST,490,Winter
+271,Co-op Field Practice,CST,490,Winter
+272,Clinical Prac & Seminar II,DH,222,Winter
+273,Clinical Prac & Seminar II Lab,DH,222,Winter
+274,Clinical Prac & Seminar II,DH,222,Winter
+275,Clinical Prac & Seminar II Lab,DH,222,Winter
+276,Prevention II,DH,241,Winter
+277,Prevention II,DH,241,Winter
+278,General and Oral Pathology,DH,244,Winter
+279,General and Oral Pathology,DH,244,Winter
+280,Oral Radiology I,DH,252,Winter
+281,Oral Radiology I Lab,DH,252,Winter
+282,Oral Radiology I Lab,DH,252,Winter
+283,Oral Radiology I Lab,DH,252,Winter
+284,Oral Radiology I Lab,DH,252,Winter
+285,Dental Ethics,DH,275,Winter
+286,Dental Ethics,DH,275,Winter
+287,Clincal Prac & Sem V,DH,322,Winter
+288,Clincal Prac & Sem V,DH,322,Winter
+289,Clincal Prac & Sem V,DH,322,Winter
+290,Clincal Prac & Sem V Lab,DH,322,Winter
+291,Prevention V,DH,341,Winter
+292,Prevention V,DH,341,Winter
+293,Pain Management I,DH,351,Winter
+294,Pain Management I Lab,DH,351,Winter
+295,Pain Management I,DH,351,Winter
+296,Pain Management I Lab,DH,351,Winter
+297,Comm Dentl Hlth III,DH,382,Winter
+298,Comm Dentl Hlth III Lab,DH,382,Winter
+299,Comm Dentl Hlth III,DH,382,Winter
+300,Comm Dentl Hlth III Lab,DH,382,Winter
+301,Overview Advanced Den Hygiene,DH,401,Winter
+302,Clincal Prac & Sem IX,DH,423,Winter
+303,Clincal Prac & Sem IX Lab,DH,423,Winter
+304,Clincal Prac & Sem IX,DH,423,Winter
+305,Clincal Prac & Sem IX Lab,DH,423,Winter
+306,Res. & Evid. Based Dent. I,DH,453,Winter
+307,Dental Prac Mgmt,DH,454,Winter
+308,Dental Practice Management,DH,454,Winter
+309,Res. & Evid. Based Dent. II,DH,455,Winter
+310,Restorative Dentistry III,DH,463,Winter
+311,Restorative Dentistry III,DH,463,Winter
+312,Restorative Dentistry III,DH,463,Winter
+313,Restorative Dentistry III,DH,463,Winter
+314,Restorative Dentistry III,DH,463,Winter
+315,Restorative Dentistry III,DH,463,Winter
+316,Restorative Dentistry III,DH,463,Winter
+317,Restorative Dentistry III,DH,463,Winter
+318,Community Program Planning I,DH,470,Winter
+319,EBDM in Healthcare II,DH,476,Winter
+320,EBDM in Healthcare II,DH,476,Winter
+321,Intro to Dental Hygiene I,DHE,100,Winter
+322,Principles of Dental Hyg VI,DHE,313,Winter
+323,Dental Hyg Clinical Prac VI,DHE,323,Winter
+324,Restorative Dentistry III Lab,DHE,463,Winter
+325,App of Abdominal Sonography I,DMS,223,Winter
+326,App of Abdominal Sonogr II,DMS,224,Winter
+327,App of Abdominal Sonogr II,DMS,224,Winter
+328,DMS Patient Care,DMS,235,Winter
+329,Sophomore Lab II,DMS,253,Winter
+330,Sophomore Lab II,DMS,253,Winter
+331,Sophomore Lab II,DMS,253,Winter
+332,Survey of Vascular Tech,DMS,316,Winter
+333,Survey of Vascular Technology,DMS,316,Winter
+334,Survey of Adult Echo,DMS,342,Winter
+335,Survey of Adult Echo,DMS,342,Winter
+336,Junior Lab II,DMS,353,Winter
+337,Junior Lab II,DMS,353,Winter
+338,Junior Lab II,DMS,353,Winter
+339,Junior Lab II,DMS,353,Winter
+340,Obstetrical Sonography,DMS,370,Winter
+341,DMS Externship,DMS,430,Winter
+342,Basic ECG Recognition/Testing,ECHO,227,Winter
+343,Echocardiography II,ECHO,232,Winter
+344,Echocardiography II Lab,ECHO,232,Winter
+345,Echocardiography II Lab,ECHO,232,Winter
+346,Pediatric Echo,ECHO,325,Winter
+347,Echocardiography IV,ECHO,334,Winter
+348,Abdominal/Renal Testing,ECHO,365,Winter
+349,Survey of Vascular Testing,ECHO,376,Winter
+350,Survey of Vascular Testing Lab,ECHO,376,Winter
+351,Survey of Vascular Testing,ECHO,376,Winter
+352,Survey of Vascular Testing Lab,ECHO,376,Winter
+353,Echo Lab Management,ECHO,385,Winter
+354,Echo Externship,ECHO,420,Winter
+355,Echo Externship,ECHO,420,Winter
+356,Echo Externship,ECHO,420,Winter
+357,Echo Senior Project,ECHO,421,Winter
+358,Principles of Economics Micro,ECO,201,Winter
+359,Principles of Economics Micro,ECO,201,Winter
+360,Principles of Economics Macro,ECO,202,Winter
+361,Principles of Economics Macro,ECO,202,Winter
+362,Int'l Economics & Finanace Mgt,ECO,367,Winter
+363,Digital Electronics I,EE,131,Winter
+364,Digital Electr-Comb Logic Lab,EE,131,Winter
+365,Circuits I,EE,221,Winter
+366,Circuits I-DC&1st Order Lab,EE,221,Winter
+367,Circuits I,EE,221,Winter
+368,Circuits I-DC&1st Order Lab,EE,221,Winter
+369,Circuits II,EE,223,Winter
+370,Elect Circuits II AC/2nd Lab,EE,223,Winter
+371,Elect Circuits II AC/2nd Lab,EE,223,Winter
+372,Electronics I,EE,321,Winter
+373,Electr I-Amplif & Semicon Lab,EE,321,Winter
+374,Electronics I,EE,321,Winter
+375,Electronics II,EE,323,Winter
+376,Electronics II Lab,EE,323,Winter
+377,Inro to Microcontrollers,EE,333,Winter
+378,Microcontroller Engineer Lab,EE,333,Winter
+379,Microcontroller Engineer Lab,EE,333,Winter
+380,Solid State Electronic Devices,EE,343,Winter
+381,Digital Logic,EE,347,Winter
+382,Digital Logic Lab,EE,347,Winter
+383,Control System Design,EE,355,Winter
+384,Control System Design Lab,EE,355,Winter
+385,Intro MOS Microelctrncs,EET,308,Winter
+386,Intro MOS Microelec Lab,EET,309,Winter
+387,Emerg Med Tech (EMT) II,EMS,152,Winter
+388,Prehospital Emerg Pharmacology,EMS,211,Winter
+389,Prehospital Emerg Pharmacology,EMS,211,Winter
+390,Medical Emergencies II,EMS,232,Winter
+391,Advanced Electrocardiography,EMS,236,Winter
+392,Advanced Electrocardiography,EMS,236,Winter
+393,Paramed Crisis Resrce Mgmt II,EMS,242,Winter
+394,Paramed Crisis Resrce Mgmt II,EMS,242,Winter
+395,Paramedic Skills Lab II,EMS,272,Winter
+396,Paramedic Skills Lab II,EMS,272,Winter
+397,Clinical Practicum I,EMS,283,Winter
+398,Clinical Practicum II,EMS,284,Winter
+399,Community Paramedic I,EMS,307,Winter
+400,Critical Care Transport,EMS,331,Winter
+401,Community Para Clinical I,EMS,341,Winter
+402,Crit Care Clin Pract I,EMS,381,Winter
+403,Research Methods in EMS,EMS,456,Winter
+404,EMS Capstone Project I,EMS,496,Winter
+405,Intro to Engineering II,ENGR,102,Winter
+406,Intro to Engineering II Lab,ENGR,102,Winter
+407,Intro to Engineering II Lab,ENGR,102,Winter
+408,Intro to Engineering,ENGR,107,Winter
+409,Intro to Engineering Lab,ENGR,107,Winter
+410,Engineering Mechanics: Statics,ENGR,211,Winter
+411,Engineering Mechanics: Statics,ENGR,211,Winter
+412,Engineering Mech: Dynamics,ENGR,212,Winter
+413,Engineering Mech: Dynamics,ENGR,212,Winter
+414,Engr Mech: Strength of Mat,ENGR,213,Winter
+415,Strength of Materials Lab,ENGR,213,Winter
+416,Strength of Materials Lab,ENGR,213,Winter
+417,Fund of Elec Circuits,ENGR,236,Winter
+418,Engineering Computation,ENGR,266,Winter
+419,Engineering Computation,ENGR,266,Winter
+420,Engineering Programming,ENGR,267,Winter
+421,Engineering Programming Lab,ENGR,267,Winter
+422,Engineering Programming,ENGR,267,Winter
+423,Ocean Renewable Energy,ENGR,307,Winter
+424,Thermodynamics,ENGR,355,Winter
+425,Thermodynamics,ENGR,355,Winter
+426,Advanced Composites,ENGR,407,Winter
+427,Advanced Composites Lab,ENGR,407,Winter
+428,Capstone Project,ENGR,465,Winter
+429,Capstone Project,ENGR,465,Winter
+430,Capstone Project,ENGR,465,Winter
+431,Scientific Reason & Method,ENV,224,Winter
+432,Careers in Env. Sciences,ENV,275,Winter
+433,Env Management and Restoration,ENV,314,Winter
+434,Research in Env Sci,ENV,407,Winter
+435,Research in Env Sci,ENV,407,Winter
+436,Profnl. & Job Readiness,ENV,475,Winter
+437,Cultural Geography II,GEOG,107,Winter
+438,Geomorphology,GEOG,305,Winter
+439,Geomorphology Lab,GEOG,305,Winter
+440,Geographic Info Systems,GIS,134,Winter
+441,Geographic Info Systems Lab,GIS,134,Winter
+442,Geographic Info Systems Lab,GIS,134,Winter
+443,Geospatial Vector Analysis I,GIS,316,Winter
+444,Geospatial Vector Analysis I,GIS,316,Winter
+445,Customizing the GIS Environ I,GIS,332,Winter
+446,Customizing the GIS Environ I,GIS,332,Winter
+447,GIS Web Services & Management,GIS,456,Winter
+448,Computations and Platting,GME,175,Winter
+449,Computations and Platting Lab,GME,175,Winter
+450,Boundary Law I,GME,241,Winter
+451,Land Descrip & Cadastre,GME,242,Winter
+452,Digital Design for Surveying,GME,264,Winter
+453,Digital Dsgn for Surveying Lab,GME,264,Winter
+454,Map Projections,GME,452,Winter
+455,Map Projections Lab,GME,452,Winter
+456,GNSS Surveying,GME,454,Winter
+457,GNSS Surveying Lab,GME,454,Winter
+458,Boundary Law II,GME,466,Winter
+459,Independet Study,GME,499,Winter
+460,Emergency Care and CPR,HED,240,Winter
+461,Emergency Care and CPR,HED,240,Winter
+462,Hist-Western Civil,HIST,102,Winter
+463,US History,HIST,202,Winter
+464,Hitler & the Holocaust,HIST,245,Winter
+465,Energy & Sustain. in Denmark,HIST,307,Winter
+466,Engineering Profession,HIST,335,Winter
+467,A History of Energy,HIST,356,Winter
+468,History of the Electric Grid,HIST,357,Winter
+469,Globalization & the Pacific NW,HIST,452,Winter
+470,West Cult in the Medieval Age,HUM,148,Winter
+471,Introduction to Film,HUM,235,Winter
+472,Digital Diversity,HUM,245,Winter
+473,Video Game Studies,HUM,335,Winter
+474,Pub/Student Newspaper,JOUR,211,Winter
+475,Research Strategies,LIS,305,Winter
+476,Research Strategies,LIS,307,Winter
+477,Intro to Literature,LIT,105,Winter
+478,Science Fiction Lit & Flim,LIT,315,Winter
+479,Topics in Film: Film Survey,LIT,456,Winter
+480,Intermediate Algebra,MATH,100,Winter
+481,Intermediate Algebra,MATH,100,Winter
+482,Accelerated Algebra,MATH,101,Winter
+483,College Algebra,MATH,111,Winter
+484,College Algebra,MATH,111,Winter
+485,College Algebra,MATH,111,Winter
+486,College Algebra,MATH,111,Winter
+487,Trigonometry,MATH,112,Winter
+488,Trigonometry,MATH,112,Winter
+489,Trigonometry,MATH,112,Winter
+490,Trigonometry,MATH,112,Winter
+491,Introductory Statistics,MATH,243,Winter
+492,Introductory Statistics,MATH,243,Winter
+493,Differential Calculus,MATH,251,Winter
+494,Differential Calculus,MATH,251,Winter
+495,Differential Calculus,MATH,251,Winter
+496,Differential Calculus,MATH,251,Winter
+497,Integral Calculus,MATH,252,Winter
+498,Integral Calculus,MATH,252,Winter
+499,Integral Calculus,MATH,252,Winter
+500,Integral Calculus,MATH,252,Winter
+501,Integral Calculus,MATH,252,Winter
+502,Integral Calculus,MATH,252,Winter
+503,Vector Calculus I,MATH,254,Winter
+504,Vector Calculus I,MATH,254,Winter
+505,Vector Calculus I,MATH,254,Winter
+506,Introduction to Real Analysis,MATH,311,Winter
+507,Applied Differential Equatn I,MATH,321,Winter
+508,Linear Algebra I,MATH,341,Winter
+509,Linear Algebra I,MATH,341,Winter
+510,Linear Algebra I,MATH,341,Winter
+511,Vector Calculus II,MATH,354,Winter
+512,Statistical Methods I,MATH,361,Winter
+513,Statistical Methods I,MATH,361,Winter
+514,Statistical Methods I,MATH,361,Winter
+515,Statistical Methods II,MATH,362,Winter
+516,Statistical Methods II,MATH,362,Winter
+517,Statistical Methods II,MATH,362,Winter
+518,Finite Math/Calc I,MATH,371,Winter
+519,Finite Math/Calculus I,MATH,371,Winter
+520,Applied Partial Diff Equtns II,MATH,422,Winter
+521,Mathematical Statistics,MATH,465,Winter
+522,Thermodynamics II,MECH,313,Winter
+523,Machine Design I,MECH,315,Winter
+524,Machine Design I,MECH,315,Winter
+525,Machine Design II,MECH,316,Winter
+526,Heat Transfer I,MECH,323,Winter
+527,Engineering Materials II,MECH,360,Winter
+528,Co-op Field Practice,MECH,404,Winter
+529,Comp. Fluid Dynamics,MECH,407,Winter
+530,Comp. Fluid Dynamics Lab,MECH,407,Winter
+531,Fluid Power Systems,MECH,407,Winter
+532,Comp. Fluid Dynamics Lab,MECH,407,Winter
+533,Adv. Strength of Materials,MECH,407,Winter
+534,Fluid Mechanics II,MECH,418,Winter
+535,Heat Transfer II,MECH,437,Winter
+536,Heat Transfer II Lab,MECH,437,Winter
+537,Heat Transfer II Lab,MECH,437,Winter
+538,Heat Transfer II Lab,MECH,437,Winter
+539,Parametric Modeling,MECH,475,Winter
+540,Parametric Modeling Lab,MECH,475,Winter
+541,Mechanical Vibrations,MECH,480,Winter
+542,Vibrations Lab,MECH,480,Winter
+543,Vibrations Lab,MECH,480,Winter
+544,Senior Projects II,MECH,491,Winter
+545,Senior Projects II,MECH,491,Winter
+546,Senior Projects II,MECH,491,Winter
+547,Senior Projects II,MECH,491,Winter
+548,Materials I,MET,160,Winter
+549,Materials I Lab,MET,160,Winter
+550,Materials I Lab,MET,160,Winter
+551,Fluid Mechanics,MET,218,Winter
+552,CAD for Mechanical Design I,MET,241,Winter
+553,CAD for Mechanical Design I,MET,241,Winter
+554,CAD for Mechanical Design I,MET,241,Winter
+555,CAD for Mechanical Design II,MET,242,Winter
+556,CAD for Mechanical Design II,MET,242,Winter
+557,CAD for Mechanical Design II,MET,242,Winter
+558,Applied Thermodynamics,MET,313,Winter
+559,Machine Design I,MET,315,Winter
+560,Machine Design I,MET,315,Winter
+561,Machine Design I,MET,315,Winter
+562,Machine Design II,MET,316,Winter
+563,Heat Transfer I,MET,323,Winter
+564,Electric Power Systems,MET,326,Winter
+565,Electric Power Systems Lab,MET,326,Winter
+566,Electric Power Systems Lab,MET,326,Winter
+567,Electric Power Systems,MET,326,Winter
+568,Electric Power Systems Lab,MET,326,Winter
+569,Electric Power Systems Lab,MET,326,Winter
+570,Finite Element Analysis,MET,351,Winter
+571,Engineering Materials II,MET,360,Winter
+572,Solid Modeling,MET,375,Winter
+573,Solid Modeling,MET,375,Winter
+574,MET Co-op Field Practice,MET,404,Winter
+575,Stat Methods Qual/Improv,MET,407,Winter
+576,Advanced Computer Aided Mfg,MET,407,Winter
+577,Fluid Power Systems,MET,426,Winter
+578,Heat Transfer II,MET,437,Winter
+579,Heat Transfer II Lab,MET,437,Winter
+580,Parametric Modeling,MET,475,Winter
+581,Parametric Modeling Lab,MET,475,Winter
+582,Senior Projects II,MET,491,Winter
+583,Senior Projects II,MET,491,Winter
+584,Senior Projects II,MET,491,Winter
+585,Senior Projects II,MET,491,Winter
+586,Senior Projects II,MET,491,Winter
+587,Intro Welding Proc,MFG,103,Winter
+588,Intro Welding Proc Lab,MFG,103,Winter
+589,Intro Welding Proc Lab,MFG,103,Winter
+590,Intro to Mfg Processes,MFG,112,Winter
+591,Mfg Process I,MFG,120,Winter
+592,Mfg Process I Lab,MFG,120,Winter
+593,Mfg Process I Lab,MFG,120,Winter
+594,Mfg Analysis & Planning,MFG,313,Winter
+595,Geom Dimension/Tolerance,MFG,314,Winter
+596,Geom Dimension/Tolerance Lab,MFG,314,Winter
+597,Geom Dimension/Tolerance Lab,MFG,314,Winter
+598,Stat Methods Qual/Improv,MFG,333,Winter
+599,Stat Methods Qual/Improv,MFG,333,Winter
+600,Computer Aided Machining,MFG,342,Winter
+601,Comp Aided Machining Lab,MFG,342,Winter
+602,Computer Aided Machining,MFG,342,Winter
+603,Manufacturing Tool Dsgn,MFG,343,Winter
+604,MFG Co-Op Field Practice,MFG,404,Winter
+605,Thermal Manufacturing Process,MFG,454,Winter
+606,Sr Project II,MFG,462,Winter
+607,Sr Project II,MFG,462,Winter
+608,Sr Project II,MFG,462,Winter
+609,Sr Project II,MFG,462,Winter
+610,Thesis,MFG,503,Winter
+611,Thesis,MFG,503,Winter
+612,Thesis,MFG,503,Winter
+613,The Technology of Mfg,MFG,507,Winter
+614,Operations Management I,MGT,321,Winter
+615,Operations Management II,MGT,322,Winter
+616,Operations Management II,MGT,322,Winter
+617,Operations Management III,MGT,323,Winter
+618,Project Management,MGT,335,Winter
+619,Project Management,MGT,335,Winter
+620,Engineering Economy,MGT,345,Winter
+621,Engineering Economy,MGT,345,Winter
+622,Engineering Economy,MGT,345,Winter
+623,Materials Management,MGT,422,Winter
+624,Materials Management,MGT,422,Winter
+625,Lean/Six Sigma Management I,MGT,461,Winter
+626,Lean/Six Sigma Management II,MGT,462,Winter
+627,Lean/Six Sigma Management II,MGT,462,Winter
+628,Word Process Software Lab,MIS,101,Winter
+629,Spreadsheet Software Lab,MIS,102,Winter
+630,Spreadsheet Software Lab,MIS,102,Winter
+631,Presentation/Graphics Sftwr Lb,MIS,103,Winter
+632,Intro to Database Systems,MIS,113,Winter
+633,Programming Fundamentals,MIS,118,Winter
+634,Intro to PC Hardware/Software,MIS,145,Winter
+635,Database Programming,MIS,218,Winter
+636,Networking I,MIS,251,Winter
+637,Health Informatics Cncpts/Prct,MIS,255,Winter
+638,Systems Administration I,MIS,273,Winter
+639,Intro to Relational Databases,MIS,275,Winter
+640,Intro to Systems Analysis,MIS,311,Winter
+641,Advanced Programming,MIS,318,Winter
+642,Systems Analysis II,MIS,322,Winter
+643,Systems Analysis II Lab,MIS,322,Winter
+644,Systems Analysis II,MIS,322,Winter
+645,Business Analytics,MIS,334,Winter
+646,Relational Database Design I,MIS,341,Winter
+647,Relational Database Dsgn I Lab,MIS,341,Winter
+648,Relational Database Design I,MIS,341,Winter
+649,Business Intelligence,MIS,344,Winter
+650,Health Care Info Systms Mgment,MIS,345,Winter
+651,Decision Support Systems,MIS,375,Winter
+652,Senior Project,MIS,407,Winter
+653,Network Security,MIS,407,Winter
+654,Informatics Externship,MIS,407,Winter
+655,Senior Project,MIS,407,Winter
+656,Senior Project Capstone,MIS,407,Winter
+657,Senior Project Capstone,MIS,407,Winter
+658,Networking III,MIS,451,Winter
+659,Senior Project Selection,MIS,495,Winter
+660,Intro to Med Imaging,MIT,103,Winter
+661,Intro to Med Imaging,MIT,103,Winter
+662,Intro to Medical Imaging,MIT,103,Winter
+663,PACS III: Tech Req & Imag Qual,MIT,229,Winter
+664,Sonographic Princ & Instru I,MIT,231,Winter
+665,Sonographic Princ & Inst I Lab,MIT,231,Winter
+666,Sonographic Princ & Instru I,MIT,231,Winter
+667,Sonographic Princ & Inst I Lab,MIT,231,Winter
+668,Sonographic Princ & Inst I Lab,MIT,231,Winter
+669,Sonographic Princ & Inst I Lab,MIT,231,Winter
+670,Sonographic Princ & Inst I Lab,MIT,231,Winter
+671,PACS IV: Implem & Sys Mgmt,MIT,239,Winter
+672,Magnetic Resonance Imaging,MIT,341,Winter
+673,Magnetic Resonance Imaging II,MIT,342,Winter
+674,Magnetic Resonance Imaging Rev,MIT,365,Winter
+675,Magnetic Resonance Externship,MIT,411,Winter
+676,Clinical Chemistry I,MLS,415,Winter
+677,Clinical Chemistry I Lab,MLS,415,Winter
+678,Clinical Chemistry I Lab,MLS,415,Winter
+679,Clinical Chemistry I Lab,MLS,415,Winter
+680,Microbiology I,MLS,444,Winter
+681,Microbiology I Lab,MLS,444,Winter
+682,Microbiology I Lab,MLS,444,Winter
+683,Microbiology I Labb,MLS,444,Winter
+684,Hematology II,MLS,452,Winter
+685,Hematology II Lab,MLS,452,Winter
+686,Hematology II Lab,MLS,452,Winter
+687,Hematology II Lab,MLS,452,Winter
+688,Foundations of MLS II,MLS,462,Winter
+689,Foundations of MLS II Lab,MLS,462,Winter
+690,Foundations of MLS II Lab,MLS,462,Winter
+691,Foundations of MLS II Lab,MLS,462,Winter
+692,Nuclear Med Admin,NMT,205,Winter
+693,Radiochem/Radiopharmacy,NMT,215,Winter
+694,Radiochem/Radiopharm Lab,NMT,215,Winter
+695,Radiochem/Radiopharm Lab,NMT,215,Winter
+696,Imaging Procedures II,NMT,312,Winter
+697,In-Vitro Proc Lab,NMT,312,Winter
+698,In-Vitro Proc Lab,NMT,312,Winter
+699,Computed Tomography,NMT,355,Winter
+700,Computed Tomography Lab,NMT,355,Winter
+701,Computed Tomography Lab,NMT,355,Winter
+702,Nuclear Med Tech Extern,NMT,410,Winter
+703,Nuclear Med Tech Extern,NMT,410,Winter
+704,Zumba,PHED,102,Winter
+705,Olympic Weightlifting,PHED,107,Winter
+706,Brazillian Jiu Jitsu,PHED,107,Winter
+707,Core Strength and Balance,PHED,111,Winter
+708,Super Circuit/Cardio Training,PHED,113,Winter
+709,Total Fitness Conditioning I,PHED,121,Winter
+710,Total Fitness Conditioning II,PHED,122,Winter
+711,Tai Chi & Qigong: Hlth Bns Mu,PHED,143,Winter
+712,Yoga,PHED,146,Winter
+713,Yoga,PHED,146,Winter
+714,Recreational Basketball,PHED,174,Winter
+715,Rugby,PHED,175,Winter
+716,Varsity Soccer,PHED,181,Winter
+717,Varsity Track/Field,PHED,182,Winter
+718,Varsity Men's Baseball,PHED,183,Winter
+719,Varsity Men's Basketball,PHED,184,Winter
+720,Varsity Women's Basketball,PHED,185,Winter
+721,Varsity Women's Softball,PHED,186,Winter
+722,Varsity Women's Volleyball,PHED,187,Winter
+723,Varsity Sport/Strength Cond,PHED,188,Winter
+724,Varsity Golf,PHED,189,Winter
+725,Introduction to Logic,PHIL,205,Winter
+726,Introduction to Logic,PHIL,205,Winter
+727,Ethics in the Professions,PHIL,331,Winter
+728,Business Ethics,PHIL,342,Winter
+729,Business Ethics,PHIL,342,Winter
+730,General Physics w/Calculus,PHY,221,Winter
+731,General Physics w/Calc Lab,PHY,221,Winter
+732,General Physics w/Calculus,PHY,221,Winter
+733,General Physics w/Calculus,PHY,221,Winter
+734,General Physics w/Calc Lab,PHY,221,Winter
+735,General Physics w/Calc Lab,PHY,221,Winter
+736,General Physics w/Calc Lab,PHY,221,Winter
+737,General Physics w/Calculus,PHY,222,Winter
+738,General Physics w/Calc Lab,PHY,222,Winter
+739,General Physics w/Calculus,PHY,222,Winter
+740,General Physics w/Calculus,PHY,222,Winter
+741,General Physics w/Calc Lab,PHY,222,Winter
+742,General Physics w/Calculus,PHY,222,Winter
+743,General Physics w/Calculus,PHY,222,Winter
+744,General Physics w/Calc Lab,PHY,222,Winter
+745,General Physics w/Calc Lab,PHY,222,Winter
+746,General Physics w/Calc Lab,PHY,222,Winter
+747,Classical Mechanics,PHY,307,Winter
+748,United States Government,PSCI,201,Winter
+749,Fund of PSG & Patient Care,PSG,211,Winter
+750,Physiology of Sleep,PSG,221,Winter
+751,Sleep Disorders Pathology,PSG,231,Winter
+752,Sleep Disorders in Women,PSG,246,Winter
+753,Clinical PSG Technology A,PSG,271,Winter
+754,Clinical PSG Technology B,PSG,271,Winter
+755,Clinical PSG Technology C,PSG,271,Winter
+756,Clinical PSG Technology I,PSG,272,Winter
+757,Clinical PSG Technology II,PSG,273,Winter
+758,Psychology,PSY,201,Winter
+759,Psychology,PSY,201,Winter
+760,Psychology,PSY,201,Winter
+761,Psychology,PSY,201,Winter
+762,Psychology,PSY,202,Winter
+763,Psychology,PSY,202,Winter
+764,Psychology,PSY,203,Winter
+765,Abnormal Psychology I,PSY,215,Winter
+766,Abnormal Psychology II,PSY,216,Winter
+767,Human Growth & Dev I,PSY,311,Winter
+768,Human Growth & Develop II,PSY,312,Winter
+769,Psych Research Methods I,PSY,313,Winter
+770,Psych Research Methods I Lab,PSY,313,Winter
+771,Psych Research Methods I Lab,PSY,313,Winter
+772,Field & Career Preparation,PSY,317,Winter
+773,Social Psychology I,PSY,330,Winter
+774,Social Psychology II,PSY,331,Winter
+775,Behavior Modification I,PSY,334,Winter
+776,Behavior Modification II,PSY,335,Winter
+777,Behavior Modification II,PSY,335,Winter
+778,Biopsychology,PSY,339,Winter
+779,Psychoactive Drugs I,PSY,341,Winter
+780,Organizational Behavior,PSY,347,Winter
+781,Organizational Behavior,PSY,347,Winter
+782,Human Sexuality I,PSY,371,Winter
+783,Adv Counseling Techniques,PSY,401,Winter
+784,Organiz Change/Development,PSY,410,Winter
+785,Applied Psych Extern,PSY,420,Winter
+786,Applied Psych Extern,PSY,420,Winter
+787,Applied Psych Extern,PSY,420,Winter
+788,Applied Psych Extern,PSY,420,Winter
+789,Adv Behavior Modification I,PSY,434,Winter
+790,OR Tech Relationship Bldg Prog,PSY,445,Winter
+791,OR Tech Relationship Bldg Prog,PSY,445,Winter
+792,Capstone in Applied Psychology,PSY,475,Winter
+793,Education Assistantship,PSY,485,Winter
+794,Education Assistantship,PSY,485,Winter
+795,Education Assistantship,PSY,485,Winter
+796,Matriculation,RCP,100,Winter
+797,Interventions Gas Exchange,RCP,120,Winter
+798,Arterial Blood Gases,RCP,235,Winter
+799,Cardiopulmonary Dynamics,RCP,236,Winter
+800,Cardiopulmonary Dynamics Lab,RCP,236,Winter
+801,Cardiopulmonary Dynamics Lab,RCP,236,Winter
+802,Respiratory Gas Therapeutics,RCP,241,Winter
+803,Resp Gas Therapeutics Lab,RCP,241,Winter
+804,Resp Gas Therapeutics Lab,RCP,241,Winter
+805,Advanced Neonatal Res Care,RCP,307,Winter
+806,Exercise Physiology Education,RCP,335,Winter
+807,Mechanical Ventilation II,RCP,352,Winter
+808,Mechanical Ventilation II Lab,RCP,352,Winter
+809,Mechanical Ventilation II Lab,RCP,352,Winter
+810,Clinical Simulation,RCP,366,Winter
+811,Critical Care I,RCP,386,Winter
+812,International Neonatology,RCP,389,Winter
+813,International Neonatology Lab,RCP,389,Winter
+814,International Neonatology Lab,RCP,389,Winter
+815,Case Management II,RCP,441,Winter
+816,Case Management III,RCP,442,Winter
+817,Clinical Care II,RCP,451,Winter
+818,Imaging Techniques II,RDSC,202,Winter
+819,Imaging Tech II Lab,RDSC,202,Winter
+820,Imaging Techniques II,RDSC,202,Winter
+821,Imaging Tech II Lab,RDSC,202,Winter
+822,Imaging Tech II Lab,RDSC,202,Winter
+823,Imaging Tech II Lab,RDSC,202,Winter
+824,Patient Care,RDSC,205,Winter
+825,Patient Care Lab,RDSC,205,Winter
+826,Patient Care Lab,RDSC,205,Winter
+827,Patient Care Lab,RDSC,205,Winter
+828,Patient Care Lab,RDSC,205,Winter
+829,Radiograph Position I,RDSC,210,Winter
+830,Rad Position I Lab,RDSC,210,Winter
+831,Radiograph Position I,RDSC,210,Winter
+832,Rad Position I Lab,RDSC,210,Winter
+833,Rad Position I Lab,RDSC,210,Winter
+834,Rad Position I Lab,RDSC,210,Winter
+835,Magnetic Resonance,RDSC,356,Winter
+836,Magnetic Resonance Lab,RDSC,356,Winter
+837,Magnetic Resonance,RDSC,356,Winter
+838,Magnetic Resonance,RDSC,356,Winter
+839,Magnetic Resonance Lab,RDSC,356,Winter
+840,Magnetic Resonance Lab,RDSC,356,Winter
+841,Magnetic Resonance Lab,RDSC,356,Winter
+842,Radiographic Pathology,RDSC,366,Winter
+843,Radiographic Pathology,RDSC,366,Winter
+844,Radiographic Pathology,RDSC,366,Winter
+845,Rad Science Externship,RDSC,410,Winter
+846,Special Rad Science Extern,RDSC,411,Winter
+847,Special Rad Science Extern,RDSC,411,Winter
+848,Intro to Renewable Energy,REE,201,Winter
+849,Materials for RE Applications,REE,337,Winter
+850,Wind Power,REE,345,Winter
+851,Wind Power,REE,345,Winter
+852,Solar Power II,REE,407,Winter
+853,Power Syst Protection & Ctnrl,REE,454,Winter
+854,Research Methods/Innov III,REE,513,Winter
+855,Applied Photovoltaics,REE,545,Winter
+856,Advanced Systems Engineering,SEM,422,Winter
+857,Advanced Systems Engineering,SEM,522,Winter
+858,Intro to Sociology,SOC,204,Winter
+859,Intro to Sociology,SOC,204,Winter
+860,Intro to Sociology,SOC,204,Winter
+861,Medical Sociology,SOC,225,Winter
+862,Medical Sociology,SOC,225,Winter
+863,Medical Sociology,SOC,225,Winter
+864,Soc Science Research Methods,SOC,301,Winter
+865,Soc Science Resrch Methods II,SOC,302,Winter
+866,Grant Wri. for Hlth. Promotion,SOC,307,Winter
+867,Research Center,SOC,407,Winter
+868,First Year Spanish,SPAN,101,Winter
+869,First Year Spanish,SPAN,102,Winter
+870,First Year Spanish,SPAN,102,Winter
+871,First Year Spanish,SPAN,102,Winter
+872,Public Speaking,SPE,111,Winter
+873,Public Speaking,SPE,111,Winter
+874,Public Speaking,SPE,111,Winter
+875,Public Speaking,SPE,111,Winter
+876,Public Speaking,SPE,111,Winter
+877,Public Speaking,SPE,111,Winter
+878,Public Speaking,SPE,111,Winter
+879,Public Speaking,SPE,111,Winter
+880,Public Speaking,SPE,111,Winter
+881,Public Speaking,SPE,111,Winter
+882,Argumentation,SPE,314,Winter
+883,Small Group/Team Comm,SPE,321,Winter
+884,Small Group/Team Comm,SPE,321,Winter
+885,Small Group/Team Communication,SPE,321,Winter
+886,Small Group/Team Comm,SPE,321,Winter
+887,Small Group/Team Comm,SPE,321,Winter
+888,Small Group/Team Comm,SPE,321,Winter
+889,Stat Methods in Epidemiology,STAT,414,Winter
+890,Dsgn & Analysis of Experiments,STAT,415,Winter
+891,Perphrl Arterial Disease,VAS,246,Winter
+892,Perphrl Arterial Disease Lab,VAS,246,Winter
+893,Perphrl Arterial Disease Lab,VAS,246,Winter
+894,Radiogrphc Vasclr Anat,VAS,335,Winter
+895,Radiographic Vascular Anatomy,VAS,335,Winter
+896,Survey of Echocardiography,VAS,337,Winter
+897,Survey of Echocardiography Lab,VAS,337,Winter
+898,Survey of Echocardiography,VAS,337,Winter
+899,Survey of Echocardiography Lab,VAS,337,Winter
+900,Abdominal Vascular Disease,VAS,365,Winter
+901,Spec Circulatory Problms,VAS,366,Winter
+902,Spec Circulatory Prob Lab,VAS,366,Winter
+903,Special Circulatory Problems,VAS,366,Winter
+904,Spec Circulatory Prob Lab,VAS,366,Winter
+905,Survey of Abdominal Sonography,VAS,375,Winter
+906,Vascular Lab Management,VAS,385,Winter
+907,Vascular Tech Extern,VAS,420,Winter
+908,Special Vas Tech Extern,VAS,420,Winter
+909,Special Vas Tech Extern,VAS,420,Winter
+910,English Composition,WRI,121,Winter
+911,English Composition,WRI,121,Winter
+912,English Composition,WRI,121,Winter
+913,Argumentative Writing,WRI,122,Winter
+914,Argumentative Writing,WRI,122,Winter
+915,Argumentative Writing,WRI,122,Winter
+916,Argumentative Writing,WRI,122,Winter
+917,Argumentative Writing,WRI,122,Winter
+918,Argumentative Writing,WRI,122,Winter
+919,Argumentative Writing,WRI,122,Winter
+920,Argumentative Writing,WRI,122,Winter
+921,Technical Report Writing,WRI,227,Winter
+922,Technical Report Writing,WRI,227,Winter
+923,Technical Report Writing,WRI,227,Winter
+924,Technical Report Writing,WRI,227,Winter
+925,Technical Report Writing,WRI,227,Winter
+926,Technical Report Writing,WRI,227,Winter
+927,Technical Report Writing,WRI,227,Winter
+928,Advanced Tech Writing,WRI,327,Winter
+929,Advanced Tech Writing,WRI,327,Winter
+930,Advanced Technical Writing,WRI,327,Winter
+931,Advanced Tech Writing,WRI,327,Winter
+932,Documentation Develop,WRI,350,Winter
+933,Documentation Develop,WRI,350,Winter

@@ -1,0 +1,90 @@
+﻿<Window x:Class="TestDataCreator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestDataCreator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="1025">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="127*"/>
+            <ColumnDefinition Width="891*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="Label_MinUserNumber" Content="Min User Number" HorizontalAlignment="Left" Margin="24,142,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Label x:Name="Label_NumToCreate" Content="number to create" HorizontalAlignment="Left" Margin="24,49,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Label_MinClassNumber" Content="Min class number" HorizontalAlignment="Left" Margin="24,80,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Label x:Name="Label_MaxClassNumber" Content="Max Class Number" HorizontalAlignment="Left" Margin="24,111,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Label x:Name="Label_StickerStartNum" Content="sticker start number" HorizontalAlignment="Left" Margin="24,23,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Label x:Name="Label_MaxUserNumber" Content="Max User Number" HorizontalAlignment="Left" Margin="22,173,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Label x:Name="Label_MinUnstucker" Content="Min Unstucker" HorizontalAlignment="Left" Margin="24,204,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Label_MaxUnstucker" Content="Max Unstucker" HorizontalAlignment="Left" Margin="22,235,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Label_ReviewStartNumber" Content="Review start Number" HorizontalAlignment="Left" Margin="160,49,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="Label_LowestStarUnstucker" Content="Lowest Star" HorizontalAlignment="Left" Margin="162.8,107,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="Label_HighestStarUnstucker" Content="Highest Star" HorizontalAlignment="Left" Margin="159.8,142,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Button x:Name="button" Content="Run" HorizontalAlignment="Left" Margin="88,326,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" Grid.ColumnSpan="2"/>
+        <Label x:Name="Label_LowestStarNumberUser" Content="Lowest Star" HorizontalAlignment="Left" Margin="162.8,204,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="Label_HighestStarNumberUser" Content="Highest Star" HorizontalAlignment="Left" Margin="159.8,237,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <ComboBox x:Name="comboBox_LowestStarUnstucker" HorizontalAlignment="Left" Margin="265.8,109,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1">
+            <ComboBoxItem Content=".5" IsSelected="True"/>
+            <ComboBoxItem Content="1"/>
+            <ComboBoxItem Content="1.5"/>
+            <ComboBoxItem Content="2"/>
+            <ComboBoxItem Content="2.5"/>
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="3.5"/>
+            <ComboBoxItem Content="4"/>
+            <ComboBoxItem Content="4.5"/>
+            <ComboBoxItem Content="5"/>
+        </ComboBox>
+        <ComboBox x:Name="comboBox_LowestStarUser" HorizontalAlignment="Left" Margin="265.8,206,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1">
+            <ComboBoxItem Content=".5" IsSelected="True"/>
+            <ComboBoxItem Content="1"/>
+            <ComboBoxItem Content="1.5"/>
+            <ComboBoxItem Content="2"/>
+            <ComboBoxItem Content="2.5"/>
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="3.5"/>
+            <ComboBoxItem Content="4"/>
+            <ComboBoxItem Content="4.5"/>
+            <ComboBoxItem Content="5"/>
+        </ComboBox>
+        <ComboBox x:Name="comboBox_HighestStarUnstucker" HorizontalAlignment="Left" Margin="265.8,144,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1">
+            <ComboBoxItem Content=".5"/>
+            <ComboBoxItem Content="1"/>
+            <ComboBoxItem Content="1.5"/>
+            <ComboBoxItem Content="2"/>
+            <ComboBoxItem Content="2.5"/>
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="3.5"/>
+            <ComboBoxItem Content="4"/>
+            <ComboBoxItem Content="4.5"/>
+            <ComboBoxItem Content="5" IsSelected="True"/>
+        </ComboBox>
+        <ComboBox x:Name="comboBox_HighestStarUser" HorizontalAlignment="Left" Margin="265.8,237,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1">
+            <ComboBoxItem Content=".5"/>
+            <ComboBoxItem Content="1"/>
+            <ComboBoxItem Content="1.5"/>
+            <ComboBoxItem Content="2"/>
+            <ComboBoxItem Content="2.5"/>
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="3.5"/>
+            <ComboBoxItem Content="4"/>
+            <ComboBoxItem Content="4.5"/>
+            <ComboBoxItem Content="5" IsSelected="True"/>
+        </ComboBox>
+        <TextBox x:Name="TextIn_StickerStartNum" HorizontalAlignment="Left" Height="23" Margin="17,26,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_NumToCreate" HorizontalAlignment="Left" Height="23" Margin="17,52,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_MinClassNum" HorizontalAlignment="Left" Height="23" Margin="17,82,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_MaxClassNum" HorizontalAlignment="Left" Height="23" Margin="17,111,0,0" TextWrapping="Wrap" Text="933" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_MinUserNum" HorizontalAlignment="Left" Height="23" Margin="17,146,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_MaxUserNum" HorizontalAlignment="Left" Height="23" Margin="17,175,0,0" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_MinUnstucker" HorizontalAlignment="Left" Height="23" Margin="17,208,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_MaxUnstucker" HorizontalAlignment="Left" Height="23" Margin="17,237,0,0" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="TextIn_ReviewStartNumber" HorizontalAlignment="Left" Height="23" Margin="295,49,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Label x:Name="Label_LowestStarUnstucker_Copy" Content="Unstucker" HorizontalAlignment="Left" Margin="224.8,75,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="Label_LowestStarUser_Copy1" Content="User" HorizontalAlignment="Left" Margin="224.8,175,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="label" Content="Export Options" Grid.Column="1" HorizontalAlignment="Left" Margin="610.8,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.146,-0.609"/>
+
+    </Grid>
+</Window>
