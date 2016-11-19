@@ -147,12 +147,12 @@ end;
 * Gets all Student Reviews for Admin
 **************************************************************************/
 go
---create proc GetAllStudentReviews as
---begin
---	select DisplayFName + ' ' + DisplayLName as Reviewer, StarRanking, Description
---	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
---		join Review					on Review.ReviewerID = Sticker.StudentID
---end;
+create proc GetAllStudentReviews as
+begin
+	select DisplayFName + ' ' + DisplayLName as Reviewer, StarRanking, Description
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Review					on Review.ReviewerID = Sticker.StudentID
+end;
 
 /**************************************************************************
 * Gets all Tutor Reviews for Admin
@@ -181,7 +181,14 @@ begin
 			as Reporter,
 			StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
 	from Report join Review		on Report.ReviewID = Review.ReviewID
-	where 'Reported User' = @user or Reporter = @user
+	where (select DisplayFName + ' ' + DisplayLName
+		   from UserProfile join Review		on UserProfile.UserID = Review.ReviewerID
+				join Report					on Review.ReviewID = Report.ReviewID
+		   where Report.FlaggerID is not null) = @user 
+											or 
+		  (select DisplayFName + ' ' + DisplayLName
+		   from UserProfile join Report		on UserProfile.UserID = Report.FlaggerID
+				join Review					on Report.ReviewID = Review.ReviewID) = @user
 end;
 
 /**************************************************************************
@@ -190,17 +197,21 @@ end;
 go
 create proc AdminPullAllReports as
 begin
-	select (select DisplayFName + ' ' + DisplayLName
-				from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
-					join Report					on Review.ReviewID = Report.ReviewID
-				where Report.FlaggerID is not null)
-			as 'Reported User',
-			(select DisplayFName + ' ' + DisplayLName
-				from UserProfile join Report	on UserProfile.UserID = Report.FlaggerID
-					join Review					on Report.ReviewID = Review.ReviewID)
-			as Reporter,
-			StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
-	from Report join Review		on Report.ReviewID = Review.ReviewID
+	--select (select DisplayFName + ' ' + DisplayLName
+	--			from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
+	--				join Report					on Review.ReviewID = Report.ReviewID
+	--			where Report.FlaggerID is not null)
+	--		as 'Reported User',
+	--		(select DisplayFName + ' ' + DisplayLName
+	--			from UserProfile join Report	on UserProfile.UserID = Report.FlaggerID
+	--				join Review					on Report.ReviewID = Review.ReviewID)
+	--		as Reporter,
+	select DisplayFName + ' ' + DisplayLName as 'Student Reported', UserID, Review.ReviewID, StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
+	from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
+		join Report					on Review.ReviewID = Report.ReviewID
+		join Sticker				on Review.ReviewerID = Sticker.StudentID and Review.ReviewerID != Sticker.TutorID
+	where Report.FlaggerID is not null
+	order by UserID
 end;
 
 /**************************************************************************
@@ -317,7 +328,7 @@ create proc OpenProfilePage
 begin
 	exec GetProfilePicture @useremail;
 
-	exec GetUserNameAndEmail @useremail, @password;
+	exec GetDisplayNameAndEmail @useremail, @password;
 
 	exec GetUserClasses @useremail, @password;
 
@@ -474,12 +485,12 @@ create proc GetUsersWithOverallStarRank
 begin
 	declare @totalrank float;
 	set @totalrank = (select StarRanking
-			 from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-				join Review					on Sticker.StudentID = Review.ReviewerID)
+					  from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+						join Review					on Sticker.StudentID = Review.ReviewerID)
 									+
-			(select StarRanking
-			 from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-				join Review					on Sticker.StudentID = Review.ReviewerID);
+					(select StarRanking
+					 from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+						join Review					on Sticker.StudentID = Review.ReviewerID);
 
 	select DisplayFName + ' ' + DisplayLName as 'User', EmailAddress,
 		avg(@totalrank) as AvgStarRank
