@@ -91,8 +91,8 @@ GO
 --Create UserProfile Table
 CREATE TABLE UserProfile
 	(UserID					INT					PRIMARY KEY IDENTITY(1,1),
-	DisplayFName			VARCHAR(30)			NOT NULL,
-	DisplayLName			VARCHAR(30)			NOT NULL,
+	DisplayFName			VARCHAR(32)			NOT NULL,
+	DisplayLName			VARCHAR(32)			NOT NULL,
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
 	UserPassword			NVARCHAR(32)		NOT NULL,
 	Privileges				NVARCHAR(32)		NOT NULL)
