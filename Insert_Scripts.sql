@@ -241,8 +241,9 @@ AS
             return 1;
         else
             BEGIN
-                INSERT INTO Picture
-				VALUES(@UserID, @Photo)
+				UPDATE Picture
+				SET Photo = @Photo
+				WHERE @UserID = UserID;
             END
 
     END
