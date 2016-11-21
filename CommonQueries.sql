@@ -527,17 +527,11 @@ create proc PullChatMessagesAndFilesBetweenUsers
 	@tutor varchar(61)
 ) as
 begin
-	select MessageData, FileData
+	select DisplayFName + ' ' + DisplayLName as Sender, MessageData, SentTime
 	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
 		join Chat						on UserToChat.ChatID = Chat.ChatID
-		join Files						on Chat.ChatID = Files.ChatID
 		join Messages					on Chat.ChatID = Messages.ChatID
-	where DisplayFName + ' ' + DisplayLName = @user;
-
-	select MessageData, FileData
-	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
-		join Chat						on UserToChat.ChatID = Chat.ChatID
-		join Files						on Chat.ChatID = Files.ChatID
-		join Messages					on Chat.ChatID = Messages.ChatID
-	where DisplayFName + ' ' + DisplayLName = @tutor;
+	where (DisplayFName + ' ' + DisplayLName = @user and SentBy = UserProfile.UserID)
+							or
+		  (DisplayFName + ' ' + DisplayLName = @tutor and SentBY = UserProfile.UserID);
 end;

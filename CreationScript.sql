@@ -70,16 +70,20 @@ GO
 
 --Create Messages Table
 CREATE TABLE [Messages]
-	(MessageID			INT				PRIMARY KEY IDENTITY(1,1),
-	ChatID				INT				NOT NULL REFERENCES Chat(ChatID),
-	MessageData			NVARCHAR(500)			NOT NULL)
+	(MessageID				INT				PRIMARY KEY IDENTITY(1,1),
+	ChatID					INT				NOT NULL REFERENCES Chat(ChatID),
+	MessageData				NVARCHAR(500)	NOT NULL,
+	SentBy					int				NOT NULL,
+	SentTime				datetime		NOT NULL)
 GO
 
 --Create File Table
 CREATE TABLE Files
-	(FileID				INT				PRIMARY KEY IDENTITY(1,1),
-	ChatID				INT				NOT NULL REFERENCES Chat(ChatID),
-	FileData			VARBINARY(MAX) 			NOT NULL);
+	(FileID				INT					PRIMARY KEY IDENTITY(1,1),
+	ChatID				INT					NOT NULL REFERENCES Chat(ChatID),
+	FileData			VARBINARY(MAX) 		NOT NULL,
+	SentBy				int					NOT NULL,
+	SentTime			datetime			NOT NULL);
 GO
 
 --Create Official Mentor Table
