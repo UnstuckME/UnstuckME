@@ -67,6 +67,8 @@ if object_id('GetUserAvgStudentStarRank') is not null
 	drop procedure GetUserAvgStudentStarRank;
 if object_id('GetUserAvgTutorStarRank') is not null
 	drop procedure GetUserAvgTutorStarRank;
+if object_id('GetAllChatIDsAUserIsPartOF') is not null
+	drop procedure GetAllChatIDsAUserIsPartOF;
 if object_id('PullChatMessagesAndFilesBetweenUsers') is not null
 	drop procedure PullChatMessagesAndFilesBetweenUsers;
 
@@ -519,12 +521,24 @@ begin
 end;
 
 /**************************************************************************
+* Pull all chats a user is part of
+**************************************************************************/
+go
+create proc GetAllChatIDsAUserIsPartOF
+(	@displayname varchar(65)	) as
+begin
+	select @displayname as 'User', ChatID
+	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
+	where (select UserID from UserProfile where DisplayFName + ' ' + DisplayLName = @displayname) = UserToChat.UserID
+end
+
+/**************************************************************************
 * Pull chat messages and files between two users
 **************************************************************************/
 go
 create proc PullChatMessagesAndFilesBetweenUsers
-(	@user varchar(61),
-	@tutor varchar(61)
+(	@user varchar(65),
+	@tutor varchar(65)
 ) as
 begin
 	select DisplayFName + ' ' + DisplayLName as Sender, MessageData, SentTime
@@ -533,5 +547,5 @@ begin
 		join Messages					on Chat.ChatID = Messages.ChatID
 	where (DisplayFName + ' ' + DisplayLName = @user and SentBy = UserProfile.UserID)
 							or
-		  (DisplayFName + ' ' + DisplayLName = @tutor and SentBY = UserProfile.UserID);
+		  (DisplayFName + ' ' + DisplayLName = @tutor and SentBy = UserProfile.UserID);
 end;
