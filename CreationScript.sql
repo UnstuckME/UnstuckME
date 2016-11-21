@@ -284,8 +284,10 @@ ALTER
 			ELSE
 			BEGIN
 				IF @madeIT <> 1
-					PRINT ('Woopsie')
-					ROLLBACK TRANSACTION
+					BEGIN
+						PRINT ('Woopsie')
+						ROLLBACK TRANSACTION
+					END;
 			END;
 		END;
 GO
