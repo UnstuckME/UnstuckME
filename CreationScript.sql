@@ -115,7 +115,8 @@ GO
 --Create Classes Table
 CREATE TABLE Picture
 	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
-	Photo				VARBINARY(MAX)			NULL)	
+	Photo				VARBINARY(MAX)			NULL
+	PRIMARY KEY (UserID))	
 GO
 
 --Create Classes Table
