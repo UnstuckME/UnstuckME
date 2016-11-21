@@ -67,6 +67,18 @@ namespace DataInputter
         public String UserID;
     }
 
+    public class DataHolderUserToChat
+    {
+        public String UserID;
+        public String ChatID;
+    }
+    public class DataHolderMessages
+    {
+        public String MessageID;
+        public String ChatID;
+        public String MessageText;
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -87,15 +99,34 @@ namespace DataInputter
             Console.WriteLine("Begining Inserting Users");
             InsertUsers(connectionString);
             Console.WriteLine("         Inserting Users Complete");
+
             Console.WriteLine("Begining Inserting Classes");
             InsertClasses(connectionString);
             Console.WriteLine("         Inserting Classes Complete");
+
             Console.WriteLine("Begining Inserting Stickers");
             InsertStickers(connectionString);
             Console.WriteLine("         Inserting Stickers Complete");
+
             Console.WriteLine("Begining Inserting Reviews");
             InsertReviews(connectionString);
             Console.WriteLine("         Inserting Reviews Complete");
+
+            Console.WriteLine("Begining Inserting Official Mentor Orgs");
+            InsertOfficialMentoringOrgs(connectionString);
+            Console.WriteLine("         Inserting Official Mentor Orgs Complete");
+
+            Console.WriteLine("Begining Inserting Official Mentors");
+            InsertOfficalMentors(connectionString);
+            Console.WriteLine("         Inserting Official Mentors Complete");
+
+            Console.WriteLine("Begining Inserting Chat");
+            InsertChat(connectionString);
+            Console.WriteLine("         Inserting Chat Complete");
+
+            Console.WriteLine("Begining Inserting Messages");
+            InsertMessages(connectionString);
+            Console.WriteLine("         Inserting Messages Complete");
             Console.WriteLine("Done");
             
         }
@@ -315,12 +346,108 @@ namespace DataInputter
         }
         static void InsertChat(string connectionString)
         {
-            //CreateChat
+            using (StreamReader reader = new StreamReader(File.OpenRead(@"..\..\..\..\FakeDataChat.csv")))
+            {
+                int countChats = 0;
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    if (!String.IsNullOrWhiteSpace(line))
+                    {
+                        countChats++;
+                    }
+                }
+                for (int i = 0; i < countChats; i++)
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        //CreateChat
+                        SqlCommand cmd = new SqlCommand("Insert Into Chat Default Values");
+                        cmd.Connection = connection;
+                        cmd.CommandType = CommandType.Text;
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
             //InsertUserIntoChat
-        }
+            List<DataHolderUserToChat> listA = new List<DataHolderUserToChat>();
+            using (StreamReader reader = new StreamReader(File.OpenRead(@"..\..\..\..\FakeDataUserToChat.csv")))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    if (!String.IsNullOrWhiteSpace(line))
+                    {
+                        string[] values = line.Split(',');
+                        if (values.Length >= 2)
+                        {
+                            DataHolderUserToChat cont = new DataHolderUserToChat();
+                            cont.UserID = values[0];
+                            cont.ChatID = values[1];
+
+                            listA.Add(cont);
+                        }
+                    }
+                }
+            }
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                foreach (DataHolderUserToChat item in listA)
+                {
+                    SqlCommand cmd = new SqlCommand("InsertUserIntoChat");
+                    cmd.Connection = connection;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@UserID", Convert.ToInt32(item.UserID)));
+                    cmd.Parameters.Add(new SqlParameter("@ChatID", Convert.ToInt32(item.ChatID)));
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
+       }
+
         static void InsertMessages(string connectionString)
         {
+            StreamReader reader = new StreamReader(File.OpenRead(@"..\..\..\..\FakeDataMessages.csv"));
+            List<DataHolderMessages> listA = new List<DataHolderMessages>();
 
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                if (!String.IsNullOrWhiteSpace(line))
+                {
+                    string[] values = line.Split(',');
+                    if (values.Length >= 3)
+                    {
+                        DataHolderMessages cont = new DataHolderMessages();
+                        cont.MessageID = values[0];
+                        cont.ChatID = values[1];
+                        cont.MessageText = values[2];
+                        listA.Add(cont);
+                    }
+                }
+            }
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                foreach (DataHolderMessages item in listA)
+                {
+                    SqlCommand cmd = new SqlCommand("InsertMessage");
+                    cmd.Connection = connection;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@ChatID", Convert.ToInt32(item.ChatID)));
+                    cmd.Parameters.Add(new SqlParameter("@Message", item.MessageText));
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
         }
     }
 }
