@@ -204,9 +204,7 @@ namespace TestAllStoredProcedures
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction dbo_ClearReviewDescriptionByReviewIDTest_PretestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction testInitializeAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test4UsersAdded;
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction testCleanupAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test3ClassesAdded;
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition6;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test5UserToClassAdded;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test3StickersAdded;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test2ReviewsAdded;
@@ -215,6 +213,8 @@ namespace TestAllStoredProcedures
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test4ChatsAdded;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test5UserToChatsAdded;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition Test2FilesAdded;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction testCleanupAction;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition6;
             this.dbo_AdminPullAllReportsTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             this.dbo_ChangeProfilePictureTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             this.dbo_ClearReviewDescriptionByReviewIDTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
@@ -457,9 +457,7 @@ namespace TestAllStoredProcedures
             dbo_ClearReviewDescriptionByReviewIDTest_PretestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             testInitializeAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             Test4UsersAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
-            testCleanupAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             Test3ClassesAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
-            rowCountCondition6 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             Test5UserToClassAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             Test3StickersAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             Test2ReviewsAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
@@ -468,6 +466,8 @@ namespace TestAllStoredProcedures
             Test4ChatsAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             Test5UserToChatsAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             Test2FilesAdded = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            testCleanupAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
+            rowCountCondition6 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             // 
             // dbo_AdminPullAllReportsTest_TestAction
             // 
@@ -1347,6 +1347,88 @@ namespace TestAllStoredProcedures
             testInitializeAction.Conditions.Add(Test2FilesAdded);
             resources.ApplyResources(testInitializeAction, "testInitializeAction");
             // 
+            // Test4UsersAdded
+            // 
+            Test4UsersAdded.Enabled = true;
+            Test4UsersAdded.Name = "Test4UsersAdded";
+            Test4UsersAdded.ResultSet = 1;
+            Test4UsersAdded.RowCount = 4;
+            // 
+            // Test3ClassesAdded
+            // 
+            Test3ClassesAdded.Enabled = true;
+            Test3ClassesAdded.Name = "Test3ClassesAdded";
+            Test3ClassesAdded.ResultSet = 2;
+            Test3ClassesAdded.RowCount = 3;
+            // 
+            // Test5UserToClassAdded
+            // 
+            Test5UserToClassAdded.Enabled = true;
+            Test5UserToClassAdded.Name = "Test5UserToClassAdded";
+            Test5UserToClassAdded.ResultSet = 3;
+            Test5UserToClassAdded.RowCount = 5;
+            // 
+            // Test3StickersAdded
+            // 
+            Test3StickersAdded.Enabled = true;
+            Test3StickersAdded.Name = "Test3StickersAdded";
+            Test3StickersAdded.ResultSet = 4;
+            Test3StickersAdded.RowCount = 3;
+            // 
+            // Test2ReviewsAdded
+            // 
+            Test2ReviewsAdded.Enabled = true;
+            Test2ReviewsAdded.Name = "Test2ReviewsAdded";
+            Test2ReviewsAdded.ResultSet = 5;
+            Test2ReviewsAdded.RowCount = 2;
+            // 
+            // Test4OfficialMentorsAdded
+            // 
+            Test4OfficialMentorsAdded.Enabled = true;
+            Test4OfficialMentorsAdded.Name = "Test4OfficialMentorsAdded";
+            Test4OfficialMentorsAdded.ResultSet = 6;
+            Test4OfficialMentorsAdded.RowCount = 4;
+            // 
+            // Test6OmToUserAdded
+            // 
+            Test6OmToUserAdded.Enabled = true;
+            Test6OmToUserAdded.Name = "Test6OmToUserAdded";
+            Test6OmToUserAdded.ResultSet = 7;
+            Test6OmToUserAdded.RowCount = 6;
+            // 
+            // Test4ChatsAdded
+            // 
+            Test4ChatsAdded.Enabled = true;
+            Test4ChatsAdded.Name = "Test4ChatsAdded";
+            Test4ChatsAdded.ResultSet = 8;
+            Test4ChatsAdded.RowCount = 4;
+            // 
+            // Test5UserToChatsAdded
+            // 
+            Test5UserToChatsAdded.Enabled = true;
+            Test5UserToChatsAdded.Name = "Test5UserToChatsAdded";
+            Test5UserToChatsAdded.ResultSet = 9;
+            Test5UserToChatsAdded.RowCount = 5;
+            // 
+            // Test2FilesAdded
+            // 
+            Test2FilesAdded.Enabled = true;
+            Test2FilesAdded.Name = "Test2FilesAdded";
+            Test2FilesAdded.ResultSet = 10;
+            Test2FilesAdded.RowCount = 2;
+            // 
+            // testCleanupAction
+            // 
+            testCleanupAction.Conditions.Add(rowCountCondition6);
+            resources.ApplyResources(testCleanupAction, "testCleanupAction");
+            // 
+            // rowCountCondition6
+            // 
+            rowCountCondition6.Enabled = true;
+            rowCountCondition6.Name = "rowCountCondition6";
+            rowCountCondition6.ResultSet = 1;
+            rowCountCondition6.RowCount = 0;
+            // 
             // dbo_AdminPullAllReportsTestData
             // 
             this.dbo_AdminPullAllReportsTestData.PosttestAction = null;
@@ -1802,88 +1884,6 @@ namespace TestAllStoredProcedures
             this.dbo_ViewAllUsersTestData.PosttestAction = null;
             this.dbo_ViewAllUsersTestData.PretestAction = null;
             this.dbo_ViewAllUsersTestData.TestAction = dbo_ViewAllUsersTest_TestAction;
-            // 
-            // Test4UsersAdded
-            // 
-            Test4UsersAdded.Enabled = true;
-            Test4UsersAdded.Name = "Test4UsersAdded";
-            Test4UsersAdded.ResultSet = 1;
-            Test4UsersAdded.RowCount = 4;
-            // 
-            // testCleanupAction
-            // 
-            testCleanupAction.Conditions.Add(rowCountCondition6);
-            resources.ApplyResources(testCleanupAction, "testCleanupAction");
-            // 
-            // Test3ClassesAdded
-            // 
-            Test3ClassesAdded.Enabled = true;
-            Test3ClassesAdded.Name = "Test3ClassesAdded";
-            Test3ClassesAdded.ResultSet = 2;
-            Test3ClassesAdded.RowCount = 3;
-            // 
-            // rowCountCondition6
-            // 
-            rowCountCondition6.Enabled = true;
-            rowCountCondition6.Name = "rowCountCondition6";
-            rowCountCondition6.ResultSet = 1;
-            rowCountCondition6.RowCount = 0;
-            // 
-            // Test5UserToClassAdded
-            // 
-            Test5UserToClassAdded.Enabled = true;
-            Test5UserToClassAdded.Name = "Test5UserToClassAdded";
-            Test5UserToClassAdded.ResultSet = 3;
-            Test5UserToClassAdded.RowCount = 5;
-            // 
-            // Test3StickersAdded
-            // 
-            Test3StickersAdded.Enabled = true;
-            Test3StickersAdded.Name = "Test3StickersAdded";
-            Test3StickersAdded.ResultSet = 4;
-            Test3StickersAdded.RowCount = 3;
-            // 
-            // Test2ReviewsAdded
-            // 
-            Test2ReviewsAdded.Enabled = true;
-            Test2ReviewsAdded.Name = "Test2ReviewsAdded";
-            Test2ReviewsAdded.ResultSet = 5;
-            Test2ReviewsAdded.RowCount = 2;
-            // 
-            // Test4OfficialMentorsAdded
-            // 
-            Test4OfficialMentorsAdded.Enabled = true;
-            Test4OfficialMentorsAdded.Name = "Test4OfficialMentorsAdded";
-            Test4OfficialMentorsAdded.ResultSet = 6;
-            Test4OfficialMentorsAdded.RowCount = 4;
-            // 
-            // Test6OmToUserAdded
-            // 
-            Test6OmToUserAdded.Enabled = true;
-            Test6OmToUserAdded.Name = "Test6OmToUserAdded";
-            Test6OmToUserAdded.ResultSet = 7;
-            Test6OmToUserAdded.RowCount = 6;
-            // 
-            // Test4ChatsAdded
-            // 
-            Test4ChatsAdded.Enabled = true;
-            Test4ChatsAdded.Name = "Test4ChatsAdded";
-            Test4ChatsAdded.ResultSet = 8;
-            Test4ChatsAdded.RowCount = 4;
-            // 
-            // Test5UserToChatsAdded
-            // 
-            Test5UserToChatsAdded.Enabled = true;
-            Test5UserToChatsAdded.Name = "Test5UserToChatsAdded";
-            Test5UserToChatsAdded.ResultSet = 9;
-            Test5UserToChatsAdded.RowCount = 5;
-            // 
-            // Test2FilesAdded
-            // 
-            Test2FilesAdded.Enabled = true;
-            Test2FilesAdded.Name = "Test2FilesAdded";
-            Test2FilesAdded.ResultSet = 10;
-            Test2FilesAdded.RowCount = 2;
             // 
             // SqlServerUnitTest1
             // 

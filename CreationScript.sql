@@ -256,3 +256,36 @@ CREATE
 			END;
 		END;
 GO
+
+ALTER
+	TRIGGER OnlyAllowCorrectReviews
+	ON Review
+	AFTER INSERT
+	AS
+		BEGIN
+			DECLARE @tempStickerID as INT, @insertedReviewerID as INT, @madeIT as INT;
+			SELECT @madeIT = 0;
+
+			SELECT @tempStickerID = (SELECT StickerID FROM inserted);
+			SELECT @insertedReviewerID = (SELECT ReviewerID FROM inserted);
+			
+			If((SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID) is NOT NULL)
+			BEGIN
+				IF( (@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID)))
+				BEGIN
+					IF (NOT EXISTS(SELECT * FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID))
+					BEGIN
+						Print ('Yippy')
+						SELECT @madeIT = 1;
+					END;
+				END;
+			END;
+			
+			ELSE
+			BEGIN
+				IF @madeIT <> 1
+					PRINT ('Woopsie')
+					ROLLBACK TRANSACTION
+			END;
+		END;
+GO
