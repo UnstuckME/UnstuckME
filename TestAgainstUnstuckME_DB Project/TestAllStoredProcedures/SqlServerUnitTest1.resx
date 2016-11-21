@@ -1,0 +1,1717 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="dbo_AdminPullAllReportsTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.AdminPullAllReports
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[AdminPullAllReports];
+
+SELECT @RC AS RC;</value>
+  </data>
+  <data name="dbo_ChangeProfilePictureTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.ChangeProfilePicture
+DECLARE @RC AS INT, @UserID AS INT, @Photo AS VARBINARY (MAX), @tempUserID AS INT;
+
+SELECT @RC = 0;
+SELECT @tempUserID = (SELECT UserID FROM UserProfile WHERE (DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and EmailAddress = 'TESTING@TESTING.COM'));
+SELECT @UserID = @tempUserID;
+SELECT @Photo  = CONVERT(varbinary(MAX),'THIS_IS_A_NEW_PICTURE');
+
+EXECUTE @RC = [dbo].[ChangeProfilePicture] @UserID, @Photo;
+SELECT @RC AS RC;
+
+SELECT @@RowCount;
+
+SELECT *
+FROM Picture
+WHERE (UserID = @tempUserID and Photo = 0x544849535F49535F415F4E45575F50494354555245)</value>
+  </data>
+  <data name="dbo_ClearReviewDescriptionByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.ClearReviewDescriptionByReviewID
+DECLARE @RC AS INT, @ReviewID AS INT;
+
+SELECT @RC = 0,
+       @ReviewID = 0;
+
+EXECUTE @RC = [dbo].[ClearReviewDescriptionByReviewID] @ReviewID;
+
+SELECT @RC AS RC;</value>
+  </data>
+  <data name="dbo_CreateChatTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateChat
+DECLARE @RC AS INT, @UserID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0;
+
+EXECUTE @RC = [dbo].[CreateChat] @UserID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_CreateNewClassTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateNewClass
+DECLARE @RC AS INT, @CourseName AS VARCHAR (50), @CourseCode AS VARCHAR (5), @CourseNumber AS SMALLINT, @TermOffered AS TINYINT;
+
+SELECT @RC = 0,
+       @CourseName = NULL,
+       @CourseCode = NULL,
+       @CourseNumber = 0,
+       @TermOffered = NULL;
+
+EXECUTE @RC = [dbo].[CreateNewClass] @CourseName, @CourseCode, @CourseNumber, @TermOffered;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_CreateNewUserTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateNewUser
+DECLARE @RC AS INT, @FirstName AS VARCHAR (30), @LastName AS VARCHAR (30), @EmailAddress AS VARCHAR (50), @Password AS NVARCHAR (32), @Privileges AS NVARCHAR (32);
+
+SELECT @RC = 0,
+       @FirstName = NULL,
+       @LastName = NULL,
+       @EmailAddress = NULL,
+       @Password = NULL,
+       @Privileges = NULL;
+
+EXECUTE @RC = [dbo].[CreateNewUser] @FirstName, @LastName, @EmailAddress, @Password, @Privileges;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_CreateOfficialMentorTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateOfficialMentor
+DECLARE @RC AS INT, @OrganizationName AS NVARCHAR (50);
+
+SELECT @RC = 0,
+       @OrganizationName = NULL;
+
+EXECUTE @RC = [dbo].[CreateOfficialMentor] @OrganizationName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_CreateReportTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateReport
+DECLARE @RC AS INT, @ReportDescription AS NVARCHAR (200), @FlaggerID AS INT, @ReviewID AS FLOAT (53);
+
+SELECT @RC = 0,
+       @ReportDescription = NULL,
+       @FlaggerID = 0,
+       @ReviewID = 0;
+
+EXECUTE @RC = [dbo].[CreateReport] @ReportDescription, @FlaggerID, @ReviewID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_CreateReviewTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateReview
+DECLARE @RC AS INT, @StickerID AS INT, @ReviewerID AS INT, @StarRanking AS FLOAT (53), @Description AS NVARCHAR (250);
+
+SELECT @RC = 0,
+       @StickerID = 0,
+       @ReviewerID = 0,
+       @StarRanking = 0,
+       @Description = NULL;
+
+EXECUTE @RC = [dbo].[CreateReview] @StickerID, @ReviewerID, @StarRanking, @Description;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_CreateServerTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateServer
+DECLARE @RC AS INT, @ServerName AS VARCHAR (75), @ServerIP AS VARCHAR (15), @ServerDomain AS VARCHAR (50), @SchoolName AS VARCHAR (75), @AdminUsername AS VARCHAR (30), @AdminPassword AS NVARCHAR (32), @EmailCredentials AS NVARCHAR (50);
+
+SELECT @RC = 0,
+       @ServerName = NULL,
+       @ServerIP = NULL,
+       @ServerDomain = NULL,
+       @SchoolName = NULL,
+       @AdminUsername = NULL,
+       @AdminPassword = NULL,
+       @EmailCredentials = NULL;
+
+EXECUTE @RC = [dbo].[CreateServer] @ServerName, @ServerIP, @ServerDomain, @SchoolName, @AdminUsername, @AdminPassword, @EmailCredentials;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_CreateStickerTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.CreateSticker
+DECLARE @RC AS INT, @ProblemDescription AS NVARCHAR (500), @ClassID AS INT, @StudentID AS INT, @MinimumStarRanking AS FLOAT (53), @Timeout AS INT;
+
+SELECT @RC = 0,
+       @ProblemDescription = NULL,
+       @ClassID = 0,
+       @StudentID = 0,
+       @MinimumStarRanking = 0,
+       @Timeout = 0;
+
+EXECUTE @RC = [dbo].[CreateSticker] @ProblemDescription, @ClassID, @StudentID, @MinimumStarRanking, @Timeout;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteClassByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteClassByClassID
+DECLARE @RC AS INT, @ClassID AS INT;
+
+SELECT @RC = 0,
+       @ClassID = 0;
+
+EXECUTE @RC = [dbo].[DeleteClassByClassID] @ClassID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteFileByFileIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteFileByFileID
+DECLARE @RC AS INT, @FileID AS INT;
+
+SELECT @RC = 0,
+       @FileID = 0;
+
+EXECUTE @RC = [dbo].[DeleteFileByFileID] @FileID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteMentorOrganizationByMentorIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteMentorOrganizationByMentorID
+DECLARE @RC AS INT, @MentorID AS INT;
+
+SELECT @RC = 0,
+       @MentorID = 0;
+
+EXECUTE @RC = [dbo].[DeleteMentorOrganizationByMentorID] @MentorID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteMessageByMessageIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteMessageByMessageID
+DECLARE @RC AS INT, @MessageID AS INT;
+
+SELECT @RC = 0,
+       @MessageID = 0;
+
+EXECUTE @RC = [dbo].[DeleteMessageByMessageID] @MessageID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteReportByReportIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteReportByReportID
+DECLARE @RC AS INT, @ReportID AS INT;
+
+SELECT @RC = 0,
+       @ReportID = 0;
+
+EXECUTE @RC = [dbo].[DeleteReportByReportID] @ReportID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteServerInformationTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteServerInformation
+DECLARE @RC AS INT, @ServerID AS INT;
+
+SELECT @RC = 0,
+       @ServerID = 0;
+
+EXECUTE @RC = [dbo].[DeleteServerInformation] @ServerID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteServerInformationByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteServerInformationByServerID
+DECLARE @RC AS INT, @ServerID AS INT;
+
+SELECT @RC = 0,
+       @ServerID = 0;
+
+EXECUTE @RC = [dbo].[DeleteServerInformationByServerID] @ServerID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteUserPictureByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteUserPictureByUserID
+DECLARE @RC AS INT, @UserID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0;
+
+EXECUTE @RC = [dbo].[DeleteUserPictureByUserID] @UserID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_DeleteUserProfileByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.DeleteUserProfileByUserID
+DECLARE @RC AS INT, @UserID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0;
+
+EXECUTE @RC = [dbo].[DeleteUserProfileByUserID] @UserID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_FilterUserReviewsByEqualStarRankTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.FilterUserReviewsByEqualStarRank
+DECLARE @RC AS INT, @starfilter AS FLOAT (53), @displayname AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @starfilter = 0,
+       @displayname = NULL;
+
+EXECUTE @RC = [dbo].[FilterUserReviewsByEqualStarRank] @starfilter, @displayname;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_FilterUserReviewsByGreaterThanStarRankTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.FilterUserReviewsByGreaterThanStarRank
+DECLARE @RC AS INT, @starfilter AS FLOAT (53), @displayname AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @starfilter = 0,
+       @displayname = NULL;
+
+EXECUTE @RC = [dbo].[FilterUserReviewsByGreaterThanStarRank] @starfilter, @displayname;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetActiveStickersWithStarRankOrMentorOrganizationTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetActiveStickersWithStarRankOrMentorOrganization
+DECLARE @RC AS INT, @displayname AS VARCHAR (61), @starrank AS FLOAT (53), @organization AS NVARCHAR (50);
+
+SELECT @RC = 0,
+       @displayname = NULL,
+       @starrank = 0,
+       @organization = NULL;
+
+EXECUTE @RC = [dbo].[GetActiveStickersWithStarRankOrMentorOrganization] @displayname, @starrank, @organization;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetAdminInfoTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetAdminInfo
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetAdminInfo] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetAllActiveStickersTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetAllActiveStickers
+DECLARE @RC AS INT, @displayname AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @displayname = NULL;
+
+EXECUTE @RC = [dbo].[GetAllActiveStickers] @displayname;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetAllOrganizationsTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetAllOrganizations
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetAllOrganizations] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetAllResolvedStickersTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetAllResolvedStickers
+DECLARE @RC AS INT, @displayname AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @displayname = NULL;
+
+EXECUTE @RC = [dbo].[GetAllResolvedStickers] @displayname;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetAllStickersTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetAllStickers
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetAllStickers] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetAllStudentReviewsTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetAllStudentReviews
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetAllStudentReviews] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetDisplayNameAndEmailTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetDisplayNameAndEmail
+DECLARE @RC AS INT, @useremail AS VARCHAR (50), @password AS NVARCHAR (30);
+
+SELECT @RC = 0,
+       @useremail = NULL,
+       @password = NULL;
+
+EXECUTE @RC = [dbo].[GetDisplayNameAndEmail] @useremail, @password;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetEmailCredentialsTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetEmailCredentials
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetEmailCredentials] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetProfilePictureTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetProfilePicture
+DECLARE @RC AS INT, @useremail AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @useremail = NULL;
+
+EXECUTE @RC = [dbo].[GetProfilePicture] @useremail;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetSchoolNameTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetSchoolName
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetSchoolName] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetServerDomainTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetServerDomain
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetServerDomain] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetServerIPTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetServerIP
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetServerIP] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetServerNameTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetServerName
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[GetServerName] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetUserAvgStudentStarRankTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetUserAvgStudentStarRank
+DECLARE @RC AS INT, @displayname AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @displayname = NULL;
+
+EXECUTE @RC = [dbo].[GetUserAvgStudentStarRank] @displayname;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetUserAvgTutorStarRankTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetUserAvgTutorStarRank
+DECLARE @RC AS INT, @displayname AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @displayname = NULL;
+
+EXECUTE @RC = [dbo].[GetUserAvgTutorStarRank] @displayname;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetUserClassesTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetUserClasses
+DECLARE @RC AS INT, @useremail AS VARCHAR (50), @password AS NVARCHAR (30);
+
+SELECT @RC = 0,
+       @useremail = NULL,
+       @password = NULL;
+
+EXECUTE @RC = [dbo].[GetUserClasses] @useremail, @password;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetUserOrganizationsTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetUserOrganizations
+DECLARE @RC AS INT, @useremail AS VARCHAR (50), @password AS NVARCHAR (30);
+
+SELECT @RC = 0,
+       @useremail = NULL,
+       @password = NULL;
+
+EXECUTE @RC = [dbo].[GetUserOrganizations] @useremail, @password;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetUserStickersAndReviewsTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetUserStickersAndReviews
+DECLARE @RC AS INT, @useremail AS VARCHAR (50), @password AS NVARCHAR (30);
+
+SELECT @RC = 0,
+       @useremail = NULL,
+       @password = NULL;
+
+EXECUTE @RC = [dbo].[GetUserStickersAndReviews] @useremail, @password;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_GetUsersWithOverallStarRankTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.GetUsersWithOverallStarRank
+DECLARE @RC AS INT, @starrank AS FLOAT (53);
+
+SELECT @RC = 0,
+       @starrank = 0;
+
+EXECUTE @RC = [dbo].[GetUsersWithOverallStarRank] @starrank;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_InsertFileTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.InsertFile
+DECLARE @RC AS INT, @ChatID AS INT, @FileData AS VARBINARY (MAX);
+
+SELECT @RC = 0,
+       @ChatID = 0,
+       @FileData = NULL;
+
+EXECUTE @RC = [dbo].[InsertFile] @ChatID, @FileData;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_InsertMessageTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.InsertMessage
+DECLARE @RC AS INT, @ChatID AS INT, @Message AS NVARCHAR (500);
+
+SELECT @RC = 0,
+       @ChatID = 0,
+       @Message = NULL;
+
+EXECUTE @RC = [dbo].[InsertMessage] @ChatID, @Message;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_InsertStudentIntoClassTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.InsertStudentIntoClass
+DECLARE @RC AS INT, @UserID AS INT, @ClassID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @ClassID = 0;
+
+EXECUTE @RC = [dbo].[InsertStudentIntoClass] @UserID, @ClassID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_InsertUserIntoChatTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.InsertUserIntoChat
+DECLARE @RC AS INT, @UserID AS INT, @ChatID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @ChatID = 0;
+
+EXECUTE @RC = [dbo].[InsertUserIntoChat] @UserID, @ChatID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_InsertUserIntoMentorProgramTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.InsertUserIntoMentorProgram
+DECLARE @RC AS INT, @UserID AS INT, @MentorID AS INT;
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @MentorID = 0;
+
+EXECUTE @RC = [dbo].[InsertUserIntoMentorProgram] @UserID, @MentorID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_OpenProfilePageTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.OpenProfilePage
+DECLARE @RC AS INT, @useremail AS VARCHAR (50), @password AS NVARCHAR (30);
+
+SELECT @RC = 0,
+       @useremail = NULL,
+       @password = NULL;
+
+EXECUTE @RC = [dbo].[OpenProfilePage] @useremail, @password;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_PullActiveClassSpecificStickersTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.PullActiveClassSpecificStickers
+DECLARE @RC AS INT, @Name AS VARCHAR (50), @Code AS VARCHAR (5), @Number AS SMALLINT, @Term AS TINYINT, @displayname AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @Name = NULL,
+       @Code = NULL,
+       @Number = 0,
+       @Term = NULL,
+       @displayname = NULL;
+
+EXECUTE @RC = [dbo].[PullActiveClassSpecificStickers] @Name, @Code, @Number, @Term, @displayname;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_PullChatMessagesAndFilesBetweenUsersTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.PullChatMessagesAndFilesBetweenUsers
+DECLARE @RC AS INT, @user AS VARCHAR (61), @tutor AS VARCHAR (61);
+
+SELECT @RC = 0,
+       @user = NULL,
+       @tutor = NULL;
+
+EXECUTE @RC = [dbo].[PullChatMessagesAndFilesBetweenUsers] @user, @tutor;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_RetrieveLoginTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.RetrieveLogin
+DECLARE @RC AS INT, @useremail AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @useremail = NULL;
+
+EXECUTE @RC = [dbo].[RetrieveLogin] @useremail;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateAdminPasswordByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateAdminPasswordByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @AdminPassword AS NVARCHAR (32);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @AdminPassword = NULL;
+
+EXECUTE @RC = [dbo].[UpdateAdminPasswordByServerID] @ServerID, @AdminPassword;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateAdminUsernameByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateAdminUsernameByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @AdminUsername AS VARCHAR (30);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @AdminUsername = NULL;
+
+EXECUTE @RC = [dbo].[UpdateAdminUsernameByServerID] @ServerID, @AdminUsername;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateCourseCodeByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateCourseCodeByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @CourseCode AS VARCHAR (5);
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @CourseCode = NULL;
+
+EXECUTE @RC = [dbo].[UpdateCourseCodeByClassID] @ClassID, @CourseCode;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateCourseNameByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateCourseNameByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @CourseName AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @CourseName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateCourseNameByClassID] @ClassID, @CourseName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateCourseNumberByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateCourseNumberByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @CourseNumber AS SMALLINT;
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @CourseNumber = 0;
+
+EXECUTE @RC = [dbo].[UpdateCourseNumberByClassID] @ClassID, @CourseNumber;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateDisplayFNameByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateDisplayFNameByUserID
+DECLARE @RC AS INT, @UserID AS INT, @DisplayFName AS VARCHAR (30);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @DisplayFName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateDisplayFNameByUserID] @UserID, @DisplayFName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateDisplayLNameByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateDisplayLNameByUserID
+DECLARE @RC AS INT, @UserID AS INT, @DisplayLName AS VARCHAR (30);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @DisplayLName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateDisplayLNameByUserID] @UserID, @DisplayLName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateEmailAddressByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateEmailAddressByUserID
+DECLARE @RC AS INT, @UserID AS INT, @EmailAddress AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @EmailAddress = NULL;
+
+EXECUTE @RC = [dbo].[UpdateEmailAddressByUserID] @UserID, @EmailAddress;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateEmailCredentialsByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateEmailCredentialsByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @EmailCredentials AS NVARCHAR (50);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @EmailCredentials = NULL;
+
+EXECUTE @RC = [dbo].[UpdateEmailCredentialsByServerID] @ServerID, @EmailCredentials;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateMentorNameByMentorIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateMentorNameByMentorID
+DECLARE @RC AS INT, @MentorID AS INT, @OrganizationName AS NVARCHAR (50);
+
+SELECT @RC = 0,
+       @MentorID = 0,
+       @OrganizationName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateMentorNameByMentorID] @MentorID, @OrganizationName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateMessageByMessageIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateMessageByMessageID
+DECLARE @RC AS INT, @MessageID AS INT, @MessageData AS NVARCHAR (500);
+
+SELECT @RC = 0,
+       @MessageID = 0,
+       @MessageData = NULL;
+
+EXECUTE @RC = [dbo].[UpdateMessageByMessageID] @MessageID, @MessageData;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdatePrivilegesByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdatePrivilegesByUserID
+DECLARE @RC AS INT, @UserID AS INT, @Privileges AS BINARY (4);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @Privileges = NULL;
+
+EXECUTE @RC = [dbo].[UpdatePrivilegesByUserID] @UserID, @Privileges;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateReviewDescriptionByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateReviewDescriptionByReviewID
+DECLARE @RC AS INT, @ReviewID AS INT, @Description AS NVARCHAR (250);
+
+SELECT @RC = 0,
+       @ReviewID = 0,
+       @Description = NULL;
+
+EXECUTE @RC = [dbo].[UpdateReviewDescriptionByReviewID] @ReviewID, @Description;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateSchoolNameByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateSchoolNameByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @SchoolName AS VARCHAR (75);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @SchoolName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateSchoolNameByServerID] @ServerID, @SchoolName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateServerDomainByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateServerDomainByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @ServerDomain AS VARCHAR (50);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @ServerDomain = NULL;
+
+EXECUTE @RC = [dbo].[UpdateServerDomainByServerID] @ServerID, @ServerDomain;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateServerIPByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateServerIPByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @ServerIP AS VARCHAR (15);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @ServerIP = NULL;
+
+EXECUTE @RC = [dbo].[UpdateServerIPByServerID] @ServerID, @ServerIP;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateServerNameByServerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateServerNameByServerID
+DECLARE @RC AS INT, @ServerID AS INT, @ServerName AS VARCHAR (75);
+
+SELECT @RC = 0,
+       @ServerID = 0,
+       @ServerName = NULL;
+
+EXECUTE @RC = [dbo].[UpdateServerNameByServerID] @ServerID, @ServerName;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateStarRankingByReviewIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateStarRankingByReviewID
+DECLARE @RC AS INT, @ReviewID AS INT, @StarRanking AS TINYINT;
+
+SELECT @RC = 0,
+       @ReviewID = 0,
+       @StarRanking = NULL;
+
+EXECUTE @RC = [dbo].[UpdateStarRankingByReviewID] @ReviewID, @StarRanking;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateStickerProblemDescriptionByStickerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateStickerProblemDescriptionByStickerID
+DECLARE @RC AS INT, @StickerID AS INT, @ProblemDescription AS NVARCHAR (500);
+
+SELECT @RC = 0,
+       @StickerID = 0,
+       @ProblemDescription = NULL;
+
+EXECUTE @RC = [dbo].[UpdateStickerProblemDescriptionByStickerID] @StickerID, @ProblemDescription;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateTermsOfferedByClassIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateTermsOfferedByClassID
+DECLARE @RC AS INT, @ClassID AS INT, @TermOffered AS TINYINT;
+
+SELECT @RC = 0,
+       @ClassID = 0,
+       @TermOffered = NULL;
+
+EXECUTE @RC = [dbo].[UpdateTermsOfferedByClassID] @ClassID, @TermOffered;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateTimeoutByStickerIDAndSecondsTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateTimeoutByStickerIDAndSeconds
+DECLARE @RC AS INT, @StickerID AS INT, @Seconds AS INT;
+
+SELECT @RC = 0,
+       @StickerID = 0,
+       @Seconds = 0;
+
+EXECUTE @RC = [dbo].[UpdateTimeoutByStickerIDAndSeconds] @StickerID, @Seconds;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateTutorIDByTutorIDAndStickerIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateTutorIDByTutorIDAndStickerID
+DECLARE @RC AS INT, @TutorID AS INT, @StickerID AS INT;
+
+SELECT @RC = 0,
+       @TutorID = 0,
+       @StickerID = 0;
+
+EXECUTE @RC = [dbo].[UpdateTutorIDByTutorIDAndStickerID] @TutorID, @StickerID;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_UpdateUserPasswordByUserIDTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.UpdateUserPasswordByUserID
+DECLARE @RC AS INT, @UserID AS INT, @UserPassword AS NVARCHAR (32);
+
+SELECT @RC = 0,
+       @UserID = 0,
+       @UserPassword = NULL;
+
+EXECUTE @RC = [dbo].[UpdateUserPasswordByUserID] @UserID, @UserPassword;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_ViewAllClassesTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.ViewAllClasses
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[ViewAllClasses] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_ViewAllUsersTest_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for dbo.ViewAllUsers
+DECLARE @RC AS INT;
+
+SELECT @RC = 0;
+
+EXECUTE @RC = [dbo].[ViewAllUsers] ;
+
+SELECT @RC AS RC;
+
+</value>
+  </data>
+  <data name="dbo_AdminPullAllReportsTest_PretestAction.SqlScript" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dbo_ChangeProfilePictureTest_PretestAction.SqlScript" xml:space="preserve">
+    <value>DECLARE @tempUserID as INT;
+
+IF EXISTS(SELECT * FROM UserProfile
+WHERE (	DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and
+		DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and
+		EmailAddress = 'TESTING@TESTING.COM'))
+
+BEGIN
+	SELECT @tempUserID = (SELECT UserID FROM UserProfile WHERE (DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and EmailAddress = 'TESTING@TESTING.COM'));
+
+	IF EXISTS (SELECT * FROM Picture WHERE UserID = @tempUserID)
+	BEGIN
+		DELETE FROM Picture
+		WHERE UserID = @tempUserID;
+	END;
+
+	DELETE FROM UserProfile
+	WHERE( DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and
+		   DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and
+		   EmailAddress = 'TESTING@TESTING.COM');
+END;
+
+
+
+INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, [Privileges])
+VALUES ('THIS_IS_FOR_TESTINNG_PURPOSES', 'THIS_IS_FOR_TESTING_PURPOSES', 'TESTING@TESTING.COM', 'TESTINGPASSWORD', 'Admin');
+
+SELECT @@ROWCOUNT;
+
+SELECT * FROM UserProfile
+WHERE (	DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and
+		DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and
+		EmailAddress = 'TESTING@TESTING.COM');
+
+SELECT @tempUserId = (SELECT UserID FROM UserProfile
+					 WHERE ( DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and
+							 DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and
+							 EmailAddress = 'TESTING@TESTING.COM'));
+
+
+INSERT INTO Picture (UserID, Photo)
+Values(@tempUserId, CONVERT(varbinary(MAX),'THIS_IS_A_TEST_PICTURE')); </value>
+  </data>
+  <data name="dbo_ChangeProfilePictureTest_PosttestAction.SqlScript" xml:space="preserve">
+    <value>DECLARE @tempUserID as INT;
+
+SELECT @tempUserID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and EmailAddress = 'TESTING@TESTING.COM');
+
+DELETE FROM Picture
+WHERE UserID = @tempUserID;
+
+SELECT @@RowCount;
+
+DELETE FROM UserProfile
+WHERE	( DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and
+		  DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and
+		  EmailAddress = 'TESTING@TESTING.COM');
+
+SELECT @@RowCount;
+
+SELECT *
+FROM Picture 
+WHERE UserID = @tempUserID
+
+SELECT *
+FROM UserProfile
+WHERE (	  DisplayFName = 'THIS_IS_FOR_TESTINNG_PURPOSES' and
+		  DisplayLName = 'THIS_IS_FOR_TESTING_PURPOSES'  and
+		  EmailAddress = 'TESTING@TESTING.COM')</value>
+  </data>
+  <data name="dbo_ClearReviewDescriptionByReviewIDTest_PretestAction.SqlScript" xml:space="preserve">
+    <value />
+  </data>
+  <data name="testInitializeAction.SqlScript" xml:space="preserve">
+    <value>/*
+SQL statements that run before each test method (unit test) 
+in this test class is run.
+
+In the lower pane, test conditions verify the results of the 
+SQL statements match what was expected.
+*/
+
+/********************************************************************
+*	Clean Up previously failed tests
+********************************************************************/
+
+DECLARE @User1ID as INT, @User2ID as INT, @User3ID as INT, @User4ID as INT;
+
+SELECT @User1ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER1_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER1_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER1@TESTING.TEST');
+SELECT @User2ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER2_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER2_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER2@TESTING.TEST'); 
+SELECT @User3ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER3_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER3_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER3@TESTING.TEST'); 
+SELECT @User4ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER4_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER4_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER4@TESTING.TEST');
+
+DECLARE @Class1ID as INT, @Class2ID as INT, @Class3ID as INT;
+
+SELECT @Class1ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME1' and CourseCode = 'TST_1'  and CourseNumber = 000 and TermOffered = 000);
+SELECT @Class2ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME2' and CourseCode = 'TST_2'  and CourseNumber = 000 and TermOffered = 000);
+SELECT @Class3ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME3' and CourseCode = 'TST_3'  and CourseNumber = 000 and TermOffered = 000);
+
+
+DECLARE @Sticker1ID as INT, @Sticker2ID as INT, @Sticker3ID as INT;
+
+SELECT @Sticker1ID = (SELECT StickerID FROM Sticker where ProblemDescription = 'THIS_IS_A_TEST1_PROBLEM_DESC' and ClassID = @Class1ID and StudentID = @User1ID and TutorID IS NULL and MinimumStarRanking IS NULL);
+SELECT @Sticker2ID = (SELECT StickerID FROM Sticker where ProblemDescription = 'THIS_IS_A_TEST2_PROBLEM_DESC' and ClassID = @Class2ID and StudentID = @User2ID and TutorID IS NULL and MinimumStarRanking = 5);
+SELECT @Sticker3ID = (SELECT StickerID FROM Sticker where ProblemDescription = 'THIS_IS_A_TEST3_PROBLEM_DESC' and ClassID = @Class3ID and StudentID = @User3ID and TutorID = @User4ID and MinimumStarRanking = 1);
+
+DECLARE @Review1ID as INT, @Review2ID as INT;
+
+SELECT @Review1ID = (SELECT ReviewID FROM Review WHERE StickerID = @Sticker3ID and ReviewerID = @User3ID and StarRanking = 5 and [Description] = 'THIS_IS_A_TEST1_REVIEW_DESC')
+SELECT @Review2ID = (SELECT ReviewID FROM Review WHERE StickerID = @Sticker3ID and ReviewerID = @User4ID and StarRanking = 1 and [Description] = 'THIS_IS_A_TEST2_REVIEW_DESC')
+
+DECLARE @Mentor1ID as INT, @Mentor2ID as INT, @Mentor3ID as INT, @Mentor4ID as INT;
+
+SELECT @Mentor1ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME1');
+SELECT @Mentor2ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME2');
+SELECT @Mentor3ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME3');
+SELECT @Mentor4ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME4');
+
+DECLARE @tempChatstable as table ( tempChatID int);
+
+INSERT INTO @tempChatstable
+	SELECT DISTINCT ChatID
+	From UserToChat
+	Where UserID = @User1ID or UserID = @User2ID or UserID = @User3ID or UserID = @User4ID;
+
+DECLARE @Chat1ID as INT, @Chat2ID as INT, @Chat3ID as INT, @chat4ID INT;
+
+SELECT @Chat1ID = (SELECT TOP (1) tempChatID FROM @tempchatstable);
+DELETE FROM @tempChatstable WHERE tempChatID = @Chat1ID;
+
+SELECT @Chat2ID = (SELECT TOP (1) tempChatID FROM @tempchatstable);
+DELETE FROM @tempChatstable WHERE tempChatID = @Chat2ID;
+
+SELECT @Chat3ID = (SELECT TOP (1) tempChatID FROM @tempchatstable);
+DELETE FROM @tempChatstable WHERE tempChatID = @Chat3ID;
+
+SELECT @Chat4ID = (SELECT TOP (1) tempChatID FROM @tempchatstable);
+DELETE FROM @tempChatstable WHERE tempChatID = @Chat4ID;
+
+DECLARE @File1ID as INT, @File2ID as INT;
+
+SELECT @File1ID = (SELECT FileId FROM Files WHERE ChatID = @Chat1ID and FileData =  0x544849535F49535F415F54455354315F46494C45);
+SELECT @File2ID = (SELECT FileId FROM Files WHERE ChatID = @Chat2ID and FileData =  0x544849535F49535F415F54455354325F46494C45);
+
+DECLARE @Message1ID as INT, @Message2ID as INT;
+
+SELECT @Message1ID = (SELECT MessageID FROM [Messages] WHERE ChatID = @Chat1ID and MessageData = 'THIS_IS_A_TEST_MESSAGE(1)_IN_CHAT_1');
+SELECT @Message2ID = (SELECT MessageID FROM [Messages] WHERE ChatID = @Chat1ID and MessageData = 'THIS_IS_A_TEST_MESSAGE(2)_IN_CHAT_1');
+SELECT @Message3ID = (SELECT MessageID FROM [Messages] WHERE ChatID = @Chat3ID and MessageData = 'THIS_IS_A_TEST_MESSAGE(3)_IN_CHAT_3');
+
+DELETE
+FROM [Messages]
+WHERE MessageID = @Message1ID or
+	  MessageID = @Message2ID or
+	  MessageID = @Message3ID;
+
+DELETE
+FROM Files
+WHERE FileID = @File1ID or
+	  FileID = @File2ID;
+
+DELETE
+FROM UserToChat
+WHERE UserId = @User1ID or
+	  UserID = @User2ID or
+	  UserID = @User3ID or
+	  UserID = @User4ID;
+
+DELETE
+FROM Chat
+WHere ChatID = @Chat1ID or
+	  ChatID = @Chat2ID or
+	  ChatID = @Chat3ID or
+	  ChatID = @Chat4ID;
+
+DELETE
+FROM OmToUser
+WHERE UserID = @User1ID or
+	  UserID = @User2ID or
+	  UserID = @User3ID;
+
+DELETE
+FROM OfficialMentor
+WHERE MentorID = @Mentor1ID or
+	  MentorID = @Mentor2ID or
+	  MentorID = @Mentor3ID or
+	  MentorID = @Mentor4ID;
+
+DELETE
+FROM Review
+WHERE ReviewID = @Review1ID or
+	  ReviewID = @Review2ID;
+
+DELETE
+FROM Sticker
+WHERE StickerID = @Sticker1ID or 
+	  StickerID = @Sticker2ID or
+	  StickerID = @Sticker3ID;
+
+DELETE 
+FROM UserToClass
+WHERE UserID = @User1ID or 
+	  UserID = @User2ID or
+	  UserID = @User3ID or
+	  UserID = @User4ID;
+
+DELETE 
+FROM Classes
+WHERE ClassID = @Class1ID or
+	  ClassID = @Class2ID or
+	  ClassID = @Class3ID;
+
+DELETE
+FROM Picture
+WHERE UserID = @User1ID or
+	  UserID = @User2ID or
+	  UserID = @User3ID;
+
+DELETE 
+FROM UserProfile
+WHERE UserID = @User1ID or
+	  UserID = @User2ID or
+	  UserID = @User3ID or
+	  UserID = @User4ID;
+
+
+/********************************************************************
+*	Begin Insert of Clean Data 
+********************************************************************/
+
+
+--INSERTING USER 1
+INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, [Privileges])
+VALUES ('THIS_IS_TEST_USER1_DISPLAYFNAME', 'THIS_IS_TEST_USER1_DISPLAYLNAME', 'TESTING_USER1@TESTING.TEST', 'TESTINGPASSWORD', 'Admin');
+
+--INSERTING USER 2
+INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, [Privileges])
+VALUES ('THIS_IS_TEST_USER2_DISPLAYFNAME', 'THIS_IS_TEST_USER2_DISPLAYLNAME', 'TESTING_USER2@TESTING.TEST', 'TESTINGPASSWORD', 'Admin');
+
+--Insert User 3 
+INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, [Privileges])
+VALUES ('THIS_IS_TEST_USER3_DISPLAYFNAME', 'THIS_IS_TEST_USER3_DISPLAYLNAME', 'TESTING_USER3@TESTING.TEST', 'TESTINGPASSWORD', 'Admin');
+
+--Insert User 4
+INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, [Privileges])
+VALUES ('THIS_IS_TEST_USER4_DISPLAYFNAME', 'THIS_IS_TEST_USER4_DISPLAYLNAME', 'TESTING_USER4@TESTING.TEST', 'TESTINGPASSWORD', 'Admin');
+	
+SELECT @User1ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER1_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER1_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER1@TESTING.TEST');
+SELECT @User2ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER2_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER2_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER2@TESTING.TEST'); 
+SELECT @User3ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER3_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER3_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER3@TESTING.TEST'); 
+SELECT @User4ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER4_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER4_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER4@TESTING.TEST'); 
+
+SELECT * FROM UserProfile WHERE UserID = @User1ID or UserID = @User2ID or UserID = @User3ID or UserID = @User4ID;
+
+/********************************************************************
+*	INSERT 3 Profile Pictures
+********************************************************************/
+--Insert Picture 1
+INSERT INTO Picture (UserID, Photo)
+Values (@User1ID, Convert(varbinary(MAX), 'THIS_IS_A_TEST1_PICTURE'));
+
+--Insert Picture 2
+INSERT INTO Picture (UserID, Photo)
+Values (@User2ID, Convert(varbinary(MAX), 'THIS_IS_A_TEST2_PICTURE'));
+
+--Insert Picture 3
+INSERT INTO Picture (UserID, Photo)
+Values (@User3ID, Convert(varbinary(MAX), 'THIS_IS_A_TEST3_PICTURE'));
+
+/********************************************************************
+*	INSERT 3 Test Classes
+********************************************************************/
+--Insert Class 1
+INSERT INTO Classes (CourseName, CourseCode, CourseNumber, TermOffered)
+VALUES ('THIS_IS_TEST_COURSENAME1', 'TST_1', 000, 000)
+
+--Insert Class 2
+INSERT INTO Classes (CourseName, CourseCode, CourseNumber, TermOffered)
+VALUES ('THIS_IS_TEST_COURSENAME2', 'TST_2', 000, 000)
+
+--Insert Class 3
+INSERT INTO Classes (CourseName, CourseCode, CourseNumber, TermOffered)
+VALUES ('THIS_IS_TEST_COURSENAME3', 'TST_3', 000, 000)
+
+SELECT @Class1ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME1' and CourseCode = 'TST_1'  and CourseNumber = 000 and TermOffered = 000);
+SELECT @Class2ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME2' and CourseCode = 'TST_2'  and CourseNumber = 000 and TermOffered = 000);
+SELECT @Class3ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME3' and CourseCode = 'TST_3'  and CourseNumber = 000 and TermOffered = 000);
+
+SELECT * FROM Classes WHERE ClassID = @Class1ID or ClassID = @Class2ID or ClassID = @Class3ID;
+
+/********************************************************************
+*	INSERT 5 UserToClass 
+********************************************************************/
+--Insert 1st user to class relationship
+INSERT INTO UserToClass (UserID, ClassID)
+Values(@User1ID, @Class1ID);
+
+--Insert 2nd user to class relationship
+INSERT INTO UserToClass (UserID, ClassID)
+Values(@User1ID, @Class2ID);
+
+--Insert 3rd user to class relationship
+INSERT INTO UserToClass (UserID, ClassID)
+Values(@User2ID, @Class2ID);
+
+--Insert 4th user to class relationship
+INSERT INTO UserToClass (UserID, ClassID)
+Values(@User3ID, @Class3ID);
+
+--Insert 5th user to class relationship
+INSERT INTO UserToClass (UserID, ClassID)
+Values(@User4ID, @Class3ID);
+
+SELECT * FROM UserToClass WHERE UserID = @User1ID or UserID = @User2ID or UserID = @User3ID or UserID = @User4ID;
+
+/********************************************************************
+*	INSERT 3 Stickers
+********************************************************************/
+--Insert sticker 1
+INSERT INTO Sticker (ProblemDescription, ClassId, StudentId, TutorID, MinimumStarRanking, SubmitTime, [Timeout])
+VALUES('THIS_IS_A_TEST1_PROBLEM_DESC', @Class1ID, @User1ID, NULL, NULL, GETDATE(), DATEADD(second, 999999, GETDATE()));  
+
+
+--Insert sticker 2
+INSERT INTO Sticker (ProblemDescription, ClassId, StudentId, TutorID, MinimumStarRanking, SubmitTime, [Timeout])
+VALUES('THIS_IS_A_TEST2_PROBLEM_DESC', @Class2ID, @User2ID, NULL, 5, GETDATE(), DATEADD(second, 999999, GETDATE()));
+
+--Insert sticker 3
+INSERT INTO Sticker (ProblemDescription, ClassId, StudentId, TutorID, MinimumStarRanking, SubmitTime, [Timeout])
+VALUES('THIS_IS_A_TEST3_PROBLEM_DESC', @Class3ID, @User3ID, @User4ID, 1, GETDATE(), DATEADD(second, 999999, GETDATE()));
+
+SELECT @Sticker1ID = (SELECT StickerID FROM Sticker where ProblemDescription = 'THIS_IS_A_TEST1_PROBLEM_DESC' and ClassID = @Class1ID and StudentID = @User1ID and TutorID IS NULL and MinimumStarRanking IS NULL);
+SELECT @Sticker2ID = (SELECT StickerID FROM Sticker where ProblemDescription = 'THIS_IS_A_TEST2_PROBLEM_DESC' and ClassID = @Class2ID and StudentID = @User2ID and TutorID IS NULL and MinimumStarRanking = 5);
+SELECT @Sticker3ID = (SELECT StickerID FROM Sticker where ProblemDescription = 'THIS_IS_A_TEST3_PROBLEM_DESC' and ClassID = @Class3ID and StudentID = @User3ID and TutorID = @User4ID and MinimumStarRanking = 1);
+
+SELECT * FROM Sticker WHERE StickerID = @Sticker1ID or StickerID = @Sticker2ID or StickerID = @Sticker3ID;
+
+/********************************************************************
+*	INSERT 2 Reviews
+********************************************************************/
+INSERT INTO Review (StickerID, ReviewerID, StarRanking, [Description])
+VALUES (@Sticker3ID, @User3ID, 5, 'THIS_IS_A_TEST1_REVIEW_DESC')
+
+INSERT INTO Review (StickerID, ReviewerID, StarRanking, [Description])
+VALUES (@Sticker3ID, @User4ID, 1, 'THIS_IS_A_TEST2_REVIEW_DESC')
+
+SELECT @Review1ID = (SELECT ReviewID FROM Review WHERE StickerID = @Sticker3ID and ReviewerID = @User3ID and StarRanking = 5 and [Description] = 'THIS_IS_A_TEST1_REVIEW_DESC')
+SELECT @Review2ID = (SELECT ReviewID FROM Review WHERE StickerID = @Sticker3ID and ReviewerID = @User4ID and StarRanking = 1 and [Description] = 'THIS_IS_A_TEST2_REVIEW_DESC')
+
+SELECT * FROM Review WHERE ReviewID = @Review1ID or ReviewID = @Review2ID;
+
+/********************************************************************
+*	INSERT 4 Mentors
+********************************************************************/
+--Insert Mentor Program 1
+INSERT INTO OfficialMentor (OrganizationName)
+VALUES ('TEST_ORGANIZATION_NAME1');
+ 
+--Insert Mentor Program 2
+INSERT INTO OfficialMentor (OrganizationName)
+VALUES ('TEST_ORGANIZATION_NAME2');
+
+--Insert Mentor Program 3
+INSERT INTO OfficialMentor (OrganizationName)
+VALUES ('TEST_ORGANIZATION_NAME3');
+
+--Insert Mentor Program 4
+INSERT INTO OfficialMentor (OrganizationName)
+VALUES ('TEST_ORGANIZATION_NAME4');
+
+SELECT @Mentor1ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME1');
+SELECT @Mentor2ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME2');
+SELECT @Mentor3ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME3');
+SELECT @Mentor4ID = (SELECT MentorID FROM OfficialMentor WHERE OrganizationName = 'TEST_ORGANIZATION_NAME4');
+
+SELECT * FROM OfficialMentor WHERE MentorID = @Mentor1ID or MentorID = @Mentor2ID or MentorID = @Mentor3ID or MentorID = @Mentor4ID;
+
+/********************************************************************
+*	Insert 6 OmToUser relationships
+********************************************************************/
+--Insert OmToUser 1
+INSERT INTO OmToUser(UserID, MentorID)
+VALUES (@User1ID, @Mentor1ID);
+
+--Insert OmToUser 2
+INSERT INTO OmToUser(UserID, MentorID)
+VALUES (@User1ID, @Mentor2ID);
+
+--Insert OmToUser 3
+INSERT INTO OmToUser(UserID, MentorID)
+VALUES (@User1ID, @Mentor3ID);
+
+--Insert OmToUser 4
+INSERT INTO OmToUser(UserID, MentorID)
+VALUES (@User2ID, @Mentor1ID);
+
+--Insert OmToUser 5
+INSERT INTO OmToUser(UserID, MentorID)
+VALUES (@User2ID, @Mentor2ID);
+
+--Insert OmToUser 6
+INSERT INTO OmToUser(UserID, MentorID)
+VALUES (@User3ID, @Mentor4ID);
+
+SELECT * FROM OmToUser WHERE UserId = @User1ID or UserID = @User2ID or UserID = @User3ID;
+
+/********************************************************************
+*	Insert 4 Chats
+********************************************************************/
+INSERT INTO Chat DEFAULT VALUES;
+SELECT @Chat1ID = @@IDENTITY;
+INSERT INTO Chat DEFAULT VALUES;
+SELECT @Chat2ID = @@IDENTITY;
+INSERT INTO Chat DEFAULT VALUES;
+SELECT @Chat3ID = @@IDENTITY;
+INSERT INTO Chat DEFAULT VALUES;
+SELECT @Chat4ID = @@IDENTITY;
+
+SELECT * FROM Chat WHERE ChatID = @Chat1ID or ChatID = @Chat2ID or ChatID = @Chat3ID or ChatID = @Chat4ID
+
+/********************************************************************
+*	Insert 5 UserToChat
+********************************************************************/
+--Insert chat 1
+INSERT INTO UserToChat (UserID, ChatID)
+VALUES (@User1ID, @Chat1ID)
+
+--Insert chat 2
+INSERT INTO UserToChat (UserID, ChatID)
+VALUES (@User2ID, @Chat1ID)
+
+--Insert chat 3
+INSERT INTO UserToChat (UserID, ChatID)
+VALUES (@User2ID, @Chat2ID)
+
+--Insert chat 4
+INSERT INTO UserToChat (UserID, ChatID)
+VALUES (@User3ID, @Chat3ID)
+
+--Insert chat 5
+INSERT INTO UserToChat (UserID, ChatID)
+VALUES (@User4ID, @Chat4ID)
+
+SELECT * FROM UserToChat WHERE UserID = @User1ID or UserID = @User2ID or UserId = @User3ID or UserID = @User4ID;
+
+/********************************************************************
+*	Insert 2 Files
+********************************************************************/
+INSERT INTO Files (ChatID, FileData)
+VALUES (@Chat1ID, convert(varbinary(MAX),'THIS_IS_A_TEST1_FILE') )
+
+INSERT INTO Files (ChatID, FileData)
+VALUES (@Chat2ID, convert(varbinary(MAX), 'THIS_IS_A_TEST2_FILE'))
+
+SELECT @File1ID = (SELECT FileId FROM Files WHERE ChatID = @Chat1ID and FileData =  0x544849535F49535F415F54455354315F46494C45)
+SELECT @File2ID = (SELECT FileId FROM Files WHERE ChatID = @Chat2ID and FileData =  0x544849535F49535F415F54455354325F46494C45)
+
+SELECT * FROM FILES WHERE FileID = @File1ID or FileID = @File2ID;
+
+/********************************************************************
+*	Insert 3 Messages
+********************************************************************/
+INSERT INTO [Messages] (ChatID, MessageData)
+VALUES (@Chat1ID, 'THIS_IS_A_TEST_MESSAGE(1)_IN_CHAT_1');
+
+INSERT INTO [Messages] (ChatID, MessageData)
+VALUES (@Chat1ID, 'THIS_IS_A_TEST_MESSAGE(2)_IN_CHAT_1');
+
+INSERT INTO [Messages] (ChatID, MessageData)
+VALUES (@Chat3ID, 'THIS_IS_A_TEST_MESSAGE(3)_IN_CHAT_3');
+
+SELECT @Message1ID = (SELECT MessageID FROM [Messages] WHERE ChatID = @Chat1ID and MessageData = 'THIS_IS_A_TEST_MESSAGE(1)_IN_CHAT_1');
+SELECT @Message2ID = (SELECT MessageID FROM [Messages] WHERE ChatID = @Chat1ID and MessageData = 'THIS_IS_A_TEST_MESSAGE(2)_IN_CHAT_1');
+SELECT @Message3ID = (SELECT MessageID FROM [Messages] WHERE ChatID = @Chat3ID and MessageData = 'THIS_IS_A_TEST_MESSAGE(3)_IN_CHAT_3');
+
+SELECT * FROM [Messages] WHERE MessageID = @Message1ID or MessageID = @Message2ID or MessageID = @Message3ID;</value>
+  </data>
+  <data name="testCleanupAction.SqlScript" xml:space="preserve">
+    <value>/*
+Add SQL statements here that you want to run after 
+each test method (unit test) in this test class is run.
+
+In the lower pane, you can add test conditions that verify 
+whether the results of your SQL statements match what 
+you expect.
+*/
+
+DECLARE @User1ID as INT, @User2ID as INT, @User3ID as INT, @User4ID as INT;
+
+SELECT @User1ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER1_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER1_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER1@TESTING.TEST');
+SELECT @User2ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER2_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER2_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER2@TESTING.TEST'); 
+SELECT @User3ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER3_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER3_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER3@TESTING.TEST'); 
+SELECT @User4ID = (SELECT UserID FROM UserProfile WHERE DisplayFName = 'THIS_IS_TEST_USER4_DISPLAYFNAME' and DisplayLName = 'THIS_IS_TEST_USER4_DISPLAYLNAME'  and EmailAddress = 'TESTING_USER4@TESTING.TEST');
+
+DECLARE @Class1ID as INT, @Class2ID as INT, @Class3ID as INT;
+
+SELECT @Class1ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME1' and CourseCode = 'TST_1'  and CourseNumber = 000 and TermOffered = 000);
+SELECT @Class2ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME2' and CourseCode = 'TST_2'  and CourseNumber = 000 and TermOffered = 000);
+SELECT @Class3ID = (SELECT ClassID FROM Classes WHERE CourseName = 'THIS_IS_TEST_COURSENAME3' and CourseCode = 'TST_3'  and CourseNumber = 000 and TermOffered = 000);
+
+
+DELETE 
+FROM UserToClass
+WHERE UserID = @User1ID;
+
+DELETE 
+FROM UserToClass
+WHERE UserID = @User2ID;
+
+DELETE 
+FROM UserToClass
+WHERE UserID = @User3ID;
+
+DELETE 
+FROM UserToClass
+WHERE UserID = @User4ID;
+
+
+DELETE 
+FROM UserProfile
+WHERE UserID = @User1ID; 
+
+DELETE 
+FROM UserProfile
+WHERE UserID = @User2ID;
+
+DELETE 
+FROM UserProfile
+WHERE UserID = @User3ID;
+
+DELETE 
+FROM UserProfile
+WHERE UserID = @User4ID;
+
+DELETE 
+FROM Classes
+WHERE ClassID = @Class1ID;
+
+DELETE 
+FROM Classes
+WHERE ClassID = @Class2ID;
+
+DELETE 
+FROM Classes
+WHERE ClassID = @Class3ID;
+
+
+</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+</root>
