@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -97,30 +98,26 @@ namespace DataInputter
             Console.ResetColor();
 
             Console.WriteLine("Begining Inserting Users");
-            Task task1 = Task.Factory.StartNew(()=> InsertUsers(connectionString));
-            Console.WriteLine("Begining Inserting Classes");
-            Task task2 = Task.Factory.StartNew(() => InsertClasses(connectionString));
-            Task.WaitAll(task1, task2);
+            InsertUsers(connectionString);
             Console.WriteLine("         Inserting Users Complete");
+            Console.WriteLine("Begining Inserting Classes");
+            InsertClasses(connectionString);
+                       
             Console.WriteLine("         Inserting Classes Complete");
 
             Console.WriteLine("Begining Inserting Stickers");
             InsertStickers(connectionString);
             Console.WriteLine("         Inserting Stickers Complete");
-
-
+            
             Console.WriteLine("Begining Inserting Reviews");
-            Console.WriteLine("Begining Inserting Official Mentor Orgs");
-            Console.WriteLine("Begining Inserting Official Mentors");
-            Task task3 = Task.Factory.StartNew(() => InsertReviews(connectionString));
-            Task task4 = Task.Factory.StartNew(() => InsertOfficialMentoringOrgs(connectionString));
-            Task task5 = Task.Factory.StartNew(() => InsertOfficalMentors(connectionString));
-            Task.WaitAll(task3, task4, task5);
-
+            InsertReviews(connectionString);
             Console.WriteLine("         Inserting Reviews Complete");
+            Console.WriteLine("Begining Inserting Official Mentor Orgs");
+            InsertOfficialMentoringOrgs(connectionString);
             Console.WriteLine("         Inserting Official Mentor Orgs Complete");
+            Console.WriteLine("Begining Inserting Official Mentors");
+            InsertOfficalMentors(connectionString);
             Console.WriteLine("         Inserting Official Mentors Complete");
-
             Console.WriteLine("Begining Inserting Chat");
             InsertChat(connectionString);
             Console.WriteLine("         Inserting Chat Complete");
@@ -157,12 +154,12 @@ namespace DataInputter
                     }
                 }
             }
-
+            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 foreach (DataHolderNames item in listA)
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, Privileges) VALUES (@DisplayFName, @DisplayLName, @EmailAddress, @UserPassword, @Privileges)");
+                    SqlCommand cmd = new SqlCommand("INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, Privileges, Salt) VALUES (@DisplayFName, @DisplayLName, @EmailAddress, @UserPassword, @Privileges, @Salt)");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
                     cmd.Parameters.AddWithValue("@DisplayFName", item.Fname);
@@ -170,7 +167,14 @@ namespace DataInputter
                     cmd.Parameters.AddWithValue("@EmailAddress", item.Email);
                     cmd.Parameters.AddWithValue("@UserPassword", item.Password);
                     cmd.Parameters.AddWithValue("@Privileges", item.Privelidges);
+                    RandomNumberGenerator rng = new RNGCryptoServiceProvider();
+                    
+                        byte[] tokenData = new byte[32];
+                        rng.GetBytes(tokenData);
 
+                        string token = Convert.ToBase64String(tokenData);
+                    
+                    cmd.Parameters.AddWithValue("@Salt", token);
                     connection.Open();
                     cmd.ExecuteNonQuery();
                     connection.Close();
@@ -233,7 +237,7 @@ namespace DataInputter
                 if (!String.IsNullOrWhiteSpace(line))
                 {
                     string[] values = line.Split(',');
-                    if (values.Length >= 7)
+                    if (values.Length >= 4)
                     {
                         DataHolderStickers cont = new DataHolderStickers();
                         cont.ID = values[0];
@@ -331,7 +335,7 @@ namespace DataInputter
                     //    cmd.Parameters.Add(new SqlParameter("@TutorReviewID", Convert.ToInt32(item.ID)));
                     //    cmd.Parameters.Add(new SqlParameter("@StickerID", Convert.ToInt32(item.StickerID)));
                     //}
-                    cmd.ExecuteNonQuery();
+                    // cmd.ExecuteNonQuery();
                     connection.Close();
                 }
             }
