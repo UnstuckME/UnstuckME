@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -97,6 +98,13 @@ namespace TestDataCreator
             // random number makers
             Random RandClass = new Random();
 
+            List<String> StickerOutputList = new List<String>();
+            List<String> ReviewOutputList = new List<String>();
+            List<String> ChatOutputList = new List<String>();
+            List<String> UserToChatOutputList = new List<String>();
+            List<String> MessageOutputList = new List<String>();
+
+
             int MessageID = 1;
             while(CurrentNum <= EndNum)
             {
@@ -124,39 +132,28 @@ namespace TestDataCreator
                 String UserToChatMentorOutput = (Unstucker + "," + CurrentNum);
 
 
-                using (System.IO.StreamWriter StickerFile =
-                new System.IO.StreamWriter(@"..\..\..\..\Stickers.csv", true))
-                {
-                    StickerFile.WriteLine(StickerOutput);
-                }
-                using (System.IO.StreamWriter ReviewFile =
-                new System.IO.StreamWriter(@"..\..\..\..\Review.csv", true))
-                {
-                    ReviewFile.WriteLine(StudentReviewOutput);
-                    ReviewFile.WriteLine(MentorReviewOutput);
-                }
-                using (System.IO.StreamWriter ChatFile =
-                new System.IO.StreamWriter(@"..\..\..\..\Chat.csv", true))
-                {
-                    ChatFile.WriteLine(CurrentNum);
-                }
-                using (System.IO.StreamWriter UserToChatFile =
-                new System.IO.StreamWriter(@"..\..\..\..\UserToChat.csv", true))
-                {
-                    UserToChatFile.WriteLine(UserToChatStudentOutput);
-                    UserToChatFile.WriteLine(UserToChatMentorOutput);
-                }
+                
+                    StickerOutputList.Add(StickerOutput);
+                
+                
+                    ReviewOutputList.Add(StudentReviewOutput);
+                    ReviewOutputList.Add(MentorReviewOutput);
+                
+                
+                    ChatOutputList.Add(CurrentNum.ToString());
+                
+                
+                    UserToChatOutputList.Add(UserToChatStudentOutput);
+                    UserToChatOutputList.Add(UserToChatMentorOutput);
+                
 
                 int randMessageNumber = RandClass.Next(5, 30);
                 for (int i = 0; i < randMessageNumber; i++)
                 {
                     String MessageOutput = (MessageID + "," + CurrentNum + "," + "Message " + i);
-                    using (System.IO.StreamWriter MessageFile =
-                    new System.IO.StreamWriter(@"..\..\..\..\Messages.csv", true))
-                    {
-                        MessageFile.WriteLine(MessageOutput);
-                    }
-                    MessageID++;
+                    
+                        MessageOutputList.Add(MessageOutput);
+                        MessageID++;
                 }
 
 
@@ -164,7 +161,72 @@ namespace TestDataCreator
 
                 CurrentNum++;
             }
-           button.Visibility = Visibility.Visible;
+
+
+            new Thread(() =>
+            {
+                using (System.IO.StreamWriter StickerFile =
+                   new System.IO.StreamWriter(@"..\..\..\..\Stickers.csv", true))
+                {
+                    foreach (String item in StickerOutputList)
+                    {
+                        StickerFile.WriteLine(item);
+                    }
+                }
+            }).Start();
+
+            new Thread(() =>
+            {
+                using (System.IO.StreamWriter ReviewFile =
+            new System.IO.StreamWriter(@"..\..\..\..\Review.csv", true))
+            {
+                foreach (String item in ReviewOutputList)
+                {
+                    ReviewFile.WriteLine(item);
+                }
+            }
+            }).Start();
+
+            new Thread(() =>
+            {
+                using (System.IO.StreamWriter ChatFile =
+            new System.IO.StreamWriter(@"..\..\..\..\Chat.csv", true))
+            {
+                foreach (String item in ChatOutputList)
+                {
+                    ChatFile.WriteLine(item);
+                }
+            }
+            }).Start();
+            new Thread(() =>
+                {
+                    using (System.IO.StreamWriter UserToChatFile =
+            new System.IO.StreamWriter(@"..\..\..\..\UserToChat.csv", true))
+            {
+                foreach (String item in UserToChatOutputList)
+                {
+                    UserToChatFile.WriteLine(item);
+                }
+            }
+                }).Start();
+            new Thread(() =>
+                    {
+                        using (System.IO.StreamWriter MessageFile =
+            new System.IO.StreamWriter(@"..\..\..\..\Messages.csv", true))
+            {
+                foreach (String item in MessageOutputList)
+                {
+                    MessageFile.WriteLine(item);
+                }
+            }
+                    }).Start();
+
+
+
+
+            button.Visibility = Visibility.Visible;
+            TextIn_StickerStartNum.Text = (EndNum + 1).ToString();
+            TextIn_ReviewStartNumber.Text = (ReviewStartNumber + 1).ToString();
         }
     }
 }

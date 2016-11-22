@@ -97,27 +97,28 @@ namespace DataInputter
             Console.ResetColor();
 
             Console.WriteLine("Begining Inserting Users");
-            InsertUsers(connectionString);
-            Console.WriteLine("         Inserting Users Complete");
-
+            Task task1 = Task.Factory.StartNew(()=> InsertUsers(connectionString));
             Console.WriteLine("Begining Inserting Classes");
-            InsertClasses(connectionString);
+            Task task2 = Task.Factory.StartNew(() => InsertClasses(connectionString));
+            Task.WaitAll(task1, task2);
+            Console.WriteLine("         Inserting Users Complete");
             Console.WriteLine("         Inserting Classes Complete");
 
             Console.WriteLine("Begining Inserting Stickers");
             InsertStickers(connectionString);
             Console.WriteLine("         Inserting Stickers Complete");
 
+
             Console.WriteLine("Begining Inserting Reviews");
-            InsertReviews(connectionString);
-            Console.WriteLine("         Inserting Reviews Complete");
-
             Console.WriteLine("Begining Inserting Official Mentor Orgs");
-            InsertOfficialMentoringOrgs(connectionString);
-            Console.WriteLine("         Inserting Official Mentor Orgs Complete");
-
             Console.WriteLine("Begining Inserting Official Mentors");
-            InsertOfficalMentors(connectionString);
+            Task task3 = Task.Factory.StartNew(() => InsertReviews(connectionString));
+            Task task4 = Task.Factory.StartNew(() => InsertOfficialMentoringOrgs(connectionString));
+            Task task5 = Task.Factory.StartNew(() => InsertOfficalMentors(connectionString));
+            Task.WaitAll(task3, task4, task5);
+
+            Console.WriteLine("         Inserting Reviews Complete");
+            Console.WriteLine("         Inserting Official Mentor Orgs Complete");
             Console.WriteLine("         Inserting Official Mentors Complete");
 
             Console.WriteLine("Begining Inserting Chat");
