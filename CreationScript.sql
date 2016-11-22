@@ -312,37 +312,48 @@ CREATE
 		END;
 GO
 
-ALTER
+CREATE
 	TRIGGER OnlyAllowCorrectReviews
 	ON Review
 	AFTER INSERT
 	AS
-		BEGIN
-			DECLARE @tempStickerID as INT, @insertedReviewerID as INT, @madeIT as INT;
-			SELECT @madeIT = 0;
+		BEGIN --BEGIN TRIGGER
+			DECLARE @tempStickerID as INT, @insertedReviewerID as INT;
 
 			SELECT @tempStickerID = (SELECT StickerID FROM inserted);
 			SELECT @insertedReviewerID = (SELECT ReviewerID FROM inserted);
-			
-			If((SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID) is NOT NULL)
-			BEGIN
-				IF( (@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID)))
+
+			PRINT('The Sticker ID is:');
+			PRINT( @tempStickerID);
+			PRINT('The Reviewer ID is:');
+			PRINT(@insertedReviewerID);
+
+			IF EXISTS (SELECT tutorID FROM Sticker WHERE StickerID = @tempStickerID)
 				BEGIN
-					IF (NOT EXISTS(SELECT * FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID))
-					BEGIN
-						Print ('Yippy')
-						SELECT @madeIT = 1;
-					END;
-				END;
-			END;
-			
+					PRINT('The sticker has a tutor belogging to it')
+					IF (@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID))
+						BEGIN
+							PRINT('The Reviewer ID is the same as either the student or tutor')
+							IF NOT EXISTS (SELECT * FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID)
+								BEGIN
+									PRINT ('The Sticker does not have a review from this reviewer yet')
+								END;--If the review has already been inserted
+							ELSE
+								BEGIN
+									PRINT ('You already inserted a review for this sticker');
+									ROLLBACK TRANSACTION;
+								END;
+						END;--If the reviewerid is either a tutor or student
+					ELSE
+						BEGIN
+							PRINT('The reviewer is some random ass third party, how did you even find this guy');
+							ROLLBACK TRANSACTION;
+						END;
+				END;-- If the sticker has a tutor
 			ELSE
-			BEGIN
-				IF @madeIT <> 1
-					BEGIN
-						PRINT ('Woopsie')
-						ROLLBACK TRANSACTION
-					END;
-			END;
-		END;
+				BEGIN
+					PRINT('Failed to insert user');
+					ROLLBACK TRANSACTION;
+				END;
+		END;-- END TRIGGER
 GO
