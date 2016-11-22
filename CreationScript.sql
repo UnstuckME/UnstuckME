@@ -318,7 +318,7 @@ CREATE
 	AFTER INSERT
 	AS
 		BEGIN --BEGIN TRIGGER
-			DECLARE @tempStickerID as INT, @insertedReviewerID as INT;
+			DECLARE @tempStickerID as INT, @insertedReviewerID as INT, @NumberReturned as INT;
 
 			SELECT @tempStickerID = (SELECT StickerID FROM inserted);
 			SELECT @insertedReviewerID = (SELECT ReviewerID FROM inserted);
@@ -328,13 +328,16 @@ CREATE
 			PRINT('The Reviewer ID is:');
 			PRINT(@insertedReviewerID);
 
-			IF EXISTS (SELECT tutorID FROM Sticker WHERE StickerID = @tempStickerID)
+			IF ((SELECT tutorID FROM Sticker WHERE StickerID = @tempStickerID) is NOT NULL)
 				BEGIN
 					PRINT('The sticker has a tutor belogging to it')
 					IF (@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID))
 						BEGIN
 							PRINT('The Reviewer ID is the same as either the student or tutor')
-							IF NOT EXISTS (SELECT * FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID)
+							SELECT @NumberReturned = ((SELECT COUNT(*) FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID));
+							PRINT('The number of review matching condition is:');
+							PRINT(@NumberReturned);
+							IF((SELECT COUNT(*) FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID) = 1)
 								BEGIN
 									PRINT ('The Sticker does not have a review from this reviewer yet')
 								END;--If the review has already been inserted
@@ -352,7 +355,7 @@ CREATE
 				END;-- If the sticker has a tutor
 			ELSE
 				BEGIN
-					PRINT('Failed to insert user');
+					PRINT('There is not asscoaiated tutor with this sticker yet');
 					ROLLBACK TRANSACTION;
 				END;
 		END;-- END TRIGGER
