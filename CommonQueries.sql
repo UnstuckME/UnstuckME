@@ -67,6 +67,8 @@ if object_id('GetUserAvgStudentStarRank') is not null
 	drop procedure GetUserAvgStudentStarRank;
 if object_id('GetUserAvgTutorStarRank') is not null
 	drop procedure GetUserAvgTutorStarRank;
+if object_id('GetAllChatIDsAUserIsPartOF') is not null
+	drop procedure GetAllChatIDsAUserIsPartOF;
 if object_id('PullChatMessagesAndFilesBetweenUsers') is not null
 	drop procedure PullChatMessagesAndFilesBetweenUsers;
 
@@ -139,7 +141,7 @@ begin
 	select DisplayFName + ' ' + DisplayLName as Student, EmailAddress,
 		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
 		ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
-		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Classes.ClassID = Sticker.ClassID
 end;
 
@@ -149,10 +151,10 @@ end;
 go
 create proc GetAllStudentReviews as
 begin
-	select DisplayFName + ' ' + DisplayLName as Reviewer, StarRanking, Description
+	select Sticker.StickerID, DisplayFName + ' ' + DisplayLName as Reviewer, StarRanking, Description
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Review.ReviewerID = Sticker.StudentID
-										and Review.ReviewerID <> Sticker.TutorID
+		join Review					on Review.ReviewerID = Sticker.TutorID
+										and Sticker.StickerID = Review.StickerID
 end;
 
 /**************************************************************************
@@ -161,10 +163,10 @@ end;
 go
 create proc GetAllTutorReviews as
 begin
-	select DisplayFName + ' ' + DisplayLName as Reviewer, StarRanking, Description
-	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Review.ReviewerID = Sticker.TutorID
-										and Review.ReviewerID <> Sticker.StudentID
+	select Sticker.StickerID, DisplayFName + ' ' + DisplayLName as Reviewer, StarRanking, Description
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.TutorID
+		join Review					on Review.ReviewerID = Sticker.StudentID
+										and Sticker.StickerID = Review.StickerID
 end;
 
 /**************************************************************************
@@ -174,13 +176,13 @@ go
 create proc AdminPullReportsForUser
 (	@user varchar(61)	) as
 begin
-	select DisplayFName + ' ' + DisplayLName as 'Tutor Reported', UserID, Review.ReviewID, StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
+	select DisplayFName + ' ' + DisplayLName as 'Reported as Tutor', UserID, Review.ReviewID, StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
 	from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
 		join Report					on Review.ReviewID = Report.ReviewID
 		join Sticker				on Sticker.StudentID = Report.FlaggerID
 	where Report.FlaggerID is not null and DisplayFName + ' ' + DisplayLName = @user
 
-	select DisplayFName + ' ' + DisplayLName as 'Student Reported', StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
+	select DisplayFName + ' ' + DisplayLName as 'Reported as Student', StarRanking as ReviewStarRanking, Description as ReviewDescription, ReportDescription
 	from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
 		join Report					on Review.ReviewID = Report.ReviewID
 		join Sticker				on Sticker.TutorID = Report.FlaggerID
@@ -287,7 +289,7 @@ create proc GetUserStickersAndReviews
 	@password nvarchar(30)
 ) as 
 begin
-		select Sticker.SubmitTime, Sticker.Timeout, Sticker.ProblemDescription,
+	select Sticker.SubmitTime, Sticker.Timeout, Sticker.ProblemDescription,
 			Sticker.MinimumStarRanking, Review.StarRanking, Review.Description
 	from UserProfile join Sticker		on Sticker.StudentID = UserProfile.UserID
 		join Review						on Review.StickerID = Sticker.StickerID
@@ -327,6 +329,17 @@ begin
 	exec GetUserStickersAndReviews @useremail, @password;
 
 	exec GetUserOrganizations @useremail, @password;
+
+	--select Photo, DisplayFName + ' ' + DisplayLName as [User], CourseName, CourseCode, CourseNumber,
+	--		SubmitTime, Timeout, ProblemDescription, MinimumStarRanking, StarRanking, Description,
+	--		OrganizationName
+	--from Picture join UserProfile	on UserProfile.UserID = Picture.UserID
+	--		join UserToClass		on UserProfile.UserID = UserToClass.UserID
+	--		join Classes			on UserToClass.ClassID = Classes.ClassID
+	--		join Sticker			on Sticker.StudentID = UserProfile.UserID
+	--		join Review				on Review.StickerID = Sticker.StickerID
+	--		join OmToUser			on UserProfile.UserID = OmToUser.UserID
+	--		join OfficialMentor		on OfficialMentor.MentorID = OmToUser.MentorID
 end;
 
 /**************************************************************************
@@ -342,9 +355,10 @@ begin
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Review					on Sticker.StickerID = Review.StickerID
 	where StarRanking >= @starfilter and 
-		@displayname = case when @displayname is not null
-						then 'User'
-					end
+		'User' = case when @displayname is not null
+						then @displayname
+					  else 'User'
+				 end
 end;
 
 /**************************************************************************
@@ -360,9 +374,10 @@ begin
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Review					on Sticker.StickerID = Review.StickerID
 	where StarRanking = @starfilter and
-		@displayname = case when @displayname is not null
-						then 'User'
-					end
+		'User' = case when @displayname is not null
+						then @displayname
+					  else 'User'
+				 end
 end;
 
 /**************************************************************************
@@ -391,7 +406,8 @@ begin
 		join Classes				on Sticker.ClassID = Classes.ClassID
 	where datediff(minute, getdate(), Timeout) > 0 and
 		DisplayFName + ' ' + DisplayLName = case when @displayname is not null
-												then @displayname
+													then @displayname
+												 else DisplayFName + ' ' + DisplayLName
 											end
 end;
 
@@ -413,41 +429,45 @@ begin
 		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
-	where CourseName = @Name and CourseCode = @Code and CourseNumber = @Number
-		and TermOffered = @Term and
-		DisplayFName + ' ' + DisplayLName = case when @displayname is not null
-												then @displayname
-											end
+	where CourseName = @Name and CourseCode = @Code
+		and CourseNumber = @Number and TermOffered = @Term
+		and DisplayFName + ' ' + DisplayLName = case when @displayname is not null
+														then @displayname
+													 else DisplayFName + ' ' + DisplayLName
+												end
 end;
 
 /**************************************************************************
 * Pull active Stickers available with a certain star ranking and/or a
-* specific mentor organization (star ranking, mentor specification, and user
+* specific mentor organization (mentor specification, and user
 * specification is optional)
 **************************************************************************/
 go
 create proc GetActiveStickersWithStarRankOrMentorOrganization
-(	@displayname varchar(65) = null,
-	@starrank float = null,
+(	@starrank float,
+	@displayname varchar(65) = null,
 	@organization nvarchar(50) = null
 ) as
 begin
 	select DisplayFName + ' ' + DisplayLName as Student,
 		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
-		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout, OrganizationName
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
 		join OmToUser				on UserProfile.UserID = OmToUser.UserID
 		join OfficialMentor			on OmToUser.MentorID = OfficialMentor.MentorID
 	where DisplayFName + ' ' + DisplayLName = case when @displayname is not null
-													then @displayname
-												end
+														then @displayname
+												   else DisplayFName + ' ' + DisplayLName
+											  end
 		and MinimumStarRanking >= case when @starrank is not null
-										then @starrank
-									end
+											then @starrank
+									   else MinimumStarRanking
+								  end
 		and OrganizationName = case when @organization is not null
-									then @organization
-								end
+										then @organization
+									else OrganizationName
+							   end
 end;
 
 /**************************************************************************
@@ -464,7 +484,8 @@ begin
 		join Classes				on Sticker.ClassID = Classes.ClassID
 	where datediff(minute, getdate(), Timeout) < 0 and
 		DisplayFName + ' ' + DisplayLName = case when @displayname is not null
-												then @displayname
+													then @displayname
+												 else DisplayFName + ' ' + DisplayLName
 											end
 end;
 
@@ -478,8 +499,8 @@ begin
 	select DisplayFName + ' ' + DisplayLName as 'User', EmailAddress,
 		avg(StarRanking) as AvgStarRank
 	from UserProfile join Review	on UserProfile.UserID = Review.ReviewerID
-	where avg(StarRanking) >= @starrank
 	group by DisplayFName + ' ' + DisplayLName, EmailAddress
+	having avg(StarRanking) >= @starrank
 end;
 
 /**************************************************************************
@@ -491,8 +512,8 @@ create proc GetUserAvgStudentStarRank
 begin
 	select avg(StarRanking) as AvgStarRank
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Sticker.StudentID = Review.ReviewerID
-										and Sticker.TutorID <> Review.ReviewerID
+		join Review					on Review.ReviewerID = Sticker.TutorID
+										and Sticker.StickerID = Review.StickerID
 	where DisplayFName + ' ' + DisplayLName = @displayname
 end;
 
@@ -504,32 +525,38 @@ create proc GetUserAvgTutorStarRank
 (	@displayname varchar(65)	) as
 begin
 	select avg(StarRanking) as AvgStarRank
-	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
-		join Review					on Sticker.TutorID = Review.ReviewerID
-										and Sticker.StudentID <> Review.ReviewerID
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.TutorID
+		join Review					on Review.ReviewerID = Sticker.StudentID
+										and Sticker.StickerID = Review.StickerID
 	where DisplayFName + ' ' + DisplayLName = @displayname
 end;
+
+/**************************************************************************
+* Pull all chats a user is part of
+**************************************************************************/
+go
+create proc GetAllChatIDsAUserIsPartOF
+(	@displayname varchar(65)	) as
+begin
+	select @displayname as 'User', ChatID
+	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
+	where (select UserID from UserProfile where DisplayFName + ' ' + DisplayLName = @displayname) = UserToChat.UserID
+end
 
 /**************************************************************************
 * Pull chat messages and files between two users
 **************************************************************************/
 go
 create proc PullChatMessagesAndFilesBetweenUsers
-(	@user varchar(61),
-	@tutor varchar(61)
+(	@user varchar(65),
+	@tutor varchar(65)
 ) as
 begin
-	select MessageData, FileData
+	select DisplayFName + ' ' + DisplayLName as Sender, MessageData, SentTime
 	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
 		join Chat						on UserToChat.ChatID = Chat.ChatID
-		join Files						on Chat.ChatID = Files.ChatID
 		join Messages					on Chat.ChatID = Messages.ChatID
-	where DisplayFName + ' ' + DisplayLName = @user;
-
-		select MessageData, FileData
-	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
-		join Chat						on UserToChat.ChatID = Chat.ChatID
-		join Files						on Chat.ChatID = Files.ChatID
-		join Messages					on Chat.ChatID = Messages.ChatID
-	where DisplayFName + ' ' + DisplayLName = @tutor;
+	where (DisplayFName + ' ' + DisplayLName = @user and SentBy = UserProfile.UserID)
+							or
+		  (DisplayFName + ' ' + DisplayLName = @tutor and SentBy = UserProfile.UserID);
 end;

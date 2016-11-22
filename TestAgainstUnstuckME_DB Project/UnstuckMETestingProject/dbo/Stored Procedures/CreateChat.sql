@@ -1,0 +1,19 @@
+﻿
+CREATE PROC [dbo].[CreateChat]
+    (
+	@UserID	INT
+    )
+AS
+	DECLARE @NewChatID INT;
+	BEGIN TRY
+		BEGIN TRAN;
+			INSERT INTO Chat
+			DEFAULT VALUES
+			SET @NewChatID = @@IDENTITY
+			INSERT INTO UserToChat
+			VALUES(@UserID, @NewChatID);
+		COMMIT TRAN;
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRAN;
+	END CATCH

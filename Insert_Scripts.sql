@@ -49,7 +49,9 @@ CREATE PROC [dbo].[CreateNewUser]
 AS
     BEGIN
         if  (Exists(Select EmailAddress from UserProfile where EmailAddress = @EmailAddress))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
 				PRINT 'INSERT SUCCESS'
@@ -70,7 +72,9 @@ AS
     BEGIN
         if  (Exists(Select UserID, ClassID from UserToClass 
 					where UserID = @UserID AND ClassID = @ClassID))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO UserToClass
@@ -92,7 +96,9 @@ AS
     BEGIN
         if  (Exists(Select CourseCode, CourseNumber from Classes 
 					where CourseCode = @CourseCode AND CourseNumber = @CourseNumber))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO Classes
@@ -115,7 +121,9 @@ AS
     BEGIN
         if  (Exists(Select StudentID, ClassID from Sticker 
 					where StudentID = @StudentID AND ClassID = @ClassID))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO Sticker (ProblemDescription, ClassID, StudentID, MinimumStarRanking, SubmitTime, [Timeout])
@@ -134,7 +142,9 @@ AS
     BEGIN
         if  (Exists(Select OrganizationName from OfficialMentor 
 					where OrganizationName = @OrganizationName))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO OfficialMentor
@@ -155,7 +165,9 @@ AS
     BEGIN
         if  (Exists(Select StickerID from Review 
 					where StickerID = @StickerID AND ReviewerID = @ReviewerID))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO Review
@@ -175,7 +187,9 @@ AS
     BEGIN
         if  (Exists(Select ReportID from Report 
 					where ReviewID = @ReviewID AND FlaggerID = @FlaggerID))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO Report
@@ -194,7 +208,9 @@ AS
     BEGIN
         if  (Exists(Select * from OmToUser 
 					WHERE UserID = @UserID AND MentorID = @MentorID))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO OmToUser
@@ -218,7 +234,9 @@ AS
     BEGIN
         if  (Exists(Select ServerName from Server 
 					WHERE ServerName = @ServerName))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO [Server]
@@ -238,7 +256,9 @@ AS
     BEGIN
         if  (NOT Exists(Select UserID from UserProfile 
 					WHERE UserID = @UserID))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
 				UPDATE Picture
@@ -259,7 +279,9 @@ AS
 		BEGIN TRAN;
 			INSERT INTO Chat
 			DEFAULT VALUES
+			
 			SET @NewChatID = @@IDENTITY
+			
 			INSERT INTO UserToChat
 			VALUES(@UserID, @NewChatID);
 		COMMIT TRAN;
@@ -278,7 +300,9 @@ AS
     BEGIN
         if  (Exists(Select ChatID, UserID from UserToChat 
 					WHERE UserID = @UserID AND ChatID = @ChatID))
-            return 1;
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO UserToChat
@@ -291,37 +315,41 @@ GO
 CREATE PROC [dbo].[InsertMessage]
     (
 	@ChatID		INT,
-	@Message	NVARCHAR(500)
+	@Message	NVARCHAR(500),
+	@UserID		INT
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ChatID from Chat 
-					WHERE ChatID = @ChatID))
-            return 1;
+        if  (NOT Exists(Select ChatID from UserToChat 
+					WHERE ChatID = @ChatID and UserID = @UserID))
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
-                INSERT INTO [Messages]
-				VALUES(@ChatID, @Message)
+               INSERT INTO [Messages]
+				VALUES(@ChatID, @Message, @UserID, GETDATE())
             END
-
     END
 GO
 
 CREATE PROC [dbo].[InsertFile]
     (
 	@ChatID		INT,
-	@FileData	VARBINARY(MAX)
+	@FileData	VARBINARY(MAX),
+	@UserID		INT
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ChatID from Chat 
-					WHERE ChatID = @ChatID))
-            return 1;
+        if  (NOT Exists(Select ChatID from UserToChat 
+					WHERE ChatID = @ChatID and UserID = @UserID))
+            BEGIN
+				return 1;
+			END
         else
             BEGIN
                 INSERT INTO Files
-				VALUES(@ChatID, @FileData)
+				VALUES(@ChatID, @FileData, @UserID, GETDATE())
             END
-
     END
 GO
