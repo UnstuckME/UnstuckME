@@ -318,42 +318,15 @@ CREATE
 	AFTER INSERT
 	AS
 		BEGIN --BEGIN TRIGGER
-			DECLARE @tempStickerID as INT, @insertedReviewerID as INT, @NumberReturned as INT;
-
+			DECLARE @tempStickerID as INT, @insertedReviewerID as INT;
 			SELECT @tempStickerID = (SELECT StickerID FROM inserted);
 			SELECT @insertedReviewerID = (SELECT ReviewerID FROM inserted);
 
-			PRINT('The Sticker ID is:');
-			PRINT( @tempStickerID);
-			PRINT('The Reviewer ID is:');
-			PRINT(@insertedReviewerID);
-
-			IF ((SELECT tutorID FROM Sticker WHERE StickerID = @tempStickerID) is NOT NULL)
-				BEGIN
-					PRINT('The sticker has a tutor belogging to it')
-					IF (@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID))
-						BEGIN
-							PRINT('The Reviewer ID is the same as either the student or tutor')
-							SELECT @NumberReturned = ((SELECT COUNT(*) FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID));
-							PRINT('The number of review matching condition is:');
-							PRINT(@NumberReturned);
-							IF((SELECT COUNT(*) FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID) = 1)
-								BEGIN
-									PRINT ('The Sticker does not have a review from this reviewer yet')
-								END;--If the review has already been inserted
-							ELSE
-								BEGIN
-									PRINT ('You already inserted a review for this sticker');
-									ROLLBACK TRANSACTION;
-								END;
-						END;--If the reviewerid is either a tutor or student
-					ELSE
-						BEGIN
-							PRINT('The reviewer is some random ass third party, how did you even find this guy');
-							ROLLBACK TRANSACTION;
-						END;
-				END;-- If the sticker has a tutor
-			ELSE
+			IF NOT (((SELECT tutorID FROM Sticker WHERE StickerID = @tempStickerID) is NOT NULL)
+				and
+				((@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID)))
+				and
+				((SELECT COUNT(*) FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID) = 1))
 				BEGIN
 					PRINT('There is not asscoaiated tutor with this sticker yet');
 					ROLLBACK TRANSACTION;
