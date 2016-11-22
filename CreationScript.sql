@@ -23,6 +23,10 @@ IF OBJECT_ID ('ForbidClass1Update', 'TR') IS NOT NULL
 IF OBJECT_ID ('OnlyAllowCorrectReviews', 'TR') IS NOT NULL
 	DROP TRIGGER OnlyAllowCorrectReviews
 	GO
+IF OBJECT_ID ('DisallowSameTutorAndStudentID', 'TR') IS NOT NULL
+	DROP TRIGGER DisallowSameTutorAndStudentID
+	GO
+	
 
 --Drop Views
 IF OBJECT_ID('AllUsers_View', 'VIEW') IS NOT NULL
@@ -75,7 +79,7 @@ CREATE TABLE [Server]
 	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
 	AdminPassword		NVARCHAR(32)		DEFAULT 'Password',
 	EmailCredentials	NVARCHAR(50)		DEFAULT NULL,
-	Salt				VARBINARY(256)		NOT NULL UNIQUE)
+	Salt				NVARCHAR(256)		NOT NULL UNIQUE)
 GO
 
 --Create Chat Table
@@ -91,7 +95,7 @@ CREATE TABLE UserProfile
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
 	UserPassword			NVARCHAR(32)		NOT NULL,
 	Privileges				NVARCHAR(32)		NOT NULL,
-	Salt					VARBINARY(256)		NOT NULL UNIQUE)
+	Salt					NVARCHAR(256)		NOT NULL UNIQUE)
 GO
 
 --Create Messages Table
@@ -332,4 +336,17 @@ CREATE
 					ROLLBACK TRANSACTION;
 				END;
 		END;-- END TRIGGER
+GO
+
+CREATE 
+	TRIGGER DisallowSameTutorAndStudentID
+	ON Sticker
+	AFTER INSERT, UPDATE
+	AS
+		BEGIN
+			IF EXISTS (SELECT * FROM inserted WHERE StudentID = TutorID)
+			BEGIN
+				ROLLBACK TRANSACTION;
+			END;
+		END;
 GO
