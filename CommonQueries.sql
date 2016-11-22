@@ -329,6 +329,17 @@ begin
 	exec GetUserStickersAndReviews @useremail, @password;
 
 	exec GetUserOrganizations @useremail, @password;
+
+	--select Photo, DisplayFName + ' ' + DisplayLName as [User], CourseName, CourseCode, CourseNumber,
+	--		SubmitTime, Timeout, ProblemDescription, MinimumStarRanking, StarRanking, Description,
+	--		OrganizationName
+	--from Picture join UserProfile	on UserProfile.UserID = Picture.UserID
+	--		join UserToClass		on UserProfile.UserID = UserToClass.UserID
+	--		join Classes			on UserToClass.ClassID = Classes.ClassID
+	--		join Sticker			on Sticker.StudentID = UserProfile.UserID
+	--		join Review				on Review.StickerID = Sticker.StickerID
+	--		join OmToUser			on UserProfile.UserID = OmToUser.UserID
+	--		join OfficialMentor		on OfficialMentor.MentorID = OmToUser.MentorID
 end;
 
 /**************************************************************************

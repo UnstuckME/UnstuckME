@@ -1,4 +1,4 @@
-USE UnstuckME_DB;
+USE UnstuckME_DB
 GO
 
 --DROP TRIGGER ON UserPRofile UserPassword
@@ -20,6 +20,20 @@ IF OBJECT_ID ('ForbidClass1Delete', 'TR') IS NOT NULL
 IF OBJECT_ID ('ForbidClass1Update', 'TR') IS NOT NULL  
 	DROP TRIGGER ForbidClass1Update;  
 	GO
+IF OBJECT_ID ('OnlyAllowCorrectReviews', 'TR') IS NOT NULL
+	DROP TRIGGER OnlyAllowCorrectReviews
+	GO
+
+--Drop Views
+IF OBJECT_ID('AllUsers_View', 'VIEW') IS NOT NULL
+	DROP VIEW AllUsers_View
+	GO
+IF OBJECT_ID('AllStickers_View', 'VIEW') IS NOT NULL
+	DROP VIEW AllStickers_View
+	GO
+IF OBJECT_ID('AllMentorPrograms_View', 'VIEW') IS NOT NULL
+	DROP VIEW AllMentorPrograms_View
+	GO
 
 --DROP ANY PRE-EXISTING TABLES
 IF OBJECT_ID('Report', 'U') IS NOT NULL
@@ -38,14 +52,14 @@ IF OBJECT_ID('OmToUser', 'U') IS NOT NULL
 	DROP TABLE OmToUser;
 IF OBJECT_ID('UserToChat', 'U') IS NOT NULL
 	DROP TABLE UserToChat;
-IF OBJECT_ID('UserProfile', 'U') IS NOT NULL
-	DROP TABLE UserProfile;
 IF OBJECT_ID('OfficialMentor', 'U') IS NOT NULL
 	DROP TABLE OfficialMentor;
 IF OBJECT_ID('Messages', 'U') IS NOT NULL
 	DROP TABLE [Messages];
 IF OBJECT_ID('Files', 'U') IS NOT NULL
 	DROP TABLE Files;
+IF OBJECT_ID('UserProfile', 'U') IS NOT NULL
+	DROP TABLE UserProfile;
 IF OBJECT_ID('Chat', 'U') IS NOT NULL
 	DROP TABLE Chat;
 IF OBJECT_ID('Server', 'U') IS NOT NULL
@@ -60,36 +74,13 @@ CREATE TABLE [Server]
 	SchoolName			VARCHAR(75)			NOT NULL,
 	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
 	AdminPassword		NVARCHAR(32)		DEFAULT 'Password',
-	EmailCredentials	NVARCHAR(50)		DEFAULT NULL)
+	EmailCredentials	NVARCHAR(50)		DEFAULT NULL,
+	Salt				VARBINARY(256)		NOT NULL UNIQUE)
 GO
 
 --Create Chat Table
 CREATE TABLE Chat
 	(ChatID				INT				PRIMARY KEY IDENTITY(1,1))
-GO
-
---Create Messages Table
-CREATE TABLE [Messages]
-	(MessageID				INT				PRIMARY KEY IDENTITY(1,1),
-	ChatID					INT				NOT NULL REFERENCES Chat(ChatID),
-	MessageData				NVARCHAR(500)	NOT NULL,
-	SentBy					int				NOT NULL,
-	SentTime				datetime		NOT NULL)
-GO
-
---Create File Table
-CREATE TABLE Files
-	(FileID				INT					PRIMARY KEY IDENTITY(1,1),
-	ChatID				INT					NOT NULL REFERENCES Chat(ChatID),
-	FileData			VARBINARY(MAX) 		NOT NULL,
-	SentBy				int					NOT NULL,
-	SentTime			datetime			NOT NULL);
-GO
-
---Create Official Mentor Table
-CREATE TABLE OfficialMentor
-	(MentorID			INT				PRIMARY KEY IDENTITY(1,1),
-	OrganizationName	NVARCHAR(50)			NOT NULL)
 GO
 
 --Create UserProfile Table
@@ -99,8 +90,35 @@ CREATE TABLE UserProfile
 	DisplayLName			VARCHAR(32)			NOT NULL,
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
 	UserPassword			NVARCHAR(32)		NOT NULL,
-	Privileges				NVARCHAR(32)		NOT NULL)
+	Privileges				NVARCHAR(32)		NOT NULL,
+	Salt					VARBINARY(256)		NOT NULL UNIQUE)
 GO
+
+--Create Messages Table
+CREATE TABLE [Messages]
+	(MessageID				INT				PRIMARY KEY IDENTITY(1,1),
+	ChatID					INT				NOT NULL REFERENCES Chat(ChatID),
+	MessageData				NVARCHAR(500)	NOT NULL,
+	SentBy					int				NOT NULL REFERENCES UserProfile(UserID),
+	SentTime				smalldatetime	NOT NULL)
+GO
+
+--Create File Table
+CREATE TABLE Files
+	(FileID				INT					PRIMARY KEY IDENTITY(1,1),
+	ChatID				INT					NOT NULL REFERENCES Chat(ChatID),
+	FileData			VARBINARY(MAX) 		NOT NULL,
+	SentBy				int					NOT NULL REFERENCES UserProfile(UserID),
+	SentTime			smalldatetime		NOT NULL);
+GO
+
+--Create Official Mentor Table
+CREATE TABLE OfficialMentor
+	(MentorID			INT				PRIMARY KEY IDENTITY(1,1),
+	OrganizationName	NVARCHAR(50)			NOT NULL)
+GO
+
+
 
 --Create Official Mentor Table
 CREATE TABLE OmToUser
@@ -171,11 +189,44 @@ CREATE TABLE Report
 	ReviewID			INT				NOT NULL		REFERENCES Review(ReviewID))
 GO
 
+--Create Indexes on tables
+CREATE INDEX MessagesSentByUserIndex on Messages (SentBy);
+CREATE INDEX MessageChatIDIndex on Messages (ChatID);
+CREATE INDEX FilesSentByUserIndex on Files (SentBy);
+CREATE INDEX FileChatIDIndex on Files (ChatID);
+CREATE INDEX ReportFlaggerIDIndex on Report(FlaggerID);
+CREATE INDEX ReportReviewIDIndex on Report (ReviewID);
+CREATE INDEX ReviewStickerIDIndex on Review (StickerID);
+CREATE INDEX ReviewReviewerIDIndex on Review (ReviewerID);
+CREATE INDEX StickerClassIDIndex on Sticker (ClassID);
+CREATE INDEX StickerStudentIDIndex on Sticker (StudentID);
+CREATE INDEX StickerTutorIDIndex on Sticker (TutorID);
+GO
+
+--Create Views
+CREATE VIEW AllUsers_View AS
+	select DisplayFName + ' ' + DisplayLName as 'User', EmailAddress, Privileges
+	from UserProfile
+GO
+
+CREATE VIEW AllStickers_View AS
+	select DisplayFName + ' ' + DisplayLName as Student, EmailAddress,
+		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
+		ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+		join Classes				on Classes.ClassID = Sticker.ClassID
+GO
+
+CREATE VIEW AllMentorPrograms_View AS
+	select OrganizationName
+	from OfficialMentor
+GO
+
 /*******************************************************************************
 INSERT DEFAULT USER
 *******************************************************************************/
 INSERT INTO UserProfile
-VALUES ('Unknown', 'User', 'Invalid Email Address', 'NO_PASSWORD', 'NO_PRIVILEGES');
+VALUES ('Unknown', 'User', 'Invalid Email Address', 'NO_PASSWORD', 'NO_PRIVILEGES', CONVERT(varbinary(256), 0));
 GO
 /*******************************************************************************
 INSERT DEFAULT CLASS
