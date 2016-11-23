@@ -113,6 +113,10 @@ namespace TestDataCreator
                 String ProblemDesc = ("Test problem for class " + ClassId + " on Sticker " + ID);
                 int Reporter = RandClass.Next(MinUserNumber, MaxUserNumber + 1);
                 int Unstucker = RandClass.Next(MinUnstuckifier, MaxUnstuckifier + 1);
+                while (Unstucker == Reporter)
+                {
+                    Unstucker = RandClass.Next(MinUnstuckifier, MaxUnstuckifier + 1);
+                }
                 int ReviewIDStudent = ReviewStartNumber++;
                 int IDStudent = ReviewIDStudent;
                 String StudentReviewDesc = ("Test Review Number " + IDStudent + " for the help requesting student " + Reporter + " on sticker " + ID);
