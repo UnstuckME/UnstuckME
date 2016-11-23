@@ -23,6 +23,10 @@ IF OBJECT_ID ('ForbidClass1Update', 'TR') IS NOT NULL
 IF OBJECT_ID ('OnlyAllowCorrectReviews', 'TR') IS NOT NULL
 	DROP TRIGGER OnlyAllowCorrectReviews
 	GO
+IF OBJECT_ID ('DisallowSameTutorAndStudentID', 'TR') IS NOT NULL
+	DROP TRIGGER DisallowSameTutorAndStudentID
+	GO
+	
 
 --Drop Views
 IF OBJECT_ID('AllUsers_View', 'VIEW') IS NOT NULL
@@ -75,7 +79,7 @@ CREATE TABLE [Server]
 	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
 	AdminPassword		NVARCHAR(32)		DEFAULT 'Password',
 	EmailCredentials	NVARCHAR(50)		DEFAULT NULL,
-	Salt				VARBINARY(256)		NOT NULL UNIQUE)
+	Salt				NVARCHAR(256)		NOT NULL UNIQUE)
 GO
 
 --Create Chat Table
@@ -91,7 +95,7 @@ CREATE TABLE UserProfile
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
 	UserPassword			NVARCHAR(32)		NOT NULL,
 	Privileges				NVARCHAR(32)		NOT NULL,
-	Salt					VARBINARY(256)		NOT NULL UNIQUE)
+	Salt					NVARCHAR(256)		NOT NULL UNIQUE)
 GO
 
 --Create Messages Table
@@ -319,41 +323,30 @@ CREATE
 	AS
 		BEGIN --BEGIN TRIGGER
 			DECLARE @tempStickerID as INT, @insertedReviewerID as INT;
-
 			SELECT @tempStickerID = (SELECT StickerID FROM inserted);
 			SELECT @insertedReviewerID = (SELECT ReviewerID FROM inserted);
 
-			PRINT('The Sticker ID is:');
-			PRINT( @tempStickerID);
-			PRINT('The Reviewer ID is:');
-			PRINT(@insertedReviewerID);
-
-			IF EXISTS (SELECT tutorID FROM Sticker WHERE StickerID = @tempStickerID)
+			IF NOT (((SELECT tutorID FROM Sticker WHERE StickerID = @tempStickerID) is NOT NULL)
+				and
+				((@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID)))
+				and
+				((SELECT COUNT(*) FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID) = 1))
 				BEGIN
-					PRINT('The sticker has a tutor belogging to it')
-					IF (@insertedReviewerID = (SELECT StudentID FROM Sticker WHERE StickerID = @tempStickerID)) or (@insertedReviewerID = (SELECT TutorID FROM Sticker WHERE StickerID = @tempStickerID))
-						BEGIN
-							PRINT('The Reviewer ID is the same as either the student or tutor')
-							IF NOT EXISTS (SELECT * FROM Review WHERE ReviewerID = @insertedReviewerID and StickerID = @tempStickerID)
-								BEGIN
-									PRINT ('The Sticker does not have a review from this reviewer yet')
-								END;--If the review has already been inserted
-							ELSE
-								BEGIN
-									PRINT ('You already inserted a review for this sticker');
-									ROLLBACK TRANSACTION;
-								END;
-						END;--If the reviewerid is either a tutor or student
-					ELSE
-						BEGIN
-							PRINT('The reviewer is some random ass third party, how did you even find this guy');
-							ROLLBACK TRANSACTION;
-						END;
-				END;-- If the sticker has a tutor
-			ELSE
-				BEGIN
-					PRINT('Failed to insert user');
+					PRINT('There is not asscoaiated tutor with this sticker yet');
 					ROLLBACK TRANSACTION;
 				END;
 		END;-- END TRIGGER
+GO
+
+CREATE 
+	TRIGGER DisallowSameTutorAndStudentID
+	ON Sticker
+	AFTER INSERT, UPDATE
+	AS
+		BEGIN
+			IF EXISTS (SELECT * FROM inserted WHERE StudentID = TutorID)
+			BEGIN
+				ROLLBACK TRANSACTION;
+			END;
+		END;
 GO
