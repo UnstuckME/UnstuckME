@@ -78,6 +78,7 @@ namespace DataInputter
         public String MessageID;
         public String ChatID;
         public String MessageText;
+        public String UserID;
     }
 
     class Program
@@ -157,6 +158,7 @@ namespace DataInputter
             
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 foreach (DataHolderNames item in listA)
                 {
                     SqlCommand cmd = new SqlCommand("INSERT INTO UserProfile (DisplayFName, DisplayLName, EmailAddress, UserPassword, Privileges, Salt) VALUES (@DisplayFName, @DisplayLName, @EmailAddress, @UserPassword, @Privileges, @Salt)");
@@ -175,10 +177,9 @@ namespace DataInputter
                         string token = Convert.ToBase64String(tokenData);
                     
                     cmd.Parameters.AddWithValue("@Salt", token);
-                    connection.Open();
                     cmd.ExecuteNonQuery();
-                    connection.Close();
                 }
+                connection.Close();
             }
         }
 
@@ -209,6 +210,7 @@ namespace DataInputter
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 foreach (DataHolderClasses item in listA)
                 {
                     SqlCommand cmd = new SqlCommand("INSERT INTO Classes (CourseName, CourseCode, CourseNumber, TermOffered) VALUES (@CourseName, @CourseCode, @CourseNumber, @TermOffered)");
@@ -219,10 +221,11 @@ namespace DataInputter
                     cmd.Parameters.AddWithValue("@CourseNumber", Convert.ToInt16(item.Number));
                     cmd.Parameters.AddWithValue("@TermOffered", 2);
                     
-                    connection.Open();
+                    
                     cmd.ExecuteNonQuery();
-                    connection.Close();
+                    
                 }
+                connection.Close();
             }
         }
 
@@ -259,6 +262,7 @@ namespace DataInputter
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 foreach (DataHolderStickers item in listA)
                 {
                     SqlCommand cmd = new SqlCommand("INSERT INTO Sticker (ProblemDescription, ClassID, StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout) VALUES (@ProblemDescription, @ClassID, @StudentID, @TutorID, @MinimumStarRanking, @SubmitTime, @Timeout)");
@@ -272,10 +276,11 @@ namespace DataInputter
                     cmd.Parameters.AddWithValue("@SubmitTime", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Timeout", DateTime.MaxValue);
 
-                    connection.Open();
+                    
                     cmd.ExecuteNonQuery();
-                    connection.Close();
+                    
                 }
+                connection.Close();
             }
         }
         static void InsertReviews(string connectionString)
@@ -304,6 +309,7 @@ namespace DataInputter
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 foreach (DataHolderReviews item in listA)
                 {
                     SqlCommand cmd = new SqlCommand("INSERT INTO Review (StickerID, ReviewerID, StarRanking, Description) VALUES (@StickerID, @ReviewerID, @StarRanking, @Description)");
@@ -316,28 +322,12 @@ namespace DataInputter
                     
 
 
-                    connection.Open();
+                    
                     cmd.ExecuteNonQuery();
 
-                    //if ((Convert.ToInt32(item.ID) % 2) == 1)
-                    //{
-                    //    cmd = new SqlCommand("UpdateStudentReviewIDByStudentReviewIDAndStickerID");
-                    //    cmd.Connection = connection;
-                    //    cmd.CommandType = CommandType.StoredProcedure;
-                    //    cmd.Parameters.Add(new SqlParameter("@StudentReviewID", Convert.ToInt32(item.ID)));
-                    //    cmd.Parameters.Add(new SqlParameter("@StickerID", Convert.ToInt32(item.StickerID)));
-                    //}
-                    //else
-                    //{
-                    //    cmd = new SqlCommand("UpdateTutorReviewIDByTutorReviewIDAndStickerID");
-                    //    cmd.Connection = connection;
-                    //    cmd.CommandType = CommandType.StoredProcedure;
-                    //    cmd.Parameters.Add(new SqlParameter("@TutorReviewID", Convert.ToInt32(item.ID)));
-                    //    cmd.Parameters.Add(new SqlParameter("@StickerID", Convert.ToInt32(item.StickerID)));
-                    //}
-                    // cmd.ExecuteNonQuery();
-                    connection.Close();
+                    
                 }
+                connection.Close();
             }
         }
 
@@ -400,6 +390,7 @@ namespace DataInputter
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 foreach (DataHolderUserToChat item in listA)
                 {
                     SqlCommand cmd = new SqlCommand("InsertUserIntoChat");
@@ -408,10 +399,11 @@ namespace DataInputter
                     cmd.Parameters.Add(new SqlParameter("@UserID", Convert.ToInt32(item.UserID)));
                     cmd.Parameters.Add(new SqlParameter("@ChatID", Convert.ToInt32(item.ChatID)));
 
-                    connection.Open();
+                    
                     cmd.ExecuteNonQuery();
-                    connection.Close();
+                    
                 }
+                connection.Close();
             }
 
        }
@@ -433,6 +425,7 @@ namespace DataInputter
                         cont.MessageID = values[0];
                         cont.ChatID = values[1];
                         cont.MessageText = values[2];
+                        cont.UserID = values[3];
                         listA.Add(cont);
                     }
                 }
@@ -440,6 +433,7 @@ namespace DataInputter
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 foreach (DataHolderMessages item in listA)
                 {
                     SqlCommand cmd = new SqlCommand("InsertMessage");
@@ -447,11 +441,13 @@ namespace DataInputter
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@ChatID", Convert.ToInt32(item.ChatID)));
                     cmd.Parameters.Add(new SqlParameter("@Message", item.MessageText));
+                    cmd.Parameters.Add(new SqlParameter("@UserID", Convert.ToInt32(item.UserID)));
 
-                    connection.Open();
+                    
                     cmd.ExecuteNonQuery();
-                    connection.Close();
+                    
                 }
+                connection.Close();
             }
         }
     }

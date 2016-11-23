@@ -104,6 +104,8 @@ namespace TestDataCreator
             List<String> UserToChatOutputList = new List<String>();
             List<String> MessageOutputList = new List<String>();
 
+            // Replace Exsisting Data
+            bool Overwrite = IsOverWrite.IsChecked.GetValueOrDefault();
 
             int MessageID = 1;
             while(CurrentNum <= EndNum)
@@ -154,7 +156,10 @@ namespace TestDataCreator
                 int randMessageNumber = RandClass.Next(5, 30);
                 for (int i = 0; i < randMessageNumber; i++)
                 {
-                    String MessageOutput = (MessageID + "," + CurrentNum + "," + "Message " + i);
+                    int user = Reporter;
+                    if (i % 2 == 0)
+                        user = Unstucker;
+                    String MessageOutput = (MessageID + "," + CurrentNum + "," + "Message " + i + "," + user);
                     
                         MessageOutputList.Add(MessageOutput);
                         MessageID++;
@@ -170,7 +175,7 @@ namespace TestDataCreator
             new Thread(() =>
             {
                 using (System.IO.StreamWriter StickerFile =
-                   new System.IO.StreamWriter(@"..\..\..\..\Stickers.csv", true))
+                   new System.IO.StreamWriter(@"..\..\..\..\FakeDataStickers.csv", !Overwrite))
                 {
                     foreach (String item in StickerOutputList)
                     {
@@ -182,7 +187,7 @@ namespace TestDataCreator
             new Thread(() =>
             {
                 using (System.IO.StreamWriter ReviewFile =
-            new System.IO.StreamWriter(@"..\..\..\..\Review.csv", true))
+            new System.IO.StreamWriter(@"..\..\..\..\FakeDataReviews.csv", !Overwrite))
             {
                 foreach (String item in ReviewOutputList)
                 {
@@ -194,7 +199,7 @@ namespace TestDataCreator
             new Thread(() =>
             {
                 using (System.IO.StreamWriter ChatFile =
-            new System.IO.StreamWriter(@"..\..\..\..\Chat.csv", true))
+            new System.IO.StreamWriter(@"..\..\..\..\FakeDataChat.csv", !Overwrite))
             {
                 foreach (String item in ChatOutputList)
                 {
@@ -205,7 +210,7 @@ namespace TestDataCreator
             new Thread(() =>
                 {
                     using (System.IO.StreamWriter UserToChatFile =
-            new System.IO.StreamWriter(@"..\..\..\..\UserToChat.csv", true))
+            new System.IO.StreamWriter(@"..\..\..\..\FakeDataUserToChat.csv", !Overwrite))
             {
                 foreach (String item in UserToChatOutputList)
                 {
@@ -216,7 +221,7 @@ namespace TestDataCreator
             new Thread(() =>
                     {
                         using (System.IO.StreamWriter MessageFile =
-            new System.IO.StreamWriter(@"..\..\..\..\Messages.csv", true))
+            new System.IO.StreamWriter(@"..\..\..\..\FakeDataMessages.csv", !Overwrite))
             {
                 foreach (String item in MessageOutputList)
                 {
@@ -230,7 +235,19 @@ namespace TestDataCreator
 
             button.Visibility = Visibility.Visible;
             TextIn_StickerStartNum.Text = (EndNum + 1).ToString();
-            TextIn_ReviewStartNumber.Text = (ReviewStartNumber + 1).ToString();
+            TextIn_ReviewStartNumber.Text = (ReviewStartNumber).ToString();
+        }
+
+        private void checkBox_Checked(object sender, RoutedEventArgs e)
+        {
+            //if (IsOverWrite.IsChecked == (false | null))
+            //{
+            //    IsOverWrite.IsChecked = true;
+            //}
+            //else
+            //{
+            //    IsOverWrite.IsChecked = false;
+            //}
         }
     }
 }

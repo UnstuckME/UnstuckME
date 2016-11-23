@@ -85,6 +85,7 @@
         <Label x:Name="Label_LowestStarUnstucker_Copy" Content="Unstucker" HorizontalAlignment="Left" Margin="224.8,75,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="Label_LowestStarUser_Copy1" Content="User" HorizontalAlignment="Left" Margin="224.8,175,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="label" Content="Export Options" Grid.Column="1" HorizontalAlignment="Left" Margin="610.8,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.146,-0.609"/>
+        <CheckBox x:Name="IsOverWrite" Content="Overwrite Exsisting Data" Grid.Column="1" HorizontalAlignment="Left" Margin="610.8,52,0,0" VerticalAlignment="Top" Height="20" Width="164" Checked="checkBox_Checked"/>
 
     </Grid>
 </Window>
