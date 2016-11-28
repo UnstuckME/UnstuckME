@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace UnstuckMEUserGUI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserLoginSettingsWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserLoginSettingsWindow : Window
     {
-        public MainWindow()
+        public UserLoginSettingsWindow()
         {
             InitializeComponent();
         }
