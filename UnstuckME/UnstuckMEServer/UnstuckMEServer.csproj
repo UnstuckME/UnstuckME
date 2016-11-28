@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{855A456B-216A-46A4-BF20-A04C9639C04C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnstuckMEServer</RootNamespace>
+    <AssemblyName>UnstuckMEServer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminPullAllReports_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPullReportsForUser_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AllMentorPrograms_View.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AllStickers_View.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AllUsers_View.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Chat.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="File.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilterUserReviewsByEqualStarRank_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilterUserReviewsByGreaterThanStarRank_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetActiveStickersWithStarRankOrMentorOrganization_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAdminInfo_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllActiveStickers_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllChatIDsAUserIsPartOF_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllResolvedStickers_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllStickers_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllStudentReviews_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllTutorReviews_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDisplayNameAndEmail_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserClasses_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserStickersAndReviews_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUsersWithOverallStarRank_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OfficialMentor.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Picture.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PullActiveClassSpecificStickers_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PullChatMessagesAndFilesBetweenUsers_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Report.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Review.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Server.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sticker.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMEService.cs" />
+    <Compile Include="UnstuckME_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckME_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckME_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckME_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfile.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewAllClasses_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewAllUsers_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="UnstuckME_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UnstuckME_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="packages.config" />
+    <None Include="UnstuckME_DB.edmx.diagram">
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UnstuckME_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckME_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="UnstuckME_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckME_DB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
+      <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
+      <Name>UnstuckMEInterfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
