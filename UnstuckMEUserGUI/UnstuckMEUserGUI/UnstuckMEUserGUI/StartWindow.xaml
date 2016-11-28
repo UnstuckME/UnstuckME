@@ -9,9 +9,9 @@
     <Grid>
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="150,170,0,0" VerticalAlignment="Top" Width="207" Height="35"/>
         <TextBox x:Name="UserNameTxtBx" HorizontalAlignment="Left" Height="34" Margin="150,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="207"/>
-        <Button x:Name="SettingsButton" Content="Login" HorizontalAlignment="Left" Margin="213,210,0,0" VerticalAlignment="Top" Width="87" Height="29"/>
-        <Button x:Name="CreateAccountBtn" Content="Create Account" HorizontalAlignment="Left" Margin="225,270,0,0" VerticalAlignment="Top" Width="75" FontSize="7"/>
-        <Button x:Name="LoginBtn" Content="Settings" HorizontalAlignment="Left" Margin="483,10,0,0" VerticalAlignment="Top" Width="25" FontSize="7"/>
+        <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="213,210,0,0" VerticalAlignment="Top" Width="87" Height="29" Click="LoginBtn_Click"/>
+        <Button x:Name="CreateAccountBtn" Content="Create Account" HorizontalAlignment="Left" Margin="225,270,0,0" VerticalAlignment="Top" Width="75" FontSize="7" Click="CreateAccountBtn_Click"/>
+        <Button x:Name="SettingsBtn" Content="Settings" HorizontalAlignment="Left" Margin="483,10,0,0" VerticalAlignment="Top" Width="25" FontSize="7" Click="SettingsBtn_Click"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="200,10,0,0" VerticalAlignment="Top" Width="100"/>
 
     </Grid>

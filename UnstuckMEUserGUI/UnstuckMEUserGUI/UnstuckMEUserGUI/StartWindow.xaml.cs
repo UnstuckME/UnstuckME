@@ -24,5 +24,26 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
         }
+
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //if valid login
+            Window disp = new MainWindow();
+            disp.Show();
+            this.Close();
+        }
+
+        private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window disp = new NewAccountSetupWindow();
+            disp.Show();
+            this.Close();
+        }
+
+        private void SettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window disp = new UserLoginSettingsWindow();
+            disp.Show();            
+        }
     }
 }
