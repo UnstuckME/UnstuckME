@@ -23,5 +23,41 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
         }
+
+        private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (passwordBox.Password == passwordBoxConfirm.Password)
+            {
+                if (FNameTxtBx.Text != null)
+                {
+
+                }
+                else
+                {
+                    // display no first name error
+                }
+                if (LNameTxtBx.Text != null)
+                {
+
+                }
+                else
+                {
+                    // display no last name error
+                }
+                if (EmailTxtBx.Text != null)
+                {
+
+                }
+                else
+                {
+                    // display no email error
+                }
+
+            }
+            else
+            {
+                // display pass words do no match error
+            }
+        }
     }
 }

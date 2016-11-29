@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="NewAccountSetupWindow" Height="300" Width="300">
+        Title="NewAccountSetupWindow" Height="400" Width="500">
     <Grid>
         
+        <Image x:Name="UnstuckME_Logo_png" Margin="10,10,263.6,197.4" Source="UnstuckME_Logo.png" Stretch="Fill" ToolTip="Click to Upload Image"/>
+        <TextBox x:Name="FNameTxtBx" HorizontalAlignment="Left" Height="23" Margin="245,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <TextBox x:Name="LNameTxtBx" HorizontalAlignment="Left" Height="23" Margin="245,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <TextBox x:Name="EmailTxtBx" HorizontalAlignment="Left" Height="23" Margin="245,161,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="200"/>
+        <PasswordBox x:Name="passwordBoxConfirm" HorizontalAlignment="Left" Margin="245,204,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button x:Name="CreateAccountBtn" Content="Create Account" HorizontalAlignment="Left" Margin="187,251,0,0" VerticalAlignment="Top" Width="101" Click="CreateAccountBtn_Click"/>
+        <Label x:Name="label_FName" Content="First Name" HorizontalAlignment="Left" Margin="245,30,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Lname" Content="Last Name" HorizontalAlignment="Left" Margin="245,84,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Email" Content="Email" HorizontalAlignment="Left" Margin="245,135,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_password" Content="Password" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_confirmPassword" Content="Confirm Password" HorizontalAlignment="Left" Margin="245,181,0,0" VerticalAlignment="Top"/>
+        
+
+
+
     </Grid>
 </Window>
