@@ -7,8 +7,6 @@
         mc:Ignorable="d"
         Title="NewAccountSetupWindow" Height="400" Width="500">
     <Grid>
-        
-        <Image x:Name="UnstuckME_Logo_png" Margin="10,10,263.6,197.4" Source="UnstuckME_Logo.png" Stretch="Fill" ToolTip="Click to Upload Image"/>
         <TextBox x:Name="FNameTxtBx" HorizontalAlignment="Left" Height="23" Margin="245,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
         <TextBox x:Name="LNameTxtBx" HorizontalAlignment="Left" Height="23" Margin="245,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
         <TextBox x:Name="EmailTxtBx" HorizontalAlignment="Left" Height="23" Margin="245,161,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
@@ -20,8 +18,15 @@
         <Label x:Name="label_Email" Content="Email" HorizontalAlignment="Left" Margin="245,135,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_password" Content="Password" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_confirmPassword" Content="Confirm Password" HorizontalAlignment="Left" Margin="245,181,0,0" VerticalAlignment="Top"/>
-        
 
+        <Button Margin="10,10,283.6,192.4" ToolTip="Click to upload image">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="UnstuckME_Logo.png"/>
+                </ControlTemplate>
+            </Button.Template>
+            
+        </Button>
 
 
     </Grid>
