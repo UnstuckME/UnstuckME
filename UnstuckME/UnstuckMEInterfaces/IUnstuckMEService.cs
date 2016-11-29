@@ -22,7 +22,7 @@ namespace UnstuckMEInterfaces
         void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
         [OperationContract]
-        bool UserLoginAttempt(byte[] emailAddress, byte[] passWord);
+        bool UserLoginAttempt(string emailAddress, byte[] passWord);
         
     }
 }

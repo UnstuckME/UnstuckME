@@ -60,15 +60,17 @@ namespace UnstuckMEInterfaces
             return userList;
         }
 
-        public bool UserLoginAttempt(byte[] emailAddress, byte[] passWord)
+        public bool UserLoginAttempt(string emailAddress, byte[] passWord)
         {
             bool loginAttempt = false;
             string salt = null;
             string storedPassword = null;
-            
+
+            Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
+
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                
+                  
             }
 
             return loginAttempt;
