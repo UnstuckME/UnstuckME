@@ -47,6 +47,9 @@ namespace UnstuckMEServerWPF
             }
         }
 
-        
+        private void button_CreateNewUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
