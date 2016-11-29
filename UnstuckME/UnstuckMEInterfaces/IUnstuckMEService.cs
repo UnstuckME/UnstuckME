@@ -16,11 +16,16 @@ namespace UnstuckMEInterfaces
         /// Implement these functions in UnstuckMEService.cs
         /// </summary>
         [OperationContract]
-        List<string> ListUsersFullName();
+        int GetUserID(string emailAddress);
 
         [OperationContract]
         void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
+        [OperationContract]
+        bool UserLoginAttempt(string emailAddress, string passWord);
 
+        [OperationContract]
+        int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt);
+        
     }
 }

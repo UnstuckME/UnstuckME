@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using UnstuckMEServer;
 
 namespace UnstuckMEInterfaces
 {
@@ -15,7 +16,7 @@ namespace UnstuckMEInterfaces
     {
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
             {
 
                 var users = (from u in db.UserProfiles
@@ -27,26 +28,43 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public List<string> ListUsersFullName()
+        public int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt)
         {
-            Console.WriteLine("Attempting User Name Select");
-            List<string> userList = new List<string>();
-            try
-            {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    var users = from u in db.UserProfiles
-                                select u.DisplayFName + " " + u.DisplayLName;
+            int retVal = -1;
 
-                    userList = users.ToList();
-                }
-            }
-            catch
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
             {
-
+               retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
             }
-            return userList;
+
+            return retVal;
         }
-       
+
+        public int GetUserID(string emailAddress)
+        {
+            int userID = 0;
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
+            {
+                var temp = db.GetUserID(emailAddress);
+                userID = temp.First().Value;
+            }
+            return userID;
+        }
+
+        public bool UserLoginAttempt(string emailAddress, string passWord)
+        {
+            bool loginAttempt = false;
+            //string salt = null;
+            //string storedPassword = null;
+
+            Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
+
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
+            {
+                  
+            }
+
+            return loginAttempt;
+        }
     }
 }

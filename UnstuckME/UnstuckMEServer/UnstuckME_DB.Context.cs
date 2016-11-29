@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEInterfaces
+namespace UnstuckMEServer
 {
     using System;
     using System.Data.Entity;
@@ -16,10 +16,10 @@ namespace UnstuckMEInterfaces
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class UnstuckME_DBEntities : DbContext
+    public partial class UnstuckME_DBEntities1 : DbContext
     {
-        public UnstuckME_DBEntities()
-            : base("name=UnstuckME_DBEntities")
+        public UnstuckME_DBEntities1()
+            : base("name=UnstuckME_DBEntities1")
         {
         }
     
@@ -47,6 +47,15 @@ namespace UnstuckMEInterfaces
         public virtual ObjectResult<AdminPullAllReports_Result> AdminPullAllReports()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminPullAllReports_Result>("AdminPullAllReports");
+        }
+    
+        public virtual ObjectResult<AdminPullReportsForOptionalUser_Result> AdminPullReportsForOptionalUser(Nullable<int> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminPullReportsForOptionalUser_Result>("AdminPullReportsForOptionalUser", useridParameter);
         }
     
         public virtual ObjectResult<AdminPullReportsForUser_Result> AdminPullReportsForUser(string user)
@@ -110,7 +119,7 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateNewClass", courseNameParameter, courseCodeParameter, courseNumberParameter, termOfferedParameter);
         }
     
-        public virtual int CreateNewUser(string firstName, string lastName, string emailAddress, string password, string privileges)
+        public virtual int CreateNewUser(string firstName, string lastName, string emailAddress, string password, string privileges, string salt)
         {
             var firstNameParameter = firstName != null ?
                 new ObjectParameter("FirstName", firstName) :
@@ -132,7 +141,11 @@ namespace UnstuckMEInterfaces
                 new ObjectParameter("Privileges", privileges) :
                 new ObjectParameter("Privileges", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateNewUser", firstNameParameter, lastNameParameter, emailAddressParameter, passwordParameter, privilegesParameter);
+            var saltParameter = salt != null ?
+                new ObjectParameter("Salt", salt) :
+                new ObjectParameter("Salt", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateNewUser", firstNameParameter, lastNameParameter, emailAddressParameter, passwordParameter, privilegesParameter, saltParameter);
         }
     
         public virtual int CreateOfficialMentor(string organizationName)
@@ -182,7 +195,7 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReview", stickerIDParameter, reviewerIDParameter, starRankingParameter, descriptionParameter);
         }
     
-        public virtual int CreateServer(string serverName, string serverIP, string serverDomain, string schoolName, string adminUsername, string adminPassword, string emailCredentials)
+        public virtual int CreateServer(string serverName, string serverIP, string serverDomain, string schoolName, string adminUsername, string adminPassword, string emailCredentials, string salt)
         {
             var serverNameParameter = serverName != null ?
                 new ObjectParameter("ServerName", serverName) :
@@ -212,7 +225,11 @@ namespace UnstuckMEInterfaces
                 new ObjectParameter("EmailCredentials", emailCredentials) :
                 new ObjectParameter("EmailCredentials", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateServer", serverNameParameter, serverIPParameter, serverDomainParameter, schoolNameParameter, adminUsernameParameter, adminPasswordParameter, emailCredentialsParameter);
+            var saltParameter = salt != null ?
+                new ObjectParameter("Salt", salt) :
+                new ObjectParameter("Salt", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateServer", serverNameParameter, serverIPParameter, serverDomainParameter, schoolNameParameter, adminUsernameParameter, adminPasswordParameter, emailCredentialsParameter, saltParameter);
         }
     
         public virtual int CreateSticker(string problemDescription, Nullable<int> classID, Nullable<int> studentID, Nullable<double> minimumStarRanking, Nullable<int> timeout)
@@ -321,47 +338,47 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserProfileByUserID", userIDParameter);
         }
     
-        public virtual ObjectResult<FilterUserReviewsByEqualStarRank_Result> FilterUserReviewsByEqualStarRank(Nullable<double> starfilter, string displayname)
+        public virtual ObjectResult<FilterUserReviewsByEqualStarRank_Result> FilterUserReviewsByEqualStarRank(Nullable<double> starfilter, Nullable<int> userid)
         {
             var starfilterParameter = starfilter.HasValue ?
                 new ObjectParameter("starfilter", starfilter) :
                 new ObjectParameter("starfilter", typeof(double));
     
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FilterUserReviewsByEqualStarRank_Result>("FilterUserReviewsByEqualStarRank", starfilterParameter, displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FilterUserReviewsByEqualStarRank_Result>("FilterUserReviewsByEqualStarRank", starfilterParameter, useridParameter);
         }
     
-        public virtual ObjectResult<FilterUserReviewsByGreaterThanStarRank_Result> FilterUserReviewsByGreaterThanStarRank(Nullable<double> starfilter, string displayname)
+        public virtual ObjectResult<FilterUserReviewsByGreaterThanStarRank_Result> FilterUserReviewsByGreaterThanStarRank(Nullable<double> starfilter, Nullable<int> userid)
         {
             var starfilterParameter = starfilter.HasValue ?
                 new ObjectParameter("starfilter", starfilter) :
                 new ObjectParameter("starfilter", typeof(double));
     
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FilterUserReviewsByGreaterThanStarRank_Result>("FilterUserReviewsByGreaterThanStarRank", starfilterParameter, displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FilterUserReviewsByGreaterThanStarRank_Result>("FilterUserReviewsByGreaterThanStarRank", starfilterParameter, useridParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickersWithStarRankOrMentorOrganization_Result> GetActiveStickersWithStarRankOrMentorOrganization(Nullable<double> starrank, string displayname, string organization)
+        public virtual ObjectResult<GetActiveStickersWithStarRankOrMentorOrganization_Result> GetActiveStickersWithStarRankOrMentorOrganization(Nullable<double> starrank, Nullable<int> userid, string organization)
         {
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
     
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
             var organizationParameter = organization != null ?
                 new ObjectParameter("organization", organization) :
                 new ObjectParameter("organization", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithStarRankOrMentorOrganization_Result>("GetActiveStickersWithStarRankOrMentorOrganization", starrankParameter, displaynameParameter, organizationParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithStarRankOrMentorOrganization_Result>("GetActiveStickersWithStarRankOrMentorOrganization", starrankParameter, useridParameter, organizationParameter);
         }
     
         public virtual ObjectResult<GetAdminInfo_Result> GetAdminInfo()
@@ -369,22 +386,22 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAdminInfo_Result>("GetAdminInfo");
         }
     
-        public virtual ObjectResult<GetAllActiveStickers_Result> GetAllActiveStickers(string displayname)
+        public virtual ObjectResult<GetAllActiveStickers_Result> GetAllActiveStickers(Nullable<int> userid)
         {
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllActiveStickers_Result>("GetAllActiveStickers", displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllActiveStickers_Result>("GetAllActiveStickers", useridParameter);
         }
     
-        public virtual ObjectResult<GetAllChatIDsAUserIsPartOF_Result> GetAllChatIDsAUserIsPartOF(string displayname)
+        public virtual ObjectResult<GetAllChatIDsAUserIsPartOF_Result> GetAllChatIDsAUserIsPartOF(Nullable<int> userid)
         {
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllChatIDsAUserIsPartOF_Result>("GetAllChatIDsAUserIsPartOF", displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllChatIDsAUserIsPartOF_Result>("GetAllChatIDsAUserIsPartOF", useridParameter);
         }
     
         public virtual ObjectResult<string> GetAllOrganizations()
@@ -392,13 +409,13 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllOrganizations");
         }
     
-        public virtual ObjectResult<GetAllResolvedStickers_Result> GetAllResolvedStickers(string displayname)
+        public virtual ObjectResult<GetAllResolvedStickers_Result> GetAllResolvedStickers(Nullable<int> userid)
         {
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllResolvedStickers_Result>("GetAllResolvedStickers", displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllResolvedStickers_Result>("GetAllResolvedStickers", useridParameter);
         }
     
         public virtual ObjectResult<GetAllStickers_Result> GetAllStickers()
@@ -416,17 +433,13 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllTutorReviews_Result>("GetAllTutorReviews");
         }
     
-        public virtual ObjectResult<GetDisplayNameAndEmail_Result> GetDisplayNameAndEmail(string useremail, string password)
+        public virtual ObjectResult<GetDisplayNameAndEmail_Result> GetDisplayNameAndEmail(Nullable<int> userid)
         {
-            var useremailParameter = useremail != null ?
-                new ObjectParameter("useremail", useremail) :
-                new ObjectParameter("useremail", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDisplayNameAndEmail_Result>("GetDisplayNameAndEmail", useremailParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDisplayNameAndEmail_Result>("GetDisplayNameAndEmail", useridParameter);
         }
     
         public virtual ObjectResult<string> GetEmailCredentials()
@@ -434,13 +447,13 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetEmailCredentials");
         }
     
-        public virtual ObjectResult<byte[]> GetProfilePicture(string useremail)
+        public virtual ObjectResult<byte[]> GetProfilePicture(Nullable<int> userid)
         {
-            var useremailParameter = useremail != null ?
-                new ObjectParameter("useremail", useremail) :
-                new ObjectParameter("useremail", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("GetProfilePicture", useremailParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("GetProfilePicture", useridParameter);
         }
     
         public virtual ObjectResult<string> GetSchoolName()
@@ -463,61 +476,58 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetServerName");
         }
     
-        public virtual ObjectResult<Nullable<double>> GetUserAvgStudentStarRank(string displayname)
+        public virtual ObjectResult<Nullable<double>> GetUserAvgStudentStarRank(Nullable<int> userid)
         {
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetUserAvgStudentStarRank", displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetUserAvgStudentStarRank", useridParameter);
         }
     
-        public virtual ObjectResult<Nullable<double>> GetUserAvgTutorStarRank(string displayname)
+        public virtual ObjectResult<Nullable<double>> GetUserAvgTutorStarRank(Nullable<int> userid)
         {
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetUserAvgTutorStarRank", displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetUserAvgTutorStarRank", useridParameter);
         }
     
-        public virtual ObjectResult<GetUserClasses_Result> GetUserClasses(string useremail, string password)
+        public virtual ObjectResult<GetUserClasses_Result> GetUserClasses(Nullable<int> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserClasses_Result>("GetUserClasses", useridParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetUserID(string useremail)
         {
             var useremailParameter = useremail != null ?
                 new ObjectParameter("useremail", useremail) :
                 new ObjectParameter("useremail", typeof(string));
     
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserClasses_Result>("GetUserClasses", useremailParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetUserID", useremailParameter);
         }
     
-        public virtual ObjectResult<string> GetUserOrganizations(string useremail, string password)
+        public virtual ObjectResult<string> GetUserOrganizations(Nullable<int> userid)
         {
-            var useremailParameter = useremail != null ?
-                new ObjectParameter("useremail", useremail) :
-                new ObjectParameter("useremail", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetUserOrganizations", useremailParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetUserOrganizations", useridParameter);
         }
     
-        public virtual ObjectResult<GetUserStickersAndReviews_Result> GetUserStickersAndReviews(string useremail, string password)
+        public virtual ObjectResult<GetUserStickersAndReviews_Result> GetUserStickersAndReviews(Nullable<int> userid)
         {
-            var useremailParameter = useremail != null ?
-                new ObjectParameter("useremail", useremail) :
-                new ObjectParameter("useremail", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserStickersAndReviews_Result>("GetUserStickersAndReviews", useremailParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserStickersAndReviews_Result>("GetUserStickersAndReviews", useridParameter);
         }
     
         public virtual ObjectResult<GetUsersWithOverallStarRank_Result> GetUsersWithOverallStarRank(Nullable<double> starrank)
@@ -602,20 +612,16 @@ namespace UnstuckMEInterfaces
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUserIntoMentorProgram", userIDParameter, mentorIDParameter);
         }
     
-        public virtual ObjectResult<byte[]> OpenProfilePage(string useremail, string password)
+        public virtual ObjectResult<byte[]> OpenProfilePage(Nullable<int> userid)
         {
-            var useremailParameter = useremail != null ?
-                new ObjectParameter("useremail", useremail) :
-                new ObjectParameter("useremail", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("OpenProfilePage", useremailParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("OpenProfilePage", useridParameter);
         }
     
-        public virtual ObjectResult<PullActiveClassSpecificStickers_Result> PullActiveClassSpecificStickers(string name, string code, Nullable<short> number, Nullable<byte> term, string displayname)
+        public virtual ObjectResult<PullActiveClassSpecificStickers_Result> PullActiveClassSpecificStickers(string name, string code, Nullable<short> number, Nullable<byte> term, Nullable<int> userid)
         {
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -633,22 +639,22 @@ namespace UnstuckMEInterfaces
                 new ObjectParameter("Term", term) :
                 new ObjectParameter("Term", typeof(byte));
     
-            var displaynameParameter = displayname != null ?
-                new ObjectParameter("displayname", displayname) :
-                new ObjectParameter("displayname", typeof(string));
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PullActiveClassSpecificStickers_Result>("PullActiveClassSpecificStickers", nameParameter, codeParameter, numberParameter, termParameter, displaynameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PullActiveClassSpecificStickers_Result>("PullActiveClassSpecificStickers", nameParameter, codeParameter, numberParameter, termParameter, useridParameter);
         }
     
-        public virtual ObjectResult<PullChatMessagesAndFilesBetweenUsers_Result> PullChatMessagesAndFilesBetweenUsers(string user, string tutor)
+        public virtual ObjectResult<PullChatMessagesAndFilesBetweenUsers_Result> PullChatMessagesAndFilesBetweenUsers(Nullable<int> user, Nullable<int> tutor)
         {
-            var userParameter = user != null ?
+            var userParameter = user.HasValue ?
                 new ObjectParameter("user", user) :
-                new ObjectParameter("user", typeof(string));
+                new ObjectParameter("user", typeof(int));
     
-            var tutorParameter = tutor != null ?
+            var tutorParameter = tutor.HasValue ?
                 new ObjectParameter("tutor", tutor) :
-                new ObjectParameter("tutor", typeof(string));
+                new ObjectParameter("tutor", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PullChatMessagesAndFilesBetweenUsers_Result>("PullChatMessagesAndFilesBetweenUsers", userParameter, tutorParameter);
         }
