@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEInterfaces
+namespace UnstuckMEServer
 {
     using System;
     using System.Collections.Generic;

@@ -402,6 +402,9 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           </ReferentialConstraint>
         </Association>
         <Function Name="AdminPullAllReports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="AdminPullReportsForOptionalUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
         <Function Name="AdminPullReportsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user" Type="varchar" Mode="In" />
         </Function>
@@ -427,6 +430,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="nvarchar" Mode="In" />
           <Parameter Name="Privileges" Type="nvarchar" Mode="In" />
+          <Parameter Name="Salt" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="CreateOfficialMentor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OrganizationName" Type="nvarchar" Mode="In" />
@@ -450,6 +454,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="AdminUsername" Type="varchar" Mode="In" />
           <Parameter Name="AdminPassword" Type="nvarchar" Mode="In" />
           <Parameter Name="EmailCredentials" Type="nvarchar" Mode="In" />
+          <Parameter Name="Salt" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="CreateSticker" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProblemDescription" Type="nvarchar" Mode="In" />
@@ -487,61 +492,60 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
         </Function>
         <Function Name="FilterUserReviewsByEqualStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starfilter" Type="float" Mode="In" />
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="FilterUserReviewsByGreaterThanStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starfilter" Type="float" Mode="In" />
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetActiveStickersWithStarRankOrMentorOrganization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starrank" Type="float" Mode="In" />
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
           <Parameter Name="organization" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetAdminInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllActiveStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetAllChatIDsAUserIsPartOF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetAllOrganizations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllResolvedStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetAllStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllStudentReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllTutorReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDisplayNameAndEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="useremail" Type="varchar" Mode="In" />
-          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetEmailCredentials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="useremail" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetSchoolName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetServerDomain" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetServerIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetServerName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetUserAvgStudentStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetUserAvgTutorStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetUserClasses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="useremail" Type="varchar" Mode="In" />
-          <Parameter Name="password" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetUserOrganizations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="useremail" Type="varchar" Mode="In" />
-          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetUserStickersAndReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="useremail" Type="varchar" Mode="In" />
-          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetUsersWithOverallStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starrank" Type="float" Mode="In" />
@@ -569,19 +573,18 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="MentorID" Type="int" Mode="In" />
         </Function>
         <Function Name="OpenProfilePage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="useremail" Type="varchar" Mode="In" />
-          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="PullActiveClassSpecificStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="Code" Type="varchar" Mode="In" />
           <Parameter Name="Number" Type="smallint" Mode="In" />
           <Parameter Name="Term" Type="tinyint" Mode="In" />
-          <Parameter Name="displayname" Type="varchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
         <Function Name="PullChatMessagesAndFilesBetweenUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="user" Type="varchar" Mode="In" />
-          <Parameter Name="tutor" Type="varchar" Mode="In" />
+          <Parameter Name="user" Type="int" Mode="In" />
+          <Parameter Name="tutor" Type="int" Mode="In" />
         </Function>
         <Function Name="RetrieveLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="useremail" Type="varchar" Mode="In" />
@@ -1163,7 +1166,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <End Role="Classes" Type="Self.Class" Multiplicity="*" />
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="UnstuckME_DBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="UnstuckME_DBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Chats" EntityType="Self.Chat" />
           <EntitySet Name="Classes" EntityType="Self.Class" />
           <EntitySet Name="Files" EntityType="Self.File" />
@@ -1240,6 +1243,9 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           <FunctionImport Name="AdminPullAllReports" ReturnType="Collection(UnstuckME_DBModel.AdminPullAllReports_Result)" />
+          <FunctionImport Name="AdminPullReportsForOptionalUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result)">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="AdminPullReportsForUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForUser_Result)">
             <Parameter Name="user" Mode="In" Type="String" />
           </FunctionImport>
@@ -1265,6 +1271,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="EmailAddress" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
             <Parameter Name="Privileges" Mode="In" Type="String" />
+            <Parameter Name="Salt" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CreateOfficialMentor">
             <Parameter Name="OrganizationName" Mode="In" Type="String" />
@@ -1288,6 +1295,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="AdminUsername" Mode="In" Type="String" />
             <Parameter Name="AdminPassword" Mode="In" Type="String" />
             <Parameter Name="EmailCredentials" Mode="In" Type="String" />
+            <Parameter Name="Salt" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CreateSticker">
             <Parameter Name="ProblemDescription" Mode="In" Type="String" />
@@ -1325,60 +1333,59 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </FunctionImport>
           <FunctionImport Name="FilterUserReviewsByEqualStarRank" ReturnType="Collection(UnstuckME_DBModel.FilterUserReviewsByEqualStarRank_Result)">
             <Parameter Name="starfilter" Mode="In" Type="Double" />
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="FilterUserReviewsByGreaterThanStarRank" ReturnType="Collection(UnstuckME_DBModel.FilterUserReviewsByGreaterThanStarRank_Result)">
             <Parameter Name="starfilter" Mode="In" Type="Double" />
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickersWithStarRankOrMentorOrganization" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickersWithStarRankOrMentorOrganization_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="organization" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAdminInfo" ReturnType="Collection(UnstuckME_DBModel.GetAdminInfo_Result)" />
           <FunctionImport Name="GetAllActiveStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllActiveStickers_Result)">
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllChatIDsAUserIsPartOF" ReturnType="Collection(UnstuckME_DBModel.GetAllChatIDsAUserIsPartOF_Result)">
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllOrganizations" ReturnType="Collection(String)" />
           <FunctionImport Name="GetAllResolvedStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllResolvedStickers_Result)">
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllStickers_Result)" />
           <FunctionImport Name="GetAllStudentReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllStudentReviews_Result)" />
           <FunctionImport Name="GetAllTutorReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllTutorReviews_Result)" />
           <FunctionImport Name="GetDisplayNameAndEmail" ReturnType="Collection(UnstuckME_DBModel.GetDisplayNameAndEmail_Result)">
-            <Parameter Name="useremail" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetEmailCredentials" ReturnType="Collection(String)" />
           <FunctionImport Name="GetProfilePicture" ReturnType="Collection(Binary)">
-            <Parameter Name="useremail" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSchoolName" ReturnType="Collection(String)" />
           <FunctionImport Name="GetServerDomain" ReturnType="Collection(String)" />
           <FunctionImport Name="GetServerIP" ReturnType="Collection(String)" />
           <FunctionImport Name="GetServerName" ReturnType="Collection(String)" />
           <FunctionImport Name="GetUserAvgStudentStarRank" ReturnType="Collection(Double)">
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserAvgTutorStarRank" ReturnType="Collection(Double)">
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserClasses" ReturnType="Collection(UnstuckME_DBModel.GetUserClasses_Result)">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserID" ReturnType="Collection(Int32)">
             <Parameter Name="useremail" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserOrganizations" ReturnType="Collection(String)">
-            <Parameter Name="useremail" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserStickersAndReviews" ReturnType="Collection(UnstuckME_DBModel.GetUserStickersAndReviews_Result)">
-            <Parameter Name="useremail" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUsersWithOverallStarRank" ReturnType="Collection(UnstuckME_DBModel.GetUsersWithOverallStarRank_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
@@ -1406,19 +1413,18 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="MentorID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="OpenProfilePage" ReturnType="Collection(Binary)">
-            <Parameter Name="useremail" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PullActiveClassSpecificStickers" ReturnType="Collection(UnstuckME_DBModel.PullActiveClassSpecificStickers_Result)">
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Code" Mode="In" Type="String" />
             <Parameter Name="Number" Mode="In" Type="Int16" />
             <Parameter Name="Term" Mode="In" Type="Byte" />
-            <Parameter Name="displayname" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PullChatMessagesAndFilesBetweenUsers" ReturnType="Collection(UnstuckME_DBModel.PullChatMessagesAndFilesBetweenUsers_Result)">
-            <Parameter Name="user" Mode="In" Type="String" />
-            <Parameter Name="tutor" Mode="In" Type="String" />
+            <Parameter Name="user" Mode="In" Type="Int32" />
+            <Parameter Name="tutor" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="RetrieveLogin" ReturnType="Collection(String)">
             <Parameter Name="useremail" Mode="In" Type="String" />
@@ -1556,6 +1562,14 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Type="String" Name="ReviewDescription" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
         </ComplexType>
+        <ComplexType Name="AdminPullReportsForOptionalUser_Result">
+          <Property Type="String" Name="Reported_as_Tutor" Nullable="false" MaxLength="65" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Int32" Name="ReviewID" Nullable="false" />
+          <Property Type="Double" Name="ReviewStarRanking" Nullable="true" />
+          <Property Type="String" Name="ReviewDescription" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
+        </ComplexType>
         <ComplexType Name="AdminPullReportsForUser_Result">
           <Property Type="String" Name="Reported_as_Tutor" Nullable="false" MaxLength="65" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
@@ -1598,7 +1612,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Type="DateTime" Name="Timeout" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetAllChatIDsAUserIsPartOF_Result">
-          <Property Type="String" Name="User" Nullable="true" MaxLength="65" />
+          <Property Type="String" Name="User" Nullable="false" MaxLength="65" />
           <Property Type="Int32" Name="ChatID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetAllResolvedStickers_Result">
@@ -1692,7 +1706,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="UnstuckME_DBModelStoreContainer" CdmEntityContainer="UnstuckME_DBEntities">
+        <EntityContainerMapping StorageEntityContainer="UnstuckME_DBModelStoreContainer" CdmEntityContainer="UnstuckME_DBEntities1">
           <EntitySetMapping Name="Chats">
             <EntityTypeMapping TypeName="UnstuckME_DBModel.Chat">
               <MappingFragment StoreEntitySet="Chat">
@@ -1888,6 +1902,18 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AdminPullReportsForOptionalUser" FunctionName="UnstuckME_DBModel.Store.AdminPullReportsForOptionalUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result">
+                <ScalarProperty Name="Reported_as_Tutor" ColumnName="Reported as Tutor" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
+                <ScalarProperty Name="ReviewStarRanking" ColumnName="ReviewStarRanking" />
+                <ScalarProperty Name="ReviewDescription" ColumnName="ReviewDescription" />
+                <ScalarProperty Name="ReportDescription" ColumnName="ReportDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AdminPullReportsForUser" FunctionName="UnstuckME_DBModel.Store.AdminPullReportsForUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.AdminPullReportsForUser_Result">
@@ -2052,6 +2078,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUserID" FunctionName="UnstuckME_DBModel.Store.GetUserID" />
           <FunctionImportMapping FunctionImportName="GetUserOrganizations" FunctionName="UnstuckME_DBModel.Store.GetUserOrganizations" />
           <FunctionImportMapping FunctionImportName="GetUserStickersAndReviews" FunctionName="UnstuckME_DBModel.Store.GetUserStickersAndReviews">
             <ResultMapping>

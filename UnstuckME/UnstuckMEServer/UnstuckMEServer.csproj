@@ -56,6 +56,9 @@
     <Compile Include="AdminPullAllReports_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="AdminPullReportsForOptionalUser_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="AdminPullReportsForUser_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -187,14 +190,23 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <EntityDeploy Include="UnstuckME_DB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UnstuckME_DB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="packages.config" />
     <None Include="UnstuckME_DB.edmx.diagram">
       <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
+      <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
+      <Name>UnstuckMEInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="UnstuckME_DB.Context.tt">
@@ -207,15 +219,6 @@
       <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
       <LastGenOutput>UnstuckME_DB.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
-      <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
-      <Name>UnstuckMEInterfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

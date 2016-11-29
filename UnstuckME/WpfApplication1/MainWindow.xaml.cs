@@ -32,14 +32,13 @@ namespace UnstuckMEServerWPF
             string email = emailAddressTextBox.Text;
             string password = passwordBox.Password;
             bool isValid = false;
-            byte[] hashedPassword = Encoding.ASCII.GetBytes(password); //Turns passed in password into bytes.
 
             //Opens a connection to UnstuckME Server.
             ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
             IUnstuckMEService proxy = channelFactory.CreateChannel();
 
             //Calls UnstuckME Server Function that checks email credentials
-            isValid = proxy.UserLoginAttempt(email, hashedPassword);
+            isValid = proxy.UserLoginAttempt(email, password);
 
             if(isValid)
             {

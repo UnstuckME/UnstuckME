@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using UnstuckMEServer;
 
 namespace UnstuckMEInterfaces
 {
@@ -15,7 +16,7 @@ namespace UnstuckMEInterfaces
     {
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
             {
 
                 var users = (from u in db.UserProfiles
@@ -27,58 +28,26 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public bool CreateNewUser(string displayFName, string displayLName, string emailAddress, byte[] userPassword, string privileges, string salt)
+        public bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt)
         {
             bool successful = false;
 
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
             {
-                
+                db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
             }
             return successful;
         }
 
-        public List<string> ListUsersFullName()
-        {
-            Console.WriteLine("Attempting User Name Select");
-            List<string> userList = new List<string>();
-            try
-            {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    var users = from u in db.UserProfiles
-                                select u.DisplayFName + " " + u.DisplayLName;
-
-                    userList = users.ToList();
-
-                    List<UserProfile> listofUsers = new List<UserProfile>();
-                    foreach (var item in (from u in db.UserProfiles select u))
-                    {
-                        Console.WriteLine(item);
-                        listofUsers.Add(item);
-                    }
-                    foreach (var item in listofUsers)
-                    {
-                        Console.WriteLine(item.DisplayFName + " " + item.DisplayLName + " " + item.EmailAddress);
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-            return userList;
-        }
-
-        public bool UserLoginAttempt(string emailAddress, byte[] passWord)
+        public bool UserLoginAttempt(string emailAddress, string passWord)
         {
             bool loginAttempt = false;
-            string salt = null;
-            string storedPassword = null;
+            //string salt = null;
+            //string storedPassword = null;
 
             Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
 
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
             {
                   
             }

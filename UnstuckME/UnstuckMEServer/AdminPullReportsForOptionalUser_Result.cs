@@ -10,17 +10,14 @@
 namespace UnstuckMEServer
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Message
+    public partial class AdminPullReportsForOptionalUser_Result
     {
-        public int MessageID { get; set; }
-        public int ChatID { get; set; }
-        public string MessageData { get; set; }
-        public int SentBy { get; set; }
-        public System.DateTime SentTime { get; set; }
-    
-        public virtual Chat Chat { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
+        public string Reported_as_Tutor { get; set; }
+        public int UserID { get; set; }
+        public int ReviewID { get; set; }
+        public Nullable<double> ReviewStarRanking { get; set; }
+        public string ReviewDescription { get; set; }
+        public string ReportDescription { get; set; }
     }
 }

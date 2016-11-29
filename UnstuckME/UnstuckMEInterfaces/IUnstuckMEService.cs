@@ -15,17 +15,15 @@ namespace UnstuckMEInterfaces
         /// These Operation Contracts are the functions that the user can call from UnstuckMEClient using proxy.FunctionName(Parameters);
         /// Implement these functions in UnstuckMEService.cs
         /// </summary>
-        [OperationContract]
-        List<string> ListUsersFullName();
 
         [OperationContract]
         void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
         [OperationContract]
-        bool UserLoginAttempt(string emailAddress, byte[] passWord);
+        bool UserLoginAttempt(string emailAddress, string passWord);
 
         [OperationContract]
-        bool CreateNewUser(string displayFName, string displayLName, string emailAddress, byte[] userPassword, string privileges, string salt);
+        bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt);
         
     }
 }
