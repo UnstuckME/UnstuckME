@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckMEInterfaces;
 
-namespace UnstuckMEServerWPF
+namespace UnstuckMEClientWPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -27,9 +27,14 @@ namespace UnstuckMEServerWPF
             InitializeComponent();
         }
 
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
-            string email = emailAddressTextBox.Text;
+            string email = textBoxEmailAddress.Text;
             string password = passwordBox.Password;
             bool isValid = false;
 
@@ -40,29 +45,10 @@ namespace UnstuckMEServerWPF
             //Calls UnstuckME Server Function that checks email credentials
             isValid = proxy.UserLoginAttempt(email, password);
 
-            if(isValid)
+            if (isValid)
             {
 
             }
-        }
-
-        private void button_CreateNewUser_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// THIS FUNCTION IS SOLEY FOR TESTING STORED PROCEDURE RESULTS FROM SERVER
-        /// </summary>
-        private void button_StoredProc_Click(object sender, RoutedEventArgs e)
-        {
-            //Opens a connection to UnstuckME Server.
-            ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
-            IUnstuckMEService proxy = channelFactory.CreateChannel();
-            int test = 4;
-            test = proxy.GetUserID("ajclark@oit.edu");
-            System.Windows.MessageBox.Show("UserID = " + test.ToString());
-
         }
     }
 }

@@ -28,15 +28,27 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt)
+        public int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt)
         {
-            bool successful = false;
+            int retVal = -1;
 
             using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
             {
-                db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
+               retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
             }
-            return successful;
+
+            return retVal;
+        }
+
+        public int GetUserID(string emailAddress)
+        {
+            int userID = 0;
+            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
+            {
+                var temp = db.GetUserID(emailAddress);
+                userID = temp.First().Value;
+            }
+            return userID;
         }
 
         public bool UserLoginAttempt(string emailAddress, string passWord)

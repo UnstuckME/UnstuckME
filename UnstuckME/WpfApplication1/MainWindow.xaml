@@ -11,6 +11,7 @@
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" Margin="160,183,150,105" VerticalAlignment="Center" Width="200" Height="30" BorderThickness="2" BorderBrush="Black" Background="White"/>
         <Button x:Name="buttonLogin" Content="Login" HorizontalAlignment="Center" Margin="221,237,221,56" VerticalAlignment="Center" Width="75" Click="buttonLogin_Click"/>
         <Button x:Name="button_CreateNewUser" Content="Create New User" HorizontalAlignment="Center" Margin="200,267,197,26" VerticalAlignment="Center" Width="200" Background="White" BorderBrush="White" Foreground="#FF0B37FF" Click="button_CreateNewUser_Click"/>
+        <Button x:Name="button_StoredProc" Content="For Testing Procs" HorizontalAlignment="Center" Margin="206,130,194,344" VerticalAlignment="Center" Width="200" Click="button_StoredProc_Click"/>
 
     </Grid>
 </Window>
