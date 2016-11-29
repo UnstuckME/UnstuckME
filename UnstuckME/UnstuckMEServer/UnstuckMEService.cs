@@ -31,7 +31,10 @@ namespace UnstuckMEInterfaces
         {
             bool successful = false;
 
-
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                
+            }
             return successful;
         }
 
