@@ -21,6 +21,8 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
-
+        [OperationContract]
+        bool LoginAttempt(string emailAddress, string passWord);
+        
     }
 }

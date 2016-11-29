@@ -18,7 +18,7 @@ namespace UnstuckMEClient
             IUnstuckMEService proxy = channelFactory.CreateChannel();
 
             //Calls Change username OperationalContract (Located in IUnstuckMEService.cs -> UnstuckMEService.cs)
-            proxy.ChangeUserName("JAMES.SMITH@oit.edu", "Jacob", "Jericho");
+            proxy.ChangeUserName("JAMES.SMITH@oit.edu", "Hurley", "Manchesterson");
 
             //Calls List all user first name (Located in IUnstuckMEService.cs -> UnstuckMEService.cs)
             List<string> users = proxy.ListUsersFullName();

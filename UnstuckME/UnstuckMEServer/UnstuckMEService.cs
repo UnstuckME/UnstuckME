@@ -27,6 +27,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
+
         public List<string> ListUsersFullName()
         {
             Console.WriteLine("Attempting User Name Select");
@@ -39,6 +40,17 @@ namespace UnstuckMEInterfaces
                                 select u.DisplayFName + " " + u.DisplayLName;
 
                     userList = users.ToList();
+
+                    List<UserProfile> listofUsers = new List<UserProfile>();
+                    foreach (var item in (from u in db.UserProfiles select u))
+                    {
+                        Console.WriteLine(item);
+                        listofUsers.Add(item);
+                    }
+                    foreach (var item in listofUsers)
+                    {
+                        Console.WriteLine(item.DisplayFName + " " + item.DisplayLName + " " + item.EmailAddress);
+                    }
                 }
             }
             catch
@@ -47,6 +59,20 @@ namespace UnstuckMEInterfaces
             }
             return userList;
         }
-       
+
+        public bool LoginAttempt(string emailAddress, string passWord)
+        {
+            bool loginAttempt = false;
+            string salt = null;
+            string storedPassword = null;
+            
+
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                
+            }
+
+            return loginAttempt;
+        }
     }
 }
