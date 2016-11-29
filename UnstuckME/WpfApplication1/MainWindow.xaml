@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerWPF"
         mc:Ignorable="d"
-        Title="UnstuckME Server" Height="350" Width="525">
-    <Grid>
-        <TextBox x:Name="emailAddressTextBox" HorizontalAlignment="Center" Height="22" Margin="200,154,197,143" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Center" Width="120" FontStyle="Italic" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" Margin="200,198,197,103" VerticalAlignment="Center" Width="120"/>
-        <Button x:Name="buttonLogin" Content="Login" HorizontalAlignment="Left" Margin="223,237,0,0" VerticalAlignment="Top" Width="75" Click="buttonLogin_Click"/>
-        <Button x:Name="button_CreateNewUser" Content="Create New User" HorizontalAlignment="Left" Margin="200,276,0,0" VerticalAlignment="Top" Width="120" Background="White" BorderBrush="White" Foreground="#FF0B37FF" Click="button_CreateNewUser_Click"/>
+        Title="UnstuckME Server" Height="500" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid Width="600" Height="500" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox x:Name="emailAddressTextBox" HorizontalAlignment="Center" Height="30" Margin="164,136,153,152" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Center" Width="200" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black" BorderThickness="2"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" Margin="160,183,150,105" VerticalAlignment="Center" Width="200" Height="30" BorderThickness="2" BorderBrush="Black" Background="White"/>
+        <Button x:Name="buttonLogin" Content="Login" HorizontalAlignment="Center" Margin="221,237,221,56" VerticalAlignment="Center" Width="75" Click="buttonLogin_Click"/>
+        <Button x:Name="button_CreateNewUser" Content="Create New User" HorizontalAlignment="Center" Margin="200,267,197,26" VerticalAlignment="Center" Width="200" Background="White" BorderBrush="White" Foreground="#FF0B37FF" Click="button_CreateNewUser_Click"/>
 
     </Grid>
 </Window>
