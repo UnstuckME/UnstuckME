@@ -205,6 +205,7 @@ CREATE INDEX ReviewReviewerIDIndex on Review (ReviewerID);
 CREATE INDEX StickerClassIDIndex on Sticker (ClassID);
 CREATE INDEX StickerStudentIDIndex on Sticker (StudentID);
 CREATE INDEX StickerTutorIDIndex on Sticker (TutorID);
+CREATE INDEX UserProfileEmailAddress on UserProfile (EmailAddress);
 GO
 
 --Create Views
