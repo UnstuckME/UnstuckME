@@ -27,11 +27,17 @@ namespace UnstuckMEClientWPF
             InitializeComponent();
         }
 
+        /// <summary>
+        /// This function is purely for testing stored procedures
+        /// </summary>
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Beginnings of a function to check login information.
+        /// </summary>
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
             string email = textBoxEmailAddress.Text;
