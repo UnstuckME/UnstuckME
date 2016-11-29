@@ -44,7 +44,8 @@ CREATE PROC [dbo].[CreateNewUser]
 	@LastName VARCHAR(30),
 	@EmailAddress VARCHAR(50),
 	@Password NVARCHAR(32),
-	@Privileges NVARCHAR(32)
+	@Privileges NVARCHAR(32),
+	@Salt NVARCHAR(256)
     )
 AS
     BEGIN
@@ -56,7 +57,7 @@ AS
             BEGIN
 				PRINT 'INSERT SUCCESS'
                 INSERT INTO UserProfile
-				VALUES(@FirstName, @LastName, @EmailAddress, @Password, @Privileges)
+				VALUES(@FirstName, @LastName, @EmailAddress, @Password, @Privileges, @Salt)
             END
 
     END
@@ -228,7 +229,8 @@ CREATE PROC [dbo].[CreateServer]
 	@SchoolName			VARCHAR(75),
 	@AdminUsername		VARCHAR(30),
 	@AdminPassword		NVARCHAR(32),
-	@EmailCredentials	NVARCHAR(50)
+	@EmailCredentials	NVARCHAR(50),
+	@Salt				NVARCHAR(256)
     )
 AS
     BEGIN
@@ -241,7 +243,7 @@ AS
             BEGIN
                 INSERT INTO [Server]
 				VALUES(@ServerName, @ServerIP, @ServerDomain, @SchoolName,
-						 @AdminUsername, @AdminPassword, @EmailCredentials)
+						 @AdminUsername, @AdminPassword, @EmailCredentials, @Salt)
             END
 
     END
