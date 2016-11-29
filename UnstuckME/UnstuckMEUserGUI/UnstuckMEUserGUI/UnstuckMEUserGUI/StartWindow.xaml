@@ -1,0 +1,18 @@
+﻿<Window x:Class="UnstuckMEUserGUI.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEUserGUI"
+        mc:Ignorable="d"
+        Title="UnstuckME" Height="350" Width="525">
+    <Grid>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="150,170,0,0" VerticalAlignment="Top" Width="207" Height="35"/>
+        <TextBox x:Name="UserNameTxtBx" HorizontalAlignment="Left" Height="34" Margin="150,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="207"/>
+        <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="213,210,0,0" VerticalAlignment="Top" Width="87" Height="29" Click="LoginBtn_Click"/>
+        <Button x:Name="CreateAccountBtn" Content="Create Account" HorizontalAlignment="Left" Margin="225,270,0,0" VerticalAlignment="Top" Width="75" FontSize="7" Click="CreateAccountBtn_Click"/>
+        <Button x:Name="SettingsBtn" Content="Settings" HorizontalAlignment="Left" Margin="483,10,0,0" VerticalAlignment="Top" Width="25" FontSize="7" Click="SettingsBtn_Click"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="200,10,0,0" VerticalAlignment="Top" Width="100"/>
+
+    </Grid>
+</Window>
