@@ -23,6 +23,9 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         bool UserLoginAttempt(string emailAddress, byte[] passWord);
+
+        [OperationContract]
+        bool CreateNewUser(string displayFName, string displayLName, string emailAddress, byte[] userPassword, string privileges, string salt);
         
     }
 }

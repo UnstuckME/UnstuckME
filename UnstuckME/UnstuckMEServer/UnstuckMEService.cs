@@ -27,6 +27,13 @@ namespace UnstuckMEInterfaces
             }
         }
 
+        public bool CreateNewUser(string displayFName, string displayLName, string emailAddress, byte[] userPassword, string privileges, string salt)
+        {
+            bool successful = false;
+
+
+            return successful;
+        }
 
         public List<string> ListUsersFullName()
         {
