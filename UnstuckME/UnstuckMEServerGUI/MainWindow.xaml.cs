@@ -53,7 +53,7 @@ namespace UnstuckMEServerGUI
             }
             catch(InvalidOperationException ex)
             {
-                MessageBox.Show(ex.Message, "Server Start Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Server Start Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 
             }
         }
@@ -69,7 +69,7 @@ namespace UnstuckMEServerGUI
                 else
                 {
                     
-                    MessageBoxResult boxResult = MessageBox.Show("Are You Sure?", "Server Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    MessageBoxResult boxResult = MessageBox.Show("Are you sure you want to shutdown the server?", "Server Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (boxResult == MessageBoxResult.Yes)
                     {
                         Process[] server = Process.GetProcessesByName("UnstuckMEServer");
@@ -84,7 +84,7 @@ namespace UnstuckMEServerGUI
             }
             catch(InvalidOperationException ex)
             {
-                MessageBox.Show(ex.Message, "Server Start Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Server Shutdown Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
