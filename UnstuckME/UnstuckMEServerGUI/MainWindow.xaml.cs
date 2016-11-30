@@ -68,9 +68,18 @@ namespace UnstuckMEServerGUI
                     throw new InvalidOperationException("Server Is Not Running.");
                 else
                 {
-                    Process[] server = Process.GetProcessesByName("UnstuckMEServer");
-                    server[0].Kill();
-                    MessageBox.Show("Server Is No Longer Running.", "Server Shutdown Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
+                    MessageBoxResult boxResult = MessageBox.Show("Are You Sure?", "Server Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (boxResult == MessageBoxResult.Yes)
+                    {
+                        Process[] server = Process.GetProcessesByName("UnstuckMEServer");
+                        server[0].Kill();
+                        MessageBox.Show("Server Successfully Shutdown!", "Server Shutdown Success", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Server Is Still Running.", "Server Shutdown Canceled", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
             }
             catch(InvalidOperationException ex)

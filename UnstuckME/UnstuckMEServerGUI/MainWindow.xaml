@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Left" Margin="42,62,0,0" VerticalAlignment="Top" Width="155" Click="button_RunServer_Click"/>
-        <Button x:Name="buttonKillServer" Content="Kill Server" HorizontalAlignment="Left" Margin="305,62,0,0" VerticalAlignment="Top" Width="159" Click="buttonKillServer_Click"/>
+        Title="UnstuckME Server Manager" Height="350" Width="525" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.507,0.727" Height="306" Margin="10,10,2,2" Width="505">
+        <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Left" Margin="184,0,0,38" VerticalAlignment="Bottom" Width="130" Click="button_RunServer_Click" Background="#FF00BD2A" BorderBrush="Black" Foreground="#FFFFF9F9" FontFamily="Global User Interface"/>
+        <Button x:Name="buttonKillServer" Content="Kill Server" HorizontalAlignment="Left" Margin="184,0,0,10" VerticalAlignment="Bottom" Width="130" Click="buttonKillServer_Click" Background="Red" BorderBrush="Black" Foreground="White" FontFamily="Global User Interface"/>
 
     </Grid>
 </Window>
