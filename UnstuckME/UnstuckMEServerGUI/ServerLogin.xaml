@@ -12,7 +12,8 @@
         <PasswordBox x:Name="passwordBoxInput" HorizontalAlignment="Center" Margin="46,157,46,86" VerticalAlignment="Center" Width="200" Height="25" BorderThickness="2"/>
         <Label x:Name="labelEmailAddress" Content="Email Address" HorizontalAlignment="Center" Margin="46,74,146,170" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
         <Label x:Name="labelPassword" Content="Password" HorizontalAlignment="Center" Margin="46,133,146,111" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
-        <Button x:Name="buttonServerLogin" Content="Login" HorizontalAlignment="Center" Margin="90,300,90,130" VerticalAlignment="Center" Width="150" Click="buttonServerLogin_Click" Height="30" BorderThickness="2"/>
+        <Button x:Name="buttonServerLogin" Content="Login" HorizontalAlignment="Center" Margin="90,225,90,0" VerticalAlignment="Center" Width="150" Click="buttonServerLogin_Click" Height="30" BorderThickness="2"/>
+        <Label x:Name="labelInvalidUsernamePassword" Content="Invalid Username/Password" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="200" Height="28" Foreground="Red" HorizontalContentAlignment="Center" FontSize="12" FontFamily="Global Sans Serif" Visibility="Hidden"/>
 
     </Grid>
 </Window>
