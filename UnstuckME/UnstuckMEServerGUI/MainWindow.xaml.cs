@@ -29,30 +29,53 @@ namespace UnstuckMEServerGUI
 
         private void button_RunServer_Click(object sender, RoutedEventArgs e)
         {
-            DirectoryInfo currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-            currentDir = currentDir.Parent;
-            currentDir = currentDir.Parent;
-            currentDir = currentDir.Parent;
-            string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
-            Process startServer = new Process();
-            startServer.StartInfo.RedirectStandardOutput = true;
-            startServer.StartInfo.UseShellExecute = false;
-            startServer.StartInfo.CreateNoWindow = true;
-            startServer.StartInfo.Verb = "runas";
-            startServer.StartInfo.FileName = serverPath;
-            startServer.Start();
+            try
+            {
+                Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
+                if (pname.Length > 0)
+                    throw new InvalidOperationException("Server Is Already Running!");
+                else
+                {                 
+                    DirectoryInfo currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
+                    currentDir = currentDir.Parent;
+                    currentDir = currentDir.Parent;
+                    currentDir = currentDir.Parent;
+                    string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
+                    Process startServer = new Process();
+                    startServer.StartInfo.RedirectStandardOutput = true;
+                    startServer.StartInfo.UseShellExecute = false;
+                    startServer.StartInfo.CreateNoWindow = true;
+                    startServer.StartInfo.Verb = "runas";
+                    startServer.StartInfo.FileName = serverPath;
+                    startServer.Start();
+                    MessageBox.Show("Server Is Now Running.", "Server Startup Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch(InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Server Start Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                
+            }
         }
 
         private void buttonKillServer_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
-                Process[] server = Process.GetProcessesByName("UnstuckMEServer");
-                server[0].Kill();
+                Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
+                if (pname.Length == 0)
+                    throw new InvalidOperationException("Server Is Not Running.");
+                else
+                {
+                    Process[] server = Process.GetProcessesByName("UnstuckMEServer");
+                    server[0].Kill();
+                    MessageBox.Show("Server Is No Longer Running.", "Server Shutdown Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-            catch
+            catch(InvalidOperationException ex)
             {
-
+                MessageBox.Show(ex.Message, "Server Start Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
