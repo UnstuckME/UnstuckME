@@ -1,0 +1,14 @@
+﻿<Window x:Class="UnstuckMEServerGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEServerGUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Left" Margin="42,62,0,0" VerticalAlignment="Top" Width="155" Click="button_RunServer_Click"/>
+        <Button x:Name="buttonKillServer" Content="Kill Server" HorizontalAlignment="Left" Margin="305,62,0,0" VerticalAlignment="Top" Width="159" Click="buttonKillServer_Click"/>
+
+    </Grid>
+</Window>
