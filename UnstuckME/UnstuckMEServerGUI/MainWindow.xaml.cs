@@ -27,6 +27,9 @@ namespace UnstuckMEServerGUI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// This function is ran when the user clicks the Start Server Button.
+        /// </summary>
         private void button_RunServer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -54,21 +57,21 @@ namespace UnstuckMEServerGUI
             catch(InvalidOperationException ex)
             {
                 MessageBox.Show(ex.Message, "Server Start Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                
             }
         }
 
+        /// <summary>
+        /// This function is ran when the user clicks the Kill Server Button.
+        /// </summary>
         private void buttonKillServer_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
                 if (pname.Length == 0)
                     throw new InvalidOperationException("Server Is Not Running.");
                 else
-                {
-                    
+                {           
                     MessageBoxResult boxResult = MessageBox.Show("Are you sure you want to shutdown the server?", "Server Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (boxResult == MessageBoxResult.Yes)
                     {
@@ -86,7 +89,6 @@ namespace UnstuckMEServerGUI
             {
                 MessageBox.Show(ex.Message, "Server Shutdown Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
     }
 }
