@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace UnstuckMEServerGUI
 
         private void buttonServerLogin_Click(object sender, RoutedEventArgs e)
         {
+            //SqlConnection conn = new SqlConnection("Server=aura.students.cset.oit.edu;Database=UnstuckME_DB;")
             MainWindow mainWindow = new MainWindow();
             App.Current.MainWindow = mainWindow;
             this.Close();
