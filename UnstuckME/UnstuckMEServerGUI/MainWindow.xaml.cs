@@ -14,8 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
-using System.ServiceModel;
-using UnstuckMEInterfaces;
 
 namespace UnstuckMEServerGUI
 {
