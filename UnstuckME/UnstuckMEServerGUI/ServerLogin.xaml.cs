@@ -65,7 +65,7 @@ namespace UnstuckMEServerGUI
                     }
 
                     MainWindow mainWindow = new MainWindow();
-                    //App.Current.MainWindow = mainWindow;
+                    App.Current.MainWindow = mainWindow;
                     Close();
                     mainWindow.Show();
                 }
