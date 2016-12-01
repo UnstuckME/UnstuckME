@@ -16,7 +16,7 @@ namespace UnstuckMEInterfaces
     {
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
-            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
+            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
             {
 
                 var users = (from u in db.UserProfiles
@@ -32,7 +32,7 @@ namespace UnstuckMEInterfaces
         {
             int retVal = -1;
 
-            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
+            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
             {
                retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
             }
@@ -43,7 +43,7 @@ namespace UnstuckMEInterfaces
         public int GetUserID(string emailAddress)
         {
             int userID = 0;
-            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
+            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
             {
                 var temp = db.GetUserID(emailAddress);
                 userID = temp.First().Value;
@@ -59,7 +59,7 @@ namespace UnstuckMEInterfaces
 
             Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
 
-            using (UnstuckME_DBEntities1 db = new UnstuckME_DBEntities1())
+            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
             {
                   
             }

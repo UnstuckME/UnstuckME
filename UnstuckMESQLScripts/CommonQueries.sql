@@ -126,7 +126,7 @@ end;
 go
 create proc GetAdminInfo as
 begin
-	select AdminUsername, AdminPassword
+	select AdminUsername, AdminPassword, Salt
 	from Server;
 end;
 

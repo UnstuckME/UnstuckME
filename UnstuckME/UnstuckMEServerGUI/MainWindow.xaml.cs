@@ -14,17 +14,23 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
+using System.ServiceModel;
+using UnstuckMEInterfaces;
 
 namespace UnstuckMEServerGUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
+       
+
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         /// <summary>
@@ -40,18 +46,17 @@ namespace UnstuckMEServerGUI
                 else
                 {                 
                     DirectoryInfo currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-                    currentDir = currentDir.Parent;
-                    currentDir = currentDir.Parent;
-                    currentDir = currentDir.Parent;
+                    currentDir = currentDir.Parent.Parent.Parent;
                     string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
                     Process startServer = new Process();
-                    startServer.StartInfo.RedirectStandardOutput = true;
-                    startServer.StartInfo.UseShellExecute = false;
-                    startServer.StartInfo.CreateNoWindow = true;
+                    //startServer.StartInfo.RedirectStandardOutput = true;
+                    //startServer.StartInfo.UseShellExecute = false;
+                    //startServer.StartInfo.CreateNoWindow = false;
                     startServer.StartInfo.Verb = "runas";
                     startServer.StartInfo.FileName = serverPath;
                     startServer.Start();
                     MessageBox.Show("Server Is Now Running.", "Server Startup Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
                 }
             }
             catch(InvalidOperationException ex)
