@@ -5,14 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UnstuckME" Height="350" Width="525">
-    <Grid>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="150,170,0,0" VerticalAlignment="Top" Width="207" Height="35"/>
-        <TextBox x:Name="UserNameTxtBx" HorizontalAlignment="Left" Height="34" Margin="150,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="207"/>
-        <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="213,210,0,0" VerticalAlignment="Top" Width="87" Height="29" Click="LoginBtn_Click"/>
-        <Button x:Name="CreateAccountBtn" Content="Create Account" HorizontalAlignment="Left" Margin="225,270,0,0" VerticalAlignment="Top" Width="75" FontSize="7" Click="CreateAccountBtn_Click"/>
-        <Button x:Name="SettingsBtn" Content="Settings" HorizontalAlignment="Left" Margin="483,10,0,0" VerticalAlignment="Top" Width="25" FontSize="7" Click="SettingsBtn_Click"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="200,10,0,0" VerticalAlignment="Top" Width="100"/>
-
-    </Grid>
+        Title="UnstuckME" Height="850" Width="1525"
+        Background="DimGray"
+        WindowStartupLocation="CenterOwner"
+        WindowState="Maximized"
+        WindowStyle="ThreeDBorderWindow">
+    <Canvas Name="Canvas">
+        <ScrollViewer Name="VerticalScrollbar" HorizontalAlignment="Right" VerticalAlignment="Center" Width="{Binding ActualWidth, ElementName=Canvas}" Height="{Binding ActualHeight, ElementName=Canvas}"
+                      HorizontalContentAlignment="Right" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
+            <Grid Name="Grid" Width="{Binding ActualWidth, ElementName=Canvas}" HorizontalAlignment="Center" ScrollViewer.CanContentScroll="True" Height="1013">
+                <Image Name="UnstuckME_Logo" Source="C:\Users\colem_000\Documents\OIT\CST 316-26-36 - Junior Project\UnstuckME\UnstuckMECore\Media\UnstuckME_Logo.png"
+                   Height="650" Width="1100" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True"
+                       ScrollViewer.VerticalScrollBarVisibility="Visible"></Image>
+                <TextBox Name="EnterEmail" Height="30" Width="220" Cursor="IBeam" Background="White" FontSize="18" MaxLength="50" TextAlignment="Left" Margin="100,0,0,-100"
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"></TextBox>
+                <Label Background="White" Height="30" Width="100" Margin="-220,0,0,-100" FontSize="13" FontWeight="Bold">
+                    Email Address
+                </Label>
+                <PasswordBox Name="EnterPassword" Height="30" Width="220" Cursor="IBeam" Background="White" FontSize="18" MaxLength="32" TextBlock.TextAlignment="Left" Margin="100,0,0,-220"
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"></PasswordBox>
+                <Label Background="White" Height="30" Width="100" Margin="-220,0,0,-220" FontSize="13" FontWeight="Bold">
+                    Password
+                </Label>
+                <Button Name="LoginButton" Margin="-150,0,0,-330" Height="25" Width="50" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="LoginBtn_Click" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True">
+                    Login
+                </Button>
+                <Button Name="CreateAccountBtn" Margin="150,0,0,-330" Height="25" Width="100" FontSize="13" FontWeight="Bold" Background="WhiteSmoke" HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Top" Click="CreateAccountBtn_Click" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    Create Account
+                </Button>
+                <Button Name="SettingsBtn" Margin="0,0,10,0" Height="100" Width="100" Background="DimGray" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
+                        Click="SettingsBtn_Click" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom" BorderBrush="DimGray">
+                    <Image Name="SettingsIcon" Source="C:\Users\colem_000\Documents\OIT\CST 316-26-36 - Junior Project\UnstuckME\UnstuckMECore\Media\Settings Icon.png"
+                           Width="{Binding ActualWidth, ElementName=SettingsBtn}" Height="{Binding ActualHeight, ElementName=SettingsBtn}" Margin="-2,-2,0,0"></Image>
+                </Button>
+            </Grid>
+        </ScrollViewer>
+    </Canvas>
 </Window>

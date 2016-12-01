@@ -30,14 +30,14 @@ namespace UnstuckMEUserGUI
             //if valid login
             Window disp = new MainWindow();
             disp.Show();
-            this.Close();
+            Close();
         }
 
         private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
         {
             Window disp = new NewAccountSetupWindow();
             disp.Show();
-            this.Close();
+            Close();
         }
 
         private void SettingsBtn_Click(object sender, RoutedEventArgs e)
