@@ -61,7 +61,7 @@ namespace UnstuckMEInterfaces
 
             using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
             {
-                  
+                loginAttempt = true;//for kyronns gui testing
             }
 
             return loginAttempt;

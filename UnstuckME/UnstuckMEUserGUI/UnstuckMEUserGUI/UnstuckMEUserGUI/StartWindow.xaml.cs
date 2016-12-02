@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ServiceModel;
 using UnstuckMEInterfaces;
+using System.Configuration;
 
 namespace UnstuckMEUserGUI
 {
@@ -25,6 +26,22 @@ namespace UnstuckMEUserGUI
         public StartWindow()
         {
             InitializeComponent();
+
+            // check the config file and see if this program is linked to a school
+            var appSettings = ConfigurationManager.AppSettings;
+            string associatedSchool = appSettings["AssociatedSchool"] ?? "Not Found";
+
+            // if linked display school logo
+            if (associatedSchool != "Not Found")
+            {
+                
+            }
+            // if not linked display the settings window
+            else
+            {
+                Window disp = new UserLoginSettingsWindow();
+                disp.Show();
+            } 
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
@@ -37,15 +54,34 @@ namespace UnstuckMEUserGUI
             ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
             IUnstuckMEService proxy = channelFactory.CreateChannel();
 
-            //Calls UnstuckME Server Function that checks email credentials
-            isValid = proxy.UserLoginAttempt(email, password);
-            //if valid login
-            if (isValid)
+            
+            if (email == "")
             {
-                Window disp = new MainWindow();
-                disp.Show();
-                this.Close();
+                MessageBox.Show("Please Enter a Valid Email");
             }
+            else if (password == "")
+            {
+                MessageBox.Show("Please Enter a Password");
+
+            }
+            else
+            {   
+                //Calls UnstuckME Server Function that checks email credentials
+                isValid = proxy.UserLoginAttempt(email, password);
+                //if valid login
+                if (isValid)
+                {
+                    Window disp = new MainWindow();
+                    disp.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Login Info Incorrect");
+                
+                }
+            }
+            
             
             
         }

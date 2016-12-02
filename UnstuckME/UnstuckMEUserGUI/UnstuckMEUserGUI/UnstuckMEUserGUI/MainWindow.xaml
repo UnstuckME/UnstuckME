@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300">
+        Title="MainWindow" Height="700" Width="1000">
     <Grid>
-        
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="670" VerticalAlignment="Top" Width="994" Margin="0,0,-0.4,0">
+            <TabItem Header="User Profile">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="243*"/>
+                        <ColumnDefinition Width="41*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="UserPhotoBtn" Content="User Photo" ToolTip="Click to Change Photo" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="117"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="My Stickers">
+                <Grid Background="#FFE5E5E5">
+                    <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="167,36,0,0" VerticalAlignment="Top"/>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Stickers">
+                <Grid Background="#FFE5E5E5">
+                    
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Chat">
+                <Grid Background="#FFE5E5E5">
+
+                </Grid>
+
+            </TabItem>
+        </TabControl>
+
+
     </Grid>
 </Window>

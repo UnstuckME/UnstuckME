@@ -23,5 +23,12 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            // get the data selected from the drop down
+            // write the associated info to the config file
+            this.Close();
+        }
     }
 }
