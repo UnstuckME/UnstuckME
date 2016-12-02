@@ -5,16 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UnstuckME" Height="350" Width="525">
-    <Grid>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="150,170,0,0" VerticalAlignment="Top" Width="207" Height="35"/>
-        <TextBox x:Name="UserNameTxtBx" HorizontalAlignment="Left" Height="34" Margin="150,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="207"/>
-        <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="213,210,0,0" VerticalAlignment="Top" Width="87" Height="29" Click="LoginBtn_Click"/>
-        <Button x:Name="CreateAccountBtn" Content="Create Account" HorizontalAlignment="Left" Margin="225,270,0,0" VerticalAlignment="Top" Width="75" FontSize="7" Click="CreateAccountBtn_Click"/>
-        <Button x:Name="SettingsBtn" Content="Settings" HorizontalAlignment="Left" Margin="483,10,0,0" VerticalAlignment="Top" Width="25" FontSize="7" Click="SettingsBtn_Click"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="200,10,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label x:Name="label" Content="Email" HorizontalAlignment="Left" Margin="41,131,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.713,-0.431" Height="34" Width="104"/>
-        <Label x:Name="label_Copy" Content="Password" HorizontalAlignment="Left" Margin="41,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.713,-0.431" Height="34" Width="104"/>
+        Title="UnstuckME" Height="500" Width="600"
+        MinHeight="500"
+        MinWidth="600"
+        Background="DimGray"
+        WindowStartupLocation="CenterOwner"
+        WindowState="Normal"
+        WindowStyle="ThreeDBorderWindow">
+    <Canvas Name="Canvas">
+        <ScrollViewer Name="VerticalScrollbar" HorizontalAlignment="Right" VerticalAlignment="Center" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}"
+                      HorizontalContentAlignment="Right" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
+            <Grid Name="Grid" Width="{Binding ActualWidth, ElementName=Canvas}" HorizontalAlignment="Center" ScrollViewer.CanContentScroll="True" Height="820">
+                <PasswordBox x:Name="passwordBox" 
+                            Height="30" Width="220" Cursor="IBeam" Background="White" FontSize="18" MaxLength="32" TextBlock.TextAlignment="Left" Margin="100,0,0,100"
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"   />
+                <TextBox x:Name="UserNameTxtBx" 
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+                         Height="30" Width="220" Cursor="IBeam" Background="White" FontSize="18" MaxLength="50" TextAlignment="Left" Margin="100,0,0,200" TextWrapping="Wrap"  
+                         ScrollViewer.CanContentScroll="True" />
 
-    </Grid>
+                <Button x:Name="LoginBtn" Content="Login" 
+                        Margin="-150,0,0,0" Height="25" Width="50" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="LoginBtn_Click"
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"/>
+
+                <Button x:Name="CreateAccountBtn" Content="Create Account" 
+                        Margin="150,0,0,0" Height="25" Width="100" FontSize="13" FontWeight="Bold" Background="WhiteSmoke" HorizontalContentAlignment="Center" Click="CreateAccountBtn_Click"
+                        VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+
+                <Button x:Name="SettingsBtn" Content="Settings" 
+                        Margin="0,0,10,0" Height="100" Width="100" Background="DimGray" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="SettingsBtn_Click"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Right"
+                        VerticalAlignment="Top" BorderBrush="DimGray"/>
+
+                <Image x:Name="Logo" Source="UnstuckME_Logo.png" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Height="100" Margin="237,119,256.6,601"  Width="100"
+                       Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                       />
+
+                <Label x:Name="label" Content="Email" 
+                       Background="White" Height="30" Width="100" Margin="-220,0,0,200" FontSize="13" FontWeight="Bold"/>
+                <Label x:Name="label_Copy" Content="Password" Background="White" Height="30" Width="100" Margin="-220,0,0,100" FontSize="13" FontWeight="Bold"/>
+
+            </Grid>
+        </ScrollViewer>
+    </Canvas>
 </Window>
