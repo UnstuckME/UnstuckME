@@ -24,6 +24,13 @@ namespace UnstuckMEServerGUI
         public ServerLogin()
         {
             InitializeComponent();
+
+
+            byte[] potato = new byte[GetBytes("Password").Length + 1];
+            potato = GetBytes("Salt");
+            Console.WriteLine(potato);
+
+
             byte [] ryan = new byte[GenerateSaltedHash(GetBytes("Password"), GetBytes("Salt")).Length];
             ryan = GenerateSaltedHash(GetBytes("Password"), GetBytes("Salt"));
 

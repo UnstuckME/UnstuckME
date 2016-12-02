@@ -1,13 +1,8 @@
 USE UnstuckME_DB
 GO
 
---DROP TRIGGER ON UserPRofile UserPassword
-IF OBJECT_ID ('HashPassword', 'TR') IS NOT NULL  
-	DROP TRIGGER HashPassword;  
-	GO
-IF OBJECT_ID ('HashPasswordAdmin', 'TR') IS NOT NULL  
-	DROP TRIGGER HashPasswordAdmin;  
-	GO
+
+-- Drop Triggers
 IF OBJECT_ID ('ForbidUser1Update', 'TR') IS NOT NULL  
 	DROP TRIGGER ForbidUser1Update;  
 	GO
@@ -25,6 +20,10 @@ IF OBJECT_ID ('OnlyAllowCorrectReviews', 'TR') IS NOT NULL
 	GO
 IF OBJECT_ID ('DisallowSameTutorAndStudentID', 'TR') IS NOT NULL
 	DROP TRIGGER DisallowSameTutorAndStudentID
+	GO
+
+IF OBJECT_ID ('DisallowDeletionOfAllAdmin', 'TR') IS NOT NULL
+	DROP TRIGGER DisallowDeletionOfAllAdmin
 	GO
 	
 
@@ -72,13 +71,13 @@ IF OBJECT_ID('Server', 'U') IS NOT NULL
 --Create Server Table
 CREATE TABLE [Server]
 	(ServerID			INT					PRIMARY KEY IDENTITY(1,1),
-	ServerName			VARCHAR(75)			NOT NULL,
-	ServerIP			VARCHAR(15)			NOT NULL,	
+	ServerName			VARCHAR(75)			DEFAULT 'ServerNameNotSet',
+	ServerIP			VARCHAR(15)			DEFAULT 'ServerIPNotSet',	
 	ServerDomain		VARCHAR(50)			DEFAULT NULL,
-	SchoolName			VARCHAR(75)			NOT NULL,
+	SchoolName			VARCHAR(75)			DEFAULT 'NoSchoolNameHasBeenSet',
 	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
-	AdminPassword		NVARCHAR(32)		DEFAULT 'Password',
-	EmailCredentials	NVARCHAR(50)		DEFAULT NULL,
+	AdminPassword		NVARCHAR(256)		DEFAULT '150179244128249143822361212085910781831781871262221825585173751928210594126105155237209', -- A hashed and salted password  using 'Password' as password and 'Salt' as the salt
+	EmailCredentials	NVARCHAR(50)		DEFAULT 'EmailCreadentialsNotSet',
 	Salt				NVARCHAR(256)		NOT NULL UNIQUE)
 GO
 
@@ -239,30 +238,19 @@ INSERT DEFAULT CLASS
 INSERT INTO Classes
 VALUES ('Class Unavailable', 'NA', 0, 0);
 GO
---Create HashingPassword trigger on UserProfile Password
-CREATE 
-	TRIGGER HashPassword
-	ON UserProfile
-	AFTER INSERT, UPDATE
-	AS
-		Begin
-			UPDATE UserProfile
-			Set UserPassword = CONVERT(NVARCHAR(32),HashBytes('MD5', (SELECT UserPassword from UserProfile WHERE UserID IN (SELECT UserID from inserted))),2)
-			WHERE  UserID IN (SELECT UserID from inserted)
-		End;
-GO
 
-CREATE 
-	TRIGGER HashPasswordAdmin
-	ON Server
-	AFTER INSERT, UPDATE
-	AS
-		Begin
-			UPDATE Server
-			Set AdminPassword = CONVERT(NVARCHAR(32),HashBytes('MD5', (SELECT AdminPassword from [Server] WHERE ServerID IN (SELECT ServerID from inserted))),2)
-			WHERE ServerID IN (SELECT ServerID from inserted)
-		End;
-GO
+/*******************************************************************************
+INSERT DEFAULT SERVER ROLL
+*******************************************************************************/
+INSERT INTO [Server] (Salt)
+VALUES('83097010801160'); --83097010801160 is the word 'Salt' turned into a byte string
+Go
+--The first ever admin user will have a username of Admin, a password of 'Password' and a salt of 'Salt'
+
+
+/*******************************************************************************
+Create DB TRIGGERS
+*******************************************************************************/
 
 CREATE
 	TRIGGER ForbidUser1Delete
@@ -346,6 +334,19 @@ CREATE
 	AS
 		BEGIN
 			IF EXISTS (SELECT * FROM inserted WHERE StudentID = TutorID)
+			BEGIN
+				ROLLBACK TRANSACTION;
+			END;
+		END;
+GO
+
+CREATE
+	TRIGGER DisallowDeletionOfAllAdmin
+	ON [Server]
+	AFTER DELETE
+	AS
+		BEGIN
+			If NOT EXISTS (SELECT * FROM Server)
 			BEGIN
 				ROLLBACK TRANSACTION;
 			END;
