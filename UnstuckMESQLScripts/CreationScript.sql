@@ -1,7 +1,6 @@
 USE UnstuckME_DB
 GO
 
-
 -- Drop Triggers
 IF OBJECT_ID ('ForbidUser1Update', 'TR') IS NOT NULL  
 	DROP TRIGGER ForbidUser1Update;  
@@ -25,7 +24,6 @@ IF OBJECT_ID ('DisallowSameTutorAndStudentID', 'TR') IS NOT NULL
 IF OBJECT_ID ('DisallowDeletionOfAllAdmin', 'TR') IS NOT NULL
 	DROP TRIGGER DisallowDeletionOfAllAdmin
 	GO
-	
 
 --Drop Views
 IF OBJECT_ID('AllUsers_View', 'VIEW') IS NOT NULL
@@ -112,7 +110,7 @@ CREATE TABLE Files
 	ChatID				INT					NOT NULL REFERENCES Chat(ChatID),
 	FileData			VARBINARY(MAX) 		NOT NULL,
 	SentBy				int					NOT NULL REFERENCES UserProfile(UserID),
-	SentTime			smalldatetime		NOT NULL);
+	SentTime			as GETDATE());
 GO
 
 --Create Official Mentor Table
