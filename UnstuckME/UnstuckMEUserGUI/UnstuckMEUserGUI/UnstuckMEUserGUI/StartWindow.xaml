@@ -40,7 +40,7 @@
 
                 <Image x:Name="Logo" Source="UnstuckME_Logo.png" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Height="100" Margin="237,119,256.6,601"  Width="100"
+                       Height="150" Margin="197,86,171.6,550"  Width="150"
                        Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
                        />
 

@@ -11,10 +11,18 @@
             <TabItem Header="User Profile">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="243*"/>
-                        <ColumnDefinition Width="41*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                     <Button x:Name="UserPhotoBtn" Content="User Photo" ToolTip="Click to Change Photo" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138" Height="117"/>
+                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="30" Margin="199,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="199"/>
+                    <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="30" Margin="199,60,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="199"/>
+                    <Label x:Name="label1" Content="Recent Mentor Reveiws" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10,0,0" VerticalAlignment="Top" Height="26" Width="206"/>
+                    <Label x:Name="label2" Content="Recent Student Reveiws" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10.4,0,0" Grid.Row="1" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="My Stickers">
@@ -25,7 +33,7 @@
             </TabItem>
             <TabItem Header="Stickers">
                 <Grid Background="#FFE5E5E5">
-                    
+
                 </Grid>
 
             </TabItem>
