@@ -134,7 +134,23 @@ namespace UnstuckMEServerGUI
 
             return algorithm.ComputeHash(plainTextWithSaltBytes);
         }
+
+        //Handles Enter Being Pressed while in the email address Box
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                buttonServerLogin_Click(sender, e);
+            }
+        }
+
+        //Handles Enter Being Pressed While in the Password Box
+        private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                buttonServerLogin_Click(sender, e);
+            }
+        }
     }
-
-
 }
