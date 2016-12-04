@@ -24,32 +24,15 @@ namespace UnstuckMEServerGUI
         public ServerLogin()
         {
             InitializeComponent();
-
-
-            byte[] potato = new byte[GetBytes("password").Length + 1];
-            potato = GetBytes("salt");
-            Console.WriteLine(potato);
-
-
-            byte [] ryan = new byte[GenerateSaltedHash(GetBytes("password"), GetBytes("salt")).Length];
-            ryan = GenerateSaltedHash(GetBytes("password"), GetBytes("salt"));
-
-            //HashAlgorithm algorithm = new SHA256Managed();
-            //byte[] ryan = new byte[algorithm.ComputeHash(GetBytes("Password")).Length + 1];
-            //ryan = algorithm.ComputeHash(GetBytes("Password"));
-            string AJ = "";
-            foreach (byte element in ryan)
-            {
-                 AJ += element;
-            }
-            Clipboard.SetText(AJ);
-            MessageBox.Show(AJ);
         }
 
         private void buttonServerLogin_Click(object sender, RoutedEventArgs e)
         {
-
-
+            labelInvalidUsernamePassword.Visibility = Visibility.Collapsed;
+            Window parent = sender as Window;
+            this.Top = parent.Top;
+            this.Left = parent.Left;
+            this.UpdateLayout();
             try
             {
                 SqlConnection conn = new SqlConnection("Server=aura.students.cset.oit.edu;Database=UnstuckME_DB;persist security info=True;user id=UnstuckME_Admin;password=B3$$t-P@$$W0rd");
@@ -107,6 +90,10 @@ namespace UnstuckMEServerGUI
                     else
                     {
                         labelInvalidUsernamePassword.Visibility = Visibility.Visible;
+                        Window parent2 = sender as Window;
+                        this.Top = parent2.Top;
+                        this.Left = parent2.Left;
+                        this.UpdateLayout();
                     }
                 }
                 else
