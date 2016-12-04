@@ -62,7 +62,7 @@ namespace UnstuckMEServerGUI
                         if(userName == userEmailAddressInput)
                         {
                             string dbStringSalt = dbSalt[listCount];
-                            byte[] databasePassword = GenerateSaltedHash(GetBytes(passwordBoxInput.Password), GetBytes(dbSalt[count]));
+                            byte[] databasePassword = GenerateSaltedHash(GetBytes(passwordBoxInput.Password), GetBytes(dbSalt[listCount]));
                             string stringOfPassword = "";
                             foreach (byte element in databasePassword)
                             {
