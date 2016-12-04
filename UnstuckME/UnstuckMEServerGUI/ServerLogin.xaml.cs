@@ -59,7 +59,7 @@ namespace UnstuckMEServerGUI
 
                     foreach (var userName in dbUsernames)
                     {
-                        if(userName == userEmailAddressInput)
+                        if (string.Equals(userName, userEmailAddressInput, StringComparison.OrdinalIgnoreCase) == true)
                         {
                             string dbStringSalt = dbSalt[listCount];
                             byte[] databasePassword = GenerateSaltedHash(GetBytes(passwordBoxInput.Password), GetBytes(dbSalt[listCount]));
@@ -115,8 +115,6 @@ namespace UnstuckMEServerGUI
             System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
             return new string(chars);
         }
-
-
 
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
