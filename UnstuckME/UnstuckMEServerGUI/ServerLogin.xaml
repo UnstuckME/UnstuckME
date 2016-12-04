@@ -9,7 +9,7 @@
         MinHeight="500" MinWidth="350" WindowStartupLocation="CenterScreen" BorderThickness="0" BorderBrush="Black"
         MaxHeight="500" MaxWidth="350">
     <Grid>
-        <TextBox x:Name="textBoxEmailAddress" HorizontalAlignment="Center" Height="25" Margin="46,98,46,145" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" BorderThickness="2" Text="Not Needed Currently"/>
+        <TextBox x:Name="textBoxEmailAddress" HorizontalAlignment="Center" Height="25" Margin="46,98,46,145" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" BorderThickness="2"/>
         <PasswordBox x:Name="passwordBoxInput" HorizontalAlignment="Center" Margin="46,157,46,86" VerticalAlignment="Center" Width="200" Height="25" BorderThickness="2"/>
         <Label x:Name="labelEmailAddress" Content="Email Address" HorizontalAlignment="Center" Margin="46,74,146,170" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
         <Label x:Name="labelPassword" Content="Password" HorizontalAlignment="Center" Margin="46,133,146,111" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
