@@ -38,9 +38,9 @@ namespace UnstuckMEServerGUI
                 //Beginnings of username check
                 if (System.Data.ConnectionState.Open == conn.State)//If successful connection to database.
                 {
-                    List<string> userNames = new List<string>();
-                    List<string> password = new List<string>();
-                    List<string> salt = new List<string>();
+                    List<string> dbUsernames = new List<string>();
+                    List<string> dbPassword = new List<string>();
+                    List<string> dbSalt = new List<string>();
 
                     SqlCommand cmd = new SqlCommand("dbo.GetAdminInfo", conn);
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -48,33 +48,33 @@ namespace UnstuckMEServerGUI
 
                     while (rdr.Read())
                     {
-                        userNames.Add(rdr["AdminUsername"].ToString());
-                        password.Add(rdr["AdminPassword"].ToString());
-                        salt.Add(rdr["Salt"].ToString());
+                        dbUsernames.Add(rdr["AdminUsername"].ToString());
+                        dbPassword.Add(rdr["AdminPassword"].ToString());
+                        dbSalt.Add(rdr["Salt"].ToString());
                     }
 
                     string userEmailAddressInput = textBoxEmailAddress.Text;
-                    int count = 0;
+                    int listCount = 0;
                     bool isUser = false;
 
-                    foreach (var userName in userNames)
+                    foreach (var userName in dbUsernames)
                     {
                         if(userName == userEmailAddressInput)
                         {
-                            string dbSalt = salt[count];
-                            byte[] databasePassword = GenerateSaltedHash(GetBytes(passwordBoxInput.Password), GetBytes(salt[count]));
+                            string dbStringSalt = dbSalt[listCount];
+                            byte[] databasePassword = GenerateSaltedHash(GetBytes(passwordBoxInput.Password), GetBytes(dbSalt[count]));
                             string stringOfPassword = "";
                             foreach (byte element in databasePassword)
                             {
                                 stringOfPassword += element;
                             }
                             
-                            if(stringOfPassword == password[count])
+                            if(stringOfPassword == dbPassword[listCount])
                             {
                                 isUser = true;
                             }
                         }
-                        count++;
+                        listCount++;
                     }
 
                     if (isUser)
