@@ -9,7 +9,7 @@
         MinHeight="500" MinWidth="350" WindowStartupLocation="CenterScreen" BorderThickness="0" BorderBrush="Black"
         MaxHeight="500" MaxWidth="350">
     <Grid>
-        <TextBox x:Name="textBoxEmailAddress" HorizontalAlignment="Center" Height="25" Margin="46,98,46,145" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" BorderThickness="2" KeyDown="OnKeyDownHandler"/>
+        <TextBox x:Name="textBoxEmailAddress" HorizontalAlignment="Center" Height="25" Margin="46,98,46,145" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" BorderThickness="2" KeyDown="OnKeyDownPasswordHandler"/>
         <PasswordBox x:Name="passwordBoxInput" HorizontalAlignment="Center" Margin="46,157,46,86" VerticalAlignment="Center" Width="200" Height="25" BorderThickness="2" KeyDown="OnKeyDownPasswordHandler"/>
         <Label x:Name="labelEmailAddress" Content="Email Address" HorizontalAlignment="Center" Margin="46,74,146,170" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
         <Label x:Name="labelPassword" Content="Password" HorizontalAlignment="Center" Margin="46,133,146,111" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
@@ -21,16 +21,7 @@
             <Label Content="Please change your login information:" Canvas.Left="24" Width="280" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Foreground="#FFF04949" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <TextBox x:Name="NewUsernameBox" Height="18" Canvas.Left="24" TextWrapping="Wrap" Text="TextBox" Canvas.Top="48" Width="168"/>
             <PasswordBox x:Name="NewPasswordBox" Canvas.Left="24" Canvas.Top="124" Width="170"/>
-            <PasswordBox x:Name="NewPasswordConfirm" Canvas.Left="23" Canvas.Top="89"  Width="170" Height="17">
-                <PasswordBox.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-0.256"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </PasswordBox.RenderTransform>
-            </PasswordBox>
+            <PasswordBox x:Name="NewPasswordConfirm" Canvas.Left="23" Canvas.Top="89"  Width="170" Height="17"/>
             <Label x:Name="label" Content="New Username:" Canvas.Left="24" Canvas.Top="27" Height="27" FontSize="10" Width="120" Foreground="White"/>
             <Label x:Name="label_Copy" Content="New Password" Canvas.Left="24" Canvas.Top="66" Height="27" FontSize="10" Width="120" Foreground="White"/>
             <Label x:Name="label_Copy1" Content="Confirm New Password:" Canvas.Left="24" Canvas.Top="103" Height="27" FontSize="10" Width="120" Foreground="White"/>
