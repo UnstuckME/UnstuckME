@@ -17,5 +17,25 @@
         <Label x:Name="labelInvalidUsernamePassword" Content="Invalid Username/Password" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="200" Height="28" Foreground="Red" HorizontalContentAlignment="Center" FontSize="12" FontFamily="Global Sans Serif" Visibility="Hidden"/>
         <Image x:Name="image" HorizontalAlignment="Center" Height="159" Margin="10,15,24,294" VerticalAlignment="Center" Width="308" Source="UnstuckME_Logo.png"/>
 
+        <Canvas x:Name ="ChangeLoginCanvas" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="322" Background="#FF7E7E7E" Visibility="Collapsed">
+            <Label Content="Please change your login information:" Canvas.Left="24" Width="280" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Foreground="#FFF04949" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="NewUsernameBox" Height="18" Canvas.Left="24" TextWrapping="Wrap" Text="TextBox" Canvas.Top="48" Width="168"/>
+            <PasswordBox x:Name="NewPasswordBox" Canvas.Left="24" Canvas.Top="124" Width="170"/>
+            <PasswordBox x:Name="NewPasswordConfirm" Canvas.Left="23" Canvas.Top="89"  Width="170" Height="17">
+                <PasswordBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.256"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </PasswordBox.RenderTransform>
+            </PasswordBox>
+            <Label x:Name="label" Content="New Username:" Canvas.Left="24" Canvas.Top="27" Height="27" FontSize="10" Width="120" Foreground="White"/>
+            <Label x:Name="label_Copy" Content="New Password" Canvas.Left="24" Canvas.Top="66" Height="27" FontSize="10" Width="120" Foreground="White"/>
+            <Label x:Name="label_Copy1" Content="Confirm New Password:" Canvas.Left="24" Canvas.Top="103" Height="27" FontSize="10" Width="120" Foreground="White"/>
+            <Button x:Name="button" Content="Button" Canvas.Left="237" Canvas.Top="140" Width="75" Foreground="White" Background="#FF5E64E6"/>
+        </Canvas>
+
     </Grid>
 </Window>
