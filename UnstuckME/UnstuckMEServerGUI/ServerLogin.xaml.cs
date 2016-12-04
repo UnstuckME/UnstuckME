@@ -29,10 +29,7 @@ namespace UnstuckMEServerGUI
         private void buttonServerLogin_Click(object sender, RoutedEventArgs e)
         {
             labelInvalidUsernamePassword.Visibility = Visibility.Collapsed;
-            Window parent = sender as Window;
-            this.Top = parent.Top;
-            this.Left = parent.Left;
-            this.UpdateLayout();
+
             try
             {
                 SqlConnection conn = new SqlConnection("Server=aura.students.cset.oit.edu;Database=UnstuckME_DB;persist security info=True;user id=UnstuckME_Admin;password=B3$$t-P@$$W0rd");
@@ -90,10 +87,6 @@ namespace UnstuckMEServerGUI
                     else
                     {
                         labelInvalidUsernamePassword.Visibility = Visibility.Visible;
-                        Window parent2 = sender as Window;
-                        this.Top = parent2.Top;
-                        this.Left = parent2.Left;
-                        this.UpdateLayout();
                     }
                 }
                 else

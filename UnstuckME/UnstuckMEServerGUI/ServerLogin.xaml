@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d"
         Title="ServerLogin" Height="500" Width="350"
-        MinHeight="500" MinWidth="350" WindowStartupLocation="CenterScreen" BorderThickness="0" BorderBrush="Black">
+        MinHeight="500" MinWidth="350" WindowStartupLocation="CenterScreen" BorderThickness="0" BorderBrush="Black"
+        MaxHeight="500" MaxWidth="350">
     <Grid>
         <TextBox x:Name="textBoxEmailAddress" HorizontalAlignment="Center" Height="25" Margin="46,98,46,145" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" BorderThickness="2" Text="Not Needed Currently"/>
         <PasswordBox x:Name="passwordBoxInput" HorizontalAlignment="Center" Margin="46,157,46,86" VerticalAlignment="Center" Width="200" Height="25" BorderThickness="2"/>
@@ -14,6 +15,7 @@
         <Label x:Name="labelPassword" Content="Password" HorizontalAlignment="Center" Margin="46,133,146,111" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
         <Button x:Name="buttonServerLogin" Content="Login" HorizontalAlignment="Center" Margin="90,225,90,0" VerticalAlignment="Center" Width="150" Click="buttonServerLogin_Click" Height="30" BorderThickness="2"/>
         <Label x:Name="labelInvalidUsernamePassword" Content="Invalid Username/Password" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="200" Height="28" Foreground="Red" HorizontalContentAlignment="Center" FontSize="12" FontFamily="Global Sans Serif" Visibility="Hidden"/>
+        <Image x:Name="image" HorizontalAlignment="Center" Height="159" Margin="10,15,24,294" VerticalAlignment="Center" Width="308" Source="UnstuckME_Logo.png"/>
 
     </Grid>
 </Window>
