@@ -243,7 +243,7 @@ GO
 INSERT DEFAULT SERVER ROLL
 *******************************************************************************/
 INSERT INTO [Server] (Salt)
-VALUES('83097010801160'); --83097010801160 is the word 'Salt' turned into a byte string
+VALUES('salt'); -- need unsalted salt in order to salt to check that password + salt is correct. Don't get salty.
 Go
 --The first ever admin user will have a username of Admin, a password of 'Password' and a salt of 'Salt'
 

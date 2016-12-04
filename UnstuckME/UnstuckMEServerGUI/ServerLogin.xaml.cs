@@ -26,13 +26,13 @@ namespace UnstuckMEServerGUI
             InitializeComponent();
 
 
-            byte[] potato = new byte[GetBytes("Password").Length + 1];
-            potato = GetBytes("Salt");
+            byte[] potato = new byte[GetBytes("password").Length + 1];
+            potato = GetBytes("salt");
             Console.WriteLine(potato);
 
 
-            byte [] ryan = new byte[GenerateSaltedHash(GetBytes("Password"), GetBytes("Salt")).Length];
-            ryan = GenerateSaltedHash(GetBytes("Password"), GetBytes("Salt"));
+            byte [] ryan = new byte[GenerateSaltedHash(GetBytes("password"), GetBytes("salt")).Length];
+            ryan = GenerateSaltedHash(GetBytes("password"), GetBytes("salt"));
 
             //HashAlgorithm algorithm = new SHA256Managed();
             //byte[] ryan = new byte[algorithm.ComputeHash(GetBytes("Password")).Length + 1];
@@ -42,18 +42,21 @@ namespace UnstuckMEServerGUI
             {
                  AJ += element;
             }
-            Console.WriteLine(AJ);
+            Clipboard.SetText(AJ);
+            MessageBox.Show(AJ);
         }
 
         private void buttonServerLogin_Click(object sender, RoutedEventArgs e)
         {
+
+
             try
             {
                 SqlConnection conn = new SqlConnection("Server=aura.students.cset.oit.edu;Database=UnstuckME_DB;persist security info=True;user id=UnstuckME_Admin;password=B3$$t-P@$$W0rd");
                 conn.Open();
 
                 //Beginnings of username check
-                if (System.Data.ConnectionState.Open == conn.State)
+                if (System.Data.ConnectionState.Open == conn.State)//If successful connection to database.
                 {
                     List<string> userNames = new List<string>();
                     List<string> password = new List<string>();
@@ -63,7 +66,6 @@ namespace UnstuckMEServerGUI
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     SqlDataReader rdr = cmd.ExecuteReader();
 
-
                     while (rdr.Read())
                     {
                         userNames.Add(rdr["AdminUsername"].ToString());
@@ -71,10 +73,41 @@ namespace UnstuckMEServerGUI
                         salt.Add(rdr["Salt"].ToString());
                     }
 
-                    MainWindow mainWindow = new MainWindow();
-                    App.Current.MainWindow = mainWindow;
-                    Close();
-                    mainWindow.Show();
+                    string userEmailAddressInput = textBoxEmailAddress.Text;
+                    int count = 0;
+                    bool isUser = false;
+
+                    foreach (var userName in userNames)
+                    {
+                        if(userName == userEmailAddressInput)
+                        {
+                            string dbSalt = salt[count];
+                            byte[] databasePassword = GenerateSaltedHash(GetBytes(passwordBoxInput.Password), GetBytes(salt[count]));
+                            string stringOfPassword = "";
+                            foreach (byte element in databasePassword)
+                            {
+                                stringOfPassword += element;
+                            }
+                            
+                            if(stringOfPassword == password[count])
+                            {
+                                isUser = true;
+                            }
+                        }
+                        count++;
+                    }
+
+                    if (isUser)
+                    {
+                        MainWindow mainWindow = new MainWindow();
+                        App.Current.MainWindow = mainWindow;
+                        Close();
+                        mainWindow.Show();
+                    }
+                    else
+                    {
+                        labelInvalidUsernamePassword.Visibility = Visibility.Visible;
+                    }
                 }
                 else
                 {
@@ -86,8 +119,6 @@ namespace UnstuckMEServerGUI
             catch(SqlException ex)
             {
                 MessageBox.Show(ex.Message, "Connection Failure", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-
             }
         }
 
