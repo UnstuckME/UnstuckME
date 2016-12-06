@@ -26,7 +26,7 @@ namespace UnstuckMEUserGUI
         public StartWindow()
         {
             InitializeComponent();
-
+/*
             // check the config file and see if this program is linked to a school
             var appSettings = ConfigurationManager.AppSettings;
             string associatedSchool = appSettings["AssociatedSchool"] ?? "Not Found";
@@ -42,6 +42,7 @@ namespace UnstuckMEUserGUI
                 Window disp = new UserLoginSettingsWindow();
                 disp.Show();
             } 
+            */
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)

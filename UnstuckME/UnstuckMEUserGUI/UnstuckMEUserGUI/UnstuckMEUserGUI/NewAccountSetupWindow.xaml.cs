@@ -116,5 +116,12 @@ namespace UnstuckMEUserGUI
                 }
             }
         }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window disp = new StartWindow();
+            disp.Show();
+            this.Close();
+        }
     }
 }
