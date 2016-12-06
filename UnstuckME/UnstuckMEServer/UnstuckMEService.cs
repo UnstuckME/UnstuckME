@@ -40,6 +40,17 @@ namespace UnstuckMEInterfaces
             return retVal;
         }
 
+        public string GetUserEmail(int UserID)
+        {
+            string email;
+            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
+            {
+                var temp = db.GetDisplayNameAndEmail(UserID);
+                email = temp.ElementAtOrDefault(2).ToString();
+            }
+            return email;
+        }
+
         public int GetUserID(string emailAddress)
         {
             int userID = 0;
@@ -62,6 +73,17 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
             {
                 loginAttempt = true;//for kyronns gui testing
+                try
+                {
+                    var temp = db.GetUserID(emailAddress);
+                    int UserID = temp.First().Value;
+                }
+                catch (Exception)
+                {
+                    loginAttempt = false;
+                    
+                }
+                    
             }
 
             return loginAttempt;

@@ -72,7 +72,8 @@ namespace UnstuckMEUserGUI
                 //if valid login
                 if (isValid)
                 {
-                    Window disp = new MainWindow();
+
+                    Window disp = new MainWindow(proxy.GetUserID(email)); // this will crash without valid login info
                     disp.Show();
                     this.Close();
                 }

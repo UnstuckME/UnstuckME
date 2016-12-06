@@ -105,7 +105,7 @@ namespace UnstuckMEUserGUI
                 int result = proxy.CreateNewUser(FName, LName, Email, Password, "User", token);
                 if (result == 1)
                 {
-                    Window disp = new MainWindow();
+                    Window disp = new MainWindow(proxy.GetUserID(Email));
                     disp.Show();
                     this.Close();
                 }

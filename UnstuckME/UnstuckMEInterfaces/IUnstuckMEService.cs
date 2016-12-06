@@ -26,6 +26,9 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt);
-        
+
+        [OperationContract]
+        string GetUserEmail(int UserID);
+
     }
 }
