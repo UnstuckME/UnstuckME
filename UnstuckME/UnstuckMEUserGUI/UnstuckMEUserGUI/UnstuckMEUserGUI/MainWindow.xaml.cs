@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UnstuckMEInterfaces;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -28,10 +29,11 @@ namespace UnstuckMEUserGUI
             IUnstuckMEService proxy = channelFactory.CreateChannel();
 
             int UsersID = UserID;
+            UserNameAndEmail userInfo = proxy.GetUserDisplayInfo(UsersID);
             InitializeComponent();
-            FNameTxtBx.Text = "F Name"; // get teh name from the server and insert it
-            LNameTxtBx.Text = "L Name";
-            EmailtextBlock.Text = proxy.GetUserEmail(UsersID); // get the email and show it
+            FNameTxtBx.Text = userInfo.FirstName; // get teh name from the server and insert it
+            LNameTxtBx.Text = userInfo.LastName;
+            EmailtextBlock.Text = userInfo.EmailAddress; // get the email and show it
         }
     }
 }

@@ -16,10 +16,10 @@ namespace UnstuckMEServer
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class UnstuckME_DBEntities2 : DbContext
+    public partial class UnstuckME_DBEntities : DbContext
     {
-        public UnstuckME_DBEntities2()
-            : base("name=UnstuckME_DBEntities2")
+        public UnstuckME_DBEntities()
+            : base("name=UnstuckME_DBEntities")
         {
         }
     

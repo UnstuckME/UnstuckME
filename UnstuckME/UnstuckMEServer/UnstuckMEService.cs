@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using UnstuckMEServer;
+using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
@@ -16,7 +17,7 @@ namespace UnstuckMEInterfaces
     {
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
-            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
 
                 var users = (from u in db.UserProfiles
@@ -32,29 +33,33 @@ namespace UnstuckMEInterfaces
         {
             int retVal = -1;
 
-            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
             }
 
             return retVal;
         }
-
-        public string GetUserEmail(int UserID)
+        
+        public UserNameAndEmail GetUserDisplayInfo(int UserID)
         {
-            string email;
-            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
+            UserNameAndEmail userInfo = new UserNameAndEmail();
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var temp = db.GetDisplayNameAndEmail(UserID);
-                email = temp.ElementAtOrDefault(2).ToString();
-            }
-            return email;
+                userInfo.EmailAddress = (from u in db.GetDisplayNameAndEmail(UserID)                            
+                             select u.EmailAddress).First();
+                userInfo.FirstName = (from u in db.GetDisplayNameAndEmail(UserID)
+                                         select u.DisplayFName).First();
+                userInfo.LastName = (from u in db.GetDisplayNameAndEmail(UserID)
+                                     select u.DisplayLName).First();
+            }   
+            return userInfo;
         }
 
         public int GetUserID(string emailAddress)
         {
             int userID = 0;
-            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 var temp = db.GetUserID(emailAddress);
                 userID = temp.First().Value;
@@ -70,7 +75,7 @@ namespace UnstuckMEInterfaces
 
             Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
 
-            using (UnstuckME_DBEntities2 db = new UnstuckME_DBEntities2())
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 loginAttempt = true;//for kyronns gui testing
                 try

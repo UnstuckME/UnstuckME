@@ -207,6 +207,10 @@
       <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
       <Name>UnstuckMEInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnstuckME_Classes\UnstuckME_Classes.csproj">
+      <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>
+      <Name>UnstuckME_Classes</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="UnstuckME_DB.Context.tt">

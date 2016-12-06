@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
@@ -28,7 +29,7 @@ namespace UnstuckMEInterfaces
         int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt);
 
         [OperationContract]
-        string GetUserEmail(int UserID);
+        UserNameAndEmail GetUserDisplayInfo(int UserID);
 
     }
 }

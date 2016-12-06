@@ -13,7 +13,8 @@ namespace UnstuckMEServer
     
     public partial class GetDisplayNameAndEmail_Result
     {
-        public string Column1 { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
         public string EmailAddress { get; set; }
     }
 }
