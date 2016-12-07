@@ -34,6 +34,13 @@ namespace UnstuckMEUserGUI
             FNameTxtBx.Text = userInfo.FirstName; // get teh name from the server and insert it
             LNameTxtBx.Text = userInfo.LastName;
             EmailtextBlock.Text = userInfo.EmailAddress; // get the email and show it
+            for (int i = 0; i < 50; i++)
+            {
+                TextBlock test = new TextBlock();
+                test.Text = "test text" + i;
+                ClassesStack.Children.Add(test);
+            }
+            
         }
     }
 }
