@@ -521,6 +521,15 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetUserOrganizations", useridParameter);
         }
     
+        public virtual ObjectResult<GetUserPasswordAndSalt_Result> GetUserPasswordAndSalt(string emailAddress)
+        {
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserPasswordAndSalt_Result>("GetUserPasswordAndSalt", emailAddressParameter);
+        }
+    
         public virtual ObjectResult<GetUserStickersAndReviews_Result> GetUserStickersAndReviews(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?

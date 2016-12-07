@@ -69,7 +69,8 @@ if object_id('GetAllChatIDsAUserIsPartOF') is not null
 	drop procedure GetAllChatIDsAUserIsPartOF;
 if object_id('PullChatMessagesAndFilesBetweenUsers') is not null
 	drop procedure PullChatMessagesAndFilesBetweenUsers;
-
+if object_id('GetUserPasswordAndSalt') is not null
+	drop procedure GetUserPasswordAndSalt;
 /**************************************************************************
 * Gets server name
 **************************************************************************/
@@ -255,7 +256,7 @@ go
 create proc GetDisplayNameAndEmail
 (	@userid int	) as
 begin
-	select DisplayFName + ' ' + DisplayLName, EmailAddress
+	select DisplayFName, DisplayLName, EmailAddress
 	from UserProfile
 	where UserProfile.UserID = @userid;
 end;
@@ -535,3 +536,19 @@ begin
 							or
 		  (UserProfile.UserID = @tutor and SentBy = UserProfile.UserID);
 end;
+go
+
+/**************************************************************************
+* Get User Password And Salt By EmailAddress
+**************************************************************************/
+create proc GetUserPasswordAndSalt
+(
+	@EmailAddress varchar(50)
+)
+as
+	BEGIN
+		SELECT UserPassword, Salt
+		FROM UserProfile
+		WHERE (EmailAddress = @EmailAddress)
+	END;
+GO

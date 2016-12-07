@@ -43,7 +43,7 @@ CREATE PROC [dbo].[CreateNewUser]
     @FirstName VARCHAR(30),
 	@LastName VARCHAR(30),
 	@EmailAddress VARCHAR(50),
-	@Password NVARCHAR(32),
+	@Password NVARCHAR(500),
 	@Privileges NVARCHAR(32),
 	@Salt NVARCHAR(256)
     )
