@@ -5,11 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d"
-        Title="UnstuckME Server Manager" Height="500" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen"
-        MinHeight="500" MinWidth="600">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.507,0.727" Height="306" Margin="10,10,2,2" Width="505">
-        <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Left" Margin="184,0,0,38" VerticalAlignment="Bottom" Width="130" Click="button_RunServer_Click" Background="#FF00BD2A" BorderBrush="Black" Foreground="#FFFFF9F9" FontFamily="Global User Interface"/>
-        <Button x:Name="buttonKillServer" Content="Kill Server" HorizontalAlignment="Left" Margin="184,0,0,10" VerticalAlignment="Bottom" Width="130" Click="buttonKillServer_Click" Background="Red" BorderBrush="Black" Foreground="White" FontFamily="Global User Interface"/>
+        Title="UnstuckME Server Manager" Height="473.354" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen"
+        MinHeight="500" MinWidth="600" MaxHeight="500" MaxWidth="600">
+    <Grid RenderTransformOrigin="0.507,0.727" Height="466" Margin="0,0,2,2" Width="590">
 
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Background="White" Height="461">
+                <MenuItem Header="File" Margin="5,5,0,0">
+                    <MenuItem Header="Restart Server">
+
+                    </MenuItem>
+                    <MenuItem x:Name="MenuItemKillAndExit" Header="Kill and Exit" Click="MenuItemKillAndExit_Click">
+
+                    </MenuItem>
+                    <MenuItem x:Name="MenuItemExit" Header="Exit" Click="MenuItemExit_Click">
+
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Edit" Margin="0,5,0,0">
+
+                </MenuItem>
+                <MenuItem Header="View" Margin="0,5,0,0">
+
+                </MenuItem>
+                <MenuItem Header="Options" Margin="0,5,0,0">
+
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Image x:Name="UnstuckMELogo" HorizontalAlignment="Center" Height="378" Margin="10,12,10,76" VerticalAlignment="Center" Width="570" Source="UnstuckME_Logo.png"/>
+        <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Center" Margin="219,308,214,124" VerticalAlignment="Center" Width="130" Click="button_RunServer_Click" Background="#FF00BD2A" BorderBrush="Black" Foreground="#FFFFF9F9" FontFamily="Global User Interface"/>
+        <Button x:Name="buttonKillServer" Content="Kill Server" HorizontalAlignment="Center" Margin="219,361,214,71" VerticalAlignment="Center" Width="130" Click="buttonKillServer_Click" Background="Red" BorderBrush="Black" Foreground="White" FontFamily="Global User Interface"/>
     </Grid>
 </Window>
