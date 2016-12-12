@@ -116,6 +116,9 @@
     <Compile Include="GetUserClasses_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetUserPasswordAndSalt_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetUserStickersAndReviews_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -206,6 +209,10 @@
     <ProjectReference Include="..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
       <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
       <Name>UnstuckMEInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnstuckME_Classes\UnstuckME_Classes.csproj">
+      <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>
+      <Name>UnstuckME_Classes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

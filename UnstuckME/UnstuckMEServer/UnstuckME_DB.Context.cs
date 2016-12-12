@@ -16,10 +16,10 @@ namespace UnstuckMEServer
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class UnstuckME_DBEntities2 : DbContext
+    public partial class UnstuckME_DBEntities : DbContext
     {
-        public UnstuckME_DBEntities2()
-            : base("name=UnstuckME_DBEntities2")
+        public UnstuckME_DBEntities()
+            : base("name=UnstuckME_DBEntities")
         {
         }
     
@@ -519,6 +519,15 @@ namespace UnstuckMEServer
                 new ObjectParameter("userid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetUserOrganizations", useridParameter);
+        }
+    
+        public virtual ObjectResult<GetUserPasswordAndSalt_Result> GetUserPasswordAndSalt(string emailAddress)
+        {
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserPasswordAndSalt_Result>("GetUserPasswordAndSalt", emailAddressParameter);
         }
     
         public virtual ObjectResult<GetUserStickersAndReviews_Result> GetUserStickersAndReviews(Nullable<int> userid)

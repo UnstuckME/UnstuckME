@@ -102,10 +102,19 @@ namespace UnstuckMEUserGUI
                 rng.GetBytes(tokenData);
 
                 string token = Convert.ToBase64String(tokenData);
-                int result = proxy.CreateNewUser(FName, LName, Email, Password, "User", token);
+
+                byte[] saltedPassword = GenerateSaltedHash(GetBytes(Password), GetBytes(token));
+
+                string newPassword = "";
+                foreach (byte element in saltedPassword)
+                {
+                     newPassword += element;
+                }
+
+                int result = proxy.CreateNewUser(FName, LName, Email, newPassword, "User", token);
                 if (result == 1)
                 {
-                    Window disp = new MainWindow();
+                    Window disp = new MainWindow(proxy.GetUserID(Email));
                     disp.Show();
                     this.Close();
                 }
@@ -115,6 +124,45 @@ namespace UnstuckMEUserGUI
                     this.Close();
                 }
             }
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window disp = new StartWindow();
+            disp.Show();
+            this.Close();
+        }
+
+        static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
+        {
+            HashAlgorithm algorithm = new SHA256Managed();
+
+            byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
+
+            for (int i = 0; i < plainText.Length; i++)
+            {
+                plainTextWithSaltBytes[i] = plainText[i];
+            }
+            for (int i = 0; i < salt.Length; i++)
+            {
+                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
+            }
+
+            return algorithm.ComputeHash(plainTextWithSaltBytes);
+        }
+
+        static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
         }
     }
 }

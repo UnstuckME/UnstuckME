@@ -11,10 +11,9 @@ namespace UnstuckMEServer
 {
     using System;
     
-    public partial class GetDisplayNameAndEmail_Result
+    public partial class GetUserPasswordAndSalt_Result
     {
-        public string DisplayFName { get; set; }
-        public string DisplayLName { get; set; }
-        public string EmailAddress { get; set; }
+        public string UserPassword { get; set; }
+        public string Salt { get; set; }
     }
 }

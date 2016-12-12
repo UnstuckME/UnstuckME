@@ -47,9 +47,9 @@ namespace UnstuckMEServerGUI
                     currentDir = currentDir.Parent.Parent.Parent;
                     string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
                     Process startServer = new Process();
-                    //startServer.StartInfo.RedirectStandardOutput = true;
-                    //startServer.StartInfo.UseShellExecute = false;
-                    //startServer.StartInfo.CreateNoWindow = false;
+                    startServer.StartInfo.RedirectStandardOutput = true;
+                    startServer.StartInfo.UseShellExecute = false;
+                    startServer.StartInfo.CreateNoWindow = true;
                     startServer.StartInfo.Verb = "runas";
                     startServer.StartInfo.FileName = serverPath;
                     startServer.Start();
@@ -68,30 +68,75 @@ namespace UnstuckMEServerGUI
         /// </summary>
         private void buttonKillServer_Click(object sender, RoutedEventArgs e)
         {
+            KillServer();
+        }
+
+        private void MenuItemKillAndExit_Click(object sender, RoutedEventArgs e)
+        {
+            bool killSuccess = KillServer();
+            if(killSuccess)
+            {
+                ExitApplication();
+            }
+            else
+            {
+                MessageBoxResult boxResult = MessageBox.Show("Server Shutdown Failure! Would You Like to Exit Anyway?", "Server Shutdown Failure", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if(MessageBoxResult.Yes == boxResult)
+                {
+                    ExitApplication();
+                }
+            }      
+        }
+
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            ExitApplication();
+        }
+
+        private void ExitApplication()
+        {
+            try
+            {
+                Application.Current.Shutdown();
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Application Exit Failure", "Exit Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private bool KillServer()
+        {
+            bool success = false;
             try
             {
                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
                 if (pname.Length == 0)
                     throw new InvalidOperationException("Server Is Not Running.");
                 else
-                {           
+                {
                     MessageBoxResult boxResult = MessageBox.Show("Are you sure you want to shutdown the server?", "Server Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (boxResult == MessageBoxResult.Yes)
                     {
                         Process[] server = Process.GetProcessesByName("UnstuckMEServer");
                         server[0].Kill();
                         MessageBox.Show("Server Successfully Shutdown!", "Server Shutdown Success", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        success = true;
                     }
                     else
                     {
                         MessageBox.Show("Server Is Still Running.", "Server Shutdown Canceled", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
+                return success;
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 MessageBox.Show(ex.Message, "Server Shutdown Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return success;
             }
         }
+
+
     }
 }

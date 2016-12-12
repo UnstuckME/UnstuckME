@@ -87,12 +87,12 @@
             <PropertyRef Name="ServerID" />
           </Key>
           <Property Name="ServerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServerName" Type="varchar" MaxLength="75" Nullable="false" />
-          <Property Name="ServerIP" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ServerName" Type="varchar" MaxLength="75" />
+          <Property Name="ServerIP" Type="varchar" MaxLength="15" />
           <Property Name="ServerDomain" Type="varchar" MaxLength="50" />
-          <Property Name="SchoolName" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="SchoolName" Type="varchar" MaxLength="75" />
           <Property Name="AdminUsername" Type="varchar" MaxLength="30" />
-          <Property Name="AdminPassword" Type="nvarchar" MaxLength="32" />
+          <Property Name="AdminPassword" Type="nvarchar" MaxLength="256" />
           <Property Name="EmailCredentials" Type="nvarchar" MaxLength="50" />
           <Property Name="Salt" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
@@ -127,7 +127,7 @@
           <Property Name="DisplayFName" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="DisplayLName" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserPassword" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Privileges" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="Salt" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
@@ -185,7 +185,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Privileges" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Files__ChatID__4E0B1F95">
+        <Association Name="FK__Files__ChatID__4654EF34">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Files" Type="Self.Files" Multiplicity="*" />
           <ReferentialConstraint>
@@ -197,7 +197,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Files__SentBy__4EFF43CE">
+        <Association Name="FK__Files__SentBy__4749136D">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Files" Type="Self.Files" Multiplicity="*" />
           <ReferentialConstraint>
@@ -209,7 +209,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__ChatID__4A3A8EB1">
+        <Association Name="FK__Messages__ChatID__42845E50">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,7 +221,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__4B2EB2EA">
+        <Association Name="FK__Messages__SentBy__43788289">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -233,7 +233,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__Mentor__54B81D24">
+        <Association Name="FK__OmToUser__Mentor__4D01ECC3">
           <End Role="OfficialMentor" Type="Self.OfficialMentor" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -245,7 +245,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__UserID__53C3F8EB">
+        <Association Name="FK__OmToUser__UserID__4C0DC88A">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -257,7 +257,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__5B651AB3">
+        <Association Name="FK__Picture__UserID__53AEEA52">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -269,7 +269,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__71545BD2">
+        <Association Name="FK__Report__FlaggerI__699E2B71">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -281,7 +281,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__7248800B">
+        <Association Name="FK__Report__ReviewID__6A924FAA">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,7 +293,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__6B9B827C">
+        <Association Name="FK__Review__Reviewer__63E5521B">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -305,7 +305,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__6AA75E43">
+        <Association Name="FK__Review__StickerI__62F12DE2">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -317,7 +317,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__63FA60B4">
+        <Association Name="FK__Sticker__ClassID__5C443053">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -329,7 +329,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__64EE84ED">
+        <Association Name="FK__Sticker__Student__5D38548C">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -341,7 +341,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__66D6CD5F">
+        <Association Name="FK__Sticker__TutorID__5F209CFE">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -353,7 +353,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__ChatI__5888AE08">
+        <Association Name="FK__UserToCha__ChatI__50D27DA7">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -365,7 +365,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__UserI__579489CF">
+        <Association Name="FK__UserToCha__UserI__4FDE596E">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -377,7 +377,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__Class__611DF409">
+        <Association Name="FK__UserToCla__Class__5967C3A8">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -389,7 +389,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__UserI__6029CFD0">
+        <Association Name="FK__UserToCla__UserI__58739F6F">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -543,6 +543,9 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
         </Function>
         <Function Name="GetUserOrganizations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUserPasswordAndSalt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetUserStickersAndReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
@@ -752,75 +755,75 @@ FROM [dbo].[AllStickers_View] AS [AllStickers_View]</DefiningQuery>
 [AllUsers_View].[Privileges] AS [Privileges]
 FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Files__ChatID__4E0B1F95" Association="Self.FK__Files__ChatID__4E0B1F95">
+          <AssociationSet Name="FK__Files__ChatID__4654EF34" Association="Self.FK__Files__ChatID__4654EF34">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Files__SentBy__4EFF43CE" Association="Self.FK__Files__SentBy__4EFF43CE">
+          <AssociationSet Name="FK__Files__SentBy__4749136D" Association="Self.FK__Files__SentBy__4749136D">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__ChatID__4A3A8EB1" Association="Self.FK__Messages__ChatID__4A3A8EB1">
+          <AssociationSet Name="FK__Messages__ChatID__42845E50" Association="Self.FK__Messages__ChatID__42845E50">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__4B2EB2EA" Association="Self.FK__Messages__SentBy__4B2EB2EA">
+          <AssociationSet Name="FK__Messages__SentBy__43788289" Association="Self.FK__Messages__SentBy__43788289">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__Mentor__54B81D24" Association="Self.FK__OmToUser__Mentor__54B81D24">
+          <AssociationSet Name="FK__OmToUser__Mentor__4D01ECC3" Association="Self.FK__OmToUser__Mentor__4D01ECC3">
             <End Role="OfficialMentor" EntitySet="OfficialMentor" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__UserID__53C3F8EB" Association="Self.FK__OmToUser__UserID__53C3F8EB">
+          <AssociationSet Name="FK__OmToUser__UserID__4C0DC88A" Association="Self.FK__OmToUser__UserID__4C0DC88A">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__5B651AB3" Association="Self.FK__Picture__UserID__5B651AB3">
+          <AssociationSet Name="FK__Picture__UserID__53AEEA52" Association="Self.FK__Picture__UserID__53AEEA52">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Picture" EntitySet="Picture" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__71545BD2" Association="Self.FK__Report__FlaggerI__71545BD2">
+          <AssociationSet Name="FK__Report__FlaggerI__699E2B71" Association="Self.FK__Report__FlaggerI__699E2B71">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__7248800B" Association="Self.FK__Report__ReviewID__7248800B">
+          <AssociationSet Name="FK__Report__ReviewID__6A924FAA" Association="Self.FK__Report__ReviewID__6A924FAA">
             <End Role="Review" EntitySet="Review" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__6B9B827C" Association="Self.FK__Review__Reviewer__6B9B827C">
+          <AssociationSet Name="FK__Review__Reviewer__63E5521B" Association="Self.FK__Review__Reviewer__63E5521B">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__6AA75E43" Association="Self.FK__Review__StickerI__6AA75E43">
+          <AssociationSet Name="FK__Review__StickerI__62F12DE2" Association="Self.FK__Review__StickerI__62F12DE2">
             <End Role="Sticker" EntitySet="Sticker" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__63FA60B4" Association="Self.FK__Sticker__ClassID__63FA60B4">
+          <AssociationSet Name="FK__Sticker__ClassID__5C443053" Association="Self.FK__Sticker__ClassID__5C443053">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__64EE84ED" Association="Self.FK__Sticker__Student__64EE84ED">
+          <AssociationSet Name="FK__Sticker__Student__5D38548C" Association="Self.FK__Sticker__Student__5D38548C">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__66D6CD5F" Association="Self.FK__Sticker__TutorID__66D6CD5F">
+          <AssociationSet Name="FK__Sticker__TutorID__5F209CFE" Association="Self.FK__Sticker__TutorID__5F209CFE">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__ChatI__5888AE08" Association="Self.FK__UserToCha__ChatI__5888AE08">
+          <AssociationSet Name="FK__UserToCha__ChatI__50D27DA7" Association="Self.FK__UserToCha__ChatI__50D27DA7">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__UserI__579489CF" Association="Self.FK__UserToCha__UserI__579489CF">
+          <AssociationSet Name="FK__UserToCha__UserI__4FDE596E" Association="Self.FK__UserToCha__UserI__4FDE596E">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__Class__611DF409" Association="Self.FK__UserToCla__Class__611DF409">
+          <AssociationSet Name="FK__UserToCla__Class__5967C3A8" Association="Self.FK__UserToCla__Class__5967C3A8">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__UserI__6029CFD0" Association="Self.FK__UserToCla__UserI__6029CFD0">
+          <AssociationSet Name="FK__UserToCla__UserI__58739F6F" Association="Self.FK__UserToCla__UserI__58739F6F">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
@@ -835,8 +838,8 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <PropertyRef Name="ChatID" />
           </Key>
           <Property Name="ChatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Files" Relationship="Self.FK__Files__ChatID__4E0B1F95" FromRole="Chat" ToRole="Files" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__4A3A8EB1" FromRole="Chat" ToRole="Messages" />
+          <NavigationProperty Name="Files" Relationship="Self.FK__Files__ChatID__4654EF34" FromRole="Chat" ToRole="Files" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__42845E50" FromRole="Chat" ToRole="Messages" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToChat" FromRole="Chat" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Class">
@@ -848,7 +851,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="CourseCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseNumber" Type="Int16" Nullable="false" />
           <Property Name="TermOffered" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__63FA60B4" FromRole="Classes" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__5C443053" FromRole="Classes" ToRole="Sticker" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToClass" FromRole="Classes" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="File">
@@ -860,8 +863,8 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="FileData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="SentBy" Type="Int32" Nullable="false" />
           <Property Name="SentTime" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Files__ChatID__4E0B1F95" FromRole="Files" ToRole="Chat" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Files__SentBy__4EFF43CE" FromRole="Files" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Files__ChatID__4654EF34" FromRole="Files" ToRole="Chat" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Files__SentBy__4749136D" FromRole="Files" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -872,8 +875,8 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="MessageData" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SentBy" Type="Int32" Nullable="false" />
           <Property Name="SentTime" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__4A3A8EB1" FromRole="Messages" ToRole="Chat" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__4B2EB2EA" FromRole="Messages" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__42845E50" FromRole="Messages" ToRole="Chat" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__43788289" FromRole="Messages" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="OfficialMentor">
           <Key>
@@ -889,7 +892,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__5B651AB3" FromRole="Picture" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__53AEEA52" FromRole="Picture" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -899,8 +902,8 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="ReportDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FlaggerID" Type="Int32" />
           <Property Name="ReviewID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__71545BD2" FromRole="Report" ToRole="UserProfile" />
-          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__7248800B" FromRole="Report" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__699E2B71" FromRole="Report" ToRole="UserProfile" />
+          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__6A924FAA" FromRole="Report" ToRole="Review" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -911,21 +914,21 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="ReviewerID" Type="Int32" Nullable="false" />
           <Property Name="StarRanking" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__7248800B" FromRole="Review" ToRole="Report" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__6B9B827C" FromRole="Review" ToRole="UserProfile" />
-          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__6AA75E43" FromRole="Review" ToRole="Sticker" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__6A924FAA" FromRole="Review" ToRole="Report" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__63E5521B" FromRole="Review" ToRole="UserProfile" />
+          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__62F12DE2" FromRole="Review" ToRole="Sticker" />
         </EntityType>
         <EntityType Name="Server">
           <Key>
             <PropertyRef Name="ServerID" />
           </Key>
           <Property Name="ServerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServerName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ServerIP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServerName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="ServerIP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="ServerDomain" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SchoolName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SchoolName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
           <Property Name="AdminUsername" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AdminPassword" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AdminPassword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailCredentials" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
@@ -941,10 +944,10 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="MinimumStarRanking" Type="Double" />
           <Property Name="SubmitTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Timeout" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__63FA60B4" FromRole="Sticker" ToRole="Classes" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__6AA75E43" FromRole="Sticker" ToRole="Review" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__64EE84ED" FromRole="Sticker" ToRole="UserProfile" />
-          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__66D6CD5F" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__5C443053" FromRole="Sticker" ToRole="Classes" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__62F12DE2" FromRole="Sticker" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__5D38548C" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__5F209CFE" FromRole="Sticker" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -964,16 +967,16 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="DisplayFName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DisplayLName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserPassword" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Privileges" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Files" Relationship="Self.FK__Files__SentBy__4EFF43CE" FromRole="UserProfile" ToRole="Files" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__4B2EB2EA" FromRole="UserProfile" ToRole="Messages" />
-          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__5B651AB3" FromRole="UserProfile" ToRole="Picture" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__71545BD2" FromRole="UserProfile" ToRole="Report" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__6B9B827C" FromRole="UserProfile" ToRole="Review" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__64EE84ED" FromRole="UserProfile" ToRole="Sticker" />
-          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__66D6CD5F" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Files" Relationship="Self.FK__Files__SentBy__4749136D" FromRole="UserProfile" ToRole="Files" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__43788289" FromRole="UserProfile" ToRole="Messages" />
+          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__53AEEA52" FromRole="UserProfile" ToRole="Picture" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__699E2B71" FromRole="UserProfile" ToRole="Report" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__63E5521B" FromRole="UserProfile" ToRole="Review" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__5D38548C" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__5F209CFE" FromRole="UserProfile" ToRole="Sticker" />
           <NavigationProperty Name="OfficialMentors" Relationship="Self.OmToUser" FromRole="UserProfile" ToRole="OfficialMentor" />
           <NavigationProperty Name="Chats" Relationship="Self.UserToChat" FromRole="UserProfile" ToRole="Chat" />
           <NavigationProperty Name="Classes" Relationship="Self.UserToClass" FromRole="UserProfile" ToRole="Classes" />
@@ -1010,7 +1013,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Privileges" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Files__ChatID__4E0B1F95">
+        <Association Name="FK__Files__ChatID__4654EF34">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Files" Type="Self.File" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1022,7 +1025,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__ChatID__4A3A8EB1">
+        <Association Name="FK__Messages__ChatID__42845E50">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1034,7 +1037,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__63FA60B4">
+        <Association Name="FK__Sticker__ClassID__5C443053">
           <End Role="Classes" Type="Self.Class" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1046,7 +1049,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Files__SentBy__4EFF43CE">
+        <Association Name="FK__Files__SentBy__4749136D">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Files" Type="Self.File" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1058,7 +1061,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__4B2EB2EA">
+        <Association Name="FK__Messages__SentBy__43788289">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1070,7 +1073,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__5B651AB3">
+        <Association Name="FK__Picture__UserID__53AEEA52">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1082,7 +1085,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__71545BD2">
+        <Association Name="FK__Report__FlaggerI__699E2B71">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1094,7 +1097,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__7248800B">
+        <Association Name="FK__Report__ReviewID__6A924FAA">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1106,7 +1109,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__6B9B827C">
+        <Association Name="FK__Review__Reviewer__63E5521B">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1118,7 +1121,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__6AA75E43">
+        <Association Name="FK__Review__StickerI__62F12DE2">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1130,7 +1133,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__64EE84ED">
+        <Association Name="FK__Sticker__Student__5D38548C">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1142,7 +1145,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__66D6CD5F">
+        <Association Name="FK__Sticker__TutorID__5F209CFE">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1166,7 +1169,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <End Role="Classes" Type="Self.Class" Multiplicity="*" />
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="UnstuckME_DBEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="UnstuckME_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Chats" EntityType="Self.Chat" />
           <EntitySet Name="Classes" EntityType="Self.Class" />
           <EntitySet Name="Files" EntityType="Self.File" />
@@ -1182,51 +1185,51 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <EntitySet Name="AllMentorPrograms_View" EntityType="Self.AllMentorPrograms_View" />
           <EntitySet Name="AllStickers_View" EntityType="Self.AllStickers_View" />
           <EntitySet Name="AllUsers_View" EntityType="Self.AllUsers_View" />
-          <AssociationSet Name="FK__Files__ChatID__4E0B1F95" Association="Self.FK__Files__ChatID__4E0B1F95">
+          <AssociationSet Name="FK__Files__ChatID__4654EF34" Association="Self.FK__Files__ChatID__4654EF34">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__ChatID__4A3A8EB1" Association="Self.FK__Messages__ChatID__4A3A8EB1">
+          <AssociationSet Name="FK__Messages__ChatID__42845E50" Association="Self.FK__Messages__ChatID__42845E50">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__63FA60B4" Association="Self.FK__Sticker__ClassID__63FA60B4">
+          <AssociationSet Name="FK__Sticker__ClassID__5C443053" Association="Self.FK__Sticker__ClassID__5C443053">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Files__SentBy__4EFF43CE" Association="Self.FK__Files__SentBy__4EFF43CE">
+          <AssociationSet Name="FK__Files__SentBy__4749136D" Association="Self.FK__Files__SentBy__4749136D">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__4B2EB2EA" Association="Self.FK__Messages__SentBy__4B2EB2EA">
+          <AssociationSet Name="FK__Messages__SentBy__43788289" Association="Self.FK__Messages__SentBy__43788289">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__5B651AB3" Association="Self.FK__Picture__UserID__5B651AB3">
+          <AssociationSet Name="FK__Picture__UserID__53AEEA52" Association="Self.FK__Picture__UserID__53AEEA52">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Picture" EntitySet="Pictures" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__71545BD2" Association="Self.FK__Report__FlaggerI__71545BD2">
+          <AssociationSet Name="FK__Report__FlaggerI__699E2B71" Association="Self.FK__Report__FlaggerI__699E2B71">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__7248800B" Association="Self.FK__Report__ReviewID__7248800B">
+          <AssociationSet Name="FK__Report__ReviewID__6A924FAA" Association="Self.FK__Report__ReviewID__6A924FAA">
             <End Role="Review" EntitySet="Reviews" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__6B9B827C" Association="Self.FK__Review__Reviewer__6B9B827C">
+          <AssociationSet Name="FK__Review__Reviewer__63E5521B" Association="Self.FK__Review__Reviewer__63E5521B">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__6AA75E43" Association="Self.FK__Review__StickerI__6AA75E43">
+          <AssociationSet Name="FK__Review__StickerI__62F12DE2" Association="Self.FK__Review__StickerI__62F12DE2">
             <End Role="Sticker" EntitySet="Stickers" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__64EE84ED" Association="Self.FK__Sticker__Student__64EE84ED">
+          <AssociationSet Name="FK__Sticker__Student__5D38548C" Association="Self.FK__Sticker__Student__5D38548C">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__66D6CD5F" Association="Self.FK__Sticker__TutorID__66D6CD5F">
+          <AssociationSet Name="FK__Sticker__TutorID__5F209CFE" Association="Self.FK__Sticker__TutorID__5F209CFE">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
@@ -1383,6 +1386,9 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </FunctionImport>
           <FunctionImport Name="GetUserOrganizations" ReturnType="Collection(String)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserPasswordAndSalt" ReturnType="Collection(UnstuckME_DBModel.GetUserPasswordAndSalt_Result)">
+            <Parameter Name="EmailAddress" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserStickersAndReviews" ReturnType="Collection(UnstuckME_DBModel.GetUserStickersAndReviews_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
@@ -1600,7 +1606,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
         </ComplexType>
         <ComplexType Name="GetAdminInfo_Result">
           <Property Type="String" Name="AdminUsername" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="AdminPassword" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="AdminPassword" Nullable="true" MaxLength="256" />
           <Property Type="String" Name="Salt" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="GetAllActiveStickers_Result">
@@ -1647,13 +1653,18 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
         <ComplexType Name="GetDisplayNameAndEmail_Result">
-          <Property Type="String" Name="Column1" Nullable="false" MaxLength="65" />
+          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="GetUserClasses_Result">
           <Property Type="String" Name="CourseName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
           <Property Type="Int16" Name="CourseNumber" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetUserPasswordAndSalt_Result">
+          <Property Type="String" Name="UserPassword" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Salt" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="GetUserStickersAndReviews_Result">
           <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
@@ -1707,7 +1718,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="UnstuckME_DBModelStoreContainer" CdmEntityContainer="UnstuckME_DBEntities2">
+        <EntityContainerMapping StorageEntityContainer="UnstuckME_DBModelStoreContainer" CdmEntityContainer="UnstuckME_DBEntities">
           <EntitySetMapping Name="Chats">
             <EntityTypeMapping TypeName="UnstuckME_DBModel.Chat">
               <MappingFragment StoreEntitySet="Chat">
@@ -2058,7 +2069,8 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <FunctionImportMapping FunctionImportName="GetDisplayNameAndEmail" FunctionName="UnstuckME_DBModel.Store.GetDisplayNameAndEmail">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetDisplayNameAndEmail_Result">
-                <ScalarProperty Name="Column1" ColumnName="Column1" />
+                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
+                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -2082,6 +2094,14 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetUserID" FunctionName="UnstuckME_DBModel.Store.GetUserID" />
           <FunctionImportMapping FunctionImportName="GetUserOrganizations" FunctionName="UnstuckME_DBModel.Store.GetUserOrganizations" />
+          <FunctionImportMapping FunctionImportName="GetUserPasswordAndSalt" FunctionName="UnstuckME_DBModel.Store.GetUserPasswordAndSalt">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUserPasswordAndSalt_Result">
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetUserStickersAndReviews" FunctionName="UnstuckME_DBModel.Store.GetUserStickersAndReviews">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUserStickersAndReviews_Result">

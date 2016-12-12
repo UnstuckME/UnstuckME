@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckMEUserGUI", "Unstuck
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckMEServerGUI", "UnstuckMEServerGUI\UnstuckMEServerGUI.csproj", "{B752AFE6-DFF6-40BB-A473-134FD614F0A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckME_Classes", "UnstuckME_Classes\UnstuckME_Classes.csproj", "{A0401A05-8CD6-4227-BD7C-32DEADC38143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B752AFE6-DFF6-40BB-A473-134FD614F0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B752AFE6-DFF6-40BB-A473-134FD614F0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B752AFE6-DFF6-40BB-A473-134FD614F0A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0401A05-8CD6-4227-BD7C-32DEADC38143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0401A05-8CD6-4227-BD7C-32DEADC38143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0401A05-8CD6-4227-BD7C-32DEADC38143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0401A05-8CD6-4227-BD7C-32DEADC38143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -87,7 +87,7 @@ namespace UnstuckMEServerGUI
                     else
                     {
                         labelInvalidUsernamePassword.Visibility = Visibility.Visible;
-                        ChangeLoginCanvas.Visibility = Visibility.Visible;
+                        //ChangeLoginCanvas.Visibility = Visibility.Visible;
                     }
                 }
                 else
