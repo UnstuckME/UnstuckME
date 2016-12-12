@@ -137,6 +137,10 @@ namespace UnstuckMEServerGUI
             }
         }
 
-
+        private void ChangeCredintials_Click(object sender, RoutedEventArgs e)
+        {
+            AdminCredChange adminChange = new AdminCredChange();
+            adminChange.Show();
+        }
     }
 }

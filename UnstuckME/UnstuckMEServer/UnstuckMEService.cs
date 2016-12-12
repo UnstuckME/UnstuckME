@@ -38,7 +38,6 @@ namespace UnstuckMEInterfaces
             {
                 retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
             }
-
             return retVal;
         }
 
@@ -47,6 +46,7 @@ namespace UnstuckMEInterfaces
             UserNameAndEmail userInfo = new UserNameAndEmail();
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
+                //Feel free to attempt to optimize this code (currently 3 DB calls it think). I can't figure it out any other way.
                 userInfo.EmailAddress = (from u in db.GetDisplayNameAndEmail(UserID)
                                          select u.EmailAddress).First();
                 userInfo.FirstName = (from u in db.GetDisplayNameAndEmail(UserID)

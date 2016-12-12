@@ -8,19 +8,12 @@
         Title="UnstuckME Server Manager" Height="473.354" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen"
         MinHeight="500" MinWidth="600" MaxHeight="500" MaxWidth="600">
     <Grid RenderTransformOrigin="0.507,0.727" Height="466" Margin="0,0,2,2" Width="590">
-
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="White" Height="461">
                 <MenuItem Header="File" Margin="5,5,0,0">
-                    <MenuItem Header="Restart Server">
-
-                    </MenuItem>
-                    <MenuItem x:Name="MenuItemKillAndExit" Header="Kill and Exit" Click="MenuItemKillAndExit_Click">
-
-                    </MenuItem>
-                    <MenuItem x:Name="MenuItemExit" Header="Exit" Click="MenuItemExit_Click">
-
-                    </MenuItem>
+                    <MenuItem Header="Restart Server"></MenuItem>
+                    <MenuItem x:Name="MenuItemKillAndExit" Header="Kill and Exit" Click="MenuItemKillAndExit_Click"></MenuItem>
+                    <MenuItem x:Name="MenuItemExit" Header="Exit" Click="MenuItemExit_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Edit" Margin="0,5,0,0">
 
@@ -29,7 +22,7 @@
 
                 </MenuItem>
                 <MenuItem Header="Options" Margin="0,5,0,0">
-
+                    <MenuItem x:Name="ChangeCredintials" Header="Change Username/Password" Click="ChangeCredintials_Click"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>

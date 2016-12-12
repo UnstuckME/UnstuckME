@@ -100,5 +100,14 @@ namespace UnstuckMEUserGUI
             Window disp = new UserLoginSettingsWindow();
             disp.Show();            
         }
+
+        //Handles Enter Being Pressed While in the Password/Username Box
+        private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                LoginBtn_Click(sender, e);
+            }
+        }
     }
 }
