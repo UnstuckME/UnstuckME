@@ -148,5 +148,25 @@ namespace UnstuckMEInterfaces
             return loginAttempt;
         }
 
+        public List<UserClasses> GetUserClasses(int UserID)
+        {
+            List<UserClasses> Rlist = new List<UserClasses>();
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var classes = db.GetUserClasses(UserID);
+                //needs to do a thing
+            }
+            return Rlist;
+        }
+
+        public void InsertStudentIntoClass(int UserID, int ClassID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+
+                db.InsertStudentIntoClass(UserID, ClassID);
+            }
+        }
+
     }
 }

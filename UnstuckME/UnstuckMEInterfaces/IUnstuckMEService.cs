@@ -31,5 +31,11 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         UserNameAndEmail GetUserDisplayInfo(int UserID);
 
+        [OperationContract]
+        List<UserClasses> GetUserClasses(int UserID);
+
+        [OperationContract]
+        void InsertStudentIntoClass(int UserID, int ClassID);
+
     }
 }
