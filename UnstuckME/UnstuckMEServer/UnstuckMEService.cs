@@ -68,46 +68,12 @@ namespace UnstuckMEInterfaces
             return userID;
         }
 
-        static byte[] GetBytes(string str)
-        {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
-
-        static string GetString(byte[] bytes)
-        {
-            char[] chars = new char[bytes.Length / sizeof(char)];
-            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
-            return new string(chars);
-        }
-
-        static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
-        {
-            HashAlgorithm algorithm = new SHA256Managed();
-
-            byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
-
-            for (int i = 0; i < plainText.Length; i++)
-            {
-                plainTextWithSaltBytes[i] = plainText[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-            }
-
-            return algorithm.ComputeHash(plainTextWithSaltBytes);
-        }
-
         public bool UserLoginAttempt(string emailAddress, string passWord)
         {
             bool loginAttempt = false;
-            //string salt = null;
-            //string storedPassword = null;
 
             Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
-
+            
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 try
@@ -117,8 +83,8 @@ namespace UnstuckMEInterfaces
 
                     string salt = (from u in db.GetUserPasswordAndSalt(emailAddress)
                                    select u.Salt).First();
-
-                    byte[] checkPassword = GenerateSaltedHash(GetBytes(passWord), GetBytes(salt));
+                    
+                    byte[] checkPassword = UnstuckMEHashing.GenerateSaltedHash(UnstuckMEHashing.GetBytes(passWord), UnstuckMEHashing.GetBytes(salt));
                     string stringOfPassword = "";
 
                     foreach (byte element in checkPassword)

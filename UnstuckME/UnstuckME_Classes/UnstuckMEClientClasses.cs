@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace UnstuckME_Classes
 {
+    public class UserNameAndEmail
+    {
+        public string FirstName { set; get; }
+        public string LastName { set; get; }
+        public string EmailAddress { set; get; }
+    }
+
     public class UserClasses
     {
         public string CourseCode { set; get; }
         public string CourseName { set; get; }
         public short CourseNumber { set; get; }
     }
+
 }

@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using UnstuckME_Classes;
 namespace UnstuckMEServerGUI
 {
     /// <summary>
@@ -62,7 +62,7 @@ namespace UnstuckMEServerGUI
                         if (string.Equals(userName, userEmailAddressInput, StringComparison.OrdinalIgnoreCase) == true)
                         {
                             string dbStringSalt = dbSalt[listCount];
-                            byte[] databasePassword = GenerateSaltedHash(GetBytes(passwordBoxInput.Password), GetBytes(dbSalt[listCount]));
+                            byte[] databasePassword = UnstuckMEHashing.GenerateSaltedHash(UnstuckMEHashing.GetBytes(passwordBoxInput.Password), UnstuckMEHashing.GetBytes(dbSalt[listCount]));
                             string stringOfPassword = "";
                             foreach (byte element in databasePassword)
                             {
@@ -102,40 +102,6 @@ namespace UnstuckMEServerGUI
                 MessageBox.Show(ex.Message, "Connection Failure", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
-
-        static byte[] GetBytes(string str)
-        {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
-
-        static string GetString(byte[] bytes)
-        {
-            char[] chars = new char[bytes.Length / sizeof(char)];
-            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
-            return new string(chars);
-        }
-
-        static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
-        {
-            HashAlgorithm algorithm = new SHA256Managed();
-
-            byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
-
-            for (int i = 0; i < plainText.Length; i++)
-            {
-                plainTextWithSaltBytes[i] = plainText[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-            }
-
-            return algorithm.ComputeHash(plainTextWithSaltBytes);
-        }
-
-        //Handles Enter Being Pressed While in the Password Box
         private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)

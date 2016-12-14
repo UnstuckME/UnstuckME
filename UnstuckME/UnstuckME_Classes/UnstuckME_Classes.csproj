@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserClasses.cs" />
-    <Compile Include="UserNameAndEmail.cs" />
+    <Compile Include="Security.cs" />
+    <Compile Include="UnstuckMEClientClasses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
