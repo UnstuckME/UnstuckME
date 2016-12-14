@@ -15,14 +15,9 @@
                     <MenuItem x:Name="MenuItemKillAndExit" Header="Kill and Exit" Click="MenuItemKillAndExit_Click"></MenuItem>
                     <MenuItem x:Name="MenuItemExit" Header="Exit" Click="MenuItemExit_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Edit" Margin="0,5,0,0">
-
-                </MenuItem>
-                <MenuItem Header="View" Margin="0,5,0,0">
-
-                </MenuItem>
                 <MenuItem Header="Options" Margin="0,5,0,0">
                     <MenuItem x:Name="ChangeCredintials" Header="Change Username/Password" Click="ChangeCredintials_Click"></MenuItem>
+                    <MenuItem x:Name="CreateAdmin" Header="Create New Administrator" Click="CreateAdmin_Click" ></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>

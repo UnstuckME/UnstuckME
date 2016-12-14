@@ -142,5 +142,10 @@ namespace UnstuckMEServerGUI
             AdminCredChange adminChange = new AdminCredChange();
             adminChange.Show();
         }
+
+        private void CreateAdmin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

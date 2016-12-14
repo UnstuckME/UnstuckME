@@ -132,11 +132,6 @@ namespace UnstuckMEInterfaces
                         loginAttempt = true;
                     }
                 }
-                //    loginAttempt = true;//for kyronns gui testing
-
-                //    var temp = db.GetUserID(emailAddress);
-                //    int UserID = temp.First().Value;
-                //}
                 catch (Exception)
                 {
                     loginAttempt = false;
@@ -150,20 +145,37 @@ namespace UnstuckMEInterfaces
 
         public List<UserClasses> GetUserClasses(int UserID)
         {
-            List<UserClasses> Rlist = new List<UserClasses>();
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            try
             {
-                var classes = db.GetUserClasses(UserID);
-                //needs to do a thing
+                List<UserClasses> Rlist = new List<UserClasses>();
+
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var classes = db.GetUserClasses(UserID);
+                    UserClasses temp = new UserClasses();
+
+                    //This might work, if not let me know and i'll figure out something else.
+                    foreach (var c in classes)
+                    {
+                        temp.CourseCode = c.CourseCode;
+                        temp.CourseName = c.CourseName;
+                        temp.CourseNumber = c.CourseNumber;
+                        Rlist.Add(temp);
+                    }
+                }
+                return Rlist;
             }
-            return Rlist;
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public void InsertStudentIntoClass(int UserID, int ClassID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-
                 db.InsertStudentIntoClass(UserID, ClassID);
             }
         }

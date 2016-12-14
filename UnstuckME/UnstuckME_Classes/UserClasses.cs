@@ -8,6 +8,8 @@ namespace UnstuckME_Classes
 {
     public class UserClasses
     {
-
+        public string CourseCode { set; get; }
+        public string CourseName { set; get; }
+        public short CourseNumber { set; get; }
     }
 }
