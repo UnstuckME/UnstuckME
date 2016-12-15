@@ -23,16 +23,18 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class NewAccountSetupWindow : Window
     {
-        public NewAccountSetupWindow()
+        public static IUnstuckMEService Server;
+        public NewAccountSetupWindow(IUnstuckMEService OpenServer)
         {
             InitializeComponent();
+            Server = OpenServer;
         }
 
         private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
         {
             //Opens a connection to UnstuckME Server.
-            ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
-            IUnstuckMEService proxy = channelFactory.CreateChannel();
+            //ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
+            //IUnstuckMEService proxy = channelFactory.CreateChannel();
 
             string errors = "Please Correct the Following:\n";
             bool errFlag = false;
@@ -112,10 +114,10 @@ namespace UnstuckMEUserGUI
                      newPassword += element;
                 }
 
-                int result = proxy.CreateNewUser(FName, LName, Email, newPassword, "User", token);
+                int result = Server.CreateNewUser(FName, LName, Email, newPassword, "User", token);
                 if (result == 1)
                 {
-                    Window disp = new MainWindow(proxy.GetUserID(Email));
+                    Window disp = new MainWindow(Server.GetUserID(Email), Server);
                     disp.Show();
                     this.Close();
                 }

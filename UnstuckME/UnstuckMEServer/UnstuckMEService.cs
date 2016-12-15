@@ -7,15 +7,18 @@ using System.Text;
 using UnstuckMEServer;
 using UnstuckME_Classes;
 using System.Security.Cryptography;
+using System.Collections.Concurrent;
 
 namespace UnstuckMEInterfaces
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UnstuckMEService" in both code and config file together.
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
     /// <summary>
     /// Implement any Operation Contracts from IUnstuckMEService.cs in this file.
     /// </summary>
     public class UnstuckMEService : IUnstuckMEService
     {
+        public ConcurrentDictionary<string, ConnectedClient> _connectedClients = new ConcurrentDictionary<string, ConnectedClient>();
+
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -72,6 +75,15 @@ namespace UnstuckMEInterfaces
         {
             bool loginAttempt = false;
 
+            //If Client is already logged on return false.
+            foreach (var client in _connectedClients)
+            {
+                if (client.Key.ToLower() == emailAddress.ToLower())
+                {
+                    return false;
+                }
+            }
+
             Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
             
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -96,7 +108,14 @@ namespace UnstuckMEInterfaces
                     if (stringOfPassword == databasePassword)
                     {
                         loginAttempt = true;
+                        var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
+                        ConnectedClient newClient = new ConnectedClient();
+                        newClient.connection = establishedUserConnection;
+                        newClient.EmailAddress = emailAddress;
+
+                        _connectedClients.TryAdd(emailAddress, newClient);
                     }
+
                 }
                 catch (Exception)
                 {
@@ -146,5 +165,15 @@ namespace UnstuckMEInterfaces
             }
         }
 
+        public void SendMessageToAllUsers(string message, string emailAddress)
+        {
+            foreach (var client in _connectedClients)
+            {
+                if(client.Key.ToLower() != emailAddress.ToLower())
+                {
+                    client.Value.connection.GetMessage(message, emailAddress);
+                }
+            }
+        }
     }
 }

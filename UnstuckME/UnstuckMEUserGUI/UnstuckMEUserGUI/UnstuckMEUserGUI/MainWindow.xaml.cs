@@ -22,14 +22,13 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(int UserID)
+        public static IUnstuckMEService Server;
+        public MainWindow(int UserID, IUnstuckMEService OpenServer)
         {
             //Opens a connection to UnstuckME Server.
-            ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
-            IUnstuckMEService proxy = channelFactory.CreateChannel();
-
+            Server = OpenServer;
             int UsersID = UserID;
-            UserNameAndEmail userInfo = proxy.GetUserDisplayInfo(UsersID);
+            UserNameAndEmail userInfo = Server.GetUserDisplayInfo(UsersID);
             InitializeComponent();
             FNameTxtBx.Text = userInfo.FirstName; // get the name from the server and insert it
             LNameTxtBx.Text = userInfo.LastName;

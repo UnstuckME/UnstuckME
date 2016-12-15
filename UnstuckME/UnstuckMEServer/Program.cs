@@ -9,15 +9,17 @@ namespace UnstuckMEInterfaces
 {
     class Program
     {
+        public static UnstuckMEService _server;
         static void Main(string[] args)
         {
             /*
              *Opens an UnstuckMEService for clients to connect to.  
              */
-            using (ServiceHost host = new ServiceHost(typeof(UnstuckMEService)))
+            _server = new UnstuckMEService();
+            using (ServiceHost host = new ServiceHost(_server))
             {
                 host.Open();
-                Console.WriteLine("Server is Open");
+                Console.WriteLine("Server is Running...");
                 Console.WriteLine("<Press Enter to Shut Down Server");
                 Console.ReadLine();
             }
