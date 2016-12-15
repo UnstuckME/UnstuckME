@@ -29,8 +29,6 @@ namespace UnstuckMEUserGUI
             //Opens a connection to UnstuckME Server.
             Server = OpenServer;
             User = Server.GetUserInfo(UserID);
-            //int UsersID = UserID;
-           //UserNameAndEmail userInfo = Server.GetUserDisplayInfo(UsersID);
             InitializeComponent();
             FNameTxtBx.Text = User.FirstName; // get the name from the server and insert it
             LNameTxtBx.Text = User.LastName;
@@ -42,8 +40,6 @@ namespace UnstuckMEUserGUI
                 test.Text = "test text" + i;
                 ClassesStack.Children.Add(test);
             }
-            //proxy.GetUserClasses(UserID);
-            
         }
 
         private void AddRemoveClasses_Click(object sender, RoutedEventArgs e)

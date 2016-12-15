@@ -32,10 +32,6 @@ namespace UnstuckMEUserGUI
 
         private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Opens a connection to UnstuckME Server.
-            //ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
-            //IUnstuckMEService proxy = channelFactory.CreateChannel();
-
             string errors = "Please Correct the Following:\n";
             bool errFlag = false;
             string FName = "";

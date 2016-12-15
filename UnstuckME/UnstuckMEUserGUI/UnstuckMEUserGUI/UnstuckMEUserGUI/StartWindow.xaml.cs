@@ -56,11 +56,6 @@ namespace UnstuckMEUserGUI
             string password = passwordBox.Password;
             bool isValid = false;
 
-            //Opens a connection to UnstuckME Server.
-            //ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
-            //IUnstuckMEService proxy = channelFactory.CreateChannel();
-
-            
             if (email == "")
             {
                 MessageBox.Show("Please Enter a Valid Email");
@@ -87,10 +82,7 @@ namespace UnstuckMEUserGUI
                     MessageBox.Show("Login Info Incorrect");
                 
                 }
-            }
-            
-            
-            
+            }     
         }
 
         private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
