@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace UnstuckME_Classes
 {
-    public class UserNameAndEmail
+    public class UserInfo
     {
-        public string FirstName { set; get; }
-        public string LastName { set; get; }
-        public string EmailAddress { set; get; }
+        public int UserID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string EmailAddress { get; set; }
+        public string Privileges { get; set; }
     }
 
     public class UserClasses

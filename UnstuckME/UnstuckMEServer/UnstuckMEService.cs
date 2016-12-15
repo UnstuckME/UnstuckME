@@ -17,7 +17,7 @@ namespace UnstuckMEInterfaces
     /// </summary>
     public class UnstuckMEService : IUnstuckMEService
     {
-        public ConcurrentDictionary<string, ConnectedClient> _connectedClients = new ConcurrentDictionary<string, ConnectedClient>();
+        public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
@@ -44,22 +44,6 @@ namespace UnstuckMEInterfaces
             return retVal;
         }
 
-        public UserNameAndEmail GetUserDisplayInfo(int UserID)
-        {
-            UserNameAndEmail userInfo = new UserNameAndEmail();
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-                //Feel free to attempt to optimize this code (currently 3 DB calls it think). I can't figure it out any other way.
-                userInfo.EmailAddress = (from u in db.GetDisplayNameAndEmail(UserID)
-                                         select u.EmailAddress).First();
-                userInfo.FirstName = (from u in db.GetDisplayNameAndEmail(UserID)
-                                      select u.DisplayFName).First();
-                userInfo.LastName = (from u in db.GetDisplayNameAndEmail(UserID)
-                                     select u.DisplayLName).First();
-            }
-            return userInfo;
-        }
-
         public int GetUserID(string emailAddress)
         {
             int userID = 0;
@@ -74,15 +58,6 @@ namespace UnstuckMEInterfaces
         public bool UserLoginAttempt(string emailAddress, string passWord)
         {
             bool loginAttempt = false;
-
-            //If Client is already logged on return false.
-            foreach (var client in _connectedClients)
-            {
-                if (client.Key.ToLower() == emailAddress.ToLower())
-                {
-                    return false;
-                }
-            }
 
             Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
             
@@ -107,24 +82,30 @@ namespace UnstuckMEInterfaces
                     Console.WriteLine("Length = {0}", stringOfPassword.Length);
                     if (stringOfPassword == databasePassword)
                     {
+                        int userID = GetUserID(emailAddress);
+                        //If Client is already logged on return false (This may be removed later).
+                        foreach (var client in _connectedClients)
+                        {
+                            if (client.Key == userID)
+                            {
+                                return false;
+                            }
+                        }
                         loginAttempt = true;
+
+                        //Stores Client into Logged in Users List
                         var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
                         ConnectedClient newClient = new ConnectedClient();
                         newClient.connection = establishedUserConnection;
-                        newClient.EmailAddress = emailAddress;
-
-                        _connectedClients.TryAdd(emailAddress, newClient);
+                        newClient.User = GetUserInfo(userID);
+                        _connectedClients.TryAdd(newClient.User.UserID, newClient);
                     }
-
                 }
                 catch (Exception)
                 {
                     loginAttempt = false;
-
                 }
-
             }
-
             return loginAttempt;
         }
 
@@ -165,14 +146,31 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void SendMessageToAllUsers(string message, string emailAddress)
+        //public void SendMessageToAllUsers(string message, string emailAddress)
+        //{
+        //    foreach (var client in _connectedClients)
+        //    {
+        //        if(client.Key.ToLower() != emailAddress.ToLower())
+        //        {
+        //            client.Value.connection.GetMessage(message, emailAddress);
+        //        }
+        //    }
+        //}
+
+        public UserInfo GetUserInfo(int userID)
         {
-            foreach (var client in _connectedClients)
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                if(client.Key.ToLower() != emailAddress.ToLower())
-                {
-                    client.Value.connection.GetMessage(message, emailAddress);
-                }
+                var users = (from u in db.UserProfiles
+                             where u.UserID == userID
+                             select u).First();
+                UserInfo newClient = new UserInfo();
+                newClient.UserID = users.UserID;
+                newClient.FirstName = users.DisplayFName;
+                newClient.LastName = users.DisplayLName;
+                newClient.EmailAddress = users.EmailAddress;
+                newClient.Privileges = users.Privileges;
+                return newClient;
             }
         }
     }

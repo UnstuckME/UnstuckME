@@ -19,11 +19,14 @@ namespace UnstuckMEInterfaces
         /// 
 
         [OperationContract]
+        UserInfo GetUserInfo(int userID);
+
+        [OperationContract]
         int GetUserID(string emailAddress);
 
         //Still Testing
-        [OperationContract]
-        void SendMessageToAllUsers(string message, string emailAddress);
+        //[OperationContract]
+        //void SendMessageToAllUsers(string message, string emailAddress);
 
         [OperationContract]
         void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
@@ -33,9 +36,6 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt);
-
-        [OperationContract]
-        UserNameAndEmail GetUserDisplayInfo(int UserID);
 
         [OperationContract]
         List<UserClasses> GetUserClasses(int UserID);

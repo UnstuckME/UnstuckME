@@ -75,7 +75,7 @@ namespace UnstuckMEUserGUI
                 isValid = Server.UserLoginAttempt(email, password);
                 //if valid login
                 if (isValid)
-                {
+                { 
 
                     Window disp = new MainWindow(Server.GetUserID(email), Server); // this will crash without valid login info
                     disp.Show();

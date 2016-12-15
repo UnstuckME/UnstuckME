@@ -23,16 +23,18 @@ namespace UnstuckMEUserGUI
     public partial class MainWindow : Window
     {
         public static IUnstuckMEService Server;
+        public static UserInfo User;
         public MainWindow(int UserID, IUnstuckMEService OpenServer)
         {
             //Opens a connection to UnstuckME Server.
             Server = OpenServer;
-            int UsersID = UserID;
-            UserNameAndEmail userInfo = Server.GetUserDisplayInfo(UsersID);
+            User = Server.GetUserInfo(UserID);
+            //int UsersID = UserID;
+           //UserNameAndEmail userInfo = Server.GetUserDisplayInfo(UsersID);
             InitializeComponent();
-            FNameTxtBx.Text = userInfo.FirstName; // get the name from the server and insert it
-            LNameTxtBx.Text = userInfo.LastName;
-            EmailtextBlock.Text = userInfo.EmailAddress; // get the email and show it
+            FNameTxtBx.Text = User.FirstName; // get the name from the server and insert it
+            LNameTxtBx.Text = User.LastName;
+            EmailtextBlock.Text = User.EmailAddress; // get the email and show it
 
             for (int i = 0; i < 50; i++)
             {
