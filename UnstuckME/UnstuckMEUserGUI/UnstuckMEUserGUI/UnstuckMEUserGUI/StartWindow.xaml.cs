@@ -30,6 +30,7 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
             Server = _channelFactory.CreateChannel();
+
 /*
             // check the config file and see if this program is linked to a school
             var appSettings = ConfigurationManager.AppSettings;

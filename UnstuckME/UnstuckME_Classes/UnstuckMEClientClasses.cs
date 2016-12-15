@@ -21,5 +21,15 @@ namespace UnstuckME_Classes
         public string CourseName { set; get; }
         public short CourseNumber { set; get; }
     }
-
+    public class UnstuckMEMessage
+    {
+        DateTime Time { get; set; }
+        string Message { get; set; }
+        int UserID { get; set; }
+    }
+    public class UserMessages
+    {
+        List<int> Users { get; set; }
+        List<UnstuckMEMessage> Messages { get; set; }
+    }
 }

@@ -58,8 +58,6 @@ namespace UnstuckMEInterfaces
         public bool UserLoginAttempt(string emailAddress, string passWord)
         {
             bool loginAttempt = false;
-
-            Console.WriteLine("User Login Attempt by {0}\n Hashed Password: {1}", emailAddress, passWord.First());
             
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -79,7 +77,6 @@ namespace UnstuckMEInterfaces
                         stringOfPassword += element;
                     }
 
-                    Console.WriteLine("Length = {0}", stringOfPassword.Length);
                     if (stringOfPassword == databasePassword)
                     {
                         int userID = GetUserID(emailAddress);
@@ -171,6 +168,25 @@ namespace UnstuckMEInterfaces
                 newClient.EmailAddress = users.EmailAddress;
                 newClient.Privileges = users.Privileges;
                 return newClient;
+            }
+        }
+
+        public bool IsValidUser(string emailAddress)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                try
+                {
+                    var users = (from u in db.UserProfiles
+                                 where u.EmailAddress == emailAddress
+                                 select u).First();
+                    Console.WriteLine(users.EmailAddress);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
     }
