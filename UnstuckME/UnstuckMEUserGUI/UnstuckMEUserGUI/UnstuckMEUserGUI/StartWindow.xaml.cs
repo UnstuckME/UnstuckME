@@ -23,9 +23,13 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class StartWindow : Window
     {
+        public static IUnstuckMEService Server;
+        private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         public StartWindow()
         {
             InitializeComponent();
+            _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+            Server = _channelFactory.CreateChannel();
 /*
             // check the config file and see if this program is linked to a school
             var appSettings = ConfigurationManager.AppSettings;
@@ -52,8 +56,8 @@ namespace UnstuckMEUserGUI
             bool isValid = false;
 
             //Opens a connection to UnstuckME Server.
-            ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
-            IUnstuckMEService proxy = channelFactory.CreateChannel();
+            //ChannelFactory<IUnstuckMEService> channelFactory = new ChannelFactory<IUnstuckMEService>("UnstuckMEClient");
+            //IUnstuckMEService proxy = channelFactory.CreateChannel();
 
             
             if (email == "")
@@ -68,12 +72,12 @@ namespace UnstuckMEUserGUI
             else
             {   
                 //Calls UnstuckME Server Function that checks email credentials
-                isValid = proxy.UserLoginAttempt(email, password);
+                isValid = Server.UserLoginAttempt(email, password);
                 //if valid login
                 if (isValid)
                 {
 
-                    Window disp = new MainWindow(proxy.GetUserID(email)); // this will crash without valid login info
+                    Window disp = new MainWindow(Server.GetUserID(email), Server); // this will crash without valid login info
                     disp.Show();
                     this.Close();
                 }
@@ -90,7 +94,7 @@ namespace UnstuckMEUserGUI
 
         private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
         {
-            Window disp = new NewAccountSetupWindow();
+            Window disp = new NewAccountSetupWindow(Server);
             disp.Show();
             this.Close();
         }
@@ -109,5 +113,6 @@ namespace UnstuckMEUserGUI
                 LoginBtn_Click(sender, e);
             }
         }
+
     }
 }

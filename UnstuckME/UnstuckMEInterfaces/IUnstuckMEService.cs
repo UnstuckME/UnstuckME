@@ -8,16 +8,22 @@ using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IUnstuckMEService" in both code and config file together.
-    [ServiceContract]
+
+    [ServiceContract(CallbackContract = typeof(IClient))]
     public interface IUnstuckMEService
     {
         /// <summary>
         /// These Operation Contracts are the functions that the user can call from UnstuckMEClient using proxy.FunctionName(Parameters);
         /// Implement these functions in UnstuckMEService.cs
         /// </summary>
+        /// 
+
         [OperationContract]
         int GetUserID(string emailAddress);
+
+        //Still Testing
+        [OperationContract]
+        void SendMessageToAllUsers(string message, string emailAddress);
 
         [OperationContract]
         void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
