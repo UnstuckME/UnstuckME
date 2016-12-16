@@ -76,7 +76,7 @@ CREATE TABLE [Server]
 	ServerDomain		VARCHAR(50)			DEFAULT NULL,
 	SchoolName			VARCHAR(75)			DEFAULT 'NoSchoolNameHasBeenSet',
 	AdminUsername		VARCHAR(30)			DEFAULT 'Admin',	
-	AdminPassword		NVARCHAR(256)		DEFAULT '150179244128249143822361212085910781831781871262221825585173751928210594126105155237209', -- A hashed and salted password  using 'Password' as password and 'Salt' as the salt
+	AdminPassword		NVARCHAR(256)		DEFAULT '20024519787285415818223418423415125157246207175561872721374197129248198221206128122231254', -- A hashed and salted password  using 'Password' as password and 'Salt' as the salt
 	EmailCredentials	NVARCHAR(50)		DEFAULT 'EmailCredentialsNotSet',
 	Salt				NVARCHAR(256)		NOT NULL UNIQUE)
 GO
