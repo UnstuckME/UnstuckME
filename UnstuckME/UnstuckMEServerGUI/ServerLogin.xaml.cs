@@ -21,85 +21,51 @@ namespace UnstuckMEServerGUI
     /// </summary>
     public partial class ServerLogin : Window
     {
+        public static AdminInfo Admin;
         public ServerLogin()
         {
             InitializeComponent();
+            Admin = new AdminInfo();
         }
 
         private void buttonServerLogin_Click(object sender, RoutedEventArgs e)
         {
-            labelInvalidUsernamePassword.Visibility = Visibility.Collapsed;
-
             try
             {
-                SqlConnection conn = new SqlConnection("Server=aura.students.cset.oit.edu;Database=UnstuckME_DB;persist security info=True;user id=UnstuckME_Admin;password=B3$$t-P@$$W0rd");
-                conn.Open();
-
-                //Beginnings of username check
-                if (System.Data.ConnectionState.Open == conn.State)//If successful connection to database.
+                if(textBoxEmailAddress.Text.Length == 0)
+                { throw new Exception(); }
+                using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
                 {
-                    List<string> dbUsernames = new List<string>();
-                    List<string> dbPassword = new List<string>();
-                    List<string> dbSalt = new List<string>();
+                    var admin = (from u in db.ServerAdmins
+                                 where u.EmailAddress.ToLower() == textBoxEmailAddress.Text.ToLower()
+                                 select u).First();
 
-                    SqlCommand cmd = new SqlCommand("dbo.GetAdminInfo", conn);
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    SqlDataReader rdr = cmd.ExecuteReader();
-
-                    while (rdr.Read())
+                    byte[] databasePassword = UnstuckMEHashing.GenerateSaltedHash(UnstuckMEHashing.GetBytes(passwordBoxInput.Password), UnstuckMEHashing.GetBytes(admin.Salt));
+                    string stringOfPassword = "";
+                    foreach (byte element in databasePassword)
                     {
-                        dbUsernames.Add(rdr["AdminUsername"].ToString());
-                        dbPassword.Add(rdr["AdminPassword"].ToString());
-                        dbSalt.Add(rdr["Salt"].ToString());
+                        stringOfPassword += element;
                     }
-
-                    string userEmailAddressInput = textBoxEmailAddress.Text;
-                    int listCount = 0;
-                    bool isUser = false;
-
-                    foreach (var userName in dbUsernames)
+                    if (stringOfPassword == admin.Password)
                     {
-                        if (string.Equals(userName, userEmailAddressInput, StringComparison.OrdinalIgnoreCase) == true)
-                        {
-                            string dbStringSalt = dbSalt[listCount];
-                            byte[] databasePassword = UnstuckMEHashing.GenerateSaltedHash(UnstuckMEHashing.GetBytes(passwordBoxInput.Password), UnstuckMEHashing.GetBytes(dbSalt[listCount]));
-                            string stringOfPassword = "";
-                            foreach (byte element in databasePassword)
-                            {
-                                stringOfPassword += element;
-                            }
-                            
-                            if(stringOfPassword == dbPassword[listCount])
-                            {
-                                isUser = true;
-                            }
-                        }
-                        listCount++;
-                    }
-
-                    if (isUser)
-                    {
-                        MainWindow mainWindow = new MainWindow();
+                        Admin.EmailAddress = admin.EmailAddress;
+                        Admin.FirstName = admin.FirstName;
+                        Admin.LastName = admin.LastName;
+                        Admin.ServerAdminID = admin.ServerAdminID;
+                        MainWindow mainWindow = new MainWindow(Admin);
                         App.Current.MainWindow = mainWindow;
                         Close();
                         mainWindow.Show();
                     }
                     else
                     {
-                        labelInvalidUsernamePassword.Visibility = Visibility.Visible;
-                        //ChangeLoginCanvas.Visibility = Visibility.Visible;
+                        throw new Exception();
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Connection Failed!", "Connection Failure", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                }
-
-                conn.Close();
             }
-            catch(SqlException ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message, "Connection Failure", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                labelInvalidUsernamePassword.Visibility = Visibility.Visible;
             }
         }
         private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
+using UnstuckME_Classes;
 
 namespace UnstuckMEServerGUI
 {
@@ -23,12 +24,14 @@ namespace UnstuckMEServerGUI
     /// 
     public partial class MainWindow : Window
     {
-       
 
-        public MainWindow()
+        public static AdminInfo Admin;
+        public MainWindow(AdminInfo currentAdmin)
         {
             InitializeComponent();
-            
+            Admin = currentAdmin;
+            labelEmailAddress.Content = "Email Address: " + Admin.EmailAddress;
+            labelName.Content = "Name: " + Admin.FirstName + " " + Admin.LastName;
         }
 
         /// <summary>
@@ -144,6 +147,11 @@ namespace UnstuckMEServerGUI
         }
 
         private void CreateAdmin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RestartServer_Click(object sender, RoutedEventArgs e)
         {
 
         }
