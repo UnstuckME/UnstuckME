@@ -17,6 +17,7 @@ namespace UnstuckMEServer
         public UserProfile()
         {
             this.Files = new HashSet<File>();
+            this.Friends = new HashSet<Friend>();
             this.Messages = new HashSet<Message>();
             this.Reports = new HashSet<Report>();
             this.Reviews = new HashSet<Review>();
@@ -36,6 +37,7 @@ namespace UnstuckMEServer
         public string Salt { get; set; }
     
         public virtual ICollection<File> Files { get; set; }
+        public virtual ICollection<Friend> Friends { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual Picture Picture { get; set; }
         public virtual ICollection<Report> Reports { get; set; }

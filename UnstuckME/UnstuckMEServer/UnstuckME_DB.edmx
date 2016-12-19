@@ -31,6 +31,14 @@
           <Property Name="SentBy" Type="int" Nullable="false" />
           <Property Name="SentTime" Type="smalldatetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="FriendID" />
+          </Key>
+          <Property Name="FriendID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FriendUserID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Messages">
           <Key>
             <PropertyRef Name="MessageID" />
@@ -46,7 +54,7 @@
             <PropertyRef Name="MentorID" />
           </Key>
           <Property Name="MentorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OrganizationName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrganizationName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="OmToUser">
           <Key>
@@ -81,20 +89,6 @@
           <Property Name="ReviewerID" Type="int" Nullable="false" />
           <Property Name="StarRanking" Type="float" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" />
-        </EntityType>
-        <EntityType Name="Server">
-          <Key>
-            <PropertyRef Name="ServerID" />
-          </Key>
-          <Property Name="ServerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServerName" Type="varchar" MaxLength="75" />
-          <Property Name="ServerIP" Type="varchar" MaxLength="15" />
-          <Property Name="ServerDomain" Type="varchar" MaxLength="50" />
-          <Property Name="SchoolName" Type="varchar" MaxLength="75" />
-          <Property Name="AdminUsername" Type="varchar" MaxLength="30" />
-          <Property Name="AdminPassword" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailCredentials" Type="nvarchar" MaxLength="50" />
-          <Property Name="Salt" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Sticker">
           <Key>
@@ -185,7 +179,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Privileges" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Files__ChatID__4654EF34">
+        <Association Name="FK__Files__ChatID__1B757E27">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Files" Type="Self.Files" Multiplicity="*" />
           <ReferentialConstraint>
@@ -197,7 +191,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Files__SentBy__4749136D">
+        <Association Name="FK__Files__SentBy__1C69A260">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Files" Type="Self.Files" Multiplicity="*" />
           <ReferentialConstraint>
@@ -209,7 +203,19 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__ChatID__42845E50">
+        <Association Name="FK__Friends__UserID__14C88098">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__ChatID__17A4ED43">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,7 +227,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__43788289">
+        <Association Name="FK__Messages__SentBy__1899117C">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -233,7 +239,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__Mentor__4D01ECC3">
+        <Association Name="FK__OmToUser__Mentor__22227BB6">
           <End Role="OfficialMentor" Type="Self.OfficialMentor" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -245,7 +251,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__UserID__4C0DC88A">
+        <Association Name="FK__OmToUser__UserID__212E577D">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -257,7 +263,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__53AEEA52">
+        <Association Name="FK__Picture__UserID__28CF7945">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -269,7 +275,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__699E2B71">
+        <Association Name="FK__Report__FlaggerI__3EBEBA64">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -281,7 +287,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__6A924FAA">
+        <Association Name="FK__Report__ReviewID__3FB2DE9D">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,7 +299,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__63E5521B">
+        <Association Name="FK__Review__Reviewer__3905E10E">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -305,7 +311,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__62F12DE2">
+        <Association Name="FK__Review__StickerI__3811BCD5">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -317,7 +323,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__5C443053">
+        <Association Name="FK__Sticker__ClassID__3164BF46">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -329,7 +335,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__5D38548C">
+        <Association Name="FK__Sticker__Student__3258E37F">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -341,7 +347,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__5F209CFE">
+        <Association Name="FK__Sticker__TutorID__34412BF1">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -353,7 +359,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__ChatI__50D27DA7">
+        <Association Name="FK__UserToCha__ChatI__25F30C9A">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -365,7 +371,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__UserI__4FDE596E">
+        <Association Name="FK__UserToCha__UserI__24FEE861">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -377,7 +383,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__Class__5967C3A8">
+        <Association Name="FK__UserToCla__Class__2E88529B">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -389,7 +395,7 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__UserI__58739F6F">
+        <Association Name="FK__UserToCla__UserI__2D942E62">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -401,12 +407,12 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="AdminPullAllReports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="AddFriend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentUserID" Type="int" Mode="In" />
+          <Parameter Name="NewFriendUserID" Type="int" Mode="In" />
+        </Function>
         <Function Name="AdminPullReportsForOptionalUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
-        <Function Name="AdminPullReportsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="user" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ChangeProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -446,16 +452,6 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="StarRanking" Type="float" Mode="In" />
           <Parameter Name="Description" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="CreateServer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerName" Type="varchar" Mode="In" />
-          <Parameter Name="ServerIP" Type="varchar" Mode="In" />
-          <Parameter Name="ServerDomain" Type="varchar" Mode="In" />
-          <Parameter Name="SchoolName" Type="varchar" Mode="In" />
-          <Parameter Name="AdminUsername" Type="varchar" Mode="In" />
-          <Parameter Name="AdminPassword" Type="nvarchar" Mode="In" />
-          <Parameter Name="EmailCredentials" Type="nvarchar" Mode="In" />
-          <Parameter Name="Salt" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="CreateSticker" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProblemDescription" Type="nvarchar" Mode="In" />
           <Parameter Name="ClassID" Type="int" Mode="In" />
@@ -469,6 +465,10 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
         <Function Name="DeleteFileByFileID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FileID" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeleteFriend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CurrentUserID" Type="int" Mode="In" />
+          <Parameter Name="TargetFriendUserID" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteMentorOrganizationByMentorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MentorID" Type="int" Mode="In" />
         </Function>
@@ -477,12 +477,6 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
         </Function>
         <Function Name="DeleteReportByReportID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReportID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteServerInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteServerInformationByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
         </Function>
         <Function Name="DeleteUserPictureByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -504,7 +498,6 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="userid" Type="int" Mode="In" />
           <Parameter Name="organization" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="GetAdminInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllActiveStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
@@ -521,14 +514,9 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
         <Function Name="GetDisplayNameAndEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetEmailCredentials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetSchoolName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetServerDomain" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetServerIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetServerName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetUserAvgStudentStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
@@ -589,9 +577,6 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="user" Type="int" Mode="In" />
           <Parameter Name="tutor" Type="int" Mode="In" />
         </Function>
-        <Function Name="RetrieveLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="useremail" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -622,14 +607,6 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="UpdateAdminPasswordByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-          <Parameter Name="AdminPassword" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="UpdateAdminUsernameByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-          <Parameter Name="AdminUsername" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="UpdateCourseCodeByClassID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClassID" Type="int" Mode="In" />
           <Parameter Name="CourseCode" Type="varchar" Mode="In" />
@@ -654,10 +631,6 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="UpdateEmailCredentialsByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-          <Parameter Name="EmailCredentials" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="UpdateMentorNameByMentorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MentorID" Type="int" Mode="In" />
           <Parameter Name="OrganizationName" Type="nvarchar" Mode="In" />
@@ -673,22 +646,6 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
         <Function Name="UpdateReviewDescriptionByReviewID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReviewID" Type="int" Mode="In" />
           <Parameter Name="Description" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="UpdateSchoolNameByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-          <Parameter Name="SchoolName" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="UpdateServerDomainByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-          <Parameter Name="ServerDomain" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="UpdateServerIPByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-          <Parameter Name="ServerIP" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="UpdateServerNameByServerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ServerID" Type="int" Mode="In" />
-          <Parameter Name="ServerName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="UpdateStarRankingByReviewID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReviewID" Type="int" Mode="In" />
@@ -720,13 +677,13 @@ warning 6002: The table/view 'UnstuckME_DB.dbo.AllUsers_View' does not have a pr
           <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficialMentor" EntityType="Self.OfficialMentor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OmToUser" EntityType="Self.OmToUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Server" EntityType="Self.Server" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sticker" EntityType="Self.Sticker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
@@ -755,75 +712,79 @@ FROM [dbo].[AllStickers_View] AS [AllStickers_View]</DefiningQuery>
 [AllUsers_View].[Privileges] AS [Privileges]
 FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Files__ChatID__4654EF34" Association="Self.FK__Files__ChatID__4654EF34">
+          <AssociationSet Name="FK__Files__ChatID__1B757E27" Association="Self.FK__Files__ChatID__1B757E27">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Files__SentBy__4749136D" Association="Self.FK__Files__SentBy__4749136D">
+          <AssociationSet Name="FK__Files__SentBy__1C69A260" Association="Self.FK__Files__SentBy__1C69A260">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__ChatID__42845E50" Association="Self.FK__Messages__ChatID__42845E50">
+          <AssociationSet Name="FK__Friends__UserID__14C88098" Association="Self.FK__Friends__UserID__14C88098">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__ChatID__17A4ED43" Association="Self.FK__Messages__ChatID__17A4ED43">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__43788289" Association="Self.FK__Messages__SentBy__43788289">
+          <AssociationSet Name="FK__Messages__SentBy__1899117C" Association="Self.FK__Messages__SentBy__1899117C">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__Mentor__4D01ECC3" Association="Self.FK__OmToUser__Mentor__4D01ECC3">
+          <AssociationSet Name="FK__OmToUser__Mentor__22227BB6" Association="Self.FK__OmToUser__Mentor__22227BB6">
             <End Role="OfficialMentor" EntitySet="OfficialMentor" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__UserID__4C0DC88A" Association="Self.FK__OmToUser__UserID__4C0DC88A">
+          <AssociationSet Name="FK__OmToUser__UserID__212E577D" Association="Self.FK__OmToUser__UserID__212E577D">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__53AEEA52" Association="Self.FK__Picture__UserID__53AEEA52">
+          <AssociationSet Name="FK__Picture__UserID__28CF7945" Association="Self.FK__Picture__UserID__28CF7945">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Picture" EntitySet="Picture" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__699E2B71" Association="Self.FK__Report__FlaggerI__699E2B71">
+          <AssociationSet Name="FK__Report__FlaggerI__3EBEBA64" Association="Self.FK__Report__FlaggerI__3EBEBA64">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__6A924FAA" Association="Self.FK__Report__ReviewID__6A924FAA">
+          <AssociationSet Name="FK__Report__ReviewID__3FB2DE9D" Association="Self.FK__Report__ReviewID__3FB2DE9D">
             <End Role="Review" EntitySet="Review" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__63E5521B" Association="Self.FK__Review__Reviewer__63E5521B">
+          <AssociationSet Name="FK__Review__Reviewer__3905E10E" Association="Self.FK__Review__Reviewer__3905E10E">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__62F12DE2" Association="Self.FK__Review__StickerI__62F12DE2">
+          <AssociationSet Name="FK__Review__StickerI__3811BCD5" Association="Self.FK__Review__StickerI__3811BCD5">
             <End Role="Sticker" EntitySet="Sticker" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__5C443053" Association="Self.FK__Sticker__ClassID__5C443053">
+          <AssociationSet Name="FK__Sticker__ClassID__3164BF46" Association="Self.FK__Sticker__ClassID__3164BF46">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__5D38548C" Association="Self.FK__Sticker__Student__5D38548C">
+          <AssociationSet Name="FK__Sticker__Student__3258E37F" Association="Self.FK__Sticker__Student__3258E37F">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__5F209CFE" Association="Self.FK__Sticker__TutorID__5F209CFE">
+          <AssociationSet Name="FK__Sticker__TutorID__34412BF1" Association="Self.FK__Sticker__TutorID__34412BF1">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__ChatI__50D27DA7" Association="Self.FK__UserToCha__ChatI__50D27DA7">
+          <AssociationSet Name="FK__UserToCha__ChatI__25F30C9A" Association="Self.FK__UserToCha__ChatI__25F30C9A">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__UserI__4FDE596E" Association="Self.FK__UserToCha__UserI__4FDE596E">
+          <AssociationSet Name="FK__UserToCha__UserI__24FEE861" Association="Self.FK__UserToCha__UserI__24FEE861">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__Class__5967C3A8" Association="Self.FK__UserToCla__Class__5967C3A8">
+          <AssociationSet Name="FK__UserToCla__Class__2E88529B" Association="Self.FK__UserToCla__Class__2E88529B">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__UserI__58739F6F" Association="Self.FK__UserToCla__UserI__58739F6F">
+          <AssociationSet Name="FK__UserToCla__UserI__2D942E62" Association="Self.FK__UserToCla__UserI__2D942E62">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
@@ -838,8 +799,8 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <PropertyRef Name="ChatID" />
           </Key>
           <Property Name="ChatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Files" Relationship="Self.FK__Files__ChatID__4654EF34" FromRole="Chat" ToRole="Files" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__42845E50" FromRole="Chat" ToRole="Messages" />
+          <NavigationProperty Name="Files" Relationship="Self.FK__Files__ChatID__1B757E27" FromRole="Chat" ToRole="Files" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__17A4ED43" FromRole="Chat" ToRole="Messages" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToChat" FromRole="Chat" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Class">
@@ -851,7 +812,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="CourseCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseNumber" Type="Int16" Nullable="false" />
           <Property Name="TermOffered" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__5C443053" FromRole="Classes" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__3164BF46" FromRole="Classes" ToRole="Sticker" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToClass" FromRole="Classes" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="File">
@@ -863,8 +824,17 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="FileData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="SentBy" Type="Int32" Nullable="false" />
           <Property Name="SentTime" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Files__ChatID__4654EF34" FromRole="Files" ToRole="Chat" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Files__SentBy__4749136D" FromRole="Files" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Files__ChatID__1B757E27" FromRole="Files" ToRole="Chat" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Files__SentBy__1C69A260" FromRole="Files" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="FriendID" />
+          </Key>
+          <Property Name="FriendID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FriendUserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Friends__UserID__14C88098" FromRole="Friends" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -875,15 +845,15 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="MessageData" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SentBy" Type="Int32" Nullable="false" />
           <Property Name="SentTime" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__42845E50" FromRole="Messages" ToRole="Chat" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__43788289" FromRole="Messages" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__17A4ED43" FromRole="Messages" ToRole="Chat" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__1899117C" FromRole="Messages" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="OfficialMentor">
           <Key>
             <PropertyRef Name="MentorID" />
           </Key>
           <Property Name="MentorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrganizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrganizationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.OmToUser" FromRole="OfficialMentor" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Picture">
@@ -892,7 +862,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__53AEEA52" FromRole="Picture" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__28CF7945" FromRole="Picture" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -902,8 +872,8 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="ReportDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FlaggerID" Type="Int32" />
           <Property Name="ReviewID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__699E2B71" FromRole="Report" ToRole="UserProfile" />
-          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__6A924FAA" FromRole="Report" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__3EBEBA64" FromRole="Report" ToRole="UserProfile" />
+          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__3FB2DE9D" FromRole="Report" ToRole="Review" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -914,23 +884,9 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="ReviewerID" Type="Int32" Nullable="false" />
           <Property Name="StarRanking" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__6A924FAA" FromRole="Review" ToRole="Report" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__63E5521B" FromRole="Review" ToRole="UserProfile" />
-          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__62F12DE2" FromRole="Review" ToRole="Sticker" />
-        </EntityType>
-        <EntityType Name="Server">
-          <Key>
-            <PropertyRef Name="ServerID" />
-          </Key>
-          <Property Name="ServerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServerName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="ServerIP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="ServerDomain" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SchoolName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="AdminUsername" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AdminPassword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailCredentials" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__3FB2DE9D" FromRole="Review" ToRole="Report" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__3905E10E" FromRole="Review" ToRole="UserProfile" />
+          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__3811BCD5" FromRole="Review" ToRole="Sticker" />
         </EntityType>
         <EntityType Name="Sticker">
           <Key>
@@ -944,10 +900,10 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="MinimumStarRanking" Type="Double" />
           <Property Name="SubmitTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Timeout" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__5C443053" FromRole="Sticker" ToRole="Classes" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__62F12DE2" FromRole="Sticker" ToRole="Review" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__5D38548C" FromRole="Sticker" ToRole="UserProfile" />
-          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__5F209CFE" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__3164BF46" FromRole="Sticker" ToRole="Classes" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__3811BCD5" FromRole="Sticker" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__3258E37F" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__34412BF1" FromRole="Sticker" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -970,13 +926,14 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="UserPassword" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Privileges" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Files" Relationship="Self.FK__Files__SentBy__4749136D" FromRole="UserProfile" ToRole="Files" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__43788289" FromRole="UserProfile" ToRole="Messages" />
-          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__53AEEA52" FromRole="UserProfile" ToRole="Picture" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__699E2B71" FromRole="UserProfile" ToRole="Report" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__63E5521B" FromRole="UserProfile" ToRole="Review" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__5D38548C" FromRole="UserProfile" ToRole="Sticker" />
-          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__5F209CFE" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Files" Relationship="Self.FK__Files__SentBy__1C69A260" FromRole="UserProfile" ToRole="Files" />
+          <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__UserID__14C88098" FromRole="UserProfile" ToRole="Friends" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__1899117C" FromRole="UserProfile" ToRole="Messages" />
+          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__28CF7945" FromRole="UserProfile" ToRole="Picture" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__3EBEBA64" FromRole="UserProfile" ToRole="Report" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__3905E10E" FromRole="UserProfile" ToRole="Review" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__3258E37F" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__34412BF1" FromRole="UserProfile" ToRole="Sticker" />
           <NavigationProperty Name="OfficialMentors" Relationship="Self.OmToUser" FromRole="UserProfile" ToRole="OfficialMentor" />
           <NavigationProperty Name="Chats" Relationship="Self.UserToChat" FromRole="UserProfile" ToRole="Chat" />
           <NavigationProperty Name="Classes" Relationship="Self.UserToClass" FromRole="UserProfile" ToRole="Classes" />
@@ -1013,7 +970,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Privileges" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Files__ChatID__4654EF34">
+        <Association Name="FK__Files__ChatID__1B757E27">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Files" Type="Self.File" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1025,7 +982,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__ChatID__42845E50">
+        <Association Name="FK__Messages__ChatID__17A4ED43">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1037,7 +994,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__5C443053">
+        <Association Name="FK__Sticker__ClassID__3164BF46">
           <End Role="Classes" Type="Self.Class" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1049,7 +1006,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Files__SentBy__4749136D">
+        <Association Name="FK__Files__SentBy__1C69A260">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Files" Type="Self.File" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1061,7 +1018,19 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__43788289">
+        <Association Name="FK__Friends__UserID__14C88098">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__SentBy__1899117C">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1073,7 +1042,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__53AEEA52">
+        <Association Name="FK__Picture__UserID__28CF7945">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1085,7 +1054,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__699E2B71">
+        <Association Name="FK__Report__FlaggerI__3EBEBA64">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1097,7 +1066,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__6A924FAA">
+        <Association Name="FK__Report__ReviewID__3FB2DE9D">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1109,7 +1078,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__63E5521B">
+        <Association Name="FK__Review__Reviewer__3905E10E">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1121,7 +1090,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__62F12DE2">
+        <Association Name="FK__Review__StickerI__3811BCD5">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1133,7 +1102,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__5D38548C">
+        <Association Name="FK__Sticker__Student__3258E37F">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1145,7 +1114,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__5F209CFE">
+        <Association Name="FK__Sticker__TutorID__34412BF1">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1173,63 +1142,67 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <EntitySet Name="Chats" EntityType="Self.Chat" />
           <EntitySet Name="Classes" EntityType="Self.Class" />
           <EntitySet Name="Files" EntityType="Self.File" />
+          <EntitySet Name="Friends" EntityType="Self.Friend" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="OfficialMentors" EntityType="Self.OfficialMentor" />
           <EntitySet Name="Pictures" EntityType="Self.Picture" />
           <EntitySet Name="Reports" EntityType="Self.Report" />
           <EntitySet Name="Reviews" EntityType="Self.Review" />
-          <EntitySet Name="Servers" EntityType="Self.Server" />
           <EntitySet Name="Stickers" EntityType="Self.Sticker" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
           <EntitySet Name="AllMentorPrograms_View" EntityType="Self.AllMentorPrograms_View" />
           <EntitySet Name="AllStickers_View" EntityType="Self.AllStickers_View" />
           <EntitySet Name="AllUsers_View" EntityType="Self.AllUsers_View" />
-          <AssociationSet Name="FK__Files__ChatID__4654EF34" Association="Self.FK__Files__ChatID__4654EF34">
+          <AssociationSet Name="FK__Files__ChatID__1B757E27" Association="Self.FK__Files__ChatID__1B757E27">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__ChatID__42845E50" Association="Self.FK__Messages__ChatID__42845E50">
+          <AssociationSet Name="FK__Messages__ChatID__17A4ED43" Association="Self.FK__Messages__ChatID__17A4ED43">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__5C443053" Association="Self.FK__Sticker__ClassID__5C443053">
+          <AssociationSet Name="FK__Sticker__ClassID__3164BF46" Association="Self.FK__Sticker__ClassID__3164BF46">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Files__SentBy__4749136D" Association="Self.FK__Files__SentBy__4749136D">
+          <AssociationSet Name="FK__Files__SentBy__1C69A260" Association="Self.FK__Files__SentBy__1C69A260">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__43788289" Association="Self.FK__Messages__SentBy__43788289">
+          <AssociationSet Name="FK__Friends__UserID__14C88098" Association="Self.FK__Friends__UserID__14C88098">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__SentBy__1899117C" Association="Self.FK__Messages__SentBy__1899117C">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__53AEEA52" Association="Self.FK__Picture__UserID__53AEEA52">
+          <AssociationSet Name="FK__Picture__UserID__28CF7945" Association="Self.FK__Picture__UserID__28CF7945">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Picture" EntitySet="Pictures" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__699E2B71" Association="Self.FK__Report__FlaggerI__699E2B71">
+          <AssociationSet Name="FK__Report__FlaggerI__3EBEBA64" Association="Self.FK__Report__FlaggerI__3EBEBA64">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__6A924FAA" Association="Self.FK__Report__ReviewID__6A924FAA">
+          <AssociationSet Name="FK__Report__ReviewID__3FB2DE9D" Association="Self.FK__Report__ReviewID__3FB2DE9D">
             <End Role="Review" EntitySet="Reviews" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__63E5521B" Association="Self.FK__Review__Reviewer__63E5521B">
+          <AssociationSet Name="FK__Review__Reviewer__3905E10E" Association="Self.FK__Review__Reviewer__3905E10E">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__62F12DE2" Association="Self.FK__Review__StickerI__62F12DE2">
+          <AssociationSet Name="FK__Review__StickerI__3811BCD5" Association="Self.FK__Review__StickerI__3811BCD5">
             <End Role="Sticker" EntitySet="Stickers" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__5D38548C" Association="Self.FK__Sticker__Student__5D38548C">
+          <AssociationSet Name="FK__Sticker__Student__3258E37F" Association="Self.FK__Sticker__Student__3258E37F">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__5F209CFE" Association="Self.FK__Sticker__TutorID__5F209CFE">
+          <AssociationSet Name="FK__Sticker__TutorID__34412BF1" Association="Self.FK__Sticker__TutorID__34412BF1">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
@@ -1245,12 +1218,12 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <End Role="Classes" EntitySet="Classes" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <FunctionImport Name="AdminPullAllReports" ReturnType="Collection(UnstuckME_DBModel.AdminPullAllReports_Result)" />
+          <FunctionImport Name="AddFriend">
+            <Parameter Name="CurrentUserID" Mode="In" Type="Int32" />
+            <Parameter Name="NewFriendUserID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="AdminPullReportsForOptionalUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="AdminPullReportsForUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForUser_Result)">
-            <Parameter Name="user" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ChangeProfilePicture">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -1290,16 +1263,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="StarRanking" Mode="In" Type="Double" />
             <Parameter Name="Description" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="CreateServer">
-            <Parameter Name="ServerName" Mode="In" Type="String" />
-            <Parameter Name="ServerIP" Mode="In" Type="String" />
-            <Parameter Name="ServerDomain" Mode="In" Type="String" />
-            <Parameter Name="SchoolName" Mode="In" Type="String" />
-            <Parameter Name="AdminUsername" Mode="In" Type="String" />
-            <Parameter Name="AdminPassword" Mode="In" Type="String" />
-            <Parameter Name="EmailCredentials" Mode="In" Type="String" />
-            <Parameter Name="Salt" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="CreateSticker">
             <Parameter Name="ProblemDescription" Mode="In" Type="String" />
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
@@ -1313,6 +1276,10 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <FunctionImport Name="DeleteFileByFileID">
             <Parameter Name="FileID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DeleteFriend">
+            <Parameter Name="CurrentUserID" Mode="In" Type="Int32" />
+            <Parameter Name="TargetFriendUserID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DeleteMentorOrganizationByMentorID">
             <Parameter Name="MentorID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1321,12 +1288,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </FunctionImport>
           <FunctionImport Name="DeleteReportByReportID">
             <Parameter Name="ReportID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteServerInformation">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteServerInformationByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteUserPictureByUserID">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -1347,7 +1308,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="organization" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetAdminInfo" ReturnType="Collection(UnstuckME_DBModel.GetAdminInfo_Result)" />
           <FunctionImport Name="GetAllActiveStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllActiveStickers_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1364,14 +1324,9 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <FunctionImport Name="GetDisplayNameAndEmail" ReturnType="Collection(UnstuckME_DBModel.GetDisplayNameAndEmail_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetEmailCredentials" ReturnType="Collection(String)" />
           <FunctionImport Name="GetProfilePicture" ReturnType="Collection(Binary)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetSchoolName" ReturnType="Collection(String)" />
-          <FunctionImport Name="GetServerDomain" ReturnType="Collection(String)" />
-          <FunctionImport Name="GetServerIP" ReturnType="Collection(String)" />
-          <FunctionImport Name="GetServerName" ReturnType="Collection(String)" />
           <FunctionImport Name="GetUserAvgStudentStarRank" ReturnType="Collection(Double)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1432,9 +1387,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="user" Mode="In" Type="Int32" />
             <Parameter Name="tutor" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveLogin" ReturnType="Collection(String)">
-            <Parameter Name="useremail" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -1465,14 +1417,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="UpdateAdminPasswordByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-            <Parameter Name="AdminPassword" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateAdminUsernameByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-            <Parameter Name="AdminUsername" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="UpdateCourseCodeByClassID">
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
             <Parameter Name="CourseCode" Mode="In" Type="String" />
@@ -1497,10 +1441,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="EmailAddress" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UpdateEmailCredentialsByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-            <Parameter Name="EmailCredentials" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="UpdateMentorNameByMentorID">
             <Parameter Name="MentorID" Mode="In" Type="Int32" />
             <Parameter Name="OrganizationName" Mode="In" Type="String" />
@@ -1516,22 +1456,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <FunctionImport Name="UpdateReviewDescriptionByReviewID">
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
             <Parameter Name="Description" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateSchoolNameByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-            <Parameter Name="SchoolName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateServerDomainByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-            <Parameter Name="ServerDomain" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateServerIPByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-            <Parameter Name="ServerIP" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateServerNameByServerID">
-            <Parameter Name="ServerID" Mode="In" Type="Int32" />
-            <Parameter Name="ServerName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UpdateStarRankingByReviewID">
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
@@ -1560,23 +1484,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <FunctionImport Name="ViewAllClasses" ReturnType="Collection(UnstuckME_DBModel.ViewAllClasses_Result)" />
           <FunctionImport Name="ViewAllUsers" ReturnType="Collection(UnstuckME_DBModel.ViewAllUsers_Result)" />
         </EntityContainer>
-        <ComplexType Name="AdminPullAllReports_Result">
-          <Property Type="String" Name="Tutor_Reported" Nullable="false" MaxLength="65" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="Int32" Name="ReviewID" Nullable="false" />
-          <Property Type="Double" Name="ReviewStarRanking" Nullable="true" />
-          <Property Type="String" Name="ReviewDescription" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
-        </ComplexType>
         <ComplexType Name="AdminPullReportsForOptionalUser_Result">
-          <Property Type="String" Name="Reported_as_Tutor" Nullable="false" MaxLength="65" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="Int32" Name="ReviewID" Nullable="false" />
-          <Property Type="Double" Name="ReviewStarRanking" Nullable="true" />
-          <Property Type="String" Name="ReviewDescription" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="AdminPullReportsForUser_Result">
           <Property Type="String" Name="Reported_as_Tutor" Nullable="false" MaxLength="65" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="Int32" Name="ReviewID" Nullable="false" />
@@ -1602,12 +1510,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
           <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
           <Property Type="DateTime" Name="Timeout" Nullable="false" />
-          <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="GetAdminInfo_Result">
-          <Property Type="String" Name="AdminUsername" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="AdminPassword" Nullable="true" MaxLength="256" />
-          <Property Type="String" Name="Salt" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="GetAllActiveStickers_Result">
           <Property Type="String" Name="Student" Nullable="false" MaxLength="65" />
@@ -1748,6 +1651,15 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Friends">
+            <EntityTypeMapping TypeName="UnstuckME_DBModel.Friend">
+              <MappingFragment StoreEntitySet="Friends">
+                <ScalarProperty Name="FriendID" ColumnName="FriendID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FriendUserID" ColumnName="FriendUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="UnstuckME_DBModel.Message">
               <MappingFragment StoreEntitySet="Messages">
@@ -1793,21 +1705,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
                 <ScalarProperty Name="ReviewerID" ColumnName="ReviewerID" />
                 <ScalarProperty Name="StarRanking" ColumnName="StarRanking" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Servers">
-            <EntityTypeMapping TypeName="UnstuckME_DBModel.Server">
-              <MappingFragment StoreEntitySet="Server">
-                <ScalarProperty Name="ServerID" ColumnName="ServerID" />
-                <ScalarProperty Name="ServerName" ColumnName="ServerName" />
-                <ScalarProperty Name="ServerIP" ColumnName="ServerIP" />
-                <ScalarProperty Name="ServerDomain" ColumnName="ServerDomain" />
-                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
-                <ScalarProperty Name="AdminUsername" ColumnName="AdminUsername" />
-                <ScalarProperty Name="AdminPassword" ColumnName="AdminPassword" />
-                <ScalarProperty Name="EmailCredentials" ColumnName="EmailCredentials" />
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1902,33 +1799,10 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
               <ScalarProperty Name="UserID" ColumnName="UserID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="AdminPullAllReports" FunctionName="UnstuckME_DBModel.Store.AdminPullAllReports">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.AdminPullAllReports_Result">
-                <ScalarProperty Name="Tutor_Reported" ColumnName="Tutor Reported" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
-                <ScalarProperty Name="ReviewStarRanking" ColumnName="ReviewStarRanking" />
-                <ScalarProperty Name="ReviewDescription" ColumnName="ReviewDescription" />
-                <ScalarProperty Name="ReportDescription" ColumnName="ReportDescription" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddFriend" FunctionName="UnstuckME_DBModel.Store.AddFriend" />
           <FunctionImportMapping FunctionImportName="AdminPullReportsForOptionalUser" FunctionName="UnstuckME_DBModel.Store.AdminPullReportsForOptionalUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result">
-                <ScalarProperty Name="Reported_as_Tutor" ColumnName="Reported as Tutor" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
-                <ScalarProperty Name="ReviewStarRanking" ColumnName="ReviewStarRanking" />
-                <ScalarProperty Name="ReviewDescription" ColumnName="ReviewDescription" />
-                <ScalarProperty Name="ReportDescription" ColumnName="ReportDescription" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="AdminPullReportsForUser" FunctionName="UnstuckME_DBModel.Store.AdminPullReportsForUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.AdminPullReportsForUser_Result">
                 <ScalarProperty Name="Reported_as_Tutor" ColumnName="Reported as Tutor" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
@@ -1946,15 +1820,13 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           <FunctionImportMapping FunctionImportName="CreateOfficialMentor" FunctionName="UnstuckME_DBModel.Store.CreateOfficialMentor" />
           <FunctionImportMapping FunctionImportName="CreateReport" FunctionName="UnstuckME_DBModel.Store.CreateReport" />
           <FunctionImportMapping FunctionImportName="CreateReview" FunctionName="UnstuckME_DBModel.Store.CreateReview" />
-          <FunctionImportMapping FunctionImportName="CreateServer" FunctionName="UnstuckME_DBModel.Store.CreateServer" />
           <FunctionImportMapping FunctionImportName="CreateSticker" FunctionName="UnstuckME_DBModel.Store.CreateSticker" />
           <FunctionImportMapping FunctionImportName="DeleteClassByClassID" FunctionName="UnstuckME_DBModel.Store.DeleteClassByClassID" />
           <FunctionImportMapping FunctionImportName="DeleteFileByFileID" FunctionName="UnstuckME_DBModel.Store.DeleteFileByFileID" />
+          <FunctionImportMapping FunctionImportName="DeleteFriend" FunctionName="UnstuckME_DBModel.Store.DeleteFriend" />
           <FunctionImportMapping FunctionImportName="DeleteMentorOrganizationByMentorID" FunctionName="UnstuckME_DBModel.Store.DeleteMentorOrganizationByMentorID" />
           <FunctionImportMapping FunctionImportName="DeleteMessageByMessageID" FunctionName="UnstuckME_DBModel.Store.DeleteMessageByMessageID" />
           <FunctionImportMapping FunctionImportName="DeleteReportByReportID" FunctionName="UnstuckME_DBModel.Store.DeleteReportByReportID" />
-          <FunctionImportMapping FunctionImportName="DeleteServerInformation" FunctionName="UnstuckME_DBModel.Store.DeleteServerInformation" />
-          <FunctionImportMapping FunctionImportName="DeleteServerInformationByServerID" FunctionName="UnstuckME_DBModel.Store.DeleteServerInformationByServerID" />
           <FunctionImportMapping FunctionImportName="DeleteUserPictureByUserID" FunctionName="UnstuckME_DBModel.Store.DeleteUserPictureByUserID" />
           <FunctionImportMapping FunctionImportName="DeleteUserProfileByUserID" FunctionName="UnstuckME_DBModel.Store.DeleteUserProfileByUserID" />
           <FunctionImportMapping FunctionImportName="FilterUserReviewsByEqualStarRank" FunctionName="UnstuckME_DBModel.Store.FilterUserReviewsByEqualStarRank">
@@ -1986,15 +1858,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
                 <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
                 <ScalarProperty Name="Timeout" ColumnName="Timeout" />
                 <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAdminInfo" FunctionName="UnstuckME_DBModel.Store.GetAdminInfo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetAdminInfo_Result">
-                <ScalarProperty Name="AdminUsername" ColumnName="AdminUsername" />
-                <ScalarProperty Name="AdminPassword" ColumnName="AdminPassword" />
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2075,12 +1938,7 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetEmailCredentials" FunctionName="UnstuckME_DBModel.Store.GetEmailCredentials" />
           <FunctionImportMapping FunctionImportName="GetProfilePicture" FunctionName="UnstuckME_DBModel.Store.GetProfilePicture" />
-          <FunctionImportMapping FunctionImportName="GetSchoolName" FunctionName="UnstuckME_DBModel.Store.GetSchoolName" />
-          <FunctionImportMapping FunctionImportName="GetServerDomain" FunctionName="UnstuckME_DBModel.Store.GetServerDomain" />
-          <FunctionImportMapping FunctionImportName="GetServerIP" FunctionName="UnstuckME_DBModel.Store.GetServerIP" />
-          <FunctionImportMapping FunctionImportName="GetServerName" FunctionName="UnstuckME_DBModel.Store.GetServerName" />
           <FunctionImportMapping FunctionImportName="GetUserAvgStudentStarRank" FunctionName="UnstuckME_DBModel.Store.GetUserAvgStudentStarRank" />
           <FunctionImportMapping FunctionImportName="GetUserAvgTutorStarRank" FunctionName="UnstuckME_DBModel.Store.GetUserAvgTutorStarRank" />
           <FunctionImportMapping FunctionImportName="GetUserClasses" FunctionName="UnstuckME_DBModel.Store.GetUserClasses">
@@ -2151,7 +2009,6 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveLogin" FunctionName="UnstuckME_DBModel.Store.RetrieveLogin" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="UnstuckME_DBModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="UnstuckME_DBModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="UnstuckME_DBModel.Store.sp_dropdiagram" />
@@ -2176,23 +2033,16 @@ FROM [dbo].[AllUsers_View] AS [AllUsers_View]</DefiningQuery>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="UnstuckME_DBModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="UnstuckME_DBModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="UpdateAdminPasswordByServerID" FunctionName="UnstuckME_DBModel.Store.UpdateAdminPasswordByServerID" />
-          <FunctionImportMapping FunctionImportName="UpdateAdminUsernameByServerID" FunctionName="UnstuckME_DBModel.Store.UpdateAdminUsernameByServerID" />
           <FunctionImportMapping FunctionImportName="UpdateCourseCodeByClassID" FunctionName="UnstuckME_DBModel.Store.UpdateCourseCodeByClassID" />
           <FunctionImportMapping FunctionImportName="UpdateCourseNameByClassID" FunctionName="UnstuckME_DBModel.Store.UpdateCourseNameByClassID" />
           <FunctionImportMapping FunctionImportName="UpdateCourseNumberByClassID" FunctionName="UnstuckME_DBModel.Store.UpdateCourseNumberByClassID" />
           <FunctionImportMapping FunctionImportName="UpdateDisplayFNameByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateDisplayFNameByUserID" />
           <FunctionImportMapping FunctionImportName="UpdateDisplayLNameByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateDisplayLNameByUserID" />
           <FunctionImportMapping FunctionImportName="UpdateEmailAddressByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateEmailAddressByUserID" />
-          <FunctionImportMapping FunctionImportName="UpdateEmailCredentialsByServerID" FunctionName="UnstuckME_DBModel.Store.UpdateEmailCredentialsByServerID" />
           <FunctionImportMapping FunctionImportName="UpdateMentorNameByMentorID" FunctionName="UnstuckME_DBModel.Store.UpdateMentorNameByMentorID" />
           <FunctionImportMapping FunctionImportName="UpdateMessageByMessageID" FunctionName="UnstuckME_DBModel.Store.UpdateMessageByMessageID" />
           <FunctionImportMapping FunctionImportName="UpdatePrivilegesByUserID" FunctionName="UnstuckME_DBModel.Store.UpdatePrivilegesByUserID" />
           <FunctionImportMapping FunctionImportName="UpdateReviewDescriptionByReviewID" FunctionName="UnstuckME_DBModel.Store.UpdateReviewDescriptionByReviewID" />
-          <FunctionImportMapping FunctionImportName="UpdateSchoolNameByServerID" FunctionName="UnstuckME_DBModel.Store.UpdateSchoolNameByServerID" />
-          <FunctionImportMapping FunctionImportName="UpdateServerDomainByServerID" FunctionName="UnstuckME_DBModel.Store.UpdateServerDomainByServerID" />
-          <FunctionImportMapping FunctionImportName="UpdateServerIPByServerID" FunctionName="UnstuckME_DBModel.Store.UpdateServerIPByServerID" />
-          <FunctionImportMapping FunctionImportName="UpdateServerNameByServerID" FunctionName="UnstuckME_DBModel.Store.UpdateServerNameByServerID" />
           <FunctionImportMapping FunctionImportName="UpdateStarRankingByReviewID" FunctionName="UnstuckME_DBModel.Store.UpdateStarRankingByReviewID" />
           <FunctionImportMapping FunctionImportName="UpdateStickerProblemDescriptionByStickerID" FunctionName="UnstuckME_DBModel.Store.UpdateStickerProblemDescriptionByStickerID" />
           <FunctionImportMapping FunctionImportName="UpdateTermsOfferedByClassID" FunctionName="UnstuckME_DBModel.Store.UpdateTermsOfferedByClassID" />

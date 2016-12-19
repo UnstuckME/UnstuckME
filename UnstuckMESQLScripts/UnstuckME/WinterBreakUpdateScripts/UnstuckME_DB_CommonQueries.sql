@@ -19,7 +19,7 @@ if object_id('GetAllStudentReviews') is not null
 	drop procedure GetAllStudentReviews;
 if object_id('GetAllTutorReviews') is not null
 	drop procedure GetAllTutorReviews;
-if object_id('AdminPullReportsForUser') is not null
+if object_id('AdminPullReportsForOptionalUser') is not null
 	drop procedure AdminPullReportsForOptionalUser;
 if object_id('ViewAllUsers') is not null
 	drop procedure ViewAllUsers;

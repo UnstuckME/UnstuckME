@@ -34,6 +34,8 @@ IF OBJECT_ID('InsertFile') is not null
 	DROP PROCEDURE InsertFile;
 IF OBJECT_ID('AddFriend') is not null
 	DROP PROCEDURE AddFriend;
+IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
+	DROP PROCEDURE [InsertUserIntoMentorProgram];
 GO
 /****************BEGIN CREATION SCRIPTS******************/
 --CREATE NEW USER

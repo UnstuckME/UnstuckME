@@ -31,12 +31,12 @@ namespace UnstuckMEServer
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<Friend> Friends { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<OfficialMentor> OfficialMentors { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Server> Servers { get; set; }
         public DbSet<Sticker> Stickers { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
@@ -44,9 +44,17 @@ namespace UnstuckMEServer
         public DbSet<AllStickers_View> AllStickers_View { get; set; }
         public DbSet<AllUsers_View> AllUsers_View { get; set; }
     
-        public virtual ObjectResult<AdminPullAllReports_Result> AdminPullAllReports()
+        public virtual int AddFriend(Nullable<int> currentUserID, Nullable<int> newFriendUserID)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminPullAllReports_Result>("AdminPullAllReports");
+            var currentUserIDParameter = currentUserID.HasValue ?
+                new ObjectParameter("CurrentUserID", currentUserID) :
+                new ObjectParameter("CurrentUserID", typeof(int));
+    
+            var newFriendUserIDParameter = newFriendUserID.HasValue ?
+                new ObjectParameter("NewFriendUserID", newFriendUserID) :
+                new ObjectParameter("NewFriendUserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddFriend", currentUserIDParameter, newFriendUserIDParameter);
         }
     
         public virtual ObjectResult<AdminPullReportsForOptionalUser_Result> AdminPullReportsForOptionalUser(Nullable<int> userid)
@@ -56,15 +64,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("userid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminPullReportsForOptionalUser_Result>("AdminPullReportsForOptionalUser", useridParameter);
-        }
-    
-        public virtual ObjectResult<AdminPullReportsForUser_Result> AdminPullReportsForUser(string user)
-        {
-            var userParameter = user != null ?
-                new ObjectParameter("user", user) :
-                new ObjectParameter("user", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminPullReportsForUser_Result>("AdminPullReportsForUser", userParameter);
         }
     
         public virtual int ChangeProfilePicture(Nullable<int> userID, byte[] photo)
@@ -195,43 +194,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReview", stickerIDParameter, reviewerIDParameter, starRankingParameter, descriptionParameter);
         }
     
-        public virtual int CreateServer(string serverName, string serverIP, string serverDomain, string schoolName, string adminUsername, string adminPassword, string emailCredentials, string salt)
-        {
-            var serverNameParameter = serverName != null ?
-                new ObjectParameter("ServerName", serverName) :
-                new ObjectParameter("ServerName", typeof(string));
-    
-            var serverIPParameter = serverIP != null ?
-                new ObjectParameter("ServerIP", serverIP) :
-                new ObjectParameter("ServerIP", typeof(string));
-    
-            var serverDomainParameter = serverDomain != null ?
-                new ObjectParameter("ServerDomain", serverDomain) :
-                new ObjectParameter("ServerDomain", typeof(string));
-    
-            var schoolNameParameter = schoolName != null ?
-                new ObjectParameter("SchoolName", schoolName) :
-                new ObjectParameter("SchoolName", typeof(string));
-    
-            var adminUsernameParameter = adminUsername != null ?
-                new ObjectParameter("AdminUsername", adminUsername) :
-                new ObjectParameter("AdminUsername", typeof(string));
-    
-            var adminPasswordParameter = adminPassword != null ?
-                new ObjectParameter("AdminPassword", adminPassword) :
-                new ObjectParameter("AdminPassword", typeof(string));
-    
-            var emailCredentialsParameter = emailCredentials != null ?
-                new ObjectParameter("EmailCredentials", emailCredentials) :
-                new ObjectParameter("EmailCredentials", typeof(string));
-    
-            var saltParameter = salt != null ?
-                new ObjectParameter("Salt", salt) :
-                new ObjectParameter("Salt", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateServer", serverNameParameter, serverIPParameter, serverDomainParameter, schoolNameParameter, adminUsernameParameter, adminPasswordParameter, emailCredentialsParameter, saltParameter);
-        }
-    
         public virtual int CreateSticker(string problemDescription, Nullable<int> classID, Nullable<int> studentID, Nullable<double> minimumStarRanking, Nullable<int> timeout)
         {
             var problemDescriptionParameter = problemDescription != null ?
@@ -275,6 +237,19 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteFileByFileID", fileIDParameter);
         }
     
+        public virtual int DeleteFriend(Nullable<int> currentUserID, Nullable<int> targetFriendUserID)
+        {
+            var currentUserIDParameter = currentUserID.HasValue ?
+                new ObjectParameter("CurrentUserID", currentUserID) :
+                new ObjectParameter("CurrentUserID", typeof(int));
+    
+            var targetFriendUserIDParameter = targetFriendUserID.HasValue ?
+                new ObjectParameter("TargetFriendUserID", targetFriendUserID) :
+                new ObjectParameter("TargetFriendUserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteFriend", currentUserIDParameter, targetFriendUserIDParameter);
+        }
+    
         public virtual int DeleteMentorOrganizationByMentorID(Nullable<int> mentorID)
         {
             var mentorIDParameter = mentorID.HasValue ?
@@ -300,24 +275,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("ReportID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteReportByReportID", reportIDParameter);
-        }
-    
-        public virtual int DeleteServerInformation(Nullable<int> serverID)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteServerInformation", serverIDParameter);
-        }
-    
-        public virtual int DeleteServerInformationByServerID(Nullable<int> serverID)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteServerInformationByServerID", serverIDParameter);
         }
     
         public virtual int DeleteUserPictureByUserID(Nullable<int> userID)
@@ -381,11 +338,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithStarRankOrMentorOrganization_Result>("GetActiveStickersWithStarRankOrMentorOrganization", starrankParameter, useridParameter, organizationParameter);
         }
     
-        public virtual ObjectResult<GetAdminInfo_Result> GetAdminInfo()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAdminInfo_Result>("GetAdminInfo");
-        }
-    
         public virtual ObjectResult<GetAllActiveStickers_Result> GetAllActiveStickers(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?
@@ -442,11 +394,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDisplayNameAndEmail_Result>("GetDisplayNameAndEmail", useridParameter);
         }
     
-        public virtual ObjectResult<string> GetEmailCredentials()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetEmailCredentials");
-        }
-    
         public virtual ObjectResult<byte[]> GetProfilePicture(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?
@@ -454,26 +401,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("userid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("GetProfilePicture", useridParameter);
-        }
-    
-        public virtual ObjectResult<string> GetSchoolName()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSchoolName");
-        }
-    
-        public virtual ObjectResult<string> GetServerDomain()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetServerDomain");
-        }
-    
-        public virtual ObjectResult<string> GetServerIP()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetServerIP");
-        }
-    
-        public virtual ObjectResult<string> GetServerName()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetServerName");
         }
     
         public virtual ObjectResult<Nullable<double>> GetUserAvgStudentStarRank(Nullable<int> userid)
@@ -668,15 +595,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PullChatMessagesAndFilesBetweenUsers_Result>("PullChatMessagesAndFilesBetweenUsers", userParameter, tutorParameter);
         }
     
-        public virtual ObjectResult<string> RetrieveLogin(string useremail)
-        {
-            var useremailParameter = useremail != null ?
-                new ObjectParameter("useremail", useremail) :
-                new ObjectParameter("useremail", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("RetrieveLogin", useremailParameter);
-        }
-    
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
@@ -780,32 +698,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual int UpdateAdminPasswordByServerID(Nullable<int> serverID, string adminPassword)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            var adminPasswordParameter = adminPassword != null ?
-                new ObjectParameter("AdminPassword", adminPassword) :
-                new ObjectParameter("AdminPassword", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAdminPasswordByServerID", serverIDParameter, adminPasswordParameter);
-        }
-    
-        public virtual int UpdateAdminUsernameByServerID(Nullable<int> serverID, string adminUsername)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            var adminUsernameParameter = adminUsername != null ?
-                new ObjectParameter("AdminUsername", adminUsername) :
-                new ObjectParameter("AdminUsername", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAdminUsernameByServerID", serverIDParameter, adminUsernameParameter);
-        }
-    
         public virtual int UpdateCourseCodeByClassID(Nullable<int> classID, string courseCode)
         {
             var classIDParameter = classID.HasValue ?
@@ -884,19 +776,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateEmailAddressByUserID", userIDParameter, emailAddressParameter);
         }
     
-        public virtual int UpdateEmailCredentialsByServerID(Nullable<int> serverID, string emailCredentials)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            var emailCredentialsParameter = emailCredentials != null ?
-                new ObjectParameter("EmailCredentials", emailCredentials) :
-                new ObjectParameter("EmailCredentials", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateEmailCredentialsByServerID", serverIDParameter, emailCredentialsParameter);
-        }
-    
         public virtual int UpdateMentorNameByMentorID(Nullable<int> mentorID, string organizationName)
         {
             var mentorIDParameter = mentorID.HasValue ?
@@ -947,58 +826,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("Description", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateReviewDescriptionByReviewID", reviewIDParameter, descriptionParameter);
-        }
-    
-        public virtual int UpdateSchoolNameByServerID(Nullable<int> serverID, string schoolName)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            var schoolNameParameter = schoolName != null ?
-                new ObjectParameter("SchoolName", schoolName) :
-                new ObjectParameter("SchoolName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateSchoolNameByServerID", serverIDParameter, schoolNameParameter);
-        }
-    
-        public virtual int UpdateServerDomainByServerID(Nullable<int> serverID, string serverDomain)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            var serverDomainParameter = serverDomain != null ?
-                new ObjectParameter("ServerDomain", serverDomain) :
-                new ObjectParameter("ServerDomain", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateServerDomainByServerID", serverIDParameter, serverDomainParameter);
-        }
-    
-        public virtual int UpdateServerIPByServerID(Nullable<int> serverID, string serverIP)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            var serverIPParameter = serverIP != null ?
-                new ObjectParameter("ServerIP", serverIP) :
-                new ObjectParameter("ServerIP", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateServerIPByServerID", serverIDParameter, serverIPParameter);
-        }
-    
-        public virtual int UpdateServerNameByServerID(Nullable<int> serverID, string serverName)
-        {
-            var serverIDParameter = serverID.HasValue ?
-                new ObjectParameter("ServerID", serverID) :
-                new ObjectParameter("ServerID", typeof(int));
-    
-            var serverNameParameter = serverName != null ?
-                new ObjectParameter("ServerName", serverName) :
-                new ObjectParameter("ServerName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateServerNameByServerID", serverIDParameter, serverNameParameter);
         }
     
         public virtual int UpdateStarRankingByReviewID(Nullable<int> reviewID, Nullable<byte> starRanking)

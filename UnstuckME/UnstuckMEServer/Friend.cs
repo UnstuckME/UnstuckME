@@ -10,14 +10,14 @@
 namespace UnstuckMEServer
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class AdminPullReportsForUser_Result
+    public partial class Friend
     {
-        public string Reported_as_Tutor { get; set; }
+        public int FriendID { get; set; }
         public int UserID { get; set; }
-        public int ReviewID { get; set; }
-        public Nullable<double> ReviewStarRanking { get; set; }
-        public string ReviewDescription { get; set; }
-        public string ReportDescription { get; set; }
+        public int FriendUserID { get; set; }
+    
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

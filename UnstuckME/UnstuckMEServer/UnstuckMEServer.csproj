@@ -53,13 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminPullAllReports_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="AdminPullReportsForOptionalUser_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AdminPullReportsForUser_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="AllMentorPrograms_View.cs">
@@ -87,10 +81,10 @@
     <Compile Include="FilterUserReviewsByGreaterThanStarRank_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetActiveStickersWithStarRankOrMentorOrganization_Result.cs">
+    <Compile Include="Friend.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetAdminInfo_Result.cs">
+    <Compile Include="GetActiveStickersWithStarRankOrMentorOrganization_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllActiveStickers_Result.cs">
@@ -147,9 +141,6 @@
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Review.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Server.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
