@@ -12,14 +12,13 @@ namespace UnstuckMEServer
     using System;
     using System.Collections.Generic;
     
-    public partial class AllStickers_View
+    public partial class ServerAdmin
     {
-        public string Student { get; set; }
+        public int ServerAdminID { get; set; }
         public string EmailAddress { get; set; }
-        public string Course { get; set; }
-        public string ProblemDescription { get; set; }
-        public Nullable<double> MinimumStarRanking { get; set; }
-        public System.DateTime SubmitTime { get; set; }
-        public System.DateTime Timeout { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Password { get; set; }
+        public string Salt { get; set; }
     }
 }

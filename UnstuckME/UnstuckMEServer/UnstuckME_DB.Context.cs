@@ -37,12 +37,10 @@ namespace UnstuckMEServer
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<ServerAdmin> ServerAdmins { get; set; }
         public DbSet<Sticker> Stickers { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<AllMentorPrograms_View> AllMentorPrograms_View { get; set; }
-        public DbSet<AllStickers_View> AllStickers_View { get; set; }
-        public DbSet<AllUsers_View> AllUsers_View { get; set; }
     
         public virtual int AddFriend(Nullable<int> currentUserID, Nullable<int> newFriendUserID)
         {
@@ -194,6 +192,31 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReview", stickerIDParameter, reviewerIDParameter, starRankingParameter, descriptionParameter);
         }
     
+        public virtual int CreateServerAdmin(string firstName, string lastName, string emailAddress, string password, string salt)
+        {
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var saltParameter = salt != null ?
+                new ObjectParameter("Salt", salt) :
+                new ObjectParameter("Salt", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateServerAdmin", firstNameParameter, lastNameParameter, emailAddressParameter, passwordParameter, saltParameter);
+        }
+    
         public virtual int CreateSticker(string problemDescription, Nullable<int> classID, Nullable<int> studentID, Nullable<double> minimumStarRanking, Nullable<int> timeout)
         {
             var problemDescriptionParameter = problemDescription != null ?
@@ -275,6 +298,15 @@ namespace UnstuckMEServer
                 new ObjectParameter("ReportID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteReportByReportID", reportIDParameter);
+        }
+    
+        public virtual int DeleteServerAdmin(Nullable<int> adminID)
+        {
+            var adminIDParameter = adminID.HasValue ?
+                new ObjectParameter("AdminID", adminID) :
+                new ObjectParameter("AdminID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteServerAdmin", adminIDParameter);
         }
     
         public virtual int DeleteUserPictureByUserID(Nullable<int> userID)
@@ -826,6 +858,31 @@ namespace UnstuckMEServer
                 new ObjectParameter("Description", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateReviewDescriptionByReviewID", reviewIDParameter, descriptionParameter);
+        }
+    
+        public virtual int UpdateServerAdmin(Nullable<int> serverAdminID, string firstName, string lastName, string password, string salt)
+        {
+            var serverAdminIDParameter = serverAdminID.HasValue ?
+                new ObjectParameter("ServerAdminID", serverAdminID) :
+                new ObjectParameter("ServerAdminID", typeof(int));
+    
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var saltParameter = salt != null ?
+                new ObjectParameter("Salt", salt) :
+                new ObjectParameter("Salt", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateServerAdmin", serverAdminIDParameter, firstNameParameter, lastNameParameter, passwordParameter, saltParameter);
         }
     
         public virtual int UpdateStarRankingByReviewID(Nullable<int> reviewID, Nullable<byte> starRanking)
