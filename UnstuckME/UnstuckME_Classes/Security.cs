@@ -23,8 +23,12 @@ namespace UnstuckME_Classes
             return new string(chars);
         }
 
-        public static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
+        public static byte[] GenerateSaltedHash(string stringPassword, string stringSalt)
         {
+
+            byte[] plainText = GetBytes(stringPassword);
+            byte[] salt = GetBytes(stringSalt);
+
             HashAlgorithm algorithm = new SHA256Managed();
 
             byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];

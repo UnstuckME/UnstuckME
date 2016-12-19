@@ -102,7 +102,7 @@ namespace UnstuckMEUserGUI
 
                 string token = Convert.ToBase64String(tokenData);
 
-                byte[] saltedPassword = UnstuckMEHashing.GenerateSaltedHash(UnstuckMEHashing.GetBytes(Password), UnstuckMEHashing.GetBytes(token));
+                byte[] saltedPassword = UnstuckMEHashing.GenerateSaltedHash(Password, token);
 
                 string newPassword = "";
                 foreach (byte element in saltedPassword)

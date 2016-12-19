@@ -40,7 +40,7 @@ namespace UnstuckMEServerGUI
                                  where u.EmailAddress.ToLower() == textBoxEmailAddress.Text.ToLower()
                                  select u).First();
 
-                    byte[] databasePassword = UnstuckMEHashing.GenerateSaltedHash(UnstuckMEHashing.GetBytes(passwordBoxInput.Password), UnstuckMEHashing.GetBytes(admin.Salt));
+                    byte[] databasePassword = UnstuckMEHashing.GenerateSaltedHash(passwordBoxInput.Password, admin.Salt);
                     string stringOfPassword = "";
                     foreach (byte element in databasePassword)
                     {

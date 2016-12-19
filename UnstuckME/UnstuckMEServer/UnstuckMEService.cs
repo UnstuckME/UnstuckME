@@ -69,7 +69,7 @@ namespace UnstuckMEInterfaces
                     string salt = (from u in db.GetUserPasswordAndSalt(emailAddress)
                                    select u.Salt).First();
                     
-                    byte[] checkPassword = UnstuckMEHashing.GenerateSaltedHash(UnstuckMEHashing.GetBytes(passWord), UnstuckMEHashing.GetBytes(salt));
+                    byte[] checkPassword = UnstuckMEHashing.GenerateSaltedHash(passWord, salt);
                     string stringOfPassword = "";
 
                     foreach (byte element in checkPassword)
