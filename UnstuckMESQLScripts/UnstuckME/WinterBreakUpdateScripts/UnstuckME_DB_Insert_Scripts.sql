@@ -8,35 +8,32 @@ USE UnstuckME_DB;
 GO
 
 /******DROP PROCEDURE STATEMENTS*************************/
-DROP PROC [dbo].[CreateNewUser];
-GO
-DROP PROC [dbo].[InsertStudentIntoClass];
-GO
-DROP PROC [dbo].[CreateNewClass];
-GO
-DROP PROC [dbo].[CreateSticker];
-GO
-DROP PROC [dbo].[CreateOfficialMentor];
-GO
-DROP PROC [dbo].[CreateReview];
-GO
-DROP PROC [dbo].[CreateReport];
-GO
-DROP PROC [dbo].[InsertUserIntoMentorProgram];
-GO
-DROP PROC [dbo].[CreateServer];
-GO
-DROP PROC [dbo].[ChangeProfilePicture];
-GO
-DROP PROC [dbo].[CreateChat];
-GO
-DROP PROC [dbo].[InsertUserIntoChat];
-GO
-DROP PROC [dbo].[InsertMessage];
-GO
-DROP PROC [dbo].[InsertFile];
-GO
-DROP PROC [dbo].[AddFriend];
+IF OBJECT_ID('CreateNewUser') is not null
+	DROP PROCEDURE CreateNewUser;
+IF OBJECT_ID('InsertStudentIntoClass') is not null
+	DROP PROCEDURE InsertStudentIntoClass;
+IF OBJECT_ID('CreateNewClass') is not null
+	DROP PROCEDURE CreateNewClass;
+IF OBJECT_ID('CreateSticker') is not null
+	DROP PROCEDURE CreateSticker;
+IF OBJECT_ID('CreateOfficialMentor') is not null
+	DROP PROCEDURE CreateOfficialMentor;
+IF OBJECT_ID('CreateReview') is not null
+	DROP PROCEDURE CreateReview;
+IF OBJECT_ID('CreateReport') is not null
+	DROP PROCEDURE CreateReport;
+IF OBJECT_ID('ChangeProfilePicture') is not null
+	DROP PROCEDURE ChangeProfilePicture;
+IF OBJECT_ID('CreateChat') is not null
+	DROP PROCEDURE CreateChat;
+IF OBJECT_ID('InsertUserIntoChat') is not null
+	DROP PROCEDURE InsertUserIntoChat;
+IF OBJECT_ID('InsertMessage') is not null
+	DROP PROCEDURE InsertMessage;
+IF OBJECT_ID('InsertFile') is not null
+	DROP PROCEDURE InsertFile;
+IF OBJECT_ID('AddFriend') is not null
+	DROP PROCEDURE AddFriend;
 GO
 /****************BEGIN CREATION SCRIPTS******************/
 --CREATE NEW USER

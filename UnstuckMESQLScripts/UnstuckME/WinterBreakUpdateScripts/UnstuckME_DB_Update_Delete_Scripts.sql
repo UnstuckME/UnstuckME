@@ -6,69 +6,70 @@ GO
 /***************************************************
 DROP STORED PROCEDURES
 ***************************************************/
-DROP PROC [dbo].[DeleteUserProfileByUserID];
-GO
-DROP PROC [dbo].[DeleteUserPictureByUserID];
-GO
-DROP PROC [dbo].[DeleteFileByFileID];
-GO
-DROP PROC [dbo].[DeleteMessageByMessageID];
-GO
-DROP PROC [dbo].[DeleteMentorOrganizationByMentorID];
-GO
-DROP PROC [dbo].[DeleteClassByClassID];
-GO
---DROP PROC [dbo].[DeleteStickerByStickerID];	NOT NEEDED AS OF NOW
---GO
---DROP PROC [dbo].[DeleteReviewByReviewID];		NOT NEEDED AS OF NOW
---GO
-DROP PROC [dbo].[ClearReviewDescriptionByReviewID];
-GO
-DROP PROC [dbo].[DeleteReportByReportID];
-GO
-DROP PROC [dbo].[DeleteFriend]
-GO
+IF OBJECT_ID('DeleteUserProfileByUserID') is not null
+	DROP PROCEDURE [DeleteUserProfileByUserID];
+IF OBJECT_ID('DeleteUserPictureByUserID') is not null
+	DROP PROCEDURE [DeleteUserPictureByUserID];
+IF OBJECT_ID('DeleteFileByFileID') is not null
+	DROP PROCEDURE [DeleteFileByFileID];
+IF OBJECT_ID('DeleteMessageByMessageID') is not null
+	DROP PROCEDURE [DeleteMessageByMessageID];
+IF OBJECT_ID('DeleteMentorOrganizationByMentorID') is not null
+	DROP PROCEDURE [DeleteMentorOrganizationByMentorID];
+IF OBJECT_ID('DeleteClassByClassID') is not null
+	DROP PROCEDURE [DeleteClassByClassID];
+--IF OBJECT_ID('DeleteStickerByStickerID') is not null
+--	DROP PROCEDURE DeleteStickerByStickerID;
+--IF OBJECT_ID('DeleteReviewByReviewID') is not null
+--	DROP PROCEDURE DeleteReviewByReviewID;
+IF OBJECT_ID('ClearReviewDescriptionByReviewID') is not null
+	DROP PROCEDURE ClearReviewDescriptionByReviewID;
+IF OBJECT_ID('DeleteReportByReportID') is not null
+	DROP PROCEDURE DeleteReportByReportID;
+IF OBJECT_ID('DeleteFriend') is not null
+	DROP PROCEDURE DeleteFriend;
+
 --Photo
 /********************************NEED MORE INFO ON HOW WE ARE STORING PHOTOS*******************************/
 
+IF OBJECT_ID('UpdateMentorNameByMentorID') is not null
+	DROP PROCEDURE UpdateMentorNameByMentorID;
+IF OBJECT_ID('UpdateDisplayFNameByUserID') is not null
+	DROP PROCEDURE UpdateDisplayFNameByUserID;
+IF OBJECT_ID('UpdateDisplayLNameByUserID') is not null
+	DROP PROCEDURE UpdateDisplayLNameByUserID;
+IF OBJECT_ID('UpdateEmailAddressByUserID') is not null
+	DROP PROCEDURE UpdateEmailAddressByUserID;
+IF OBJECT_ID('UpdateUserPasswordByUserID') is not null
+	DROP PROCEDURE UpdateUserPasswordByUserID;
+IF OBJECT_ID('UpdatePrivilegesByUserID') is not null
+	DROP PROCEDURE UpdatePrivilegesByUserID;
+IF OBJECT_ID('UpdateStickerProblemDescriptionByStickerID') is not null
+	DROP PROCEDURE UpdateStickerProblemDescriptionByStickerID;
+IF OBJECT_ID('UpdateTimeoutByStickerIDAndSeconds') is not null
+	DROP PROCEDURE UpdateTimeoutByStickerIDAndSeconds;
+IF OBJECT_ID('UpdateCourseNameByClassID') is not null
+	DROP PROCEDURE UpdateCourseNameByClassID;
+IF OBJECT_ID('UpdateCourseCodeByClassID') is not null
+	DROP PROCEDURE UpdateCourseCodeByClassID;
+IF OBJECT_ID('UpdateCourseNumberByClassID') is not null
+	DROP PROCEDURE UpdateCourseNumberByClassID;
+IF OBJECT_ID('UpdateTermsOfferedByClassID') is not null
+	DROP PROCEDURE UpdateTermsOfferedByClassID;
+IF OBJECT_ID('UpdateStarRankingByReviewID') is not null
+	DROP PROCEDURE UpdateStarRankingByReviewID;
+IF OBJECT_ID('UpdateReviewDescriptionByReviewID') is not null
+	DROP PROCEDURE UpdateReviewDescriptionByReviewID;
 
-DROP PROC [dbo].[UpdateMentorNameByMentorID];
+IF OBJECT_ID('UpdateMessageByMessageID') is not null
+	DROP PROCEDURE UpdateMessageByMessageID;
+IF OBJECT_ID('UpdateTutorIDByTutorIDAndStickerID') is not null
+	DROP PROCEDURE UpdateTutorIDByTutorIDAndStickerID;
 GO
-DROP PROC [dbo].[UpdateDisplayFNameByUserID];
-GO
-DROP PROC [dbo].[UpdateDisplayLNameByUserID];
-GO
-DROP PROC [dbo].[UpdateEmailAddressByUserID];
-GO
-DROP PROC [dbo].[UpdateUserPasswordByUserID];
-GO
-DROP PROC [dbo].[UpdatePrivilegesByUserID];
-GO
-DROP PROC [dbo].[UpdateStickerProblemDescriptionByStickerID];
-GO
-DROP PROC [dbo].[UpdateTimeoutByStickerIDAndSeconds];
-GO
-DROP PROC [dbo].[UpdateCourseNameByClassID];
-GO
-DROP PROC [dbo].[UpdateCourseCodeByClassID];
-GO
-DROP PROC [dbo].[UpdateCourseNumberByClassID];
-GO
-DROP PROC [dbo].[UpdateTermsOfferedByClassID];
-GO
-DROP PROC [dbo].[UpdateStarRankingByReviewID];
-GO
-DROP PROC [dbo].[UpdateReviewDescriptionByReviewID];
-GO
-DROP PROC [dbo].[UpdateMessageByMessageID];
-GO
-DROP PROC [dbo].[UpdateTutorIDByTutorIDAndStickerID];
-GO
-
 --START CREATION SCRIPTS
 /*********************************************************/
 /*********************************************************
---Delete User Profile Procedure Creation Script
+--Delete User Profile PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[DeleteUserProfileByUserID]
     (
@@ -76,9 +77,9 @@ CREATE PROC [dbo].[DeleteUserProfileByUserID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Sticker
 				SET StudentID = 1
@@ -102,14 +103,14 @@ AS
 				WHERE UserID = @UserID;
                 DELETE FROM UserProfile
 				WHERE UserID = @UserID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /*********************************************************
---Delete User Profile Picture Procedure Creation Script
+--Delete User Profile Picture PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[DeleteUserPictureByUserID]
     (
@@ -117,20 +118,20 @@ CREATE PROC [dbo].[DeleteUserPictureByUserID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from Picture where UserID = @UserID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT UserID FROM Picture WHERE UserID = @UserID))
+            RETURN 1;
+        ELSE
             BEGIN
                 DELETE Picture
 				WHERE UserID = @UserID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /*********************************************************
---Delete File Procedure Creation Script
+--Delete File PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[DeleteFileByFileID]
     (
@@ -138,20 +139,20 @@ CREATE PROC [dbo].[DeleteFileByFileID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select FileID from Files where FileID = @FileID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT FileID FROM Files WHERE FileID = @FileID))
+            RETURN 1;
+        ELSE
             BEGIN
                 DELETE Files
 				WHERE FileID = @fileID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /*********************************************************
---Delete Message Procedure Creation Script
+--Delete Message PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[DeleteMessageByMessageID]
     (
@@ -159,20 +160,20 @@ CREATE PROC [dbo].[DeleteMessageByMessageID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select MessageID from [Messages] where MessageID = @MessageID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT MessageID FROM [Messages] WHERE MessageID = @MessageID))
+            RETURN 1;
+        ELSE
             BEGIN
                 DELETE [Messages]
 				WHERE MessageID = @messageID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /*********************************************************
---Delete Mentor Organization Procedure Creation Script
+--Delete Mentor Organization PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[DeleteMentorOrganizationByMentorID]
     (
@@ -180,22 +181,22 @@ CREATE PROC [dbo].[DeleteMentorOrganizationByMentorID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select MentorID from OfficialMentor where MentorID = @MentorID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT MentorID FROM OfficialMentor WHERE MentorID = @MentorID))
+            RETURN 1;
+        ELSE
             BEGIN
 				DELETE OmToUser
 				WHERE @MentorID = MentorID;
 				DELETE OfficialMentor
 				WHERE MentorID = @MentorID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /*********************************************************
---Delete Class Procedure Creation Script
+--Delete Class PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[DeleteClassByClassID]
     (
@@ -203,9 +204,9 @@ CREATE PROC [dbo].[DeleteClassByClassID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Sticker
 				SET ClassID = 1
@@ -214,14 +215,14 @@ AS
 				WHERE ClassID = @ClassID
 				DELETE Classes
 				WHERE ClassID = @classID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /*********************************************************
---Delete Sticker Procedure Creation Script NOT NEEDED AS OF NOW
+--Delete Sticker PROCEDURE Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
 --CREATE PROC [dbo].[DeleteStickerByStickerID]
 --    (
@@ -229,20 +230,20 @@ GO
 --    )
 --AS
 --    BEGIN
---        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
---            return 1;
---        else
+--        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
+--            RETURN 1;
+--        ELSE
 --            BEGIN
 --				DELETE Sticker
 --				WHERE StickerID = @stickerID;
---                return 0;
+--                RETURN 0;
 --            END
 
 --    END
 --GO
 
 /*********************************************************
---Delete Review Procedure Creation Script NOT NEEDED AS OF NOW
+--Delete Review PROCEDURE Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
 --CREATE PROC [dbo].[DeleteReviewByReviewID]
 --    (
@@ -250,20 +251,20 @@ GO
 --    )
 --AS
 --    BEGIN
---        if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
---            return 1;
---        else
+--        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
+--            RETURN 1;
+--        ELSE
 --            BEGIN
 --				DELETE Review
 --				WHERE ReviewID = @reviewID;
---                return 0;
+--                RETURN 0;
 --            END
 
 --    END
 --GO
 
 /*********************************************************
---Delete Review Description Procedure Creation Script
+--Delete Review Description PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[ClearReviewDescriptionByReviewID]
     (
@@ -271,21 +272,21 @@ CREATE PROC [dbo].[ClearReviewDescriptionByReviewID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Review
 				SET [Description] = ''
 				WHERE ReviewID = @reviewID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /*********************************************************
---Delete Report Procedure Creation Script
+--Delete Report PROCEDURE Creation Script
 *********************************************************/
 CREATE PROC [dbo].[DeleteReportByReportID]
     (
@@ -293,13 +294,13 @@ CREATE PROC [dbo].[DeleteReportByReportID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ReportID from Report where ReportID = @ReportID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ReportID FROM Report WHERE ReportID = @ReportID))
+            RETURN 1;
+        ELSE
             BEGIN
 				DELETE Report
 				WHERE ReportID = @reportID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -341,14 +342,14 @@ CREATE PROC [dbo].[UpdateMentorNameByMentorID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select MentorID from OfficialMentor where MentorID = @MentorID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT MentorID FROM OfficialMentor WHERE MentorID = @MentorID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE OfficialMentor
 				SET OrganizationName = @OrganizationName
 				WHERE MentorID = @MentorID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -364,14 +365,14 @@ CREATE PROC [dbo].[UpdateDisplayFNameByUserID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE UserProfile
 				SET DisplayFName = @DisplayFName
 				WHERE UserID = @userID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -387,14 +388,14 @@ CREATE PROC [dbo].[UpdateDisplayLNameByUserID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE UserProfile
 				SET DisplayLName = @DisplayLName
 				WHERE UserID = @userID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -410,14 +411,14 @@ CREATE PROC [dbo].[UpdateEmailAddressByUserID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE UserProfile
 				SET EmailAddress = @EmailAddress
 				WHERE UserID = @userID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -433,14 +434,14 @@ CREATE PROC [dbo].[UpdateUserPasswordByUserID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE UserProfile
 				SET UserPassword = @UserPassword
 				WHERE UserID = @userID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -456,14 +457,14 @@ CREATE PROC [dbo].[UpdatePrivilegesByUserID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from UserProfile where UserID = @UserID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE UserProfile
 				SET Privileges = @Privileges
 				WHERE UserID = @userID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -479,14 +480,14 @@ CREATE PROC [dbo].[UpdateStickerProblemDescriptionByStickerID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Sticker
 				SET ProblemDescription = @ProblemDescription
 				WHERE StickerID = @StickerID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -502,14 +503,14 @@ CREATE PROC [dbo].[UpdateTimeoutByStickerIDAndSeconds]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Sticker
 				SET [Timeout] = DATEADD(second, @Seconds, GETDATE())
 				WHERE StickerID = @StickerID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -525,14 +526,14 @@ CREATE PROC [dbo].[UpdateCourseNameByClassID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Classes
 				SET CourseName = @CourseName
 				WHERE ClassID = @ClassID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -548,14 +549,14 @@ CREATE PROC [dbo].[UpdateCourseCodeByClassID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Classes
 				SET CourseCode = @CourseCode
 				WHERE ClassID = @ClassID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -571,14 +572,14 @@ CREATE PROC [dbo].[UpdateCourseNumberByClassID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Classes
 				SET CourseNumber = @CourseNumber
 				WHERE ClassID = @ClassID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -594,14 +595,14 @@ CREATE PROC [dbo].[UpdateTermsOfferedByClassID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ClassID from Classes where ClassID = @ClassID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Classes
 				SET TermOffered = @TermOffered
 				WHERE ClassID = @ClassID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -617,14 +618,14 @@ CREATE PROC [dbo].[UpdateStarRankingByReviewID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Review
 				SET StarRanking = @StarRanking
 				WHERE ReviewID = @ReviewID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -640,14 +641,14 @@ CREATE PROC [dbo].[UpdateReviewDescriptionByReviewID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select ReviewID from Review where ReviewID = @ReviewID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Review
 				SET [Description] = @Description
 				WHERE ReviewID = @ReviewID;
-                return 0;
+                RETURN 0;
             END
 
     END
@@ -663,21 +664,21 @@ CREATE PROC [dbo].[UpdateMessageByMessageID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select MessageID from [Messages] where MessageID = @MessageID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT MessageID FROM [Messages] WHERE MessageID = @MessageID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE [Messages]
 				SET MessageData = @MessageData
 				WHERE MessageID = @MessageID;
-                return 0;
+                RETURN 0;
             END
 
     END
 GO
 
 /******************************************************************
---Update TutorID by TutorID and StickerID Procedure Creation Script
+--Update TutorID by TutorID and StickerID PROCEDURE Creation Script
 ******************************************************************/
 CREATE PROC [dbo].[UpdateTutorIDByTutorIDAndStickerID]
     (
@@ -686,14 +687,14 @@ CREATE PROC [dbo].[UpdateTutorIDByTutorIDAndStickerID]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select StickerID from Sticker where StickerID = @StickerID))
-            return 1;
-        else
+        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
+            RETURN 1;
+        ELSE
             BEGIN
 				UPDATE Sticker
 				SET TutorID = @TutorID
 				WHERE StickerID = @StickeriD;
-                return 0;
+                RETURN 0;
             END
 
     END
