@@ -8,6 +8,8 @@ USE UnstuckME_DB;
 GO
 
 /******DROP PROCEDURE STATEMENTS*************************/
+IF OBJECT_ID('CreateServerAdmin') is not null
+	DROP PROCEDURE CreateServerAdmin;
 IF OBJECT_ID('CreateNewUser') is not null
 	DROP PROCEDURE CreateNewUser;
 IF OBJECT_ID('InsertStudentIntoClass') is not null
@@ -36,15 +38,36 @@ IF OBJECT_ID('AddFriend') is not null
 	DROP PROCEDURE AddFriend;
 IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
 	DROP PROCEDURE [InsertUserIntoMentorProgram];
+
 GO
 /****************BEGIN CREATION SCRIPTS******************/
+--CREATE NEW SERVER ADMIN
+CREATE PROC [dbo].[CreateServerAdmin]
+	(
+	@FirstName		VARCHAR(32),
+	@LastName		VARCHAR(32),
+	@EmailAddress	VARCHAR(50),
+	@Password		NVARCHAR(256),
+	@Salt			NVARCHAR(256)
+	)
+AS	
+	BEGIN
+		IF (EXISTS(SELECT EmailAddress FROM ServerAdmins WHERE EmailAddress = @EmailAddress))
+			RETURN 1;	
+		ELSE
+			INSERT INTO ServerAdmins
+			VALUES(@EmailAddress, @FirstName, @LastName, @Password, @Salt)
+			RETURN 0;
+	END
+GO
+
 --CREATE NEW USER
 CREATE PROC [dbo].[CreateNewUser]
     (
     @FirstName VARCHAR(30),
 	@LastName VARCHAR(30),
 	@EmailAddress VARCHAR(50),
-	@Password NVARCHAR(500),
+	@Password NVARCHAR(256),
 	@Privileges NVARCHAR(32),
 	@Salt NVARCHAR(256)
     )
@@ -52,7 +75,7 @@ AS
     BEGIN
         if  (Exists(Select EmailAddress from UserProfile where EmailAddress = @EmailAddress))
             BEGIN
-				RETURN 0;
+				RETURN 1;
 			END
         else
             BEGIN

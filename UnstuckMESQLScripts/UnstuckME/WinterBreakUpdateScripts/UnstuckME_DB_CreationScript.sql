@@ -1,7 +1,33 @@
 USE UnstuckME_DB
 GO
 
+-- Drop Triggers
+IF OBJECT_ID ('ForbidUser1Update', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidUser1Update;  
+	GO
+IF OBJECT_ID ('ForbidUser1Delete', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidUser1Delete;  
+	GO
+IF OBJECT_ID ('ForbidClass1Delete', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidClass1Delete;  
+	GO
+IF OBJECT_ID ('ForbidClass1Update', 'TR') IS NOT NULL  
+	DROP TRIGGER ForbidClass1Update;  
+	GO
+IF OBJECT_ID ('OnlyAllowCorrectReviews', 'TR') IS NOT NULL
+	DROP TRIGGER OnlyAllowCorrectReviews
+	GO
+IF OBJECT_ID ('DisallowSameTutorAndStudentID', 'TR') IS NOT NULL
+	DROP TRIGGER DisallowSameTutorAndStudentID
+	GO
+
+IF OBJECT_ID ('DisallowDeletionOfAllAdmin', 'TR') IS NOT NULL
+	DROP TRIGGER DisallowDeletionOfAllAdmin
+	GO
+
 --DROP ANY PRE-EXISTING TABLES
+IF OBJECT_ID('ServerAdmins', 'U') IS NOT NULL
+	DROP TABLE ServerAdmins;
 IF OBJECT_ID('Report', 'U') IS NOT NULL
 	DROP TABLE Report;
 IF OBJECT_ID('Review', 'U') IS NOT NULL
@@ -31,6 +57,15 @@ IF OBJECT_ID('UserProfile', 'U') IS NOT NULL
 IF OBJECT_ID('Chat', 'U') IS NOT NULL
 	DROP TABLE Chat;
 
+CREATE TABLE ServerAdmins
+	(ServerAdminID			INT				PRIMARY KEY IDENTITY(1,1),
+	EmailAddress			VARCHAR(50)		NOT NULL UNIQUE,
+	FirstName				VARCHAR(32)		NOT NULL,
+	LastName				VARCHAR(32)		NOT NULL,
+	[Password]				NVARCHAR(256)	NOT NULL,
+	Salt					NVARCHAR(256)	NOT NULL UNIQUE)
+GO
+
 --Create Chat Table
 CREATE TABLE Chat
 	(ChatID				INT				PRIMARY KEY IDENTITY(1,1))
@@ -42,7 +77,7 @@ CREATE TABLE UserProfile
 	DisplayFName			VARCHAR(32)			NOT NULL,
 	DisplayLName			VARCHAR(32)			NOT NULL,
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
-	UserPassword			NVARCHAR(500)		NOT NULL,
+	UserPassword			NVARCHAR(256)		NOT NULL,
 	Privileges				NVARCHAR(32)		NOT NULL,
 	Salt					NVARCHAR(256)		NOT NULL UNIQUE)
 GO
@@ -174,6 +209,13 @@ VALUES ('Class Unavailable', 'NA', 0, 0);
 GO
 
 /*******************************************************************************
+INSERT DEFAULT ServerAdmin
+*******************************************************************************/
+INSERT INTO ServerAdmins
+VALUES ('Admin', 'John', 'Doe', '20024519787285415818223418423415125157246207175561872721374197129248198221206128122231254', 'salt');
+GO
+
+/*******************************************************************************
 Create DB TRIGGERS
 *******************************************************************************/
 
@@ -259,6 +301,19 @@ CREATE
 	AS
 		BEGIN
 			IF EXISTS (SELECT * FROM inserted WHERE StudentID = TutorID)
+			BEGIN
+				ROLLBACK TRANSACTION;
+			END;
+		END;
+GO
+
+CREATE
+	TRIGGER DisallowDeletionOfAllAdmin
+	ON ServerAdmins
+	AFTER DELETE
+	AS
+		BEGIN
+			If NOT EXISTS (SELECT * FROM ServerAdmins)
 			BEGIN
 				ROLLBACK TRANSACTION;
 			END;

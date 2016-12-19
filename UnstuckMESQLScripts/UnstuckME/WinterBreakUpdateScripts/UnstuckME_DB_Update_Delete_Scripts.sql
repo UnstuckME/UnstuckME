@@ -6,6 +6,8 @@ GO
 /***************************************************
 DROP STORED PROCEDURES
 ***************************************************/
+IF OBJECT_ID('DeleteServerAdmin') is not null
+	DROP PROCEDURE [DeleteServerAdmin];
 IF OBJECT_ID('DeleteUserProfileByUserID') is not null
 	DROP PROCEDURE [DeleteUserProfileByUserID];
 IF OBJECT_ID('DeleteUserPictureByUserID') is not null
@@ -31,7 +33,8 @@ IF OBJECT_ID('DeleteFriend') is not null
 
 --Photo
 /********************************NEED MORE INFO ON HOW WE ARE STORING PHOTOS*******************************/
-
+IF OBJECT_ID('UpdateServerAdmin') is not null
+	DROP PROCEDURE UpdateServerAdmin;
 IF OBJECT_ID('UpdateMentorNameByMentorID') is not null
 	DROP PROCEDURE UpdateMentorNameByMentorID;
 IF OBJECT_ID('UpdateDisplayFNameByUserID') is not null
@@ -68,6 +71,24 @@ IF OBJECT_ID('UpdateTutorIDByTutorIDAndStickerID') is not null
 GO
 --START CREATION SCRIPTS
 /*********************************************************/
+/*********************************************************
+--Delete ServerAdmin PROCEDURE Creation Script
+*********************************************************/
+CREATE PROC [dbo].[DeleteServerAdmin]
+	(
+	@AdminID INT
+	)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT ServerAdminID FROM ServerAdmins WHERE ServerAdminID = @AdminID))
+			RETURN 1;
+		ELSE
+			DELETE FROM ServerAdmins
+			WHERE ServerAdminID = @AdminID
+			RETURN 0;
+	END
+GO
+
 /*********************************************************
 --Delete User Profile PROCEDURE Creation Script
 *********************************************************/
@@ -331,7 +352,40 @@ GO
 
 --Photo
 /********************************NEED MORE INFO ON HOW WE ARE STORING PHOTOS*******************************/
-
+CREATE PROC [dbo].[UpdateServerAdmin]
+	(
+	@ServerAdminID INT,
+	@FirstName	VARCHAR(32) = NULL,
+	@LastName	VARCHAR(32) = NULL,
+	@Password	NVARCHAR(256) = NULL,
+	@Salt		NVARCHAR(256) = NULL
+	)
+AS
+	BEGIN
+		IF(NOT EXISTS(SELECT ServerAdminID FROM ServerAdmins WHERE ServerAdminID = @ServerAdminID))
+			RETURN 1;
+		ELSE
+			IF(@FirstName IS NOT NULL)
+			BEGIN
+				UPDATE ServerAdmins
+				SET FirstName = @FirstName
+				WHERE @ServerAdminID = ServerAdminID
+			END
+			IF(@LastName IS NOT NULL)
+			BEGIN
+				UPDATE ServerAdmins
+				SET LastName = @LastName
+				WHERE @ServerAdminID = ServerAdminID
+			END
+			IF(@Password IS NOT NULL AND @Salt IS NOT NULL)
+			BEGIN
+				UPDATE ServerAdmins
+				SET [Password] = @Password, Salt = @Salt
+				WHERE @ServerAdminID = ServerAdminID
+			END
+	END
+GO
+				
 /*********************************************************
 --Update Mentor Organization Name
 *********************************************************/
