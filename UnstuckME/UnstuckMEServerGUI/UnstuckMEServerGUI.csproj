@@ -154,6 +154,7 @@
     <Compile Include="ServerAdmin.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ServerCallback.cs" />
     <Compile Include="ServerLogin.xaml.cs">
       <DependentUpon>ServerLogin.xaml</DependentUpon>
     </Compile>

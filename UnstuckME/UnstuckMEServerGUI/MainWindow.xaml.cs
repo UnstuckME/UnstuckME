@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
 using UnstuckMEServer;
+using UnstuckMEInterfaces;
+using System.ServiceModel;
 
 namespace UnstuckMEServerGUI
 {
@@ -24,11 +26,14 @@ namespace UnstuckMEServerGUI
     /// 
     public partial class MainWindow : Window
     {
-
+        public static IUnstuckMEService Server;
+        private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         public static AdminInfo Admin;
         public MainWindow(AdminInfo currentAdmin)
         {
             InitializeComponent();
+            _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ServerCallback(), "UnstuckMEServiceEndPoint");
+            Server = _channelFactory.CreateChannel();
             Admin = currentAdmin;
             labelEmailAddress.Content = "Email Address: " + Admin.EmailAddress;
             labelName.Content = "Name: " + Admin.FirstName + " " + Admin.LastName;
@@ -39,6 +44,7 @@ namespace UnstuckMEServerGUI
         /// </summary>
         private void button_RunServer_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
