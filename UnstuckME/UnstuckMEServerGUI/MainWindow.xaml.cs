@@ -26,15 +26,22 @@ namespace UnstuckMEServerGUI
     /// 
     public partial class MainWindow : Window
     {
-        public static IUnstuckMEService Server;
-        private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
+        public static IUnstuckMEServer Server;
+        private static DuplexChannelFactory<IUnstuckMEServer> _channelFactory;
         public static AdminInfo Admin;
         public MainWindow(AdminInfo currentAdmin)
         {
-            InitializeComponent();
-            _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ServerCallback(), "UnstuckMEServiceEndPoint");
-            Server = _channelFactory.CreateChannel();
-            Admin = currentAdmin;
+            try
+            {
+                InitializeComponent();
+                _channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
+                Server = _channelFactory.CreateChannel();
+                Admin = currentAdmin;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             labelEmailAddress.Content = "Email Address: " + Admin.EmailAddress;
             labelName.Content = "Name: " + Admin.FirstName + " " + Admin.LastName;
         }

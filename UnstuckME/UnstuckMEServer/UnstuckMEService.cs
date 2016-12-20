@@ -16,7 +16,7 @@ namespace UnstuckMEInterfaces
     /// <summary>
     /// Implement any Operation Contracts from IUnstuckMEService.cs in this file.
     /// </summary>
-    public class UnstuckMEService : IUnstuckMEService
+    public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer
     {
         public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 
@@ -189,6 +189,9 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        
+        public void DoWork()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
