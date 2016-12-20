@@ -48,5 +48,8 @@ namespace UnstuckMEInterfaces
     {
         [OperationContract]
         void DoWork();
+
+        [OperationContract]
+        void RegisterServerAdmin(AdminInfo admin);
     }
 }

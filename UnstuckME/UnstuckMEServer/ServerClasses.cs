@@ -15,13 +15,10 @@ namespace UnstuckMEServer
         public UserInfo User;
     }
 
-    public class AdminInfo
+    public class ConnectedServerAdmin
     {
-        public int ServerAdminID { get; set; }
-        public string EmailAddress { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
+        public IServer connection;
+        public AdminInfo Admin;
     }
     public class UnstuckMEPassword
     {

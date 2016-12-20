@@ -19,7 +19,7 @@ namespace UnstuckMEInterfaces
     public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer
     {
         public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
-
+        public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -193,5 +193,24 @@ namespace UnstuckMEInterfaces
         {
             throw new NotImplementedException();
         }
+
+        public void RegisterServerAdmin(AdminInfo admin)
+        {
+            try
+            {
+                //Stores Client into Logged in Users List
+                var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IServer>();
+                ConnectedServerAdmin newAdmin = new ConnectedServerAdmin();
+                newAdmin.connection = establishedUserConnection;
+                newAdmin.Admin = admin;
+                _connectedServerAdmins.TryAdd(newAdmin.Admin.ServerAdminID, newAdmin);
+            }
+            catch(Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("ERROR WHILE REGISTERING SERVER ADMIN!\nMESSAGE: " + ex.Message);
+                Console.ResetColor();
+            }
+         }
     }
 }
