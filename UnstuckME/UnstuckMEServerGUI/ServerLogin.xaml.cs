@@ -34,7 +34,10 @@ namespace UnstuckMEServerGUI
             try
             {
                 if(textBoxEmailAddress.Text.Length == 0)
-                { throw new Exception(); }
+                {
+                    throw new Exception();
+                }
+
                 using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
                 {
                     var admin = (from u in db.ServerAdmins
@@ -49,10 +52,22 @@ namespace UnstuckMEServerGUI
                         Admin.FirstName = admin.FirstName;
                         Admin.LastName = admin.LastName;
                         Admin.ServerAdminID = admin.ServerAdminID;
-                        MainWindow mainWindow = new MainWindow(Admin);
-                        App.Current.MainWindow = mainWindow;
-                        Close();
-                        mainWindow.Show();
+
+                        if (Admin.EmailAddress.ToLower() == "admin" &&  UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.Password)
+                        {
+                            AdminCredChange changeloginCreds = new AdminCredChange(Admin);
+                            App.Current.MainWindow = changeloginCreds;
+                            Close();
+                            changeloginCreds.Show();
+
+                        }
+                        else
+                        {
+                            MainWindow mainWindow = new MainWindow(Admin);
+                            App.Current.MainWindow = mainWindow;
+                            Close();
+                            mainWindow.Show();
+                        }
                     }
                     else
                     {

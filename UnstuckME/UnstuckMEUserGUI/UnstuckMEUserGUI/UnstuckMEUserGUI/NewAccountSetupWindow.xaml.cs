@@ -42,7 +42,7 @@ namespace UnstuckMEUserGUI
                 else if (EmailTxtBx.Text.Length == 0)
                     throw new Exception("Email Address Required!");
                 else if (passwordBox.Password.Length < 6)
-                    throw new Exception("Please enter a password with 6 or more charcters!");
+                    throw new Exception("Please enter a password with 6 or more characters!");
                 else if (passwordBox.Password != passwordBoxConfirm.Password)
                     throw new Exception("Passwords Not Match!");
                 else
@@ -55,7 +55,7 @@ namespace UnstuckMEUserGUI
                     }
                     else
                     {
-                        throw new Exception("Error Occured Creating New User, Please Contact Your Server Administrator");
+                        throw new Exception("Error occurred creating a new user, Please Contact Your Server Administrator");
                     }
                 }
             }
