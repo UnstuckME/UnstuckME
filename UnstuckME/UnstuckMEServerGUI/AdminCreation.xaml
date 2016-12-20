@@ -1,0 +1,25 @@
+﻿<Window x:Class="UnstuckMEServerGUI.AdminCreation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEServerGUI"
+        mc:Ignorable="d"
+        Title="Create New Admin" Height="300" Width="450" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        MinHeight="300" MinWidth="450" MaxHeight="300" MaxWidth="450" >
+    <Grid>
+        <TextBox x:Name="textBoxEmailAddress" HorizontalAlignment="Left" Height="30" Margin="165,39,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="0"/>
+        <TextBox x:Name="textBoxFirstName" HorizontalAlignment="Left" Height="30" Margin="165,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="1"/>
+        <TextBox x:Name="textBoxLastName" HorizontalAlignment="Left" Height="30" Margin="165,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="2"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="165,144,0,0" VerticalAlignment="Top" Width="250" Height="30" TabIndex="3"/>
+        <PasswordBox x:Name="passwordBoxConfirm" HorizontalAlignment="Left" Margin="165,179,0,0" VerticalAlignment="Top" Width="250" Height="30" TabIndex="4"/>
+        <Label x:Name="labelEmailAddres" Content="Email Address" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Label x:Name="labelFirstName" Content="First Name" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Label x:Name="label_Copy1" Content="Last Name" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Label x:Name="label_Copy2" Content="Password" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Label x:Name="label_Copy3" Content="Confirm Password" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="196,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="5" Click="buttonCancel_Click" IsCancel="True"/>
+        <Button x:Name="buttonCreate" Content="Create" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonCreate_Click" IsDefault="True"/>
+
+    </Grid>
+</Window>

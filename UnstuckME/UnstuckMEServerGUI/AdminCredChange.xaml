@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d"
         Title="Update Credintials" Height="300" Width="424.762" WindowStyle="None" BorderBrush="White" BorderThickness="2"
-        MaxHeight="325" MaxWidth="500" MinHeight="325" MinWidth="500">
+        MaxHeight="325" MaxWidth="500" MinHeight="325" MinWidth="500" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,-2,0">
         <Label x:Name="labelAdminUpdate" Content="Administrator Update " HorizontalContentAlignment="Center" FontFamily="Times New Roman" Background="{x:Null}" BorderThickness="2" Panel.ZIndex="-1" VerticalAlignment="Top" Height="33"/>
         <Label x:Name="labelCurrentUsername" Content="Current Email Address" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="222"/>
@@ -19,7 +19,7 @@
         <PasswordBox x:Name="passwordBoxNewPassword" TabIndex="3" HorizontalAlignment="Left" Margin="237,191,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
         <PasswordBox x:Name="passwordBoxConfirm" TabIndex="4" HorizontalAlignment="Left" Margin="237,227,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
         <PasswordBox x:Name="passwordBoxCurrentPassword" TabIndex="1" HorizontalAlignment="Left" Margin="237,101,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
-        <Button x:Name="buttonSave" Content="Save" TabIndex="6" HorizontalAlignment="Left" Margin="380,278,0,0" VerticalAlignment="Top" Width="100" Click="buttonSave_Click"/>
-        <Button x:Name="buttonCancel" Content="Cancel" TabIndex="5" HorizontalAlignment="Left" Margin="257,278,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click"/>
+        <Button x:Name="buttonSave" Content="Save" TabIndex="6" HorizontalAlignment="Left" Margin="380,278,0,0" VerticalAlignment="Top" Width="100" Click="buttonSave_Click" IsDefault="True"/>
+        <Button x:Name="buttonCancel" Content="Cancel" TabIndex="5" HorizontalAlignment="Left" Margin="257,278,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click" IsCancel="True"/>
     </Grid>
 </Window>

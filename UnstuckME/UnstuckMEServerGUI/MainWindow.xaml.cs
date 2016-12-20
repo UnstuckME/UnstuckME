@@ -142,19 +142,30 @@ namespace UnstuckMEServerGUI
 
         private void ChangeCredintials_Click(object sender, RoutedEventArgs e)
         {
+            
             AdminCredChange adminChange = new AdminCredChange(Admin);
             adminChange.Show();
-            
+            App.Current.MainWindow = adminChange;
+
         }
 
         private void CreateAdmin_Click(object sender, RoutedEventArgs e)
         {
-
+            AdminCreation adminCreate = new AdminCreation(Admin);
+            adminCreate.Show();
+            App.Current.MainWindow = adminCreate;
         }
 
         private void RestartServer_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void DeleteAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteAdmin deleteAdmin = new DeleteAdmin(Admin);
+            deleteAdmin.Show();
+            App.Current.MainWindow = deleteAdmin;
         }
     }
 }

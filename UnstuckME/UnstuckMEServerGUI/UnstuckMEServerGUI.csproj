@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminCreation.xaml.cs">
+      <DependentUpon>AdminCreation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminCredChange.xaml.cs">
       <DependentUpon>AdminCredChange.xaml</DependentUpon>
     </Compile>
@@ -75,6 +78,9 @@
     </Compile>
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteAdmin.xaml.cs">
+      <DependentUpon>DeleteAdmin.xaml</DependentUpon>
     </Compile>
     <Compile Include="File.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
@@ -187,7 +193,15 @@
     <Compile Include="ViewAllUsers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
+    <Page Include="AdminCreation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminCredChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeleteAdmin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

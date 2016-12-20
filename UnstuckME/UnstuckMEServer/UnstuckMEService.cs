@@ -24,7 +24,6 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-
                 var users = (from u in db.UserProfiles
                              where u.EmailAddress == emailaddress
                              select u).First();
