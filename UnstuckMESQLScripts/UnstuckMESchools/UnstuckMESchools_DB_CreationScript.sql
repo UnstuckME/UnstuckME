@@ -1,5 +1,12 @@
-use UnstuckME_Schools;
+USE UnstuckME_Schools;
 GO
+
+IF OBJECT_ID('SchoolLogo', 'U') IS NOT NULL
+	DROP TABLE SchoolLogo;
+IF OBJECT_ID('Server', 'U') IS NOT NULL
+	DROP TABLE [Server];
+IF OBJECT_ID('School', 'U') IS NOT NULL
+	DROP TABLE School;
 
 CREATE TABLE School
 	(SchoolID			INT				PRIMARY KEY IDENTITY(1,1),
