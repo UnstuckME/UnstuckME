@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using UnstuckMEServer;
 
 namespace UnstuckMEServerGUI
 {
@@ -20,9 +21,13 @@ namespace UnstuckMEServerGUI
     /// </summary>
     public partial class AdminCredChange : Window
     {
-        public AdminCredChange()
+        public static AdminInfo Admin;
+
+        public AdminCredChange(AdminInfo passedInAdmin)
         {
             InitializeComponent();
+            Admin = passedInAdmin;
+
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
@@ -32,55 +37,31 @@ namespace UnstuckMEServerGUI
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            try
+            
+            using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
             {
-                SqlConnection conn = new SqlConnection("Server=aura.students.cset.oit.edu;Database=UnstuckME_DB;persist security info=True;user id=UnstuckME_Admin;password=B3$$t-P@$$W0rd");
-                conn.Open();
-
-                //Beginnings of username check
-                if (System.Data.ConnectionState.Open == conn.State)//If successful connection to database.
+                try
                 {
-                    string dbUsernames = "";
-                    string dbPassword = "";
-                    string dbSalt = "";
-                    bool userFound = false;
+                    var admin = (from u in db.ServerAdmins
+                                 where u.EmailAddress.ToLower() == textBoxCurrentUsername.Text.ToLower()
+                                 select u).First();
 
-                    SqlCommand cmd = new SqlCommand("dbo.GetAdminInfo", conn);
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    //if(inputPassword == admin.Password)
+                    //{
 
-                    while (rdr.Read())
-                    {
-                        if (rdr["AdminUsername"].ToString() == textBoxCurrentUsername.Text)
-                        {
-                            dbUsernames = rdr["AdminUsername"].ToString();
-                            dbPassword = rdr["AdminPassword"].ToString();
-                            dbSalt = rdr["Salt"].ToString();
-                            userFound = true;
-                        }
-                    }
-
-
-                    if (userFound)
-                    {
-                        MessageBox.Show("Admin Found!", "Invalid Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Admin Credintials Incorrect!", "Invalid Admin", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    //    //db.UpdateServerAdmin(admin.ServerAdminID, admin.FirstName, admin.LastName, )
+                    //}
+                    //else
+                    //{
+                    //    throw new Exception("Invalid Username/Password");
+                    //}
                 }
-                else
+                catch(Exception ex)
                 {
-                    MessageBox.Show("Connection Failed!", "Connection Failure", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBox.Show(ex.Message, "Credintials Incorrect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
+            }
 
-                conn.Close();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message, "Connection Failure", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
         }
     }
 }

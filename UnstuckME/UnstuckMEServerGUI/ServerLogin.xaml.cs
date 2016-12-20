@@ -13,7 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using UnstuckME_Classes;
+using UnstuckMEServer;
+
 namespace UnstuckMEServerGUI
 {
     /// <summary>
@@ -40,12 +41,8 @@ namespace UnstuckMEServerGUI
                                  where u.EmailAddress.ToLower() == textBoxEmailAddress.Text.ToLower()
                                  select u).First();
 
-                    byte[] databasePassword = UnstuckMEHashing.GenerateSaltedHash(passwordBoxInput.Password, admin.Salt);
-                    string stringOfPassword = "";
-                    foreach (byte element in databasePassword)
-                    {
-                        stringOfPassword += element;
-                    }
+                    string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passwordBoxInput.Password, admin.Salt);
+
                     if (stringOfPassword == admin.Password)
                     {
                         Admin.EmailAddress = admin.EmailAddress;

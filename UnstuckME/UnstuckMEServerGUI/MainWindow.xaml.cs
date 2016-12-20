@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.IO;
-using UnstuckME_Classes;
+using UnstuckMEServer;
 
 namespace UnstuckMEServerGUI
 {
@@ -142,8 +142,9 @@ namespace UnstuckMEServerGUI
 
         private void ChangeCredintials_Click(object sender, RoutedEventArgs e)
         {
-            AdminCredChange adminChange = new AdminCredChange();
+            AdminCredChange adminChange = new AdminCredChange(Admin);
             adminChange.Show();
+            
         }
 
         private void CreateAdmin_Click(object sender, RoutedEventArgs e)

@@ -62,7 +62,6 @@
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ConnectedClient.cs" />
     <Compile Include="File.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -137,6 +136,7 @@
     <Compile Include="ServerAdmin.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ServerClasses.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>

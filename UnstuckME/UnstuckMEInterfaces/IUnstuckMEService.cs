@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security;
 using System.ServiceModel;
 using System.Text;
 using UnstuckME_Classes;
@@ -35,7 +36,7 @@ namespace UnstuckMEInterfaces
         bool UserLoginAttempt(string emailAddress, string passWord);
 
         [OperationContract]
-        int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt);
+        bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword);
 
         [OperationContract]
         List<UserClasses> GetUserClasses(int UserID);

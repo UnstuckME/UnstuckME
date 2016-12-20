@@ -15,6 +15,7 @@ using System.ServiceModel;
 using UnstuckMEInterfaces;
 using UnstuckME_Classes;
 using System.Security.Cryptography;
+using System.Security;
 
 namespace UnstuckMEUserGUI
 {
@@ -32,96 +33,35 @@ namespace UnstuckMEUserGUI
 
         private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
         {
-            string errors = "Please Correct the Following:\n";
-            bool errFlag = false;
-            string FName = "";
-            string LName = "";
-            string Email = "";
-            string Password = "";
-
-            if (FNameTxtBx.Text != "")
+            try
             {
-                FName = FNameTxtBx.Text;
-            }
-            else
-            {
-                // display no first name error
-                errors = errors + "No First Name \n";
-                errFlag = true;
-            }
-            if (LNameTxtBx.Text != "")
-            {
-                LName = LNameTxtBx.Text;
-            }
-            else
-            {
-                // display no last name error
-                errors = errors + "No Last Name \n";
-                errFlag = true;
-            }
-            if (EmailTxtBx.Text != "")
-            {
-                Email = EmailTxtBx.Text;
-            }
-            else
-            {
-                // display no email error
-                errors = errors + "No Email\n";
-                errFlag = true;
-            }
-            if (passwordBox.Password == passwordBoxConfirm.Password)
-            {
-                if (passwordBox.Password == "")
-                {
-                    errors = errors + "No Password";
-                    errFlag = true;
-                }
+                if (FNameTxtBx.Text.Length == 0)
+                    throw new Exception("First Name Required!");
+                else if (LNameTxtBx.Text.Length == 0)
+                    throw new Exception("Last Name Required!");
+                else if (EmailTxtBx.Text.Length == 0)
+                    throw new Exception("Email Address Required!");
+                else if (passwordBox.Password.Length < 6)
+                    throw new Exception("Please enter a password with 6 or more charcters!");
+                else if (passwordBox.Password != passwordBoxConfirm.Password)
+                    throw new Exception("Passwords Not Match!");
                 else
                 {
-                    Password = passwordBox.Password;
+                    if(Server.CreateNewUser(FNameTxtBx.Text, LNameTxtBx.Text, EmailTxtBx.Text, passwordBox.Password))
+                    {
+                        Window disp = new MainWindow(Server.GetUserID(EmailTxtBx.Text), Server);
+                        disp.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        throw new Exception("Error Occured Creating New User, Please Contact Your Server Administrator");
+                    }
                 }
             }
-            else
+            catch(Exception ex)
             {
-                // display pass words do no match error
-                errors = errors + "Passwords Dont Match\n";
-                errFlag = true;
-            }
-
-            if (errFlag == true)
-            {
-                MessageBox.Show(errors);
-            }
-            else
-            {
-                //create the account
-                RandomNumberGenerator rng = new RNGCryptoServiceProvider();
-
-                byte[] tokenData = new byte[32];
-                rng.GetBytes(tokenData);
-
-                string token = Convert.ToBase64String(tokenData);
-
-                byte[] saltedPassword = UnstuckMEHashing.GenerateSaltedHash(Password, token);
-
-                string newPassword = "";
-                foreach (byte element in saltedPassword)
-                {
-                     newPassword += element;
-                }
-
-                int result = Server.CreateNewUser(FName, LName, Email, newPassword, "User", token);
-                if (result == 1)
-                {
-                    Window disp = new MainWindow(Server.GetUserID(Email), Server);
-                    disp.Show();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("An Error Occurred. Please Contact your UnstuckME Admin");
-                    this.Close();
-                }
+                MessageBox.Show(ex.Message, "New User Creation Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 

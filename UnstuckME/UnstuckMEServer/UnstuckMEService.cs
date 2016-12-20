@@ -8,6 +8,7 @@ using UnstuckMEServer;
 using UnstuckME_Classes;
 using System.Security.Cryptography;
 using System.Collections.Concurrent;
+using System.Security;
 
 namespace UnstuckMEInterfaces
 {
@@ -33,15 +34,20 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public int CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword, string privileges, string salt)
+        public bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword)
         {
-            int retVal = -1;
-
+            bool success = false;
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, userPassword, privileges, salt);
+                UnstuckMEPassword hashedUserPassword = new UnstuckMEPassword();
+                hashedUserPassword = UnstuckMEHashing.GetHashedPassword(userPassword);
+                int retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, hashedUserPassword.Password, "User", hashedUserPassword.Salt);
+                if(retVal == 1)
+                {
+                    success = true;
+                }
             }
-            return retVal;
+            return success;
         }
 
         public int GetUserID(string emailAddress)
@@ -63,21 +69,13 @@ namespace UnstuckMEInterfaces
             {
                 try
                 {
-                    string databasePassword = (from u in db.GetUserPasswordAndSalt(emailAddress)
-                                               select u.UserPassword).Last();
+                    var users = (from u in db.UserProfiles
+                                 where u.EmailAddress == emailAddress
+                                 select u).First();
 
-                    string salt = (from u in db.GetUserPasswordAndSalt(emailAddress)
-                                   select u.Salt).First();
-                    
-                    byte[] checkPassword = UnstuckMEHashing.GenerateSaltedHash(passWord, salt);
-                    string stringOfPassword = "";
+                    string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passWord, users.Salt);
 
-                    foreach (byte element in checkPassword)
-                    {
-                        stringOfPassword += element;
-                    }
-
-                    if (stringOfPassword == databasePassword)
+                    if (stringOfPassword == users.UserPassword)
                     {
                         int userID = GetUserID(emailAddress);
                         //If Client is already logged on return false (This may be removed later).
@@ -189,5 +187,7 @@ namespace UnstuckMEInterfaces
                 }
             }
         }
+
+        
     }
 }
