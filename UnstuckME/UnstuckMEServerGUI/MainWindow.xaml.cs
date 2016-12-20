@@ -17,6 +17,7 @@ using System.IO;
 using UnstuckMEServer;
 using UnstuckMEInterfaces;
 using System.ServiceModel;
+using UnstuckME_Classes;
 
 namespace UnstuckMEServerGUI
 {

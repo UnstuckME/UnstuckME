@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using UnstuckMEServer;
+using UnstuckME_Classes;
 
 namespace UnstuckMEServerGUI
 {
