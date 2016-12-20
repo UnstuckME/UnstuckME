@@ -62,8 +62,10 @@ namespace UnstuckMEInterfaces
 
         public bool UserLoginAttempt(string emailAddress, string passWord)
         {
+            Console.WriteLine("a user with the email address of: " + emailAddress + " attempted a login");
+
             bool loginAttempt = false;
-            
+
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 try
