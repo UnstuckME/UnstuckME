@@ -53,16 +53,24 @@ namespace UnstuckMEServerGUI
                         Admin.LastName = admin.LastName;
                         Admin.ServerAdminID = admin.ServerAdminID;
 
-                        if (Admin.EmailAddress.ToLower() == "admin" &&  UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.Password)
+                        if (Admin.EmailAddress.ToLower() == "admin" && UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.Password)
                         {
                             AdminCredChange changeloginCreds = new AdminCredChange(Admin);
                             App.Current.MainWindow = changeloginCreds;
-                            Close();
-                            changeloginCreds.Show();
+                            changeloginCreds.ShowDialog();
 
+                            admin = (from u in db.ServerAdmins
+                                     where u.ServerAdminID == Admin.ServerAdminID
+                                     select u).First();
+
+                            Admin.EmailAddress = admin.EmailAddress;
+
+                            textBoxEmailAddress.Text = Admin.EmailAddress;
+                            passwordBoxInput.Password = "";
                         }
+
                         else
-                        {
+                        { 
                             MainWindow mainWindow = new MainWindow(Admin);
                             App.Current.MainWindow = mainWindow;
                             Close();
