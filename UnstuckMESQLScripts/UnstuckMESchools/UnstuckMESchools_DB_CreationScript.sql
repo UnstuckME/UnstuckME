@@ -2,3 +2,21 @@ use UnstuckME_Schools;
 GO
 
 CREATE TABLE School
+	(SchoolID			INT				PRIMARY KEY IDENTITY(1,1),
+	SchoolName 			NVARCHAR(128)	NOT NULL,
+	EmailCredentials	VARCHAR(64)		DEFAULT NULL)
+ GO
+
+ CREATE TABLE [Server]
+	(ServerID			INT				PRIMARY KEY IDENTITY(1,1),
+	SchoolID			INT				NOT NULL REFERENCES School(SchoolID),
+	ServerDomain		VARCHAR			DEFAULT NULL,
+	ServerName			NVARCHAR(128)	NOT NULL UNIQUE,
+	ServerIPAddress		VARCHAR(39)		NOT NULL UNIQUE)
+GO
+
+CREATE TABLE SchoolLogo
+	(LogoID		INT		NOT NULL UNIQUE REFERENCES School(SchoolID),
+	Logo		VARBINARY(MAX)
+	PRIMARY KEY(LogoID))
+GO

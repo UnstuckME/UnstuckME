@@ -60,16 +60,20 @@ namespace UnstuckMEServerGUI
                             App.Current.MainWindow = changeloginCreds;
                             changeloginCreds.ShowDialog();
 
-                            admin = (from u in db.ServerAdmins
-                                     where u.ServerAdminID == Admin.ServerAdminID
-                                     select u).First();
+                            using (UnstuckMEServer_DBEntities db2 = new UnstuckMEServer_DBEntities())
+                            {
+                                admin = (from u in db2.ServerAdmins
+                                         where u.ServerAdminID == Admin.ServerAdminID
+                                         select u).First();
 
-                            Admin.EmailAddress = admin.EmailAddress;
+                                Admin.EmailAddress = admin.EmailAddress;
 
-                            textBoxEmailAddress.Text = Admin.EmailAddress;
-                            passwordBoxInput.Password = "";
+                                textBoxEmailAddress.Text = Admin.EmailAddress.ToLower();
+                                passwordBoxInput.Password = "";
+                            }
+
+                            labelInvalidUsernamePassword.Visibility = Visibility.Hidden;
                         }
-
                         else
                         { 
                             MainWindow mainWindow = new MainWindow(Admin);

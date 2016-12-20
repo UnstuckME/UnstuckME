@@ -83,7 +83,7 @@ namespace UnstuckMEServerGUI
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Credintials Incorrect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show(ex.Message, "Credentials Incorrect", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 }
             }
