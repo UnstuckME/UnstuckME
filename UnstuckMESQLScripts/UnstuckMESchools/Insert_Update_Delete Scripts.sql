@@ -15,6 +15,12 @@ if OBJECT_ID('DeleteSchool') is not null
 	drop proc DeleteSchool;
 if OBJECT_ID('DeleteServer') is not null
 	drop proc DeleteServer;
+if OBJECT_ID('PreventSchoolsInTableMultipleTimes') is not null
+	drop trigger PreventSchoolsInTableMultipleTimes;
+if OBJECT_ID('PreventMultipleSchoolsWithSameEmailCredential') is not null
+	drop trigger PreventMultipleSchoolsWithSameEmailCredential;
+if OBJECT_ID('PreventMultipleSchoolLogos') is not null
+	drop trigger PreventMultipleSchoolLogos;
 
 /*************************************************************************
 * Inserts a new school, email credentials for that school, and a logo into
@@ -27,11 +33,13 @@ create proc InsertSchool
 	@SchoolLogo			varbinary(MAX)
 ) as
 begin
-	insert into School
-	values (@SchooName, @EmailCredentials);
+	begin tran InsertingNewSchool
+		insert into School
+		values (@SchooName, @EmailCredentials);
 
-	insert into SchoolLogo
-	values (@@IDENTITY, @SchoolLogo);
+		insert into SchoolLogo
+		values (@@IDENTITY, @SchoolLogo);
+	commit tran InsertingNewSchool
 end;
 
 /*************************************************************************
@@ -206,3 +214,60 @@ begin
 	delete from [Server]
 	where ServerName = @ServerName;
 end; --proc
+
+/*************************************************************************
+* Trigger that doesn't allow a school to exist more than once in the school
+* table
+*************************************************************************/
+go
+create trigger PreventSchoolsInTableMultipleTimes on School
+after insert, update
+as
+begin
+	declare @SchoolName nvarchar(128);
+	set @SchoolName = (select SchoolName from inserted);
+
+	if (select count(SchoolName) from School where @SchoolName = SchoolName) > 1
+	begin
+		print @SchoolName + ' already exists in the database';
+		rollback tran;
+	end; --if
+end; --trigger
+
+/*************************************************************************
+* Trigger that doesn't allow email credentials to be available for more
+* than one school
+*************************************************************************/
+go
+create trigger PreventMultipleSchoolsWithSameEmailCredential on School
+after insert
+as
+begin
+	declare @EmailCredentials varchar(64);
+	set @EmailCredentials = (select EmailCredentials from inserted);
+
+	if (select count(EmailCredentials) from School where @EmailCredentials = EmailCredentials) > 1
+	begin
+		print @EmailCredentials + ' is already in use by another school';
+		rollback tran;
+	end; --if
+end; --trigger
+
+/*************************************************************************
+* Trigger that doesn't allow email credentials to be available for more
+* than one school
+*************************************************************************/
+go
+create trigger PreventMultipleSchoolLogos on SchoolLogo
+after insert, update
+as
+begin
+	declare @Logo varbinary(MAX);
+	set @Logo = (select Logo from inserted);
+
+	if (select count(Logo) from SchoolLogo where @Logo = Logo) > 1
+	begin
+		print 'This logo is already in use by another school';
+		rollback tran InsertingNewSchool;
+	end; --if
+end; --trigger
