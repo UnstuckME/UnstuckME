@@ -58,16 +58,40 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ClientCallback.cs" />
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewAccountSetupPage.xaml.cs">
+      <DependentUpon>NewAccountSetupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewAccountSetupWindow.xaml.cs">
       <DependentUpon>NewAccountSetupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserLoginSettingsPage.xaml.cs">
+      <DependentUpon>UserLoginSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserLoginSettingsWindow.xaml.cs">
       <DependentUpon>UserLoginSettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewAccountSetupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -87,6 +111,10 @@
       <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserLoginSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserLoginSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -131,6 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UnstuckME_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Settings_Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

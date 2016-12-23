@@ -6,49 +6,12 @@
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
         Title="UnstuckME" Height="500" Width="600"
-        MinHeight="500"
-        MinWidth="600"
+        Name="UnstuckME_Window"
+        MinHeight="500" MinWidth="600"
         Background="DimGray"
-        WindowStartupLocation="CenterOwner"
-        WindowState="Normal"
-        WindowStyle="ThreeDBorderWindow">
-    <Canvas Name="Canvas">
-        <ScrollViewer Name="VerticalScrollbar" HorizontalAlignment="Right" VerticalAlignment="Center" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}"
-                      HorizontalContentAlignment="Right" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
-            <Grid Name="Grid" Width="{Binding ActualWidth, ElementName=Canvas}" HorizontalAlignment="Center" ScrollViewer.CanContentScroll="True" Height="820">
-                <PasswordBox x:Name="passwordBox" TabIndex="1" KeyDown="OnKeyDownPasswordHandler"
-                            Height="30" Width="220" Cursor="IBeam" Background="White" FontSize="18" MaxLength="32" TextBlock.TextAlignment="Left" Margin="100,0,0,100"
-                     HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"   />
-                <TextBox x:Name="UserNameTxtBx" TabIndex="0" KeyDown="OnKeyDownPasswordHandler"
-                         HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
-                         Height="30" Width="220" Cursor="IBeam" Background="White" FontSize="18" MaxLength="50" TextAlignment="Left" Margin="100,0,0,200" TextWrapping="Wrap"  
-                         ScrollViewer.CanContentScroll="True" />
-
-                <Button x:Name="LoginBtn" Content="Login" TabIndex="2"
-                        Margin="-150,0,0,0" Height="25" Width="50" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="LoginBtn_Click"
-                         ScrollViewer.VerticalScrollBarVisibility="Visible"
-                        HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"/>
-
-                <Button x:Name="CreateAccountBtn" Content="Create Account" TabIndex="3"
-                        Margin="150,0,0,0" Height="25" Width="100" FontSize="13" FontWeight="Bold" Background="WhiteSmoke" HorizontalContentAlignment="Center" Click="CreateAccountBtn_Click"
-                        VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-
-                <Button x:Name="SettingsBtn" Content="Settings" TabIndex="4"
-                        Margin="0,0,10,0" Height="100" Width="100" Background="DimGray" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="SettingsBtn_Click"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Right"
-                        VerticalAlignment="Top" BorderBrush="DimGray"/>
-
-                <Image x:Name="Logo" Source="UnstuckME_Logo.png" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Height="150" Margin="197,86,171.6,550"  Width="150"
-                       Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                       />
-
-                <Label x:Name="label" Content="Email" 
-                       Background="White" Height="30" Width="100" Margin="-220,0,0,200" FontSize="13" FontWeight="Bold"/>
-                <Label x:Name="label_Copy" Content="Password" Background="White" Height="30" Width="100" Margin="-220,0,0,100" FontSize="13" FontWeight="Bold"/>
-
-            </Grid>
-        </ScrollViewer>
-    </Canvas>
+        WindowStartupLocation="CenterOwner" WindowState="Normal" WindowStyle="ThreeDBorderWindow"
+        Icon="UnstuckME_Logo.png">
+    <DockPanel>
+        <Frame x:Name="_mainFrame" Source="LoginPage.xaml" NavigationUIVisibility="Hidden" />
+    </DockPanel>
 </Window>

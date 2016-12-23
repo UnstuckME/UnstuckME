@@ -1,0 +1,46 @@
+﻿<Page x:Class="UnstuckMEUserGUI.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UnstuckMEUserGUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1000"
+      Name="Login"
+      Background="DimGray">
+    <ScrollViewer Name="VerticalScrollbar" HorizontalAlignment="Right" VerticalAlignment="Center" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}"
+                      HorizontalContentAlignment="Right" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
+        <Grid Name="Grid" Width="{Binding ActualWidth, ElementName=Login}" Height="1012" HorizontalAlignment="Center" VerticalAlignment="Top" ScrollViewer.CanContentScroll="True">
+            <TextBox x:Name="UserNameTxtBx" TabIndex="0" KeyDown="OnKeyDownPasswordHandler" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Height="30" Width="220"
+                     Background="White" FontSize="18" MaxLength="50" TextAlignment="Left" Margin="100,0,0,150" TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" Cursor="IBeam" />
+
+            <PasswordBox x:Name="passwordBox" TabIndex="1" KeyDown="OnKeyDownPasswordHandler" Height="30" Width="220" Background="White" FontSize="18" MaxLength="32" Cursor="IBeam"
+                         TextBlock.TextAlignment="Left" Margin="100,0,0,50" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True" />
+
+            <TextBlock x:Name="PasswordBox_ErrorCode" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20" Width="320" Background="DimGray" FontSize="12"
+                       Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,496,0,0" Text="" />
+
+            <TextBlock x:Name="EmailBox_ErrorCode" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20" Width="320" Background="DimGray" FontSize="12"
+                       Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,446,0,0" Text="" />
+
+            <Button x:Name="LoginBtn" Content="Login" TabIndex="2" Margin="-150,0,0,-50" Height="25" Width="50" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="LoginBtn_Click"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"/>
+
+            <Button x:Name="CreateAccountBtn" Content="Create Account" TabIndex="3" Margin="150,0,0,-50" Height="25" Width="100" FontSize="13" FontWeight="Bold" Background="WhiteSmoke"
+                    HorizontalContentAlignment="Center" Click="CreateAccountBtn_Click" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+
+            <Button x:Name="SettingsBtn" TabIndex="4" Height="100" Width="100" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Click="SettingsBtn_Click" Background="DimGray"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" BorderBrush="DimGray" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Image x:Name="SettingsImage" Source="Settings_Icon.png" Height="{Binding ActualHeight, ElementName=SettingsBtn}" Width="{Binding ActualWidth, ElementName=SettingsBtn}"
+                       Cursor="Hand" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Button>
+
+            <Image x:Name="Logo" Source="UnstuckME_Logo.png" HorizontalAlignment="Center" VerticalAlignment="Top" Height="650" Width="650" Grid.IsSharedSizeScope="True"
+                   ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Panel.ZIndex="-1" />
+
+            <Label x:Name="label" Content="Email" Background="White" Height="30" Width="100" Margin="-220,0,0,150" FontSize="13" FontWeight="Bold"/>
+
+            <Label x:Name="label_Copy" Content="Password" Background="White" Height="30" Width="100" Margin="-220,0,0,50" FontSize="13" FontWeight="Bold"/>
+        </Grid>
+    </ScrollViewer>
+</Page>
