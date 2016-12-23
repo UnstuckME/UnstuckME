@@ -65,6 +65,9 @@ if object_id('PullChatMessagesAndFilesBetweenUsers') is not null
 	drop procedure PullChatMessagesAndFilesBetweenUsers;
 if object_id('GetUserPasswordAndSalt') is not null
 	drop procedure GetUserPasswordAndSalt;
+if object_id('GetUserFriends') is not null
+	drop procedure GetUserFriends;
+
 /**************************************************************************
 * Gets all Stickers for Admin
 **************************************************************************/
@@ -458,31 +461,39 @@ end;
 **************************************************************************/
 go
 create proc PullChatMessagesAndFilesBetweenUsers
-(	@user int,
-	@tutor int
+(	@userid int,
+	@tutorid int
 ) as
 begin
 	select DisplayFName + ' ' + DisplayLName as Sender, MessageData, SentTime
 	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
 		join Chat						on UserToChat.ChatID = Chat.ChatID
 		join Messages					on Chat.ChatID = Messages.ChatID
-	where (UserProfile.UserID = @user and SentBy = UserProfile.UserID)
+	where (UserProfile.UserID = @userid and SentBy = UserProfile.UserID)
 							or
-		  (UserProfile.UserID = @tutor and SentBy = UserProfile.UserID);
+		  (UserProfile.UserID = @tutorid and SentBy = UserProfile.UserID);
 end;
-go
 
 /**************************************************************************
 * Get User Password And Salt By EmailAddress
 **************************************************************************/
+go
 create proc GetUserPasswordAndSalt
-(
-	@EmailAddress varchar(50)
-)
-as
-	BEGIN
-		SELECT UserPassword, Salt
-		FROM UserProfile
-		WHERE (EmailAddress = @EmailAddress)
-	END;
-GO
+(	@EmailAddress varchar(50)	) as
+begin
+	select UserPassword, Salt
+	from UserProfile
+	where EmailAddress = @EmailAddress;
+end;
+
+/*************************************************************************
+* Gets the friends list of a specific user
+*************************************************************************/
+go
+create proc GetUserFriends
+(	@userid int	) as
+begin
+	select DisplayFName + ' ' + DisplayLName as Friends, EmailAddress
+	from UserProfile join Friends	on UserProfile.UserID = Friends.FriendUserID
+	where Friends.UserID = @userid;
+end;
