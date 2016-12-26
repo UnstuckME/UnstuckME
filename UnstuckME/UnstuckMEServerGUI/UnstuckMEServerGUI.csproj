@@ -70,6 +70,9 @@
     <Compile Include="AdminCredChange.xaml.cs">
       <DependentUpon>AdminCredChange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminNameChange.xaml.cs">
+      <DependentUpon>AdminNameChange.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminPullReportsForOptionalUser_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -199,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AdminCredChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminNameChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

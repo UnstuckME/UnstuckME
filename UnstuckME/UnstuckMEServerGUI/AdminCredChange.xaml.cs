@@ -24,7 +24,7 @@ namespace UnstuckMEServerGUI
     {
         public static AdminInfo Admin;
 
-        public AdminCredChange(AdminInfo passedInAdmin)
+        public AdminCredChange(ref AdminInfo passedInAdmin)
         {
             InitializeComponent();
             Admin = passedInAdmin;
@@ -64,6 +64,7 @@ namespace UnstuckMEServerGUI
                                 admin.Password = newHashedPassword.Password;
                                 admin.Salt = newHashedPassword.Salt;
                                 db.SaveChanges();
+                                Admin.EmailAddress = textBoxNewUsername.Text;
                                 MessageBox.Show("New Username and Password Saved", "Administrator Update Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                             else

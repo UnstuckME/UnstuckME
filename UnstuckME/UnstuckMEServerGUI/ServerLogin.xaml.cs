@@ -56,7 +56,7 @@ namespace UnstuckMEServerGUI
 
                         if (Admin.EmailAddress.ToLower() == "admin" && UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.Password)
                         {
-                            AdminCredChange changeloginCreds = new AdminCredChange(Admin);
+                            AdminCredChange changeloginCreds = new AdminCredChange(ref Admin);
                             App.Current.MainWindow = changeloginCreds;
                             changeloginCreds.ShowDialog();
 

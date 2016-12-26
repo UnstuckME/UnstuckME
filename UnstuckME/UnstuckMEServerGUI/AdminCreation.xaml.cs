@@ -22,7 +22,7 @@ namespace UnstuckMEServerGUI
     public partial class AdminCreation : Window
     {
         public static AdminInfo Admin;
-        public AdminCreation(AdminInfo passedInAdmin)
+        public AdminCreation(ref AdminInfo passedInAdmin)
         {
             InitializeComponent();
             Admin = passedInAdmin;
