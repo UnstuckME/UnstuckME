@@ -161,6 +161,9 @@
     <Compile Include="ServerLogin.xaml.cs">
       <DependentUpon>ServerLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerRunning.xaml.cs">
+      <DependentUpon>ServerRunning.xaml</DependentUpon>
+    </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -226,6 +229,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ServerLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServerRunning.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,14 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d"
-        Title="UnstuckME Server Manager" Height="473.354" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen"
-        MinHeight="500" MinWidth="600" >
-    <Grid RenderTransformOrigin="0.507,0.727" Height="466" Margin="0,0,2,2" Width="590">
+        Title="UnstuckME Server Manager" Height="500" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen"
+        MinHeight="500" MinWidth="350" MaxHeight="500" MaxWidth="350">
+    <Grid RenderTransformOrigin="0.507,0.727" Height="466" Margin="0,0,2,2" Width="345">
         <DockPanel Margin="0,0,0,433">
             <Menu DockPanel.Dock="Top" Background="White" Height="34">
                 <MenuItem Header="File" Margin="5,5,0,0">
-                    <MenuItem x:Name="RestartServer" Header="Restart Server" Click="RestartServer_Click"></MenuItem>
-                    <MenuItem x:Name="MenuItemKillAndExit" Header="Kill and Exit" Click="MenuItemKillAndExit_Click"></MenuItem>
                     <MenuItem x:Name="MenuItemExit" Header="Exit" Click="MenuItemExit_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Options" Margin="0,5,0,0">
@@ -23,10 +21,9 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Image x:Name="UnstuckMELogo" HorizontalAlignment="Center" Height="182" Margin="278,10,10,274" VerticalAlignment="Center" Width="302" Source="UnstuckME_Logo.png" RenderTransformOrigin="0.5,0.5"/>
-        <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Center" Margin="219,308,214,124" VerticalAlignment="Center" Width="130" Click="button_RunServer_Click" Background="#FF00BD2A" BorderBrush="Black" Foreground="#FFFFF9F9" FontFamily="Global User Interface"/>
-        <Button x:Name="buttonKillServer" Content="Kill Server" HorizontalAlignment="Center" Margin="219,361,214,71" VerticalAlignment="Center" Width="130" Click="buttonKillServer_Click" Background="Red" BorderBrush="Black" Foreground="White" FontFamily="Global User Interface"/>
-        <Label x:Name="labelEmailAddress" Content="Email Address:" HorizontalAlignment="Left" Margin="10,425,0,0" VerticalAlignment="Top" Width="286"/>
-        <Label x:Name="labelName" Content="Name:" HorizontalAlignment="Left" Margin="301,425,0,0" VerticalAlignment="Top" Width="279"/>
+        <Image x:Name="UnstuckMELogo" HorizontalAlignment="Center" Height="182" Margin="-24,68,10,216" VerticalAlignment="Center" Width="359" Source="UnstuckME_Logo.png" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Center" Margin="101,255,114,149" VerticalAlignment="Center" Width="130" Click="button_RunServer_Click" Background="#FF00BD2A" BorderBrush="Black" Foreground="#FFFFF9F9" FontFamily="Global User Interface" Height="62" BorderThickness="3" FontSize="18"/>
+        <Label x:Name="labelEmailAddress" Content="Email Address:" HorizontalAlignment="Left" Margin="10,430,0,0" VerticalAlignment="Top" Width="325" Height="30"/>
+        <Label x:Name="labelName" Content="Name:" HorizontalAlignment="Left" Margin="10,396,0,0" VerticalAlignment="Top" Width="325" Height="30"/>
     </Grid>
 </Window>

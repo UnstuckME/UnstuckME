@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -75,11 +76,22 @@ namespace UnstuckMEServerGUI
                             labelInvalidUsernamePassword.Visibility = Visibility.Hidden;
                         }
                         else
-                        { 
-                            MainWindow mainWindow = new MainWindow(Admin);
-                            App.Current.MainWindow = mainWindow;
-                            Close();
-                            mainWindow.Show();
+                        {
+                            Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
+                            if (pname.Length == 0)
+                            {
+                                MainWindow mainWindow = new MainWindow(ref Admin);
+                                App.Current.MainWindow = mainWindow;
+                                Close();
+                                mainWindow.Show();
+                            }
+                            else
+                            {
+                                ServerRunning window = new ServerRunning(ref Admin);
+                                App.Current.MainWindow = window;
+                                this.Close();
+                                window.Show();
+                            }
                         }
                     }
                     else

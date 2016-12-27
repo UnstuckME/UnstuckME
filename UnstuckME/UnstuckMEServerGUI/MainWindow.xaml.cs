@@ -27,16 +27,12 @@ namespace UnstuckMEServerGUI
     /// 
     public partial class MainWindow : Window
     {
-        public static IUnstuckMEServer Server;
-        private static DuplexChannelFactory<IUnstuckMEServer> _channelFactory;
         public static AdminInfo Admin;
-        public MainWindow(AdminInfo currentAdmin)
+        public MainWindow(ref AdminInfo currentAdmin)
         {
             try
             {
                 InitializeComponent();
-                _channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
-                Server = _channelFactory.CreateChannel();
                 Admin = currentAdmin;
             }
             catch(Exception ex)
@@ -71,7 +67,10 @@ namespace UnstuckMEServerGUI
                     startServer.StartInfo.FileName = serverPath;
                     startServer.Start();
                     MessageBox.Show("Server Is Now Running.", "Server Startup Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    
+                    ServerRunning window = new ServerRunning(ref Admin);
+                    App.Current.MainWindow = window;
+                    this.Close();
+                    window.Show();
                 }
             }
             catch(InvalidOperationException ex)
@@ -80,30 +79,6 @@ namespace UnstuckMEServerGUI
             }
         }
 
-        /// <summary>
-        /// This function is ran when the user clicks the Kill Server Button.
-        /// </summary>
-        private void buttonKillServer_Click(object sender, RoutedEventArgs e)
-        {
-            KillServer();
-        }
-
-        private void MenuItemKillAndExit_Click(object sender, RoutedEventArgs e)
-        {
-            bool killSuccess = KillServer();
-            if(killSuccess)
-            {
-                ExitApplication();
-            }
-            else
-            {
-                MessageBoxResult boxResult = MessageBox.Show("Server Shutdown Failure! Would You Like to Exit Anyway?", "Server Shutdown Failure", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                if(MessageBoxResult.Yes == boxResult)
-                {
-                    ExitApplication();
-                }
-            }      
-        }
 
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
@@ -122,38 +97,6 @@ namespace UnstuckMEServerGUI
             }
         }
 
-        private bool KillServer()
-        {
-            bool success = false;
-            try
-            {
-                Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
-                if (pname.Length == 0)
-                    throw new InvalidOperationException("Server Is Not Running.");
-                else
-                {
-                    MessageBoxResult boxResult = MessageBox.Show("Are you sure you want to shutdown the server?", "Server Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (boxResult == MessageBoxResult.Yes)
-                    {
-                        Process[] server = Process.GetProcessesByName("UnstuckMEServer");
-                        server[0].Kill();
-                        MessageBox.Show("Server Successfully Shutdown!", "Server Shutdown Success", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        success = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Server Is Still Running.", "Server Shutdown Canceled", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                }
-                return success;
-            }
-            catch (InvalidOperationException ex)
-            {
-                MessageBox.Show(ex.Message, "Server Shutdown Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return success;
-            }
-        }
-
         private void ChangeCredintials_Click(object sender, RoutedEventArgs e)
         {
             
@@ -169,11 +112,6 @@ namespace UnstuckMEServerGUI
             AdminCreation adminCreate = new AdminCreation(ref Admin);
             adminCreate.Show();
             App.Current.MainWindow = adminCreate;
-        }
-
-        private void RestartServer_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void DeleteAdmin_Click(object sender, RoutedEventArgs e)
