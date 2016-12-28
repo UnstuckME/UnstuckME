@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000">
+        Title="MainWindow" Height="700" Width="1000" Closing="Window_Closing">
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="670" VerticalAlignment="Top" Width="994" Margin="0,0,-0.4,0">
             <TabItem Header="User Profile">

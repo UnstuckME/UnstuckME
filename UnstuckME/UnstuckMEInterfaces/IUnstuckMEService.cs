@@ -41,6 +41,9 @@ namespace UnstuckMEInterfaces
         //Checks to see if specified email address exists in the database.
         [OperationContract]
         bool IsValidUser(string emailAddress);
+
+        [OperationContract]
+        void Logout();
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

@@ -17,7 +17,7 @@
                 <MenuItem Header="Options"></MenuItem>
             </Menu>
         </DockPanel>
-        <Button x:Name="buttonKill" Content="Kill Server" HorizontalAlignment="Left" Margin="10,319,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="buttonKill_Click"/>
+        <Button x:Name="buttonKill" Content="Kill Server" HorizontalAlignment="Left" Margin="10,319,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="buttonKill_Click" Background="Red" Foreground="White"/>
 
     </Grid>
 </Window>

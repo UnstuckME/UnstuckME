@@ -63,5 +63,10 @@ namespace UnstuckMEUserGUI
             ClassesView.Visibility = Visibility.Visible;
             AddRemoveClassesView.Visibility = Visibility.Collapsed;
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Server.Logout();
+        }
     }
 }

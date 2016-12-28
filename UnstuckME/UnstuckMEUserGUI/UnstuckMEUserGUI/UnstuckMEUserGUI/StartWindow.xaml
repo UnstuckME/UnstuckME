@@ -10,7 +10,7 @@
         MinHeight="500" MinWidth="600"
         Background="DimGray"
         WindowStartupLocation="CenterOwner" WindowState="Normal" WindowStyle="ThreeDBorderWindow"
-        Icon="UnstuckME_Logo.png">
+        Icon="UnstuckME_Logo.png" Closing="UnstuckME_Window_Closing">
     <DockPanel>
         <Frame x:Name="_mainFrame" Source="LoginPage.xaml" NavigationUIVisibility="Hidden" />
     </DockPanel>

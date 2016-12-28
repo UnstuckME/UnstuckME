@@ -49,5 +49,10 @@ namespace UnstuckMEUserGUI
             } 
             */
         }
+
+        private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Server.Logout();
+        }
     }
 }
