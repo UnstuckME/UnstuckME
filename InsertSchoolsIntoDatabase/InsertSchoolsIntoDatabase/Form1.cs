@@ -17,7 +17,7 @@ namespace InsertSchoolsIntoDatabase
 			// load the combo box
 			List<int> imageIDList = DatabaseOperations.GetImageIDList();
 			foreach (int i in imageIDList)
-				imageIDComboBox.Items.Add(i);
+				SchoolIDComboBox.Items.Add(i);
 		}
 
 		private void Image_Load(object sender, EventArgs e)
@@ -31,14 +31,14 @@ namespace InsertSchoolsIntoDatabase
 		{
 			try
 			{
-				int imageID = Convert.ToInt32(imageIDComboBox.Text);
+				int imageID = Convert.ToInt32(SchoolIDComboBox.Text);
 
 				// read image bytes from the database and display in picture box
 				byte[] imageByteArray = DatabaseOperations.ReadImage(imageID);
 				MemoryStream ms = new MemoryStream(imageByteArray);
 				imagePictureBox.Image = System.Drawing.Image.FromStream(ms);
 
-				DatabaseOperations.ReadExtraData(imageID, ProdIdText, UserIdText, LoaderFileText);
+				DatabaseOperations.ReadExtraData(imageID, SchoolNameText, EmailCredentialText);
 				ms.Close();
 			}
 			catch (Exception ex)
@@ -51,14 +51,13 @@ namespace InsertSchoolsIntoDatabase
 		{
 			try
 			{
-				int productID = Convert.ToInt32(productIDTextBox.Text);
 				string filename = filenameTextBox.Text;
-				DatabaseOperations.WriteImage(productID, filename);
+				DatabaseOperations.WriteImage(filename);
 				MessageBox.Show(this, "Image upload was successful!",
 					"Upload Confirmation");
 
 				// refresh combo box
-				imageIDComboBox.Items.Clear();
+				SchoolIDComboBox.Items.Clear();
 				this.LoadImageIDComboBox();
 
 			}

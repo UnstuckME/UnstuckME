@@ -28,73 +28,62 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-			this.imageIDComboBox = new System.Windows.Forms.ComboBox();
+			this.SchoolIDComboBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.filenameTextBox = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.LoaderFileText = new System.Windows.Forms.TextBox();
-			this.UserIdText = new System.Windows.Forms.TextBox();
-			this.ProdIdText = new System.Windows.Forms.TextBox();
-			this.label7 = new System.Windows.Forms.Label();
+			this.EmailCredentialText = new System.Windows.Forms.TextBox();
+			this.SchoolNameText = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
+			this.SchoolName = new System.Windows.Forms.Label();
 			this.imagePictureBox = new System.Windows.Forms.PictureBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
 			this.uploadButton = new System.Windows.Forms.Button();
-			this.productIDTextBox = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.imagePictureBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// imageIDComboBox
+			// SchoolIDComboBox
 			// 
-			this.imageIDComboBox.FormattingEnabled = true;
-			this.imageIDComboBox.Location = new System.Drawing.Point(89, 27);
-			this.imageIDComboBox.MaxDropDownItems = 50;
-			this.imageIDComboBox.Name = "imageIDComboBox";
-			this.imageIDComboBox.Size = new System.Drawing.Size(175, 21);
-			this.imageIDComboBox.TabIndex = 1;
-			this.imageIDComboBox.Text = "1";
-			this.imageIDComboBox.SelectedIndexChanged += new System.EventHandler(this.imageIDComboBox_SelectedIndexChanged);
+			this.SchoolIDComboBox.FormattingEnabled = true;
+			this.SchoolIDComboBox.Location = new System.Drawing.Point(89, 27);
+			this.SchoolIDComboBox.MaxDropDownItems = 50;
+			this.SchoolIDComboBox.Name = "SchoolIDComboBox";
+			this.SchoolIDComboBox.Size = new System.Drawing.Size(175, 21);
+			this.SchoolIDComboBox.TabIndex = 1;
+			this.SchoolIDComboBox.Text = "1";
+			this.SchoolIDComboBox.SelectedIndexChanged += new System.EventHandler(this.imageIDComboBox_SelectedIndexChanged);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(14, 30);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(53, 13);
+			this.label1.Size = new System.Drawing.Size(57, 13);
 			this.label1.TabIndex = 2;
-			this.label1.Text = "Image ID:";
+			this.label1.Text = "School ID:";
 			// 
 			// filenameTextBox
 			// 
-			this.filenameTextBox.Location = new System.Drawing.Point(101, 19);
+			this.filenameTextBox.Location = new System.Drawing.Point(101, 32);
 			this.filenameTextBox.Name = "filenameTextBox";
 			this.filenameTextBox.Size = new System.Drawing.Size(214, 20);
 			this.filenameTextBox.TabIndex = 4;
-			this.filenameTextBox.Text = "pf02_cover.jpg";
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.BackColor = System.Drawing.Color.LightSteelBlue;
-			this.groupBox1.Controls.Add(this.pictureBox1);
-			this.groupBox1.Controls.Add(this.LoaderFileText);
-			this.groupBox1.Controls.Add(this.UserIdText);
-			this.groupBox1.Controls.Add(this.ProdIdText);
-			this.groupBox1.Controls.Add(this.label7);
+			this.groupBox1.BackColor = System.Drawing.Color.DimGray;
+			this.groupBox1.Controls.Add(this.EmailCredentialText);
+			this.groupBox1.Controls.Add(this.SchoolNameText);
 			this.groupBox1.Controls.Add(this.label6);
-			this.groupBox1.Controls.Add(this.label5);
+			this.groupBox1.Controls.Add(this.SchoolName);
 			this.groupBox1.Controls.Add(this.imagePictureBox);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.imageIDComboBox);
+			this.groupBox1.Controls.Add(this.SchoolIDComboBox);
 			this.groupBox1.Location = new System.Drawing.Point(14, 12);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(676, 424);
@@ -102,66 +91,39 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Display images";
 			// 
-			// pictureBox1
+			// EmailCredentialText
 			// 
-			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-			this.pictureBox1.Location = new System.Drawing.Point(17, 290);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(128, 128);
-			this.pictureBox1.TabIndex = 11;
-			this.pictureBox1.TabStop = false;
+			this.EmailCredentialText.Location = new System.Drawing.Point(89, 147);
+			this.EmailCredentialText.Name = "EmailCredentialText";
+			this.EmailCredentialText.ReadOnly = true;
+			this.EmailCredentialText.Size = new System.Drawing.Size(175, 20);
+			this.EmailCredentialText.TabIndex = 9;
 			// 
-			// LoaderFileText
+			// SchoolNameText
 			// 
-			this.LoaderFileText.Location = new System.Drawing.Point(89, 147);
-			this.LoaderFileText.Multiline = true;
-			this.LoaderFileText.Name = "LoaderFileText";
-			this.LoaderFileText.ReadOnly = true;
-			this.LoaderFileText.Size = new System.Drawing.Size(175, 70);
-			this.LoaderFileText.TabIndex = 10;
-			// 
-			// UserIdText
-			// 
-			this.UserIdText.Location = new System.Drawing.Point(89, 107);
-			this.UserIdText.Name = "UserIdText";
-			this.UserIdText.ReadOnly = true;
-			this.UserIdText.Size = new System.Drawing.Size(175, 20);
-			this.UserIdText.TabIndex = 9;
-			// 
-			// ProdIdText
-			// 
-			this.ProdIdText.Location = new System.Drawing.Point(89, 67);
-			this.ProdIdText.Name = "ProdIdText";
-			this.ProdIdText.ReadOnly = true;
-			this.ProdIdText.Size = new System.Drawing.Size(175, 20);
-			this.ProdIdText.TabIndex = 8;
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(14, 150);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(65, 13);
-			this.label7.TabIndex = 7;
-			this.label7.Text = "Loaded File:";
+			this.SchoolNameText.Location = new System.Drawing.Point(89, 87);
+			this.SchoolNameText.Name = "SchoolNameText";
+			this.SchoolNameText.ReadOnly = true;
+			this.SchoolNameText.Size = new System.Drawing.Size(175, 20);
+			this.SchoolNameText.TabIndex = 8;
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(14, 110);
+			this.label6.Location = new System.Drawing.Point(14, 144);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(46, 13);
+			this.label6.Size = new System.Drawing.Size(62, 26);
 			this.label6.TabIndex = 6;
-			this.label6.Text = "User ID:";
+			this.label6.Text = "Email\nCredentials:";
 			// 
-			// label5
+			// SchoolName
 			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(14, 70);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(61, 13);
-			this.label5.TabIndex = 5;
-			this.label5.Text = "Product ID:";
+			this.SchoolName.AutoSize = true;
+			this.SchoolName.Location = new System.Drawing.Point(14, 91);
+			this.SchoolName.Name = "SchoolName";
+			this.SchoolName.Size = new System.Drawing.Size(74, 13);
+			this.SchoolName.TabIndex = 5;
+			this.SchoolName.Text = "School Name:";
 			// 
 			// imagePictureBox
 			// 
@@ -174,12 +136,10 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.BackColor = System.Drawing.Color.LightSteelBlue;
+			this.groupBox2.BackColor = System.Drawing.Color.DimGray;
 			this.groupBox2.Controls.Add(this.button1);
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.uploadButton);
-			this.groupBox2.Controls.Add(this.productIDTextBox);
-			this.groupBox2.Controls.Add(this.label3);
 			this.groupBox2.Controls.Add(this.label2);
 			this.groupBox2.Controls.Add(this.filenameTextBox);
 			this.groupBox2.Location = new System.Drawing.Point(14, 442);
@@ -191,7 +151,7 @@
 			// 
 			// button1
 			// 
-			this.button1.BackColor = System.Drawing.Color.Yellow;
+			this.button1.BackColor = System.Drawing.Color.Firebrick;
 			this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.button1.Location = new System.Drawing.Point(563, 79);
 			this.button1.Name = "button1";
@@ -212,7 +172,7 @@
 			// 
 			// uploadButton
 			// 
-			this.uploadButton.BackColor = System.Drawing.Color.Lime;
+			this.uploadButton.BackColor = System.Drawing.Color.DarkCyan;
 			this.uploadButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.uploadButton.Location = new System.Drawing.Point(26, 79);
 			this.uploadButton.Name = "uploadButton";
@@ -222,73 +182,50 @@
 			this.uploadButton.UseVisualStyleBackColor = false;
 			this.uploadButton.Click += new System.EventHandler(this.uploadButton_Click);
 			// 
-			// productIDTextBox
-			// 
-			this.productIDTextBox.Location = new System.Drawing.Point(101, 48);
-			this.productIDTextBox.Name = "productIDTextBox";
-			this.productIDTextBox.Size = new System.Drawing.Size(214, 20);
-			this.productIDTextBox.TabIndex = 7;
-			this.productIDTextBox.Text = "4";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(23, 51);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(61, 13);
-			this.label3.TabIndex = 6;
-			this.label3.Text = "Product ID:";
-			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(23, 22);
+			this.label2.Location = new System.Drawing.Point(23, 35);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(52, 13);
 			this.label2.TabIndex = 5;
 			this.label2.Text = "Filename:";
 			// 
-			// ImageManagerForm
+			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Gold;
+			this.BackColor = System.Drawing.Color.LightSlateGray;
 			this.ClientSize = new System.Drawing.Size(702, 593);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Name = "ImageManagerForm";
+			this.Name = "Form1";
 			this.Text = "Product Image Manager";
 			this.Load += new System.EventHandler(this.Image_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.imagePictureBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
+
 		}
 
 		#endregion
 
-		private System.Windows.Forms.ComboBox imageIDComboBox;
+		private System.Windows.Forms.ComboBox SchoolIDComboBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox filenameTextBox;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button uploadButton;
-		private System.Windows.Forms.TextBox productIDTextBox;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.PictureBox imagePictureBox;
-		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox LoaderFileText;
-		private System.Windows.Forms.TextBox UserIdText;
-		private System.Windows.Forms.TextBox ProdIdText;
-		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.Label SchoolName;
+		private System.Windows.Forms.TextBox EmailCredentialText;
+		private System.Windows.Forms.TextBox SchoolNameText;
 		private System.Windows.Forms.Button button1;
 	}
 }
-

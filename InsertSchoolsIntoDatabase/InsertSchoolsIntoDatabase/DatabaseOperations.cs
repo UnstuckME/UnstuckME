@@ -8,9 +8,9 @@ namespace InsertSchoolsIntoDatabase
 	class DatabaseOperations
 	{
 		// The directory for the images
-		public static string IMAGES_PATH = "C:\\Users\\colem_000\\Documents\\OIT\\CST 316-26-36 - Junior Project\\UnstuckME\\UnstuckMECore\\Media";
-		static string DB_USER_NAME = "jesse_chaney";
-		static string DB_USER_PWD = "NotMyP@$$W0rd";
+		public static string IMAGES_PATH = "C:\\Users\\colem_000\\Documents\\OIT\\CST 316-26-36 - Junior Project\\UnstuckME\\UnstuckMECore\\Media\\";
+		static string DB_USER_NAME = "matthew_cole";
+		static string DB_USER_PWD = "Ensalada1";
 
 		public static SqlConnection GetConnection()
 		{
@@ -19,13 +19,13 @@ namespace InsertSchoolsIntoDatabase
 				//"Data Source=localhost\\SqlExpress;" + 
 				//"Data Source=ORANGE1\\ORANGE1" +
 				"Data Source=aura.students.cset.oit.edu" +
-				";Initial Catalog=" + DB_USER_NAME +
+				";Initial Catalog=UnstuckME_Schools" +
 				";Integrated Security=False" +
 				";User ID=" + DB_USER_NAME + ";Password=" + DB_USER_PWD;
 			return connection;
 		}
 
-		public static void WriteImage(int productID, string imageName)
+		public static void WriteImage(string imageName)
 		{
 			SqlConnection connection = null;
 
@@ -33,6 +33,7 @@ namespace InsertSchoolsIntoDatabase
 			{
 				// 1. Read image from file
 				string filepath = IMAGES_PATH + imageName;
+				string schoolname = imageName.Split('.')[0];
 
 				if (File.Exists(filepath) == false)
 					throw new Exception("File Not Found: " + filepath);
@@ -45,7 +46,10 @@ namespace InsertSchoolsIntoDatabase
 				string school_email_cred = string.Empty;
 
 				foreach (string item in schoolname_split)
-					school_email_cred += schoolname_split[0][0].ToString();
+				{
+					if (item.Length > 3)
+						school_email_cred += item[0].ToString().ToLower();
+				}
 
 				sourceStream.Read(productImage, 0, streamLength);
 				sourceStream.Close();
@@ -56,20 +60,16 @@ namespace InsertSchoolsIntoDatabase
 				SqlCommand command = new SqlCommand();
 				command.Connection = connection;
 				command.CommandText =
-					"INSERT INTO UnstuckME_Schools.School (SchoolName, EmailCredentials) " +
-					"VALUES (@SchoolName, @EmailCredentials)";
-				command.Parameters.AddWithValue("@SchoolName", imageName);
+					"INSERT INTO dbo.School (SchoolName, EmailCredentials) " +
+					"VALUES (@SchoolName, @EmailCredentials)" +
+				
+					"INSERT INTO dbo.SchoolLogo (LogoID, Logo)" +
+					"VALUES (@@IDENTITY, @SchoolLogo)";
+				command.Parameters.AddWithValue("@SchoolName", schoolname);
 				command.Parameters.AddWithValue("@EmailCredentials", "@" + school_email_cred + ".edu");
+				command.Parameters.AddWithValue("@SchoolLogo", productImage);
 
 				connection.Open();
-				int schoolID = (int)command.ExecuteScalar();
-
-				command.CommandText =
-					"INSERT INTO UnstuckME_Schools.SchoolLogo (LogoID, Logo)" +
-					"VALUES (@@IDENTITY, @SchoolLogo)";
-				command.Parameters.AddWithValue("@SchoolLogo", productImage);
-				//command.Parameters.AddWithValue("@@IDENTITY", schoolID);
-
 				command.ExecuteNonQuery();
 			}
 			catch (Exception e)
@@ -88,6 +88,7 @@ namespace InsertSchoolsIntoDatabase
 		public static Byte[] ReadImage(int imageID)
 		{
 			SqlConnection connection = null;
+
 			try
 			{
 				connection = GetConnection();
@@ -95,9 +96,9 @@ namespace InsertSchoolsIntoDatabase
 				SqlCommand command = new SqlCommand();
 				command.Connection = connection;
 				command.CommandText =
-					"SELECT ProductImage " +
-					"FROM blobs.ProductImages " +
-					"WHERE ImageID = @ImageID";
+					"SELECT Logo " +
+					"FROM dbo.SchoolLogo " +
+					"WHERE LogoID = @ImageID";
 				command.Parameters.AddWithValue("@ImageID", imageID);
 
 				connection.Open();
@@ -126,10 +127,10 @@ namespace InsertSchoolsIntoDatabase
 
 		// I really don't want to think about how many ugly things I did to accomplish this.
 		// This should not be used as a model, unless it models bad.
-		public static int ReadExtraData(int imageID
-			, System.Windows.Forms.TextBox prodIdTB, System.Windows.Forms.TextBox userIdTB, System.Windows.Forms.TextBox loadedFileTB)
+		public static int ReadExtraData(int imageID, System.Windows.Forms.TextBox SchoolNameTB, System.Windows.Forms.TextBox EmailCredTB)
 		{
 			SqlConnection connection = null;
+
 			try
 			{
 				connection = GetConnection();
@@ -137,10 +138,10 @@ namespace InsertSchoolsIntoDatabase
 				SqlCommand command = new SqlCommand();
 				command.Connection = connection;
 				command.CommandText =
-					"SELECT UserId, ProductId, LoadedFromFile " +
-					"FROM blobs.ProductImages " +
-					"WHERE ImageID = @ImageID";
-				command.Parameters.AddWithValue("@ImageID", imageID);
+					"SELECT SchoolName, EmailCredentials " +
+					"FROM School " +
+					"WHERE SchoolID = @SchoolID";
+				command.Parameters.AddWithValue("@SchoolID", imageID);
 
 				connection.Open();
 				SqlDataReader reader = command.ExecuteReader();
@@ -148,18 +149,14 @@ namespace InsertSchoolsIntoDatabase
 				if (reader.Read() == false)
 					throw new Exception("Unable to read image.");
 
-				// Gasp! Well, I don't have to worry about deallocating it.
-				char[] loadedFile = new char[256];
-				char[] userId = new char[100];
-				int productId;
+				char[] SchoolName = new char[128];
+				char[] EmailCred = new char[64];
 
-				long bytesRead = reader.GetChars(reader.GetOrdinal("UserID"), 0, userId, 0, 100);
-				productId = reader.GetInt32(reader.GetOrdinal("ProductID"));
-				bytesRead = reader.GetChars(reader.GetOrdinal("LoadedFromFile"), 0, loadedFile, 0, 256);
+				reader.GetChars(reader.GetOrdinal("SchoolName"), 0, SchoolName, 0, 128);
+				reader.GetChars(reader.GetOrdinal("EmailCredentials"), 0, EmailCred, 0, 64);
 
-				prodIdTB.Text = productId.ToString();
-				userIdTB.Text = new string(userId);
-				loadedFileTB.Text = new string(loadedFile);
+				SchoolNameTB.Text = new string(SchoolName);
+				EmailCredTB.Text = new string(EmailCred);
 
 				return 0;
 			}
@@ -186,7 +183,7 @@ namespace InsertSchoolsIntoDatabase
 				SqlCommand command = new SqlCommand();
 				command.Connection = connection;
 				command.CommandText =
-					"SELECT LogoID FROM UnstuckME_Schools.SchoolLogo " +
+					"SELECT LogoID FROM dbo.SchoolLogo " +
 					"ORDER BY LogoID";
 
 				connection.Open();

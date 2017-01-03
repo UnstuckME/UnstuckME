@@ -28,7 +28,7 @@ namespace InsertSchoolsIntoDatabase
 				for (int imageID = 0; imageID < Media.GetFiles().Length; imageID++)
 				{
 					FileInfo item = Media.GetFiles()[imageID];
-					DatabaseOperations.WriteImage(imageID, item.Name);
+					DatabaseOperations.WriteImage(item.Name);
 				}
 			}
 
