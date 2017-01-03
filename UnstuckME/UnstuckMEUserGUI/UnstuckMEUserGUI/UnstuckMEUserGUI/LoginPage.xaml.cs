@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,28 @@ namespace UnstuckMEUserGUI
 		{
 			InitializeComponent();
 			Server = OpenServer;
+
+			//add code here to get school logos and names and instantiate the UI objects that need them
+
+			// check the config file and see if this program is linked to a school
+			/*
+			var appSettings = ConfigurationManager.AppSettings;
+            string associatedSchool = appSettings["AssociatedSchool"] ?? "Not Found";
+
+            // if linked display school logo
+            if (associatedSchool != "Not Found")
+            {
+                
+            }
+            // if not linked display the settings window
+            else
+            {
+				NavigationService.Navigate(new UserLoginSettingsPage());
+			}
+			*/
 		}
 
+		//Checks for proper login information and attempts to login; if successful navigates to main interface
 		private void LoginBtn_Click(object sender, RoutedEventArgs e)
 		{
 			string email = UserNameTxtBx.Text;
@@ -49,10 +70,11 @@ namespace UnstuckMEUserGUI
 			{
 				//Calls UnstuckME Server Function that checks email credentials
 				isValid = Server.UserLoginAttempt(email, password);
-				//if valid login
-				if (isValid)
+				
+				if (isValid)	//if valid login
 				{
-					NavigationService.Navigate(new MainPage(Server.GetUserID(email), Server));	//this will crash without valid login info
+					//this will crash without valid login info
+					NavigationService.Navigate(new MainPage(Server.GetUserID(email), Server));
 				}
 				else
 				{
@@ -63,11 +85,13 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
+		//Navigates to the create account menu
 		private void CreateAccountBtn_Click(object sender, RoutedEventArgs e)
 		{
 			NavigationService.Navigate(new NewAccountSetupPage(Server));
 		}
 
+		//Navigates to the Settings menu
 		private void SettingsBtn_Click(object sender, RoutedEventArgs e)
 		{
 			NavigationService.Navigate(new UserLoginSettingsPage());
@@ -77,9 +101,25 @@ namespace UnstuckMEUserGUI
 		private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return)
-			{
 				LoginBtn_Click(sender, e);
-			}
+		}
+
+		//Close the Application
+		private void ExitBtn_Click(object sender, RoutedEventArgs e)
+		{
+			Application.Current.Shutdown();
+		}
+
+		//Rotates left between schools
+		private void Rotate_Left_SchoolBtn_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		//Rotates right between schools
+		private void Rotate_Right_SchoolBtn_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

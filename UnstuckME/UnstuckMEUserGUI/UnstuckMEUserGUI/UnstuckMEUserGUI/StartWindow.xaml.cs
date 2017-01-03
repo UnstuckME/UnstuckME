@@ -25,34 +25,23 @@ namespace UnstuckMEUserGUI
     {
         public static IUnstuckMEService Server;
         private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
+
         public StartWindow()
         {
             InitializeComponent();
             _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
             Server = _channelFactory.CreateChannel();
 			_mainFrame.Navigate(new LoginPage(Server));
-/*
-            // check the config file and see if this program is linked to a school
-            var appSettings = ConfigurationManager.AppSettings;
-            string associatedSchool = appSettings["AssociatedSchool"] ?? "Not Found";
-
-            // if linked display school logo
-            if (associatedSchool != "Not Found")
-            {
-                
-            }
-            // if not linked display the settings window
-            else
-            {
-                Window disp = new UserLoginSettingsWindow();
-                disp.Show();
-            } 
-            */
         }
 
         private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Server.Logout();
+			try
+			{
+				Server.Logout();
+			}
+			catch (Exception)
+			{ }
         }
     }
 }
