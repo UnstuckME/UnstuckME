@@ -74,8 +74,8 @@ namespace UnstuckMEUserGUI
 	//Handles all School DB connections and queries
 	static class SchoolDB_Connection
 	{
-		static string DB_USER_NAME = "";
-		static string DB_USER_PWD = "";
+		static string DB_USER_NAME = "UnstuckME_Student_Guest";
+		static string DB_USER_PWD = "oK@yP@$$W0rd";
 
 		private static SqlConnection GetConnection()
 		{
@@ -109,10 +109,12 @@ namespace UnstuckMEUserGUI
 				for (int i = 0; reader.Read(); i++)
 					schools.Add(new School(reader[0].ToString(), (byte[])reader[1]));
 
-				foreach (var school in schools)
-					GetServerInfo(school, connection);
-
 				reader.Close();
+
+				//this works just need data in Server table
+				//foreach (var school in schools)
+				//	GetServerInfo(school, connection);
+
 				return schools;
 			}
 			catch (Exception e)
@@ -133,13 +135,12 @@ namespace UnstuckMEUserGUI
 				SqlCommand command = new SqlCommand();
 				command.Connection = connection;
 				command.CommandText =
-					"SELECT ServerDomain, ServerName, ServerIPAddress" +
+					"SELECT ServerDomain, ServerName, ServerIPAddress " +
 					"FROM dbo.Server JOIN dbo.School " +
 					"ON dbo.Server.SchoolID = dbo.School.SchoolID " +
 					"WHERE dbo.School.SchoolName = @schoolname";
 				command.Parameters.AddWithValue("@schoolname", school.Name);
 
-				connection.Open();
 				SqlDataReader reader = command.ExecuteReader();
 
 				school.Domain = reader[0].ToString();

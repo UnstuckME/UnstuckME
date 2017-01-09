@@ -39,6 +39,9 @@
 			this.ServerIPText = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.SchoolName = new System.Windows.Forms.Label();
+			this.ServerDomain = new System.Windows.Forms.Label();
+			this.ServerName = new System.Windows.Forms.Label();
+			this.ServerIP = new System.Windows.Forms.Label();
 			this.imagePictureBox = new System.Windows.Forms.PictureBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.button1 = new System.Windows.Forms.Button();
@@ -152,6 +155,33 @@
 			this.SchoolName.TabIndex = 5;
 			this.SchoolName.Text = "School Name:";
 			// 
+			// ServerDomain
+			// 
+			this.ServerDomain.AutoSize = true;
+			this.ServerDomain.Location = new System.Drawing.Point(14, 211);
+			this.ServerDomain.Name = "ServerDomain";
+			this.ServerDomain.Size = new System.Drawing.Size(74, 13);
+			this.ServerDomain.TabIndex = 14;
+			this.ServerDomain.Text = "Server Domain:";
+			// 
+			// ServerName
+			// 
+			this.ServerName.AutoSize = true;
+			this.ServerName.Location = new System.Drawing.Point(14, 271);
+			this.ServerName.Name = "ServerName";
+			this.ServerName.Size = new System.Drawing.Size(74, 13);
+			this.ServerName.TabIndex = 15;
+			this.ServerName.Text = "Server Name:";
+			// 
+			// ServerIP
+			// 
+			this.ServerIP.AutoSize = true;
+			this.ServerIP.Location = new System.Drawing.Point(14, 331);
+			this.ServerIP.Name = "ServerIP";
+			this.ServerIP.Size = new System.Drawing.Size(74, 13);
+			this.ServerIP.TabIndex = 16;
+			this.ServerIP.Text = "Server IP:";
+			// 
 			// imagePictureBox
 			// 
 			this.imagePictureBox.Location = new System.Drawing.Point(270, 18);
@@ -251,6 +281,9 @@
 		private System.Windows.Forms.PictureBox imagePictureBox;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label SchoolName;
+		private System.Windows.Forms.Label ServerDomain;
+		private System.Windows.Forms.Label ServerName;
+		private System.Windows.Forms.Label ServerIP;
 		private System.Windows.Forms.TextBox EmailCredentialText;
 		private System.Windows.Forms.TextBox SchoolNameText;
 		private System.Windows.Forms.TextBox ServerDomainText;
