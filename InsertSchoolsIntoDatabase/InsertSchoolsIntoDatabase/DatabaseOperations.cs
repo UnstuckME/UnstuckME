@@ -9,8 +9,8 @@ namespace InsertSchoolsIntoDatabase
 	{
 		// The directory for the images
 		public static string IMAGES_PATH = "C:\\Users\\colem_000\\Documents\\OIT\\CST 316-26-36 - Junior Project\\UnstuckME\\UnstuckMECore\\Media\\";
-		static string DB_USER_NAME = "matthew_cole";
-		static string DB_USER_PWD = "Ensalada1";
+		static string DB_USER_NAME = "";
+		static string DB_USER_PWD = "";
 
 		public static SqlConnection GetConnection()
 		{

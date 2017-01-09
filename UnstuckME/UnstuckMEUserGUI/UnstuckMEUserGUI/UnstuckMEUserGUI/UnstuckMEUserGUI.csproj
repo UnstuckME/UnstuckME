@@ -73,6 +73,7 @@
     <Compile Include="NewAccountSetupWindow.xaml.cs">
       <DependentUpon>NewAccountSetupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SchoolDB_Connection.cs" />
     <Compile Include="UserLoginSettingsPage.xaml.cs">
       <DependentUpon>UserLoginSettingsPage.xaml</DependentUpon>
     </Compile>

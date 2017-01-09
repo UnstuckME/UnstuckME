@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,30 +25,41 @@ namespace UnstuckMEUserGUI
 	public partial class LoginPage : Page
 	{
 		public static IUnstuckMEService Server;
+		private static List<School> schools = new List<School>();
+		private static ImageSourceConverter source = new ImageSourceConverter();
 
 		public LoginPage(IUnstuckMEService OpenServer)
 		{
-			InitializeComponent();
-			Server = OpenServer;
+			try
+			{
+				InitializeComponent();
+				Server = OpenServer;
 
-			//add code here to get school logos and names and instantiate the UI objects that need them
+				//add code here to get school logos and names and instantiate the UI objects that need them
 
-			// check the config file and see if this program is linked to a school
-			/*
-			var appSettings = ConfigurationManager.AppSettings;
-            string associatedSchool = appSettings["AssociatedSchool"] ?? "Not Found";
+				// check the config file and see if this program is linked to a school
+			
+				var appSettings = ConfigurationManager.AppSettings;
+				string associatedSchool = appSettings["AssociatedSchool"] ?? "Not Found";
+				schools = SchoolDB_Connection.GetSchoolNamesAndImages();
 
-            // if linked display school logo
-            if (associatedSchool != "Not Found")
-            {
-                
-            }
-            // if not linked display the settings window
-            else
-            {
-				NavigationService.Navigate(new UserLoginSettingsPage());
+				// if linked display school logo
+				if (associatedSchool != "Not Found")
+				{
+
+				}
+				else    //if not linked display default order of schools
+				{
+					Left_School_Logo.Source = source.ConvertFrom(schools[0].Logo) as ImageSource;
+					Selected_School_Logo.Source = source.ConvertFrom(schools[1].Logo) as ImageSource;
+					Right_School_Logo.Source = source.ConvertFrom(schools[2].Logo) as ImageSource;
+					Selected_SchoolName.Content = schools[1].Name;
+				}
 			}
-			*/
+			catch (Exception e)
+			{
+				Selected_SchoolName.Content = "Error: " + e.Message;
+			}
 		}
 
 		//Checks for proper login information and attempts to login; if successful navigates to main interface
@@ -68,6 +81,9 @@ namespace UnstuckMEUserGUI
 			}
 			else
 			{
+				//add stuff here regarding manual connection string
+				//if (ConnectionStrTxtBx.Visibility != Visibility.Hidden)	//if a connection string is specified
+
 				//Calls UnstuckME Server Function that checks email credentials
 				isValid = Server.UserLoginAttempt(email, password);
 				
@@ -113,13 +129,66 @@ namespace UnstuckMEUserGUI
 		//Rotates left between schools
 		private void Rotate_Left_SchoolBtn_Click(object sender, RoutedEventArgs e)
 		{
+			if (Selected_SchoolName.Content.ToString() != schools[0].Name)
+			{
+				int index = -1;
+				while (Selected_SchoolName.Content.ToString() != schools[index + 1].Name)
+					index++;
 
+				if (index != 0)
+					Left_School_Logo.Source = source.ConvertFrom(schools[index - 1].Logo) as ImageSource;
+				else
+					Left_School_Logo.Source = null;
+
+				Selected_School_Logo.Source = source.ConvertFrom(schools[index].Logo) as ImageSource;
+				Right_School_Logo.Source = source.ConvertFrom(schools[index + 1].Logo) as ImageSource;
+				Selected_SchoolName.Content = schools[index].Name;
+			}
 		}
 
 		//Rotates right between schools
 		private void Rotate_Right_SchoolBtn_Click(object sender, RoutedEventArgs e)
 		{
+			int length = schools.Count;
 
+			if (Selected_SchoolName.Content.ToString() != schools[length - 1].Name)
+			{
+				int index = 1;
+				while (Selected_SchoolName.Content.ToString() != schools[index - 1].Name)
+					index++;
+
+				Left_School_Logo.Source = source.ConvertFrom(schools[index - 1].Logo) as ImageSource;
+				Selected_School_Logo.Source = source.ConvertFrom(schools[index].Logo) as ImageSource;
+
+				if (index != length - 1)
+					Right_School_Logo.Source = source.ConvertFrom(schools[index + 1].Logo) as ImageSource;
+				else
+					Right_School_Logo.Source = null;
+
+				Selected_SchoolName.Content = schools[index].Name;
+			}
+		}
+
+		private void AdvancedSettingsBtn_Click(object sender, RoutedEventArgs e)
+		{
+			if (ConnectionStrTxtBx.Visibility == Visibility.Hidden)
+			{
+				LoginBtn.Margin = new Thickness(LoginBtn.Margin.Left, LoginBtn.Margin.Top, LoginBtn.Margin.Right, LoginBtn.Margin.Bottom - 100);
+				CreateAccountBtn.Margin = new Thickness(CreateAccountBtn.Margin.Left, CreateAccountBtn.Margin.Top, CreateAccountBtn.Margin.Right, CreateAccountBtn.Margin.Bottom - 100);
+				AdvancedSettingsBtn.Margin = new Thickness(AdvancedSettingsBtn.Margin.Left, AdvancedSettingsBtn.Margin.Top, AdvancedSettingsBtn.Margin.Right, AdvancedSettingsBtn.Margin.Bottom - 100);
+				School_Logos.Margin = new Thickness(School_Logos.Margin.Left, School_Logos.Margin.Top, School_Logos.Margin.Right, School_Logos.Margin.Bottom - 100);
+				ConnectionStrTxtBx.Visibility = Visibility.Visible;
+				ConnectionStr_Label.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				LoginBtn.Margin = new Thickness(LoginBtn.Margin.Left, LoginBtn.Margin.Top, LoginBtn.Margin.Right, LoginBtn.Margin.Bottom + 100);
+				CreateAccountBtn.Margin = new Thickness(CreateAccountBtn.Margin.Left, CreateAccountBtn.Margin.Top, CreateAccountBtn.Margin.Right, CreateAccountBtn.Margin.Bottom + 100);
+				AdvancedSettingsBtn.Margin = new Thickness(AdvancedSettingsBtn.Margin.Left, AdvancedSettingsBtn.Margin.Top, AdvancedSettingsBtn.Margin.Right, AdvancedSettingsBtn.Margin.Bottom + 100);
+				School_Logos.Margin = new Thickness(School_Logos.Margin.Left, School_Logos.Margin.Top, School_Logos.Margin.Right, School_Logos.Margin.Bottom + 100);
+				ConnectionStrTxtBx.Visibility = Visibility.Hidden;
+				ConnectionStr_Label.Visibility = Visibility.Hidden;
+			}
 		}
 	}
 }

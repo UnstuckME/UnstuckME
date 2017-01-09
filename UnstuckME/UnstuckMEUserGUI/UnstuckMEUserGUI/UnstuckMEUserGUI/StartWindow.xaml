@@ -15,7 +15,7 @@
         <Frame x:Name="_mainFrame" Source="LoginPage.xaml" NavigationUIVisibility="Hidden" />
     </DockPanel>
 </Window>
-<Style x:Key="StandardStyle" TargetType="{x:Type local:MainWindow}">
+<!--<Style x:Key="StandardStyle" TargetType="{x:Type local:MainWindow}">
     <Setter Property="shell:WindowChrome.WindowChrome">
         <Setter.Value>
             <shell:WindowChrome />
@@ -41,4 +41,4 @@
             </ControlTemplate>
         </Setter.Value>
     </Setter>
-</Style>
+</Style>-->
