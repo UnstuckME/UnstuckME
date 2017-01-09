@@ -35,10 +35,7 @@ namespace UnstuckMEUserGUI
 				InitializeComponent();
 				Server = OpenServer;
 
-				//add code here to get school logos and names and instantiate the UI objects that need them
-
 				// check the config file and see if this program is linked to a school
-			
 				var appSettings = ConfigurationManager.AppSettings;
 				string associatedSchool = appSettings["AssociatedSchool"] ?? "Not Found";
 				schools = SchoolDB_Connection.GetSchoolNamesAndImages();
@@ -46,20 +43,41 @@ namespace UnstuckMEUserGUI
 				// if linked display school logo
 				if (associatedSchool != "Not Found")
 				{
+					int index = 0;
+					while (associatedSchool != schools[index].Name)
+						index++;
 
+					SetSchoolImages(index);
 				}
 				else    //if not linked display default order of schools
 				{
-					Left_School_Logo.Source = source.ConvertFrom(schools[0].Logo) as ImageSource;
-					Selected_School_Logo.Source = source.ConvertFrom(schools[1].Logo) as ImageSource;
-					Right_School_Logo.Source = source.ConvertFrom(schools[2].Logo) as ImageSource;
-					Selected_SchoolName.Content = schools[1].Name;
+					SetSchoolImages(1);
 				}
 			}
 			catch (Exception e)
 			{
 				Selected_SchoolName.Content = "Error: " + e.Message;
 			}
+		}
+
+		//orders the 
+		private void SetSchoolImages(int index)
+		{
+			int length = schools.Count;
+						
+			if (index != 0)
+				Left_School_Logo.Source = source.ConvertFrom(schools[index - 1].Logo) as ImageSource;
+			else
+				Left_School_Logo.Source = null;
+
+			Selected_School_Logo.Source = source.ConvertFrom(schools[index].Logo) as ImageSource;
+
+			if (index != length - 1)
+				Right_School_Logo.Source = source.ConvertFrom(schools[index + 1].Logo) as ImageSource;
+			else
+				Right_School_Logo.Source = null;
+
+			Selected_SchoolName.Content = schools[index].Name;
 		}
 
 		//Checks for proper login information and attempts to login; if successful navigates to main interface
@@ -90,6 +108,10 @@ namespace UnstuckMEUserGUI
 				if (isValid)	//if valid login
 				{
 					//this will crash without valid login info
+					//save school info in app.config
+					var appSettings = ConfigurationManager.AppSettings;
+					appSettings.Set("AssociatedSchool", Selected_SchoolName.Content.ToString());
+
 					NavigationService.Navigate(new MainPage(Server.GetUserID(email), Server));
 				}
 				else
@@ -135,14 +157,7 @@ namespace UnstuckMEUserGUI
 				while (Selected_SchoolName.Content.ToString() != schools[index + 1].Name)
 					index++;
 
-				if (index != 0)
-					Left_School_Logo.Source = source.ConvertFrom(schools[index - 1].Logo) as ImageSource;
-				else
-					Left_School_Logo.Source = null;
-
-				Selected_School_Logo.Source = source.ConvertFrom(schools[index].Logo) as ImageSource;
-				Right_School_Logo.Source = source.ConvertFrom(schools[index + 1].Logo) as ImageSource;
-				Selected_SchoolName.Content = schools[index].Name;
+				SetSchoolImages(index);
 			}
 		}
 
@@ -157,15 +172,7 @@ namespace UnstuckMEUserGUI
 				while (Selected_SchoolName.Content.ToString() != schools[index - 1].Name)
 					index++;
 
-				Left_School_Logo.Source = source.ConvertFrom(schools[index - 1].Logo) as ImageSource;
-				Selected_School_Logo.Source = source.ConvertFrom(schools[index].Logo) as ImageSource;
-
-				if (index != length - 1)
-					Right_School_Logo.Source = source.ConvertFrom(schools[index + 1].Logo) as ImageSource;
-				else
-					Right_School_Logo.Source = null;
-
-				Selected_SchoolName.Content = schools[index].Name;
+				SetSchoolImages(index);
 			}
 		}
 

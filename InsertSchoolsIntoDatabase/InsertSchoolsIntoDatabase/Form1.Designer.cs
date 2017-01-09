@@ -34,6 +34,9 @@
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.EmailCredentialText = new System.Windows.Forms.TextBox();
 			this.SchoolNameText = new System.Windows.Forms.TextBox();
+			this.ServerDomainText = new System.Windows.Forms.TextBox();
+			this.ServerNameText = new System.Windows.Forms.TextBox();
+			this.ServerIPText = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.SchoolName = new System.Windows.Forms.Label();
 			this.imagePictureBox = new System.Windows.Forms.PictureBox();
@@ -107,6 +110,30 @@
 			this.SchoolNameText.Size = new System.Drawing.Size(175, 20);
 			this.SchoolNameText.TabIndex = 8;
 			// 
+			// ServerDomainText
+			// 
+			this.ServerDomainText.Location = new System.Drawing.Point(89, 207);
+			this.ServerDomainText.Name = "ServerDomainText";
+			this.ServerDomainText.ReadOnly = true;
+			this.ServerDomainText.Size = new System.Drawing.Size(175, 20);
+			this.ServerDomainText.TabIndex = 11;
+			// 
+			// ServerNameText
+			// 
+			this.ServerNameText.Location = new System.Drawing.Point(89, 267);
+			this.ServerNameText.Name = "ServerNameText";
+			this.ServerNameText.ReadOnly = true;
+			this.ServerNameText.Size = new System.Drawing.Size(175, 20);
+			this.ServerNameText.TabIndex = 12;
+			// 
+			// ServerIPText
+			// 
+			this.ServerIPText.Location = new System.Drawing.Point(89, 327);
+			this.ServerIPText.Name = "ServerIPText";
+			this.ServerIPText.ReadOnly = true;
+			this.ServerIPText.Size = new System.Drawing.Size(175, 20);
+			this.ServerIPText.TabIndex = 13;
+			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
@@ -168,7 +195,7 @@
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(255, 13);
 			this.label4.TabIndex = 9;
-			this.label4.Text = "Note: The image file must be in the C:\\temp directory";
+			//this.label4.Text = "Note: The image file must be in the C:\\temp directory";
 			// 
 			// uploadButton
 			// 
@@ -226,6 +253,9 @@
 		private System.Windows.Forms.Label SchoolName;
 		private System.Windows.Forms.TextBox EmailCredentialText;
 		private System.Windows.Forms.TextBox SchoolNameText;
+		private System.Windows.Forms.TextBox ServerDomainText;
+		private System.Windows.Forms.TextBox ServerNameText;
+		private System.Windows.Forms.TextBox ServerIPText;
 		private System.Windows.Forms.Button button1;
 	}
 }
