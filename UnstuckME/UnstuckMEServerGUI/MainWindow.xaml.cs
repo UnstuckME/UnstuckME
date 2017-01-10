@@ -60,13 +60,13 @@ namespace UnstuckMEServerGUI
                     currentDir = currentDir.Parent.Parent.Parent;
                     string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
                     Process startServer = new Process();
-                    startServer.StartInfo.RedirectStandardOutput = true;
-                    startServer.StartInfo.UseShellExecute = false;
-                    startServer.StartInfo.CreateNoWindow = true;
-                    startServer.StartInfo.Verb = "runas";
+                    //startServer.StartInfo.RedirectStandardOutput = true;
+                    //startServer.StartInfo.UseShellExecute = false;
+                    //startServer.StartInfo.CreateNoWindow = true;
+                    //startServer.StartInfo.Verb = "runas";
                     startServer.StartInfo.FileName = serverPath;
                     startServer.Start();
-                    MessageBox.Show("Server Is Now Running.", "Server Startup Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
                     ServerRunning window = new ServerRunning(ref Admin);
                     App.Current.MainWindow = window;
                     this.Close();

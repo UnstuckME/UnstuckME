@@ -37,46 +37,89 @@ namespace UnstuckMEServerGUI
 
         private void buttonKill_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to Kill the server?", "Server Kill Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (result == MessageBoxResult.Yes)
             {
-                Server.AdminLogMessage("Server Kill Attempt.");
-                Server.AdminLogout();
-                bool retVal = KillServer();
-                if (!retVal)
+                try
                 {
-                    throw new Exception("Failure to Kill Server!");
-                }
-                else
-                {
-                    MainWindow window = new MainWindow(ref Admin);
-                    App.Current.MainWindow = window;
-                    this.Close();
-                    window.Show();
-                }
+                    Server.AdminLogMessage("Server Kill Attempt.");
+                    Server.AdminLogout();
+                    bool retVal = KillServer();
+                    if (!retVal)
+                    {
+                        throw new Exception("Failure to Kill Server!");
+                    }
+                    else
+                    {
+                        MainWindow window = new MainWindow(ref Admin);
+                        App.Current.MainWindow = window;
+                        this.Close();
+                        window.Show();
+                    }
 
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Kill Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Server.RegisterServerAdmin(Admin);
-                Server.AdminLogMessage("Server Kill Failure, Relogged Admin");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Kill Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Server.RegisterServerAdmin(Admin);
+                    Server.AdminLogMessage("Server Kill Failure, Relogged Admin");
+                }
             }
         }
 
         private bool KillServer()
         {
+
             try
             {
                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
                 pname[0].Kill();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Server Kill Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
+        }
 
+        private void DeleteAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteAdmin deleteAdmin = new DeleteAdmin(Admin);
+            deleteAdmin.Show();
+            App.Current.MainWindow = deleteAdmin;
+        }
+
+        private void ChangeCredintials_Click(object sender, RoutedEventArgs e)
+        {
+            AdminCredChange adminChange = new AdminCredChange(ref Admin);
+            adminChange.ShowDialog();
+            //labelEmailAddress.Content = Admin.EmailAddress;
+            App.Current.MainWindow = adminChange;
+        }
+
+        private void CreateAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            AdminCreation adminCreate = new AdminCreation(ref Admin);
+            adminCreate.Show();
+            App.Current.MainWindow = adminCreate;
+        }
+
+        private void ChangeFirstLastName_Click(object sender, RoutedEventArgs e)
+        {
+            AdminNameChange nameChange = new AdminNameChange(ref Admin);
+            App.Current.MainWindow = nameChange;
+            nameChange.ShowDialog();
+            //labelName.Content = Admin.FirstName + " " + Admin.LastName;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
+            //if (pname.Length > 0)
+            //{
+            //    Server.AdminLogout();
+            //}
         }
     }
 }

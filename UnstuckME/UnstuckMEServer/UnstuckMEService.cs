@@ -199,20 +199,34 @@ namespace UnstuckMEInterfaces
             throw new NotImplementedException();
         }
 
-        public void RegisterServerAdmin(AdminInfo admin)
+        public void RegisterServerAdmin(AdminInfo LoggingInAdmin)
         {
             try
             {
                 //Stores Server Admin into Logged in _ConnectedServerAdmins List
                 IServer establishedUserConnection = OperationContext.Current.GetCallbackChannel<IServer>();
-                ConnectedServerAdmin newAdmin = new ConnectedServerAdmin();
-                newAdmin.connection = establishedUserConnection;
-                newAdmin.Admin = admin;
-                _connectedServerAdmins.TryAdd(newAdmin.Admin.ServerAdminID, newAdmin);
-
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Server Admin Login: {0} at {1}", newAdmin.Admin.EmailAddress, System.DateTime.Now);
-                Console.ResetColor();
+                bool oldConnection = false;
+                foreach(var onlineAdmin in _connectedServerAdmins)
+                {
+                    if(onlineAdmin.Key == LoggingInAdmin.ServerAdminID)
+                    {
+                        oldConnection = true;
+                        onlineAdmin.Value.connection = establishedUserConnection;
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("Server Admin Re-Login: {0} at {1}", onlineAdmin.Value.Admin.EmailAddress, System.DateTime.Now);
+                        Console.ResetColor();
+                    }
+                }
+                if (!oldConnection)
+                {
+                    ConnectedServerAdmin newAdmin = new ConnectedServerAdmin();
+                    newAdmin.connection = establishedUserConnection;
+                    newAdmin.Admin = LoggingInAdmin;
+                    _connectedServerAdmins.TryAdd(newAdmin.Admin.ServerAdminID, newAdmin);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("Server Admin Login: {0} at {1}", newAdmin.Admin.EmailAddress, System.DateTime.Now);
+                    Console.ResetColor();
+                }
             }
             catch(Exception ex)
             {
