@@ -203,12 +203,16 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                //Stores Client into Logged in Users List
-                var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IServer>();
+                //Stores Server Admin into Logged in _ConnectedServerAdmins List
+                IServer establishedUserConnection = OperationContext.Current.GetCallbackChannel<IServer>();
                 ConnectedServerAdmin newAdmin = new ConnectedServerAdmin();
                 newAdmin.connection = establishedUserConnection;
                 newAdmin.Admin = admin;
                 _connectedServerAdmins.TryAdd(newAdmin.Admin.ServerAdminID, newAdmin);
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Server Admin Login: {0} at {1}", newAdmin.Admin.EmailAddress, System.DateTime.Now);
+                Console.ResetColor();
             }
             catch(Exception ex)
             {
@@ -217,6 +221,8 @@ namespace UnstuckMEInterfaces
                 Console.ResetColor();
             }
          }
+
+        
 
         public void Logout()
         {
@@ -234,7 +240,7 @@ namespace UnstuckMEInterfaces
 
         public ConnectedClient GetMyClient()
         {
-            var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
+            IClient establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
             foreach (var client in _connectedClients)
             {
                 if (client.Value.connection == establishedUserConnection)
@@ -243,6 +249,42 @@ namespace UnstuckMEInterfaces
                 }
             }
             return null;
+        }
+
+        public void AdminLogout()
+        {
+            ConnectedServerAdmin connectedAdmin = GetMyAdmin();
+            if(connectedAdmin != null)
+            {
+                ConnectedServerAdmin removedAdmin;
+                _connectedServerAdmins.TryRemove(connectedAdmin.Admin.ServerAdminID, out removedAdmin);
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Server Admin Logoff: {0} at {1}", removedAdmin.Admin.EmailAddress, System.DateTime.Now);
+                Console.ResetColor();
+            }
+        }
+
+        public ConnectedServerAdmin GetMyAdmin()
+        {
+            IServer establishedAdminConnection = OperationContext.Current.GetCallbackChannel<IServer>();
+            foreach (var admin in _connectedServerAdmins)
+            {
+                if(admin.Value.connection == establishedAdminConnection)
+                {
+                    return admin.Value;
+                }
+            }
+            return null;
+        }
+
+        public void AdminLogMessage(string message)
+        {
+            ConnectedServerAdmin currentAdmin = GetMyAdmin();
+            //Future Will Log to Log File.
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Message: {0} Sent by: {1} at {2}", message, currentAdmin.Admin.EmailAddress, System.DateTime.Now);
+            Console.ResetColor();
         }
     }
 }

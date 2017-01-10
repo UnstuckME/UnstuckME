@@ -54,5 +54,11 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void RegisterServerAdmin(AdminInfo admin);
+
+        [OperationContract]
+        void AdminLogout();
+
+        [OperationContract]
+        void AdminLogMessage(string message);
     }
 }

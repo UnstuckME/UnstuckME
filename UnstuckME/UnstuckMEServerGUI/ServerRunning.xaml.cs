@@ -32,12 +32,15 @@ namespace UnstuckMEServerGUI
             _channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
             Server = _channelFactory.CreateChannel();
             Admin = passedInAdmin;
+            Server.RegisterServerAdmin(Admin);
         }
 
         private void buttonKill_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                Server.AdminLogMessage("Server Kill Attempt.");
+                Server.AdminLogout();
                 bool retVal = KillServer();
                 if (!retVal)
                 {
@@ -55,6 +58,8 @@ namespace UnstuckMEServerGUI
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Kill Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Server.RegisterServerAdmin(Admin);
+                Server.AdminLogMessage("Server Kill Failure, Relogged Admin");
             }
         }
 
