@@ -66,7 +66,12 @@ namespace UnstuckMEUserGUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Server.Logout();
+			try
+			{
+				Server.Logout();
+			}
+			catch (Exception)
+			{ }
         }
     }
 }

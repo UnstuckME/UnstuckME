@@ -6,41 +6,103 @@
       xmlns:local="clr-namespace:UnstuckMEUserGUI"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1000"
-      Name="Login"
-      Background="DimGray">
+      Name="Login" Background="DimGray">
     <ScrollViewer Name="VerticalScrollbar" HorizontalAlignment="Right" VerticalAlignment="Center" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}"
-                      HorizontalContentAlignment="Right" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
-        <Grid Name="Grid" Width="{Binding ActualWidth, ElementName=Login}" Height="1012" HorizontalAlignment="Center" VerticalAlignment="Top" ScrollViewer.CanContentScroll="True">
+                      HorizontalContentAlignment="Right" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="True" VerticalContentAlignment="Bottom">
+        <Grid Name="Grid" Width="{Binding ActualWidth, ElementName=Login}" MinWidth="800" Height="1012" HorizontalAlignment="Center" VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"
+              ScrollViewer.HorizontalScrollBarVisibility="Visible">
             <TextBox x:Name="UserNameTxtBx" TabIndex="0" KeyDown="OnKeyDownPasswordHandler" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Height="30" Width="220"
-                     Background="White" FontSize="18" MaxLength="50" TextAlignment="Left" Margin="100,0,0,150" TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" Cursor="IBeam" />
+                     Background="White" FontSize="18" MaxLength="50" TextAlignment="Left" Margin="100,0,0,150" ScrollViewer.CanContentScroll="True" Cursor="IBeam" />
 
             <PasswordBox x:Name="passwordBox" TabIndex="1" KeyDown="OnKeyDownPasswordHandler" Height="30" Width="220" Background="White" FontSize="18" MaxLength="32" Cursor="IBeam"
-                         TextBlock.TextAlignment="Left" Margin="100,0,0,50" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True" />
+                         TextBlock.TextAlignment="Left" Margin="100,0,0,50" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+            <TextBox x:Name="ConnectionStrTxtBx" KeyDown="OnKeyDownPasswordHandler" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Height="30" Width="200" Visibility="Hidden"
+                     Background="White" FontSize="18" MaxLength="75" TextAlignment="Left" Margin="120,0,0,-50" ScrollViewer.CanContentScroll="True" Cursor="IBeam" />
 
             <TextBlock x:Name="PasswordBox_ErrorCode" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20" Width="320" Background="DimGray" FontSize="12"
-                       Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,496,0,0" Text="" />
+                       Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,496,0,0" Text="" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
 
             <TextBlock x:Name="EmailBox_ErrorCode" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20" Width="320" Background="DimGray" FontSize="12"
-                       Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,446,0,0" Text="" />
+                       Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,446,0,0" Text="" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
 
-            <Button x:Name="LoginBtn" Content="Login" TabIndex="2" Margin="-150,0,0,-50" Height="25" Width="50" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="LoginBtn_Click"
-                    ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True"/>
+            <Button x:Name="LoginBtn" Content="Login" TabIndex="2" Margin="-275,0,0,-50" Height="25" Width="50" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="LoginBtn_Click"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
 
-            <Button x:Name="CreateAccountBtn" Content="Create Account" TabIndex="3" Margin="150,0,0,-50" Height="25" Width="100" FontSize="13" FontWeight="Bold" Background="WhiteSmoke"
-                    HorizontalContentAlignment="Center" Click="CreateAccountBtn_Click" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+            <Button x:Name="CreateAccountBtn" Content="Create Account" TabIndex="3" Margin="-20,0,0,-50" Height="25" Width="100" FontSize="13" FontWeight="Bold" Background="WhiteSmoke"
+                    HorizontalContentAlignment="Center" Click="CreateAccountBtn_Click" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto" />
 
-            <Button x:Name="SettingsBtn" TabIndex="4" Height="100" Width="100" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Click="SettingsBtn_Click" Background="DimGray"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" BorderBrush="DimGray" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button x:Name="AdvancedSettingsBtn" Content="Advanced" TabIndex="4" Margin="250,0,0,-50" Height="25" Width="75" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="AdvancedSettingsBtn_Click"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+
+            <Button x:Name="SettingsBtn" TabIndex="8" Height="100" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="SettingsBtn_Click" Background="DimGray"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" BorderBrush="DimGray" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <Image x:Name="SettingsImage" Source="Settings_Icon.png" Height="{Binding ActualHeight, ElementName=SettingsBtn}" Width="{Binding ActualWidth, ElementName=SettingsBtn}"
-                       Cursor="Hand" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                       Cursor="Hand" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       ScrollViewer.HorizontalScrollBarVisibility="Auto" />
             </Button>
 
-            <Image x:Name="Logo" Source="UnstuckME_Logo.png" HorizontalAlignment="Center" VerticalAlignment="Top" Height="650" Width="650" Grid.IsSharedSizeScope="True"
-                   ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Panel.ZIndex="-1" />
+            <Button x:Name="ExitBtn" TabIndex="5" Height="80" Width="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Click="ExitBtn_Click" Background="DimGray" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" BorderBrush="DimGray" Cursor="Hand"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <Image x:Name="ExitBtn_Image" Source="Exit_Button.png" Height="{Binding ActualHeight, ElementName=ExitBtn}" Width="{Binding ActualWidth, ElementName=ExitBtn}"
+                       Cursor="Hand" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+            </Button>
 
-            <Label x:Name="label" Content="Email" Background="White" Height="30" Width="100" Margin="-220,0,0,150" FontSize="13" FontWeight="Bold"/>
+            <!--<Label x:Name="ExitBtn_Label" Content="Exit" Background="DimGray" Height="25" Width="50" HorizontalAlignment="Left"  VerticalAlignment="Top" HorizontalContentAlignment="Center"
+                   Margin="15,81" VerticalContentAlignment="Center" FontSize="13" FontWeight="Bold" ScrollViewer.HorizontalScrollBarVisibility="Auto" />-->
 
-            <Label x:Name="label_Copy" Content="Password" Background="White" Height="30" Width="100" Margin="-220,0,0,50" FontSize="13" FontWeight="Bold"/>
+            <Image x:Name="Logo" Source="UnstuckME_Logo.png" HorizontalAlignment="Center" VerticalAlignment="Top" Height="950" Width="950" Grid.IsSharedSizeScope="True"
+                   ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Panel.ZIndex="-1" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+            <Label x:Name="Email_Label" Content="Email" Background="White" Height="30" Width="100" Margin="-220,0,0,150" FontSize="13" FontWeight="Bold" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+
+            <Label x:Name="Password_Label" Content="Password" Background="White" Height="30" Width="100" Margin="-220,0,0,50" FontSize="13" FontWeight="Bold" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+
+            <Label x:Name="ConnectionStr_Label" Content="Connection String" Background="White" Height="30" Width="120" Margin="-200,0,0,-50" FontSize="13" FontWeight="Bold" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                   Visibility="Hidden"/>
+
+            <Canvas x:Name="School_Logos" Height="350" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.IsSharedSizeScope="True" Margin="0,500,0,0"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                <Rectangle x:Name="imageBackground" Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,0,0,0" ScrollViewer.CanContentScroll="True"
+                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Fill="DimGray" />
+                
+                <Image x:Name="Selected_School_Logo" Height="300" Width="300" Grid.IsSharedSizeScope="True" Margin="250,0,0,0" ScrollViewer.CanContentScroll="True"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                <Image x:Name="Left_School_Logo" Height="250" Width="250" Grid.IsSharedSizeScope="True" Margin="50,50,0,0" Panel.ZIndex="-1" ScrollViewer.CanContentScroll="True"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                <Image x:Name="Right_School_Logo" Height="250" Width="250" Grid.IsSharedSizeScope="True" Margin="500,50,0,0" Panel.ZIndex="-1" ScrollViewer.CanContentScroll="True"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Center" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                <Label x:Name="Selected_SchoolName" Content="" Height="30" Width="300" Margin="250,310,0,0" HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                <Button x:Name="Rotate_Left_SchoolBtn" TabIndex="6" Height="125" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"
+                        Margin="0,112.5,0,0" VerticalAlignment="Center" Click="Rotate_Left_SchoolBtn_Click" Background="WhiteSmoke" Cursor="Hand" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                    <Image x:Name="LeftArrow_Image" Source="Right_Arrow.png" Height="{Binding ActualHeight, ElementName=Rotate_Left_SchoolBtn}" Width="{Binding ActualWidth, ElementName=Rotate_Left_SchoolBtn}"
+                           Cursor="Hand" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="180"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Button>
+
+                <Button x:Name="Rotate_Right_SchoolBtn" TabIndex="7" Height="125" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"
+                        Margin="770,112.5,0,0" VerticalAlignment="Center" Click="Rotate_Right_SchoolBtn_Click" Background="WhiteSmoke" Cursor="Hand" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                    <Image x:Name="RightArrow_Image" Source="Right_Arrow.png" Height="{Binding ActualHeight, ElementName=Rotate_Right_SchoolBtn}" Width="{Binding ActualWidth, ElementName=Rotate_Right_SchoolBtn}"
+                           Cursor="Hand" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+                </Button>
+            </Canvas>
         </Grid>
     </ScrollViewer>
 </Page>

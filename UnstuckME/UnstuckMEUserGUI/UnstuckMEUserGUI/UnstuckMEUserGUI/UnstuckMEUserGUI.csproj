@@ -73,11 +73,9 @@
     <Compile Include="NewAccountSetupWindow.xaml.cs">
       <DependentUpon>NewAccountSetupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SchoolDB_Connection.cs" />
     <Compile Include="UserLoginSettingsPage.xaml.cs">
       <DependentUpon>UserLoginSettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserLoginSettingsWindow.xaml.cs">
-      <DependentUpon>UserLoginSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
@@ -112,10 +110,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserLoginSettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserLoginSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,6 +156,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Settings_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Exit_Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Right_Arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
