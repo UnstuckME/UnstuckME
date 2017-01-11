@@ -32,4 +32,25 @@ namespace UnstuckME_Classes
         List<int> Users { get; set; }
         List<UnstuckMEMessage> Messages { get; set; }
     }
+
+    public class UnstuckMEReview
+    {
+        public int ReviewID { get; set; }
+        public int StickerID { get; set; }
+        public int ReviewerID { get; set; }
+        public float StarRanking { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class UnstuckMESticker
+    {
+        public int StickerID { get; set; }
+        public string ProblemDescription { get; set; }
+        public int ClassID { get; set; }
+        public int StudentID { get; set; }
+        public int TutorID { get; set; }
+        public float MinimumStarRanking { get; set; }
+        public DateTime SubmitTime { get; set; }
+        public DateTime Timeout { get; set; }
+    }
 }
