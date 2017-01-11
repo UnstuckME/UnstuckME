@@ -111,9 +111,7 @@ namespace UnstuckMEUserGUI
 
 				reader.Close();
 
-				//this works just need data in Server table
-				//foreach (var school in schools)
-				//	GetServerInfo(school, connection);
+				for (int i = 0; GetServerInfo(schools[i], connection); i++);
 
 				return schools;
 			}
@@ -128,8 +126,10 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
-		public static void GetServerInfo(School school, SqlConnection connection)
+		public static bool GetServerInfo(School school, SqlConnection connection)
 		{
+			bool result = false;
+
 			try
 			{
 				SqlCommand command = new SqlCommand();
@@ -143,11 +143,16 @@ namespace UnstuckMEUserGUI
 
 				SqlDataReader reader = command.ExecuteReader();
 
-				school.Domain = reader[0].ToString();
-				school.Server = reader[1].ToString();
-				school.IP = reader[2].ToString();
+				if (reader.HasRows)
+				{
+					result = true;
+					school.Domain = reader[0].ToString();
+					school.Server = reader[1].ToString();
+					school.IP = reader[2].ToString();
+				}
 
 				reader.Close();
+				return result;
 			}
 			catch (Exception e)
 			{

@@ -15,30 +15,3 @@
         <Frame x:Name="_mainFrame" Source="LoginPage.xaml" NavigationUIVisibility="Hidden" />
     </DockPanel>
 </Window>
-<!--<Style x:Key="StandardStyle" TargetType="{x:Type local:MainWindow}">
-    <Setter Property="shell:WindowChrome.WindowChrome">
-        <Setter.Value>
-            <shell:WindowChrome />
-        </Setter.Value>
-    </Setter>
-    <Setter Property="Template">
-        <Setter.Value>
-            <ControlTemplate TargetType="{x:Type local:MainWindow}">
-                <Grid>
-                    <Border Background="White"
-                            Margin="{Binding Source={x:Static shell:SystemParameters2.Current}, Path=WindowNonClientFrameThickness}">
-                        <ContentPresenter Content="{TemplateBinding Content}" />
-                    </Border>
-                    <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" 
-                               VerticalAlignment="Top" HorizontalAlignment="Left" 
-                               Margin="36,8,0,0"/>
-                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon}"
-                           VerticalAlignment="Top" HorizontalAlignment="Left"
-                           Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness}" 
-                           Width="{Binding Source={x:Static shell:SystemParameters2.Current}, Path=SmallIconSize.Width}"
-                           shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
-                </Grid>
-            </ControlTemplate>
-        </Setter.Value>
-    </Setter>
-</Style>-->

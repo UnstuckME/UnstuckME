@@ -129,23 +129,11 @@ namespace UnstuckMEUserGUI
 			NavigationService.Navigate(new NewAccountSetupPage(Server));
 		}
 
-		//Navigates to the Settings menu
-		private void SettingsBtn_Click(object sender, RoutedEventArgs e)
-		{
-			NavigationService.Navigate(new UserLoginSettingsPage());
-		}
-
 		//Handles Enter Being Pressed While in the Password/Username Box
 		private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return)
 				LoginBtn_Click(sender, e);
-		}
-
-		//Close the Application
-		private void ExitBtn_Click(object sender, RoutedEventArgs e)
-		{
-			Application.Current.Shutdown();
 		}
 
 		//Rotates left between schools

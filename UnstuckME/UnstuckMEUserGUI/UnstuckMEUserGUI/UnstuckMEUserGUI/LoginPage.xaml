@@ -38,26 +38,7 @@
             <Button x:Name="AdvancedSettingsBtn" Content="Advanced" TabIndex="4" Margin="250,0,0,-50" Height="25" Width="75" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="AdvancedSettingsBtn_Click"
                     ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
-
-            <Button x:Name="SettingsBtn" TabIndex="8" Height="100" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="SettingsBtn_Click" Background="DimGray"
-                    ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" BorderBrush="DimGray" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <Image x:Name="SettingsImage" Source="Settings_Icon.png" Height="{Binding ActualHeight, ElementName=SettingsBtn}" Width="{Binding ActualWidth, ElementName=SettingsBtn}"
-                       Cursor="Hand" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"
-                       ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-            </Button>
-
-            <Button x:Name="ExitBtn" TabIndex="5" Height="80" Width="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Click="ExitBtn_Click" Background="DimGray" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" BorderBrush="DimGray" Cursor="Hand"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <Image x:Name="ExitBtn_Image" Source="Exit_Button.png" Height="{Binding ActualHeight, ElementName=ExitBtn}" Width="{Binding ActualWidth, ElementName=ExitBtn}"
-                       Cursor="Hand" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center"
-                       ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-            </Button>
-
-            <!--<Label x:Name="ExitBtn_Label" Content="Exit" Background="DimGray" Height="25" Width="50" HorizontalAlignment="Left"  VerticalAlignment="Top" HorizontalContentAlignment="Center"
-                   Margin="15,81" VerticalContentAlignment="Center" FontSize="13" FontWeight="Bold" ScrollViewer.HorizontalScrollBarVisibility="Auto" />-->
-
+            
             <Image x:Name="Logo" Source="UnstuckME_Logo.png" HorizontalAlignment="Center" VerticalAlignment="Top" Height="950" Width="950" Grid.IsSharedSizeScope="True"
                    ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Panel.ZIndex="-1" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
 

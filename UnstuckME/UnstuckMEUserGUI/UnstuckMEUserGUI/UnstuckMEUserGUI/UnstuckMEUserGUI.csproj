@@ -64,19 +64,10 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NewAccountSetupPage.xaml.cs">
       <DependentUpon>NewAccountSetupPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewAccountSetupWindow.xaml.cs">
-      <DependentUpon>NewAccountSetupWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SchoolDB_Connection.cs" />
-    <Compile Include="UserLoginSettingsPage.xaml.cs">
-      <DependentUpon>UserLoginSettingsPage.xaml</DependentUpon>
-    </Compile>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -85,15 +76,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="NewAccountSetupPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NewAccountSetupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -109,10 +92,6 @@
       <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserLoginSettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -153,12 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UnstuckME_Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Settings_Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Exit_Button.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Right_Arrow.png" />
