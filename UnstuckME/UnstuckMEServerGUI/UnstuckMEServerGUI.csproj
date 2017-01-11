@@ -290,6 +290,7 @@
     <Resource Include="UnstuckME_Logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="GearIcon.png" />
     <Content Include="UnstuckMEServer_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>

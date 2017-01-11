@@ -27,6 +27,11 @@
             <Label x:Name="label_Copy1" Content="Confirm New Password:" Canvas.Left="24" Canvas.Top="103" Height="27" FontSize="10" Width="120" Foreground="White"/>
             <Button x:Name="button" Content="Button" Canvas.Left="237" Canvas.Top="140" Width="75" Foreground="White" Background="#FF5E64E6"/>
         </Canvas>
+        <Button Name="SettingButton" Margin="290,10,10,420" BorderThickness="0" Background="White" Click="buttonSetting_Click">
+            <StackPanel Orientation ="Horizontal">
+                <Image Source="GearIcon.png" Stretch="Uniform" />
+            </StackPanel>
+        </Button>
 
     </Grid>
 </Window>

@@ -105,6 +105,12 @@ namespace UnstuckMEServerGUI
                 labelInvalidUsernamePassword.Visibility = Visibility.Visible;
             }
         }
+
+        private void buttonSetting_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Whatsup mani");
+        }
+
         private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
