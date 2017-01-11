@@ -40,6 +40,7 @@ namespace UnstuckMEServerGUI
             MessageBoxResult result = MessageBox.Show("Are you sure you want to Kill the server?", "Server Kill Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
             if (result == MessageBoxResult.Yes)
             {
+
                 try
                 {
                     Server.AdminLogMessage("Server Kill Attempt.");
@@ -115,11 +116,15 @@ namespace UnstuckMEServerGUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
-            //if (pname.Length > 0)
-            //{
-            //    Server.AdminLogout();
-            //}
+            try
+            {
+                Server.AdminLogout();
+            }
+            catch(Exception)
+            {
+                //This occurs when the administrator kills the server and the window closes. Server Unreachable.
+            }
+
         }
     }
 }

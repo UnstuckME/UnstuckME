@@ -38,10 +38,13 @@ namespace UnstuckMEUserGUI
         {
 			try
 			{
+                this.Hide();
 				Server.Logout();
 			}
 			catch (Exception)
-			{ }
+			{
+                this.Show();
+            }
         }
     }
 }
