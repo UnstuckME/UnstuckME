@@ -121,11 +121,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
+    <ProjectReference Include="..\..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
       <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
       <Name>UnstuckMEInterfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\UnstuckME_Classes\UnstuckME_Classes.csproj">
+    <ProjectReference Include="..\..\UnstuckME_Classes\UnstuckME_Classes.csproj">
       <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>
       <Name>UnstuckME_Classes</Name>
     </ProjectReference>
@@ -135,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Right_Arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Edit Icon %2832x32%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

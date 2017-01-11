@@ -27,6 +27,9 @@
             <TextBlock x:Name="EmailBox_ErrorCode" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20" Width="320" Background="DimGray" FontSize="12"
                        Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,446,0,0" Text="" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
 
+            <TextBlock x:Name="ConnectionStr_ErrorCode" HorizontalAlignment="Center" VerticalAlignment="Top" Height="20" Width="320" Background="DimGray" FontSize="12" Visibility="Hidden"
+                       Foreground="Red" TextAlignment="Left" TextWrapping="NoWrap" ScrollViewer.CanContentScroll="True" Margin="0,546,0,0" Text="" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
             <Button x:Name="LoginBtn" Content="Login" TabIndex="2" Margin="-275,0,0,-50" Height="25" Width="50" Background="WhiteSmoke" FontSize="13" FontWeight="Bold" Click="LoginBtn_Click"
                     ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
