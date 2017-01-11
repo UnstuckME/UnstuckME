@@ -19,10 +19,6 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         int GetUserID(string emailAddress);
 
-        //Still Testing
-        //[OperationContract]
-        //void SendMessageToAllUsers(string message, string emailAddress);
-
         [OperationContract]
         void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
@@ -44,14 +40,36 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void Logout();
+
+        [OperationContract]
+        void ChangePassword(UserInfo User, string newPassword);
+
+        [OperationContract]
+        void DeleteUserAccount(int userID);
+
+        [OperationContract]
+        List<UnstuckMEReview> GetUserStudentReviews (int userID);
+
+        [OperationContract]
+        List<UnstuckMEReview> GetUserTutorReviews(int userID);
+
+        [OperationContract]
+        List<UnstuckMESticker> GetUserSubmittedStickers(int userID);
+
+        [OperationContract]
+        List<UnstuckMESticker> GetUserTutoredStickers(int userID);
+
+        [OperationContract]
+        void AddUserToTutoringOrganization(int userID, int organizationID);
+
+        [OperationContract]
+        void SubmitSticker(UnstuckMESticker newSticker, int timoutInSeconds);
+
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]
     public interface IUnstuckMEServer
     {
-        [OperationContract]
-        void DoWork();
-
         [OperationContract]
         void RegisterServerAdmin(AdminInfo admin);
 

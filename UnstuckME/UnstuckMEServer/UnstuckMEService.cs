@@ -9,6 +9,7 @@ using UnstuckME_Classes;
 using System.Security.Cryptography;
 using System.Collections.Concurrent;
 using System.Security;
+using System.Data.Objects;
 
 namespace UnstuckMEInterfaces
 {
@@ -62,8 +63,6 @@ namespace UnstuckMEInterfaces
 
         public bool UserLoginAttempt(string emailAddress, string passWord)
         {
-            Console.WriteLine("a user with the email address of: " + emailAddress + " attempted a login");
-
             bool loginAttempt = false;
 
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -120,7 +119,7 @@ namespace UnstuckMEInterfaces
                 {
                     var classes = db.GetUserClasses(UserID);
                     UserClasses temp = new UserClasses();
-
+                    
                     //This might work, if not let me know and i'll figure out something else.
                     foreach (var c in classes)
                     {
@@ -146,17 +145,6 @@ namespace UnstuckMEInterfaces
                 db.InsertStudentIntoClass(UserID, ClassID);
             }
         }
-
-        //public void SendMessageToAllUsers(string message, string emailAddress)
-        //{
-        //    foreach (var client in _connectedClients)
-        //    {
-        //        if(client.Key.ToLower() != emailAddress.ToLower())
-        //        {
-        //            client.Value.connection.GetMessage(message, emailAddress);
-        //        }
-        //    }
-        //}
 
         public UserInfo GetUserInfo(int userID)
         {
@@ -192,11 +180,6 @@ namespace UnstuckMEInterfaces
                     return false;
                 }
             }
-        }
-
-        public void DoWork()
-        {
-            throw new NotImplementedException();
         }
 
         public void RegisterServerAdmin(AdminInfo LoggingInAdmin)
@@ -299,6 +282,147 @@ namespace UnstuckMEInterfaces
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Message: {0} Sent by: {1} at {2}", message, currentAdmin.Admin.EmailAddress, System.DateTime.Now);
             Console.ResetColor();
+        }
+
+        public void ChangePassword(UserInfo User, string newPassword)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                UnstuckMEPassword newHashedPassword = UnstuckMEHashing.GetHashedPassword(newPassword);
+                var users = (from u in db.UserProfiles
+                             where u.EmailAddress == User.EmailAddress
+                             select u).First();
+                users.UserPassword = newHashedPassword.Password;
+                users.Salt = newHashedPassword.Salt;
+                db.SaveChanges();
+            }
+        }
+
+        public void DeleteUserAccount(int userID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.DeleteUserProfileByUserID(userID);
+            }
+        }
+
+        public List<UnstuckMEReview> GetUserStudentReviews(int userID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var studentReviews = from u in db.Reviews
+                                     join j in db.Stickers on u.StickerID equals j.StickerID
+                                     where u.ReviewerID == userID && j.StudentID == userID
+                                     select new { Review = u };
+
+                List<UnstuckMEReview> studentReviewList = new List<UnstuckMEReview>();
+                UnstuckMEReview usReview = new UnstuckMEReview();
+                foreach (var review in studentReviews)
+                {
+                    usReview.ReviewID = review.Review.ReviewID;
+                    usReview.StickerID = review.Review.StickerID;
+                    usReview.ReviewerID = review.Review.ReviewerID;
+                    usReview.StarRanking = (float)review.Review.StarRanking;
+                    usReview.Description = review.Review.Description;
+                    studentReviewList.Add(usReview);
+                }
+
+                return studentReviewList;
+            }
+        }
+
+        public List<UnstuckMEReview> GetUserTutorReviews(int userID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var tutorReviews = from u in db.Reviews
+                                     join j in db.Stickers on u.StickerID equals j.StickerID
+                                     where u.ReviewerID == userID && j.TutorID == userID
+                                     select new { Review = u };
+
+                List<UnstuckMEReview> tutorReviewList = new List<UnstuckMEReview>();
+                UnstuckMEReview usReview = new UnstuckMEReview();
+                foreach (var review in tutorReviews)
+                {
+                    usReview.ReviewID = review.Review.ReviewID;
+                    usReview.StickerID = review.Review.StickerID;
+                    usReview.ReviewerID = review.Review.ReviewerID;
+                    usReview.StarRanking = (review.Review.StarRanking.HasValue) ? (float)review.Review.StarRanking.Value : 0;
+                    usReview.Description = review.Review.Description;
+                    tutorReviewList.Add(usReview);
+                }
+                return tutorReviewList;
+            }
+        }
+
+        public List<UnstuckMESticker> GetUserSubmittedStickers(int userID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var userStickers = from u in db.Stickers
+                                  where u.StudentID == userID
+                                  select new { Sticker = u };
+
+                List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
+                UnstuckMESticker usSticker = new UnstuckMESticker();
+
+                foreach (var sticker in userStickers)
+                {
+                    usSticker.StickerID = sticker.Sticker.StickerID;
+                    usSticker.ProblemDescription = sticker.Sticker.ProblemDescription;
+                    usSticker.ClassID = sticker.Sticker.ClassID;
+                    usSticker.StudentID = sticker.Sticker.StudentID;
+                    usSticker.TutorID =  (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
+                    usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
+                    usSticker.SubmitTime = sticker.Sticker.SubmitTime;
+                    usSticker.Timeout = sticker.Sticker.Timeout;
+                    stickerList.Add(usSticker);
+                }
+                return stickerList;
+            }
+        }
+
+        public List<UnstuckMESticker> GetUserTutoredStickers(int userID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var userStickers = from u in db.Stickers
+                                   where u.TutorID == userID
+                                   select new { Sticker = u };
+
+                List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
+                UnstuckMESticker usSticker = new UnstuckMESticker();
+
+                foreach (var sticker in userStickers)
+                {
+                    usSticker.StickerID = sticker.Sticker.StickerID;
+                    usSticker.ProblemDescription = sticker.Sticker.ProblemDescription;
+                    usSticker.ClassID = sticker.Sticker.ClassID;
+                    usSticker.StudentID = sticker.Sticker.StudentID;
+                    usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
+                    usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
+                    usSticker.SubmitTime = sticker.Sticker.SubmitTime;
+                    usSticker.Timeout = sticker.Sticker.Timeout;
+                    stickerList.Add(usSticker);
+                }
+                return stickerList;
+            }
+        }
+
+        public void AddUserToTutoringOrganization(int userID, int organizationID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.InsertUserIntoMentorProgram(userID, organizationID);
+            }
+        }
+
+        public void SubmitSticker(UnstuckMESticker newSticker, int timoutInSeconds)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, timoutInSeconds);
+            }
         }
     }
 }
