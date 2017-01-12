@@ -109,7 +109,8 @@ namespace UnstuckMEServerGUI
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
             ChangeDBSchoolInfo schoolInfoWindow = new ChangeDBSchoolInfo();
-
+            schoolInfoWindow.Show();
+            App.Current.MainWindow = schoolInfoWindow;
         }
 
         private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
