@@ -46,6 +46,7 @@ namespace UnstuckMEUserGUI
 				{
 					if (Server.CreateNewUser(FNameTxtBx.Text, LNameTxtBx.Text, EmailTxtBx.Text, passwordBox.Password))
 					{
+                        Server.UserLoginAttempt(EmailTxtBx.Text, passwordBox.Password);
 						NavigationService.Navigate(new MainPage(Server.GetUserID(EmailTxtBx.Text), Server));
 					}
 					else
