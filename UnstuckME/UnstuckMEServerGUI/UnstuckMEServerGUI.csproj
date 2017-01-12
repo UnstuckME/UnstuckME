@@ -200,6 +200,9 @@
     <Compile Include="ViewAllUsers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ChangeDBSchoolInfo.xaml.cs">
+      <DependentUpon>ChangeDBSchoolInfo.xaml</DependentUpon>
+    </Compile>
     <Page Include="AdminCreation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -233,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ServerRunning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChangeDBSchoolInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -291,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="GearIcon.png" />
+    <Resource Include="SimpleAvatar.png" />
     <Content Include="UnstuckMEServer_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>

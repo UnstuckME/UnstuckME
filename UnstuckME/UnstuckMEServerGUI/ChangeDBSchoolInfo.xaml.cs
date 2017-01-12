@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace UnstuckMEServerGUI
 {
     /// <summary>
-    /// Interaction logic for SchoolDBSettings.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class SchoolDBSettings : Page
+    public partial class Window1 : Window
     {
-        public SchoolDBSettings()
+        public Window1()
         {
             InitializeComponent();
         }
