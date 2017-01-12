@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Collections.Concurrent;
 using System.Security;
 using System.Data.Objects;
+using System.Drawing;
 
 namespace UnstuckMEInterfaces
 {
@@ -362,7 +363,7 @@ namespace UnstuckMEInterfaces
                 var userStickers = from u in db.Stickers
                                   where u.StudentID == userID
                                   select new { Sticker = u };
-
+                
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
                 UnstuckMESticker usSticker = new UnstuckMESticker();
 
@@ -422,6 +423,26 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, timoutInSeconds);
+            }
+        }
+
+        public Image GetProfilePicture(int userID)
+        {
+            Image img = null;
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                ImageConverter ic = new ImageConverter();
+                byte[] imgByte = db.GetProfilePicture(userID).First();
+                img = (Image)ic.ConvertFrom(imgByte);
+            }
+            return img;
+        }
+
+        public void SetProfilePicture(int userID, byte[] image)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.ChangeProfilePicture(userID, image);
             }
         }
     }
