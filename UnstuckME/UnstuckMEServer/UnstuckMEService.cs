@@ -488,7 +488,7 @@ namespace UnstuckMEInterfaces
             {
                 ImageSourceConverter ic = new ImageSourceConverter();
                 byte[] imgByte = db.GetProfilePicture(userID).First();
-                img = (ImageSource)ic.ConvertFrom(imgByte);
+                img = ic.ConvertFrom(imgByte) as ImageSource;
             }
             return img;
         }

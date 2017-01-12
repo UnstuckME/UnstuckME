@@ -27,10 +27,6 @@
                         <Image x:Name="ChangeFirstName" Height="{Binding ActualHeight, ElementName=ChangeFirstNameBtn}" Width="{Binding ActualWidth, ElementName=ChangeFirstNameBtn}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Cursor="Hand" Source="Edit Icon (32x32).png"/>
                     </Button>
-                    <Button x:Name="ChangeLastNameBtn" HorizontalAlignment="Left" Margin="175,100,0,0" VerticalAlignment="Top" Width="20" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUserName_Click">
-                        <Image x:Name="ChangeLastName" Height="{Binding ActualHeight, ElementName=ChangeLastNameBtn}" Width="{Binding ActualWidth, ElementName=ChangeLastNameBtn}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Cursor="Hand" Source="Edit Icon (32x32).png"/>
-                    </Button>
                     <TextBox x:Name="FNameTxtBx" HorizontalAlignment="Left" Height="30" Margin="199,47,0,0" TextWrapping="Wrap" Text="FName" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0"/>
                     <TextBox x:Name="LNameTxtBx" HorizontalAlignment="Left" Height="30" Margin="199,97,0,0" TextWrapping="Wrap" Text="LName" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0"/>
                     <Label x:Name="label1" Content="Recent Mentor Reveiws" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10,0,0" VerticalAlignment="Top" Height="26" Width="206"/>

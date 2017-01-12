@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Drawing;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -46,8 +48,13 @@ namespace UnstuckMEUserGUI
 				{
 					if (Server.CreateNewUser(FNameTxtBx.Text, LNameTxtBx.Text, EmailTxtBx.Text, passwordBox.Password))
 					{
+						int userID = Server.GetUserID(EmailTxtBx.Text);
+						ImageConverter converter = new ImageConverter();
+						byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.SimpleAvatar, typeof(byte[]));
+
+						Server.SetProfilePicture(userID, avatar);
                         Server.UserLoginAttempt(EmailTxtBx.Text, passwordBox.Password);
-						NavigationService.Navigate(new MainPage(Server.GetUserID(EmailTxtBx.Text), Server));
+						NavigationService.Navigate(new MainPage(userID, Server));
 					}
 					else
 					{

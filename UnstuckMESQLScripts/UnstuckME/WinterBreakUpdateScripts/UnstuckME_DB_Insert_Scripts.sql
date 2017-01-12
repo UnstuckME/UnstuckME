@@ -259,10 +259,11 @@ CREATE PROC [dbo].[ChangeProfilePicture]
     )
 AS
     BEGIN
-        if  (NOT Exists(Select UserID from UserProfile 
+        if  (NOT Exists(Select UserID from Picture
 					WHERE UserID = @UserID))
             BEGIN
-				RETURN 1;
+				INSERT INTO Picture (UserID, Photo)
+				VALUES (@UserID, @Photo);
 			END
         else
             BEGIN
