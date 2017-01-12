@@ -15,7 +15,7 @@
         <Label x:Name="labelDatabseIP" Content="Database IP" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Label x:Name="labelSchoolLogoPath" Content="School Logo Destination" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="196,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="5" Click="buttonCancel_Click" IsCancel="True"/>
-        <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonCreate_Click" IsDefault="True"/>
+        <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonSave_Click" IsDefault="True"/>
         <Button x:Name="buttonBrowse" Content="Browse" HorizontalAlignment="Left" Margin="351,114,0,0" VerticalAlignment="Top" Width="59" TabIndex="6" Click="buttonBrowse_Click" IsDefault="True"/>
         <Button x:Name="ButtonSchoolLogoImg"  HorizontalAlignment="Left" Height="117" Margin="27,144,0,0" VerticalAlignment="Top" Width="107" BorderBrush="{x:Null}" Opacity="0.7" Background="#FF999393" Click="ButtonSchoolLogoImg_Click">
             <StackPanel Orientation="Vertical" Height="117">

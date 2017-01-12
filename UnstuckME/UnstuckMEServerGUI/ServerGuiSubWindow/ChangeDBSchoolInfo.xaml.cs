@@ -25,8 +25,16 @@ namespace UnstuckMEServerGUI
         }
 
 
-        private void buttoBrowse_Click(object sender, RoutedEventArgs e)
+
+
+        private void ButtonSchoolLogoImg_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void buttonBrowse_Click(object sender, RoutedEventArgs e)
+        {
+
             //Create the actual brwse window
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
@@ -45,7 +53,12 @@ namespace UnstuckMEServerGUI
             }
         }
 
-        private void ButtonSchoolLogoImg_Click(object sender, RoutedEventArgs e)
+        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
 
         }
