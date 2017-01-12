@@ -15,5 +15,10 @@ namespace UnstuckMEUserGUI
         {
             throw new NotImplementedException();
         }
+
+        public bool isOnline()
+        {
+            return true;
+        }
     }
 }

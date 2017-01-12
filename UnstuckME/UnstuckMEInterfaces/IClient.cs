@@ -11,5 +11,8 @@ namespace UnstuckMEInterfaces
     {
         [OperationContract]
         void GetMessage(string message, string emailAddress);
+
+        [OperationContract]
+        bool isOnline();
     }
 }

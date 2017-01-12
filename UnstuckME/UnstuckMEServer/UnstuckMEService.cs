@@ -12,6 +12,7 @@ using System.Security;
 using System.Data.Objects;
 using System.Drawing;
 using System.Windows.Media;
+using System.Threading;
 
 namespace UnstuckMEInterfaces
 {
@@ -23,6 +24,54 @@ namespace UnstuckMEInterfaces
     {
         public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
+
+        public void CheckStatus()
+        {
+            bool isUserOnline = false;
+            while (true)
+            {
+                foreach (var client in _connectedClients)
+                {
+                    try
+                    {
+                        isUserOnline = client.Value.connection.isOnline();
+                    }
+                    catch(Exception)
+                    {
+                        ConnectedClient removedClient;
+                        _connectedClients.TryRemove(client.Key, out removedClient);
+                        Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
+                        isUserOnline = false;
+                    }
+                    if(isUserOnline)
+                    {
+                        Console.WriteLine("{0} is still online.", client.Value.User.EmailAddress);
+                    }
+                }
+                
+                foreach (var admin in _connectedServerAdmins)
+                {
+                    try
+                    {
+                        isUserOnline = admin.Value.connection.isOnline();
+                    }
+                    catch(Exception)
+                    {
+                        ConnectedServerAdmin removedAdmin;
+                        _connectedServerAdmins.TryRemove(admin.Key, out removedAdmin);
+                        Console.WriteLine("{0} is not responding and is assumed to be offline.", removedAdmin.Admin.EmailAddress);
+                        isUserOnline = false;
+                    }
+                    if(isUserOnline)
+                    {
+                        Console.WriteLine("{0} is still online.", admin.Value.Admin.EmailAddress);
+                    }
+                }
+
+                Thread.Sleep(5000);
+            }
+        }
+
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -446,5 +495,6 @@ namespace UnstuckMEInterfaces
                 db.ChangeProfilePicture(userID, image);
             }
         }
+
     }
 }
