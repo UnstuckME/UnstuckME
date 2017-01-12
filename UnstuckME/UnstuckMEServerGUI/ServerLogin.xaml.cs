@@ -108,7 +108,8 @@ namespace UnstuckMEServerGUI
 
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Whatsup mani");
+            ChangeDBSchoolInfo schoolInfoWindow = new ChangeDBSchoolInfo();
+
         }
 
         private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)

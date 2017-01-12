@@ -64,13 +64,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AdminCreation.xaml.cs">
+    <Compile Include="ServerGuiSubWindow\AdminCreation.xaml.cs">
       <DependentUpon>AdminCreation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AdminCredChange.xaml.cs">
+    <Compile Include="ServerGuiSubWindow\AdminCredChange.xaml.cs">
       <DependentUpon>AdminCredChange.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AdminNameChange.xaml.cs">
+    <Compile Include="ServerGuiSubWindow\AdminNameChange.xaml.cs">
       <DependentUpon>AdminNameChange.xaml</DependentUpon>
     </Compile>
     <Compile Include="AdminPullReportsForOptionalUser_Result.cs">
@@ -82,7 +82,7 @@
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DeleteAdmin.xaml.cs">
+    <Compile Include="ServerGuiSubWindow\DeleteAdmin.xaml.cs">
       <DependentUpon>DeleteAdmin.xaml</DependentUpon>
     </Compile>
     <Compile Include="File.cs">
@@ -200,22 +200,22 @@
     <Compile Include="ViewAllUsers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ChangeDBSchoolInfo.xaml.cs">
+    <Compile Include="ServerGuiSubWindow\ChangeDBSchoolInfo.xaml.cs">
       <DependentUpon>ChangeDBSchoolInfo.xaml</DependentUpon>
     </Compile>
-    <Page Include="AdminCreation.xaml">
+    <Page Include="ServerGuiSubWindow\AdminCreation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AdminCredChange.xaml">
+    <Page Include="ServerGuiSubWindow\AdminCredChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AdminNameChange.xaml">
+    <Page Include="ServerGuiSubWindow\AdminNameChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DeleteAdmin.xaml">
+    <Page Include="ServerGuiSubWindow\DeleteAdmin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,7 +239,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ChangeDBSchoolInfo.xaml">
+    <Page Include="ServerGuiSubWindow\ChangeDBSchoolInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
