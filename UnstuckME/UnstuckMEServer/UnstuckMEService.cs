@@ -10,6 +10,9 @@ using System.Security.Cryptography;
 using System.Collections.Concurrent;
 using System.Security;
 using System.Data.Objects;
+using System.Drawing;
+using System.Windows.Media;
+using System.Threading;
 
 namespace UnstuckMEInterfaces
 {
@@ -21,6 +24,59 @@ namespace UnstuckMEInterfaces
     {
         public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
+
+        public void CheckStatus()
+        {
+            bool isUserOnline = false;
+            while (true)
+            {
+                foreach (var client in _connectedClients)
+                {
+                    try
+                    {
+                        isUserOnline = client.Value.connection.isOnline();
+                    }
+                    catch(Exception)
+                    {
+                        try
+                        {
+                            ConnectedClient removedClient;
+                            _connectedClients.TryRemove(client.Key, out removedClient);
+                            Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
+                            isUserOnline = false;
+                            removedClient.connection.ForceClose();
+                        }
+                        catch(Exception)
+                        { }
+                    }
+                    if(isUserOnline)
+                    {
+                        Console.WriteLine("{0} was online @ {1}.", client.Value.User.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
+                    }
+                }
+                
+                foreach (var admin in _connectedServerAdmins)
+                {
+                    try
+                    {
+                        isUserOnline = admin.Value.connection.isOnline();
+                    }
+                    catch(Exception)
+                    {
+                        ConnectedServerAdmin removedAdmin;
+                        _connectedServerAdmins.TryRemove(admin.Key, out removedAdmin);
+                        Console.WriteLine("{0} is not responding and is assumed to be offline.", removedAdmin.Admin.EmailAddress);
+                        isUserOnline = false;
+                    }
+                    if(isUserOnline)
+                    {
+                        Console.WriteLine("{0} was online @ {1}.", admin.Value.Admin.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
+                    }
+                }
+                Thread.Sleep(5000);
+            }
+        }
+
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -362,7 +418,7 @@ namespace UnstuckMEInterfaces
                 var userStickers = from u in db.Stickers
                                   where u.StudentID == userID
                                   select new { Sticker = u };
-
+                
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
                 UnstuckMESticker usSticker = new UnstuckMESticker();
 
@@ -424,5 +480,26 @@ namespace UnstuckMEInterfaces
                 db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, timoutInSeconds);
             }
         }
+
+        public ImageSource GetProfilePicture(int userID)
+        {
+            ImageSource img = null;
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                ImageSourceConverter ic = new ImageSourceConverter();
+                byte[] imgByte = db.GetProfilePicture(userID).First();
+                img = (ImageSource)ic.ConvertFrom(imgByte);
+            }
+            return img;
+        }
+
+        public void SetProfilePicture(int userID, byte[] image)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.ChangeProfilePicture(userID, image);
+            }
+        }
+
     }
 }

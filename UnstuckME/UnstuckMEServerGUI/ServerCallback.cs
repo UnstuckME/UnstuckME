@@ -15,5 +15,10 @@ namespace UnstuckMEServerGUI
         {
             throw new NotImplementedException();
         }
+
+        public bool isOnline()
+        {
+            return true;
+        }
     }
 }

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckMEServer", "UnstuckM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckMEInterfaces", "UnstuckMEInterfaces\UnstuckMEInterfaces.csproj", "{D42B1E14-AC26-4947-A68C-168849BA8DB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckMEUserGUI", "UnstuckMEUserGUI\UnstuckMEUserGUI\UnstuckMEUserGUI\UnstuckMEUserGUI.csproj", "{3FD3E7CC-1F8F-4934-ACC0-CE0E3B9E324E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckMEUserGUI", "UnstuckMEUserGUI\UnstuckMEUserGUI\UnstuckMEUserGUI.csproj", "{3FD3E7CC-1F8F-4934-ACC0-CE0E3B9E324E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstuckMEServerGUI", "UnstuckMEServerGUI\UnstuckMEServerGUI.csproj", "{B752AFE6-DFF6-40BB-A473-134FD614F0A3}"
 EndProject

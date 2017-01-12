@@ -86,6 +86,7 @@ namespace UnstuckMEUserGUI
 			string email = UserNameTxtBx.Text;
 			string password = passwordBox.Password;
 			bool isValid = false;
+			int failed_connections = 0;
 
 			if (email == string.Empty)
 			{
@@ -99,10 +100,12 @@ namespace UnstuckMEUserGUI
 			}
 			else
 			{
-				//add stuff here regarding manual connection string
+				//add stuff here regarding manual connection string AND
+				//What are we going to do with the Server Name/Domain/IP stored in the database?????????
 				//if (ConnectionStrTxtBx.Visibility != Visibility.Hidden)	//if a connection string is specified
 
 				//Calls UnstuckME Server Function that checks email credentials
+				//should probably put in a try/catch if connection to server fails rather than failed login attempt
 				isValid = Server.UserLoginAttempt(email, password);
 				
 				if (isValid)	//if valid login
@@ -119,6 +122,10 @@ namespace UnstuckMEUserGUI
 					passwordBox.Password = string.Empty;
 					EmailBox_ErrorCode.Text = string.Empty;
 					PasswordBox_ErrorCode.Text = "Login Info Incorrect";
+					failed_connections++;
+
+					if (failed_connections >= 5)
+						ConnectionStr_ErrorCode.Text = "If you're having difficulties logging in, contact your UnstuckME administrator";
 				}
 			}
 		}

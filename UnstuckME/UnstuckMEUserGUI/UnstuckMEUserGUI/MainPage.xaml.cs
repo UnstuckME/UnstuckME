@@ -24,6 +24,7 @@ namespace UnstuckMEUserGUI
 	{
 		public static IUnstuckMEService Server;
 		public static UserInfo User;
+
 		public MainPage(int UserID, IUnstuckMEService OpenServer)
 		{
 			//Opens a connection to UnstuckME Server.
@@ -62,6 +63,16 @@ namespace UnstuckMEUserGUI
 		{
 			ClassesView.Visibility = Visibility.Visible;
 			AddRemoveClassesView.Visibility = Visibility.Collapsed;
+		}
+
+		private void UserPhotoBtn_Click(object sender, RoutedEventArgs e)
+		{
+			
+		}
+
+		private void ChangeUserName_Click(object sender, RoutedEventArgs e)
+		{
+			Server.ChangeUserName(User.EmailAddress, FNameTxtBx.Text, LNameTxtBx.Text);
 		}
 	}
 }
