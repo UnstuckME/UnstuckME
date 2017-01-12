@@ -11,6 +11,12 @@ namespace UnstuckMEUserGUI
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ClientCallback : IClient
     {
+        public void ForceClose()
+        {
+            App.Current.MainWindow.Hide();
+            App.Current.Shutdown();
+        }
+
         public void GetMessage(string message, string emailAddress)
         {
             throw new NotImplementedException();

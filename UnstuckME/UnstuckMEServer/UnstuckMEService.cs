@@ -38,14 +38,20 @@ namespace UnstuckMEInterfaces
                     }
                     catch(Exception)
                     {
-                        ConnectedClient removedClient;
-                        _connectedClients.TryRemove(client.Key, out removedClient);
-                        Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
-                        isUserOnline = false;
+                        try
+                        {
+                            ConnectedClient removedClient;
+                            _connectedClients.TryRemove(client.Key, out removedClient);
+                            Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
+                            isUserOnline = false;
+                            removedClient.connection.ForceClose();
+                        }
+                        catch(Exception)
+                        { }
                     }
                     if(isUserOnline)
                     {
-                        Console.WriteLine("{0} is still online.", client.Value.User.EmailAddress);
+                        Console.WriteLine("{0} was online @ {1}.", client.Value.User.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
                     }
                 }
                 
@@ -64,10 +70,9 @@ namespace UnstuckMEInterfaces
                     }
                     if(isUserOnline)
                     {
-                        Console.WriteLine("{0} is still online.", admin.Value.Admin.EmailAddress);
+                        Console.WriteLine("{0} was online @ {1}.", admin.Value.Admin.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
                     }
                 }
-
                 Thread.Sleep(5000);
             }
         }
