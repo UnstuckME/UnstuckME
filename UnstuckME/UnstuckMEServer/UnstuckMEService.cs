@@ -11,6 +11,7 @@ using System.Collections.Concurrent;
 using System.Security;
 using System.Data.Objects;
 using System.Drawing;
+using System.Windows.Media;
 
 namespace UnstuckMEInterfaces
 {
@@ -426,14 +427,14 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public Image GetProfilePicture(int userID)
+        public ImageSource GetProfilePicture(int userID)
         {
-            Image img = null;
+            ImageSource img = null;
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                ImageConverter ic = new ImageConverter();
+                ImageSourceConverter ic = new ImageSourceConverter();
                 byte[] imgByte = db.GetProfilePicture(userID).First();
-                img = (Image)ic.ConvertFrom(imgByte);
+                img = (ImageSource)ic.ConvertFrom(imgByte);
             }
             return img;
         }

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Security;
 using System.ServiceModel;
 using System.Text;
+using System.Windows.Media;
 using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
@@ -66,7 +67,7 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         void SubmitSticker(UnstuckMESticker newSticker, int timoutInSeconds);
         [OperationContract]
-        Image GetProfilePicture(int userID);
+        ImageSource GetProfilePicture(int userID);
 
         [OperationContract]
         void SetProfilePicture(int userID, byte[] image);
