@@ -58,7 +58,17 @@ namespace UnstuckMEServerGUI
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (!System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
+                {
+                    throw new Exception("Please Enter a Valid File path to a image");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "School DB Unable to Update", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
