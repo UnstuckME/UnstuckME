@@ -152,7 +152,7 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ClassID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Files__ChatID__78173351">
+        <Association Name="FK__Files__ChatID__5ECC629A">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Files" Type="Self.Files" Multiplicity="*" />
           <ReferentialConstraint>
@@ -164,7 +164,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Files__SentBy__790B578A">
+        <Association Name="FK__Files__SentBy__5FC086D3">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Files" Type="Self.Files" Multiplicity="*" />
           <ReferentialConstraint>
@@ -176,7 +176,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Friends__UserID__716A35C2">
+        <Association Name="FK__Friends__UserID__581F650B">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
           <ReferentialConstraint>
@@ -188,7 +188,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__ChatID__7446A26D">
+        <Association Name="FK__Messages__ChatID__5AFBD1B6">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -200,7 +200,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__753AC6A6">
+        <Association Name="FK__Messages__SentBy__5BEFF5EF">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -212,7 +212,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__Mentor__7EC430E0">
+        <Association Name="FK__OmToUser__Mentor__65796029">
           <End Role="OfficialMentor" Type="Self.OfficialMentor" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -224,7 +224,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__UserID__7DD00CA7">
+        <Association Name="FK__OmToUser__UserID__64853BF0">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -236,7 +236,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__05712E6F">
+        <Association Name="FK__Picture__UserID__6C265DB8">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -248,7 +248,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__1B606F8E">
+        <Association Name="FK__Report__FlaggerI__02159ED7">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -260,7 +260,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__1C5493C7">
+        <Association Name="FK__Report__ReviewID__0309C310">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -272,7 +272,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__15A79638">
+        <Association Name="FK__Review__Reviewer__7C5CC581">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -284,7 +284,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__14B371FF">
+        <Association Name="FK__Review__StickerI__7B68A148">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -296,7 +296,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__0E067470">
+        <Association Name="FK__Sticker__ClassID__74BBA3B9">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -308,7 +308,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__0EFA98A9">
+        <Association Name="FK__Sticker__Student__75AFC7F2">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -320,7 +320,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__10E2E11B">
+        <Association Name="FK__Sticker__TutorID__77981064">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -332,7 +332,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__ChatI__0294C1C4">
+        <Association Name="FK__UserToCha__ChatI__6949F10D">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -344,7 +344,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__UserI__01A09D8B">
+        <Association Name="FK__UserToCha__UserI__6855CCD4">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -356,7 +356,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__Class__0B2A07C5">
+        <Association Name="FK__UserToCla__Class__71DF370E">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -368,7 +368,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__UserI__0A35E38C">
+        <Association Name="FK__UserToCla__UserI__70EB12D5">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -534,6 +534,10 @@
           <Parameter Name="Message" Type="nvarchar" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
+        <Function Name="InsertProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Photo" Type="varbinary(max)" Mode="In" />
+        </Function>
         <Function Name="InsertStudentIntoClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="ClassID" Type="int" Mode="In" />
@@ -680,79 +684,79 @@
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToChat" EntityType="Self.UserToChat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToClass" EntityType="Self.UserToClass" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Files__ChatID__78173351" Association="Self.FK__Files__ChatID__78173351">
+          <AssociationSet Name="FK__Files__ChatID__5ECC629A" Association="Self.FK__Files__ChatID__5ECC629A">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Files__SentBy__790B578A" Association="Self.FK__Files__SentBy__790B578A">
+          <AssociationSet Name="FK__Files__SentBy__5FC086D3" Association="Self.FK__Files__SentBy__5FC086D3">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Friends__UserID__716A35C2" Association="Self.FK__Friends__UserID__716A35C2">
+          <AssociationSet Name="FK__Friends__UserID__581F650B" Association="Self.FK__Friends__UserID__581F650B">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__ChatID__7446A26D" Association="Self.FK__Messages__ChatID__7446A26D">
+          <AssociationSet Name="FK__Messages__ChatID__5AFBD1B6" Association="Self.FK__Messages__ChatID__5AFBD1B6">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__753AC6A6" Association="Self.FK__Messages__SentBy__753AC6A6">
+          <AssociationSet Name="FK__Messages__SentBy__5BEFF5EF" Association="Self.FK__Messages__SentBy__5BEFF5EF">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__Mentor__7EC430E0" Association="Self.FK__OmToUser__Mentor__7EC430E0">
+          <AssociationSet Name="FK__OmToUser__Mentor__65796029" Association="Self.FK__OmToUser__Mentor__65796029">
             <End Role="OfficialMentor" EntitySet="OfficialMentor" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__UserID__7DD00CA7" Association="Self.FK__OmToUser__UserID__7DD00CA7">
+          <AssociationSet Name="FK__OmToUser__UserID__64853BF0" Association="Self.FK__OmToUser__UserID__64853BF0">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__05712E6F" Association="Self.FK__Picture__UserID__05712E6F">
+          <AssociationSet Name="FK__Picture__UserID__6C265DB8" Association="Self.FK__Picture__UserID__6C265DB8">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Picture" EntitySet="Picture" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__1B606F8E" Association="Self.FK__Report__FlaggerI__1B606F8E">
+          <AssociationSet Name="FK__Report__FlaggerI__02159ED7" Association="Self.FK__Report__FlaggerI__02159ED7">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__1C5493C7" Association="Self.FK__Report__ReviewID__1C5493C7">
+          <AssociationSet Name="FK__Report__ReviewID__0309C310" Association="Self.FK__Report__ReviewID__0309C310">
             <End Role="Review" EntitySet="Review" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__15A79638" Association="Self.FK__Review__Reviewer__15A79638">
+          <AssociationSet Name="FK__Review__Reviewer__7C5CC581" Association="Self.FK__Review__Reviewer__7C5CC581">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__14B371FF" Association="Self.FK__Review__StickerI__14B371FF">
+          <AssociationSet Name="FK__Review__StickerI__7B68A148" Association="Self.FK__Review__StickerI__7B68A148">
             <End Role="Sticker" EntitySet="Sticker" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__0E067470" Association="Self.FK__Sticker__ClassID__0E067470">
+          <AssociationSet Name="FK__Sticker__ClassID__74BBA3B9" Association="Self.FK__Sticker__ClassID__74BBA3B9">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__0EFA98A9" Association="Self.FK__Sticker__Student__0EFA98A9">
+          <AssociationSet Name="FK__Sticker__Student__75AFC7F2" Association="Self.FK__Sticker__Student__75AFC7F2">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__10E2E11B" Association="Self.FK__Sticker__TutorID__10E2E11B">
+          <AssociationSet Name="FK__Sticker__TutorID__77981064" Association="Self.FK__Sticker__TutorID__77981064">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__ChatI__0294C1C4" Association="Self.FK__UserToCha__ChatI__0294C1C4">
+          <AssociationSet Name="FK__UserToCha__ChatI__6949F10D" Association="Self.FK__UserToCha__ChatI__6949F10D">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__UserI__01A09D8B" Association="Self.FK__UserToCha__UserI__01A09D8B">
+          <AssociationSet Name="FK__UserToCha__UserI__6855CCD4" Association="Self.FK__UserToCha__UserI__6855CCD4">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__Class__0B2A07C5" Association="Self.FK__UserToCla__Class__0B2A07C5">
+          <AssociationSet Name="FK__UserToCla__Class__71DF370E" Association="Self.FK__UserToCla__Class__71DF370E">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__UserI__0A35E38C" Association="Self.FK__UserToCla__UserI__0A35E38C">
+          <AssociationSet Name="FK__UserToCla__UserI__70EB12D5" Association="Self.FK__UserToCla__UserI__70EB12D5">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
@@ -767,8 +771,8 @@
             <PropertyRef Name="ChatID" />
           </Key>
           <Property Name="ChatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Files" Relationship="Self.FK__Files__ChatID__78173351" FromRole="Chat" ToRole="Files" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__7446A26D" FromRole="Chat" ToRole="Messages" />
+          <NavigationProperty Name="Files" Relationship="Self.FK__Files__ChatID__5ECC629A" FromRole="Chat" ToRole="Files" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__5AFBD1B6" FromRole="Chat" ToRole="Messages" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToChat" FromRole="Chat" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Class">
@@ -780,7 +784,7 @@
           <Property Name="CourseCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseNumber" Type="Int16" Nullable="false" />
           <Property Name="TermOffered" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__0E067470" FromRole="Classes" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__74BBA3B9" FromRole="Classes" ToRole="Sticker" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToClass" FromRole="Classes" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="File">
@@ -792,8 +796,8 @@
           <Property Name="FileData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="SentBy" Type="Int32" Nullable="false" />
           <Property Name="SentTime" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Files__ChatID__78173351" FromRole="Files" ToRole="Chat" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Files__SentBy__790B578A" FromRole="Files" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Files__ChatID__5ECC629A" FromRole="Files" ToRole="Chat" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Files__SentBy__5FC086D3" FromRole="Files" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Friend">
           <Key>
@@ -802,7 +806,7 @@
           <Property Name="FriendID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="FriendUserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Friends__UserID__716A35C2" FromRole="Friends" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Friends__UserID__581F650B" FromRole="Friends" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -813,8 +817,8 @@
           <Property Name="MessageData" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SentBy" Type="Int32" Nullable="false" />
           <Property Name="SentTime" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__7446A26D" FromRole="Messages" ToRole="Chat" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__753AC6A6" FromRole="Messages" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__5AFBD1B6" FromRole="Messages" ToRole="Chat" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__5BEFF5EF" FromRole="Messages" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="OfficialMentor">
           <Key>
@@ -830,7 +834,7 @@
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__05712E6F" FromRole="Picture" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__6C265DB8" FromRole="Picture" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -840,8 +844,8 @@
           <Property Name="ReportDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FlaggerID" Type="Int32" />
           <Property Name="ReviewID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__1B606F8E" FromRole="Report" ToRole="UserProfile" />
-          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__1C5493C7" FromRole="Report" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__02159ED7" FromRole="Report" ToRole="UserProfile" />
+          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__0309C310" FromRole="Report" ToRole="Review" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -852,9 +856,9 @@
           <Property Name="ReviewerID" Type="Int32" Nullable="false" />
           <Property Name="StarRanking" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__1C5493C7" FromRole="Review" ToRole="Report" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__15A79638" FromRole="Review" ToRole="UserProfile" />
-          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__14B371FF" FromRole="Review" ToRole="Sticker" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__0309C310" FromRole="Review" ToRole="Report" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__7C5CC581" FromRole="Review" ToRole="UserProfile" />
+          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__7B68A148" FromRole="Review" ToRole="Sticker" />
         </EntityType>
         <EntityType Name="ServerAdmin">
           <Key>
@@ -879,10 +883,10 @@
           <Property Name="MinimumStarRanking" Type="Double" />
           <Property Name="SubmitTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Timeout" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__0E067470" FromRole="Sticker" ToRole="Classes" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__14B371FF" FromRole="Sticker" ToRole="Review" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__0EFA98A9" FromRole="Sticker" ToRole="UserProfile" />
-          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__10E2E11B" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__74BBA3B9" FromRole="Sticker" ToRole="Classes" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__7B68A148" FromRole="Sticker" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__75AFC7F2" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__77981064" FromRole="Sticker" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -905,19 +909,19 @@
           <Property Name="UserPassword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Privileges" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Files" Relationship="Self.FK__Files__SentBy__790B578A" FromRole="UserProfile" ToRole="Files" />
-          <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__UserID__716A35C2" FromRole="UserProfile" ToRole="Friends" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__753AC6A6" FromRole="UserProfile" ToRole="Messages" />
-          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__05712E6F" FromRole="UserProfile" ToRole="Picture" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__1B606F8E" FromRole="UserProfile" ToRole="Report" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__15A79638" FromRole="UserProfile" ToRole="Review" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__0EFA98A9" FromRole="UserProfile" ToRole="Sticker" />
-          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__10E2E11B" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Files" Relationship="Self.FK__Files__SentBy__5FC086D3" FromRole="UserProfile" ToRole="Files" />
+          <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__UserID__581F650B" FromRole="UserProfile" ToRole="Friends" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__5BEFF5EF" FromRole="UserProfile" ToRole="Messages" />
+          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__6C265DB8" FromRole="UserProfile" ToRole="Picture" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__02159ED7" FromRole="UserProfile" ToRole="Report" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__7C5CC581" FromRole="UserProfile" ToRole="Review" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__75AFC7F2" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__77981064" FromRole="UserProfile" ToRole="Sticker" />
           <NavigationProperty Name="OfficialMentors" Relationship="Self.OmToUser" FromRole="UserProfile" ToRole="OfficialMentor" />
           <NavigationProperty Name="Chats" Relationship="Self.UserToChat" FromRole="UserProfile" ToRole="Chat" />
           <NavigationProperty Name="Classes" Relationship="Self.UserToClass" FromRole="UserProfile" ToRole="Classes" />
         </EntityType>
-        <Association Name="FK__Files__ChatID__78173351">
+        <Association Name="FK__Files__ChatID__5ECC629A">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Files" Type="Self.File" Multiplicity="*" />
           <ReferentialConstraint>
@@ -929,7 +933,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__ChatID__7446A26D">
+        <Association Name="FK__Messages__ChatID__5AFBD1B6">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -941,7 +945,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__0E067470">
+        <Association Name="FK__Sticker__ClassID__74BBA3B9">
           <End Role="Classes" Type="Self.Class" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -953,7 +957,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Files__SentBy__790B578A">
+        <Association Name="FK__Files__SentBy__5FC086D3">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Files" Type="Self.File" Multiplicity="*" />
           <ReferentialConstraint>
@@ -965,7 +969,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Friends__UserID__716A35C2">
+        <Association Name="FK__Friends__UserID__581F650B">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friend" Multiplicity="*" />
           <ReferentialConstraint>
@@ -977,7 +981,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__753AC6A6">
+        <Association Name="FK__Messages__SentBy__5BEFF5EF">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -989,7 +993,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__05712E6F">
+        <Association Name="FK__Picture__UserID__6C265DB8">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1001,7 +1005,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__1B606F8E">
+        <Association Name="FK__Report__FlaggerI__02159ED7">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1013,7 +1017,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__1C5493C7">
+        <Association Name="FK__Report__ReviewID__0309C310">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1025,7 +1029,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__15A79638">
+        <Association Name="FK__Review__Reviewer__7C5CC581">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1037,7 +1041,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__14B371FF">
+        <Association Name="FK__Review__StickerI__7B68A148">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1049,7 +1053,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__0EFA98A9">
+        <Association Name="FK__Sticker__Student__75AFC7F2">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1061,7 +1065,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__10E2E11B">
+        <Association Name="FK__Sticker__TutorID__77981064">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1099,55 +1103,55 @@
           <EntitySet Name="Stickers" EntityType="Self.Sticker" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
-          <AssociationSet Name="FK__Files__ChatID__78173351" Association="Self.FK__Files__ChatID__78173351">
+          <AssociationSet Name="FK__Files__ChatID__5ECC629A" Association="Self.FK__Files__ChatID__5ECC629A">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__ChatID__7446A26D" Association="Self.FK__Messages__ChatID__7446A26D">
+          <AssociationSet Name="FK__Messages__ChatID__5AFBD1B6" Association="Self.FK__Messages__ChatID__5AFBD1B6">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__0E067470" Association="Self.FK__Sticker__ClassID__0E067470">
+          <AssociationSet Name="FK__Sticker__ClassID__74BBA3B9" Association="Self.FK__Sticker__ClassID__74BBA3B9">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Files__SentBy__790B578A" Association="Self.FK__Files__SentBy__790B578A">
+          <AssociationSet Name="FK__Files__SentBy__5FC086D3" Association="Self.FK__Files__SentBy__5FC086D3">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Files" EntitySet="Files" />
           </AssociationSet>
-          <AssociationSet Name="FK__Friends__UserID__716A35C2" Association="Self.FK__Friends__UserID__716A35C2">
+          <AssociationSet Name="FK__Friends__UserID__581F650B" Association="Self.FK__Friends__UserID__581F650B">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__753AC6A6" Association="Self.FK__Messages__SentBy__753AC6A6">
+          <AssociationSet Name="FK__Messages__SentBy__5BEFF5EF" Association="Self.FK__Messages__SentBy__5BEFF5EF">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__05712E6F" Association="Self.FK__Picture__UserID__05712E6F">
+          <AssociationSet Name="FK__Picture__UserID__6C265DB8" Association="Self.FK__Picture__UserID__6C265DB8">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Picture" EntitySet="Pictures" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__1B606F8E" Association="Self.FK__Report__FlaggerI__1B606F8E">
+          <AssociationSet Name="FK__Report__FlaggerI__02159ED7" Association="Self.FK__Report__FlaggerI__02159ED7">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__1C5493C7" Association="Self.FK__Report__ReviewID__1C5493C7">
+          <AssociationSet Name="FK__Report__ReviewID__0309C310" Association="Self.FK__Report__ReviewID__0309C310">
             <End Role="Review" EntitySet="Reviews" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__15A79638" Association="Self.FK__Review__Reviewer__15A79638">
+          <AssociationSet Name="FK__Review__Reviewer__7C5CC581" Association="Self.FK__Review__Reviewer__7C5CC581">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__14B371FF" Association="Self.FK__Review__StickerI__14B371FF">
+          <AssociationSet Name="FK__Review__StickerI__7B68A148" Association="Self.FK__Review__StickerI__7B68A148">
             <End Role="Sticker" EntitySet="Stickers" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__0EFA98A9" Association="Self.FK__Sticker__Student__0EFA98A9">
+          <AssociationSet Name="FK__Sticker__Student__75AFC7F2" Association="Self.FK__Sticker__Student__75AFC7F2">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__10E2E11B" Association="Self.FK__Sticker__TutorID__10E2E11B">
+          <AssociationSet Name="FK__Sticker__TutorID__77981064" Association="Self.FK__Sticker__TutorID__77981064">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
@@ -1315,6 +1319,10 @@
             <Parameter Name="ChatID" Mode="In" Type="Int32" />
             <Parameter Name="Message" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertProfilePicture">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="Photo" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="InsertStudentIntoClass">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -1930,6 +1938,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertFile" FunctionName="UnstuckME_DBModel.Store.InsertFile" />
           <FunctionImportMapping FunctionImportName="InsertMessage" FunctionName="UnstuckME_DBModel.Store.InsertMessage" />
+          <FunctionImportMapping FunctionImportName="InsertProfilePicture" FunctionName="UnstuckME_DBModel.Store.InsertProfilePicture" />
           <FunctionImportMapping FunctionImportName="InsertStudentIntoClass" FunctionName="UnstuckME_DBModel.Store.InsertStudentIntoClass" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoChat" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoChat" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoMentorProgram" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoMentorProgram" />

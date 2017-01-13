@@ -72,6 +72,8 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         void SetProfilePicture(int userID, byte[] image);
 
+		[OperationContract]
+		void InsertProfilePicture(int userID, byte[] image);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

@@ -541,6 +541,19 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertMessage", chatIDParameter, messageParameter, userIDParameter);
         }
     
+        public virtual int InsertProfilePicture(Nullable<int> userID, byte[] photo)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var photoParameter = photo != null ?
+                new ObjectParameter("Photo", photo) :
+                new ObjectParameter("Photo", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertProfilePicture", userIDParameter, photoParameter);
+        }
+    
         public virtual int InsertStudentIntoClass(Nullable<int> userID, Nullable<int> classID)
         {
             var userIDParameter = userID.HasValue ?

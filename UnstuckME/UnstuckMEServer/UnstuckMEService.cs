@@ -36,13 +36,14 @@ namespace UnstuckMEInterfaces
                     {
                         isUserOnline = client.Value.connection.isOnline();
                     }
-                    catch(Exception)
+                    catch(Exception e)
                     {
                         try
                         {
                             ConnectedClient removedClient;
                             _connectedClients.TryRemove(client.Key, out removedClient);
                             Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
+							Console.WriteLine("Error: " + e.Message);
                             isUserOnline = false;
                             removedClient.connection.ForceClose();
                         }
@@ -501,5 +502,12 @@ namespace UnstuckMEInterfaces
             }
         }
 
+		public void InsertProfilePicture(int userID, byte[] image)
+		{
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				db.InsertProfilePicture(userID, image);
+			}
+		}
     }
 }
