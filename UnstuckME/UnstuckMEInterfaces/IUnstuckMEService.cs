@@ -67,11 +67,13 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         void SubmitSticker(UnstuckMESticker newSticker, int timoutInSeconds);
         [OperationContract]
-        ImageSource GetProfilePicture(int userID);
+        byte[] GetProfilePicture(int userID);
 
         [OperationContract]
         void SetProfilePicture(int userID, byte[] image);
 
+		[OperationContract]
+		void InsertProfilePicture(int userID, byte[] image);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]
@@ -85,5 +87,10 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void AdminLogMessage(string message);
+
+        [OperationContract]
+        List<string> GetAllOnlineUsers();
+
+
     }
 }

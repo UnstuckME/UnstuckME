@@ -36,14 +36,19 @@ namespace UnstuckMEInterfaces
                     {
                         isUserOnline = client.Value.connection.isOnline();
                     }
-                    catch(Exception)
+                    catch(Exception e)
                     {
                         try
                         {
                             ConnectedClient removedClient;
                             _connectedClients.TryRemove(client.Key, out removedClient);
                             Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
+							Console.WriteLine("Error: " + e.Message);
                             isUserOnline = false;
+                            foreach (var admin in _connectedServerAdmins)
+                            {
+                                admin.Value.connection.GetUpdate(1, removedClient.User.EmailAddress);
+                            }
                             removedClient.connection.ForceClose();
                         }
                         catch(Exception)
@@ -154,7 +159,10 @@ namespace UnstuckMEInterfaces
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Client Login: {0} at {1}", newClient.User.EmailAddress, System.DateTime.Now);
                         Console.ResetColor();
-                        
+                        foreach (var admin in _connectedServerAdmins)
+                        {
+                            admin.Value.connection.GetUpdate(0, newClient.User.EmailAddress);
+                        }
                     }
                 }
                 catch (Exception)
@@ -284,7 +292,10 @@ namespace UnstuckMEInterfaces
             {
                 ConnectedClient removedClient;
                 _connectedClients.TryRemove(client.User.UserID, out removedClient);
-
+                foreach (var admin in _connectedServerAdmins)
+                {
+                    admin.Value.connection.GetUpdate(1, removedClient.User.EmailAddress);
+                }
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Client Loggoff: {0} at {1}", removedClient.User.EmailAddress, System.DateTime.Now);
                 Console.ResetColor();
@@ -481,16 +492,15 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public ImageSource GetProfilePicture(int userID)
+        public byte [] GetProfilePicture(int userID)
         {
-            ImageSource img = null;
+            byte[] imgByte = null;
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                ImageSourceConverter ic = new ImageSourceConverter();
-                byte[] imgByte = db.GetProfilePicture(userID).First();
-                img = ic.ConvertFrom(imgByte) as ImageSource;
+                imgByte = db.GetProfilePicture(userID).First();
+                
             }
-            return img;
+            return imgByte;
         }
 
         public void SetProfilePicture(int userID, byte[] image)
@@ -501,5 +511,22 @@ namespace UnstuckMEInterfaces
             }
         }
 
+		public void InsertProfilePicture(int userID, byte[] image)
+		{
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				db.InsertProfilePicture(userID, image);
+			}
+		}
+
+        public List<string> GetAllOnlineUsers()
+        {
+            List<string> userList = new List<string>();
+            foreach (var user in _connectedClients)
+            {
+                userList.Add(user.Value.User.EmailAddress);
+            }
+            return userList;
+        }
     }
 }

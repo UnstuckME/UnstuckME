@@ -24,6 +24,8 @@ IF OBJECT_ID('CreateReview') is not null
 	DROP PROCEDURE CreateReview;
 IF OBJECT_ID('CreateReport') is not null
 	DROP PROCEDURE CreateReport;
+IF OBJECT_ID('InsertProfilePicture') is not null
+	DROP PROCEDURE InsertProfilePicture;
 IF OBJECT_ID('ChangeProfilePicture') is not null
 	DROP PROCEDURE ChangeProfilePicture;
 IF OBJECT_ID('CreateChat') is not null
@@ -252,7 +254,7 @@ AS
     END
 GO
 
-CREATE PROC [dbo].[ChangeProfilePicture]
+CREATE PROC [dbo].[InsertProfilePicture]
     (
 	@UserID		INT,
 	@Photo		VARBINARY(MAX)
@@ -262,8 +264,31 @@ AS
         if  (NOT Exists(Select UserID from Picture
 					WHERE UserID = @UserID))
             BEGIN
-				INSERT INTO Picture (UserID, Photo)
+				INSERT INTO Picture
 				VALUES (@UserID, @Photo);
+			END
+        else
+            BEGIN
+				UPDATE Picture
+				SET Photo = @Photo
+				WHERE @UserID = UserID;
+				RETURN 0;
+            END
+
+    END
+GO
+
+CREATE PROC [dbo].[ChangeProfilePicture]
+    (
+	@UserID		INT,
+	@Photo		VARBINARY(MAX)
+    )
+AS
+    BEGIN
+        if  (NOT Exists(Select UserID from UserProfile
+					WHERE UserID = @UserID))
+            BEGIN
+				RETURN 1;
 			END
         else
             BEGIN
