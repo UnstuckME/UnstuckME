@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -125,6 +126,50 @@ namespace UnstuckMEServerGUI
                 //This occurs when the administrator kills the server and the window closes. Server Unreachable.
             }
 
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            Server.AdminLogout();
+            ServerLogin loginWindow = new ServerLogin();
+            this.Hide();
+            loginWindow.Show();
+            this.Close();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ShutdownAndExit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to shutdown the server?", "Sever Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if(result == MessageBoxResult.Yes)
+            {
+                this.Hide();
+                Server.AdminLogMessage("Exit and Shutdown Initiated.");
+                Server.AdminLogout();
+                KillServer();
+                this.Close();
+            }
+        }
+
+        public void AddUser(string emailAddress)
+        {
+            TextBlock newUser = new TextBlock();
+            newUser.Text = emailAddress;
+            StackPanelOnlineUsers.Children.Add(newUser);
+        }
+        public void RemoveUser(string emailAddress)
+        {
+            foreach (TextBlock block  in StackPanelOnlineUsers.Children)
+            {
+                if(block.Text == emailAddress)
+                {
+                    StackPanelOnlineUsers.Children.Remove(block);
+                }
+            }
         }
     }
 }
