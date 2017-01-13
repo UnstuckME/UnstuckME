@@ -482,16 +482,15 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public ImageSource GetProfilePicture(int userID)
+        public byte [] GetProfilePicture(int userID)
         {
-            ImageSource img = null;
+            byte[] imgByte = null;
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                ImageSourceConverter ic = new ImageSourceConverter();
-                byte[] imgByte = db.GetProfilePicture(userID).First();
-                img = ic.ConvertFrom(imgByte) as ImageSource;
+                imgByte = db.GetProfilePicture(userID).First();
+                
             }
-            return img;
+            return imgByte;
         }
 
         public void SetProfilePicture(int userID, byte[] image)

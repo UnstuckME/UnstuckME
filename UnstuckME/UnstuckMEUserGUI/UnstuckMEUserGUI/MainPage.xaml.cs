@@ -29,16 +29,21 @@ namespace UnstuckMEUserGUI
 
 		public MainPage(int UserID, IUnstuckMEService OpenServer)
 		{
-			//Opens a connection to UnstuckME Server.
-			Server = OpenServer;
+            ImageSourceConverter ic = new ImageSourceConverter();
+            ImageSource img = null;
+            byte[] imgByte;
+            //Opens a connection to UnstuckME Server.
+            Server = OpenServer;
 			User = Server.GetUserInfo(UserID);
 			InitializeComponent();
 			FNameTxtBx.Text = User.FirstName; // get the name from the server and insert it
 			LNameTxtBx.Text = User.LastName;
 			EmailtextBlock.Text = User.EmailAddress; // get the email and show it
-			UserPhoto.Source = Server.GetProfilePicture(UserID);
+            imgByte = Server.GetProfilePicture(UserID);
+            img = ic.ConvertFrom(imgByte) as ImageSource;
+            UserPhoto.Source = img;
 
-			for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 50; i++)
 			{
 				TextBlock test = new TextBlock();
 				test.Text = "test text" + i;
@@ -89,8 +94,13 @@ namespace UnstuckMEUserGUI
 				}
 
 				Server.SetProfilePicture(User.UserID, image);
-				UserPhoto.Source = Server.GetProfilePicture(User.UserID);
-			}
+                ImageSourceConverter ic = new ImageSourceConverter();
+                ImageSource img = null;
+                byte[] imgByte;
+                imgByte = Server.GetProfilePicture(User.UserID);
+                img = ic.ConvertFrom(imgByte) as ImageSource;
+                UserPhoto.Source = img;
+            }
 		}
 
 		private void ChangeUserName_Click(object sender, RoutedEventArgs e)
