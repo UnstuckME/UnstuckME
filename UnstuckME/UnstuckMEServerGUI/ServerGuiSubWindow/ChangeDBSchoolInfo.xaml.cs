@@ -64,12 +64,11 @@ namespace UnstuckMEServerGUI
                 {
                     throw new Exception("Please Enter a Valid File path to a image");
                 }
-
-                using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
+                using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
                 {
-                    schoolDB.UpdateSchoolInfo("Oregon Institute of Technology", "Oregon Institute of Technology", "@oit.edu", new byte[1]);
+                    //schoolDB.
                 }
-                MessageBox.Show("Administrator Succesfully Created", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
             }
             catch (Exception ex)

@@ -71,6 +71,17 @@
           <Parameter Name="ServerName" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetAllSchoolLogos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllSchools" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetSchoolEmailCredentials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetSchoolID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetSchoolServerInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SchoolName" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="InsertSchool" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SchooName" Type="nvarchar" Mode="In" />
           <Parameter Name="EmailCredentials" Type="varchar" Mode="In" />
@@ -206,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="UnstuckME_SchoolsEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="UnstuckME_SchoolsEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Schools" EntityType="Self.School" />
           <EntitySet Name="SchoolLogoes" EntityType="Self.SchoolLogo" />
           <EntitySet Name="Servers" EntityType="Self.Server" />
@@ -224,6 +235,17 @@
           </FunctionImport>
           <FunctionImport Name="DeleteServer">
             <Parameter Name="ServerName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllSchoolLogos" ReturnType="Collection(UnstuckME_SchoolsModel.GetAllSchoolLogos_Result)" />
+          <FunctionImport Name="GetAllSchools" ReturnType="Collection(UnstuckME_SchoolsModel.GetAllSchools_Result)" />
+          <FunctionImport Name="GetSchoolEmailCredentials" ReturnType="Collection(String)">
+            <Parameter Name="SchoolName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetSchoolID" ReturnType="Collection(Int32)">
+            <Parameter Name="SchoolName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetSchoolServerInfo" ReturnType="Collection(UnstuckME_SchoolsModel.GetSchoolServerInfo_Result)">
+            <Parameter Name="SchoolName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertSchool">
             <Parameter Name="SchooName" Mode="In" Type="String" />
@@ -279,6 +301,26 @@
             <Parameter Name="IPAddress" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="GetAllSchoolLogos_Result">
+          <Property Type="Int32" Name="SchoolID" Nullable="false" />
+          <Property Type="String" Name="SchoolName" Nullable="false" MaxLength="128" />
+          <Property Type="Binary" Name="Logo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllSchools_Result">
+          <Property Type="Int32" Name="SchoolID" Nullable="false" />
+          <Property Type="String" Name="SchoolName" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="EmailCredentials" Nullable="true" MaxLength="64" />
+          <Property Type="Binary" Name="Logo" Nullable="false" />
+          <Property Type="Int32" Name="ServerID" Nullable="false" />
+          <Property Type="String" Name="ServerDomain" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="ServerName" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="ServerIPAddress" Nullable="false" MaxLength="39" />
+        </ComplexType>
+        <ComplexType Name="GetSchoolServerInfo_Result">
+          <Property Type="String" Name="ServerDomain" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="ServerName" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="ServerIPAddress" Nullable="false" MaxLength="39" />
+        </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -295,7 +337,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="UnstuckME_SchoolsModelStoreContainer" CdmEntityContainer="UnstuckME_SchoolsEntities">
+        <EntityContainerMapping StorageEntityContainer="UnstuckME_SchoolsModelStoreContainer" CdmEntityContainer="UnstuckME_SchoolsEntities1">
           <EntitySetMapping Name="Schools">
             <EntityTypeMapping TypeName="UnstuckME_SchoolsModel.School">
               <MappingFragment StoreEntitySet="School">
@@ -337,6 +379,40 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeleteSchool" FunctionName="UnstuckME_SchoolsModel.Store.DeleteSchool" />
           <FunctionImportMapping FunctionImportName="DeleteServer" FunctionName="UnstuckME_SchoolsModel.Store.DeleteServer" />
+          <FunctionImportMapping FunctionImportName="GetAllSchoolLogos" FunctionName="UnstuckME_SchoolsModel.Store.GetAllSchoolLogos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_SchoolsModel.GetAllSchoolLogos_Result">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllSchools" FunctionName="UnstuckME_SchoolsModel.Store.GetAllSchools">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_SchoolsModel.GetAllSchools_Result">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="EmailCredentials" ColumnName="EmailCredentials" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="ServerID" ColumnName="ServerID" />
+                <ScalarProperty Name="ServerDomain" ColumnName="ServerDomain" />
+                <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+                <ScalarProperty Name="ServerIPAddress" ColumnName="ServerIPAddress" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSchoolEmailCredentials" FunctionName="UnstuckME_SchoolsModel.Store.GetSchoolEmailCredentials" />
+          <FunctionImportMapping FunctionImportName="GetSchoolID" FunctionName="UnstuckME_SchoolsModel.Store.GetSchoolID" />
+          <FunctionImportMapping FunctionImportName="GetSchoolServerInfo" FunctionName="UnstuckME_SchoolsModel.Store.GetSchoolServerInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_SchoolsModel.GetSchoolServerInfo_Result">
+                <ScalarProperty Name="ServerDomain" ColumnName="ServerDomain" />
+                <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+                <ScalarProperty Name="ServerIPAddress" ColumnName="ServerIPAddress" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertSchool" FunctionName="UnstuckME_SchoolsModel.Store.InsertSchool" />
           <FunctionImportMapping FunctionImportName="InsertServerForSchool" FunctionName="UnstuckME_SchoolsModel.Store.InsertServerForSchool" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="UnstuckME_SchoolsModel.Store.sp_alterdiagram" />

@@ -16,10 +16,10 @@ namespace UnstuckMEServerGUI
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class UnstuckME_SchoolsEntities : DbContext
+    public partial class UnstuckME_SchoolsEntities1 : DbContext
     {
-        public UnstuckME_SchoolsEntities()
-            : base("name=UnstuckME_SchoolsEntities")
+        public UnstuckME_SchoolsEntities1()
+            : base("name=UnstuckME_SchoolsEntities1")
         {
         }
     
@@ -49,6 +49,43 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("ServerName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteServer", serverNameParameter);
+        }
+    
+        public virtual ObjectResult<GetAllSchoolLogos_Result> GetAllSchoolLogos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllSchoolLogos_Result>("GetAllSchoolLogos");
+        }
+    
+        public virtual ObjectResult<GetAllSchools_Result> GetAllSchools()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllSchools_Result>("GetAllSchools");
+        }
+    
+        public virtual ObjectResult<string> GetSchoolEmailCredentials(string schoolName)
+        {
+            var schoolNameParameter = schoolName != null ?
+                new ObjectParameter("SchoolName", schoolName) :
+                new ObjectParameter("SchoolName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSchoolEmailCredentials", schoolNameParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetSchoolID(string schoolName)
+        {
+            var schoolNameParameter = schoolName != null ?
+                new ObjectParameter("SchoolName", schoolName) :
+                new ObjectParameter("SchoolName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetSchoolID", schoolNameParameter);
+        }
+    
+        public virtual ObjectResult<GetSchoolServerInfo_Result> GetSchoolServerInfo(string schoolName)
+        {
+            var schoolNameParameter = schoolName != null ?
+                new ObjectParameter("SchoolName", schoolName) :
+                new ObjectParameter("SchoolName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSchoolServerInfo_Result>("GetSchoolServerInfo", schoolNameParameter);
         }
     
         public virtual int InsertSchool(string schooName, string emailCredentials, byte[] schoolLogo)
