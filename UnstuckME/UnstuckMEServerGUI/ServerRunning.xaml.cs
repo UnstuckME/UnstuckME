@@ -34,7 +34,6 @@ namespace UnstuckMEServerGUI
             Server = _channelFactory.CreateChannel();
             Admin = passedInAdmin;
             Server.RegisterServerAdmin(Admin);
-            Server.GetAllOnlineUsers();
         }
 
         private void buttonKill_Click(object sender, RoutedEventArgs e)
