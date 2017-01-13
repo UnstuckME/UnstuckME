@@ -10,10 +10,10 @@
         <DockPanel Margin="0,0,0,335" Background="White">
             <Menu DockPanel.Dock="Top" Height="34" Background="White">
                 <MenuItem Header="File">
-                    
+                    <MenuItem x:Name="ShutdownAndExit" Header="Shutdown and Exit" Click="ShutdownAndExit_Click"></MenuItem>
+                    <MenuItem x:Name="Logout" Header="Logout" Click="Logout_Click"></MenuItem>
+                    <MenuItem x:Name="Exit" Header="Exit" Click="Exit_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Edit"></MenuItem>
-                <MenuItem Header="View"></MenuItem>
                 <MenuItem Header="Options">
                     <MenuItem x:Name="ChangeFirstLastName" Header="Admin Name Change" Click="ChangeFirstLastName_Click"  ></MenuItem>
                     <MenuItem x:Name="CreateAdmin" Header="Create New Administrator" Click="CreateAdmin_Click" ></MenuItem>
@@ -23,6 +23,10 @@
             </Menu>
         </DockPanel>
         <Button x:Name="buttonKill" Content="Kill Server" HorizontalAlignment="Left" Margin="10,319,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="buttonKill_Click" Background="Red" Foreground="White"/>
+        <ScrollViewer HorizontalAlignment="Left" Height="289" Margin="420,69,0,0" VerticalAlignment="Top" Width="168">
+            <StackPanel Name="StackPanelOnlineUsers"></StackPanel>
+        </ScrollViewer>
+        <Label x:Name="labelOnlineUsers" Content="Online Users" HorizontalAlignment="Left" Margin="420,38,0,0" VerticalAlignment="Top" Width="162"/>
 
     </Grid>
 </Window>
