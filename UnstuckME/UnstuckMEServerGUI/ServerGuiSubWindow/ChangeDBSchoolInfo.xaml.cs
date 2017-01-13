@@ -62,11 +62,16 @@ namespace UnstuckMEServerGUI
             {
                 if (!System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
                 {
-                    throw new Exception("Please Enter a Valid File path to a image");
+                    throw new Exception("Please Enter a valid file path for the image");
                 }
                 using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
-                {
-                    //schoolDB.
+                { 
+                    var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
+                    if (schoolIDs.Count() < 1)
+                    {
+                        throw new Exception("No school matching that name exists as registered school site of UnstuckME");
+                    }
+                    
                 }
                 MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
