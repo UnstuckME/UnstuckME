@@ -23,12 +23,17 @@
                         <Image x:Name="UserPhoto" Height="{Binding ActualHeight, ElementName=UserPhotoBtn}" Width="{Binding ActualWidth, ElementName=UserPhotoBtn}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Cursor="Hand"/>
                     </Button>
-                    <Button x:Name="ChangeFirstNameBtn" HorizontalAlignment="Left" Margin="175,50,0,0" VerticalAlignment="Top" Width="20" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUserName_Click">
+                    <Button x:Name="AllowChangeUsernameBtn" HorizontalAlignment="Left" Margin="175,50,0,0" VerticalAlignment="Top" Width="20" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUserName_Click">
                         <Image x:Name="ChangeFirstName" Height="{Binding ActualHeight, ElementName=ChangeFirstNameBtn}" Width="{Binding ActualWidth, ElementName=ChangeFirstNameBtn}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Cursor="Hand" Source="Edit Icon (32x32).png"/>
                     </Button>
+                    <Button x:Name="AllowChangePasswordBtn" Content="Change Password" Width="100" Height="20" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Click="AllowChangePasswordBtn_Click" />
+                    <Button x:Name="ChangeUsernameBtn" Content="Submit" Width="50" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUsernameBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Visibility="Hidden" />
+                    <Button x:Name="ChangePasswordBtn" Content="Submit" Width="50" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangePasswordBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Visibility="Hidden" />
+                    <Button x:Name="DeleteAccountBtn" Content="Delete Account" Width="100" Height="20" Background="Red" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="DeleteAccountBtn_Click" />
                     <TextBox x:Name="FNameTxtBx" HorizontalAlignment="Left" Height="30" Margin="199,47,0,0" TextWrapping="Wrap" Text="FName" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0"/>
                     <TextBox x:Name="LNameTxtBx" HorizontalAlignment="Left" Height="30" Margin="199,97,0,0" TextWrapping="Wrap" Text="LName" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox x:Name="ChangePasswordBx" HorizontalAlignment="Left" Height="30" Margin="199,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0" Visibility="Hidden" />
                     <Label x:Name="label1" Content="Recent Mentor Reveiws" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10,0,0" VerticalAlignment="Top" Height="26" Width="206"/>
                     <Label x:Name="label2" Content="Recent Student Reveiws" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10.4,0,0" Grid.Row="1" VerticalAlignment="Top"/>
                     <TextBlock x:Name="EmailtextBlock" HorizontalAlignment="Left" Margin="199,20,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
@@ -37,7 +42,7 @@
                         <StackPanel HorizontalAlignment="Left" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" VerticalAlignment="Top" Width="248" Name="ClassesStack" CanVerticallyScroll="True"/>
                     </ScrollViewer>
                     <ScrollViewer Name="AddRemoveClassesView" Visibility="Visible" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,27.4,0.4,0.4">
-                        <Button x:Name="Commit" Content="Commit Changes" Height="30" Width="40" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Commit_Click"/>
+                        <Button x:Name="Commit" Content="Commit Changes" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Commit_Click"/>
                     </ScrollViewer>
                     <Button x:Name="AddRemoveClasses" Content="|||" HorizontalAlignment="Left" Margin="466,1.4,0,0" VerticalAlignment="Top" Width="28" Height="29" RenderTransformOrigin="0.5,0.5" Grid.Row="1" Click="AddRemoveClasses_Click">
                         <Button.RenderTransform>
@@ -53,11 +58,13 @@
             </TabItem>
             <TabItem Header="My Stickers">
                 <Grid Background="#FFE5E5E5">
-                    <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="167,36,0,0" VerticalAlignment="Top"/>
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Stickers">
-                <Grid Background="#FFE5E5E5"></Grid>
+                <Grid Background="#FFE5E5E5">
+                    
+                </Grid>
             </TabItem>
             <TabItem Header="Chat">
                 <Grid Background="#FFE5E5E5"></Grid>
