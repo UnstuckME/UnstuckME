@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,8 @@ namespace UnstuckMEServerGUI
             {
                 string filepath = dlg.FileName;
                 textBoxPathToSchoolPhoto.Text = filepath;
+
+                UpdatePhoto(filepath);
             }
         }
 
@@ -60,7 +63,33 @@ namespace UnstuckMEServerGUI
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
 
+        private void textBoxPathToSchoolPhoto_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+            if (System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
+            {
+                UpdatePhoto(textBoxPathToSchoolPhoto.Text);
+            }
+        }
+
+        private void UpdatePhoto(string filePath)
+        {
+            Image schoolImage = new Image();
+            BitmapImage src = new BitmapImage();
+            src.BeginInit();
+            src.UriSource = new Uri(filePath, UriKind.Relative);
+            src.CacheOption = BitmapCacheOption.OnLoad;
+            src.EndInit();
+            schoolImage.Source = src;
+            schoolImage.Stretch = Stretch.UniformToFill;
+
+            imageSchoolLogo.Source = schoolImage.Source;
+
+            buttonClickToChangePhoto.Background = null;
+            buttonClickToChangePhoto.BorderThickness = new Thickness(0, 0, 0, 0);
         }
     }
 }
