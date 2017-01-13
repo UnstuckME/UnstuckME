@@ -171,5 +171,17 @@ namespace UnstuckMEServerGUI
                 }
             }
         }
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+           
+            Server.AdminLogMessage("Getting Users");
+            List<string> userList = Server.GetAllOnlineUsers();
+
+            foreach (string email in userList)
+            {
+                AddUser(email);
+            }
+        }
     }
 }

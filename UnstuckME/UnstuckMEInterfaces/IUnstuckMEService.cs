@@ -89,7 +89,7 @@ namespace UnstuckMEInterfaces
         void AdminLogMessage(string message);
 
         [OperationContract]
-        void GetAllOnlineUsers();
+        List<string> GetAllOnlineUsers();
 
 
     }

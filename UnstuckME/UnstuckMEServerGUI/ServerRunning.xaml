@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d"
-        Title="Server Management" Height="400" Width="600" MinHeight="400" MinWidth="600" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="Server Management" Height="400" Width="600" MinHeight="400" MinWidth="600" Closing="Window_Closing" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered">
     <Grid>
         <DockPanel Margin="0,0,0,335" Background="White">
             <Menu DockPanel.Dock="Top" Height="34" Background="White">

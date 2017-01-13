@@ -519,14 +519,14 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-        public void GetAllOnlineUsers()
+        public List<string> GetAllOnlineUsers()
         {
-            ConnectedServerAdmin admin = GetMyAdmin();
-
-            foreach  (var client in _connectedClients)
+            List<string> userList = new List<string>();
+            foreach (var user in _connectedClients)
             {
-                admin.connection.GetUpdate(0, client.Value.User.EmailAddress);
+                userList.Add(user.Value.User.EmailAddress);
             }
+            return userList;
         }
     }
 }
