@@ -20,7 +20,9 @@ namespace UnstuckMEInterfaces
             using (ServiceHost host = new ServiceHost(_server))
             {
                 host.Open();
-                Task.Factory.StartNew(_server.CheckStatus, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+                //Task.Factory.StartNew(_server.CheckStatus, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+                Thread userStatusCheck = new Thread(_server.CheckStatus);
+                userStatusCheck.Start();
                 Console.WriteLine("Server is Running...");
                 Console.WriteLine("<Press Enter to Shut Down Server");
                 Console.ReadLine();
