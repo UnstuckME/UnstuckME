@@ -64,6 +64,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GetAllSchoolLogos_Result.cs">
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllSchools_Result.cs">
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSchoolServerInfo_Result.cs">
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="School.cs">
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolLogo.cs">
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Server.cs">
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="ServerGuiSubWindow\AdminCreation.xaml.cs">
       <DependentUpon>AdminCreation.xaml</DependentUpon>
     </Compile>
@@ -165,16 +183,31 @@
       <DependentUpon>ServerRunning.xaml</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Sticker.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchool_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchool_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchool_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchool_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMEServer_DB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -272,6 +305,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UnstuckMEServer_DB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="UnstuckMESchool_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UnstuckMESchool_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="UnstuckMESchool_DB.edmx.diagram">
+      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
+    </None>
     <None Include="UnstuckMEServer_DB.edmx.diagram">
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
     </None>
@@ -299,6 +339,16 @@
   <ItemGroup>
     <Resource Include="GearIcon.png" />
     <Resource Include="SimpleAvatar.png" />
+    <Content Include="UnstuckMESchool_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckMESchool_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="UnstuckMESchool_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckMESchool_DB.cs</LastGenOutput>
+    </Content>
     <Content Include="UnstuckMEServer_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>

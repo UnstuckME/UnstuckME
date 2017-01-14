@@ -10,19 +10,14 @@
     <Grid>
         <TextBox x:Name="textBoxSchoolName" HorizontalAlignment="Left" Height="30" Margin="165,39,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="0"/>
         <TextBox x:Name="textBoxDatabaseIP" HorizontalAlignment="Left" Height="30" Margin="165,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="1"/>
-        <TextBox x:Name="textBoxPathToSchoolPhoto" HorizontalAlignment="Left" Height="30" Margin="165,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="2"/>
+        <TextBox x:Name="textBoxPathToSchoolPhoto" HorizontalAlignment="Left" Height="30" Margin="165,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" TabIndex="2" FontSize="10" TextChanged="textBoxPathToSchoolPhoto_TextChanged"/>
         <Label x:Name="labelSchoolName" Content="School Name" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Label x:Name="labelDatabseIP" Content="Database IP" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Label x:Name="labelSchoolLogoPath" Content="School Logo Destination" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="196,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="5" Click="buttonCancel_Click" IsCancel="True"/>
         <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonSave_Click" IsDefault="True"/>
-        <Button x:Name="buttonBrowse" Content="Browse" HorizontalAlignment="Left" Margin="351,114,0,0" VerticalAlignment="Top" Width="59" TabIndex="6" Click="buttonBrowse_Click" IsDefault="True"/>
-        <Button x:Name="ButtonSchoolLogoImg"  HorizontalAlignment="Left" Height="117" Margin="27,144,0,0" VerticalAlignment="Top" Width="107" BorderBrush="{x:Null}" Opacity="0.7" Background="#FF999393" Click="ButtonSchoolLogoImg_Click">
-            <StackPanel Orientation="Vertical" Height="117">
-                <TextBlock Text="Click To Change" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
-                <Image Source="SimpleAvatar.png" Stretch="Fill"/>
-            </StackPanel>
-        </Button>
-
+        <Button x:Name="buttonBrowse" Content="Browse" HorizontalAlignment="Left" Margin="356,112,0,0" VerticalAlignment="Top" Width="59" TabIndex="6" Click="buttonBrowse_Click" IsDefault="True"/>
+        <Image x:Name="imageSchoolLogo" HorizontalAlignment="Left" Height="108" Margin="24,160,0,0" VerticalAlignment="Top" Width="97" Source="/UnstuckMEServerGUI;component/SimpleAvatar.png" Stretch="UniformToFill"/>
+        <Button x:Name="buttonClickToChangePhoto" Content="Click To Change" VerticalContentAlignment="Top"  HorizontalAlignment="Left" Height="138" Margin="10,139,0,0" VerticalAlignment="Top" Width="128" Background="#FF8B8484" RenderTransformOrigin="0.507,0.219" Click="buttonBrowse_Click" FontWeight="Bold" Opacity="0.75"/>
     </Grid>
 </Window>
