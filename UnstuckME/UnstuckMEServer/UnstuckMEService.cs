@@ -22,7 +22,7 @@ namespace UnstuckMEInterfaces
     /// </summary>
     public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer
     {
-        public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
+		public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
 
         public void CheckStatus()
@@ -495,19 +495,20 @@ namespace UnstuckMEInterfaces
         public byte [] GetProfilePicture(int userID)
         {
             byte[] imgByte = null;
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-                imgByte = db.GetProfilePicture(userID).First();
-                
-            }
-            return imgByte;
+
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				imgByte = db.GetProfilePicture(userID).First();
+			}
+
+			return imgByte;
         }
 
         public void SetProfilePicture(int userID, byte[] image)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                db.ChangeProfilePicture(userID, image);
+				db.ChangeProfilePicture(userID, image);
             }
         }
 

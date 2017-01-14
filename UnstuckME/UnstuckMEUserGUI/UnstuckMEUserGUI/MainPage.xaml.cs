@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckMEInterfaces;
 using UnstuckME_Classes;
+using System.Data.SqlClient;
 
 namespace UnstuckMEUserGUI
 {
@@ -85,32 +86,59 @@ namespace UnstuckMEUserGUI
 
 			if (file_browser.ShowDialog() == DialogResult.OK)
 			{
-				//FileStream file = new FileStream(file_browser.FileName, FileMode.Open, FileAccess.Read);
-				////FileStream file = file_browser.OpenFile() as FileStream;
-				//int stream_length = (int)file.Length;
-				//byte[] byte_array = new byte[stream_length];
-				//file.Read(byte_array, 0, stream_length);
-				//file.Close();
+				FileStream file = new FileStream(file_browser.FileName, FileMode.Open, FileAccess.Read);
+				//FileStream file = file_browser.OpenFile() as FileStream;
+				int stream_length = (int)file.Length;
+				byte[] byte_array = new byte[stream_length];
+				file.Read(byte_array, 0, stream_length);
+				file.Close();
 
-				/********************************************************************************
-				System.Drawing.Image image = System.Drawing.Image.FromStream(file);
 
-				using (MemoryStream ms = new MemoryStream())
-				{
-					if (file_browser.SafeFileName.Split('.').Last() == "jpeg" || file_browser.SafeFileName.Split('.').Last() == "jpg")
-						image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-					else if (file_browser.SafeFileName.Split('.').Last() == "png")
-						image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+				//System.Drawing.Image image = System.Drawing.Image.FromStream(file);
 
-					byte_array = ms.ToArray();
-				}
-				********************************************************************************/
+				//using (MemoryStream ms = new MemoryStream())
+				//{
+				//	if (file_browser.SafeFileName.Split('.').Last() == "jpeg" || file_browser.SafeFileName.Split('.').Last() == "jpg")
+				//		image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+				//	else if (file_browser.SafeFileName.Split('.').Last() == "png")
+				//		image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+
+				//	byte_array = ms.ToArray();
+				//}
+
 
 				//Server.SetProfilePicture(User.UserID, byte_array);
 
-				//ImageSourceConverter ic = new ImageSourceConverter();
-				//UserPhoto.Source = ic.ConvertFrom(byte_array) as ImageSource;
+				SqlConnection connection = GetConnection();
+
+				SqlCommand command = new SqlCommand();
+				command.Connection = connection;
+				command.CommandText =
+					"update Picture " +
+					"set Photo = @photo " +
+					"where @UserID = UserID";
+				command.Parameters.AddWithValue("@photo", byte_array);
+				command.Parameters.AddWithValue("@UserID", User.UserID);
+
+				connection.Open();
+				command.ExecuteNonQuery();
+				connection.Close();
+
+				ImageSourceConverter ic = new ImageSourceConverter();
+				UserPhoto.Source = ic.ConvertFrom(byte_array) as ImageSource;
 			}
+		}
+		public static SqlConnection GetConnection()
+		{
+			SqlConnection connection = new SqlConnection();
+			connection.ConnectionString =
+				//"Data Source=localhost\\SqlExpress;" + 
+				//"Data Source=ORANGE1\\ORANGE1" +
+				"Data Source=aura.students.cset.oit.edu" +
+				";Initial Catalog=UnstuckME_DB" +
+				";Integrated Security=False" +
+				";User ID=" + "matthew_cole" + ";Password=" + "Ensalada1";
+			return connection;
 		}
 
 		//Opens prompt for user to change their username
