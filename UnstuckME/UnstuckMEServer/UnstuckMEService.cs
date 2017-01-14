@@ -182,14 +182,16 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var classes = db.GetUserClasses(UserID);
-                    UserClasses temp = new UserClasses();
+                    
                     
                     //This might work, if not let me know and i'll figure out something else.
                     foreach (var c in classes)
                     {
+                        UserClasses temp = new UserClasses();
                         temp.CourseCode = c.CourseCode;
                         temp.CourseName = c.CourseName;
                         temp.CourseNumber = c.CourseNumber;
+                        //temp.ID =
                         Rlist.Add(temp);
                     }
                 }
@@ -528,6 +530,16 @@ namespace UnstuckMEInterfaces
                 userList.Add(user.Value.User.EmailAddress);
             }
             return userList;
+        }
+
+        public void RemoveUserFromClass(int UserID, int ClassID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                //it appears that no stored proc exsists to do this
+                //db.
+                return;
+            }
         }
     }
 }

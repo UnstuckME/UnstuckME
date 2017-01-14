@@ -42,12 +42,12 @@ namespace UnstuckMEUserGUI
 			byte[] imgByte = Server.GetProfilePicture(UserID);
 			UserPhoto.Source = ic.ConvertFrom(imgByte) as ImageSource;	//convert image so it can be displayed
 
-            for (int i = 0; i < 50; i++)	//just testing
-			{
-				TextBlock test = new TextBlock();
-				test.Text = "test text" + i;
-				ClassesStack.Children.Add(test);
-			}
+            List<UserClasses> classes = Server.GetUserClasses(UserID);
+            foreach (UserClasses C in classes)
+            {
+                ClassDisplay usersClass = new ClassDisplay(UserID, Server, C.CourseCode, C.CourseNumber, C.CourseName, 1);
+                ClassesStack.Children.Add(usersClass);
+            }
 		}
 
 		//Adds/removes classes from the list of classes user can mentor for

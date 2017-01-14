@@ -59,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClassDisplay.xaml.cs">
+      <DependentUpon>ClassDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ClientCallback.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -70,6 +73,10 @@
       <DependentUpon>NewAccountSetupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SchoolDB_Connection.cs" />
+    <Page Include="ClassDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

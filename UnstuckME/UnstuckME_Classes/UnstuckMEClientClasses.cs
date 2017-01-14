@@ -20,6 +20,7 @@ namespace UnstuckME_Classes
         public string CourseCode { set; get; }
         public string CourseName { set; get; }
         public short CourseNumber { set; get; }
+        public int ID { set; get; }
     }
     public class UnstuckMEMessage
     {
