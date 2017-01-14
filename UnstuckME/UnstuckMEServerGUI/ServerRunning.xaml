@@ -26,7 +26,7 @@
         <ScrollViewer HorizontalAlignment="Left" Height="289" Margin="420,69,0,0" VerticalAlignment="Top" Width="168">
             <StackPanel Name="StackPanelOnlineUsers"></StackPanel>
         </ScrollViewer>
-        <Label x:Name="labelOnlineUsers" Content="Online Users" HorizontalAlignment="Left" Margin="420,38,0,0" VerticalAlignment="Top" Width="162"/>
+        <Label x:Name="labelOnlineUsers" Content="Online Users: 0" HorizontalAlignment="Left" Margin="420,38,0,0" VerticalAlignment="Top" Width="162"/>
 
     </Grid>
 </Window>

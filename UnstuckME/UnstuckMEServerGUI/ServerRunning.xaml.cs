@@ -160,6 +160,7 @@ namespace UnstuckMEServerGUI
             TextBlock newUser = new TextBlock();
             newUser.Text = emailAddress;
             StackPanelOnlineUsers.Children.Add(newUser);
+            labelOnlineUsers.Content = "Online Users: " + StackPanelOnlineUsers.Children.Count;
         }
         public void RemoveUser(string emailAddress)
         {
@@ -168,6 +169,7 @@ namespace UnstuckMEServerGUI
                 if (block.Text == emailAddress)
                 {
                     StackPanelOnlineUsers.Children.Remove(block);
+                    labelOnlineUsers.Content = "Online Users: " + StackPanelOnlineUsers.Children.Count;
                     return; //This Return Is Needed for some reason, otherwise ServerGuiBreaks.
                 }
             }
