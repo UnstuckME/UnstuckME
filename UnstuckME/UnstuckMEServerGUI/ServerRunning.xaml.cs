@@ -163,11 +163,12 @@ namespace UnstuckMEServerGUI
         }
         public void RemoveUser(string emailAddress)
         {
-            foreach (TextBlock block  in StackPanelOnlineUsers.Children)
+            foreach (TextBlock block in StackPanelOnlineUsers.Children)
             {
-                if(block.Text == emailAddress)
+                if (block.Text == emailAddress)
                 {
                     StackPanelOnlineUsers.Children.Remove(block);
+                    return; //This Return Is Needed for some reason, otherwise ServerGuiBreaks.
                 }
             }
         }
