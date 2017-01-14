@@ -10,65 +10,35 @@ namespace UnstuckMEUserGUI
 	//Holds the information gathered from the school DB
 	class School
 	{
-		string school_name;
-		byte[] school_logo;
-		string server_domain;
-		string server_name;
-		string server_IP;
-
 		public School()
 		{
-			school_name = string.Empty;
-			school_logo = null;
-			server_domain = string.Empty;
-			server_name = string.Empty;
-			server_IP = string.Empty;
+			Name = string.Empty;
+			Logo = null;
+			Domain = string.Empty;
+			Server = string.Empty;
+			IP = string.Empty;
 		}
 
 		public School(string name, byte[] logo)
 		{
-			school_name = name;
-			school_logo = logo;
+			Name = name;
+			Logo = logo;
 		}
 
-		public School(string name, byte[] logo, string domain, string server, string IP)
+		public School(string name, byte[] logo, string domain, string server, string ip)
 		{
-			school_name = name;
-			school_logo = logo;
-			server_domain = domain;
-			server_name = server;
-			server_IP = IP;
+			Name = name;
+			Logo = logo;
+			Domain = domain;
+			Server = server;
+			IP = ip;
 		}
 
-		public byte[] Logo
-		{
-			get { return school_logo; }
-			set { school_logo = value; }
-		}
-
-		public string Name
-		{
-			get { return school_name; }
-			set { school_name = value; }
-		}
-
-		public string Domain
-		{
-			get { return server_domain; }
-			set { server_domain = value; }
-		}
-
-		public string Server
-		{
-			get { return server_name; }
-			set { server_name = value; }
-		}
-
-		public string IP
-		{
-			get { return server_IP; }
-			set { server_IP = value; }
-		}
+		public byte[] Logo { get; set; }
+		public string Name { get; set; }
+		public string Domain { get; set; }
+		public string Server { get; set; }
+		public string IP { get; set; }
 	}
 
 	//Handles all School DB connections and queries

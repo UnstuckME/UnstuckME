@@ -173,11 +173,11 @@ namespace UnstuckMEInterfaces
             return loginAttempt;
         }
 
-        public List<UserClasses> GetUserClasses(int UserID)
+        public List<UserClass> GetUserClasses(int UserID)
         {
             try
             {
-                List<UserClasses> Rlist = new List<UserClasses>();
+                List<UserClass> Rlist = new List<UserClass>();
 
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
@@ -187,7 +187,7 @@ namespace UnstuckMEInterfaces
                     //This might work, if not let me know and i'll figure out something else.
                     foreach (var c in classes)
                     {
-                        UserClasses temp = new UserClasses();
+                        UserClass temp = new UserClass();
                         temp.CourseCode = c.CourseCode;
                         temp.CourseName = c.CourseName;
                         temp.CourseNumber = c.CourseNumber;
@@ -486,11 +486,11 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void SubmitSticker(UnstuckMESticker newSticker, int timoutInSeconds)
+        public void SubmitSticker(UnstuckMESticker newSticker)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, timoutInSeconds);
+                db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, (int)((newSticker.SubmitTime - newSticker.Timeout).TotalSeconds));
             }
         }
 

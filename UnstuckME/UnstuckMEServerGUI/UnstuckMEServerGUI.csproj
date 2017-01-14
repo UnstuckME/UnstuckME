@@ -43,6 +43,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -334,11 +335,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UnstuckME_Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="GearIcon.png" />
-    <Resource Include="SimpleAvatar.png" />
+    <None Include="Resources\GearIcon.png" />
+    <None Include="Resources\UnstuckME_Logo.png" />
+    <None Include="Resources\SimpleAvatar.png" />
     <Content Include="UnstuckMESchool_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>

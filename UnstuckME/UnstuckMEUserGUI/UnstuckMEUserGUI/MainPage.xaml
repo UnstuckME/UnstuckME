@@ -25,7 +25,7 @@
                     </Button>
                     <Button x:Name="AllowChangeUsernameBtn" HorizontalAlignment="Left" Margin="175,50,0,0" VerticalAlignment="Top" Width="20" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUserName_Click">
                         <Image x:Name="ChangeFirstName" Height="{Binding ActualHeight, ElementName=ChangeFirstNameBtn}" Width="{Binding ActualWidth, ElementName=ChangeFirstNameBtn}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Cursor="Hand" Source="Edit Icon (32x32).png"/>
+                               Cursor="Hand" Source="Resources/Edit Icon (32x32).png"/>
                     </Button>
                     <Button x:Name="AllowChangePasswordBtn" Content="Change Password" Width="100" Height="20" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Click="AllowChangePasswordBtn_Click" />
                     <Button x:Name="ChangeUsernameBtn" Content="Submit" Width="50" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUsernameBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Visibility="Hidden" />

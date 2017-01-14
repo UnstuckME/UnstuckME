@@ -15,12 +15,12 @@ namespace UnstuckME_Classes
         public string Privileges { get; set; }
     }
 
-    public class UserClasses
+    public class UserClass
     {
         public string CourseCode { set; get; }
         public string CourseName { set; get; }
         public short CourseNumber { set; get; }
-        public int ID { set; get; }
+        public int ClassID { set; get; }
     }
     public class UnstuckMEMessage
     {

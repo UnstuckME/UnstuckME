@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="UnstuckMEUserGUI.StarRankTemplate_UC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnstuckMEUserGUI"
+             mc:Ignorable="d"
+             Name="StarRankTemplate"
+             d:DesignHeight="20" d:DesignWidth="100">
+    <Grid x:Name="StarRankDisplay" Height="{Binding ActualHeight, ElementName=StarRankTemplate}" Width="{Binding ActualWidth, ElementName=StarRankTemplate}">
+        <Button x:Name="OneStarBtn" Height="{Binding ActualHeight, ElementName=StarRankDisplay}" Width="20" Margin="0,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0">
+            <Image x:Name="OneStar" Height="{Binding ActualHeight, ElementName=OneStarBtn}" Width="{Binding ActualWidth, ElementName=OneStarBtn}" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/Star.png" Margin="0,0,0,0" />
+        </Button>
+        <Button x:Name="TwoStarBtn" Height="{Binding ActualHeight, ElementName=StarRankDisplay}" Width="20" Margin="20,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0">
+            <Image x:Name="TwoStar" Height="{Binding ActualHeight, ElementName=TwoStarBtn}" Width="{Binding ActualWidth, ElementName=TwoStarBtn}" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/Star.png" Margin="0,0,0,0" />
+        </Button>
+        <Button x:Name="ThreeStarBtn" Height="{Binding ActualHeight, ElementName=StarRankDisplay}" Width="20" Margin="40,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0">
+            <Image x:Name="ThreeStar" Height="{Binding ActualHeight, ElementName=ThreeStarBtn}" Width="{Binding ActualWidth, ElementName=ThreeStarBtn}" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/Star.png" Margin="0,0,0,0" />
+        </Button>
+        <Button x:Name="FourStarBtn" Height="{Binding ActualHeight, ElementName=StarRankDisplay}" Width="20" Margin="60,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0">
+            <Image x:Name="FourStar" Height="{Binding ActualHeight, ElementName=FourStarBtn}" Width="{Binding ActualWidth, ElementName=FourStarBtn}" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/Star.png" Margin="0,0,0,0" />
+        </Button>
+        <Button x:Name="FiveStarBtn" Height="{Binding ActualHeight, ElementName=StarRankDisplay}" Width="20" Margin="80,0,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0">
+            <Image x:Name="FiveStar" Height="{Binding ActualHeight, ElementName=FiveStarBtn}" Width="{Binding ActualWidth, ElementName=FiveStarBtn}" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/Star.png" Margin="0,0,0,0" />
+        </Button>
+    </Grid>
+</UserControl>

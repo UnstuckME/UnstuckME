@@ -21,7 +21,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Image x:Name="UnstuckMELogo" HorizontalAlignment="Center" Height="182" Margin="-24,68,10,216" VerticalAlignment="Center" Width="359" Source="UnstuckME_Logo.png" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="UnstuckMELogo" HorizontalAlignment="Center" Height="182" Margin="-24,68,10,216" VerticalAlignment="Center" Width="359" Source="Resources/UnstuckME_Logo.png" RenderTransformOrigin="0.5,0.5"/>
         <Button x:Name="button_RunServer" Content="Start Server" HorizontalAlignment="Center" Margin="101,255,114,149" VerticalAlignment="Center" Width="130" Click="button_RunServer_Click" Background="#FF00BD2A" BorderBrush="Black" Foreground="#FFFFF9F9" FontFamily="Global User Interface" Height="62" BorderThickness="3" FontSize="18"/>
         <Label x:Name="labelEmailAddress" Content="Email Address:" HorizontalAlignment="Left" Margin="10,430,0,0" VerticalAlignment="Top" Width="325" Height="30"/>
         <Label x:Name="labelName" Content="Name:" HorizontalAlignment="Left" Margin="10,396,0,0" VerticalAlignment="Top" Width="325" Height="30"/>

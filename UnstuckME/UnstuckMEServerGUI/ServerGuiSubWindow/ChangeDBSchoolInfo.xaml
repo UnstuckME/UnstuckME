@@ -17,7 +17,7 @@
         <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="196,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="5" Click="buttonCancel_Click" IsCancel="True"/>
         <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonSave_Click" IsDefault="True"/>
         <Button x:Name="buttonBrowse" Content="Browse" HorizontalAlignment="Left" Margin="356,112,0,0" VerticalAlignment="Top" Width="59" TabIndex="6" Click="buttonBrowse_Click" IsDefault="True"/>
-        <Image x:Name="imageSchoolLogo" HorizontalAlignment="Left" Height="108" Margin="24,160,0,0" VerticalAlignment="Top" Width="97" Source="/UnstuckMEServerGUI;component/SimpleAvatar.png" Stretch="UniformToFill"/>
+        <Image x:Name="imageSchoolLogo" HorizontalAlignment="Left" Height="108" Margin="24,160,0,0" VerticalAlignment="Top" Width="97" Source="/UnstuckMEServerGUI;component/Resources/SimpleAvatar.png" Stretch="UniformToFill"/>
         <Button x:Name="buttonClickToChangePhoto" Content="Click To Change" VerticalContentAlignment="Top"  HorizontalAlignment="Left" Height="138" Margin="10,139,0,0" VerticalAlignment="Top" Width="128" Background="#FF8B8484" RenderTransformOrigin="0.507,0.219" Click="buttonBrowse_Click" FontWeight="Bold" Opacity="0.75"/>
     </Grid>
 </Window>

@@ -73,6 +73,12 @@
       <DependentUpon>NewAccountSetupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SchoolDB_Connection.cs" />
+    <Compile Include="StarRankTemplate_UC.xaml.cs">
+      <DependentUpon>StarRankTemplate_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sticker_UC.xaml.cs">
+      <DependentUpon>Sticker_UC.xaml</DependentUpon>
+    </Compile>
     <Page Include="ClassDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,6 +95,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="StarRankTemplate_UC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StartWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +111,10 @@
       <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Sticker_UC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -140,16 +154,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UnstuckME_Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Right_Arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Edit Icon %2832x32%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="SimpleAvatar.png" />
+    <Resource Include="Resources\Edit Icon %2832x32%29.png" />
+    <Resource Include="Resources\Right_Arrow.png" />
+    <Resource Include="Resources\SimpleAvatar.png" />
+    <Resource Include="Resources\Star.png" />
+    <Resource Include="Resources\UnstuckME_Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

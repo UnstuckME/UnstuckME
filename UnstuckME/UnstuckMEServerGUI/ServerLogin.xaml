@@ -15,7 +15,7 @@
         <Label x:Name="labelPassword" Content="Password" HorizontalAlignment="Center" Margin="46,133,146,111" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12"/>
         <Button x:Name="buttonServerLogin" Content="Login" HorizontalAlignment="Center" Margin="90,225,90,0" VerticalAlignment="Center" Width="150" Click="buttonServerLogin_Click" Height="30" BorderThickness="2" IsDefault="True"/>
         <Label x:Name="labelInvalidUsernamePassword" Content="Invalid Username/Password" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="200" Height="28" Foreground="Red" HorizontalContentAlignment="Center" FontSize="12" FontFamily="Global Sans Serif" Visibility="Hidden"/>
-        <Image x:Name="image" HorizontalAlignment="Center" Height="159" Margin="10,15,24,294" VerticalAlignment="Center" Width="308" Source="UnstuckME_Logo.png"/>
+        <Image x:Name="image" HorizontalAlignment="Center" Height="159" Margin="10,15,24,294" VerticalAlignment="Center" Width="308" Source="Resources/UnstuckME_Logo.png"/>
 
         <Canvas x:Name ="ChangeLoginCanvas" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="322" Background="#FF7E7E7E" Visibility="Collapsed">
             <Label Content="Please change your login information:" Canvas.Left="24" Width="280" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Foreground="#FFF04949" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -29,7 +29,7 @@
         </Canvas>
         <Button Name="SettingButton" Margin="290,10,10,420" BorderThickness="0" Background="White" Click="buttonSetting_Click">
             <StackPanel Orientation ="Horizontal">
-                <Image Source="GearIcon.png" Stretch="Uniform" />
+                <Image Source="Resources/GearIcon.png" Stretch="Uniform" />
             </StackPanel>
         </Button>
 

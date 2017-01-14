@@ -42,7 +42,7 @@
                     ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
             
-            <Image x:Name="Logo" Source="UnstuckME_Logo.png" HorizontalAlignment="Center" VerticalAlignment="Top" Height="950" Width="950" Grid.IsSharedSizeScope="True"
+            <Image x:Name="Logo" Source="Resources/UnstuckME_Logo.png" HorizontalAlignment="Center" VerticalAlignment="Top" Height="950" Width="950" Grid.IsSharedSizeScope="True"
                    ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Panel.ZIndex="-1" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
 
             <Label x:Name="Email_Label" Content="Email" Background="White" Height="30" Width="100" Margin="-220,0,0,150" FontSize="13" FontWeight="Bold" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
@@ -71,7 +71,7 @@
 
                 <Button x:Name="Rotate_Left_SchoolBtn" TabIndex="6" Height="125" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"
                         Margin="0,112.5,0,0" VerticalAlignment="Center" Click="Rotate_Left_SchoolBtn_Click" Background="WhiteSmoke" Cursor="Hand" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                    <Image x:Name="LeftArrow_Image" Source="Right_Arrow.png" Height="{Binding ActualHeight, ElementName=Rotate_Left_SchoolBtn}" Width="{Binding ActualWidth, ElementName=Rotate_Left_SchoolBtn}"
+                    <Image x:Name="LeftArrow_Image" Source="Resources/Right_Arrow.png" Height="{Binding ActualHeight, ElementName=Rotate_Left_SchoolBtn}" Width="{Binding ActualWidth, ElementName=Rotate_Left_SchoolBtn}"
                            Cursor="Hand" RenderTransformOrigin="0.5,0.5" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
                         <Image.RenderTransform>
                             <TransformGroup>
@@ -83,7 +83,7 @@
 
                 <Button x:Name="Rotate_Right_SchoolBtn" TabIndex="7" Height="125" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"
                         Margin="770,112.5,0,0" VerticalAlignment="Center" Click="Rotate_Right_SchoolBtn_Click" Background="WhiteSmoke" Cursor="Hand" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                    <Image x:Name="RightArrow_Image" Source="Right_Arrow.png" Height="{Binding ActualHeight, ElementName=Rotate_Right_SchoolBtn}" Width="{Binding ActualWidth, ElementName=Rotate_Right_SchoolBtn}"
+                    <Image x:Name="RightArrow_Image" Source="Resources/Right_Arrow.png" Height="{Binding ActualHeight, ElementName=Rotate_Right_SchoolBtn}" Width="{Binding ActualWidth, ElementName=Rotate_Right_SchoolBtn}"
                            Cursor="Hand" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                 </Button>
             </Canvas>

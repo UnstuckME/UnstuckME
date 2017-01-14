@@ -31,7 +31,7 @@ namespace UnstuckMEInterfaces
         bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword);
 
         [OperationContract]
-        List<UserClasses> GetUserClasses(int UserID);
+        List<UserClass> GetUserClasses(int UserID);
 
         [OperationContract]
         void RemoveUserFromClass(int UserID, int ClassID);
@@ -68,7 +68,7 @@ namespace UnstuckMEInterfaces
         void AddUserToTutoringOrganization(int userID, int organizationID);
 
         [OperationContract]
-        void SubmitSticker(UnstuckMESticker newSticker, int timoutInSeconds);
+        void SubmitSticker(UnstuckMESticker newSticker);
         [OperationContract]
         byte[] GetProfilePicture(int userID);
 
