@@ -36,9 +36,7 @@
                     <ScrollViewer Name="ClassesView" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,36.4,0.4,-8.6">
                         <StackPanel HorizontalAlignment="Left" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" VerticalAlignment="Top" Width="248" Name="ClassesStack" CanVerticallyScroll="True"/>
                     </ScrollViewer>
-                    <ScrollViewer Name="AddRemoveClassesView" Visibility="Visible" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,27.4,0.4,0.4">
-                        <Button x:Name="Commit" Content="Commit Changes" Height="30" Width="40" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Commit_Click"/>
-                    </ScrollViewer>
+                    <ScrollViewer Name="AddRemoveClassesView" Visibility="Visible" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,27.4,0.4,0.4"/>
                     <Button x:Name="AddRemoveClasses" Content="|||" HorizontalAlignment="Left" Margin="466,1.4,0,0" VerticalAlignment="Top" Width="28" Height="29" RenderTransformOrigin="0.5,0.5" Grid.Row="1" Click="AddRemoveClasses_Click">
                         <Button.RenderTransform>
                             <TransformGroup>
@@ -49,6 +47,9 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
+                    <ComboBox x:Name="CourseCodeDropdown" Visibility="Collapsed" HorizontalAlignment="Left" Height="28" Margin="10,36.4,0,0" VerticalAlignment="Top" Width="138" Grid.Row="1"/>
+                    <ComboBox x:Name="CourseNumberDropdown" Visibility="Collapsed"  HorizontalAlignment="Left" Height="28" Margin="153,36.4,0,0" VerticalAlignment="Top" Width="245" Grid.Row="1"/>
+
                 </Grid>
             </TabItem>
             <TabItem Header="My Stickers">
@@ -63,5 +64,6 @@
                 <Grid Background="#FFE5E5E5"></Grid>
             </TabItem>
         </TabControl>
+
     </Grid>
 </Page>

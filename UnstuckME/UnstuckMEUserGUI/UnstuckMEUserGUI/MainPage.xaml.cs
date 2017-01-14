@@ -43,13 +43,20 @@ namespace UnstuckMEUserGUI
             img = ic.ConvertFrom(imgByte) as ImageSource;
             UserPhoto.Source = img;
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 5; i++)
 			{
 				TextBlock test = new TextBlock();
 				test.Text = "test text" + i;
 				ClassesStack.Children.Add(test);
 			}
-		}
+            List<UserClasses> enrolledClasses = Server.GetUserClasses(UserID);
+            foreach (UserClasses UserClass in enrolledClasses)
+            {
+                TextBlock test = new TextBlock();
+                test.Text = UserClass.CourseCode + UserClass.CourseNumber + UserClass.CourseName;
+                ClassesStack.Children.Add(test);
+            }
+        }
 
 		private void AddRemoveClasses_Click(object sender, RoutedEventArgs e)
 		{
@@ -57,12 +64,17 @@ namespace UnstuckMEUserGUI
 			{
 				ClassesView.Visibility = Visibility.Collapsed;
 				AddRemoveClassesView.Visibility = Visibility.Visible;
+                CourseCodeDropdown.Visibility = Visibility.Visible;
+                CourseNumberDropdown.Visibility = Visibility.Visible;
 
+                CourseCodeDropdown.Items.Add("test");
 			}
 			else
 			{
 				ClassesView.Visibility = Visibility.Visible;
 				AddRemoveClassesView.Visibility = Visibility.Collapsed;
+                CourseCodeDropdown.Visibility = Visibility.Collapsed;
+                CourseNumberDropdown.Visibility = Visibility.Collapsed;
 			}
 
 		}
