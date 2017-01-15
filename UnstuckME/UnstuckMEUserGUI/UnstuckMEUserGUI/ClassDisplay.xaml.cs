@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+
 
 namespace UnstuckMEUserGUI
 {
@@ -28,7 +30,8 @@ namespace UnstuckMEUserGUI
         string m_desc;
         int m_IDnum;
         FrameworkElement lastClick = null;
-        public ClassDisplay(int UserID, IUnstuckMEService OpenServer, string code, int number, string desc, int IDnum)
+        StackPanel ItemContainer = null;
+        public ClassDisplay(StackPanel itemcontainer, int UserID, IUnstuckMEService OpenServer, string code, int number, string desc, int IDnum)
         {
             m_UserID = UserID;
             m_OpenServer = OpenServer;
@@ -36,6 +39,7 @@ namespace UnstuckMEUserGUI
             m_number = number;
             m_desc = desc;
             m_IDnum = IDnum;
+            ItemContainer = itemcontainer;
 
             InitializeComponent();
             CourseCode.Text = m_code;
@@ -53,15 +57,16 @@ namespace UnstuckMEUserGUI
 
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {
-            FrameworkElement s = e.Source as FrameworkElement;
-            
-            string toDelete = lastClick.Name;
-            toDelete = toDelete.Remove(0, 13);
-            //remove the above course number
-            int courseToRemove = Convert.ToInt32(toDelete);
-            //int courseToRemove = Convert.ToInt32(lastClick.Name);
-            m_OpenServer.RemoveUserFromClass(m_UserID, courseToRemove);
-            lastClick.Visibility = Visibility.Collapsed;
+            m_OpenServer.RemoveUserFromClass(m_UserID, m_IDnum);    //this call currently does nothing but if it did this function would work
+            lastClick.Visibility = Visibility.Collapsed;    // this line may not even be needed
+            ItemContainer.Children.Clear();
+            List<UserClass> classes = m_OpenServer.GetUserClasses(m_UserID);
+            foreach (UserClass C in classes)
+            {
+                ClassDisplay usersClass = new ClassDisplay(ItemContainer, m_UserID, m_OpenServer, C.CourseCode, C.CourseNumber, C.CourseName, 1);
+                ItemContainer.Children.Add(usersClass);
+            }
+
         }
     }
 }

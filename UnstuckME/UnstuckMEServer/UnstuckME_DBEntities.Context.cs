@@ -41,6 +41,7 @@ namespace UnstuckMEServer
         public DbSet<Sticker> Stickers { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        
     
         public virtual int AddFriend(Nullable<int> currentUserID, Nullable<int> newFriendUserID)
         {

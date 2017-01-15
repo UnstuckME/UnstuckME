@@ -54,4 +54,9 @@ namespace UnstuckME_Classes
         public DateTime SubmitTime { get; set; }
         public DateTime Timeout { get; set; }
     }
+    public class CourseCodes
+    {
+        public string Code { get; set; }
+    }
+
 }

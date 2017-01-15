@@ -41,8 +41,12 @@
                     <ScrollViewer Name="ClassesView" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,36.4,0.4,-8.6">
                         <StackPanel HorizontalAlignment="Left" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" VerticalAlignment="Top" Width="494" Name="ClassesStack" CanVerticallyScroll="True"/>
                     </ScrollViewer>
-                    <ScrollViewer Name="AddRemoveClassesView" Visibility="Visible" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,27.4,0.4,0.4">
+                    <ScrollViewer Name="AddRemoveClassesView" Visibility="Collapsed" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,27.4,0.4,0.4">
+                        <Grid>
                         <Button x:Name="Commit" Content="Commit Changes" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Commit_Click"/>
+                            <ComboBox x:Name="CourseCodeComboBox" SelectionChanged="CourseCodeComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Height="30"/>
+                        <ComboBox x:Name="CourseNumandNameComboBox" Visibility="Collapsed" HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top" Width="307" Height="30"/>
+                        </Grid>
                     </ScrollViewer>
                     <Button x:Name="AddRemoveClasses" Content="|||" HorizontalAlignment="Left" Margin="466,1.4,0,0" VerticalAlignment="Top" Width="28" Height="29" RenderTransformOrigin="0.5,0.5" Grid.Row="1" Click="AddRemoveClasses_Click">
                         <Button.RenderTransform>
@@ -54,6 +58,7 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="My Stickers">

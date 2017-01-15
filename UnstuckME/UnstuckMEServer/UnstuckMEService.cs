@@ -537,8 +537,72 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 //it appears that no stored proc exsists to do this
-                //db.
-                return;
+                // Delete from UserToClass Where UserID = 14 and ClassID = 2
+                //the following code should work but for some reason it doesnt recognize db.UserToClass table?
+                
+                                //var deleteClassInfo = (from u in db.UserToClass
+                                //                      where u.UserID == UserID && u.ClassID == ClassID
+                                //                      select u).First();
+
+
+                                //    db.UserToClass.DeleteOnSubmit(deleteClassInfo);
+
+
+                                //try
+                                //{
+                                //    db.SaveChanges();
+                                //}
+                                //catch (Exception e)
+                                //{
+                                //    Console.WriteLine(e);
+                                //    // Provide for exceptions.
+                                //}
+                                
+            }
+        }
+
+        public List<String> GetCourseCodes()
+        {           
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var codes = from u in db.Classes
+                            select new { CourseCode = u};
+                List<String> rlist = new List<String>();
+                foreach (var code in codes)
+                {
+                    rlist.Add(code.CourseCode.CourseCode.ToString());
+                }
+                return rlist;
+            }
+
+        }
+
+        public List<string> GetCourseNumbersByCourseCode(string CourseCode)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var codes = from u in db.Classes
+                            select new { CourseNumber = u };
+                List<String> rlist = new List<String>();
+                foreach (var code in codes)
+                {
+                    rlist.Add(code.CourseNumber.CourseNumber.ToString());
+                }
+                return rlist;
+            }
+        }
+
+        public int GetCourseIdNumberByCodeAndNumber(string code, string number)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                int num = (Convert.ToInt32(number));
+                var ID = (from u in db.Classes
+                         where u.CourseNumber == num && u.CourseCode == code
+                         select new { ClassID = u }).First();
+
+                
+                return ID.ClassID.ClassID;
             }
         }
     }

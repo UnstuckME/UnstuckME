@@ -42,12 +42,7 @@ namespace UnstuckMEUserGUI
 			byte[] imgByte = Server.GetProfilePicture(UserID);
 			UserPhoto.Source = ic.ConvertFrom(imgByte) as ImageSource;	//convert image so it can be displayed
 
-            List<UserClass> classes = Server.GetUserClasses(UserID);
-            foreach (UserClass C in classes)
-            {
-                ClassDisplay usersClass = new ClassDisplay(UserID, Server, C.CourseCode, C.CourseNumber, C.CourseName, 1);
-                ClassesStack.Children.Add(usersClass);
-            }
+            RepopulateClasses();
 		}
 
 		//Adds/removes classes from the list of classes user can mentor for
@@ -64,14 +59,20 @@ namespace UnstuckMEUserGUI
 				ClassesView.Visibility = Visibility.Visible;
 				AddRemoveClassesView.Visibility = Visibility.Collapsed;
 			}
-
+            List<String> codes = Server.GetCourseCodes();
+            CourseCodeComboBox.ItemsSource = codes;
+            
 		}
 
 		//Commits changes to the user's classes to mentor
 		private void Commit_Click(object sender, RoutedEventArgs e)
 		{
+            int classid = Server.GetCourseIdNumberByCodeAndNumber(CourseCodeComboBox.SelectedValue as String, CourseNumandNameComboBox.SelectedValue as String);
+            Server.InsertStudentIntoClass(User.UserID, classid);
 			ClassesView.Visibility = Visibility.Visible;
 			AddRemoveClassesView.Visibility = Visibility.Collapsed;
+            CourseNumandNameComboBox.Visibility = Visibility.Collapsed;
+            RepopulateClasses();
 		}
 
 		//Uploads a new photo from the user's computer and inserts it as the user's new profile picture
@@ -143,5 +144,28 @@ namespace UnstuckMEUserGUI
 			Server.DeleteUserAccount(User.UserID);
 			NavigationService.Navigate(new LoginPage(Server));
 		}
-	}
+
+        public void RepopulateClasses()
+        {
+            ClassesStack.Children.Clear();
+            List<UserClass> classes = Server.GetUserClasses(User.UserID);
+            foreach (UserClass C in classes)
+            {
+                ClassDisplay usersClass = new ClassDisplay(ClassesStack, User.UserID, Server, C.CourseCode, C.CourseNumber, C.CourseName, 1);
+                ClassesStack.Children.Add(usersClass);
+            }
+        }
+
+        private void CourseCodeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CourseNumandNameComboBox.Visibility = Visibility.Visible;
+            String selected = CourseCodeComboBox.SelectedValue as String;
+            if (selected != null)
+            {
+                List<String> coursenums = Server.GetCourseNumbersByCourseCode(selected);
+                CourseNumandNameComboBox.ItemsSource = coursenums;
+            }
+
+        }
+    }
 }
