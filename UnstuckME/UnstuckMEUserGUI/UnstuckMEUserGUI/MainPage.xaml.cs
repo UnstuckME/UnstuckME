@@ -57,14 +57,12 @@ namespace UnstuckMEUserGUI
 			{
 				ClassesView.Visibility = Visibility.Collapsed;
 				AddRemoveClassesView.Visibility = Visibility.Visible;
-
 			}
 			else
 			{
 				ClassesView.Visibility = Visibility.Visible;
 				AddRemoveClassesView.Visibility = Visibility.Collapsed;
 			}
-
 		}
 
 		//Commits changes to the user's classes to mentor

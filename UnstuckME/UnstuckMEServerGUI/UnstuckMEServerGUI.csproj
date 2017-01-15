@@ -318,7 +318,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
@@ -335,9 +337,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GearIcon.png" />
-    <None Include="Resources\UnstuckME_Logo.png" />
-    <None Include="Resources\SimpleAvatar.png" />
+    <Resource Include="Resources\GearIcon.png" />
+    <Resource Include="Resources\SimpleAvatar.png" />
+    <Resource Include="Resources\UnstuckME_Logo.png" />
     <Content Include="UnstuckMESchool_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
