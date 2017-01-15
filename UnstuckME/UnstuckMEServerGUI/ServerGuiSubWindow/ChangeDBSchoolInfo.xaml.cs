@@ -25,23 +25,18 @@ namespace UnstuckMEServerGUI
             InitializeComponent();
         }
 
-
-
-
-        private void ButtonSchoolLogoImg_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void buttonBrowse_Click(object sender, RoutedEventArgs e)
         {
-
             //Create the actual brwse window
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
             //Set what file they are trying to upload
             dlg.DefaultExt = ".png";
-            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+			dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+			dlg.Multiselect = false;
+
+			//gifs do not work in WPF image controls
+			dlg.Filter = "Image Files (*.jpeg; *.png; *.jpg)| *.jpeg; *.png; *.jpg | JPEG Files(*.jpeg) | *.jpeg | PNG Files(*.png) | *.png | JPG Files(*.jpg) | *.jpg|GIF Files (*.gif)|*.gif";
 
             //Make sure they selected something
             Nullable<bool> result = dlg.ShowDialog();
@@ -89,7 +84,6 @@ namespace UnstuckMEServerGUI
 
         private void textBoxPathToSchoolPhoto_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
             if (System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
             {
                 UpdatePhoto(textBoxPathToSchoolPhoto.Text);

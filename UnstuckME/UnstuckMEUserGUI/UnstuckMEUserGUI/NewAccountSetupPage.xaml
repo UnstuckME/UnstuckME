@@ -30,7 +30,7 @@
             <Button Margin="10,10,283.6,192.4" ToolTip="Click to upload image">
                 <Button.Template>
                     <ControlTemplate>
-                        <Image Source="UnstuckME_Logo.png" Height="150" Width="200" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                        <Image Source="Resources/UnstuckME_Logo.png" Height="150" Width="200" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                     </ControlTemplate>
                 </Button.Template>
             </Button>

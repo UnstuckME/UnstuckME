@@ -48,7 +48,6 @@ namespace UnstuckMEServerGUI
         /// </summary>
         private void button_RunServer_Click(object sender, RoutedEventArgs e)
         {
-            
             try
             {
                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");

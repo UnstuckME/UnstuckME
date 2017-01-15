@@ -52,7 +52,6 @@ namespace UnstuckMEUserGUI
 			{
 				ClassesView.Visibility = Visibility.Collapsed;
 				AddRemoveClassesView.Visibility = Visibility.Visible;
-
 			}
 			else
 			{
