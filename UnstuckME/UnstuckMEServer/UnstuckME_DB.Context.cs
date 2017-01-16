@@ -309,6 +309,19 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteServerAdmin", adminIDParameter);
         }
     
+        public virtual int DeleteUserFromClass(Nullable<int> userID, Nullable<int> classID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var classIDParameter = classID.HasValue ?
+                new ObjectParameter("ClassID", classID) :
+                new ObjectParameter("ClassID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserFromClass", userIDParameter, classIDParameter);
+        }
+    
         public virtual int DeleteUserPictureByUserID(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?

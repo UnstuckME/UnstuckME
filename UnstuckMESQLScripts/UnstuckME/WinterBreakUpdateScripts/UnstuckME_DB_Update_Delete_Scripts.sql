@@ -6,6 +6,8 @@ GO
 /***************************************************
 DROP STORED PROCEDURES
 ***************************************************/
+IF OBJECT_ID('DeleteUserFromClass') is not null
+	DROP PROCEDURE [DeleteUserFromClass];
 IF OBJECT_ID('DeleteServerAdmin') is not null
 	DROP PROCEDURE [DeleteServerAdmin];
 IF OBJECT_ID('DeleteUserProfileByUserID') is not null
@@ -71,6 +73,25 @@ IF OBJECT_ID('UpdateTutorIDByTutorIDAndStickerID') is not null
 GO
 --START CREATION SCRIPTS
 /*********************************************************/
+/*********************************************************
+--Delete User From Class Stored Procedure
+*********************************************************/
+CREATE PROC [dbo].[DeleteUserFromClass]
+	(
+		@UserID INT,
+		@ClassID INT
+	)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT UserID FROM UserToClass WHERE UserID = @UserID AND ClassID = @ClassID))
+			RETURN 1;
+		ELSE
+			DELETE FROM UserToClass 
+			WHERE UserID = @UserID AND @ClassID = ClassID
+			RETURN 0;
+	END
+GO
+ 
 /*********************************************************
 --Delete ServerAdmin PROCEDURE Creation Script
 *********************************************************/

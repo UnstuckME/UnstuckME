@@ -536,9 +536,7 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                //it appears that no stored proc exsists to do this
-                //db.
-                return;
+                db.DeleteUserFromClass(UserID, ClassID);
             }
         }
     }

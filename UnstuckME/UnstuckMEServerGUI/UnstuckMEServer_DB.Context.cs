@@ -309,6 +309,19 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteServerAdmin", adminIDParameter);
         }
     
+        public virtual int DeleteUserFromClass(Nullable<int> userID, Nullable<int> classID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var classIDParameter = classID.HasValue ?
+                new ObjectParameter("ClassID", classID) :
+                new ObjectParameter("ClassID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserFromClass", userIDParameter, classIDParameter);
+        }
+    
         public virtual int DeleteUserPictureByUserID(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
@@ -539,6 +552,19 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("UserID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertMessage", chatIDParameter, messageParameter, userIDParameter);
+        }
+    
+        public virtual int InsertProfilePicture(Nullable<int> userID, byte[] photo)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var photoParameter = photo != null ?
+                new ObjectParameter("Photo", photo) :
+                new ObjectParameter("Photo", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertProfilePicture", userIDParameter, photoParameter);
         }
     
         public virtual int InsertStudentIntoClass(Nullable<int> userID, Nullable<int> classID)
