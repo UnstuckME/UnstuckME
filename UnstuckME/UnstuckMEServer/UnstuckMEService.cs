@@ -567,12 +567,19 @@ namespace UnstuckMEInterfaces
             {
                 var codes = from u in db.Classes
                             select new { CourseCode = u};
+                
                 List<String> rlist = new List<String>();
+                List<String> rlist2 = new List<String>();
                 foreach (var code in codes)
                 {
                     rlist.Add(code.CourseCode.CourseCode.ToString());
                 }
-                return rlist;
+                IEnumerable<String> list = rlist.Distinct();
+                foreach (String classcode in list)
+                {
+                    rlist2.Add(classcode);
+                }
+                return rlist2;
             }
 
         }
@@ -582,13 +589,20 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 var codes = from u in db.Classes
+                            where u.CourseCode == CourseCode
                             select new { CourseNumber = u };
                 List<String> rlist = new List<String>();
+                List<String> rlist2 = new List<String>();
                 foreach (var code in codes)
                 {
                     rlist.Add(code.CourseNumber.CourseNumber.ToString());
                 }
-                return rlist;
+                IEnumerable<String> list = rlist.Distinct();
+                foreach (String classcode in list)
+                {
+                    rlist2.Add(classcode);
+                }
+                return rlist2;
             }
         }
 
