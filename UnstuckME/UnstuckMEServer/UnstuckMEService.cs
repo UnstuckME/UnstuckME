@@ -561,5 +561,64 @@ namespace UnstuckMEInterfaces
                 { }
             }
         }
+
+        public List<string> GetCourseCodes()
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var codes = from u in db.Classes
+                            select new { CourseCode = u };
+
+                List<String> rlist = new List<String>();
+                List<String> rlist2 = new List<String>();
+                foreach (var code in codes)
+                {
+                    rlist.Add(code.CourseCode.CourseCode.ToString());
+                }
+
+                IEnumerable<String> list = rlist.Distinct();
+                foreach (String classcode in list)
+                {
+                    rlist2.Add(classcode);
+                }
+                return rlist2;
+            }
+        }
+
+        public int GetCourseIdNumberByCodeAndNumber(string code, string number)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                int num = Convert.ToInt32(number);
+                var ID = (from u in db.Classes
+                         where u.CourseCode == code && u.CourseNumber == num
+                         select new { ClassID = u }).First();
+                return ID.ClassID.ClassID;
+            }
+        }
+
+        public List<string> GetCourseNumbersByCourseCode(string CourseCode)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var codes = from u in db.Classes
+                            where u.CourseCode == CourseCode
+                            select new { CourseNum = u };
+
+                List<String> rlist = new List<String>();
+                List<String> rlist2 = new List<String>();
+                foreach (var code in codes)
+                {
+                    rlist.Add(code.CourseNum.CourseNumber.ToString());
+                }
+
+                IEnumerable<String> list = rlist.Distinct();
+                foreach (String classcode in list)
+                {
+                    rlist2.Add(classcode);
+                }
+                return rlist2;
+            }
+        }
     }
 }
