@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using UnstuckMEInterfaces;
+using System.Threading;
 
 namespace UnstuckMEUserGUI
 {
@@ -16,9 +17,17 @@ namespace UnstuckMEUserGUI
         //Message Style Legend: 0 - Info(Blue), 1 - Warning(Yellow), 2 - Error(Red)
         public void ForceClose(int messageStyle, string message)
         {
-            App.Current.MainWindow.Hide();
-            ((StartWindow)Application.Current.MainWindow).MessageBoxToUser(messageStyle, message);
-            App.Current.Shutdown();
+            //(StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message)
+            //App.Current.MainWindow.Hide();
+            try
+            {
+                ((StartWindow)Application.Current.MainWindow).StartThread(messageStyle, message);
+            }
+            catch(Exception ex)
+            {
+
+            }
+
         }
 
         public bool isOnline()

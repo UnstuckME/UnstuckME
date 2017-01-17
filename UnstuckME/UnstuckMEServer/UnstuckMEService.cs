@@ -531,5 +531,18 @@ namespace UnstuckMEInterfaces
                 db.DeleteUserFromClass(UserID, ClassID);
             }
         }
+
+        public void ServerShuttingDown()
+        {
+            foreach  (var client in _connectedClients)
+            {
+                try
+                {
+                    client.Value.connection.ForceClose(1, "Server has shutdown, Please contact your Server Administrator for more information.");
+                }
+                catch (Exception)
+                { }
+            }
+        }
     }
 }

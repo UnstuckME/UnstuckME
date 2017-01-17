@@ -17,5 +17,6 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void GetUpdate(int value, string emailAddress);
+
     }
 }
