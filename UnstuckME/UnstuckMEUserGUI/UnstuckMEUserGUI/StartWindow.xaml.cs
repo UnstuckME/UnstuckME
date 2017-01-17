@@ -34,6 +34,28 @@ namespace UnstuckMEUserGUI
 			_mainFrame.Navigate(new LoginPage(Server));
         }
 
+        public void MessageBoxToUser(int messageStyle, string message)
+        {
+            switch(messageStyle)
+            {
+                case 0: //Blue Information (i) Message
+                    {
+                        MessageBox.Show(message, "Message From Server", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        break;
+                    }
+                case 1: //Yellow Warning Message
+                    {
+                        MessageBox.Show(message, "Message From Server", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        break;
+                    }
+                case 2: //Red Error message.
+                    {
+                        MessageBox.Show(message, "Message From Server", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                    }
+            }
+        }
+
         private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 			try

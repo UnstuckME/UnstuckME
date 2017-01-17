@@ -16,6 +16,6 @@ namespace UnstuckMEInterfaces
         bool isOnline();
 
         [OperationContract]
-        void ForceClose();
+        void ForceClose(int messageStyle, string message);
     }
 }

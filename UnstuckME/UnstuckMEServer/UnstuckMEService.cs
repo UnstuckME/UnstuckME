@@ -30,36 +30,33 @@ namespace UnstuckMEInterfaces
             bool isUserOnline = false;
             while (true)
             {
+                RestartUserPing: 
                 foreach (var client in _connectedClients)
                 {
                     try
                     {
                         isUserOnline = client.Value.connection.isOnline();
                     }
-                    catch(Exception e)
+                    catch(Exception)
                     {
                         try
                         {
                             ConnectedClient removedClient;
                             _connectedClients.TryRemove(client.Key, out removedClient);
-                            Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
-							Console.WriteLine("Error: " + e.Message);
-                            isUserOnline = false;
+                            Console.WriteLine("User: {0} did not respond and is now logged off.", removedClient.User.EmailAddress);
                             foreach (var admin in _connectedServerAdmins)
                             {
                                 admin.Value.connection.GetUpdate(1, removedClient.User.EmailAddress);
                             }
-                            removedClient.connection.ForceClose();
+                            removedClient.connection.ForceClose(1, "You have been logged out by the server. Please Re-Login to continue using UnstuckME"); //Incase of faulty ping and user is still connected.
                         }
                         catch(Exception)
                         { }
-                    }
-                    if(isUserOnline)
-                    {
-                        Console.WriteLine("{0} was online @ {1}.", client.Value.User.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
+                        goto RestartUserPing; //Prevents foreach loop from breaking server.
                     }
                 }
-                
+                Thread.Sleep(5000);
+                RestartAdminPing:
                 foreach (var admin in _connectedServerAdmins)
                 {
                     try
@@ -70,8 +67,9 @@ namespace UnstuckMEInterfaces
                     {
                         ConnectedServerAdmin removedAdmin;
                         _connectedServerAdmins.TryRemove(admin.Key, out removedAdmin);
-                        Console.WriteLine("{0} is not responding and is assumed to be offline.", removedAdmin.Admin.EmailAddress);
+                        Console.WriteLine("Admin: {0} did not respond and is now logged off.", removedAdmin.Admin.EmailAddress);
                         isUserOnline = false;
+                        goto RestartAdminPing; //Prevents foreach loop from breaking server.
                     }
                     if(isUserOnline)
                     {
