@@ -57,125 +57,125 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminPullReportsForOptionalUser_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Chat.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Class.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="File.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="FilterUserReviewsByEqualStarRank_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="FilterUserReviewsByGreaterThanStarRank_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Friend.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetActiveStickersWithStarRankOrMentorOrganization_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllActiveStickers_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllChatIDsAUserIsPartOF_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllResolvedStickers_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllStickers_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllStudentReviews_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllTutorReviews_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetDisplayNameAndEmail_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserClasses_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserPasswordAndSalt_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserStickersAndReviews_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUsersWithOverallStarRank_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Message.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="OfficialMentor.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Picture.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PullActiveClassSpecificStickers_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="PullChatMessagesAndFilesBetweenUsers_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Report.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Review.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ServerAdmin.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ServerClasses.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Sticker.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMEService.cs" />
-    <Compile Include="UnstuckME_DBEntities.Context.cs">
+    <Compile Include="UnstuckME_DB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckME_DBEntities.Context.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnstuckME_DBEntities.cs">
+    <Compile Include="UnstuckME_DB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnstuckME_DBEntities.Designer.cs">
+    <Compile Include="UnstuckME_DB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckME_DBEntities.edmx</DependentUpon>
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewAllClasses_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewAllUsers_Result.cs">
-      <DependentUpon>UnstuckME_DBEntities.tt</DependentUpon>
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -183,12 +183,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <EntityDeploy Include="UnstuckME_DBEntities.edmx">
+    <EntityDeploy Include="UnstuckME_DB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UnstuckME_DBEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>UnstuckME_DB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="UnstuckME_DBEntities.edmx.diagram">
-      <DependentUpon>UnstuckME_DBEntities.edmx</DependentUpon>
+    <None Include="UnstuckME_DB.edmx.diagram">
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -205,15 +205,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UnstuckME_DBEntities.Context.tt">
+    <Content Include="UnstuckME_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UnstuckME_DBEntities.edmx</DependentUpon>
-      <LastGenOutput>UnstuckME_DBEntities.Context.cs</LastGenOutput>
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckME_DB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="UnstuckME_DBEntities.tt">
+    <Content Include="UnstuckME_DB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UnstuckME_DBEntities.edmx</DependentUpon>
-      <LastGenOutput>UnstuckME_DBEntities.cs</LastGenOutput>
+      <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckME_DB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -44,6 +44,7 @@ namespace UnstuckMEServerGUI
 
                 try
                 {
+                    Server.ServerShuttingDown();
                     Server.AdminLogMessage("Server Kill Attempt.");
                     Server.AdminLogout();
                     bool retVal = KillServer();

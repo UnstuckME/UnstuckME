@@ -203,7 +203,6 @@ AS
             BEGIN
                 INSERT INTO Review
 				VALUES(@StickerID, @ReviewerID, @StarRanking, @Description)
-				RETURN 0;
 			END
 
     END
@@ -321,6 +320,9 @@ AS
 	BEGIN CATCH
 		ROLLBACK TRAN;
 	END CATCH
+	BEGIN
+		SELECT @NewChatID
+	END
 GO
 
 CREATE PROC [dbo].[InsertUserIntoChat]

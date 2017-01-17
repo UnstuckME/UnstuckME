@@ -4,22 +4,30 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using UnstuckMEInterfaces;
+using System.Threading;
 
 namespace UnstuckMEUserGUI
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ClientCallback : IClient
     {
-        public void ForceClose()
+        //Forces The Cient to close with a messagebox popup.
+        //Message Style Legend: 0 - Info(Blue), 1 - Warning(Yellow), 2 - Error(Red)
+        public void ForceClose(int messageStyle, string message)
         {
-            App.Current.MainWindow.Hide();
-            App.Current.Shutdown();
-        }
+            //(StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message)
+            //App.Current.MainWindow.Hide();
+            try
+            {
+                ((StartWindow)Application.Current.MainWindow).StartThread(messageStyle, message);
+            }
+            catch(Exception ex)
+            {
 
-        public void GetMessage(string message, string emailAddress)
-        {
-            throw new NotImplementedException();
+            }
+
         }
 
         public bool isOnline()

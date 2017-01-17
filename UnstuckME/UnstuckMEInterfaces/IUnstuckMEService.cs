@@ -101,6 +101,7 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         List<string> GetAllOnlineUsers();
 
-
+        [OperationContract]
+        void ServerShuttingDown();
     }
 }

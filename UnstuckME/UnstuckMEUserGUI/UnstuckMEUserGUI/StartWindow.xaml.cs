@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.ServiceModel;
 using UnstuckMEInterfaces;
 using System.Configuration;
+using System.Threading;
 
 namespace UnstuckMEUserGUI
 {
@@ -32,6 +33,50 @@ namespace UnstuckMEUserGUI
             _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
             Server = _channelFactory.CreateChannel();
 			_mainFrame.Navigate(new LoginPage(Server));
+        }
+        public void StartThread(int style, string message)
+        {
+            Thread newThread = new Thread(() => MessageBoxToUserAndShutdown(style, message));
+            newThread.Start();
+        }
+        public void MessageBoxToUserAndShutdown(int messageStyle, string message)
+        {
+            try
+            {
+                switch (messageStyle)
+                {
+                    case 0: //Blue Information (i) Message
+                        {
+                            MessageBox.Show(message, "Message From Server", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            break;
+                        }
+                    case 1: //Yellow Warning Message
+                        {
+                            MessageBox.Show(message, "Message From Server", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            break;
+                        }
+                    case 2: //Red Error message.
+                        {
+                            MessageBox.Show(message, "Message From Server", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                        }
+                    default:
+                        {
+                            MessageBox.Show(message, "Case Statment Not Working", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                        }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            try
+            {
+                Environment.Exit(0);
+            }
+            catch (Exception)
+            { }
         }
 
         private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

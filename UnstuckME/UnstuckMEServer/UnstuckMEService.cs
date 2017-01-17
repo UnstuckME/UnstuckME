@@ -25,41 +25,56 @@ namespace UnstuckMEInterfaces
 		public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
 
+        //This function is for testing stored procedures. In program.cs replace:
+        //Thread userStatusCheck = new Thread(_server.CheckStatus); with Thread userStatusCheck = new Thread(_server.SPTest); 
+        public void SPTest()
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                try
+                {
+                    //Insert db.<StoredProcedure> here.
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
         public void CheckStatus()
         {
             bool isUserOnline = false;
             while (true)
-            {
+            { 
+                RestartUserPing: 
                 foreach (var client in _connectedClients)
                 {
                     try
                     {
                         isUserOnline = client.Value.connection.isOnline();
                     }
-                    catch(Exception e)
+                    catch(Exception)
                     {
                         try
                         {
                             ConnectedClient removedClient;
                             _connectedClients.TryRemove(client.Key, out removedClient);
-                            Console.WriteLine("{0} did not respond and is now removed from online list.", removedClient.User.EmailAddress);
-							Console.WriteLine("Error: " + e.Message);
-                            isUserOnline = false;
+                            Console.WriteLine("User: {0} did not respond and is now logged off.", removedClient.User.EmailAddress);
                             foreach (var admin in _connectedServerAdmins)
                             {
                                 admin.Value.connection.GetUpdate(1, removedClient.User.EmailAddress);
                             }
-                            removedClient.connection.ForceClose();
+                            removedClient.connection.ForceClose(1, "You have been logged out by the server. Please Re-Login to continue using UnstuckME"); //Incase of faulty ping and user is still connected.
                         }
                         catch(Exception)
                         { }
-                    }
-                    if(isUserOnline)
-                    {
-                        Console.WriteLine("{0} was online @ {1}.", client.Value.User.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
+                        goto RestartUserPing; //Prevents foreach loop from breaking server.
                     }
                 }
-                
+                Thread.Sleep(5000);
+
+                RestartAdminPing:
                 foreach (var admin in _connectedServerAdmins)
                 {
                     try
@@ -70,12 +85,8 @@ namespace UnstuckMEInterfaces
                     {
                         ConnectedServerAdmin removedAdmin;
                         _connectedServerAdmins.TryRemove(admin.Key, out removedAdmin);
-                        Console.WriteLine("{0} is not responding and is assumed to be offline.", removedAdmin.Admin.EmailAddress);
-                        isUserOnline = false;
-                    }
-                    if(isUserOnline)
-                    {
-                        Console.WriteLine("{0} was online @ {1}.", admin.Value.Admin.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
+                        Console.WriteLine("Admin: {0} did not respond and is now logged off.", removedAdmin.Admin.EmailAddress);
+                        goto RestartAdminPing; //Prevents foreach loop from breaking server.
                     }
                 }
                 Thread.Sleep(5000);
@@ -182,8 +193,6 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var classes = db.GetUserClasses(UserID);
-                    
-                    
                     //This might work, if not let me know and i'll figure out something else.
                     foreach (var c in classes)
                     {
@@ -191,7 +200,6 @@ namespace UnstuckMEInterfaces
                         temp.CourseCode = c.CourseCode;
                         temp.CourseName = c.CourseName;
                         temp.CourseNumber = c.CourseNumber;
-                        //temp.ID =
                         Rlist.Add(temp);
                     }
                 }
@@ -243,6 +251,7 @@ namespace UnstuckMEInterfaces
                 }
                 catch
                 {
+                    Console.WriteLine(emailAddress + ": is not a valid Username.");
                     return false;
                 }
             }
@@ -536,87 +545,20 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                //it appears that no stored proc exsists to do this
-                // Delete from UserToClass Where UserID = 14 and ClassID = 2
-                //the following code should work but for some reason it doesnt recognize db.UserToClass table?
-                
-                                //var deleteClassInfo = (from u in db.UserToClass
-                                //                      where u.UserID == UserID && u.ClassID == ClassID
-                                //                      select u).First();
-
-
-                                //    db.UserToClass.DeleteOnSubmit(deleteClassInfo);
-
-
-                                //try
-                                //{
-                                //    db.SaveChanges();
-                                //}
-                                //catch (Exception e)
-                                //{
-                                //    Console.WriteLine(e);
-                                //    // Provide for exceptions.
-                                //}
-                                
+                db.DeleteUserFromClass(UserID, ClassID);
             }
         }
 
-        public List<String> GetCourseCodes()
-        {           
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-                var codes = from u in db.Classes
-                            select new { CourseCode = u};
-                
-                List<String> rlist = new List<String>();
-                List<String> rlist2 = new List<String>();
-                foreach (var code in codes)
-                {
-                    rlist.Add(code.CourseCode.CourseCode.ToString());
-                }
-                IEnumerable<String> list = rlist.Distinct();
-                foreach (String classcode in list)
-                {
-                    rlist2.Add(classcode);
-                }
-                return rlist2;
-            }
-
-        }
-
-        public List<string> GetCourseNumbersByCourseCode(string CourseCode)
+        public void ServerShuttingDown()
         {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            foreach  (var client in _connectedClients)
             {
-                var codes = from u in db.Classes
-                            where u.CourseCode == CourseCode
-                            select new { CourseNumber = u };
-                List<String> rlist = new List<String>();
-                List<String> rlist2 = new List<String>();
-                foreach (var code in codes)
+                try
                 {
-                    rlist.Add(code.CourseNumber.CourseNumber.ToString());
+                    client.Value.connection.ForceClose(1, "Server has shutdown, Please contact your Server Administrator for more information.");
                 }
-                IEnumerable<String> list = rlist.Distinct();
-                foreach (String classcode in list)
-                {
-                    rlist2.Add(classcode);
-                }
-                return rlist2;
-            }
-        }
-
-        public int GetCourseIdNumberByCodeAndNumber(string code, string number)
-        {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-                int num = (Convert.ToInt32(number));
-                var ID = (from u in db.Classes
-                         where u.CourseNumber == num && u.CourseCode == code
-                         select new { ClassID = u }).First();
-
-                
-                return ID.ClassID.ClassID;
+                catch (Exception)
+                { }
             }
         }
     }

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServerGUI
+namespace UnstuckMEServer
 {
     using System;
     using System.Data.Entity;
@@ -16,10 +16,10 @@ namespace UnstuckMEServerGUI
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class UnstuckMEServer_DBEntities : DbContext
+    public partial class UnstuckME_DBEntities : DbContext
     {
-        public UnstuckMEServer_DBEntities()
-            : base("name=UnstuckMEServer_DBEntities")
+        public UnstuckME_DBEntities()
+            : base("name=UnstuckME_DBEntities")
         {
         }
     
