@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UnstuckME" Height="800" Width="1750"
+        Title="UnstuckME" Height="500" Width="600"
         Name="UnstuckME_Window"
         MinHeight="500" MinWidth="600"
         Background="DimGray"

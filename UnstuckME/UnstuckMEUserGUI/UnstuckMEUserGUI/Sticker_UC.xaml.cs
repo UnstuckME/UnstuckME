@@ -23,7 +23,7 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class Sticker_UC : UserControl
 	{
-		private static UnstuckMESticker sticker;
+		//private static UnstuckMESticker sticker;
 		private static IUnstuckMEService Server;
 
 		public Sticker_UC(IUnstuckMEService OpenServer)
@@ -34,7 +34,7 @@ namespace UnstuckMEUserGUI
 
 		private void SubmitStickerBtn_Click(object sender, RoutedEventArgs e)
 		{
-			Server.SubmitSticker(sticker);
+			//Server.SubmitSticker(sticker);
 		}
 	}
 }

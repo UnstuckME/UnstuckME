@@ -18,17 +18,17 @@ namespace UnstuckMEUserGUI
 	/// <summary>
 	/// Interaction logic for StarRankTemplate.xaml
 	/// </summary>
-	public partial class StarRankTemplate_UC : UserControl
-	{
-		private float onestar = 0;
-		private float twostar = 0;
-		private float threestar = 0;
-		private float fourstar = 0;
-		private float fivestar = 0;
+	//public partial class StarRankTemplate_UC : UserControl
+	//{
+	//	private float onestar = 0;
+	//	private float twostar = 0;
+	//	private float threestar = 0;
+	//	private float fourstar = 0;
+	//	private float fivestar = 0;
 
-		public StarRankTemplate_UC()
-		{
-			InitializeComponent();
-		}
-	}
+	//	public StarRankTemplate_UC()
+	//	{
+	//		InitializeComponent();
+	//	}
+	//}
 }
