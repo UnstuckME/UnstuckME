@@ -321,6 +321,9 @@ AS
 	BEGIN CATCH
 		ROLLBACK TRAN;
 	END CATCH
+	BEGIN
+		SELECT @NewChatID
+	END
 GO
 
 CREATE PROC [dbo].[InsertUserIntoChat]

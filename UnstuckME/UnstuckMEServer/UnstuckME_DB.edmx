@@ -1185,7 +1185,7 @@
           <FunctionImport Name="ClearReviewDescriptionByReviewID">
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="CreateChat">
+          <FunctionImport Name="CreateChat" ReturnType="Collection(Int32)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateNewClass">

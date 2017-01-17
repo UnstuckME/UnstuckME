@@ -86,13 +86,13 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ClearReviewDescriptionByReviewID", reviewIDParameter);
         }
     
-        public virtual int CreateChat(Nullable<int> userID)
+        public virtual ObjectResult<Nullable<int>> CreateChat(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateChat", userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CreateChat", userIDParameter);
         }
     
         public virtual int CreateNewClass(string courseName, string courseCode, Nullable<short> courseNumber, Nullable<byte> termOffered)

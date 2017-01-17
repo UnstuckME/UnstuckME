@@ -25,11 +25,21 @@ namespace UnstuckMEInterfaces
 		public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
 
+        //This function is for testing stored procedures. In program.cs replace:
+        //Thread userStatusCheck = new Thread(_server.CheckStatus); with Thread userStatusCheck = new Thread(_server.SPTest); 
+        public void SPTest()
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                //Test Stored Procedures here
+            }
+        }
+
         public void CheckStatus()
         {
             bool isUserOnline = false;
             while (true)
-            {
+            { 
                 RestartUserPing: 
                 foreach (var client in _connectedClients)
                 {
