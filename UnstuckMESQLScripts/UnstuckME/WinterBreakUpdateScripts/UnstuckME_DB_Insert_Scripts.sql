@@ -203,7 +203,6 @@ AS
             BEGIN
                 INSERT INTO Review
 				VALUES(@StickerID, @ReviewerID, @StarRanking, @Description)
-				RETURN 0;
 			END
 
     END

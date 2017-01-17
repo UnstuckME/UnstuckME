@@ -31,7 +31,14 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                //Test Stored Procedures here
+                try
+                {
+                    //Insert db.<StoredProcedure> here.
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 

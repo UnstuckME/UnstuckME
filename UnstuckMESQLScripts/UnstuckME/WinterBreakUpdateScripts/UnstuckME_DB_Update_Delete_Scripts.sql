@@ -357,7 +357,7 @@ CREATE PROC [dbo].[DeleteFriend]
 	)
 AS
 	BEGIN
-		IF (NOT NOT EXISTS(SELECT UserID, FriendUserID
+		IF (NOT EXISTS(SELECT UserID, FriendUserID
 						FROM Friends
 						WHERE UserID = @CurrentUserID AND FriendUserID = @TargetFriendUserID))
 						RETURN 1;
