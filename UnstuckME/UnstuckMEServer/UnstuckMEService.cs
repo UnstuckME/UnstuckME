@@ -56,6 +56,7 @@ namespace UnstuckMEInterfaces
                     }
                 }
                 Thread.Sleep(5000);
+
                 RestartAdminPing:
                 foreach (var admin in _connectedServerAdmins)
                 {
@@ -68,12 +69,7 @@ namespace UnstuckMEInterfaces
                         ConnectedServerAdmin removedAdmin;
                         _connectedServerAdmins.TryRemove(admin.Key, out removedAdmin);
                         Console.WriteLine("Admin: {0} did not respond and is now logged off.", removedAdmin.Admin.EmailAddress);
-                        isUserOnline = false;
                         goto RestartAdminPing; //Prevents foreach loop from breaking server.
-                    }
-                    if(isUserOnline)
-                    {
-                        Console.WriteLine("{0} was online @ {1}.", admin.Value.Admin.EmailAddress, DateTime.Now); //This is strictly for testing purposes.
                     }
                 }
                 Thread.Sleep(5000);
@@ -180,8 +176,6 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var classes = db.GetUserClasses(UserID);
-                    
-                    
                     //This might work, if not let me know and i'll figure out something else.
                     foreach (var c in classes)
                     {
@@ -189,7 +183,6 @@ namespace UnstuckMEInterfaces
                         temp.CourseCode = c.CourseCode;
                         temp.CourseName = c.CourseName;
                         temp.CourseNumber = c.CourseNumber;
-                        //temp.ID =
                         Rlist.Add(temp);
                     }
                 }
@@ -241,6 +234,7 @@ namespace UnstuckMEInterfaces
                 }
                 catch
                 {
+                    Console.WriteLine(emailAddress + ": is not a valid Username.");
                     return false;
                 }
             }

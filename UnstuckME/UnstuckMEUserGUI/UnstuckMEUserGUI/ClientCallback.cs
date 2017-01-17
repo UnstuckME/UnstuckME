@@ -12,16 +12,13 @@ namespace UnstuckMEUserGUI
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ClientCallback : IClient
     {
+        //Forces The Cient to close with a messagebox popup.
+        //Message Style Legend: 0 - Info(Blue), 1 - Warning(Yellow), 2 - Error(Red)
         public void ForceClose(int messageStyle, string message)
         {
             App.Current.MainWindow.Hide();
             ((StartWindow)Application.Current.MainWindow).MessageBoxToUser(messageStyle, message);
             App.Current.Shutdown();
-        }
-
-        public void GetMessage(string message, string emailAddress)
-        {
-            throw new NotImplementedException();
         }
 
         public bool isOnline()

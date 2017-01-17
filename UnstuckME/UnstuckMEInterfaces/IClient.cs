@@ -10,9 +10,6 @@ namespace UnstuckMEInterfaces
     public interface IClient
     {
         [OperationContract]
-        void GetMessage(string message, string emailAddress);
-
-        [OperationContract]
         bool isOnline();
 
         [OperationContract]
