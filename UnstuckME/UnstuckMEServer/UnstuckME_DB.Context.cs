@@ -154,7 +154,7 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateOfficialMentor", organizationNameParameter);
         }
     
-        public virtual int CreateReport(string reportDescription, Nullable<int> flaggerID, Nullable<double> reviewID)
+        public virtual int CreateReport(string reportDescription, Nullable<int> flaggerID, Nullable<int> reviewID)
         {
             var reportDescriptionParameter = reportDescription != null ?
                 new ObjectParameter("ReportDescription", reportDescription) :
@@ -166,7 +166,7 @@ namespace UnstuckMEServer
     
             var reviewIDParameter = reviewID.HasValue ?
                 new ObjectParameter("ReviewID", reviewID) :
-                new ObjectParameter("ReviewID", typeof(double));
+                new ObjectParameter("ReviewID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReport", reportDescriptionParameter, flaggerIDParameter, reviewIDParameter);
         }

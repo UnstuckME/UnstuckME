@@ -33,7 +33,7 @@ namespace UnstuckMEInterfaces
             {
                 try
                 {
-                    //Insert db.<StoredProcedure> here.
+                    //db.ClearReviewDescriptionByReviewID(7);
                 }
                 catch(Exception ex)
                 {

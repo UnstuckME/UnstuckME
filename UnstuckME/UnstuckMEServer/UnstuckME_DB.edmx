@@ -417,7 +417,7 @@
         <Function Name="CreateReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReportDescription" Type="nvarchar" Mode="In" />
           <Parameter Name="FlaggerID" Type="int" Mode="In" />
-          <Parameter Name="ReviewID" Type="float" Mode="In" />
+          <Parameter Name="ReviewID" Type="int" Mode="In" />
         </Function>
         <Function Name="CreateReview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StickerID" Type="int" Mode="In" />
@@ -1208,7 +1208,7 @@
           <FunctionImport Name="CreateReport">
             <Parameter Name="ReportDescription" Mode="In" Type="String" />
             <Parameter Name="FlaggerID" Mode="In" Type="Int32" />
-            <Parameter Name="ReviewID" Mode="In" Type="Double" />
+            <Parameter Name="ReviewID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateReview">
             <Parameter Name="StickerID" Mode="In" Type="Int32" />

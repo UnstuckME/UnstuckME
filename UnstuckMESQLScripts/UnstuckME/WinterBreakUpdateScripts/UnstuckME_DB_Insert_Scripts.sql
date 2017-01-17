@@ -212,7 +212,7 @@ CREATE PROC [dbo].[CreateReport]
     (
 	@ReportDescription		NVARCHAR(200),
 	@FlaggerID		INT,
-    @ReviewID		FLOAT
+    @ReviewID		INT
     )
 AS
     BEGIN

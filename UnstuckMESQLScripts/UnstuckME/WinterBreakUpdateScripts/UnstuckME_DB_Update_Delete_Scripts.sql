@@ -768,7 +768,7 @@ AS
             BEGIN
 				UPDATE Sticker
 				SET TutorID = @TutorID
-				WHERE StickerID = @StickeriD;
+				WHERE StickerID = @StickerID;
                 RETURN 0;
             END
 
