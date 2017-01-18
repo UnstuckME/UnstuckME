@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
@@ -74,6 +75,7 @@
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConnectionTools.cs" />
     <Compile Include="File.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -173,6 +175,9 @@
     <Compile Include="ServerGuiSubWindow\AdminNameChange.xaml.cs">
       <DependentUpon>AdminNameChange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerGuiSubWindow\ChangeDabaseConnectionSettings.xaml.cs">
+      <DependentUpon>ChangeDabaseConnectionSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServerGuiSubWindow\DeleteAdmin.xaml.cs">
       <DependentUpon>DeleteAdmin.xaml</DependentUpon>
     </Compile>
@@ -246,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ServerGuiSubWindow\AdminNameChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServerGuiSubWindow\ChangeDabaseConnectionSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
