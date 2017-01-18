@@ -80,9 +80,10 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                 UnstuckMEServer_DBEntities SelectedDB = new UnstuckMEServer_DBEntities();
                 SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckMEServer_DBEntities", userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
 
-                string message = "Connecting to" + SelectedDB.Database.Connection.ConnectionString.ToString();
+                string message = "Connecting to " + SelectedDB.Database.Connection.ConnectionString.ToString();
 
-                MessageBox.Show(message);
+                if (displayOutput == true)
+                    MessageBox.Show(message);
                 using (var connection = new SqlConnection(SelectedDB.Database.Connection.ConnectionString))
                 {
                     var query = "select 1";
