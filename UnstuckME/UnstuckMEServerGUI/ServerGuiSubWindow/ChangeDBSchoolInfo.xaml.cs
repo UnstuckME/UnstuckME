@@ -62,62 +62,26 @@ namespace UnstuckMEServerGUI
 
 		private void buttonSave_Click(object sender, RoutedEventArgs e)
 		{
-			try
+            MessageBox.Show("This SAVE button is not fully implemented yet!");
+
+            try
 			{
-                //if (!System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
-                //{
-                //	throw new Exception("Please Enter a valid file path for the image");
-                //}
-                //using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
-                //{ 
-                //	var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
-                //	if (schoolIDs.Count() < 1)
-                //	{
-                //		throw new Exception("No school matching that name exists as registered school site of UnstuckME");
-                //	}
+                if (!System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
+                {
+                    throw new Exception("Please Enter a valid file path for the image");
+                }
+                using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
+                {
+                    var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
+                    if (schoolIDs.Count() < 1)
+                    {
+                        throw new Exception("No school matching that name exists as registered school site of UnstuckME");
+                    }
 
-                //}
-
-
-                //NetTcpBinding binding = new NetTcpBinding();
-                //binding.Security.Mode = SecurityMode.None;
-
-                //EndpointAddress endpoint = new EndpointAddress(new Uri(textBoxDatabaseIP.Text));
-
-                //string testingStuff = Properties.Settings.Default.ToString();
-
-
-
-
-                //string connectionString = ConfigurationManager.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString;
-                //SqlConnectionStringBuilder newConnectionString = new SqlConnectionStringBuilder();
-                //newConnectionString.DataSource = textBoxDatabaseIP.Text;
-                //newConnectionString.PersistSecurityInfo = true;
-                //newConnectionString.UserID = "UnstuckME_Student_Admin";
-                //newConnectionString.Password = "B1gGn@rlyP@$$W0rd";
-                //newConnectionString.ApplicationName = "UnstuckMEServer_DBEntities";
-
-                //config.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString = newConnectionString.ToString();
-                //config.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ProviderName = "System.Data.SqlClient";
-
-
-                //MessageBox.Show(newConnectionString.ToString());
-                //MessageBox.Show(connectionString.ToString());
-
-                Configuration config;
-                config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-                UnstuckMEServer_DBEntities SelectedDB = new UnstuckMEServer_DBEntities();
-                SelectedDB.ChangeDatabase(initialCatalog: "UnstuckMEServer_DBEntities", userId: "UnstuckME_Student_Admin", password: "B1gGn@rlyP@$$W0rd", dataSource: "aura.students.cset.oit.edu");
-                config.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString = SelectedDB.Database.Connection.ConnectionString.ToString();
-                config.Save(ConfigurationSaveMode.Modified);
-
-                //MessageBox.Show(SelectedDB.ViewAllUsers().ToString());
-
+                }
                 MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 				this.Close();
 
-                
             }
 			catch (Exception ex)
 			{
@@ -155,12 +119,7 @@ namespace UnstuckMEServerGUI
 			buttonClickToChangePhoto.BorderThickness = new Thickness(0, 0, 0, 0);
 		}
 
-    private void textBoxDatabaseIP_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-           
-        }
-
-        private void textBoxDatabaseIP_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void buttonConfigure_Click(object sender, RoutedEventArgs e)
         {
             ChangeDabaseConnectionSettings settingsWindow = new ChangeDabaseConnectionSettings();
 
