@@ -112,8 +112,6 @@ namespace UnstuckMEServerGUI
                 config.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString = SelectedDB.Database.Connection.ConnectionString.ToString();
                 config.Save(ConfigurationSaveMode.Modified);
 
-                MessageBox.Show(SelectedDB.ViewAllUsers().ToString());
-
                 MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 				this.Close();
 

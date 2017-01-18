@@ -23,5 +23,10 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         {
             InitializeComponent();
         }
+
+        private void buttonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

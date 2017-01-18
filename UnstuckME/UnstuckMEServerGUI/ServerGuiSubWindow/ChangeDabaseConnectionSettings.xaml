@@ -18,7 +18,7 @@
         <TextBlock x:Name="textBlockPasword" HorizontalAlignment="Left" Margin="10,161,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="155"/>
         <PasswordBox x:Name="passwordBoxPassword" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="215"/>
         <TextBlock x:Name="textBlockPasswordQuestion" ToolTip="The Administrator PASSWORD used when connecting &#x0a;to your UnstuckMe MSSQL server" HorizontalAlignment="Left" Height="23" Margin="214,151,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Height="22" Margin="10,237,0,0" VerticalAlignment="Top" Width="109"/>
+        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Height="22" Margin="10,237,0,0" VerticalAlignment="Top" Width="109" Click="buttonCancel_Click"/>
 
     </Grid>
 </Window>
