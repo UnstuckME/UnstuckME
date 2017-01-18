@@ -112,6 +112,8 @@ namespace UnstuckMEServerGUI
                 config.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString = SelectedDB.Database.Connection.ConnectionString.ToString();
                 config.Save(ConfigurationSaveMode.Modified);
 
+                //MessageBox.Show(SelectedDB.ViewAllUsers().ToString());
+
                 MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 				this.Close();
 
@@ -152,6 +154,11 @@ namespace UnstuckMEServerGUI
 			buttonClickToChangePhoto.Background = null;
 			buttonClickToChangePhoto.BorderThickness = new Thickness(0, 0, 0, 0);
 		}
+
+    private void textBoxDatabaseIP_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+           
+        }
 
         private void textBoxDatabaseIP_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
