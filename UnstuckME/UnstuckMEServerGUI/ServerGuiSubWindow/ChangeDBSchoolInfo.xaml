@@ -9,7 +9,7 @@
         MinHeight="300" MinWidth="450" MaxHeight="300" MaxWidth="450" >
     <Grid>
         <TextBox x:Name="textBoxSchoolName" HorizontalAlignment="Left" Height="30" Margin="165,39,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="0"/>
-        <TextBox x:Name="textBoxDatabaseIP" HorizontalAlignment="Left" Height="30" Margin="165,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="1"/>
+        <TextBox x:Name="textBoxDatabaseIP" HorizontalAlignment="Left" Height="30" Margin="165,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="1" MouseLeftButtonUp="textBoxDatabaseIP_MouseLeftButtonUp"/>
         <TextBox x:Name="textBoxPathToSchoolPhoto" HorizontalAlignment="Left" Height="30" Margin="165,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" TabIndex="2" FontSize="10" TextChanged="textBoxPathToSchoolPhoto_TextChanged"/>
         <Label x:Name="labelSchoolName" Content="School Name" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Label x:Name="labelDatabseIP" Content="Database IP" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
