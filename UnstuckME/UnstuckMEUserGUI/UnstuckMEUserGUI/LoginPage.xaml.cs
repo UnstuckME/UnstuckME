@@ -28,7 +28,7 @@ namespace UnstuckMEUserGUI
 		private static List<School> schools = new List<School>();
 		private static ImageSourceConverter source = new ImageSourceConverter();
 
-		public LoginPage(IUnstuckMEService OpenServer)
+		public LoginPage(ref IUnstuckMEService OpenServer)
 		{
 			try
 			{
@@ -115,7 +115,7 @@ namespace UnstuckMEUserGUI
 					var appSettings = ConfigurationManager.AppSettings;
 					appSettings.Set("AssociatedSchool", Selected_SchoolName.Content.ToString());
 
-					NavigationService.Navigate(new MainPage(Server.GetUserID(email), Server));
+					NavigationService.Navigate(new MainPage(Server.GetUserID(email), ref Server));
 				}
 				else
 				{

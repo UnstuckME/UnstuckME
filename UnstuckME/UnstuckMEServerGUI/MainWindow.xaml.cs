@@ -66,7 +66,7 @@ namespace UnstuckMEServerGUI
                     startServer.StartInfo.FileName = serverPath;
                     startServer.Start();
 
-                    ServerRunning window = new ServerRunning(ref Admin);
+					ServerRunning window = new ServerRunning(ref Admin);
                     App.Current.MainWindow = window;
                     this.Close();
                     window.Show();

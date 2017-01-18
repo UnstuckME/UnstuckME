@@ -555,6 +555,8 @@ namespace UnstuckMEInterfaces
             {
                 try
                 {
+					ConnectedClient RemovedClient = new ConnectedClient();
+					_connectedClients.TryRemove(client.Key, out RemovedClient);
                     client.Value.connection.ForceClose(1, "Server has shutdown, Please contact your Server Administrator for more information.");
                 }
                 catch (Exception)
@@ -620,5 +622,13 @@ namespace UnstuckMEInterfaces
                 return rlist2;
             }
         }
+
+		public List<string> GetAllOrganizations()
+		{
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				return db.GetAllOrganizations().ToList();
+			}
+		}
     }
 }

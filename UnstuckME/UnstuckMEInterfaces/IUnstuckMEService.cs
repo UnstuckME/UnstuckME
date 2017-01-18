@@ -75,15 +75,19 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         void SetProfilePicture(int userID, byte[] image);
         [OperationContract]
-        List<String> GetCourseCodes();
+        List<string> GetCourseCodes();
 
         [OperationContract]
         int GetCourseIdNumberByCodeAndNumber(string code, string number);
 
         [OperationContract]
-        List<String> GetCourseNumbersByCourseCode(String CourseCode);
+        List<string> GetCourseNumbersByCourseCode(String CourseCode);
+
         [OperationContract]
 		void InsertProfilePicture(int userID, byte[] image);
+
+		[OperationContract]
+		List<string> GetAllOrganizations();
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

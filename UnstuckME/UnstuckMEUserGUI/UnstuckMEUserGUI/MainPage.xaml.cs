@@ -28,7 +28,7 @@ namespace UnstuckMEUserGUI
 		public static IUnstuckMEService Server;
 		public static UserInfo User;
 
-		public MainPage(int UserID, IUnstuckMEService OpenServer)
+		public MainPage(int UserID, ref IUnstuckMEService OpenServer)
 		{
             ImageSourceConverter ic = new ImageSourceConverter();
 
@@ -141,7 +141,7 @@ namespace UnstuckMEUserGUI
 		{
 			Server.Logout();
 			Server.DeleteUserAccount(User.UserID);
-			NavigationService.Navigate(new LoginPage(Server));
+			NavigationService.Navigate(new LoginPage(ref Server));
 		}
 
         public void RepopulateClasses()

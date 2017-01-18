@@ -21,13 +21,10 @@ namespace UnstuckMEUserGUI
             //App.Current.MainWindow.Hide();
             try
             {
-                ((StartWindow)Application.Current.MainWindow).StartThread(messageStyle, message);
+				((StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message);
             }
-            catch(Exception)
-            {
-
-            }
-
+            catch(Exception ex)
+            { }
         }
 
         public bool isOnline()

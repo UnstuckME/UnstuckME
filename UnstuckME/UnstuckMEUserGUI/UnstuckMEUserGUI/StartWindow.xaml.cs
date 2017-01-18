@@ -32,14 +32,10 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
             Server = _channelFactory.CreateChannel();
-			_mainFrame.Navigate(new LoginPage(Server));
+			_mainFrame.Navigate(new LoginPage(ref Server));
         }
-        public void StartThread(int style, string message)
-        {
-            Thread newThread = new Thread(() => MessageBoxToUserAndShutdown(style, message));
-            newThread.Start();
-        }
-        public void MessageBoxToUserAndShutdown(int messageStyle, string message)
+
+		public void MessageBoxToUserAndShutdown(int messageStyle, string message)
         {
             try
             {
@@ -71,12 +67,8 @@ namespace UnstuckMEUserGUI
             {
                 MessageBox.Show(ex.Message);
             }
-            try
-            {
-                Environment.Exit(0);
-            }
-            catch (Exception)
-            { }
+
+			_mainFrame.Navigate(new LoginPage(ref Server));
         }
 
         private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
