@@ -58,7 +58,41 @@ namespace UnstuckMEUserGUI
 			return connection;
 		}
 
-		public static List<School> GetSchoolNamesAndImages()
+        public static List<string> GetSchoolNames()
+        {
+            SqlConnection connection = null;
+
+            try
+            {
+                connection = GetConnection();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText =
+                    "SELECT SchoolName FROM dbo.School";
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                List<string> schools = new List<string>();
+
+                for (int i = 0; reader.Read(); i++)
+                    schools.Add(reader[0].ToString());
+
+                reader.Close();
+
+                return schools;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
+        }
+
+        public static List<School> GetSchoolNamesAndImages()
 		{
 			SqlConnection connection = null;
 
