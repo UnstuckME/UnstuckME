@@ -115,7 +115,7 @@ namespace UnstuckMEUserGUI
 					var appSettings = ConfigurationManager.AppSettings;
 					appSettings.Set("AssociatedSchool", Selected_SchoolName.Content.ToString());
 
-					NavigationService.Navigate(new MainPage(Server.GetUserID(email), ref Server));
+					//NavigationService.Navigate(new MainPage(Server.GetUserID(email), ref Server));
 				}
 				else
 				{

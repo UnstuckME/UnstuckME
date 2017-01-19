@@ -54,7 +54,6 @@ namespace UnstuckMEUserGUI
 
 						Server.InsertProfilePicture(userID, avatar);
                         Server.UserLoginAttempt(EmailTxtBx.Text, passwordBox.Password);
-						NavigationService.Navigate(new MainPage(userID, ref Server));
 					}
 					else
 					{

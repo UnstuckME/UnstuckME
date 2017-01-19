@@ -16,6 +16,7 @@ using System.ServiceModel;
 using UnstuckMEInterfaces;
 using System.Configuration;
 using System.Threading;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -27,12 +28,12 @@ namespace UnstuckMEUserGUI
 		public static IUnstuckMEService Server;
 		private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
 
-		public StartWindow()
+		public StartWindow(ref IUnstuckMEService inboundServer, ref UserInfo inboundUser, ref byte [] inboundImg)
 		{
 			InitializeComponent();
 			_channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
 			Server = _channelFactory.CreateChannel();
-			_mainFrame.Navigate(new LoginPage(ref Server));
+			_mainFrame.Navigate(new MainPage(ref Server, ref inboundUser, ref inboundImg));
 		}
 
 		public void MessageBoxToUserAndShutdown(int messageStyle, string message)

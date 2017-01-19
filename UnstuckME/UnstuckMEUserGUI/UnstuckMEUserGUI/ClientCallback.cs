@@ -23,7 +23,7 @@ namespace UnstuckMEUserGUI
             {
 				((StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message);
             }
-            catch(Exception ex)
+            catch(Exception)
             { }
         }
 

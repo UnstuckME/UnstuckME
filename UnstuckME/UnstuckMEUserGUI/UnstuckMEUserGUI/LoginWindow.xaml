@@ -10,29 +10,37 @@
         <Grid x:Name="_LoginGrid" Visibility="Visible" IsEnabled="True">
             <TextBox x:Name="textBoxUserName" HorizontalAlignment="Left" Background="White" Height="22" Margin="93,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"/>
             <PasswordBox x:Name="passwordBox" Background="White" HorizontalAlignment="Left" Margin="93,243,0,0" VerticalAlignment="Top" Width="164"/>
-            <Button x:Name="buttonLogin" Click="buttonLogin_Click" Background="White" Content="Login" HorizontalAlignment="Left" Margin="141,352,0,0" VerticalAlignment="Top" Width="74"/>
-            <ComboBox x:Name="comboBoxSchools" Background="White"  HorizontalAlignment="Left" Margin="93,294,0,0" VerticalAlignment="Top" Width="164" SelectedIndex="0">
+            <Button x:Name="buttonLogin" Click="buttonLogin_Click" Background="White" Content="Login" HorizontalAlignment="Left" Margin="141,352,0,0" VerticalAlignment="Top" Width="74" IsDefault="True"/>
+            <ComboBox x:Name="comboBoxSchools" Background="White"  HorizontalAlignment="Left" Margin="93,286,0,0" VerticalAlignment="Top" Width="164" SelectedIndex="0">
                 <ComboBoxItem Name="Default" Content="(Select School)" Visibility="Hidden" Height="0" Width="0"/>
             </ComboBox>
             <Label x:Name="labelUsername" Foreground="White" Content="Username:" HorizontalAlignment="Left" Margin="93,152,0,0" VerticalAlignment="Top" Width="165" Height="27" FontSize="12"/>
-            <Label x:Name="labelPassword" Foreground="White" Content="Password:" HorizontalAlignment="Left" Margin="95,211,0,0" VerticalAlignment="Top" Width="165" Height="32" FontSize="12"/>
+            <Label x:Name="labelPassword" Foreground="White" Content="Password:" HorizontalAlignment="Left" Margin="95,211,0,0" VerticalAlignment="Top" Width="162" Height="32" FontSize="12"/>
             <Button x:Name="buttonCreateAccount" Click="buttonCreateAccount_Click" Foreground="White" Background="#336699" Content="Create New Account" HorizontalAlignment="Left" Margin="106,393,0,0" VerticalAlignment="Top" Width="140" BorderBrush="#FF585656"  Height="23" FontSize="14" MouseEnter="buttonCreateAccount_MouseEnter" MouseLeave="buttonCreateAccount_MouseLeave"/>
+            <Label x:Name="_labelInvalidLogin" Visibility="Hidden" Content="Invalid Login" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,318,0,0" VerticalAlignment="Top" Width="322" Height="29" FontSize="14" Foreground="#FFD50505"/>
+
         </Grid>
         <Grid x:Name="_AccountCreationGrid" Visibility="Hidden" IsEnabled="False">
             <Button TabIndex="6" x:Name="buttonCancel" Click="buttonCancel_Click" MouseEnter="buttonCancel_MouseEnter" MouseLeave="buttonCancel_MouseLeave" Background="#FF993333" Foreground="White" Content="Cancel" HorizontalAlignment="Left" Margin="128,418,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
             <Button TabIndex="5" x:Name="buttonCreate" Click="buttonCreate_Click" MouseEnter="buttonCreate_MouseEnter" MouseLeave="buttonCreate_MouseLeave" Background="#336699" Foreground="White" Content="Create Account" HorizontalAlignment="Left" Margin="64,374,0,0" VerticalAlignment="Top" Width="209" IsDefault="True"/>
-            <TextBox TabIndex="0" x:Name="textBoxFirstName" HorizontalAlignment="Left" Height="23" Margin="64,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209"/>
-            <TextBox TabIndex="1" x:Name="textBoxLastName" HorizontalAlignment="Left" Height="23" Margin="64,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209"/>
-            <TextBox TabIndex="2" x:Name="textBoxEmailAddress" HorizontalAlignment="Left" Height="23" Margin="64,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209"/>
+            <TextBox TabIndex="0" x:Name="textBoxCreateFirstName" HorizontalAlignment="Left" Height="23" Margin="64,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209"/>
+            <TextBox TabIndex="1" x:Name="textBoxCreateLastName" HorizontalAlignment="Left" Height="23" Margin="64,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209"/>
+            <TextBox TabIndex="2" x:Name="textBoxCreateEmailAddress" HorizontalAlignment="Left" Height="23" Margin="64,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209"/>
             <PasswordBox TabIndex="3" x:Name="passwordBoxCreate" HorizontalAlignment="Left" Margin="64,260,0,0" VerticalAlignment="Top" Width="209"/>
             <PasswordBox TabIndex="4" x:Name="passwordBoxCreateConfirm" HorizontalAlignment="Left" Margin="64,314,0,0" VerticalAlignment="Top" Width="209"/>
-            <Label x:Name="labelFirstName" Content="First Name" HorizontalAlignment="Left" Margin="64,73,0,0" VerticalAlignment="Top" Width="209" FontSize="12" Height="25" Foreground="White"/>
-            <Label x:Name="labelLastName" Content="Last Name" HorizontalAlignment="Left" Margin="64,126,0,0" VerticalAlignment="Top" Width="209" Foreground="White" FontSize="12"/>
-            <Label x:Name="labelEmailAddress" Content="Email Address" HorizontalAlignment="Left" Margin="64,180,0,0" VerticalAlignment="Top" Width="209" Foreground="White" FontSize="12"/>
-            <Label x:Name="labelCreatePassword" Content="Password" HorizontalAlignment="Left" Margin="64,234,0,0" VerticalAlignment="Top" Width="209" Foreground="White" FontSize="12"/>
+            <Label x:Name="labelCreateFirstName" Content="First Name" HorizontalAlignment="Left" Margin="64,73,0,0" VerticalAlignment="Top" Width="209" FontSize="12" Height="25" Foreground="White"/>
+            <Label x:Name="labelCreateLastName" Content="Last Name" HorizontalAlignment="Left" Margin="64,126,0,0" VerticalAlignment="Top" Width="209" Foreground="White" FontSize="12"/>
+            <Label x:Name="labelCreateEmailAddress" Content="Email Address" HorizontalAlignment="Left" Margin="64,180,0,0" VerticalAlignment="Top" Width="209" Foreground="White" FontSize="12"/>
+            <Label x:Name="labelCreatePassword" Content="Password" HorizontalAlignment="Left" Margin="64,234,0,0" VerticalAlignment="Top" Width="175" Foreground="White" FontSize="12"/>
             <Label x:Name="labelCreatePasswordConfirm" Content="Confirm Password" HorizontalAlignment="Left" Margin="64,288,0,0" VerticalAlignment="Top" Width="209" Foreground="White" FontSize="12"/>
-            <Label x:Name="labelTitle" Content="Account Creation" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="64,24,0,0" VerticalAlignment="Top" Width="209" Height="49" FontSize="22" Foreground="White"/>
-            <Label x:Name="labelIncorrectCreds" Visibility="Hidden" Content="Invalid Username/Password" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="64,342,0,0" VerticalAlignment="Top" Width="209" Height="27" Foreground="#FFFF0909" FontFamily="Times New Roman" FontSize="12"/>
+            <Label x:Name="labelCreateTitle" Content="Account Creation" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="64,24,0,0" VerticalAlignment="Top" Width="209" Height="49" FontSize="22" Foreground="White"/>
+            <Label x:Name="labelCreateIncorrectCreds" Visibility="Hidden" Content="Invalid Username/Password" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="64,342,0,0" VerticalAlignment="Top" Width="209" Height="27" Foreground="#FFFF0909" FontFamily="Times New Roman" FontSize="12"/>
+            <Label x:Name="labelCreatePasswordHelp" Content="?" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="278,260,0,0" VerticalAlignment="Top" Width="20" Height="23" FontSize="12" ToolTip="Password Must Be 6-32 Characters Long"/>
+        </Grid>
+        <Grid x:Name="_LoadingGrid" Visibility="Hidden" IsEnabled="False">
+            <ProgressBar Name="_LoadingProgressBar" Background="White" Foreground="#336699" HorizontalAlignment="Left" Height="36" Margin="58,225,0,0" VerticalAlignment="Top" Width="232" BorderBrush="Black" BorderThickness="5"/>
+            <Label x:Name="labelLoading" Foreground="White" Content="0%" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="58,193,0,0" VerticalAlignment="Top" Width="232" Height="32" FontFamily="Impact" FontSize="20"/>
+            <Label x:Name="_labelLoadingPercent" Foreground="White" Content="Loading..." VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="58,130,0,0" VerticalAlignment="Top" Width="232" Height="58" FontFamily="Impact" FontSize="24"/>
         </Grid>
     </Grid>
 </Window>
