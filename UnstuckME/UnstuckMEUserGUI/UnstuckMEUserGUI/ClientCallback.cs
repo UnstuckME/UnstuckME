@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using UnstuckMEInterfaces;
 using System.Threading;
+using System.Diagnostics;
 
 namespace UnstuckMEUserGUI
 {
@@ -15,16 +16,12 @@ namespace UnstuckMEUserGUI
     {
         //Forces The Cient to close with a messagebox popup.
         //Message Style Legend: 0 - Info(Blue), 1 - Warning(Yellow), 2 - Error(Red)
-        public void ForceClose(int messageStyle, string message)
+        public void ForceClose(string message)
         {
-            //(StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message)
-            //App.Current.MainWindow.Hide();
-            try
-            {
-				((StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message);
-            }
-            catch(Exception)
-            { }
+            MessageBox.Show(message);
+            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            Process.Start(unstuckME);
+            Application.Current.Shutdown();
         }
 
         public bool isOnline()

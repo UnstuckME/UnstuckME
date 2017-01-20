@@ -65,7 +65,7 @@ namespace UnstuckMEInterfaces
                             {
                                 admin.Value.connection.GetUpdate(1, removedClient.User.EmailAddress);
                             }
-                            removedClient.connection.ForceClose(1, "You have been logged out by the server. Please Re-Login to continue using UnstuckME"); //Incase of faulty ping and user is still connected.
+                            removedClient.connection.ForceClose("You have been logged out by the server. Please Re-Login to continue using UnstuckME"); //Incase of faulty ping and user is still connected.
                         }
                         catch(Exception)
                         { }
@@ -555,9 +555,7 @@ namespace UnstuckMEInterfaces
             {
                 try
                 {
-					ConnectedClient RemovedClient = new ConnectedClient();
-					_connectedClients.TryRemove(client.Key, out RemovedClient);
-                    client.Value.connection.ForceClose(1, "Server has shutdown, Please contact your Server Administrator for more information.");
+                    client.Value.connection.ForceClose("Server has shutdown, Please contact your Server Administrator for more information.");
                 }
                 catch (Exception)
                 { }

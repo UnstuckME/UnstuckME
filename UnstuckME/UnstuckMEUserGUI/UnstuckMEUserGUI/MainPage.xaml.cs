@@ -141,7 +141,7 @@ namespace UnstuckMEUserGUI
 		{
 			Server.Logout();
 			Server.DeleteUserAccount(User.UserID);
-			NavigationService.Navigate(new LoginPage(ref Server));
+			//NavigationService.Navigate(new LoginPage(ref Server));
 		}
 
         public void RepopulateClasses()

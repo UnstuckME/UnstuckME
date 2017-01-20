@@ -25,23 +25,43 @@ namespace UnstuckMEUserGUI
     {
         public static IUnstuckMEService Server;
         private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
-        private static List<string> schools = new List<string>();
+        private static List<UnstuckMESchool> schools;
         public LoginWindow()
-        {
-            schools = SchoolDB_Connection.GetSchoolNames();
+        { 
             InitializeComponent();
         }
         public LoginWindow(bool invalidUser)
         {
-            schools = SchoolDB_Connection.GetSchoolNames();
             InitializeComponent();
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            foreach (string school in schools)
+            schools = new List<UnstuckMESchool>();
+            using (UnstuckMESchools_DBEntities db = new UnstuckMESchools_DBEntities())
             {
-                comboBoxSchools.Items.Add(new ComboBoxItem().Content = school);
+                var dbSchools = from s in db.Schools 
+                                //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
+                                //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/
+                                select new
+                               {
+                                   SchoolName = s.SchoolName,
+                                   EmailCredentials = s.EmailCredentials,
+                                   SchoolID = s.SchoolID
+                               };
+                foreach (var dbschool in dbSchools)
+                {
+                    UnstuckMESchool newSchool = new UnstuckMESchool();
+                    newSchool.SchoolName = dbschool.SchoolName;
+                    newSchool.SchoolID = dbschool.SchoolID;
+                    newSchool.SchoolEmailCredentials = dbschool.EmailCredentials;
+                    schools.Add(newSchool);
+                }
+            }
+
+            foreach (UnstuckMESchool school in schools)
+            {
+                comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
             }
             _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
             Server = _channelFactory.CreateChannel();
@@ -49,67 +69,65 @@ namespace UnstuckMEUserGUI
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
-            _LoadingGrid.Visibility = Visibility.Visible;
-            _LoginGrid.Visibility = Visibility.Hidden;
             bool isValid = false;
             int userID = 0;
             string emailAttempt = textBoxUserName.Text;
             string passwordAttempt = passwordBox.Password;
-            _LoginGrid.IsEnabled = false;
-            _LoadingGrid.IsEnabled = true;
-            _labelLoadingPercent.Content = "0%";
-            _LoadingProgressBar.Value = 0;
-            
+            _labelInvalidLogin.Visibility = Visibility.Hidden;
             try
             {
                 if (textBoxUserName.Text.Length <= 0)
                     throw new Exception("Enter an Email Address");
-                _LoadingProgressBar.Value = 10;
-                _labelLoadingPercent.Content = "10%";
                 if (passwordBox.Password.Length <= 6)
                     throw new Exception("Enter a Valid Password");
-                _LoadingProgressBar.Value = 30;
-                _labelLoadingPercent.Content = "30%";
                 if (passwordBox.Password.Length >= 32)
                     throw new Exception("Enter a Valid Password");
-                _LoadingProgressBar.Value = 50;
-                _labelLoadingPercent.Content = "50%";
+                isValid = true;
             }
             catch(Exception ex)
             {
-                _LoginGrid.IsEnabled = true;
                 _labelInvalidLogin.Content = ex.Message;
-                _AccountCreationGrid.IsEnabled = false;
-                _AccountCreationGrid.Visibility = Visibility.Hidden;
-                _LoadingGrid.Visibility = Visibility.Hidden;
-                _LoadingGrid.IsEnabled = false;
                 passwordBox.Password = string.Empty;
                 textBoxUserName.Text = string.Empty;
-                _LoginGrid.Visibility = Visibility.Visible;
+                _labelInvalidLogin.Visibility = Visibility.Visible;
+                isValid = false;
             }
-            try
+            if (isValid)
             {
-                isValid = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
-                _LoadingProgressBar.Value = 60;
-                _labelLoadingPercent.Content = "60%";
-                userID = Server.GetUserID(emailAttempt);
-                _LoadingProgressBar.Value = 70;
-                _labelLoadingPercent.Content = "70%";
-                UserInfo loggedInUser = Server.GetUserInfo(userID);
-                _LoadingProgressBar.Value = 80;
-                _labelLoadingPercent.Content = "80%";
-                byte[] img = Server.GetProfilePicture(loggedInUser.UserID);
-                _LoadingProgressBar.Value = 90;
-                _labelLoadingPercent.Content = "90%";
-                StartWindow mainWindow = new StartWindow(ref Server, ref loggedInUser, ref img);
-                _LoadingProgressBar.Value = 100;
-                _labelLoadingPercent.Content = "100%";
-                mainWindow.Show();
-                this.Close();
+                try
+                {
+                    isValid = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+                    if (!isValid)
+                        _labelInvalidLogin.Content = "Invalid Username/Password";
+                }
+                catch (Exception)
+                {
+                    //MessageBox.Show("Please check that you entered the correct credentials.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    _labelInvalidLogin.Visibility = Visibility.Visible;
+                    _channelFactory.Abort();
+                    _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                    Server = _channelFactory.CreateChannel();
+                }
             }
-            catch(Exception ex)
+            if (isValid)
             {
-                MessageBox.Show(ex.Message + " Please Contact Your Server Administrator", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+                try
+                {
+                    userID = Server.GetUserID(emailAttempt);
+                    UserInfo loggedInUser = Server.GetUserInfo(userID);
+                    byte[] img = Server.GetProfilePicture(loggedInUser.UserID);
+                    StartWindow mainWindow = new StartWindow(ref Server, ref loggedInUser, ref img);
+                    mainWindow.Show();
+                    this.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Unable to successfully contact the server. Please Contact Your Server Administrator", "Connection Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    _channelFactory.Abort();
+                    _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                    Server = _channelFactory.CreateChannel();
+                }
             }
         }
 
@@ -164,18 +182,21 @@ namespace UnstuckMEUserGUI
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _channelFactory.Close();
+                    _channelFactory.Open();
+                    Server = _channelFactory.CreateChannel();
                 }
             }
         }
 
         private void buttonCreateAccount_MouseEnter(object sender, MouseEventArgs e)
         {
-            //buttonCreateAccount.Foreground = Brushes.Black;
+            buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
         }
 
         private void buttonCreateAccount_MouseLeave(object sender, MouseEventArgs e)
         {
-            //buttonCreateAccount.Foreground = Brushes.White;
+            buttonCreateAccount.Foreground = System.Windows.Media.Brushes.White;
         }
 
         private void buttonCreateAccount_Click(object sender, RoutedEventArgs e)
@@ -188,21 +209,21 @@ namespace UnstuckMEUserGUI
 
         private void buttonCancel_MouseEnter(object sender, MouseEventArgs e)
         {
-            //buttonCreateAccount.Foreground = Brushes.Black;
+            buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
         }
 
         private void buttonCancel_MouseLeave(object sender, MouseEventArgs e)
         {
-            //buttonCreateAccount.Foreground = Brushes.White;
+            buttonCreateAccount.Foreground = System.Windows.Media.Brushes.White;
         }
         private void buttonCreate_MouseEnter(object sender, MouseEventArgs e)
         {
-            //buttonCreateAccount.Foreground = Brushes.Black;
+            buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
         }
 
         private void buttonCreate_MouseLeave(object sender, MouseEventArgs e)
         {
-            //buttonCreateAccount.Foreground = Brushes.White;
+            buttonCreateAccount.Foreground = System.Windows.Media.Brushes.White;
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
