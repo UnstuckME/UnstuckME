@@ -32,6 +32,14 @@ namespace UnstuckMEUserGUI
             {
                 case 0:
                     {
+                        WindowCollection windows = App.Current.Windows;
+                        foreach (Window item in windows)
+                        {
+                            if(item != this)
+                            {
+                                item.Close();
+                            }
+                        }
                         _GridServerShutdown.IsEnabled = true;
                         textBoxServerShutdownMessage.Text = message;
                         labelTitleServerShutdown.Content = "Server Shutdown";
