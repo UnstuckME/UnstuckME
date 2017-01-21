@@ -20,6 +20,6 @@
         <PasswordBox x:Name="passwordBoxConfirm" TabIndex="4" HorizontalAlignment="Left" Margin="237,227,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
         <PasswordBox x:Name="passwordBoxCurrentPassword" TabIndex="1" HorizontalAlignment="Left" Margin="237,101,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
         <Button x:Name="buttonSave" Content="Save" TabIndex="6" HorizontalAlignment="Left" Margin="380,278,0,0" VerticalAlignment="Top" Width="100" Click="buttonSave_Click" IsDefault="True" Background="#336699" Foreground="White"/>
-        <Button x:Name="buttonCancel" Content="Cancel" TabIndex="5" HorizontalAlignment="Left" Margin="257,278,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click" IsCancel="True"/>
+        <Button x:Name="buttonCancel" Background="#FF993333" Foreground="White" Content="Cancel" TabIndex="5" HorizontalAlignment="Left" Margin="257,278,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click" IsCancel="True"/>
     </Grid>
 </Window>

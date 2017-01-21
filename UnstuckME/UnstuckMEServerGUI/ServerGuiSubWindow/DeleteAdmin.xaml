@@ -13,7 +13,7 @@
         <Label x:Name="labelTarget" Foreground="White" Content="Target Username" HorizontalAlignment="Left" Margin="46,27,0,0" VerticalAlignment="Top" Width="200"/>
         <PasswordBox x:Name="passwordBox" TabIndex="1" HorizontalAlignment="Left" Margin="46,127,0,0" VerticalAlignment="Top" Width="250"/>
         <Label x:Name="labelPassword" Foreground="White" Content="Your Password" HorizontalAlignment="Left" Margin="46,91,0,0" VerticalAlignment="Top" Width="200"/>
-        <Button x:Name="buttonCancel" TabIndex="3" Content="Cancel" HorizontalAlignment="Left" Margin="80,171,0,0" VerticalAlignment="Top" Width="100" IsCancel="True" Click="buttonCancel_Click"/>
+        <Button x:Name="buttonCancel" Background="#FF993333" Foreground="White" TabIndex="3" Content="Cancel" HorizontalAlignment="Left" Margin="80,171,0,0" VerticalAlignment="Top" Width="100" IsCancel="True" Click="buttonCancel_Click"/>
 
     </Grid>
 </Window>
