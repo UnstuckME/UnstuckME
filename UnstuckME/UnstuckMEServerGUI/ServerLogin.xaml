@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d" Background="DimGray"
-        Title="ServerLogin" Height="500" Width="350" MinHeight="500" MinWidth="350"  WindowStartupLocation="CenterScreen" Name="ServerLoginWindow">
+        Title="ServerLogin" Height="525" Width="350" MinHeight="525" MinWidth="350"  WindowStartupLocation="CenterScreen" Name="ServerLoginWindow">
 
     <Grid x:Name="_GridGeneralLogin" Width="Auto" Height="Auto">
         <Grid>
             <TextBox x:Name="textBoxEmailAddress" HorizontalAlignment="Center" Height="24"  TextWrapping="Wrap" VerticalAlignment="Center" Width="200" BorderThickness="2" KeyDown="OnKeyDownPasswordHandler" Margin="71,198,71,246"/>
             <PasswordBox x:Name="passwordBoxInput" HorizontalAlignment="Center" Margin="71,257,71,186" VerticalAlignment="Center" Width="200" Height="25" BorderThickness="2" KeyDown="OnKeyDownPasswordHandler"/>
-            <Label x:Name="labelEmailAddress" Content="Email Address" HorizontalAlignment="Center" Margin="67,169,175,275" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12" Foreground="White"/>
-            <Label x:Name="labelPassword" Content="Password" HorizontalAlignment="Center" Margin="69,233,173,211" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12" Foreground="White"/>
+            <Label x:Name="labelEmailAddress" Content="Email Address" HorizontalAlignment="Center" Margin="69,169,173,275" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12" Foreground="White"/>
+            <Label x:Name="labelPassword" Content="Password" HorizontalAlignment="Center" Margin="71,228,171,216" VerticalAlignment="Center" Width="100" FontFamily="Global User Interface" FontSize="12" Foreground="White"/>
             <Button x:Name="buttonServerLogin" Background="#336699" Foreground="White" Content="Login" HorizontalAlignment="Center" Margin="90,225,90,0" VerticalAlignment="Center" Width="150" Click="buttonServerLogin_Click" Height="30" BorderThickness="2" IsDefault="True" BorderBrush="#FF7E7E7E"/>
             <Label x:Name="labelInvalidUsernamePassword" Content="Invalid Username/Password" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="200" Height="28" Foreground="Red" HorizontalContentAlignment="Center" FontSize="12" FontFamily="Global Sans Serif" Visibility="Hidden"/>
             <Button Name="SettingButton" Background="DimGray" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="50" Width="50" BorderThickness="0"  Click="buttonSetting_Click" Margin="0,0,4,0">
@@ -33,8 +33,8 @@
                 <Button x:Name="button" Content="Save" Canvas.Left="237" Canvas.Top="140" Width="75" Foreground="White" Background="#FF5E64E6"/>
             </Canvas>
         </Grid>
-        <Grid x:Name="_GridLogo" Margin="0,0,0,292" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image x:Name="UnstuckME_Logo" Height="166" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Top" Source="Resources/UnstuckME_Logo.png" Margin="26,0" />
+        <Grid x:Name="_GridLogo" Margin="10,10,10,316" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="Auto" Height="Auto" MaxHeight="500">
+            <Image x:Name="UnstuckME_Logo" Height="Auto" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Top" Source="Resources/UnstuckME_Logo.png" Margin="26,0" />
         </Grid>
     </Grid>
 </Window>
