@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Data.SqlClient;
 using UnstuckMEServer;
 using UnstuckME_Classes;
+using System.Diagnostics;
 
 namespace UnstuckMEServerGUI
 {
@@ -46,6 +47,8 @@ namespace UnstuckMEServerGUI
                 {
                     try
                     {
+                        if (textBoxCurrentUsername.Text != Admin.EmailAddress)
+                            throw new Exception("You cannot change the credentials of another Admin.");
                         var admin = (from u in db.ServerAdmins
                                      where u.EmailAddress.ToLower() == textBoxCurrentUsername.Text.ToLower()
                                      select u).First();
@@ -55,7 +58,7 @@ namespace UnstuckMEServerGUI
                         {
                             if (passwordBoxNewPassword.Password != passwordBoxConfirm.Password)
                                 throw new Exception("Passwords Do Not Match!");
-                            if (textBoxNewUsername.Text.Length != 0)
+                            if (textBoxNewUsername.Text.Length != 0) //Changes username/password
                             {
                                 if (textBoxNewUsername.Text.Length < 6)
                                     throw new Exception("Please Enter A Username of 6 Characters or More!");
@@ -67,7 +70,7 @@ namespace UnstuckMEServerGUI
                                 Admin.EmailAddress = textBoxNewUsername.Text;
                                 MessageBox.Show("New Username and Password Saved", "Administrator Update Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
-                            else
+                            else //Only changes password
                             {
                                 UnstuckMEPassword newHashedPassword = UnstuckMEHashing.GetHashedPassword(passwordBoxNewPassword.Password);
                                 admin.Password = newHashedPassword.Password;
@@ -75,7 +78,9 @@ namespace UnstuckMEServerGUI
                                 db.SaveChanges();
                                 MessageBox.Show("New Password Saved", "Password Change Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
-                            this.Close();
+                            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                            Process.Start(unstuckME);
+                            Application.Current.Shutdown();
                         }
                         else
                         {

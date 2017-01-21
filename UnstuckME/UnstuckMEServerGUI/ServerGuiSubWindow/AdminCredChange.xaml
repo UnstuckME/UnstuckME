@@ -15,7 +15,7 @@
         <Label x:Name="labelNewPassword" Content="New Password" HorizontalAlignment="Left" Margin="10,191,0,0" VerticalAlignment="Top" Width="222"/>
         <Label x:Name="labelConfirmPassword" Content="Confirm Password" HorizontalAlignment="Left" Margin="10,227,0,0" VerticalAlignment="Top" Width="222"/>
         <TextBox x:Name="textBoxCurrentUsername" TabIndex="0" HorizontalAlignment="Left" Height="31" Margin="237,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
-        <TextBox x:Name="textBoxNewUsername" TabIndex="2" HorizontalAlignment="Left" Height="31" Margin="237,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
+        <TextBox x:Name="textBoxNewUsername" TabIndex="2" HorizontalAlignment="Left" Height="31" Margin="237,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" ToolTip="This field is optional"/>
         <PasswordBox x:Name="passwordBoxNewPassword" TabIndex="3" HorizontalAlignment="Left" Margin="237,191,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
         <PasswordBox x:Name="passwordBoxConfirm" TabIndex="4" HorizontalAlignment="Left" Margin="237,227,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
         <PasswordBox x:Name="passwordBoxCurrentPassword" TabIndex="1" HorizontalAlignment="Left" Margin="237,101,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
