@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,39 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEMessageBox : Window
     {
-        public UnstuckMEMessageBox()
+        public UnstuckMEMessageBox(int boxStyle, string message)
         {
             InitializeComponent();
+            ShowBox(boxStyle, message);
+        }
+
+        void ShowBox(int boxStyle, string message)
+        {
+            switch(boxStyle)
+            {
+                case 0:
+                    {
+                        _GridServerShutdown.IsEnabled = true;
+                        textBoxServerShutdownMessage.Text = message;
+                        labelTitleServerShutdown.Content = "Server Shutdown";
+                        _GridServerShutdown.Visibility = Visibility.Visible;
+                        break;
+                    }
+            }
+        }
+
+        private void buttonCloseServerShutdown_Click(object sender, RoutedEventArgs e)
+        {
+            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            Process.Start(unstuckME);
+            Application.Current.Shutdown();
+        }
+
+        private void buttonOKServerShutdown_Click(object sender, RoutedEventArgs e)
+        {
+            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            Process.Start(unstuckME);
+            Application.Current.Shutdown();
         }
     }
 }

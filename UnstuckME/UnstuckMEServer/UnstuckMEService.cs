@@ -615,21 +615,24 @@ namespace UnstuckMEInterfaces
 
         public void ServerShuttingDown()
         {
-            List<Thread> newThread = new List<Thread>();
             foreach (var client in _connectedClients)
             {
-                try
-                {
-                    newThread.Add(new Thread(new ThreadStart(client.Value.connection.ForceClose)));
-                }
-                catch (Exception)
-                { }
+                client.Value.connection.ForceClose();
             }
-            foreach (Thread thread in newThread)
-            {
-                thread.Start();
-            }
-            
+            //List<Thread> newThread = new List<Thread>();
+            //foreach (var client in _connectedClients)
+            //{
+            //    try
+            //    {
+            //        newThread.Add(new Thread(new ThreadStart(client.Value.connection.ForceClose)));
+            //    }
+            //    catch (Exception)
+            //    { }
+            //}
+            //foreach (Thread thread in newThread)
+            //{
+            //    thread.Start();
+            //}     
         }
 
         public List<string> GetCourseCodes()

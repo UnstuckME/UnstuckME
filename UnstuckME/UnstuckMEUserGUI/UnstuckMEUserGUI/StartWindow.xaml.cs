@@ -34,9 +34,19 @@ namespace UnstuckMEUserGUI
 			_mainFrame.Navigate(new MainPage(ref Server, ref inboundUser, ref inboundImg));
 		}
 
-        public void ForceClose()
+        public void ForceCloseStart()
         {
+            Task.Factory.StartNew(() => ForceClose()).ContinueWith(t => t.Result.Show(), TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Factory.StartNew(() => returnCurrent()).ContinueWith(t => t.Result.Close(), TaskScheduler.FromCurrentSynchronizationContext());
+        }
+        UnstuckMEMessageBox ForceClose()
+        {
+            return new UnstuckMEMessageBox(0, "Server has shutdown, Please contact your Server Administrator.");
+        }
 
+        StartWindow returnCurrent()
+        {
+            return this;
         }
 
 		private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -44,7 +54,7 @@ namespace UnstuckMEUserGUI
 			try
 			{
 				this.Hide();
-				//Server.Logout();
+				Server.Logout();
 			}
 			catch (Exception)
 			{
