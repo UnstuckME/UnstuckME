@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="UnstuckMEMessageBox" MaxHeight="205" MaxWidth="405" MinHeight="205" MinWidth="405" Height="205" Width="405" Background="DimGray" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
+        <!--IF YOU NEED A NEW LAYOUT MAKE A NEW GRID (CHECK BELOW FOR EXAMPLES)-->
+        <!--LAYOUT 0 ShutdownServer-->
         <Grid Name="_GridServerShutdown" Visibility="Hidden" IsEnabled="false">
             <Rectangle Fill="#FF323232" HorizontalAlignment="Left" Height="34"  VerticalAlignment="Top" Width="397" Margin="0,-3,0,0"/>
             <Button x:Name="buttonOKServerShutdown" Background="#336699" Foreground="White" Content="OK" HorizontalAlignment="Left" Margin="295,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonOKServerShutdown_Click"/>
@@ -16,6 +18,7 @@
             </Button>
             <Label x:Name="labelTitleServerShutdown" Foreground="White" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="355" FontFamily="Lucida Sans Unicode"/>
         </Grid>
+        <!--LAYOUT 1 OK/CANCEL-->
         <Grid x:Name="_GridOKCancel" Visibility="Hidden" IsEnabled="False">
             <Rectangle Fill="#FF323232" HorizontalAlignment="Left" Height="34"  VerticalAlignment="Top" Width="397" Margin="0,-3,0,0"/>
             <Button x:Name="buttonOK" Background="#336699" Foreground="White" Content="OK" HorizontalAlignment="Left" Margin="295,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonOK_Click"/>
@@ -26,5 +29,6 @@
             </Button>
             <Label x:Name="labelTitleOKCancel" Foreground="White" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="355" FontFamily="Lucida Sans Unicode"/>
         </Grid>
+        <!--INSERT GRID 2 BELOW-->
     </Grid>
 </Window>
