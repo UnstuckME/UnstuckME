@@ -20,17 +20,18 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEMessageBox : Window
     {
-        public UnstuckMEMessageBox(int boxStyle, string message)
+        public UnstuckMEMessageBox(int boxStyle, string message, string title)
         {
             InitializeComponent();
-            ShowBox(boxStyle, message);
+            ShowBox(boxStyle, message, title);
         }
 
-        void ShowBox(int boxStyle, string message)
+        //Legend: 0 - ShutdownAndRestart Application, 1 - OK and Cancel Box, 
+        void ShowBox(int boxStyle, string message, string title)
         {
             switch(boxStyle)
             {
-                case 0:
+                case 0: //ShutdownCurrent/RestartNew Application 
                     {
                         WindowCollection windows = App.Current.Windows;
                         foreach (Window item in windows)
@@ -42,8 +43,16 @@ namespace UnstuckMEUserGUI
                         }
                         _GridServerShutdown.IsEnabled = true;
                         textBoxServerShutdownMessage.Text = message;
-                        labelTitleServerShutdown.Content = "Server Shutdown";
+                        labelTitleServerShutdown.Content = title;
                         _GridServerShutdown.Visibility = Visibility.Visible;
+                        break;
+                    }
+                case 1: //OK/Cancel Box
+                    {
+                        _GridOKCancel.IsEnabled = true;
+                        labelTitleOKCancel.Content = title;
+                        textBoxOKCancel.Text = message;
+                        _GridOKCancel.Visibility = Visibility.Visible;
                         break;
                     }
             }
@@ -61,6 +70,21 @@ namespace UnstuckMEUserGUI
             string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
             Process.Start(unstuckME);
             Application.Current.Shutdown();
+        }
+
+        private void buttonOK_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonCancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonCloseOKCancel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
