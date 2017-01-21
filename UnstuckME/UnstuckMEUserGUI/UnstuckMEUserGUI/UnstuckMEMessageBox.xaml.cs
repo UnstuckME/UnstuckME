@@ -74,17 +74,17 @@ namespace UnstuckMEUserGUI
 
         private void buttonOK_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void buttonCloseOKCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
     }
 }

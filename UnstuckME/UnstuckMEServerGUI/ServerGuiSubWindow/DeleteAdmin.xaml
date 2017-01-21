@@ -4,16 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Background="DimGray"
         Title="Delete Administrator" Height="250" Width="350" WindowStyle="None" MaxHeight="250" MaxWidth="350" MinHeight="250" MinWidth="300"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="buttonDelete" Content="Delete" HorizontalAlignment="Left" Margin="196,171,0,0" VerticalAlignment="Top" Width="100" Click="buttonDelete_Click" IsDefault="True"/>
-        <TextBox x:Name="textBoxTargetDelete" HorizontalAlignment="Left" Height="23" Margin="46,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250"/>
-        <Label x:Name="labelTarget" Content="Target Username" HorizontalAlignment="Left" Margin="46,27,0,0" VerticalAlignment="Top" Width="200"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="46,127,0,0" VerticalAlignment="Top" Width="250"/>
-        <Label x:Name="labelPassword" Content="Your Password" HorizontalAlignment="Left" Margin="46,91,0,0" VerticalAlignment="Top" Width="200"/>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="80,171,0,0" VerticalAlignment="Top" Width="100" IsCancel="True" Click="buttonCancel_Click"/>
+        <Button x:Name="buttonDelete" Background="#336699" Foreground="White" TabIndex="2" Content="Delete" HorizontalAlignment="Left" Margin="196,171,0,0" VerticalAlignment="Top" Width="100" Click="buttonDelete_Click" IsDefault="True"/>
+        <TextBox x:Name="textBoxTargetDelete" TabIndex="0" HorizontalAlignment="Left" Height="23" Margin="46,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250"/>
+        <Label x:Name="labelTarget" Foreground="White" Content="Target Username" HorizontalAlignment="Left" Margin="46,27,0,0" VerticalAlignment="Top" Width="200"/>
+        <PasswordBox x:Name="passwordBox" TabIndex="1" HorizontalAlignment="Left" Margin="46,127,0,0" VerticalAlignment="Top" Width="250"/>
+        <Label x:Name="labelPassword" Foreground="White" Content="Your Password" HorizontalAlignment="Left" Margin="46,91,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button x:Name="buttonCancel" TabIndex="3" Content="Cancel" HorizontalAlignment="Left" Margin="80,171,0,0" VerticalAlignment="Top" Width="100" IsCancel="True" Click="buttonCancel_Click"/>
 
     </Grid>
 </Window>
