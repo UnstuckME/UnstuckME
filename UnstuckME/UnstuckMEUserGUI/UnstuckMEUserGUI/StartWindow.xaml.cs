@@ -34,6 +34,11 @@ namespace UnstuckMEUserGUI
 			_mainFrame.Navigate(new MainPage(ref Server, ref inboundUser, ref inboundImg));
 		}
 
+        public void ForceClose()
+        {
+
+        }
+
 		private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			try

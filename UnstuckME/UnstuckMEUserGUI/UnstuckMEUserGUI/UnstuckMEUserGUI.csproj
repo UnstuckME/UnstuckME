@@ -113,6 +113,9 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="UnstuckMEMessageBox.xaml.cs">
+      <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UnstuckMESchools_DB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +164,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Sticker_UC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnstuckMEMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

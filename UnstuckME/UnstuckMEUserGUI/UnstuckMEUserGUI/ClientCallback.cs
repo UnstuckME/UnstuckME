@@ -16,9 +16,9 @@ namespace UnstuckMEUserGUI
     {
         //Forces The Cient to close with a messagebox popup.
         //Message Style Legend: 0 - Info(Blue), 1 - Warning(Yellow), 2 - Error(Red)
-        public void ForceClose(string message)
+        public void ForceClose()
         {
-            MessageBox.Show(message);
+            MessageBox.Show("Server Has Shutdown");
             string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
             Process.Start(unstuckME);
             Application.Current.Shutdown();
