@@ -133,22 +133,21 @@ namespace UnstuckMEInterfaces
         void AdminLogMessage(string message);
 
         [OperationContract]
-        List<string> GetAllOnlineUsers();
+        List<string> AdminGetAllOnlineUsers();
 
         [OperationContract]
-        void ServerShuttingDown();
+        void AdminServerShuttingDown();
 
         [OperationContract]
-        int CreateMentoringOrganization(string organizationName);
+        int AdminCreateMentoringOrganization(string organizationName);
 
         [OperationContract]
-        int DeleteClass(int classID);
+        int AdminDeleteClass(int classID);
 
         [OperationContract]
-        int DeleteMentoringOrganization(int organizationID);
+        int AdminDeleteMentoringOrganization(int organizationID);
 
         [OperationContract]
-        int DeleteReportByAdmin(int reportID);
-
+        int AdminDeleteReport(int reportID);
     }
 }

@@ -37,7 +37,7 @@ namespace UnstuckMEInterfaces
             {
                 try
                 {
-                    
+                    //insert db. function here
                 }
                 catch (Exception ex)
                 {
@@ -106,57 +106,6 @@ namespace UnstuckMEInterfaces
             ping.SendAsync(address, 5000, new object());
             return tcs.Task;
         }
-
-        //public void CheckStatus()
-        //{
-        //    bool isUserOnline = false;
-        //    while (true)
-        //    { 
-        //        RestartUserPing: 
-        //        foreach (var client in _connectedClients)
-        //        {
-        //            try
-        //            {
-        //                isUserOnline = client.Value.connection.isOnline();
-        //            }
-        //            catch(Exception)
-        //            {
-        //                try
-        //                {
-        //                    ConnectedClient removedClient;
-        //                    _connectedClients.TryRemove(client.Key, out removedClient);
-        //                    Console.WriteLine("User: {0} did not respond and is now logged off.", removedClient.User.EmailAddress);
-        //                    foreach (var admin in _connectedServerAdmins)
-        //                    {
-        //                        admin.Value.connection.GetUpdate(1, removedClient.User.EmailAddress);
-        //                    }
-        //                    removedClient.connection.ForceClose("You have been logged out by the server. Please Re-Login to continue using UnstuckME"); //Incase of faulty ping and user is still connected.
-        //                }
-        //                catch(Exception)
-        //                { }
-        //                goto RestartUserPing; //Prevents foreach loop from breaking server.
-        //            }
-        //        }
-        //        Thread.Sleep(5000);
-
-        //        RestartAdminPing:
-        //        foreach (var admin in _connectedServerAdmins)
-        //        {
-        //            try
-        //            {
-        //                isUserOnline = admin.Value.connection.isOnline();
-        //            }
-        //            catch(Exception)
-        //            {
-        //                ConnectedServerAdmin removedAdmin;
-        //                _connectedServerAdmins.TryRemove(admin.Key, out removedAdmin);
-        //                Console.WriteLine("Admin: {0} did not respond and is now logged off.", removedAdmin.Admin.EmailAddress);
-        //                goto RestartAdminPing; //Prevents foreach loop from breaking server.
-        //            }
-        //        }
-        //        Thread.Sleep(5000);
-        //    }
-        //}
 
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
         {
@@ -458,9 +407,9 @@ namespace UnstuckMEInterfaces
                                      select new { Review = u };
 
                 List<UnstuckMEReview> studentReviewList = new List<UnstuckMEReview>();
-                UnstuckMEReview usReview = new UnstuckMEReview();
                 foreach (var review in studentReviews)
                 {
+                    UnstuckMEReview usReview = new UnstuckMEReview();
                     usReview.ReviewID = review.Review.ReviewID;
                     usReview.StickerID = review.Review.StickerID;
                     usReview.ReviewerID = review.Review.ReviewerID;
@@ -483,9 +432,9 @@ namespace UnstuckMEInterfaces
                                    select new { Review = u };
 
                 List<UnstuckMEReview> tutorReviewList = new List<UnstuckMEReview>();
-                UnstuckMEReview usReview = new UnstuckMEReview();
                 foreach (var review in tutorReviews)
                 {
+                    UnstuckMEReview usReview = new UnstuckMEReview();
                     usReview.ReviewID = review.Review.ReviewID;
                     usReview.StickerID = review.Review.StickerID;
                     usReview.ReviewerID = review.Review.ReviewerID;
@@ -506,10 +455,9 @@ namespace UnstuckMEInterfaces
                                    select new { Sticker = u };
 
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                UnstuckMESticker usSticker = new UnstuckMESticker();
-
                 foreach (var sticker in userStickers)
                 {
+                    UnstuckMESticker usSticker = new UnstuckMESticker();
                     usSticker.StickerID = sticker.Sticker.StickerID;
                     usSticker.ProblemDescription = sticker.Sticker.ProblemDescription;
                     usSticker.ClassID = sticker.Sticker.ClassID;
@@ -533,10 +481,9 @@ namespace UnstuckMEInterfaces
                                    select new { Sticker = u };
 
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                UnstuckMESticker usSticker = new UnstuckMESticker();
-
                 foreach (var sticker in userStickers)
                 {
+                    UnstuckMESticker usSticker = new UnstuckMESticker();
                     usSticker.StickerID = sticker.Sticker.StickerID;
                     usSticker.ProblemDescription = sticker.Sticker.ProblemDescription;
                     usSticker.ClassID = sticker.Sticker.ClassID;
@@ -595,7 +542,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public List<string> GetAllOnlineUsers()
+        public List<string> AdminGetAllOnlineUsers()
         {
             List<string> userList = new List<string>();
             foreach (var user in _connectedClients)
@@ -613,7 +560,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void ServerShuttingDown()
+        public void AdminServerShuttingDown()
         {
             try
             {
@@ -730,7 +677,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public int CreateMentoringOrganization(string organizationName)
+        public int AdminCreateMentoringOrganization(string organizationName)
         {
             try
             {
@@ -747,7 +694,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public int CreateClass(string courseName, string courseCode, int courseNumber, byte termOffered)
+        public int AdminCreateClass(string courseName, string courseCode, int courseNumber, byte termOffered)
         {
             try
             {
@@ -798,7 +745,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public int DeleteClass(int classID)
+        public int AdminDeleteClass(int classID)
         {
             try
             {
@@ -849,7 +796,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public int DeleteMentoringOrganization(int organizationID)
+        public int AdminDeleteMentoringOrganization(int organizationID)
         {
             try
             {
@@ -915,7 +862,7 @@ namespace UnstuckMEInterfaces
                 return -1; //If Failure to create chat.
             }
         }
-        public int DeleteReportByAdmin(int reportID)
+        public int AdminDeleteReport(int reportID)
         {
             try
             {

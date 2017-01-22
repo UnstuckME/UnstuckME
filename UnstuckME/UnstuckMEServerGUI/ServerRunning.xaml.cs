@@ -40,7 +40,7 @@ namespace UnstuckMEServerGUI
             {
                 try
                 {
-                    Server.ServerShuttingDown();
+                    Server.AdminServerShuttingDown();
                     Server.AdminLogMessage("Server Kill Attempt.");
                     Server.AdminLogout();
                     bool retVal = KillServer();
@@ -180,12 +180,32 @@ namespace UnstuckMEServerGUI
             Server = _channelFactory.CreateChannel();
             Server.RegisterServerAdmin(Admin);
 
-            List<string> userList = Server.GetAllOnlineUsers();
+            List<string> userList = Server.AdminGetAllOnlineUsers();
 
             foreach (string email in userList)
             {
                 AddUser(email);
             }
+        }
+
+        private void AddMentorOrganization_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteMentorOrganization_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateClass_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteClass_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
