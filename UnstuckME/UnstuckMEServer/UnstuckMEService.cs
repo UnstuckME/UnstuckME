@@ -960,7 +960,7 @@ namespace UnstuckMEInterfaces
                 return -1; //If Failure to create chat.
             }
         }
-    }
+    
 		public UserClass GetCourseCode_Name_NumberByID(int ClassID)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
