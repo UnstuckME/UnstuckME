@@ -98,7 +98,10 @@ namespace UnstuckMEUserGUI
                 {
                     isValid = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
                     if (!isValid)
+                    {
                         _labelInvalidLogin.Content = "Invalid Username/Password";
+                        throw new Exception();
+                    }
                 }
                 catch (Exception)
                 {

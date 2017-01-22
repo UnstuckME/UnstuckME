@@ -615,24 +615,15 @@ namespace UnstuckMEInterfaces
 
         public void ServerShuttingDown()
         {
-            foreach (var client in _connectedClients)
+            try
             {
-                client.Value.connection.ForceClose();
+                foreach (var client in _connectedClients)
+                {
+                    client.Value.connection.ForceClose();
+                }
             }
-            //List<Thread> newThread = new List<Thread>();
-            //foreach (var client in _connectedClients)
-            //{
-            //    try
-            //    {
-            //        newThread.Add(new Thread(new ThreadStart(client.Value.connection.ForceClose)));
-            //    }
-            //    catch (Exception)
-            //    { }
-            //}
-            //foreach (Thread thread in newThread)
-            //{
-            //    thread.Start();
-            //}     
+            catch(Exception)
+            { }
         }
 
         public List<string> GetCourseCodes()
@@ -715,6 +706,280 @@ namespace UnstuckMEInterfaces
             catch(Exception)
             {
                 return -1; //If Failure to add friend.
+            }
+        }
+
+        public int CreateChat(int userId)
+        {
+            try
+            {
+                int chatID = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var result = db.CreateChat(userId);
+                    if(result.First().HasValue)
+                    {
+                        chatID = result.First().Value;
+                    }
+                }
+                return chatID; //On success return friendID failure -1
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int CreateMentoringOrganization(string organizationName)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateOfficialMentor(organizationName);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int CreateClass(string courseName, string courseCode, int courseNumber, byte termOffered)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateNewClass(courseName, courseCode, (short)courseNumber, termOffered);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int CreateReport(string reportDescription, int flaggerID, int reviewID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateReport(reportDescription, flaggerID, reviewID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int CreateReview(int stickerID, int reviewerID, double starRanking, string description)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateReview(stickerID, reviewerID, starRanking, description);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteClass(int classID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteClassByClassID(classID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteFile(int fileID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteFileByFileID(fileID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteFriend(int userID, int fileID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteFriend(userID, fileID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteMentoringOrganization(int organizationID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteMentorOrganizationByMentorID(organizationID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteMessage(int messageID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteMessageByMessageID(messageID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+        /// <summary>
+        /// This function will only allow a user to delete their own report.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="reportID"></param>
+        /// <returns></returns>
+        public int DeleteReportByUser(int userID, int reportID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var report = from u in db.Reports
+                                 where reportID == u.ReportID
+                                 select new { ReportID = u.ReportID, ReporterID = u.FlaggerID };
+                    
+                    if(report.First().ReporterID == userID)
+                    {
+                        db.DeleteReportByReportID(reportID);
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+        public int DeleteReportByAdmin(int reportID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteReportByReportID(reportID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int InsertMessage(int chatID, string message, int userID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.InsertMessage(chatID, message, userID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int InsertUserInToChat(int userID, int chatID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.InsertUserIntoChat(userID, chatID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int InsertFileInToChat(int userID, int chatID, byte [] fileData)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.InsertFile(chatID, fileData, userID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
             }
         }
     }

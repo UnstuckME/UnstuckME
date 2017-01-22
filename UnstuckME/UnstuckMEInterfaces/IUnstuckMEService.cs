@@ -19,6 +19,9 @@ namespace UnstuckMEInterfaces
         int AddFriend(int userId, int friendUserID);
 
         [OperationContract]
+        int CreateChat(int userID);
+
+        [OperationContract]
         UserInfo GetUserInfo(int userID);
 
         [OperationContract]
@@ -91,6 +94,30 @@ namespace UnstuckMEInterfaces
 
 		[OperationContract]
 		List<string> GetAllOrganizations();
+
+        [OperationContract]
+        int CreateReport(string reportDescription, int flaggerID, int reviewID);
+
+        [OperationContract]
+        int CreateReview(int stickerID, int reviewerID, double starRanking, string description);
+
+        [OperationContract]
+        int DeleteFile(int fileID);
+
+        [OperationContract]
+        int DeleteFriend(int userID, int friendID);
+
+        [OperationContract]
+        int DeleteMessage(int messageID);
+
+        [OperationContract]
+        int DeleteReportByUser(int userID, int reportID);
+
+        [OperationContract]
+        int InsertUserInToChat(int userID, int chatID);
+
+        [OperationContract]
+        int InsertFileInToChat(int userID, int chatID, byte[] fileData);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]
@@ -110,5 +137,18 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void ServerShuttingDown();
+
+        [OperationContract]
+        int CreateMentoringOrganization(string organizationName);
+
+        [OperationContract]
+        int DeleteClass(int classID);
+
+        [OperationContract]
+        int DeleteMentoringOrganization(int organizationID);
+
+        [OperationContract]
+        int DeleteReportByAdmin(int reportID);
+
     }
 }
