@@ -31,6 +31,7 @@ namespace UnstuckMEUserGUI
         int m_IDnum;
         FrameworkElement lastClick = null;
         StackPanel ItemContainer = null;
+
         public ClassDisplay(StackPanel itemcontainer, int UserID, IUnstuckMEService OpenServer, string code, int number, string desc, int IDnum)
         {
             m_UserID = UserID;
@@ -59,14 +60,7 @@ namespace UnstuckMEUserGUI
         {
             m_OpenServer.RemoveUserFromClass(m_UserID, m_IDnum);    //this call currently does nothing but if it did this function would work
             lastClick.Visibility = Visibility.Collapsed;    // this line may not even be needed
-            ItemContainer.Children.Clear();
-            List<UserClass> classes = m_OpenServer.GetUserClasses(m_UserID);
-            foreach (UserClass C in classes)
-            {
-                ClassDisplay usersClass = new ClassDisplay(ItemContainer, m_UserID, m_OpenServer, C.CourseCode, C.CourseNumber, C.CourseName, 1);
-                ItemContainer.Children.Add(usersClass);
-            }
-
+			ItemContainer.Children.Remove(this);
         }
     }
 }

@@ -64,30 +64,41 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         List<UnstuckMESticker> GetUserTutoredStickers(int userID);
 
+		[OperationContract]
+		List<UnstuckMESticker> GetAllStickers();
+
         [OperationContract]
         void AddUserToTutoringOrganization(int userID, int organizationID);
 
         [OperationContract]
         void SubmitSticker(UnstuckMESticker newSticker);
+
         [OperationContract]
         byte[] GetProfilePicture(int userID);
 
         [OperationContract]
         void SetProfilePicture(int userID, byte[] image);
+
         [OperationContract]
         List<string> GetCourseCodes();
 
         [OperationContract]
         int GetCourseIdNumberByCodeAndNumber(string code, string number);
 
-        [OperationContract]
+		[OperationContract]
+		string GetCourseNameByCodeAndNumber(string code, string number);
+
+		[OperationContract]
         List<string> GetCourseNumbersByCourseCode(String CourseCode);
 
         [OperationContract]
 		void InsertProfilePicture(int userID, byte[] image);
 
 		[OperationContract]
-		List<string> GetAllOrganizations();
+		UserClass GetCourseCode_Name_NumberByID(int ClassID);
+
+		[OperationContract]
+		List<Organization> GetAllOrganizations();
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

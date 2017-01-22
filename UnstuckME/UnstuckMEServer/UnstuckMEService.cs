@@ -390,7 +390,7 @@ namespace UnstuckMEInterfaces
             {
                 var studentReviews = from u in db.Reviews
                                      join j in db.Stickers on u.StickerID equals j.StickerID
-                                     where u.ReviewerID == userID && j.StudentID == userID
+                                     where j.StudentID == userID
                                      select new { Review = u };
 
                 List<UnstuckMEReview> studentReviewList = new List<UnstuckMEReview>();
@@ -487,7 +487,33 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void AddUserToTutoringOrganization(int userID, int organizationID)
+		public List<UnstuckMESticker> GetAllStickers()
+		{
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				var userStickers = from u in db.Stickers
+								   select new { Sticker = u };
+
+				List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
+				UnstuckMESticker usSticker = new UnstuckMESticker();
+
+				foreach (var sticker in userStickers)
+				{
+					usSticker.StickerID = sticker.Sticker.StickerID;
+					usSticker.ProblemDescription = sticker.Sticker.ProblemDescription;
+					usSticker.ClassID = sticker.Sticker.ClassID;
+					usSticker.StudentID = sticker.Sticker.StudentID;
+					usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
+					usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
+					usSticker.SubmitTime = sticker.Sticker.SubmitTime;
+					usSticker.Timeout = sticker.Sticker.Timeout;
+					stickerList.Add(usSticker);
+				}
+				return stickerList;
+			}
+		}
+
+		public void AddUserToTutoringOrganization(int userID, int organizationID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -599,7 +625,20 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public List<string> GetCourseNumbersByCourseCode(string CourseCode)
+		public string GetCourseNameByCodeAndNumber(string code, string number)
+		{
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				int num = Convert.ToInt32(number);
+				var name = (from u in db.Classes
+							where u.CourseCode == code && u.CourseNumber == num
+							select new { CourseName = u }).First();
+
+				return name.CourseName.CourseName;
+			}
+		}
+
+		public List<string> GetCourseNumbersByCourseCode(string CourseCode)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -623,12 +662,43 @@ namespace UnstuckMEInterfaces
             }
         }
 
-		public List<string> GetAllOrganizations()
+		public UserClass GetCourseCode_Name_NumberByID(int ClassID)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
-				return db.GetAllOrganizations().ToList();
+				var _class = from u in db.Classes
+							where u.ClassID == ClassID
+							select new { u.CourseCode, u.CourseName, u.CourseNumber};
+
+				UserClass classinfo = new UserClass();
+				classinfo.ClassID = ClassID;
+				classinfo.CourseCode = _class.First().CourseCode;
+				classinfo.CourseName = _class.First().CourseName;
+				classinfo.CourseNumber = _class.First().CourseNumber;
+
+				return classinfo;
 			}
 		}
-    }
+
+		public List<Organization> GetAllOrganizations()
+		{
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				var organizations = from u in db.OfficialMentors
+									select new { u.MentorID, u.OrganizationName };   //db.GetAllOrganizations();
+
+				List<Organization> orgs = new List<Organization>();
+				Organization new_org = new Organization();
+
+				foreach (var org in organizations)
+				{
+					new_org.MentorID = org.MentorID;
+					new_org.OrganizationName = org.OrganizationName;
+					orgs.Add(new_org);
+				}
+
+				return orgs;
+			}
+		}
+	}
 }

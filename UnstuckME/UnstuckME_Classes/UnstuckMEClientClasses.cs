@@ -51,12 +51,19 @@ namespace UnstuckME_Classes
         public int StudentID { get; set; }
         public int TutorID { get; set; }
         public float MinimumStarRanking { get; set; }
-        public DateTime SubmitTime { get; set; }
+		public List<string> TutoringOrganizations { get; set; }
+		public DateTime SubmitTime { get; set; }
         public DateTime Timeout { get; set; }
     }
-    public class CourseCodes
+
+	public class CourseCodes
     {
         public string Code { get; set; }
     }
 
+	public class Organization
+	{
+		public int MentorID { get; set; }
+		public string OrganizationName { get; set; }
+	}
 }

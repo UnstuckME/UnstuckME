@@ -158,7 +158,7 @@ end;
 go
 create proc GetAllOrganizations as
 begin
-	select OrganizationName
+	select *
 	from OfficialMentor;
 end;
 
@@ -205,7 +205,7 @@ go
 create proc GetUserClasses
 (	@userid int	) as
 begin
-	select Classes.CourseName, Classes.CourseCode, Classes.CourseNumber
+	select Classes.ClassID, Classes.CourseName, Classes.CourseCode, Classes.CourseNumber
 	from UserProfile join UserToClass	on UserProfile.UserID = UserToClass.UserID
 		join Classes					on UserToClass.ClassID = Classes.ClassID
 	where UserProfile.UserID = @userid;

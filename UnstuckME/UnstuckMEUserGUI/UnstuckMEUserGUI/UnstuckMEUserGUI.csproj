@@ -72,12 +72,18 @@
     <Compile Include="NewAccountSetupPage.xaml.cs">
       <DependentUpon>NewAccountSetupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReviewDisplay.xaml.cs">
+      <DependentUpon>ReviewDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SchoolDB_Connection.cs" />
     <Compile Include="StarRankTemplate_UC.xaml.cs">
       <DependentUpon>StarRankTemplate_UC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sticker_UC.xaml.cs">
-      <DependentUpon>Sticker_UC.xaml</DependentUpon>
+    <Compile Include="CreateStickerTemplate.xaml.cs">
+      <DependentUpon>CreateStickerTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StickerDisplay.xaml.cs">
+      <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
     <Page Include="ClassDisplay.xaml">
       <SubType>Designer</SubType>
@@ -92,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewAccountSetupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReviewDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,7 +121,11 @@
       <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Sticker_UC.xaml">
+    <Page Include="CreateStickerTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StickerDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,6 +173,9 @@
     <Resource Include="Resources\SimpleAvatar.png" />
     <Resource Include="Resources\Star.png" />
     <Resource Include="Resources\UnstuckME_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Refresh Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
