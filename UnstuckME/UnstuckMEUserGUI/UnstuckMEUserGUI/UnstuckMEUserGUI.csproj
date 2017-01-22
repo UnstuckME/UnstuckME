@@ -104,7 +104,6 @@
     <Compile Include="ReviewDisplay.xaml.cs">
       <DependentUpon>ReviewDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SchoolDB_Connection.cs" />
     <Compile Include="StarRankTemplate_UC.xaml.cs">
       <DependentUpon>StarRankTemplate_UC.xaml</DependentUpon>
     </Compile>

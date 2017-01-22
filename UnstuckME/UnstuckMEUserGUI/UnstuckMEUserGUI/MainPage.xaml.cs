@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using UnstuckMEInterfaces;
 using UnstuckME_Classes;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace UnstuckMEUserGUI
 {
@@ -54,7 +55,7 @@ namespace UnstuckMEUserGUI
 			foreach (var org in orgs)
 			{
 				item.Content = org;
-				TutoringOrgComboBox.Items.Add(item);
+				//TutoringOrgComboBox.Items.Add(item);
 			}
 		}
 
@@ -209,8 +210,10 @@ namespace UnstuckMEUserGUI
 		private void LogoutBtn_Click(object sender, RoutedEventArgs e)
 		{
 			Server.Logout();
-			NavigationService.Navigate(new LoginPage(ref Server));
-		}
+            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            Process.Start(unstuckME);
+            System.Windows.Application.Current.Shutdown();
+        }
 
 		private void SubmitStickerBtn_Click(object sender, RoutedEventArgs e)
 		{

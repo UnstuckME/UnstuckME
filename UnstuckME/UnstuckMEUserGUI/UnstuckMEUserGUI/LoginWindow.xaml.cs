@@ -126,10 +126,17 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Unable to successfully contact the server. Please Contact Your Server Administrator", "Connection Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    _channelFactory.Abort();
-                    _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-                    Server = _channelFactory.CreateChannel();
+                    try
+                    {
+                        MessageBox.Show("Unable to successfully contact the server. Please Contact Your Server Administrator", "Connection Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        _channelFactory.Abort();
+                        _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                        Server = _channelFactory.CreateChannel();
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }
