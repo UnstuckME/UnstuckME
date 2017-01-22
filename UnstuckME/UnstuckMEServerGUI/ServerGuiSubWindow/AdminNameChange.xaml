@@ -4,21 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Background="DimGray"
         Title="AdminNameChange" Height="350" Width="500" WindowStyle="None"
         MaxHeight="350" MaxWidth="500" MinHeight="350" MinWidth="500" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label x:Name="label" Content="Admin Name Change" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Width="472" Height="37" FontSize="16" FontFamily="Georgia"/>
+        <Label x:Name="label" Foreground="White" Content="Admin Name Change" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Width="472" Height="37" FontSize="16" FontFamily="Georgia"/>
         <TextBox x:Name="textBoxUsername" TabIndex="0" HorizontalAlignment="Left" Height="30" Margin="193,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
         <TextBox x:Name="textBoxFirstName" TabIndex="2" HorizontalAlignment="Left" Height="30" Margin="193,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
         <TextBox x:Name="textBoxLastName" TabIndex="3" HorizontalAlignment="Left" Height="30" Margin="193,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
         <PasswordBox x:Name="passwordBox" TabIndex="1" HorizontalAlignment="Left" Margin="193,118,0,0" VerticalAlignment="Top" Height="30" Width="250"/>
-        <Label x:Name="labelUserName" Content="Username: " FontSize="18" HorizontalAlignment="Left" Margin="95,73,0,0" VerticalAlignment="Top" Width="93"/>
-        <Label x:Name="labelPassword" Content="Password: " FontSize="18" HorizontalAlignment="Left" Margin="95,118,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelFirstName" Content="New First Name: " FontSize="18" HorizontalAlignment="Left" Margin="43,183,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelLastName" Content="New Last Name: " FontSize="18" HorizontalAlignment="Left" Margin="45,218,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="buttonCancel" TabIndex="4" Content="Cancel" HorizontalAlignment="Left" Margin="222,289,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click" IsCancel="True"/>
-        <Button x:Name="buttonSave" Content="Save" TabIndex="5" HorizontalAlignment="Left" Margin="343,289,0,0" VerticalAlignment="Top" Width="100" Click="buttonSave_Click" IsDefault="True"/>
+        <Label x:Name="labelUserName" Foreground="White" Content="Username: " FontSize="18" HorizontalAlignment="Left" Margin="95,73,0,0" VerticalAlignment="Top" Width="93"/>
+        <Label x:Name="labelPassword" Foreground="White" Content="Password: " FontSize="18" HorizontalAlignment="Left" Margin="95,118,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelFirstName" Foreground="White" Content="New First Name: " FontSize="18" HorizontalAlignment="Left" Margin="43,183,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelLastName" Foreground="White" Content="New Last Name: " FontSize="18" HorizontalAlignment="Left" Margin="45,218,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonCancel" Background="#FF993333" Foreground="White" TabIndex="4" Content="Cancel" HorizontalAlignment="Left" Margin="222,289,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click" IsCancel="True"/>
+        <Button x:Name="buttonSave" Background="#336699" Foreground="White" Content="Save" TabIndex="5" HorizontalAlignment="Left" Margin="343,289,0,0" VerticalAlignment="Top" Width="100" Click="buttonSave_Click" IsDefault="True"/>
 
     </Grid>
 </Window>

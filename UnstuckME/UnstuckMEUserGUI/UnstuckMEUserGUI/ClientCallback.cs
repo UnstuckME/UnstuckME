@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using UnstuckMEInterfaces;
 using System.Threading;
+using System.Diagnostics;
 
 namespace UnstuckMEUserGUI
 {
@@ -14,17 +15,10 @@ namespace UnstuckMEUserGUI
     class ClientCallback : IClient
     {
         //Forces The Cient to close with a messagebox popup.
-        //Message Style Legend: 0 - Info(Blue), 1 - Warning(Yellow), 2 - Error(Red)
-        public void ForceClose(int messageStyle, string message)
+        public void ForceClose()
         {
-            //(StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message)
-            //App.Current.MainWindow.Hide();
-            try
-            {
-				((StartWindow)Application.Current.MainWindow).MessageBoxToUserAndShutdown(messageStyle, message);
-            }
-            catch(Exception ex)
-            { }
+            UnstuckMEMessageBox messageBox = new UnstuckMEMessageBox(0, "UnstuckME Server has shutdown. Please Contact Your Server Administrator", "Server Shutdown");
+            messageBox.Show();
         }
 
         public bool isOnline()

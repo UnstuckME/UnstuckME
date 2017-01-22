@@ -35,10 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -63,14 +71,35 @@
       <DependentUpon>ClassDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientCallback.cs" />
-    <Compile Include="LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <Compile Include="GetAllSchoolLogos_Result.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllSchools_Result.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSchoolServerInfo_Result.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewAccountSetupPage.xaml.cs">
-      <DependentUpon>NewAccountSetupPage.xaml</DependentUpon>
+    <Compile Include="School.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolLogo.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Server.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ReviewDisplay.xaml.cs">
       <DependentUpon>ReviewDisplay.xaml</DependentUpon>
@@ -82,6 +111,27 @@
     <Compile Include="CreateStickerTemplate.xaml.cs">
       <DependentUpon>CreateStickerTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMEMessageBox.xaml.cs">
+      <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchools_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchools_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchools_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchools_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="StickerDisplay.xaml.cs">
       <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
@@ -89,15 +139,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NewAccountSetupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -125,6 +171,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UnstuckMEMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StickerDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,11 +198,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EntityDeploy Include="UnstuckMESchools_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UnstuckMESchools_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="UnstuckMESchools_DB.edmx.diagram">
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -176,6 +234,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Refresh Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CloseButton.png" />
+    <Content Include="UnstuckMESchools_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckMESchools_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="UnstuckMESchools_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckMESchools_DB.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

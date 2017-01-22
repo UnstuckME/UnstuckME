@@ -12,7 +12,7 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         bool isOnline();
 
-        [OperationContract]
-        void ForceClose(int messageStyle, string message);
+        [OperationContract(IsOneWay = true)]
+        void ForceClose();
     }
 }

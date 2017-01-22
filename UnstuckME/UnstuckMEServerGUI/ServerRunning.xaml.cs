@@ -30,10 +30,7 @@ namespace UnstuckMEServerGUI
         public ServerRunning(ref AdminInfo passedInAdmin)
         {
             InitializeComponent();
-            _channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
-            Server = _channelFactory.CreateChannel();
             Admin = passedInAdmin;
-            Server.RegisterServerAdmin(Admin);
         }
 
         private void buttonKill_Click(object sender, RoutedEventArgs e)
@@ -41,10 +38,9 @@ namespace UnstuckMEServerGUI
             MessageBoxResult result = MessageBox.Show("Are you sure you want to Kill the server?", "Server Kill Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
             if (result == MessageBoxResult.Yes)
             {
-
                 try
                 {
-                    Server.ServerShuttingDown();
+                    Server.AdminServerShuttingDown();
                     Server.AdminLogMessage("Server Kill Attempt.");
                     Server.AdminLogout();
                     bool retVal = KillServer();
@@ -54,12 +50,11 @@ namespace UnstuckMEServerGUI
                     }
                     else
                     {
+                        _channelFactory.Abort();
                         MainWindow window = new MainWindow(ref Admin);
-                        App.Current.MainWindow = window;
-                        this.Close();
                         window.Show();
+                        this.Close();
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -72,7 +67,6 @@ namespace UnstuckMEServerGUI
 
         private bool KillServer()
         {
-
             try
             {
                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
@@ -121,6 +115,7 @@ namespace UnstuckMEServerGUI
             try
             {
                 Server.AdminLogout();
+                _channelFactory.Abort();
             }
             catch(Exception)
             {
@@ -132,6 +127,7 @@ namespace UnstuckMEServerGUI
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             Server.AdminLogout();
+            _channelFactory.Abort();
             ServerLogin loginWindow = new ServerLogin();
             this.Hide();
             loginWindow.Show();
@@ -140,6 +136,7 @@ namespace UnstuckMEServerGUI
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            _channelFactory.Abort();
             this.Close();
         }
 
@@ -152,6 +149,7 @@ namespace UnstuckMEServerGUI
                 Server.AdminLogMessage("Exit and Shutdown Initiated.");
                 Server.AdminLogout();
                 KillServer();
+                _channelFactory.Abort();
                 this.Close();
             }
         }
@@ -178,14 +176,36 @@ namespace UnstuckMEServerGUI
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-           
-            Server.AdminLogMessage("Getting Users");
-            List<string> userList = Server.GetAllOnlineUsers();
+            _channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
+            Server = _channelFactory.CreateChannel();
+            Server.RegisterServerAdmin(Admin);
+
+            List<string> userList = Server.AdminGetAllOnlineUsers();
 
             foreach (string email in userList)
             {
                 AddUser(email);
             }
+        }
+
+        private void AddMentorOrganization_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteMentorOrganization_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateClass_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteClass_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

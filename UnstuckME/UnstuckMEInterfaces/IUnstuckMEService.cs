@@ -16,6 +16,12 @@ namespace UnstuckMEInterfaces
     public interface IUnstuckMEService
     {
         [OperationContract]
+        int AddFriend(int userId, int friendUserID);
+
+        [OperationContract]
+        int CreateChat(int userID);
+
+        [OperationContract]
         UserInfo GetUserInfo(int userID);
 
         [OperationContract]
@@ -99,6 +105,30 @@ namespace UnstuckMEInterfaces
 
 		[OperationContract]
 		List<Organization> GetAllOrganizations();
+
+        [OperationContract]
+        int CreateReport(string reportDescription, int flaggerID, int reviewID);
+
+        [OperationContract]
+        int CreateReview(int stickerID, int reviewerID, double starRanking, string description);
+
+        [OperationContract]
+        int DeleteFile(int fileID);
+
+        [OperationContract]
+        int DeleteFriend(int userID, int friendID);
+
+        [OperationContract]
+        int DeleteMessage(int messageID);
+
+        [OperationContract]
+        int DeleteReportByUser(int userID, int reportID);
+
+        [OperationContract]
+        int InsertUserInToChat(int userID, int chatID);
+
+        [OperationContract]
+        int InsertFileInToChat(int userID, int chatID, byte[] fileData);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]
@@ -114,9 +144,21 @@ namespace UnstuckMEInterfaces
         void AdminLogMessage(string message);
 
         [OperationContract]
-        List<string> GetAllOnlineUsers();
+        List<string> AdminGetAllOnlineUsers();
 
         [OperationContract]
-        void ServerShuttingDown();
+        void AdminServerShuttingDown();
+
+        [OperationContract]
+        int AdminCreateMentoringOrganization(string organizationName);
+
+        [OperationContract]
+        int AdminDeleteClass(int classID);
+
+        [OperationContract]
+        int AdminDeleteMentoringOrganization(int organizationID);
+
+        [OperationContract]
+        int AdminDeleteReport(int reportID);
     }
 }

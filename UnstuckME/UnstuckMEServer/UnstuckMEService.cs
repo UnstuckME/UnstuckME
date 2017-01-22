@@ -13,6 +13,10 @@ using System.Data.Objects;
 using System.Drawing;
 using System.Windows.Media;
 using System.Threading;
+using System.Net;
+using System.ServiceModel.Channels;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -22,7 +26,7 @@ namespace UnstuckMEInterfaces
     /// </summary>
     public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer
     {
-		public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
+        public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
 
         //This function is for testing stored procedures. In program.cs replace:
@@ -33,64 +37,74 @@ namespace UnstuckMEInterfaces
             {
                 try
                 {
-                    //db.ClearReviewDescriptionByReviewID(7);
+                    //insert db. function here
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
         }
 
-        public void CheckStatus()
+        public void CheckUserStatus()
         {
-            bool isUserOnline = false;
-            while (true)
-            { 
-                RestartUserPing: 
-                foreach (var client in _connectedClients)
+            List<int> offlineUsers = new List<int>();
+            List<Task<PingReply>> pingTasks = new List<Task<PingReply>>();
+            int count = 1;
+            try
+            {
+                while (true)
                 {
-                    try
+                    Console.WriteLine("Loop: {0}", count);
+                    count++;
+                    foreach (var address in _connectedClients)
                     {
-                        isUserOnline = client.Value.connection.isOnline();
+                        pingTasks.Add(PingAsync(address.Value.returnAddress.Address));
                     }
-                    catch(Exception)
-                    {
-                        try
-                        {
-                            ConnectedClient removedClient;
-                            _connectedClients.TryRemove(client.Key, out removedClient);
-                            Console.WriteLine("User: {0} did not respond and is now logged off.", removedClient.User.EmailAddress);
-                            foreach (var admin in _connectedServerAdmins)
-                            {
-                                admin.Value.connection.GetUpdate(1, removedClient.User.EmailAddress);
-                            }
-                            removedClient.connection.ForceClose(1, "You have been logged out by the server. Please Re-Login to continue using UnstuckME"); //Incase of faulty ping and user is still connected.
-                        }
-                        catch(Exception)
-                        { }
-                        goto RestartUserPing; //Prevents foreach loop from breaking server.
-                    }
-                }
-                Thread.Sleep(5000);
+                    //Wait for all the tasks to complete
+                    Task.WaitAll(pingTasks.ToArray());
 
-                RestartAdminPing:
-                foreach (var admin in _connectedServerAdmins)
-                {
-                    try
+                    //Now you can iterate over your list of pingTasks
+                    foreach (var pingTask in pingTasks)
                     {
-                        isUserOnline = admin.Value.connection.isOnline();
+                        Console.WriteLine("PingTask Foreach");
+                        if (pingTask.Result.Status != IPStatus.Success)
+                        {
+                            foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
+                            {
+                                if (client.Value.returnAddress.Address == pingTask.Result.Address.ToString())
+                                {
+                                    offlineUsers.Add(client.Key);
+                                }
+                            }
+                        }
                     }
-                    catch(Exception)
+                    foreach (int user in offlineUsers)
                     {
-                        ConnectedServerAdmin removedAdmin;
-                        _connectedServerAdmins.TryRemove(admin.Key, out removedAdmin);
-                        Console.WriteLine("Admin: {0} did not respond and is now logged off.", removedAdmin.Admin.EmailAddress);
-                        goto RestartAdminPing; //Prevents foreach loop from breaking server.
+                        ConnectedClient removedClient = new ConnectedClient();
+                        _connectedClients.TryRemove(user, out removedClient);
+                        Console.WriteLine(removedClient.User.EmailAddress + " did not respond to a ping from the server. They are now considered offline");
                     }
+                    offlineUsers.Clear();
+                    pingTasks.Clear();
+                    Thread.Sleep(10000);
                 }
-                Thread.Sleep(5000);
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        static Task<PingReply> PingAsync(string address)
+        {
+            var tcs = new TaskCompletionSource<PingReply>();
+            Ping ping = new Ping();
+            ping.PingCompleted += (obj, sender) =>
+            {
+                tcs.SetResult(sender.Reply);
+            };
+            ping.SendAsync(address, 5000, new object());
+            return tcs.Task;
         }
 
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
@@ -114,7 +128,7 @@ namespace UnstuckMEInterfaces
                 UnstuckMEPassword hashedUserPassword = new UnstuckMEPassword();
                 hashedUserPassword = UnstuckMEHashing.GetHashedPassword(userPassword);
                 int retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, hashedUserPassword.Password, "User", hashedUserPassword.Salt);
-                if(retVal == 1)
+                if (retVal == 1)
                 {
                     success = true;
                 }
@@ -165,6 +179,7 @@ namespace UnstuckMEInterfaces
                         ConnectedClient newClient = new ConnectedClient();
                         newClient.connection = establishedUserConnection;
                         newClient.User = GetUserInfo(userID);
+                        newClient.returnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
                         _connectedClients.TryAdd(newClient.User.UserID, newClient);
                         //Login Success, Print to console window.
                         Console.ForegroundColor = ConsoleColor.Green;
@@ -205,7 +220,7 @@ namespace UnstuckMEInterfaces
                 }
                 return Rlist;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
@@ -246,12 +261,10 @@ namespace UnstuckMEInterfaces
                     var users = (from u in db.UserProfiles
                                  where u.EmailAddress == emailAddress
                                  select u).First();
-                    Console.WriteLine(users.EmailAddress);
                     return true;
                 }
                 catch
                 {
-                    Console.WriteLine(emailAddress + ": is not a valid Username.");
                     return false;
                 }
             }
@@ -264,9 +277,9 @@ namespace UnstuckMEInterfaces
                 //Stores Server Admin into Logged in _ConnectedServerAdmins List
                 IServer establishedUserConnection = OperationContext.Current.GetCallbackChannel<IServer>();
                 bool oldConnection = false;
-                foreach(var onlineAdmin in _connectedServerAdmins)
+                foreach (var onlineAdmin in _connectedServerAdmins)
                 {
-                    if(onlineAdmin.Key == LoggingInAdmin.ServerAdminID)
+                    if (onlineAdmin.Key == LoggingInAdmin.ServerAdminID)
                     {
                         oldConnection = true;
                         onlineAdmin.Value.connection = establishedUserConnection;
@@ -286,20 +299,20 @@ namespace UnstuckMEInterfaces
                     Console.ResetColor();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("ERROR WHILE REGISTERING SERVER ADMIN!\nMESSAGE: " + ex.Message);
                 Console.ResetColor();
             }
-         }
+        }
 
-        
+
 
         public void Logout()
         {
             ConnectedClient client = GetMyClient();
-            if(client != null)
+            if (client != null)
             {
                 ConnectedClient removedClient;
                 _connectedClients.TryRemove(client.User.UserID, out removedClient);
@@ -329,7 +342,7 @@ namespace UnstuckMEInterfaces
         public void AdminLogout()
         {
             ConnectedServerAdmin connectedAdmin = GetMyAdmin();
-            if(connectedAdmin != null)
+            if (connectedAdmin != null)
             {
                 ConnectedServerAdmin removedAdmin;
                 _connectedServerAdmins.TryRemove(connectedAdmin.Admin.ServerAdminID, out removedAdmin);
@@ -345,7 +358,7 @@ namespace UnstuckMEInterfaces
             IServer establishedAdminConnection = OperationContext.Current.GetCallbackChannel<IServer>();
             foreach (var admin in _connectedServerAdmins)
             {
-                if(admin.Value.connection == establishedAdminConnection)
+                if (admin.Value.connection == establishedAdminConnection)
                 {
                     return admin.Value;
                 }
@@ -394,9 +407,9 @@ namespace UnstuckMEInterfaces
                                      select new { Review = u };
 
                 List<UnstuckMEReview> studentReviewList = new List<UnstuckMEReview>();
-                UnstuckMEReview usReview = new UnstuckMEReview();
                 foreach (var review in studentReviews)
                 {
+                    UnstuckMEReview usReview = new UnstuckMEReview();
                     usReview.ReviewID = review.Review.ReviewID;
                     usReview.StickerID = review.Review.StickerID;
                     usReview.ReviewerID = review.Review.ReviewerID;
@@ -414,14 +427,14 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 var tutorReviews = from u in db.Reviews
-                                     join j in db.Stickers on u.StickerID equals j.StickerID
-                                     where u.ReviewerID == userID && j.TutorID == userID
-                                     select new { Review = u };
+                                   join j in db.Stickers on u.StickerID equals j.StickerID
+                                   where u.ReviewerID == userID && j.TutorID == userID
+                                   select new { Review = u };
 
                 List<UnstuckMEReview> tutorReviewList = new List<UnstuckMEReview>();
-                UnstuckMEReview usReview = new UnstuckMEReview();
                 foreach (var review in tutorReviews)
                 {
+                    UnstuckMEReview usReview = new UnstuckMEReview();
                     usReview.ReviewID = review.Review.ReviewID;
                     usReview.StickerID = review.Review.StickerID;
                     usReview.ReviewerID = review.Review.ReviewerID;
@@ -438,19 +451,18 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 var userStickers = from u in db.Stickers
-                                  where u.StudentID == userID
-                                  select new { Sticker = u };
-                
-                List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                UnstuckMESticker usSticker = new UnstuckMESticker();
+                                   where u.StudentID == userID
+                                   select new { Sticker = u };
 
+                List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
                 foreach (var sticker in userStickers)
                 {
+                    UnstuckMESticker usSticker = new UnstuckMESticker();
                     usSticker.StickerID = sticker.Sticker.StickerID;
                     usSticker.ProblemDescription = sticker.Sticker.ProblemDescription;
                     usSticker.ClassID = sticker.Sticker.ClassID;
                     usSticker.StudentID = sticker.Sticker.StudentID;
-                    usSticker.TutorID =  (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
+                    usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
                     usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
                     usSticker.SubmitTime = sticker.Sticker.SubmitTime;
                     usSticker.Timeout = sticker.Sticker.Timeout;
@@ -469,10 +481,9 @@ namespace UnstuckMEInterfaces
                                    select new { Sticker = u };
 
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                UnstuckMESticker usSticker = new UnstuckMESticker();
-
                 foreach (var sticker in userStickers)
                 {
+                    UnstuckMESticker usSticker = new UnstuckMESticker();
                     usSticker.StickerID = sticker.Sticker.StickerID;
                     usSticker.ProblemDescription = sticker.Sticker.ProblemDescription;
                     usSticker.ClassID = sticker.Sticker.ClassID;
@@ -529,35 +540,35 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public byte [] GetProfilePicture(int userID)
+        public byte[] GetProfilePicture(int userID)
         {
             byte[] imgByte = null;
 
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				imgByte = db.GetProfilePicture(userID).First();
-			}
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                imgByte = db.GetProfilePicture(userID).First();
+            }
 
-			return imgByte;
+            return imgByte;
         }
 
         public void SetProfilePicture(int userID, byte[] image)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-				db.ChangeProfilePicture(userID, image);
+                db.ChangeProfilePicture(userID, image);
             }
         }
 
-		public void InsertProfilePicture(int userID, byte[] image)
-		{
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				db.InsertProfilePicture(userID, image);
-			}
-		}
+        public void InsertProfilePicture(int userID, byte[] image)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.InsertProfilePicture(userID, image);
+            }
+        }
 
-        public List<string> GetAllOnlineUsers()
+        public List<string> AdminGetAllOnlineUsers()
         {
             List<string> userList = new List<string>();
             foreach (var user in _connectedClients)
@@ -575,19 +586,17 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void ServerShuttingDown()
+        public void AdminServerShuttingDown()
         {
-            foreach  (var client in _connectedClients)
+            try
             {
-                try
+                foreach (var client in _connectedClients)
                 {
-					ConnectedClient RemovedClient = new ConnectedClient();
-					_connectedClients.TryRemove(client.Key, out RemovedClient);
-                    client.Value.connection.ForceClose(1, "Server has shutdown, Please contact your Server Administrator for more information.");
+                    client.Value.connection.ForceClose();
                 }
-                catch (Exception)
-                { }
             }
+            catch(Exception)
+            { }
         }
 
         public List<string> GetCourseCodes()
@@ -619,8 +628,8 @@ namespace UnstuckMEInterfaces
             {
                 int num = Convert.ToInt32(number);
                 var ID = (from u in db.Classes
-                         where u.CourseCode == code && u.CourseNumber == num
-                         select new { ClassID = u }).First();
+                          where u.CourseCode == code && u.CourseNumber == num
+                          select new { ClassID = u }).First();
                 return ID.ClassID.ClassID;
             }
         }
@@ -662,6 +671,296 @@ namespace UnstuckMEInterfaces
             }
         }
 
+        public int AddFriend(int userId, int friendUserID)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    db.AddFriend(userId, friendUserID);
+                }
+                return friendUserID; //On success return friendID
+            }
+            catch(Exception)
+            {
+                return -1; //If Failure to add friend.
+            }
+        }
+
+        public int CreateChat(int userId)
+        {
+            try
+            {
+                int chatID = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var result = db.CreateChat(userId);
+                    if(result.First().HasValue)
+                    {
+                        chatID = result.First().Value;
+                    }
+                }
+                return chatID; //On success return friendID failure -1
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int AdminCreateMentoringOrganization(string organizationName)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateOfficialMentor(organizationName);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int AdminCreateClass(string courseName, string courseCode, int courseNumber, byte termOffered)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateNewClass(courseName, courseCode, (short)courseNumber, termOffered);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int CreateReport(string reportDescription, int flaggerID, int reviewID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateReport(reportDescription, flaggerID, reviewID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int CreateReview(int stickerID, int reviewerID, double starRanking, string description)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.CreateReview(stickerID, reviewerID, starRanking, description);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int AdminDeleteClass(int classID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteClassByClassID(classID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteFile(int fileID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteFileByFileID(fileID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteFriend(int userID, int fileID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteFriend(userID, fileID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int AdminDeleteMentoringOrganization(int organizationID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteMentorOrganizationByMentorID(organizationID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int DeleteMessage(int messageID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteMessageByMessageID(messageID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+        /// <summary>
+        /// This function will only allow a user to delete their own report.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="reportID"></param>
+        /// <returns></returns>
+        public int DeleteReportByUser(int userID, int reportID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var report = from u in db.Reports
+                                 where reportID == u.ReportID
+                                 select new { ReportID = u.ReportID, ReporterID = u.FlaggerID };
+                    
+                    if(report.First().ReporterID == userID)
+                    {
+                        db.DeleteReportByReportID(reportID);
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+        public int AdminDeleteReport(int reportID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.DeleteReportByReportID(reportID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int InsertMessage(int chatID, string message, int userID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.InsertMessage(chatID, message, userID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int InsertUserInToChat(int userID, int chatID)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.InsertUserIntoChat(userID, chatID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+
+        public int InsertFileInToChat(int userID, int chatID, byte [] fileData)
+        {
+            try
+            {
+                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    retVal = db.InsertFile(chatID, fileData, userID);
+                }
+                return retVal;
+            }
+            catch (Exception)
+            {
+                return -1; //If Failure to create chat.
+            }
+        }
+    }
 		public UserClass GetCourseCode_Name_NumberByID(int ClassID)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())

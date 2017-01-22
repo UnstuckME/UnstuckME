@@ -28,18 +28,18 @@ namespace UnstuckMEUserGUI
 		public static IUnstuckMEService Server;
 		public static UserInfo User;
 
-		public MainPage(int UserID, ref IUnstuckMEService OpenServer)
+		public MainPage(ref IUnstuckMEService OpenServer, ref UserInfo inboundUser, ref byte [] inboundImg)
 		{
             ImageSourceConverter ic = new ImageSourceConverter();
 
             //Opens a connection to UnstuckME Server.
             Server = OpenServer;
-			User = Server.GetUserInfo(UserID);
+            User = inboundUser;
 			InitializeComponent();
 			FNameTxtBx.Text = User.FirstName; // get the name from the server and show it
 			LNameTxtBx.Text = User.LastName;
 			EmailtextBlock.Text = User.EmailAddress; // get the email and show it
-			byte[] imgByte = Server.GetProfilePicture(UserID);
+            byte[] imgByte = inboundImg;
 			UserPhoto.Source = ic.ConvertFrom(imgByte) as ImageSource;	//convert image so it can be displayed
 
             RepopulateClasses();
@@ -154,7 +154,7 @@ namespace UnstuckMEUserGUI
 		{
 			Server.Logout();
 			Server.DeleteUserAccount(User.UserID);
-			NavigationService.Navigate(new LoginPage(ref Server));
+			//NavigationService.Navigate(new LoginPage(ref Server));
 		}
 
         private void RepopulateClasses()

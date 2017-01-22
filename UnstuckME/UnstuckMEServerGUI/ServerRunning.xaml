@@ -10,16 +10,30 @@
         <DockPanel Margin="0,0,0,335" Background="White">
             <Menu DockPanel.Dock="Top" Height="34" Background="White">
                 <MenuItem Header="File">
+                    <MenuItem Header="Account Settings">
+                        <MenuItem x:Name="ChangeFirstLastName" Header="Admin Name Change" Click="ChangeFirstLastName_Click"  ></MenuItem>
+                        <MenuItem x:Name="CreateAdmin" Header="Create New Administrator" Click="CreateAdmin_Click" ></MenuItem>
+                        <MenuItem x:Name="ChangeCredintials" Header="Change Username/Password" Click="ChangeCredintials_Click"></MenuItem>
+                        <MenuItem x:Name="DeleteAdmin" Header="Delete Administrator" Click="DeleteAdmin_Click"></MenuItem>
+                    </MenuItem>
                     <MenuItem x:Name="ShutdownAndExit" Header="Shutdown and Exit" Click="ShutdownAndExit_Click"></MenuItem>
                     <MenuItem x:Name="Logout" Header="Logout" Click="Logout_Click"></MenuItem>
                     <MenuItem x:Name="Exit" Header="Exit" Click="Exit_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Options">
-                    <MenuItem x:Name="ChangeFirstLastName" Header="Admin Name Change" Click="ChangeFirstLastName_Click"  ></MenuItem>
-                    <MenuItem x:Name="CreateAdmin" Header="Create New Administrator" Click="CreateAdmin_Click" ></MenuItem>
-                    <MenuItem x:Name="ChangeCredintials" Header="Change Username/Password" Click="ChangeCredintials_Click"></MenuItem>
-                    <MenuItem x:Name="DeleteAdmin" Header="Delete Administrator" Click="DeleteAdmin_Click"></MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem x:Name="AddMentorOrganization" Header="Add Tutoring Organization" Click="AddMentorOrganization_Click"></MenuItem>
+                    <MenuItem x:Name="DeleteMentorOrganization" Header="Delete Tutoring Organization" Click="DeleteMentorOrganization_Click"></MenuItem>
+                    <MenuItem x:Name="CreateClass" Header="Add Available Class" Click="CreateClass_Click"></MenuItem>
+                    <MenuItem x:Name="DeleteClass" Header="Delete Available Class" Click="DeleteClass_Click"></MenuItem>
                 </MenuItem>
+                <MenuItem Header="View">
+                    <MenuItem x:Name="ViewReportedReviews" Header="View Reported Reviews"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Broadcast">
+                    <MenuItem Header="Message to All Users"></MenuItem>
+                    <MenuItem Header="Message to Specific User"></MenuItem>
+                </MenuItem>
+
             </Menu>
         </DockPanel>
         <Button x:Name="buttonKill" Content="Kill Server" HorizontalAlignment="Left" Margin="10,319,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="buttonKill_Click" Background="Red" Foreground="White"/>
