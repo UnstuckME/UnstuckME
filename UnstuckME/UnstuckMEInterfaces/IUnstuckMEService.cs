@@ -16,6 +16,9 @@ namespace UnstuckMEInterfaces
     public interface IUnstuckMEService
     {
         [OperationContract]
+        int AddFriend(int userId, int friendUserID);
+
+        [OperationContract]
         UserInfo GetUserInfo(int userID);
 
         [OperationContract]

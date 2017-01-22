@@ -37,7 +37,7 @@ namespace UnstuckMEInterfaces
             {
                 try
                 {
-                    //db.ClearReviewDescriptionByReviewID(7);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -699,6 +699,22 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 return db.GetAllOrganizations().ToList();
+            }
+        }
+
+        public int AddFriend(int userId, int friendUserID)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    db.AddFriend(userId, friendUserID);
+                }
+                return friendUserID; //On success return friendID
+            }
+            catch(Exception)
+            {
+                return -1; //If Failure to add friend.
             }
         }
     }
