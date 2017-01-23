@@ -30,41 +30,47 @@ namespace UnstuckMEUserGUI
         { 
             InitializeComponent();
         }
-        public LoginWindow(bool invalidUser)
+
+        private async void Window_ContentRendered(object sender, EventArgs e)
         {
-            InitializeComponent();
+            _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+            Server = _channelFactory.CreateChannel();
+            schools = await LoadSchoolsAsync();
+            foreach (UnstuckMESchool school in schools)
+            {
+                comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
+            }
         }
 
-        private void Window_ContentRendered(object sender, EventArgs e)
+        private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
         {
-            schools = new List<UnstuckMESchool>();
+            return Task.Factory.StartNew(() => LoadSchools());     
+        }
+
+        List<UnstuckMESchool> LoadSchools()
+        {
+            List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
             using (UnstuckMESchools_DBEntities db = new UnstuckMESchools_DBEntities())
             {
-                var dbSchools = from s in db.Schools 
-                                //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
-                                //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/
+                var dbSchools = from s in db.Schools
+                                    //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
+                                    //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/
                                 select new
-                               {
-                                   SchoolName = s.SchoolName,
-                                   EmailCredentials = s.EmailCredentials,
-                                   SchoolID = s.SchoolID
-                               };
+                                {
+                                    SchoolName = s.SchoolName,
+                                    EmailCredentials = s.EmailCredentials,
+                                    SchoolID = s.SchoolID
+                                };
                 foreach (var dbschool in dbSchools)
                 {
                     UnstuckMESchool newSchool = new UnstuckMESchool();
                     newSchool.SchoolName = dbschool.SchoolName;
                     newSchool.SchoolID = dbschool.SchoolID;
                     newSchool.SchoolEmailCredentials = dbschool.EmailCredentials;
-                    schools.Add(newSchool);
+                    tempSchools.Add(newSchool);
                 }
             }
-
-            foreach (UnstuckMESchool school in schools)
-            {
-                comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
-            }
-            _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-            Server = _channelFactory.CreateChannel();
+            return tempSchools;
         }
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
@@ -88,7 +94,6 @@ namespace UnstuckMEUserGUI
             {
                 _labelInvalidLogin.Content = ex.Message;
                 passwordBox.Password = string.Empty;
-                textBoxUserName.Text = string.Empty;
                 _labelInvalidLogin.Visibility = Visibility.Visible;
                 isValid = false;
             }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d" Background="DimGray"
-        Title="ServerLogin" Height="525" Width="350" MinHeight="525" MinWidth="350"  WindowStartupLocation="CenterScreen" Name="ServerLoginWindow">
+        Title="ServerLogin" Height="525" Width="375" MinHeight="525" MinWidth="375"  WindowStartupLocation="CenterScreen" Name="ServerLoginWindow">
 
     <Grid x:Name="_GridGeneralLogin" Width="Auto" Height="Auto">
         <Grid>
