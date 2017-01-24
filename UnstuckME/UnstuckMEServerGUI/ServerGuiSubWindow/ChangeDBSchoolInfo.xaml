@@ -7,20 +7,23 @@
         mc:Ignorable="d"
         Title="Change School Information" Height="300" Width="450" WindowStartupLocation="CenterScreen" WindowStyle="None"
         MinHeight="300" MinWidth="500" MaxHeight="300" MaxWidth="500" >
-    <Grid>
-        <TextBox x:Name="textBoxSchoolName" HorizontalAlignment="Left" Height="30" Margin="165,39,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="0"/>
-        <TextBox x:Name="textBoxDatabaseIP" HorizontalAlignment="Left" Height="30" Margin="165,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="1"/>
-        <Button x:Name="buttonConfigure" Content="Configure" HorizontalAlignment="Left" Margin="420,77,0,0" VerticalAlignment="Top" Width="53" Height="19" FontSize="10" Click="buttonConfigure_Click" TabIndex="2"/>
-        <TextBox x:Name="textBoxPathToSchoolPhoto" HorizontalAlignment="Left" Height="30" Margin="165,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" FontSize="10" TextChanged="textBoxPathToSchoolPhoto_TextChanged" TabIndex="3"/>
-        <Button x:Name="buttonBrowse" Content="Browse" HorizontalAlignment="Left" Margin="356,112,0,0" VerticalAlignment="Top" Width="59" Click="buttonBrowse_Click" IsDefault="True" TabIndex="4"/>
-        <Label x:Name="labelSchoolName" Content="School Name" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
-        <Label x:Name="labelDatabseIP" Content="Database IP" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
-        <Label x:Name="labelSchoolLogoPath" Content="School Logo Destination" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+    <Grid Background="DimGray">
+        <TextBox x:Name="textBoxSchoolName" HorizontalAlignment="Left" Height="30" Margin="165,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="0"/>
+        <TextBox x:Name="textBoxDatabaseIP" HorizontalAlignment="Left" Height="30" Margin="165,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="1"/>
+        <Button x:Name="buttonConfigure" Content="Configure" HorizontalAlignment="Left" Margin="420,51,0,0" VerticalAlignment="Top" Width="53" Height="19" FontSize="10" Click="buttonConfigure_Click" TabIndex="2"/>
+        <TextBox x:Name="textBoxPathToSchoolPhoto" HorizontalAlignment="Left" Height="30" Margin="165,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" FontSize="10" TextChanged="textBoxPathToSchoolPhoto_TextChanged" TabIndex="3"/>
+        <Button x:Name="buttonBrowse" Content="Browse" HorizontalAlignment="Left" Margin="420,87,0,0" VerticalAlignment="Top" Width="53" Click="buttonBrowse_Click" IsDefault="True" TabIndex="4" Height="19" FontSize="10"/>
+        <Label x:Name="labelSchoolName" Content="School Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Label x:Name="labelDatabseIP" Content="Database IP" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Label x:Name="labelSchoolLogoPath" Content="School Logo Destination" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="196,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="5" Click="buttonCancel_Click" IsCancel="True"/>
         <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonSave_Click" IsDefault="True"/>
-        
-        <Image x:Name="imageSchoolLogo" HorizontalAlignment="Left" Height="108" Margin="24,160,0,0" VerticalAlignment="Top" Width="97" Source="/Resources/SimpleAvatar.png" Stretch="UniformToFill"/>
-        <Button x:Name="buttonClickToChangePhoto" Content="Click To Change" VerticalContentAlignment="Top"  HorizontalAlignment="Left" Height="138" Margin="10,139,0,0" VerticalAlignment="Top" Width="128" Background="#FF8B8484" RenderTransformOrigin="0.507,0.219" Click="buttonBrowse_Click" FontWeight="Bold" Opacity="0.75"/>
-        
+        <Button x:Name="buttonClickToChangePhoto" Content="Click To Change" VerticalContentAlignment="Top"  HorizontalAlignment="Left" Height="138" Margin="10,144,0,0" VerticalAlignment="Top" Width="128" Background="#336699" RenderTransformOrigin="0.507,0.219" Click="buttonBrowse_Click" FontWeight="Bold" Foreground="Black"/>
+
+        <Image x:Name="imageSchoolLogo" HorizontalAlignment="Left" Height="96" Margin="30,176,0,0" VerticalAlignment="Top" Width="85" Source="/Resources/SimpleAvatarWhite.png" Stretch="UniformToFill" OpacityMask="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+        <TextBox x:Name="textBoxUnstuckMEServerIP" HorizontalAlignment="Left" Height="30" Margin="165,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TabIndex="0"/>
+        <Label x:Name="labelUnstuckMEServerIp" Content="UnstuckME Server IP" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Button x:Name="buttonConfigureUnstuckMEServer" Content="Configure" HorizontalAlignment="Left" Margin="420,120,0,0" VerticalAlignment="Top" Width="53" Height="20" FontSize="10" TabIndex="2" Click="buttonConfigureUnstuckMEServer_Click"/>
+
     </Grid>
 </Window>
