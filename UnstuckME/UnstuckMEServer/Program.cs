@@ -16,6 +16,7 @@ namespace UnstuckMEInterfaces
             /*
              *Opens an UnstuckMEService for clients to connect to.  
              */
+             //testiung things
             _server = new UnstuckMEService();
             using (ServiceHost host = new ServiceHost(_server))
             {
