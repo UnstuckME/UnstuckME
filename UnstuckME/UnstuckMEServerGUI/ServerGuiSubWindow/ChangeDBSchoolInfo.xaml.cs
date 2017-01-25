@@ -17,6 +17,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data.EntityClient;
 using UnstuckMEServerGUI.ServerGuiSubWindow;
+using System.ServiceModel.Configuration;
 
 namespace UnstuckMEServerGUI
 {
@@ -28,11 +29,11 @@ namespace UnstuckMEServerGUI
 		public ChangeDBSchoolInfo()
 		{
 			InitializeComponent();
-            var entityConnectionString = new EntityConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString);
-            var basicConnectionString = new SqlConnectionStringBuilder(entityConnectionString.ProviderConnectionString);
-            textBoxDatabaseIP.Text = basicConnectionString.DataSource;
-        }
-        
+			var entityConnectionString = new EntityConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString);
+			var basicConnectionString = new SqlConnectionStringBuilder(entityConnectionString.ProviderConnectionString);
+			textBoxDatabaseIP.Text = basicConnectionString.DataSource;
+		}
+		
 
 		private void buttonBrowse_Click(object sender, RoutedEventArgs e)
 		{
@@ -62,27 +63,27 @@ namespace UnstuckMEServerGUI
 
 		private void buttonSave_Click(object sender, RoutedEventArgs e)
 		{
-            MessageBox.Show("This SAVE button is not fully implemented yet!");
+			MessageBox.Show("This SAVE button is not fully implemented yet!");
 
-            try
+			try
 			{
-                if (!System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
-                {
-                    throw new Exception("Please Enter a valid file path for the image");
-                }
-                using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
-                {
-                    var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
-                    if (schoolIDs.Count() < 1)
-                    {
-                        throw new Exception("No school matching that name exists as registered school site of UnstuckME");
-                    }
+				if (!System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
+				{
+					throw new Exception("Please Enter a valid file path for the image");
+				}
+				using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
+				{
+					var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
+					if (schoolIDs.Count() < 1)
+					{
+						throw new Exception("No school matching that name exists as registered school site of UnstuckME");
+					}
 
-                }
-                MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+				}
+				MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 				this.Close();
 
-            }
+			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "School DB Unable to Update", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -119,12 +120,25 @@ namespace UnstuckMEServerGUI
 			buttonClickToChangePhoto.BorderThickness = new Thickness(0, 0, 0, 0);
 		}
 
-        private void buttonConfigure_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeDabaseConnectionSettings settingsWindow = new ChangeDabaseConnectionSettings();
+		private void buttonConfigure_Click(object sender, RoutedEventArgs e)
+		{
+			ChangeDabaseConnectionSettings settingsWindow = new ChangeDabaseConnectionSettings();
 
-            App.Current.MainWindow = settingsWindow;
-            settingsWindow.ShowDialog();
-        }
-    }
+			App.Current.MainWindow = settingsWindow;
+			settingsWindow.ShowDialog();
+		}
+
+		private void buttonConfigureUnstuckMEServer_Click(object sender, RoutedEventArgs e)
+		{
+			//MessageBox.Show("Not yet implemented");
+
+			Configuration wConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			ServiceModelSectionGroup wServiceSection = ServiceModelSectionGroup.GetSectionGroup(wConfig);
+
+			ClientSection wClientSection = wServiceSection.Client;
+			wClientSection.Endpoints[0].Address = new Uri(textBoxUnstuckMEServerIP.Text);
+			wConfig.Save();
+
+		}
+	}
 }
