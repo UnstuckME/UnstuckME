@@ -197,7 +197,7 @@ namespace UnstuckMEUserGUI
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    _channelFactory.Close();
+                    _channelFactory.Abort();
                     _channelFactory.Open();
                     Server = _channelFactory.CreateChannel();
                 }
