@@ -78,12 +78,12 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             {
 
                 UnstuckMEServer_DBEntities SelectedDB = new UnstuckMEServer_DBEntities();
-                SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckMEServer_DBEntities", userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
+                SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckMEServer_DBEntities",initialCatalog: textBoxDatabaseName.Text, userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
 
-                string message = "Connecting to " + SelectedDB.Database.Connection.ConnectionString.ToString();
+                //string message = "Connecting to " + SelectedDB.Database.Connection.ConnectionString.ToString();
 
-                if (displayOutput == true)
-                    MessageBox.Show(message);
+                //if (displayOutput == true)
+                //    MessageBox.Show(message);
                 using (var connection = new SqlConnection(SelectedDB.Database.Connection.ConnectionString))
                 {
                     var query = "select 1";
@@ -93,15 +93,14 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                     var command = new SqlCommand(query, connection);
 
                     connection.Open();
-                    if (displayOutput == true)
-                        MessageBox.Show("SQL Connection successful.");
-
                     command.ExecuteScalar();
                     if (displayOutput == true)
-                        MessageBox.Show("SQL Query execution successful.");
+                        MessageBox.Show("SQL Query execution successful\nSQL Connection successful.");
 
-                    if (displayOutput == false)
+                    if (displayOutput == false) // Actually modify the app.config here
                     {
+                        System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] = textBoxDatabaseName.Text;
+
                         Configuration exeConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
                         exeConfig.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString = SelectedDB.Database.Connection.ConnectionString.ToString();

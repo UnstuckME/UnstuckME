@@ -75,6 +75,7 @@
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ConfigsClass.cs" />
     <Compile Include="ConnectionTools.cs" />
     <Compile Include="File.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
@@ -346,7 +347,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SimpleAvatarWhite.png" />
+    <Resource Include="Resources\SimpleAvatarWhite.png" />
     <Content Include="UnstuckMEServer_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>

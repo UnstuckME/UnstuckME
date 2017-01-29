@@ -32,6 +32,21 @@ CREATE TABLE [Server]	(
 	ServerIPAddress		VARCHAR(39)		NOT NULL UNIQUE)
 
 /*************************************************************************
+* Databse table containing the domain, identifier for the school it belongs
+* to, the name, and the IP address. Schools can have multiple servers, but
+* a server cannot belong to multiple schools
+*************************************************************************/
+CREATE TABLE [Database]	
+(
+	DatabaseID					INT				PRIMARY KEY IDENTITY(1,1),
+	SchoolID					INT				NOT NULL REFERENCES School(SchoolID),
+	DatabaseName				NVARCHAR(128)	NOT NULL,
+	DatabaseIP					VARCHAR(39)		NOT NULL UNIQUE,
+	DatabaseAdminUsername		VARCHAR(128)	NOT NULL,
+	DatabaseAdminPassword		VARCHAR(128)	NOT NULL
+)
+
+/*************************************************************************
 * Logo table containing the logo of the school. A school can only have one
 * logo, and a logo can belong to only one school
 *************************************************************************/

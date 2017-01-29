@@ -7,26 +7,29 @@
         mc:Ignorable="d"
         Title="Change Connection Settings for UnstuckME MSSQL Server" Height="300" Width="500" WindowStartupLocation="CenterScreen" WindowStyle="None"
         MinHeight="300" MinWidth="500" MaxHeight="300" MaxWidth="500">
-    <Grid>
-        <TextBox x:Name="textBoxDataSource" HorizontalAlignment="Left" Height="23" Margin="16,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="376" TabIndex="0"/>
-        <TextBox x:Name="textBoxUsername" HorizontalAlignment="Left" Height="23" Margin="17,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="215" TabIndex="1"/>
-        <PasswordBox x:Name="passwordBoxPassword" HorizontalAlignment="Left" Margin="17,151,0,0" VerticalAlignment="Top" Width="215" Height="25" TabIndex="2"/>
+    <Grid Background="DimGray">
+        <TextBox x:Name="textBoxDataSource" HorizontalAlignment="Left" Height="23" Margin="18,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="376" TabIndex="0"/>
+        <TextBox x:Name="textBoxDatabaseName" HorizontalAlignment="Left" Height="23" Margin="19,84,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="375" TabIndex="1"/>
+        <TextBox x:Name="textBoxUsername" HorizontalAlignment="Left" Height="23" Margin="19,135,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="215" TabIndex="2"/>
+        <PasswordBox x:Name="passwordBoxPassword" HorizontalAlignment="Left" Margin="19,186,0,0" VerticalAlignment="Top" Width="215" Height="25" TabIndex="3"/>
 
-        <CheckBox x:Name="checkBox" Content="Use Windows Authentication" HorizontalAlignment="Left" Margin="17,197,0,0" VerticalAlignment="Top" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" TabIndex="3"/>
-        <Button x:Name="buttonTestConnection" Content="Test Connection" HorizontalAlignment="Left" Height="22" Margin="246,252,0,0" VerticalAlignment="Top" Width="109" Click="buttonTestConnection_Click" TabIndex="4" Background="#FF4AA83D" FontWeight="Bold" BorderBrush="#FF157810" BorderThickness="2"/>
-        <Button x:Name="textBoxSaveConnection" Content="Save Connection" HorizontalAlignment="Left" Margin="369,252,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.789,2.164" Height="22" Click="textBoxSaveConnection_Click" IsDefault="True"  TabIndex="5" BorderBrush="#FF4054D8" Foreground="Black" Background="#FF0091F5" FontWeight="Bold" BorderThickness="2"/>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Height="22" Margin="16,252,0,0" VerticalAlignment="Top" Width="109" Click="buttonCancel_Click" IsCancel="True"  TabIndex="6" Background="#FFE22E2E" FontWeight="Bold" BorderThickness="2" BorderBrush="#FF930909"/>
+        <CheckBox x:Name="checkBox" Content="Use Windows Authentication" HorizontalAlignment="Left" Margin="274,167,0,0" VerticalAlignment="Top" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" TabIndex="4" Foreground="White"/>
+        <Button x:Name="buttonTestConnection" Content="Test Connection" HorizontalAlignment="Left" Height="22" Margin="246,252,0,0" VerticalAlignment="Top" Width="109" Click="buttonTestConnection_Click" TabIndex="5" Background="#FF4AA83D" FontWeight="Bold" BorderBrush="#FF157810" BorderThickness="2"/>
+        <Button x:Name="textBoxSaveConnection" Content="Save Connection" HorizontalAlignment="Left" Margin="369,252,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.789,2.164" Height="22" Click="textBoxSaveConnection_Click" IsDefault="True"  TabIndex="6" BorderBrush="#FF4054D8" Foreground="Black" Background="#FF0091F5" FontWeight="Bold" BorderThickness="2"/>
+        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Height="22" Margin="16,252,0,0" VerticalAlignment="Top" Width="109" Click="buttonCancel_Click" IsCancel="True"  TabIndex="7" Background="#FFE22E2E" FontWeight="Bold" BorderThickness="2" BorderBrush="#FF930909"/>
 
 
-        <TextBlock x:Name="textBlockIP" HorizontalAlignment="Left" Margin="16,19,0,0" TextWrapping="Wrap" Text="IP Address or Domain Name" VerticalAlignment="Top" Width="155"/>
-        <TextBlock x:Name="textBlockUsername" HorizontalAlignment="Left" Margin="17,75,0,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="155"/>
-        <TextBlock x:Name="textBlockPasword" HorizontalAlignment="Left" Margin="17,133,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="155"/>
+        <TextBlock x:Name="textBlockIP" HorizontalAlignment="Left" Margin="18,12,0,0" TextWrapping="Wrap" Text="IP Address or Domain Name" VerticalAlignment="Top" Width="155" Foreground="White"/>
+        <TextBlock x:Name="textBlockUsername" HorizontalAlignment="Left" Margin="19,117,0,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="155" Foreground="White"/>
+        <TextBlock x:Name="textBlockPasword" HorizontalAlignment="Left" Margin="19,168,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="155" Foreground="White"/>
 
-        <TextBlock x:Name="textBlockIPQuestion" ToolTip="The IP or Domain Name (Data Source)  &#x0a;of your UnstuckME MSSQL server" HorizontalAlignment="Left" Height="23" Margin="381,17,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
-        <TextBlock x:Name="textBlockUsernameQuestion" ToolTip="The Administrator's USERNAME used when connecting &#x0a;to your UnstuckMe MSSQL server" HorizontalAlignment="Left" Height="23" Margin="221,70,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
-        <TextBlock x:Name="textBlockPasswordQuestion" ToolTip="The Administrator PASSWORD used when connecting &#x0a;to your UnstuckMe MSSQL server" HorizontalAlignment="Left" Height="23" Margin="221,128,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
-        <TextBlock x:Name="textBlockUseAuthQuestion" ToolTip="Set the integrated security to TRUE &#xA;to use windows authentication" HorizontalAlignment="Left" Height="23" Margin="195,191,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20" RenderTransformOrigin="1.042,1.042"/>
+        <TextBlock x:Name="textBlockIPQuestion" ToolTip="The IP or Domain Name (Data Source)  &#x0a;of your UnstuckME MSSQL server" HorizontalAlignment="Left" Height="23" Margin="383,10,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
+        <TextBlock x:Name="textBlockUsernameQuestion" ToolTip="The Administrator's USERNAME used when connecting &#x0a;to your UnstuckMe MSSQL server" HorizontalAlignment="Left" Height="23" Margin="223,112,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
+        <TextBlock x:Name="textBlockPasswordQuestion" ToolTip="The Administrator PASSWORD used when connecting &#x0a;to your UnstuckMe MSSQL server" HorizontalAlignment="Left" Height="23" Margin="223,163,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
+        <TextBlock x:Name="textBlockUseAuthQuestion" ToolTip="Set the integrated security to TRUE &#xA;to use windows authentication" HorizontalAlignment="Left" Height="23" Margin="452,161,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20" RenderTransformOrigin="1.042,1.042"/>
         <TextBlock x:Name="textBlockConnectionTestedCheck" HorizontalAlignment="Left" Margin="214,249,0,0" TextWrapping="Wrap" Text="✔️ " VerticalAlignment="Top" Width="27" FontSize="20" Height="23" Foreground="#FF42951B" Visibility="Hidden"/>
+        <TextBlock x:Name="textBlockDatabasename" HorizontalAlignment="Left" Margin="19,66,0,0" TextWrapping="Wrap" Text="Database Name:" VerticalAlignment="Top" Width="155" Foreground="White"/>
+        <TextBlock x:Name="textBlockDatabaseNameQuestion" ToolTip="The name of the MSSQL database, setup for &#xA;use with your UnstuckME program" HorizontalAlignment="Left" Height="23" Margin="383,61,0,0" Text="?" VerticalAlignment="Top" Width="11" FontFamily="Stencil" FontSize="20"/>
 
 
     </Grid>

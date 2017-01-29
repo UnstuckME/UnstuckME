@@ -16,9 +16,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEServer;
+using UnstuckMEServerGUI.ServerGuiSubWindow;
+using static UnstuckMEServerGUI.ConfigsClass;
 
 namespace UnstuckMEServerGUI
 {
+
     /// <summary>
     /// Interaction logic for ServerLogin.xaml
     /// </summary>
@@ -29,88 +32,109 @@ namespace UnstuckMEServerGUI
         {
             InitializeComponent();
             Admin = new AdminInfo();
+            MessageBox.Show(ConfigsClass.APP_CONFIG_SCHOOLNAME);
         }
 
         private void buttonServerLogin_Click(object sender, RoutedEventArgs e)
         {
-            try
+
+            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] == "" || System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "")
             {
-                if(textBoxEmailAddress.Text.Length == 0)
+                MessageBox.Show("It Looks like you have not configured your login settings on this machine before, press the gear icon to configure your connection settings.", "Unable To Login", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                try
                 {
-                    throw new Exception();
-                }
-
-                using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
-                {
-                    var admin = (from u in db.ServerAdmins
-                                 where u.EmailAddress.ToLower() == textBoxEmailAddress.Text.ToLower()
-                                 select u).First();
-
-                    string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passwordBoxInput.Password, admin.Salt);
-
-                    if (stringOfPassword == admin.Password)
-                    {
-                        Admin.EmailAddress = admin.EmailAddress;
-                        Admin.FirstName = admin.FirstName;
-                        Admin.LastName = admin.LastName;
-                        Admin.ServerAdminID = admin.ServerAdminID;
-
-                        if (Admin.EmailAddress.ToLower() == "admin" && UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.Password)
-                        {
-                            AdminCredChange changeloginCreds = new AdminCredChange(ref Admin);
-                            App.Current.MainWindow = changeloginCreds;
-                            changeloginCreds.ShowDialog();
-
-                            using (UnstuckMEServer_DBEntities db2 = new UnstuckMEServer_DBEntities())
-                            {
-                                admin = (from u in db2.ServerAdmins
-                                         where u.ServerAdminID == Admin.ServerAdminID
-                                         select u).First();
-
-                                Admin.EmailAddress = admin.EmailAddress;
-
-                                textBoxEmailAddress.Text = Admin.EmailAddress.ToLower();
-                                passwordBoxInput.Password = "";
-                            }
-
-                            labelInvalidUsernamePassword.Visibility = Visibility.Hidden;
-                        }
-                        else
-                        {
-                            Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
-                            if (pname.Length == 0)
-                            {
-                                MainWindow mainWindow = new MainWindow(ref Admin);
-                                App.Current.MainWindow = mainWindow;
-                                Close();
-                                mainWindow.Show();
-                            }
-                            else
-                            {
-                                ServerRunning window = new ServerRunning(ref Admin);
-                                App.Current.MainWindow = window;
-                                this.Close();
-                                window.Show();
-                            }
-                        }
-                    }
-                    else
+                    if (textBoxEmailAddress.Text.Length == 0)
                     {
                         throw new Exception();
                     }
+
+                    using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
+                    {
+                        var admin = (from u in db.ServerAdmins
+                            where u.EmailAddress.ToLower() == textBoxEmailAddress.Text.ToLower()
+                            select u).First();
+
+                        string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passwordBoxInput.Password,
+                            admin.Salt);
+
+                        if (stringOfPassword == admin.Password)
+                        {
+                            Admin.EmailAddress = admin.EmailAddress;
+                            Admin.FirstName = admin.FirstName;
+                            Admin.LastName = admin.LastName;
+                            Admin.ServerAdminID = admin.ServerAdminID;
+
+                            if (Admin.EmailAddress.ToLower() == "admin" &&
+                                UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.Password)
+                            {
+                                AdminCredChange changeloginCreds = new AdminCredChange(ref Admin);
+                                Application.Current.MainWindow = changeloginCreds;
+                                changeloginCreds.ShowDialog();
+
+                                using (UnstuckMEServer_DBEntities db2 = new UnstuckMEServer_DBEntities())
+                                {
+                                    admin = (from u in db2.ServerAdmins
+                                        where u.ServerAdminID == Admin.ServerAdminID
+                                        select u).First();
+
+                                    Admin.EmailAddress = admin.EmailAddress;
+
+                                    textBoxEmailAddress.Text = Admin.EmailAddress.ToLower();
+                                    passwordBoxInput.Password = "";
+                                }
+
+                                labelInvalidUsernamePassword.Visibility = Visibility.Hidden;
+                            }
+                            else
+                            {
+                                Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
+                                if (pname.Length == 0)
+                                {
+                                    MainWindow mainWindow = new MainWindow(ref Admin);
+                                    Application.Current.MainWindow = mainWindow;
+                                    Close();
+                                    mainWindow.Show();
+                                }
+                                else
+                                {
+                                    ServerRunning window = new ServerRunning(ref Admin);
+                                    Application.Current.MainWindow = window;
+                                    Close();
+                                    window.Show();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
                 }
-            }
-            catch (Exception)
-            {
-                labelInvalidUsernamePassword.Visibility = Visibility.Visible;
+                catch (Exception)
+                {
+                    labelInvalidUsernamePassword.Visibility = Visibility.Visible;
+                }
             }
         }
 
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
-            ChangeDBSchoolInfo schoolInfoWindow = new ChangeDBSchoolInfo();
-            App.Current.MainWindow = schoolInfoWindow;
-            schoolInfoWindow.ShowDialog();
+
+            if (System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "")
+            {
+                ChangeDabaseConnectionSettings changeDBString = new ChangeDabaseConnectionSettings();
+                Application.Current.MainWindow = changeDBString;
+                changeDBString.ShowDialog();
+            }
+            else
+            {
+                ChangeDBSchoolInfo schoolInfoWindow = new ChangeDBSchoolInfo();
+                Application.Current.MainWindow = schoolInfoWindow;
+                schoolInfoWindow.ShowDialog();
+            }
         }
 
         private void OnKeyDownPasswordHandler(object sender, KeyEventArgs e)
