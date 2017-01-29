@@ -12,7 +12,7 @@
             <TextBox x:Name="textBoxUserName" HorizontalAlignment="Center" Background="White" Height="22"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="200" Margin="66,187,66,243"  />
             <PasswordBox x:Name="passwordBox" Background="White" HorizontalAlignment="Center" Margin="66,242,66,187" VerticalAlignment="Center" Width="200"/>
             <Button x:Name="buttonLogin" Click="buttonLogin_Click" Background="White" Content="Login" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="182" IsDefault="True" Height="36" Margin="75,340,75,76"/>
-            <ComboBox x:Name="comboBoxSchools" Background="White"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="200" SelectedIndex="0" Margin="66,282,66,142">
+            <ComboBox x:Name="comboBoxSchools" Background="White"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="200" SelectedIndex="0" Margin="66,282,66,142" >
                 <ComboBoxItem Name="Default" Content="(Select School)" Visibility="Hidden" Height="0" Width="0"/>
             </ComboBox>
             <Label x:Name="labelUsername" Foreground="White" Content="Username:" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="165" Height="27" FontSize="14" Margin="66,155,101,270"/>

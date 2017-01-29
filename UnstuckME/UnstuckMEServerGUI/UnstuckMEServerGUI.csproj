@@ -176,6 +176,9 @@
     <Compile Include="ServerGuiSubWindow\AdminNameChange.xaml.cs">
       <DependentUpon>AdminNameChange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerGuiSubWindow\AdminSchoolChange.xaml.cs">
+      <DependentUpon>AdminSchoolChange.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServerGuiSubWindow\ChangeDabaseConnectionSettings.xaml.cs">
       <DependentUpon>ChangeDabaseConnectionSettings.xaml</DependentUpon>
     </Compile>
@@ -252,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ServerGuiSubWindow\AdminNameChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServerGuiSubWindow\AdminSchoolChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -340,6 +347,10 @@
     <ProjectReference Include="..\UnstuckMEServer\UnstuckMEServer.csproj">
       <Project>{855a456b-216a-46a4-bf20-a04c9639c04c}</Project>
       <Name>UnstuckMEServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnstuckMEUserGUI\UnstuckMEUserGUI\UnstuckMEUserGUI.csproj">
+      <Project>{3FD3E7CC-1F8F-4934-ACC0-CE0E3B9E324E}</Project>
+      <Name>UnstuckMEUserGUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnstuckME_Classes\UnstuckME_Classes.csproj">
       <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>

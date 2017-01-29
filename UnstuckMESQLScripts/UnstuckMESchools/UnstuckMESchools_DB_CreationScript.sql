@@ -15,9 +15,11 @@ IF OBJECT_ID('School', 'U') IS NOT NULL
 * School table with name and email credentials
 *************************************************************************/
 CREATE TABLE School	(
-	SchoolID			INT				PRIMARY KEY IDENTITY(1,1),
-	SchoolName 			NVARCHAR(128)	NOT NULL,
-	EmailCredentials	VARCHAR(64)		DEFAULT NULL)
+	SchoolID				INT				PRIMARY KEY IDENTITY(1,1),
+	SchoolName 				NVARCHAR(128)	NOT NULL,
+	EmailCredentials		VARCHAR(64)		DEFAULT NULL, 
+	SchoolAdminUsername		VARCHAR(128)    DEFAULT 'Admin',
+	SchoolAdminPassword		VARCHAR(128)	DEFAULT 'Password')
 
 /*************************************************************************
 * Server table containing the domain, identifier for the school it belongs

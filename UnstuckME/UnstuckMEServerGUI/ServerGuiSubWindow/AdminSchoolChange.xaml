@@ -1,0 +1,23 @@
+﻿<Window x:Class="UnstuckMEServerGUI.ServerGuiSubWindow.AdminSchoolChange"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEServerGUI"
+        mc:Ignorable="d" Background="DimGray"
+        Title="AdminSchoolChange" Height="250" Width="424.762" WindowStyle="None" BorderThickness="2"
+        MaxHeight="250" MaxWidth="500" MinHeight="250" MinWidth="500" WindowStartupLocation="CenterScreen">
+    <Grid Height="Auto" Width="Auto" Margin="0,0,0,-2">
+        <ComboBox x:Name="comboBoxSchools" Background="White"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="243" SelectedIndex="0" Margin="237,67,8,146" Height="27" TabIndex="0">
+            <ComboBoxItem Name="Default" Content="(Select School)" Visibility="Hidden" Height="0" Width="0"/>
+        </ComboBox>
+        <Label x:Name="labelSchoolSelection" Content="School Selection " HorizontalContentAlignment="Center" FontFamily="Times New Roman" Background="{x:Null}" BorderThickness="2" Panel.ZIndex="-1" VerticalAlignment="Top" Height="33" Foreground="White" Margin="0,10,0,0" FontSize="14"/>
+        <Label x:Name="labelSelectSchool" Content="Select School" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
+        <Label x:Name="labelUnstuckMESchoolUsername" Content="UnstuckME Schools Username" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
+        <Label x:Name="labelUnstuckMESchoolPassword" Content="UnstuckME Schools Password" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top" Width="222" RenderTransformOrigin="0.513,1.166" Foreground="White"/>
+        <TextBox x:Name="textBoxUnstuckMEUsername" TabIndex="1" HorizontalAlignment="Left" Height="31" Margin="235,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" ToolTip="This field is optional"/>
+        <PasswordBox x:Name="passwordBoxUnstuckMEPassword" TabIndex="2" HorizontalAlignment="Left" Margin="235,137,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
+        <Button x:Name="buttonSave" Content="Save" TabIndex="6" HorizontalAlignment="Left" Margin="370,190,0,0" VerticalAlignment="Top" Width="100" Click="buttonSave_Click" IsDefault="True" Background="#336699" Foreground="White"/>
+        <Button x:Name="buttonCancel" Background="#FF993333" Foreground="White" Content="Cancel" TabIndex="5" HorizontalAlignment="Left" Margin="253,190,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click" IsCancel="True"/>
+    </Grid>
+</Window>

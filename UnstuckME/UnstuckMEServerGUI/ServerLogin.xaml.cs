@@ -32,7 +32,6 @@ namespace UnstuckMEServerGUI
         {
             InitializeComponent();
             Admin = new AdminInfo();
-            MessageBox.Show(ConfigsClass.APP_CONFIG_SCHOOLNAME);
         }
 
         private void buttonServerLogin_Click(object sender, RoutedEventArgs e)
@@ -123,13 +122,20 @@ namespace UnstuckMEServerGUI
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
 
-            if (System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "")
+            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] == "")
+            {
+                MessageBox.Show("It Looks like you have not stated what school you are trying to configure on this machine before. Select your school and login with the credentials provided to you by an UnstuckME associate.\n\n NOTE: Your login information will be updated to use the same credentials as your MSSQL database once you connect one.", "School Information Not Set", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                AdminSchoolChange changeSchool = new AdminSchoolChange();
+                Application.Current.MainWindow = changeSchool;
+                changeSchool.ShowDialog();
+            }
+            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "")
             {
                 ChangeDabaseConnectionSettings changeDBString = new ChangeDabaseConnectionSettings();
                 Application.Current.MainWindow = changeDBString;
                 changeDBString.ShowDialog();
             }
-            else
+            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "")
             {
                 ChangeDBSchoolInfo schoolInfoWindow = new ChangeDBSchoolInfo();
                 Application.Current.MainWindow = schoolInfoWindow;
