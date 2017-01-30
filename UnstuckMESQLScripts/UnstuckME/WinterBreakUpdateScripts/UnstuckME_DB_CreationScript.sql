@@ -1,6 +1,6 @@
 USE UnstuckME_DB
 GO
-
+-- Presentation Push
 -- Drop Triggers
 IF OBJECT_ID ('ForbidUser1Update', 'TR') IS NOT NULL  
 	DROP TRIGGER ForbidUser1Update;  
@@ -56,8 +56,7 @@ IF OBJECT_ID('UserProfile', 'U') IS NOT NULL
 	DROP TABLE UserProfile;
 IF OBJECT_ID('Chat', 'U') IS NOT NULL
 	DROP TABLE Chat;
-IF OBJECT_ID('Subject', 'U') IS NOT NULL
-	DROP TABLE [Subject];
+
 
 CREATE TABLE ServerAdmins
 	(ServerAdminID			INT				PRIMARY KEY IDENTITY(1,1),
@@ -110,7 +109,7 @@ GO
 
 --Create Official Mentor Table
 CREATE TABLE OfficialMentor
-	(MentorID			INT				PRIMARY KEY IDENTITY(1,1),
+	(MentorID			INT						PRIMARY KEY IDENTITY(1,1),
 	OrganizationName	NVARCHAR(100)			NOT NULL)
 GO
 
@@ -132,22 +131,15 @@ GO
 
 --Create Classes Table
 CREATE TABLE Picture
-	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
+	(UserID				INT						NOT NULL	REFERENCES UserProfile(UserID),
 	Photo				VARBINARY(MAX)			NULL
 	PRIMARY KEY (UserID))	
 GO
 
---Create Subject Table
-CREATE TABLE [Subject]
-	(SubjectID			INT				PRIMARY KEY IDENTITY(1,1),
-	SubjectCode			VARCHAR(5)		NOT NULL,
-	SubjectName			VARCHAR(45)		NOT NULL)
-GO				
-
 --Create Classes Table
 CREATE TABLE Classes
-	(ClassID			INT				PRIMARY KEY IDENTITY(1,1),
-	SubjectID			INT					NOT NULL REFERENCES [Subject](SubjectID),	--Subject
+	(ClassID			INT					PRIMARY KEY IDENTITY(1,1),
+	CourseName			VARCHAR(50)			NOT NULL,  --Common Name 
 	CourseCode			VARCHAR(5)			NOT NULL,	--Ex. WRI
 	CourseNumber		SMALLINT			NOT NULL,	--Ex. 121
 	TermOffered			TINYINT				NOT NULL)
