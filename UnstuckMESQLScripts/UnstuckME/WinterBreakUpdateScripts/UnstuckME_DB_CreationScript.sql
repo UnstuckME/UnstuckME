@@ -28,6 +28,8 @@ IF OBJECT_ID ('DisallowDeletionOfAllAdmin', 'TR') IS NOT NULL
 --DROP ANY PRE-EXISTING TABLES
 IF OBJECT_ID('ServerAdmins', 'U') IS NOT NULL
 	DROP TABLE ServerAdmins;
+IF OBJECT_ID('StickerToMentor', 'U') IS NOT NULL
+	DROP TABLE StickerToMentor;
 IF OBJECT_ID('Report', 'U') IS NOT NULL
 	DROP TABLE Report;
 IF OBJECT_ID('Review', 'U') IS NOT NULL
@@ -48,16 +50,14 @@ IF OBJECT_ID('OfficialMentor', 'U') IS NOT NULL
 	DROP TABLE OfficialMentor;
 IF OBJECT_ID('Messages', 'U') IS NOT NULL
 	DROP TABLE [Messages];
-IF OBJECT_ID('Files', 'U') IS NOT NULL
-	DROP TABLE Files;
+--IF OBJECT_ID('Files', 'U') IS NOT NULL
+--	DROP TABLE Files;
 IF OBJECT_ID('Friends', 'U') IS NOT NULL
 	DROP TABLE Friends;
 IF OBJECT_ID('UserProfile', 'U') IS NOT NULL
 	DROP TABLE UserProfile;
 IF OBJECT_ID('Chat', 'U') IS NOT NULL
 	DROP TABLE Chat;
-IF OBJECT_ID('Subject', 'U') IS NOT NULL
-	DROP TABLE [Subject];
 
 CREATE TABLE ServerAdmins
 	(ServerAdminID			INT				PRIMARY KEY IDENTITY(1,1),
@@ -80,7 +80,11 @@ CREATE TABLE UserProfile
 	DisplayLName			VARCHAR(32)			NOT NULL,
 	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
 	UserPassword			NVARCHAR(256)		NOT NULL,
-	Privileges				NVARCHAR(32)		NOT NULL,
+	AverageStudentRank		FLOAT				DEFAULT(5)  NOT NULL,
+	AverageTutorRank		FLOAT				DEFAULT(5)	NOT NULL,
+	TotalTutorReviews       INT                 DEFAULT(0)  NOT NULL,
+	TotalStudentReviews		INT					DEFAULT(0)  NOT NULL,
+	Privileges				INT					DEFAULT(3)	NOT NULL,
 	Salt					NVARCHAR(256)		NOT NULL UNIQUE)
 GO
 
@@ -94,19 +98,21 @@ CREATE TABLE Friends
 CREATE TABLE [Messages]
 	(MessageID				INT				PRIMARY KEY IDENTITY(1,1),
 	ChatID					INT				NOT NULL REFERENCES Chat(ChatID),
-	MessageData				NVARCHAR(500)	NOT NULL,
-	SentBy					int				NOT NULL REFERENCES UserProfile(UserID),
-	SentTime				smalldatetime	NOT NULL)
+	MessageData				NVARCHAR(500)	DEFAULT NULL, 
+	FilePath				VARCHAR(MAX)	DEFAULT NULL,  
+	IsFile                  BIT				NOT NULL DEFAULT(0),                
+	SentBy					INT				NOT NULL REFERENCES UserProfile(UserID),
+	SentTime				SMALLDATETIME	NOT NULL)
 GO
 
 --Create File Table
-CREATE TABLE Files
-	(FileID				INT					PRIMARY KEY IDENTITY(1,1),
-	ChatID				INT					NOT NULL REFERENCES Chat(ChatID),
-	FileData			VARBINARY(MAX) 		NOT NULL,
-	SentBy				int					NOT NULL REFERENCES UserProfile(UserID),
-	SentTime			smalldatetime		NOT NULL);
-GO
+--CREATE TABLE Files
+--	(FileID				INT					PRIMARY KEY IDENTITY(1,1),
+--	ChatID				INT					NOT NULL REFERENCES Chat(ChatID),
+--	FileData			VARBINARY(MAX) 		NOT NULL,
+--	SentBy				INT					NOT NULL REFERENCES UserProfile(UserID),
+--	SentTime			SMALLDATETIME		NOT NULL);
+--GO
 
 --Create Official Mentor Table
 CREATE TABLE OfficialMentor
@@ -135,22 +141,14 @@ CREATE TABLE Picture
 	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
 	Photo				VARBINARY(MAX)			NULL
 	PRIMARY KEY (UserID))	
-GO
-
---Create Subject Table
-CREATE TABLE [Subject]
-	(SubjectID			INT				PRIMARY KEY IDENTITY(1,1),
-	SubjectCode			VARCHAR(5)		NOT NULL,
-	SubjectName			VARCHAR(45)		NOT NULL)
-GO				
+GO	
 
 --Create Classes Table
 CREATE TABLE Classes
 	(ClassID			INT				PRIMARY KEY IDENTITY(1,1),
-	SubjectID			INT					NOT NULL REFERENCES [Subject](SubjectID),	--Subject
+	CourseName			VARCHAR(100)		NOT NULL,
 	CourseCode			VARCHAR(5)			NOT NULL,	--Ex. WRI
-	CourseNumber		SMALLINT			NOT NULL,	--Ex. 121
-	TermOffered			TINYINT				NOT NULL)
+	CourseNumber		SMALLINT			NOT NULL)
 GO
 
 --Create User To Class Table
@@ -165,6 +163,7 @@ CREATE TABLE Sticker
 	(StickerID			INT								PRIMARY KEY IDENTITY(1,1),
 	ProblemDescription	NVARCHAR(500)	NOT NULL,
 	ClassID				INT				NOT NULL		REFERENCES Classes(ClassID),
+	ChatID				INT				DEFAULT NULL	REFERENCES Chat(ChatID),
 	StudentID			INT				NOT NULL		REFERENCES UserProfile(UserID),
 	TutorID				INT				DEFAULT NULL	REFERENCES UserProfile(UserID),
 	MinimumStarRanking	FLOAT			DEFAULT 0.0,
@@ -172,6 +171,11 @@ CREATE TABLE Sticker
 	[Timeout]			DATETIME2		NOT NULL)
 GO
 
+CREATE TABLE StickerToMentor
+(	StickerID			INT				NOT NULL		REFERENCES Sticker(StickerID),
+	MentorID			INT				NOT NULL		REFERENCES OfficialMentor(MentorID)
+	PRIMARY KEY (StickerID, MentorID))
+GO
 	--Create Review Table
 CREATE TABLE Review
 	(ReviewID			INT					PRIMARY KEY IDENTITY(1,1),
@@ -192,8 +196,6 @@ GO
 --Create Indexes on tables
 CREATE INDEX MessagesSentByUserIndex on [Messages] (SentBy);
 CREATE INDEX MessageChatIDIndex on [Messages] (ChatID);
-CREATE INDEX FilesSentByUserIndex on Files (SentBy);
-CREATE INDEX FileChatIDIndex on Files (ChatID);
 CREATE INDEX ReportFlaggerIDIndex on Report(FlaggerID);
 CREATE INDEX ReportReviewIDIndex on Report (ReviewID);
 CREATE INDEX ReviewStickerIDIndex on Review (StickerID);
@@ -208,13 +210,13 @@ GO
 INSERT DEFAULT USER
 *******************************************************************************/
 INSERT INTO UserProfile
-VALUES ('Unknown', 'User', 'Invalid Email Address', 'NO_PASSWORD', 'NO_PRIVILEGES', CONVERT(varbinary(256), 0));
+VALUES ('Unknown', 'User', 'Invalid Email Address', 'NO_PASSWORD', DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 0);
 GO
 /*******************************************************************************
 INSERT DEFAULT CLASS
 *******************************************************************************/
 INSERT INTO Classes
-VALUES ('Class Unavailable', 'NA', 0, 0);
+VALUES ('Class Unavailable', 'NA', 0);
 GO
 
 /*******************************************************************************

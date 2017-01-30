@@ -63,6 +63,20 @@ AS
 	END
 GO
 
+--CREATE TABLE UserProfile
+--	(UserID					INT					PRIMARY KEY IDENTITY(1,1),
+--	DisplayFName			VARCHAR(32)			NOT NULL,
+--	DisplayLName			VARCHAR(32)			NOT NULL,
+--	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
+--	UserPassword			NVARCHAR(256)		NOT NULL,
+--	AverageStudentRank		FLOAT				DEFAULT(5)  NOT NULL,
+--	AverageTutorRank		FLOAT				DEFAULT(5)	NOT NULL,
+--	TotalTutorReviews       INT                 DEFAULT(0)  NOT NULL,
+--	TotalStudentReviews		INT					DEFAULT(0)  NOT NULL,
+--	Privileges				INT					DEFAULT(3)	NOT NULL,
+--	Salt					NVARCHAR(256)		NOT NULL UNIQUE)
+--GO
+
 --CREATE NEW USER
 CREATE PROC [dbo].[CreateNewUser]
     (
@@ -70,7 +84,6 @@ CREATE PROC [dbo].[CreateNewUser]
 	@LastName VARCHAR(30),
 	@EmailAddress VARCHAR(50),
 	@Password NVARCHAR(256),
-	@Privileges NVARCHAR(32),
 	@Salt NVARCHAR(256)
     )
 AS
@@ -82,7 +95,7 @@ AS
         else
             BEGIN
                 INSERT INTO UserProfile
-				VALUES(@FirstName, @LastName, @EmailAddress, @Password, @Privileges, @Salt)
+				VALUES(@FirstName, @LastName, @EmailAddress, @Password, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, @Salt)
 				RETURN 0;
             END
 
@@ -117,8 +130,7 @@ CREATE PROC [dbo].[CreateNewClass]
     (
     @CourseName VARCHAR(50),
 	@CourseCode VARCHAR(5),
-	@CourseNumber SMALLINT,
-	@TermOffered TINYINT
+	@CourseNumber SMALLINT
     )
 AS
     BEGIN
@@ -130,7 +142,7 @@ AS
         else
             BEGIN
                 INSERT INTO Classes
-				VALUES(@CourseName, @CourseCode, @CourseNumber, @TermOffered)
+				VALUES(@CourseName, @CourseCode, @CourseNumber)
 				RETURN 0;
             END
 
@@ -155,8 +167,8 @@ AS
 			END
         else
             BEGIN
-                INSERT INTO Sticker (ProblemDescription, ClassID, StudentID, MinimumStarRanking, SubmitTime, [Timeout])
-				VALUES(@ProblemDescription, @ClassID, @StudentID, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))
+                INSERT INTO Sticker
+				VALUES(@ProblemDescription, @ClassID, DEFAULT, @StudentID, DEFAULT, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))
 				RETURN 0;
             END
 
@@ -363,7 +375,7 @@ AS
         else
             BEGIN
                INSERT INTO [Messages]
-				VALUES(@ChatID, @Message, @UserID, GETDATE())
+				VALUES(@ChatID, @Message, DEFAULT, DEFAULT, @UserID, GETDATE())
 				RETURN 0;
             END
     END
@@ -372,7 +384,7 @@ GO
 CREATE PROC [dbo].[InsertFile]
     (
 	@ChatID		INT,
-	@FileData	VARBINARY(MAX),
+	@FilePath	VARCHAR(MAX),
 	@UserID		INT
     )
 AS
@@ -385,7 +397,7 @@ AS
         else
             BEGIN
                 INSERT INTO Files
-				VALUES(@ChatID, @FileData, @UserID, GETDATE())
+				VALUES(@ChatID, DEFAULT, @FilePath, 1, @UserID, GETDATE())
 				RETURN 0;
             END
     END
