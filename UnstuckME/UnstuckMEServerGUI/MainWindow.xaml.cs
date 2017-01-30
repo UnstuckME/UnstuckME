@@ -56,7 +56,7 @@ namespace UnstuckMEServerGUI
                 else
                 {                 
                     DirectoryInfo currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-                    currentDir = currentDir.Parent.Parent.Parent;
+                    currentDir = currentDir.Parent.Parent.Parent;                    
                     string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
                     Process startServer = new Process();
                     //startServer.StartInfo.RedirectStandardOutput = true;

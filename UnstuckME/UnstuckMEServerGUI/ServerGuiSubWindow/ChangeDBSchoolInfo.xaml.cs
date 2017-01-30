@@ -71,7 +71,7 @@ namespace UnstuckMEServerGUI
 				{
 					throw new Exception("Please Enter a valid file path for the image");
 				}
-				using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
+				using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
 				{
 					var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
 					if (schoolIDs.Count() < 1)

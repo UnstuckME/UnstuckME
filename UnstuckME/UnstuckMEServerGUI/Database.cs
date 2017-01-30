@@ -10,10 +10,17 @@
 namespace UnstuckMEServerGUI
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class ViewAllClasses_Result
+    public partial class Database
     {
-        public string Course { get; set; }
-        public byte TermOffered { get; set; }
+        public int DatabaseID { get; set; }
+        public int SchoolID { get; set; }
+        public string DatabaseName { get; set; }
+        public string DatabaseIP { get; set; }
+        public string DatabaseAdminUsername { get; set; }
+        public Nullable<bool> DatabaseUsingWindowsAuthen { get; set; }
+    
+        public virtual School School { get; set; }
     }
 }

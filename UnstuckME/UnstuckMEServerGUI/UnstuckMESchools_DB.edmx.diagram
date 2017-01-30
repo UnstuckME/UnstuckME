@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f5512c76d5764c17add8aa1a14fbce12" Name="Diagram1">
+        <EntityTypeShape EntityType="UnstuckME_SchoolsModel.Database" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_SchoolsModel.School" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_SchoolsModel.SchoolLogo" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_SchoolsModel.Server" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_SchoolsModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="UnstuckME_SchoolsModel.FK__Database__School__703EA55A" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_SchoolsModel.FK__SchoolLog__LogoI__75035A77" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_SchoolsModel.FK__Server__SchoolID__6B79F03D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

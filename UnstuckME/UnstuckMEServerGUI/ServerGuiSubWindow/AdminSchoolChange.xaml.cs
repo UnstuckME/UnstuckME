@@ -15,7 +15,8 @@ using System.Windows.Shapes;
 using UnstuckMEInterfaces;
 using UnstuckME_Classes;
 using System.ServiceModel.Channels;
-using UnstuckMEUserGUI;
+using UnstuckMEServer;
+using UnstuckMEServerGUI;
 
 namespace UnstuckMEServerGUI.ServerGuiSubWindow
 {
@@ -30,14 +31,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         {
             InitializeComponent();
         }
-        private async void Window_ContentRendered(object sender, EventArgs e)
-        {
-            schools = await LoadSchoolsAsync();
-            foreach (UnstuckMESchool school in schools)
-            {
-                comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
-            }
-        }
+  
 
         private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
         {
@@ -47,11 +41,11 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         List<UnstuckMESchool> LoadSchools()
         {
             List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
-            using (UnstuckMESchools_DBEntities db = new UnstuckMESchools_DBEntities())
-            {
+            using (UnstuckMEServerGUI.UnstuckME_SchoolsEntities db = new UnstuckMEServerGUI.UnstuckME_SchoolsEntities())
+            { 
+
                 var dbSchools = from s in db.Schools select new {
                                                                     SchoolName = s.SchoolName,
-                                                                    EmailCredentials = s.EmailCredentials,
                                                                     SchoolID = s.SchoolID
                                                                 };
 
@@ -60,21 +54,68 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                     UnstuckMESchool newSchool = new UnstuckMESchool();
                     newSchool.SchoolName = dbschool.SchoolName;
                     newSchool.SchoolID = dbschool.SchoolID;
-                    newSchool.SchoolEmailCredentials = dbschool.EmailCredentials;
                     tempSchools.Add(newSchool);
                 }
             }
             return tempSchools;
         }
 
-        private void buttonSave_Click(object sender, RoutedEventArgs e)
-        {
 
+        private void buttonLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboBoxSchools.SelectedIndex != -1)
+            {
+                int selectedSchoolID = schools[(comboBoxSchools.SelectedIndex) - 1].SchoolID;
+
+                using (UnstuckMEServerGUI.UnstuckME_SchoolsEntities db = new UnstuckMEServerGUI.UnstuckME_SchoolsEntities())
+                {
+                    var admin = (from u in db.Schools
+                                 where u.SchoolID == selectedSchoolID
+                                 select u).First();
+
+                    string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passwordBoxUnstuckMEPassword.Password, admin.Salt);
+                    if (stringOfPassword == admin.SchoolAdminPassword)
+                    {
+                        System.Configuration.ConfigurationManager.AppSettings["SchoolName"] = comboBoxSchools.SelectionBoxItem.ToString();
+
+                        if ((admin.SchoolAdminUsername == "admin" && UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.SchoolAdminPassword) || (admin.Salt == "salt"))
+                        {
+                            MessageBox.Show("It looks like you are new to the UnstuckME program, please update your UnstuckME Credentials","New To UnstuckME",MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            this.Close();
+                            UnstuckMeCredChange unstuckMECredChangeWindow = new UnstuckMeCredChange(selectedSchoolID);
+                            Application.Current.MainWindow = unstuckMECredChangeWindow;
+                            unstuckMECredChangeWindow.ShowDialog();
+                        }
+
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid Login");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("You need to select a school first");
+            }
+            
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
+
+        private async void AdminSchoolChange_OnContentRendered(object sender, EventArgs e)
+        {
+            schools = await LoadSchoolsAsync();
+            foreach (UnstuckMESchool school in schools)
+            {
+                comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
+            }
+        }
+
+     
     }
 }

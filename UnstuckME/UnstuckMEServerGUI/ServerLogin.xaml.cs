@@ -17,7 +17,6 @@ using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEServer;
 using UnstuckMEServerGUI.ServerGuiSubWindow;
-using static UnstuckMEServerGUI.ConfigsClass;
 
 namespace UnstuckMEServerGUI
 {
@@ -121,6 +120,7 @@ namespace UnstuckMEServerGUI
 
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
+            
 
             if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] == "")
             {
@@ -129,11 +129,16 @@ namespace UnstuckMEServerGUI
                 Application.Current.MainWindow = changeSchool;
                 changeSchool.ShowDialog();
             }
-            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "")
+            if (System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "")
             {
+                MessageBox.Show("It looks like you have not configured your MSSQL database settings on this machine before, please configure them before continuing", "Configure MSSQL Database", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 ChangeDabaseConnectionSettings changeDBString = new ChangeDabaseConnectionSettings();
                 Application.Current.MainWindow = changeDBString;
                 changeDBString.ShowDialog();
+            }
+            if (System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] == "")
+            {
+                
             }
             if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "")
             {
