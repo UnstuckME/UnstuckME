@@ -12,6 +12,8 @@ namespace UnstuckMEServerGUI
 {
     public static class ConnectionTools
     {
+        public static EntityConnectionStringBuilder entityCnxStringBuilder { get; set; }
+
         // all params are optional
         public static void ChangeDatabase(
             this DbContext source,
@@ -35,7 +37,7 @@ namespace UnstuckMEServerGUI
                     : configConnectionStringName;
 
                 // add a reference to System.Configuration
-                var entityCnxStringBuilder = new EntityConnectionStringBuilder
+                entityCnxStringBuilder = new EntityConnectionStringBuilder
                     (System.Configuration.ConfigurationManager
                         .ConnectionStrings[configNameEf].ConnectionString);
 
@@ -59,6 +61,8 @@ namespace UnstuckMEServerGUI
                 // now flip the properties that were changed
                 source.Database.Connection.ConnectionString
                     = sqlCnxStringBuilder.ConnectionString;
+
+                entityCnxStringBuilder.ProviderConnectionString = sqlCnxStringBuilder.ToString();
             }
             catch (Exception ex)
             {

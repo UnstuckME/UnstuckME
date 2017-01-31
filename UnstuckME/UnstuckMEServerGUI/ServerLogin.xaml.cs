@@ -129,18 +129,22 @@ namespace UnstuckMEServerGUI
                 Application.Current.MainWindow = changeSchool;
                 changeSchool.ShowDialog();
             }
-            if (System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "")
+
+            if (System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "" && System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "")
             {
                 MessageBox.Show("It looks like you have not configured your MSSQL database settings on this machine before, please configure them before continuing", "Configure MSSQL Database", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 ChangeDabaseConnectionSettings changeDBString = new ChangeDabaseConnectionSettings();
                 Application.Current.MainWindow = changeDBString;
                 changeDBString.ShowDialog();
             }
-            if (System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] == "")
+
+            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" &&
+                System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "" &&
+                System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] == "")
             {
-                
+                    
             }
-            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "")
+            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "" && System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] != "")
             {
                 ChangeDBSchoolInfo schoolInfoWindow = new ChangeDBSchoolInfo();
                 Application.Current.MainWindow = schoolInfoWindow;
