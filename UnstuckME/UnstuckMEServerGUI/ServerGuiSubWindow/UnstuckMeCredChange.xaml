@@ -12,9 +12,9 @@
         <Label x:Name="labelNewUnstuckMEUserName" Content="New UnstuckME Username" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="222" RenderTransformOrigin="0.513,1.166" Foreground="White"/>
         <Label x:Name="labelNewUnstuckMEPassword" Content="New UnstuckME Password" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
         <Label x:Name="labelConfirmUnstuckMePassword" Content="Confirm UnstuckME Password" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
-        <TextBox x:Name="textBoxNewUsername" TabIndex="2" HorizontalAlignment="Left" Height="31" Margin="237,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" ToolTip="This field is optional"/>
-        <PasswordBox x:Name="passwordBoxNewPassword" TabIndex="3" HorizontalAlignment="Left" Margin="237,90,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
-        <PasswordBox x:Name="passwordBoxConfirm" TabIndex="4" HorizontalAlignment="Left" Margin="237,126,0,0" VerticalAlignment="Top" Width="243" Height="31"/>
+        <TextBox x:Name="textBoxNewUsername" VerticalContentAlignment="Center" TabIndex="2" HorizontalAlignment="Left" Height="31" Margin="237,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" ToolTip="This field is optional" Padding="4,0,0,0"/>
+        <PasswordBox x:Name="passwordBoxNewPassword" VerticalContentAlignment="Center" TabIndex="3" HorizontalAlignment="Left" Margin="237,90,0,0" VerticalAlignment="Top" Width="243" Height="31" Padding="4,0,0,0"/>
+        <PasswordBox x:Name="passwordBoxConfirm" VerticalContentAlignment="Center" TabIndex="4" HorizontalAlignment="Left" Margin="237,126,0,0" VerticalAlignment="Top" Width="243" Height="31" Padding="4,0,0,0"/>
         <Button x:Name="buttonSave" Content="Save" TabIndex="6" HorizontalAlignment="Left" Margin="378,203,0,0" VerticalAlignment="Top" Width="100" Click="buttonSave_Click" IsDefault="True" Background="#336699" Foreground="White" Height="25"/>
         <Button x:Name="buttonCancel" Background="#FF993333" Foreground="White" Content="Cancel" TabIndex="5" HorizontalAlignment="Left" Margin="255,203,0,0" VerticalAlignment="Top" Width="100" Click="buttonCancel_Click" IsCancel="True" Height="25"/>
     </Grid>

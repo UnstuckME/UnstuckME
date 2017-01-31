@@ -104,6 +104,9 @@
     <Compile Include="ServerGuiSubWindow\ChangeDabaseConnectionSettings.xaml.cs">
       <DependentUpon>ChangeDabaseConnectionSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerGuiSubWindow\ChangeUnstuckMEServerIP.xaml.cs">
+      <DependentUpon>ChangeUnstuckMEServerIP.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServerGuiSubWindow\DeleteAdmin.xaml.cs">
       <DependentUpon>DeleteAdmin.xaml</DependentUpon>
     </Compile>
@@ -176,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ServerGuiSubWindow\ChangeDabaseConnectionSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServerGuiSubWindow\ChangeUnstuckMEServerIP.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
