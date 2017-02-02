@@ -125,7 +125,7 @@ namespace UnstuckMEServerGUI
             AdminNameChange nameChange = new AdminNameChange(ref Admin);
             App.Current.MainWindow = nameChange;
             nameChange.ShowDialog();
-            labelName.Content = Admin.FirstName + " " + Admin.LastName;
+            labelName.Content = "Name: " + Admin.FirstName + " " + Admin.LastName;
         }
     }
 }
