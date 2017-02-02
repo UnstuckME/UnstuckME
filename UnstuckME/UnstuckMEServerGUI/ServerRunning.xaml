@@ -40,7 +40,7 @@
             </Menu>
         </DockPanel>
         <Button x:Name="buttonKill" Content="Kill Server" HorizontalAlignment="Left" Margin="10,313,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="buttonKill_Click" Background="#FF993333" Foreground="White" BorderBrush="#FFE6E4E4" BorderThickness="2"/>
-        <ScrollViewer Background="Gray" Foreground="White" HorizontalAlignment="Left" Height="289" Margin="414,69,0,0" VerticalAlignment="Top" Width="168" Padding="3,0,0,0">
+        <ScrollViewer Background="Gray" Foreground="White" HorizontalAlignment="Left" Height="289" Margin="414,69,0,0" VerticalAlignment="Top" Width="168" Padding="8,0,0,0">
             <StackPanel Name="StackPanelOnlineUsers"></StackPanel>
         </ScrollViewer>
         <Label x:Name="labelOnlineUsers" Foreground="White" Content="Online Users: 0" HorizontalAlignment="Left" Margin="414,38,0,0" VerticalAlignment="Top" Width="162"/>

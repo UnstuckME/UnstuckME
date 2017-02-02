@@ -169,6 +169,10 @@ namespace UnstuckMEUserGUI
                 ClassDisplay usersClass = new ClassDisplay(ClassesStack, User.UserID, Server, C.CourseCode, C.CourseNumber, C.CourseName, ID);
                 ClassesStack.Children.Add(usersClass);
             }
+            //var text = (TextBlock)ClassesStack.Children[0];
+            //text.Text = "Potato";
+            CourseCodeComboBox.SelectedIndex = 0;
+            //((ClassDisplay)CourseCodeComboBox.Items.CurrentItem).Content = ;
         }
 
 		private void PopulateStudentReviews()

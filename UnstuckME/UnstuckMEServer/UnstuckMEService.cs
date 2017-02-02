@@ -55,7 +55,7 @@ namespace UnstuckMEInterfaces
 			{
 				while (true)
 				{
-					Console.WriteLine("Loop: {0}", count);
+					//Console.WriteLine("Loop: {0}", count);
 					count++;
 					foreach (var address in _connectedClients)
 					{
@@ -67,7 +67,7 @@ namespace UnstuckMEInterfaces
 					//Now you can iterate over your list of pingTasks
 					foreach (var pingTask in pingTasks)
 					{
-						Console.WriteLine("PingTask Foreach");
+						//Console.WriteLine("PingTask Foreach");
 						if (pingTask.Result.Status != IPStatus.Success)
 						{
 							foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
