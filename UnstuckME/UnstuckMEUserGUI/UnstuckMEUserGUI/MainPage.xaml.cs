@@ -74,6 +74,7 @@ namespace UnstuckMEUserGUI
 			}
 
 			List<string> codes = Server.GetCourseCodes();
+            codes[0] = "Select Class";
             CourseCodeComboBox.ItemsSource = codes;
 		}
 
