@@ -73,7 +73,7 @@
                 <Grid x:Name="MyStickersGrid" Background="#FFE5E5E5">
                     <Button x:Name="SubmitStickerBtn" Content="Submit New Sticker" HorizontalAlignment="Left" Margin="75,10,0,0" VerticalAlignment="Top" Width="125" Click="SubmitStickerBtn_Click" />
                     <Button x:Name="RefreshBtn1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="30" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="RefreshBtn_Click">
-                        <Image x:Name="RefreshImage1" Source="Resources/Refresh Icon.png" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" />
+                        <Image x:Name="RefreshImage1" Source="Resources/Refresh Icon.png" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True"/>
                     </Button>
                     <Label x:Name="SubmittedStickers" Content="Submitted Stickers" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="TutoredStickers" Content="Tutored Stickers" HorizontalAlignment="Right" Margin="0,50,385,0" VerticalAlignment="Top"/>

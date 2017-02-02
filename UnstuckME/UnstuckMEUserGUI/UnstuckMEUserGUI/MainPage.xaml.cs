@@ -222,6 +222,10 @@ namespace UnstuckMEUserGUI
 			Window window = new Window();
 			window.Content = new_sticker;
 			App.Current.MainWindow = window;
+            //window.SizeToContent = SizeToContent.WidthAndHeight;  // this didnt work right
+            
+            
+            window.Show();
 		}
 
 		private void RefreshBtn_Click(object sender, RoutedEventArgs e)
