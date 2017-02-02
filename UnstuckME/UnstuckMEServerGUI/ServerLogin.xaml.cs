@@ -120,7 +120,7 @@ namespace UnstuckMEServerGUI
 
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
-            
+           
 
             if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] == "")
             {
@@ -142,7 +142,10 @@ namespace UnstuckMEServerGUI
                 System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "" &&
                 System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] == "")
             {
-                    
+                MessageBox.Show("It looks like you have not configured your UnstuckME Server on this machine before, please configuring your UnstuckME server settings before continuing", "Configure UnstuckME Server", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                ChangeUnstuckMEServerIP changeIPString = new ChangeUnstuckMEServerIP();
+                Application.Current.MainWindow = changeIPString;
+                changeIPString.ShowDialog();
             }
             if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "" && System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] != "")
             {

@@ -13,9 +13,8 @@ namespace UnstuckMEInterfaces
         public static UnstuckMEService _server;
         static void Main(string[] args)
         {
-            /*
-             *Opens an UnstuckMEService for clients to connect to.  
-             */
+           
+        
             _server = new UnstuckMEService();
             using (ServiceHost host = new ServiceHost(_server))
             {
@@ -27,6 +26,7 @@ namespace UnstuckMEInterfaces
                 Console.WriteLine("<Press Enter to Shut Down Server");
                 Console.ReadLine();
             }
+            
         }
     }
 }

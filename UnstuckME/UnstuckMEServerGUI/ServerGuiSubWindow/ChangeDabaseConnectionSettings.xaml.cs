@@ -167,7 +167,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                                 schoolDB.SaveChanges();
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             MessageBox.Show("ERROR: It looks like we were unable to update our UnstuckME servers with your new information. Next time you connect you may need to re-enter some of your information", "UnstuckME Servers Unable To Update", MessageBoxButton.OK, MessageBoxImage.Error);
                         }

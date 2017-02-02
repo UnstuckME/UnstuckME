@@ -22,11 +22,13 @@ namespace UnstuckMEServer
         public IServer connection;
         public AdminInfo Admin;
     }
+
     public class UnstuckMEPassword
     {
         public string Password { get; set; }
         public string Salt { get; set; }
     }
+
     public class UnstuckMEHashing
     {
         static byte[] GetBytes(string str)
