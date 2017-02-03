@@ -12,7 +12,7 @@ namespace UnstuckME_Classes
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
-        public string Privileges { get; set; }
+        public int Privileges { get; set; }
     }
 
     public class UserClass

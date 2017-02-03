@@ -7,13 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServerGUI
+namespace UnstuckMEServer
 {
     using System;
     
-    public partial class ViewAllClasses_Result
+    public partial class GetUserFriends_Result
     {
-        public string Course { get; set; }
-        public byte TermOffered { get; set; }
+        public string Friends { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

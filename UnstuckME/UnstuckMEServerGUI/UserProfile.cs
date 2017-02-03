@@ -16,7 +16,6 @@ namespace UnstuckMEServerGUI
     {
         public UserProfile()
         {
-            this.Files = new HashSet<File>();
             this.Friends = new HashSet<Friend>();
             this.Messages = new HashSet<Message>();
             this.Reports = new HashSet<Report>();
@@ -33,10 +32,13 @@ namespace UnstuckMEServerGUI
         public string DisplayLName { get; set; }
         public string EmailAddress { get; set; }
         public string UserPassword { get; set; }
-        public string Privileges { get; set; }
+        public double AverageStudentRank { get; set; }
+        public double AverageTutorRank { get; set; }
+        public int TotalTutorReviews { get; set; }
+        public int TotalStudentReviews { get; set; }
+        public int Privileges { get; set; }
         public string Salt { get; set; }
     
-        public virtual ICollection<File> Files { get; set; }
         public virtual ICollection<Friend> Friends { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual Picture Picture { get; set; }

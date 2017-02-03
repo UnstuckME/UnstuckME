@@ -7,20 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServer
+namespace UnstuckMEServerGUI
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class File
+    public partial class GetAllOrganizations_Result
     {
-        public int FileID { get; set; }
-        public int ChatID { get; set; }
-        public byte[] FileData { get; set; }
-        public int SentBy { get; set; }
-        public System.DateTime SentTime { get; set; }
-    
-        public virtual Chat Chat { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
+        public int MentorID { get; set; }
+        public string OrganizationName { get; set; }
     }
 }

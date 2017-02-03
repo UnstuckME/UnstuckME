@@ -65,9 +65,6 @@
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="File.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="FilterUserReviewsByEqualStarRank_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -86,6 +83,9 @@
     <Compile Include="GetAllChatIDsAUserIsPartOF_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllOrganizations_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllResolvedStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -102,6 +102,9 @@
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserClasses_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserFriends_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserPasswordAndSalt_Result.cs">
@@ -169,9 +172,6 @@
       <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewAllClasses_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewAllUsers_Result.cs">

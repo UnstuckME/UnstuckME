@@ -76,9 +76,6 @@
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ConnectionTools.cs" />
-    <Compile Include="File.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="FilterUserReviewsByEqualStarRank_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -95,6 +92,9 @@
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllChatIDsAUserIsPartOF_Result.cs">
+      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllOrganizations_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllResolvedStickers_Result.cs">
@@ -122,6 +122,9 @@
       <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserClasses_Result.cs">
+      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserFriends_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserPasswordAndSalt_Result.cs">
@@ -236,9 +239,6 @@
     <Compile Include="UserProfile.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewAllClasses_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewAllUsers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -346,7 +346,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SimpleAvatarWhite.png" />
     <Content Include="UnstuckMEServer_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
@@ -357,6 +356,7 @@
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
       <LastGenOutput>UnstuckMEServer_DB.cs</LastGenOutput>
     </Content>
+    <Resource Include="SimpleAvatarWhite.png" />
     <Resource Include="Resources\GearIcon.png" />
     <Resource Include="Resources\SimpleAvatar.png" />
     <Resource Include="Resources\UnstuckME_Logo.png" />

@@ -15,6 +15,6 @@ namespace UnstuckMEServer
     {
         public string User { get; set; }
         public string EmailAddress { get; set; }
-        public string Privileges { get; set; }
+        public int Privileges { get; set; }
     }
 }

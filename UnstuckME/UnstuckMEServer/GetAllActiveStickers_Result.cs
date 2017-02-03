@@ -15,7 +15,6 @@ namespace UnstuckMEServer
     {
         public string Student { get; set; }
         public string Course { get; set; }
-        public byte TermOffered { get; set; }
         public string ProblemDescription { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
         public System.DateTime SubmitTime { get; set; }

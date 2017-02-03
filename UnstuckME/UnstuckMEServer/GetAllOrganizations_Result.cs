@@ -11,9 +11,9 @@ namespace UnstuckMEServer
 {
     using System;
     
-    public partial class ViewAllClasses_Result
+    public partial class GetAllOrganizations_Result
     {
-        public string Course { get; set; }
-        public byte TermOffered { get; set; }
+        public int MentorID { get; set; }
+        public string OrganizationName { get; set; }
     }
 }

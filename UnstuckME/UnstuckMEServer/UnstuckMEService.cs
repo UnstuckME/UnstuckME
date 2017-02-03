@@ -127,7 +127,7 @@ namespace UnstuckMEInterfaces
 			{
 				UnstuckMEPassword hashedUserPassword = new UnstuckMEPassword();
 				hashedUserPassword = UnstuckMEHashing.GetHashedPassword(userPassword);
-				int retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, hashedUserPassword.Password, "User", hashedUserPassword.Salt);
+				int retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, hashedUserPassword.Password, hashedUserPassword.Salt);
 				if (retVal == 1)
 				{
 					success = true;
@@ -715,7 +715,7 @@ namespace UnstuckMEInterfaces
 				int retVal = -1;
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
-					retVal = db.CreateOfficialMentor(organizationName);
+                    retVal = db.CreateMentorOrganization(organizationName);
 				}
 				return retVal;
 			}
@@ -725,14 +725,14 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-		public int AdminCreateClass(string courseName, string courseCode, int courseNumber, byte termOffered)
+		public int AdminCreateClass(string courseName, string courseCode, int courseNumber)
 		{
 			try
 			{
 				int retVal = -1;
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
-					retVal = db.CreateNewClass(courseName, courseCode, (short)courseNumber, termOffered);
+					retVal = db.CreateNewClass(courseName, courseCode, (short)courseNumber);
 				}
 				return retVal;
 			}
@@ -784,23 +784,6 @@ namespace UnstuckMEInterfaces
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
 					retVal = db.DeleteClassByClassID(classID);
-				}
-				return retVal;
-			}
-			catch (Exception)
-			{
-				return -1; //If Failure to create chat.
-			}
-		}
-
-		public int DeleteFile(int fileID)
-		{
-			try
-			{
-				int retVal = -1;
-				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-				{
-					retVal = db.DeleteFileByFileID(fileID);
 				}
 				return retVal;
 			}
@@ -935,23 +918,6 @@ namespace UnstuckMEInterfaces
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
 					retVal = db.InsertUserIntoChat(userID, chatID);
-				}
-				return retVal;
-			}
-			catch (Exception)
-			{
-				return -1; //If Failure to create chat.
-			}
-		}
-
-		public int InsertFileInToChat(int userID, int chatID, byte [] fileData)
-		{
-			try
-			{
-				int retVal = -1;
-				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-				{
-					retVal = db.InsertFile(chatID, fileData, userID);
 				}
 				return retVal;
 			}
