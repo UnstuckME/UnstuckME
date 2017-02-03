@@ -8,6 +8,10 @@ USE UnstuckME_DB;
 GO
 
 /******DROP PROCEDURE STATEMENTS*************************/
+--IF OBJECT_ID('CreateOfficialMentor') is not null
+--	DROP PROCEDURE CreateOfficialMentor;
+IF OBJECT_ID('CreateNewAdminUser') is not null
+	DROP PROCEDURE CreateNewAdminUser;
 IF OBJECT_ID('AddTutorStarRankToUser') is not null
 	DROP PROCEDURE AddTutorStarRankToUser;
 IF OBJECT_ID('AddStudentStarRankToUser') is not null

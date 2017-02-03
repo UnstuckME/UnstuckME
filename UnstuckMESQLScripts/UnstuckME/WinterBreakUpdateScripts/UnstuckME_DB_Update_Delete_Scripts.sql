@@ -22,10 +22,10 @@ IF OBJECT_ID('DeleteMentorOrganizationByMentorID') is not null
 	DROP PROCEDURE [DeleteMentorOrganizationByMentorID];
 IF OBJECT_ID('DeleteClassByClassID') is not null
 	DROP PROCEDURE [DeleteClassByClassID];
---IF OBJECT_ID('DeleteStickerByStickerID') is not null
---	DROP PROCEDURE DeleteStickerByStickerID;
---IF OBJECT_ID('DeleteReviewByReviewID') is not null
---	DROP PROCEDURE DeleteReviewByReviewID;
+IF OBJECT_ID('DeleteStickerByStickerID') is not null
+	DROP PROCEDURE DeleteStickerByStickerID;
+IF OBJECT_ID('DeleteReviewByReviewID') is not null
+	DROP PROCEDURE DeleteReviewByReviewID;
 IF OBJECT_ID('ClearReviewDescriptionByReviewID') is not null
 	DROP PROCEDURE ClearReviewDescriptionByReviewID;
 IF OBJECT_ID('DeleteReportByReportID') is not null
@@ -59,8 +59,8 @@ IF OBJECT_ID('UpdateCourseCodeByClassID') is not null
 	DROP PROCEDURE UpdateCourseCodeByClassID;
 IF OBJECT_ID('UpdateCourseNumberByClassID') is not null
 	DROP PROCEDURE UpdateCourseNumberByClassID;
-IF OBJECT_ID('UpdateTermsOfferedByClassID') is not null
-	DROP PROCEDURE UpdateTermsOfferedByClassID;
+--IF OBJECT_ID('UpdateTermsOfferedByClassID') is not null
+--	DROP PROCEDURE UpdateTermsOfferedByClassID;
 IF OBJECT_ID('UpdateStarRankingByReviewID') is not null
 	DROP PROCEDURE UpdateStarRankingByReviewID;
 IF OBJECT_ID('UpdateReviewDescriptionByReviewID') is not null
@@ -667,25 +667,25 @@ GO
 /*********************************************************
 --Update Terms Offered
 *********************************************************/
-CREATE PROC [dbo].[UpdateTermsOfferedByClassID]
-    (
-    @ClassID INT,
-	@TermOffered TINYINT
-    )
-AS
-    BEGIN
-        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
-            RETURN 1;
-        ELSE
-            BEGIN
-				UPDATE Classes
-				SET TermOffered = @TermOffered
-				WHERE ClassID = @ClassID;
-                RETURN 0;
-            END
+--CREATE PROC [dbo].[UpdateTermsOfferedByClassID]
+--    (
+--    @ClassID INT,
+--	@TermOffered TINYINT
+--    )
+--AS
+--    BEGIN
+--        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
+--            RETURN 1;
+--        ELSE
+--            BEGIN
+--				UPDATE Classes
+--				SET TermOffered = @TermOffered
+--				WHERE ClassID = @ClassID;
+--                RETURN 0;
+--            END
 
-    END
-GO
+--    END
+--GO
 
 /*********************************************************
 --Update Review Star Ranking
