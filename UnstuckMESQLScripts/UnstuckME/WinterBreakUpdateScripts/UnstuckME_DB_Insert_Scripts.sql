@@ -8,6 +8,10 @@ USE UnstuckME_DB;
 GO
 
 /******DROP PROCEDURE STATEMENTS*************************/
+IF OBJECT_ID('AddTutorStarRankToUser') is not null
+	DROP PROCEDURE AddTutorStarRankToUser;
+IF OBJECT_ID('AddStudentStarRankToUser') is not null
+	DROP PROCEDURE AddStudentStarRankToUser;
 IF OBJECT_ID('AddOrgToSticker') is not null
 	DROP PROCEDURE AddOrgToSticker;
 IF OBJECT_ID('CreateServerAdmin') is not null
@@ -42,8 +46,64 @@ IF OBJECT_ID('AddFriend') is not null
 	DROP PROCEDURE AddFriend;
 IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
 	DROP PROCEDURE [InsertUserIntoMentorProgram];
-
 GO
+
+CREATE PROC [dbo].[AddTutorStarRankToUser]
+(
+	@UserID INT,
+	@StarRanking FLOAT
+)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+			RETURN 1;
+		ELSE IF (@StarRanking > 5 OR @StarRanking < 0)
+			RETURN 1;
+		ELSE
+			DECLARE @AverageTutorRank FLOAT;
+			SELECT @AverageTutorRank = (AverageTutorRank * TotalTutorReviews)
+			FROM UserProfile
+			WHERE UserID = @UserID;
+
+			UPDATE UserProfile
+			SET TotalTutorReviews = (TotalTutorReviews + 1)
+			WHERE @UserID = UserID;
+
+			UPDATE UserProfile
+			SET AverageTutorRank = ((@AverageTutorRank + @StarRanking)/ TotalTutorReviews)
+			WHERE @UserID = UserID;
+	END
+GO
+
+--Adds A rating to a user and updates current value.
+CREATE PROC [dbo].[AddStudentStarRankToUser]
+(
+	@UserID INT,
+	@StarRanking FLOAT
+)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+			RETURN 1;
+		ELSE IF (@StarRanking > 5 OR @StarRanking < 0)
+			RETURN 1;
+		ELSE
+			DECLARE @AverageStudentRank FLOAT;
+			SELECT @AverageStudentRank = (AverageStudentRank * TotalStudentReviews)
+			FROM UserProfile
+			WHERE UserID = @UserID;
+
+			UPDATE UserProfile
+			SET TotalStudentReviews = (TotalStudentReviews + 1)
+			WHERE @UserID = UserID;
+
+			UPDATE UserProfile
+			SET AverageStudentRank = ((@AverageStudentRank + @StarRanking)/ TotalStudentReviews)
+			WHERE @UserID = UserID;
+	END
+GO
+
+
 /****************BEGIN Insert/Create SCRIPTS******************/
 --Add Sticker/Mentor Organization Relationship
 CREATE PROC [dbo].[AddOrgToSticker]
