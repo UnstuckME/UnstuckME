@@ -8,6 +8,8 @@ USE UnstuckME_DB;
 GO
 
 /******DROP PROCEDURE STATEMENTS*************************/
+IF OBJECT_ID('AddOrgToSticker') is not null
+	DROP PROCEDURE AddOrgToSticker;
 IF OBJECT_ID('CreateServerAdmin') is not null
 	DROP PROCEDURE CreateServerAdmin;
 IF OBJECT_ID('CreateNewUser') is not null
@@ -18,8 +20,8 @@ IF OBJECT_ID('CreateNewClass') is not null
 	DROP PROCEDURE CreateNewClass;
 IF OBJECT_ID('CreateSticker') is not null
 	DROP PROCEDURE CreateSticker;
-IF OBJECT_ID('CreateOfficialMentor') is not null
-	DROP PROCEDURE CreateOfficialMentor;
+IF OBJECT_ID('CreateMentorOrganization') is not null
+	DROP PROCEDURE CreateMentorOrganization;
 IF OBJECT_ID('CreateReview') is not null
 	DROP PROCEDURE CreateReview;
 IF OBJECT_ID('CreateReport') is not null
@@ -42,7 +44,23 @@ IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
 	DROP PROCEDURE [InsertUserIntoMentorProgram];
 
 GO
-/****************BEGIN CREATION SCRIPTS******************/
+/****************BEGIN Insert/Create SCRIPTS******************/
+--Add Sticker/Mentor Organization Relationship
+CREATE PROC [dbo].[AddOrgToSticker]
+(
+	@StickerID INT,
+	@OrganizationID INT
+)
+AS
+	BEGIN
+		IF(EXISTS(SELECT StickerID, MentorID FROM StickerToMentor WHERE StickerID = @StickerID AND MentorID = @OrganizationID))
+			RETURN 1;
+		ELSE
+			INSERT INTO StickerToMentor
+			VALUES(@StickerID, @OrganizationID);
+		END
+GO
+
 --CREATE NEW SERVER ADMIN
 CREATE PROC [dbo].[CreateServerAdmin]
 	(
@@ -63,21 +81,30 @@ AS
 	END
 GO
 
---CREATE TABLE UserProfile
---	(UserID					INT					PRIMARY KEY IDENTITY(1,1),
---	DisplayFName			VARCHAR(32)			NOT NULL,
---	DisplayLName			VARCHAR(32)			NOT NULL,
---	EmailAddress			VARCHAR(50)			NOT NULL UNIQUE, 
---	UserPassword			NVARCHAR(256)		NOT NULL,
---	AverageStudentRank		FLOAT				DEFAULT(5)  NOT NULL,
---	AverageTutorRank		FLOAT				DEFAULT(5)	NOT NULL,
---	TotalTutorReviews       INT                 DEFAULT(0)  NOT NULL,
---	TotalStudentReviews		INT					DEFAULT(0)  NOT NULL,
---	Privileges				INT					DEFAULT(3)	NOT NULL,
---	Salt					NVARCHAR(256)		NOT NULL UNIQUE)
---GO
+CREATE PROC [dbo].[CreateNewAdminUser]
+    (
+    @FirstName VARCHAR(30),
+	@LastName VARCHAR(30),
+	@EmailAddress VARCHAR(50),
+	@Password NVARCHAR(256),
+	@Salt NVARCHAR(256)
+    )
+AS
+    BEGIN
+        if  (Exists(Select EmailAddress from UserProfile where EmailAddress = @EmailAddress))
+            BEGIN
+				RETURN 1;
+			END
+        else
+            BEGIN
+                INSERT INTO UserProfile
+				VALUES(@FirstName, @LastName, @EmailAddress, @Password, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 1, @Salt)
+				RETURN 0;
+            END
 
---CREATE NEW USER
+    END
+GO
+
 CREATE PROC [dbo].[CreateNewUser]
     (
     @FirstName VARCHAR(30),
@@ -176,7 +203,7 @@ AS
 GO
 
 --CREATE AN OFFICIAL MENTOR
-CREATE PROC [dbo].[CreateOfficialMentor]
+CREATE PROC [dbo].[CreateMentorOrganization]
     (
     @OrganizationName	NVARCHAR(100)
     )

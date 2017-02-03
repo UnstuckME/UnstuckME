@@ -14,8 +14,8 @@ IF OBJECT_ID('DeleteUserProfileByUserID') is not null
 	DROP PROCEDURE [DeleteUserProfileByUserID];
 IF OBJECT_ID('DeleteUserPictureByUserID') is not null
 	DROP PROCEDURE [DeleteUserPictureByUserID];
-IF OBJECT_ID('DeleteFileByFileID') is not null
-	DROP PROCEDURE [DeleteFileByFileID];
+--IF OBJECT_ID('DeleteFileByFileID') is not null
+--	DROP PROCEDURE [DeleteFileByFileID];
 IF OBJECT_ID('DeleteMessageByMessageID') is not null
 	DROP PROCEDURE [DeleteMessageByMessageID];
 IF OBJECT_ID('DeleteMentorOrganizationByMentorID') is not null
@@ -173,25 +173,25 @@ AS
 GO
 
 /*********************************************************
---Delete File PROCEDURE Creation Script
+--Delete File PROCEDURE Creation Script (Delete Message Can now be used instead)
 *********************************************************/
-CREATE PROC [dbo].[DeleteFileByFileID]
-    (
-    @FileID INT
-    )
-AS
-    BEGIN
-        IF  (NOT Exists(SELECT FileID FROM Files WHERE FileID = @FileID))
-            RETURN 1;
-        ELSE
-            BEGIN
-                DELETE Files
-				WHERE FileID = @fileID;
-                RETURN 0;
-            END
+--CREATE PROC [dbo].[DeleteFileByFileID]
+--    (
+--    @FileID INT
+--    )
+--AS
+--    BEGIN
+--        IF  (NOT Exists(SELECT FileID FROM Files WHERE FileID = @FileID))
+--            RETURN 1;
+--        ELSE
+--            BEGIN
+--                DELETE Files
+--				WHERE FileID = @fileID;
+--                RETURN 0;
+--            END
 
-    END
-GO
+--    END
+--GO
 
 /*********************************************************
 --Delete Message PROCEDURE Creation Script
@@ -227,6 +227,8 @@ AS
             RETURN 1;
         ELSE
             BEGIN
+				DELETE FROM StickerToMentor
+				WHERE @MentorID = MentorID;
 				DELETE OmToUser
 				WHERE @MentorID = MentorID;
 				DELETE OfficialMentor
@@ -254,7 +256,7 @@ AS
 				SET ClassID = 1
 				WHERE ClassID = @ClassID;
 				DELETE UserToClass
-				WHERE ClassID = @ClassID
+				WHERE ClassID = @ClassID;
 				DELETE Classes
 				WHERE ClassID = @classID;
                 RETURN 0;
@@ -266,44 +268,46 @@ GO
 /*********************************************************
 --Delete Sticker PROCEDURE Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
---CREATE PROC [dbo].[DeleteStickerByStickerID]
---    (
---    @StickerID INT
---    )
---AS
---    BEGIN
---        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
---            RETURN 1;
---        ELSE
---            BEGIN
---				DELETE Sticker
---				WHERE StickerID = @stickerID;
---                RETURN 0;
---            END
+CREATE PROC [dbo].[DeleteStickerByStickerID]
+    (
+    @StickerID INT
+    )
+AS
+    BEGIN
+        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
+            RETURN 1;
+        ELSE
+            BEGIN
+				DELETE FROM StickerToMentor
+				WHERE StickerID = @StickerID;
+				DELETE Sticker
+				WHERE StickerID = @stickerID;
+                RETURN 0;
+            END
 
---    END
---GO
+    END
+GO
 
 /*********************************************************
 --Delete Review PROCEDURE Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
---CREATE PROC [dbo].[DeleteReviewByReviewID]
---    (
---    @ReviewID INT
---    )
---AS
---    BEGIN
---        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
---            RETURN 1;
---        ELSE
---            BEGIN
---				DELETE Review
---				WHERE ReviewID = @reviewID;
---                RETURN 0;
---            END
+CREATE PROC [dbo].[DeleteReviewByReviewID]
+    (
+    @ReviewID INT
+    )
+AS
+    BEGIN
+        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
+            RETURN 1;
+        ELSE
+            BEGIN
+				DELETE Review
+				WHERE ReviewID = @reviewID;
+                RETURN 0;
+            END
 
---    END
---GO
+    END
+GO
 
 /*********************************************************
 --Delete Review Description PROCEDURE Creation Script
@@ -319,7 +323,7 @@ AS
         ELSE
             BEGIN
 				UPDATE Review
-				SET [Description] = ''
+				SET [Description] = 'This Review Has Been Removed'
 				WHERE ReviewID = @reviewID;
                 RETURN 0;
             END
@@ -528,7 +532,7 @@ GO
 CREATE PROC [dbo].[UpdatePrivilegesByUserID]
     (
     @UserID INT,
-	@Privileges BINARY(4)
+	@Privileges INT
     )
 AS
     BEGIN
