@@ -74,6 +74,7 @@ namespace UnstuckMEUserGUI
 			}
 
 			List<string> codes = Server.GetCourseCodes();
+            codes[0] = "Select Class";
             CourseCodeComboBox.ItemsSource = codes;
 		}
 
@@ -169,6 +170,10 @@ namespace UnstuckMEUserGUI
                 ClassDisplay usersClass = new ClassDisplay(ClassesStack, User.UserID, Server, C.CourseCode, C.CourseNumber, C.CourseName, ID);
                 ClassesStack.Children.Add(usersClass);
             }
+            //var text = (TextBlock)ClassesStack.Children[0];
+            //text.Text = "Potato";
+            CourseCodeComboBox.SelectedIndex = 0;
+            //((ClassDisplay)CourseCodeComboBox.Items.CurrentItem).Content = ;
         }
 
 		private void PopulateStudentReviews()
@@ -222,6 +227,10 @@ namespace UnstuckMEUserGUI
 			Window window = new Window();
 			window.Content = new_sticker;
 			App.Current.MainWindow = window;
+            //window.SizeToContent = SizeToContent.WidthAndHeight;  // this didnt work right
+            
+            
+            window.Show();
 		}
 
 		private void RefreshBtn_Click(object sender, RoutedEventArgs e)

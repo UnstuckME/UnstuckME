@@ -11,7 +11,7 @@
         <Label x:Name="labelAdminUpdate" Content="Administrator Update " HorizontalContentAlignment="Center" FontFamily="Times New Roman" Background="{x:Null}" BorderThickness="2" Panel.ZIndex="-1" VerticalAlignment="Top" Height="33" Foreground="White" Margin="0,10,0,0"/>
         <Label x:Name="labelCurrentUsername" Content="Current Email Address" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
         <Label x:Name="labelCurrentPassword" Content="Current Password" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
-        <Label x:Name="labelNewUserName" Content="New Email Address" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Width="222" RenderTransformOrigin="0.513,1.166" Foreground="White"/>
+        <Label x:Name="labelNewUserName" Content="New Email Address (Optional)" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Width="222" RenderTransformOrigin="0.513,1.166" Foreground="White"/>
         <Label x:Name="labelNewPassword" Content="New Password" HorizontalAlignment="Left" Margin="10,191,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
         <Label x:Name="labelConfirmPassword" Content="Confirm Password" HorizontalAlignment="Left" Margin="10,227,0,0" VerticalAlignment="Top" Width="222" Foreground="White"/>
         <TextBox x:Name="textBoxCurrentUsername" TabIndex="0" HorizontalAlignment="Left" Height="31" Margin="237,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>

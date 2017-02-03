@@ -158,6 +158,7 @@ namespace UnstuckMEServerGUI
         {
             TextBlock newUser = new TextBlock();
             newUser.Text = emailAddress;
+            newUser.FontSize = 14;
             StackPanelOnlineUsers.Children.Add(newUser);
             labelOnlineUsers.Content = "Online Users: " + StackPanelOnlineUsers.Children.Count;
         }
