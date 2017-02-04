@@ -49,13 +49,42 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                 {
                     textBoxNewIP.Text = serverInfo.ServerIPAddress;
                     textBoxServerName.Text = serverInfo.ServerName;
+                    m_serverID = serverInfo.ServerID;
                 }
             }
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            buttonTest_Click(sender, e);
+            buttonTest_Click(sender, e); //Run one final check on current entered setttings
+            if (m_pastTest != false)  //If the user entered settings htat were able to pass all tests
+            {
+                using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
+                {
+                    if (m_serverID != null) // If the Admin already has server settings for their school in the database
+                    {
+                        var schoolServer = (from Servers in schoolDB.Servers where Servers.ServerID == m_serverID.Value select Servers).First();
+                        schoolServer.ServerName = textBoxServerName.Text;
+                        schoolServer.ServerIPAddress = textBoxNewIP.Text;
+                    }
+                    else // If this the first time the Admin is configuring the server a new row needs to be inserted into the DB
+                    {
+
+                        int schoolID = (from Schools in schoolDB.Schools where Schools.SchoolName == m_SchoolName select Schools.SchoolID).First();
+                        Server tempServer = new Server
+                        {
+                            SchoolID = schoolID,
+                            ServerName = textBoxServerName.Text,
+                            ServerIPAddress = textBoxNewIP.Text
+                        };
+                        schoolDB.Servers.Add(tempServer);
+                    }
+
+                    schoolDB.SaveChanges();
+                }
+
+                this.Close();
+            }
         }
 
         private bool CheckIPAddress()
@@ -87,20 +116,31 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         private bool CheckLocalHost()
         {
             bool localHostConnection = false;
-            if (textBoxNewIP.Text == "net.tcp://localhost")
+
+            string connectionString = textBoxNewIP.Text.ToLower();
+
+            if (connectionString == "net.tcp://localhost" ||
+                connectionString == @"\\" ||
+                connectionString == @"\"  ||
+                connectionString == @"//" ||
+                connectionString == @"/"  )
             {
-                localHostConnection = true;
-            }
-            else if (textBoxNewIP.Text == "//localhost")
-            {
-                textBoxNewIP.Text = "net.tcp://localhost";
+                textBoxNewIP.Text = "//localhost";
                 localHostConnection = true;
             }
             else
             {
-                localHostConnection = false;
+                connectionString = textBoxNewIP.Text.Replace(@"\", "").Replace(@"/", "");
+                if (connectionString == "localhost"  ||
+                    connectionString == "hostlocal"  ||
+                    connectionString == "local_host" ||
+                    connectionString == "local")
+                {
+                    textBoxNewIP.Text = "//localhost";
+                    localHostConnection = true;
+                }
             }
-
+            
             return localHostConnection;
         }
 
@@ -110,7 +150,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
             if (CheckIPAddress() == false && CheckLocalHost() == false)
             {
-                MessageBox.Show("It appears you have not eneter a valid IPV4/ IPV6/ or //LocalHost connection", "Invalid COnnection Settings", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("It appears you have not entered a valid IPV4/ IPV6/ or //LocalHost connection", "Invalid Connection Settings", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
@@ -243,7 +283,8 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
                         if (testingChannel.TestNewConfig() == true)
                         {
-                            MessageBox.Show("Internal connection between administrator successful!", "Connection Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("Internal connection between administrator successful!",
+                                "Connection Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             try
                             {
                                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
@@ -251,17 +292,31 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show(ex.Message, "Server Kill Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBox.Show(ex.Message, "Server Kill Error", MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
                             }
+
+                            m_pastTest = true;
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Unable To Connect At That Address", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show(ex.Message, "Unable To Connect At That Address", MessageBoxButton.OK,
+                            MessageBoxImage.Exclamation);
+                        m_pastTest = false;
                     }
                 }
+                else
+                {
+                    m_pastTest = false;
+                }
+            }
+            else
+            {
+                m_pastTest = false;
             }
         }
+
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
