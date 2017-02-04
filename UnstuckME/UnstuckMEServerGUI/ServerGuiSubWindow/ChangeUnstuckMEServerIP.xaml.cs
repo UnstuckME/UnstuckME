@@ -56,11 +56,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             buttonTest_Click(sender, e);
-
-
         }
-
-        
 
         private bool CheckIPAddress()
         {
@@ -214,8 +210,6 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             return exeUpdated;
         }
 
-
-
         private void buttonTest_Click(object sender, RoutedEventArgs e)
         {
             DirectoryInfo tempDir = new DirectoryInfo(Directory.GetCurrentDirectory());
@@ -268,7 +262,6 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                 }
             }
         }
-
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
