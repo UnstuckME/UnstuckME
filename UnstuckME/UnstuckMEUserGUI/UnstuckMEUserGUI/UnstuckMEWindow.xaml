@@ -60,19 +60,19 @@
             </Grid>
             <Label x:Name="OnlineUsersLabel" Foreground="White" Content="Online Users: " VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="300" Height="38" Grid.Row="3" Grid.RowSpan="2"/>
         </Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,1,1,1" MinWidth="300" Background="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="75,0,300,0" Grid.ColumnSpan="3"/>
+        <Frame x:Name="MainFrame"  NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,1,1,1" MinWidth="300" Background="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="75,0,300,0" Grid.ColumnSpan="3"/>
         <Grid Width="Auto" Height="Auto" MinWidth="75" MaxWidth="75" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Gray" Grid.Column="0">
-            <Border CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,10,10,0" Cursor="Hand">
+            <Border x:Name="HomeButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,10,10,0" Cursor="Hand">
                 <Button x:Name="HomeButton" Style="{StaticResource NoHighlightButton}" Click="HomeButton_Click">
                     <Image Source="Resources/home.png" ></Image>
                 </Button>
             </Border>
-            <Border CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,75,10,0" Cursor="Hand">
+            <Border x:Name="StickerButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,75,10,0" Cursor="Hand">
                 <Button x:Name="StickerButton" Style="{StaticResource NoHighlightButton}" Click="StickerButton_Click">
                     <Image Source="Resources/Star.png" ></Image>
                 </Button>
             </Border>
-            <Border CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,140,10,0" Cursor="Hand">
+            <Border x:Name="ProfileButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,140,10,0" Cursor="Hand">
                 <Button x:Name="ProfileButton" Style="{StaticResource NoHighlightButton}" >
                     <Image Source="Resources/UnstuckME_Logo.png" ></Image>
                 </Button>

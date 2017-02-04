@@ -22,9 +22,11 @@ namespace UnstuckMEUserGUI
     {
         private static HomePage _HomePage;
         private static StickerPage _stickerPage;
+        private static Brush _UnstuckMEBlue;
         public UnstuckMEWindow()
         {
             InitializeComponent();
+            _UnstuckMEBlue = HomeButtonBorder.Background;
             _HomePage = new HomePage();
             _stickerPage = new StickerPage();
             for (int i = 0; i < 30; i++)
@@ -42,11 +44,15 @@ namespace UnstuckMEUserGUI
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(_HomePage);
+            HomeButtonBorder.Background = Brushes.White;
+            StickerButtonBorder.Background = _UnstuckMEBlue;
         }
 
         private void StickerButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(_stickerPage);
+            StickerButtonBorder.Background = Brushes.White;
+            HomeButtonBorder.Background = _UnstuckMEBlue;
         }
     }
 }
