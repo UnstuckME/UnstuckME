@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="280" Mouse.MouseDown="UserControl_MouseDown" Mouse.MouseEnter="UserControl_MouseEnter" Mouse.MouseLeave="UserControl_MouseLeave">
     <Grid x:Name="OnlineUserGrid">
-        <TextBlock x:Name="UserName" Height="Auto" Margin="30,0,10,0" Text="Hello" VerticalAlignment="Center" Foreground="White"/>
+        <TextBlock Cursor="Hand" x:Name="UserName" Height="Auto" Margin="30,0,10,0" Text="Hello" VerticalAlignment="Center" Foreground="White"/>
         <Image Source="Resources/online.png" HorizontalAlignment="Left" Height="15" Width="15" Margin="8,0,0,0"></Image>
     </Grid>
 </UserControl>

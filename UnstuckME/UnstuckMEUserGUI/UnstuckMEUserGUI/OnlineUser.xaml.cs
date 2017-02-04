@@ -34,11 +34,13 @@ namespace UnstuckMEUserGUI
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
             OnlineUserGrid.Background = Brushes.White;
+            UserName.Foreground = Brushes.Black;
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             OnlineUserGrid.Background = null;
+            UserName.Foreground = Brushes.White;
         }
     }
 }

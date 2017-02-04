@@ -85,6 +85,9 @@
     <Compile Include="GetSchoolServerInfo_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,9 @@
     </Compile>
     <Compile Include="CreateStickerTemplate.xaml.cs">
       <DependentUpon>CreateStickerTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StickerPage.xaml.cs">
+      <DependentUpon>StickerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
@@ -153,6 +159,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,6 +196,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="CreateStickerTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StickerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
