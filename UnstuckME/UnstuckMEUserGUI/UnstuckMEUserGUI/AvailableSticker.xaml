@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="300" BorderBrush="Black" BorderThickness="1,1,1,1">
     <Grid>
-        <Button x:Name="ClassNameInfoButton" Padding="6,0,0,0" HorizontalAlignment="Right" Mouse.MouseEnter="Button_MouseEnter" Mouse.MouseLeave="Button_MouseLeave" Cursor="Hand" Margin="0,0,80,0" VerticalContentAlignment="Center" Foreground="White" Background="{x:Null}" Width="218" Height="Auto" HorizontalContentAlignment="Left">
+        <Button x:Name="ClassNameInfoButton" Click="ClassNameInfoButton_Click" Padding="6,0,0,0" HorizontalAlignment="Right" Mouse.MouseEnter="Button_MouseEnter" Mouse.MouseLeave="Button_MouseLeave" Cursor="Hand" Margin="0,0,80,0" VerticalContentAlignment="Center" Foreground="White" Background="{x:Null}" Width="218" Height="Auto" HorizontalContentAlignment="Left">
         </Button>
         <Button x:Name="Decline" Width="40" Margin="240,0,0,0" Background="{x:Null}" Cursor="Hand" HorizontalAlignment="Right">
             <Image Source="Resources/redXMark.png" Height="25" Width="25"></Image>
