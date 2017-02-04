@@ -59,31 +59,47 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             buttonTest_Click(sender, e); //Run one final check on current entered setttings
             if (m_pastTest != false)  //If the user entered settings htat were able to pass all tests
             {
-                using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
+                try
                 {
-                    if (m_serverID != null) // If the Admin already has server settings for their school in the database
+                    using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
                     {
-                        var schoolServer = (from Servers in schoolDB.Servers where Servers.ServerID == m_serverID.Value select Servers).First();
-                        schoolServer.ServerName = textBoxServerName.Text;
-                        schoolServer.ServerIPAddress = textBoxNewIP.Text;
-                    }
-                    else // If this the first time the Admin is configuring the server a new row needs to be inserted into the DB
-                    {
-
-                        int schoolID = (from Schools in schoolDB.Schools where Schools.SchoolName == m_SchoolName select Schools.SchoolID).First();
-                        Server tempServer = new Server
+                        if (m_serverID != null)
+                            // If the Admin already has server settings for their school in the database
                         {
-                            SchoolID = schoolID,
-                            ServerName = textBoxServerName.Text,
-                            ServerIPAddress = textBoxNewIP.Text
-                        };
-                        schoolDB.Servers.Add(tempServer);
+                            var schoolServer =
+                            (from Servers in schoolDB.Servers
+                                where Servers.ServerID == m_serverID.Value
+                                select Servers).First();
+                            schoolServer.ServerName = textBoxServerName.Text;
+                            schoolServer.ServerIPAddress = textBoxNewIP.Text;
+                        }
+                        else
+                            // If this the first time the Admin is configuring the server a new row needs to be inserted into the DB
+                        {
+
+                            int schoolID =
+                            (from Schools in schoolDB.Schools
+                                where Schools.SchoolName == m_SchoolName
+                                select Schools.SchoolID).First();
+                            Server tempServer = new Server
+                            {
+                                SchoolID = schoolID,
+                                ServerName = textBoxServerName.Text,
+                                ServerIPAddress = textBoxNewIP.Text
+                            };
+                            schoolDB.Servers.Add(tempServer);
+                        }
+
+                        schoolDB.SaveChanges();
                     }
 
-                    schoolDB.SaveChanges();
+                    this.Close();
                 }
-
-                this.Close();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Unable to the UnstuckME Servers", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+                
             }
         }
 
