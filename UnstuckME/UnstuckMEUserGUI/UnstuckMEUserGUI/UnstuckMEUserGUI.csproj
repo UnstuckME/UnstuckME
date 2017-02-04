@@ -58,15 +58,20 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AvailableSticker.xaml.cs">
+      <DependentUpon>AvailableSticker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ClassDisplay.xaml.cs">
       <DependentUpon>ClassDisplay.xaml</DependentUpon>
     </Compile>
@@ -85,6 +90,9 @@
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineUser.xaml.cs">
+      <DependentUpon>OnlineUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="School.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
@@ -134,6 +142,13 @@
     <Compile Include="StickerDisplay.xaml.cs">
       <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UnstuckMEWindow.xaml.cs">
+      <DependentUpon>UnstuckMEWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AvailableSticker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ClassDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OnlineUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StickerDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnstuckMEWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,6 +262,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\CloseButton.png" />
+    <Resource Include="Resources\home.png" />
+    <Resource Include="Resources\online.png" />
+    <Resource Include="Resources\greenCheckMark.png" />
+    <Resource Include="Resources\redXMark.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
