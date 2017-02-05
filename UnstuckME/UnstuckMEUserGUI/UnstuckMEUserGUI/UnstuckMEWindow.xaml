@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d" 
-        Title="UnstuckME" Height="Auto" Width="Auto" MinWidth="75"
+        Title="UnstuckME" Height="Auto" Width="Auto" MinWidth="392"
         Background="DimGray" WindowStyle="SingleBorderWindow" ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen" Visibility="Visible">
     <Window.Resources>
@@ -36,33 +36,34 @@
             <ColumnDefinition Width="75"/>
             <ColumnDefinition Width="192*"/>
         </Grid.ColumnDefinitions>
-        <Grid Width="300" Height="Auto" MinWidth="100" MaxWidth="300" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Gray" Grid.Column="1">
+        <Grid Width="300" Height="Auto" MinWidth="100" MaxWidth="300" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="DimGray" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="221*"/>
-                <RowDefinition Height="12"/>
-                <RowDefinition Height="209*"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="107*"/>
+                <RowDefinition Height="5"/>
                 <RowDefinition Height="33"/>
+                <RowDefinition Height="104*"/>
             </Grid.RowDefinitions>
-            <Label x:Name="AvailableStickerLabel" Content="Available Stickers:" FontSize="18" Foreground="White" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="280" Height="34"/>
+            <Separator Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="Black" ></Separator>
+            <Label x:Name="AvailableStickerLabel" Content="Available Stickers:" Padding="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="18" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="290" Height="33"/>
             <Grid Margin="0,5,0,0" Grid.Row="1">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="AvailableStickersStack" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="300" Grid.Row="0"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto" VerticalAlignment="Top" Margin="0,-5,0,0" RenderTransformOrigin="0.5,0.5">
+                    <StackPanel x:Name="AvailableStickersStack" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
                 </ScrollViewer>
 
             </Grid>
             <Separator Grid.Row="2" Foreground="Black" Background="Black" VerticalContentAlignment="Center" VerticalAlignment="Center"></Separator>
-            <Separator Grid.Row="4" Foreground="Black" Background="Black" VerticalContentAlignment="Top" VerticalAlignment="Top"></Separator>
-            <Grid Grid.Row="3">
+            <Separator Grid.Row="4" Foreground="Black" Background="Black" VerticalContentAlignment="Top" VerticalAlignment="Top" ></Separator>
+            <Grid Grid.Row="4" Margin="0,3,0,0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="OnlineUsersStack" Height="Auto" VerticalAlignment="Top" Grid.Row="2"/>
+                    <StackPanel x:Name="OnlineUsersStack" Height="Auto" VerticalAlignment="Top" Grid.Row="4"/>
                 </ScrollViewer>
             </Grid>
-            <Label x:Name="OnlineUsersLabel" Foreground="White" Content="Online Users: " VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="300" Height="38" Grid.Row="3" Grid.RowSpan="2"/>
+            <Label x:Name="OnlineUsersLabel" Foreground="White" Content="Contacts: " VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="300" Height="30" Grid.Row="3"/>
         </Grid>
-        <Frame x:Name="MainFrame"  NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,1,1,1" MinWidth="300" Background="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="75,0,300,0" Grid.ColumnSpan="3"/>
-        <Grid Width="Auto" Height="Auto" MinWidth="75" MaxWidth="75" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Gray" Grid.Column="0">
-            <Border x:Name="HomeButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,10,10,0" Cursor="Hand">
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,0,1,0" MinWidth="300" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="75,0,300,0" Grid.ColumnSpan="3"/>
+        <Grid Width="Auto" Height="Auto" MinWidth="75" MaxWidth="75" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="DimGray" Grid.Column="0">
+            <Border x:Name="HomeButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#FF993333" Height="60" Margin="10,10,10,0" Cursor="Hand">
                 <Button x:Name="HomeButton" Style="{StaticResource NoHighlightButton}" Click="HomeButton_Click">
                     <Image Source="Resources/home.png" ></Image>
                 </Button>

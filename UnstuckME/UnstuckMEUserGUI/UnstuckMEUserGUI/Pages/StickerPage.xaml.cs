@@ -24,5 +24,11 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
         }
+
+        public void HelloWorld()
+        {
+
+        }
     }
+
 }

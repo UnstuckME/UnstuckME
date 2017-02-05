@@ -23,24 +23,27 @@ namespace UnstuckMEUserGUI
         public OnlineUser(string username)
         {
             InitializeComponent();
-            UserName.Text = username;
+            UserButton.Content = username;
         }
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            UserName.Text = "Clicked";
+            UserButton.Content = "Clicked";
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        private void UserButton_Click(object sender, RoutedEventArgs e)
         {
-            OnlineUserGrid.Background = Brushes.White;
-            UserName.Foreground = Brushes.Black;
+            UserButton.Content = "Clicked";
         }
 
-        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        private void UserButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            OnlineUserGrid.Background = null;
-            UserName.Foreground = Brushes.White;
+            UserButton.Foreground = Brushes.Black;
+        }
+
+        private void UserButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            UserButton.Foreground = Brushes.White;
         }
     }
 }

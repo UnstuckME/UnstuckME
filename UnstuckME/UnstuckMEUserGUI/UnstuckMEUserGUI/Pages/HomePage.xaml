@@ -1,0 +1,22 @@
+﻿<Page x:Class="UnstuckMEUserGUI.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UnstuckMEUserGUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="500"
+      Title="HomePage">
+
+    <Grid >
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="150" Width="150">
+            <Border BorderBrush="Black" BorderThickness="0,0,1,1">
+                <Image x:Name="image" Source="/Resources/UnstuckME_Logo.png" HorizontalAlignment="Center" Width="Auto" Height="Auto" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="150" Width="200" Margin="155,0,0,0">
+            <TextBox Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="First Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,10,0,0"></TextBox>
+            <TextBox Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Last Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,40,0,0"></TextBox>
+        </Grid>
+    </Grid>
+</Page>

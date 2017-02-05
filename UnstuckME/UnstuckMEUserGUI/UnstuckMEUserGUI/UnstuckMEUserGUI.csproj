@@ -69,10 +69,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AvailableSticker.xaml.cs">
+    <Compile Include="UserControls\AvailableSticker.xaml.cs">
       <DependentUpon>AvailableSticker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ClassDisplay.xaml.cs">
+    <Compile Include="UserControls\ClassDisplay.xaml.cs">
       <DependentUpon>ClassDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientCallback.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="GetSchoolServerInfo_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="HomePage.xaml.cs">
+    <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginWindow.xaml.cs">
@@ -94,7 +94,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OnlineUser.xaml.cs">
+    <Compile Include="UserControls\OnlineUser.xaml.cs">
       <DependentUpon>OnlineUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="School.cs">
@@ -112,22 +112,22 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ReviewDisplay.xaml.cs">
+    <Compile Include="UserControls\ReviewDisplay.xaml.cs">
       <DependentUpon>ReviewDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StarRankTemplate_UC.xaml.cs">
+    <Compile Include="UserControls\StarRankTemplate_UC.xaml.cs">
       <DependentUpon>StarRankTemplate_UC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateStickerTemplate.xaml.cs">
+    <Compile Include="UserControls\CreateStickerTemplate.xaml.cs">
       <DependentUpon>CreateStickerTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StickerPage.xaml.cs">
+    <Compile Include="Pages\StickerPage.xaml.cs">
       <DependentUpon>StickerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnstuckMEMessageBox.xaml.cs">
+    <Compile Include="SubWindows\UnstuckMEMessageBox.xaml.cs">
       <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMESchools_DB.Context.cs">
@@ -145,21 +145,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="StickerDisplay.xaml.cs">
+    <Compile Include="UserControls\StickerDisplay.xaml.cs">
       <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMEWindow.xaml.cs">
       <DependentUpon>UnstuckMEWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="AvailableSticker.xaml">
+    <Page Include="UserControls\AvailableSticker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ClassDisplay.xaml">
+    <Page Include="UserControls\ClassDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HomePage.xaml">
+    <Page Include="Pages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,15 +171,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OnlineUser.xaml">
+    <Page Include="UserControls\OnlineUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ReviewDisplay.xaml">
+    <Page Include="UserControls\ReviewDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StarRankTemplate_UC.xaml">
+    <Page Include="UserControls\StarRankTemplate_UC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,19 +195,19 @@
       <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="CreateStickerTemplate.xaml">
+    <Page Include="UserControls\CreateStickerTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StickerPage.xaml">
+    <Page Include="Pages\StickerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UnstuckMEMessageBox.xaml">
+    <Page Include="SubWindows\UnstuckMEMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StickerDisplay.xaml">
+    <Page Include="UserControls\StickerDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -291,6 +291,7 @@
       <LastGenOutput>UnstuckMESchools_DB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

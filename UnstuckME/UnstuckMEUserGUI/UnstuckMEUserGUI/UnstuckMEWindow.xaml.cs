@@ -23,35 +23,39 @@ namespace UnstuckMEUserGUI
         private static HomePage _HomePage;
         private static StickerPage _stickerPage;
         private static Brush _UnstuckMEBlue;
+        private static Brush _UnstuckMERed;
         public UnstuckMEWindow()
         {
             InitializeComponent();
-            _UnstuckMEBlue = HomeButtonBorder.Background;
+            _UnstuckMERed = HomeButtonBorder.Background;
+            _UnstuckMEBlue = StickerButtonBorder.Background;
             _HomePage = new HomePage();
             _stickerPage = new StickerPage();
             for (int i = 0; i < 30; i++)
             {
                 OnlineUsersStack.Children.Add(new OnlineUser("Hello User " + i ));
             }
-            OnlineUsersLabel.Content = "Online Users: " + OnlineUsersStack.Children.Count;
 
             for (int i = 0; i < 30; i++)
             {
                 AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
             }
+            MainFrame.Navigate(_HomePage);
+            HomeButtonBorder.Background = _UnstuckMERed;
+            StickerButtonBorder.Background = _UnstuckMEBlue;
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(_HomePage);
-            HomeButtonBorder.Background = Brushes.White;
+            HomeButtonBorder.Background = _UnstuckMERed;
             StickerButtonBorder.Background = _UnstuckMEBlue;
         }
 
         private void StickerButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(_stickerPage);
-            StickerButtonBorder.Background = Brushes.White;
+            StickerButtonBorder.Background = _UnstuckMERed;
             HomeButtonBorder.Background = _UnstuckMEBlue;
         }
     }
