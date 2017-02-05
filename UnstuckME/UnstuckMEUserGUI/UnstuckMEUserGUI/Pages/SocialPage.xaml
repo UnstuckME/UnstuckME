@@ -9,6 +9,6 @@
       Title="SocialPage">
 
     <Grid>
-        <TextBox Text="Social Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
+        <TextBox x:Name="SocialText" Text="Social Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
     </Grid>
 </Page>

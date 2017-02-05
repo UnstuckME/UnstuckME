@@ -5,10 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="300" 
+             d:DesignHeight="35" d:DesignWidth="300" 
              BorderBrush="Black" BorderThickness="0,0,0,1">
     <Grid x:Name="OnlineUserGrid">
-        <Image Source="/Resources/online.png" HorizontalAlignment="Left" Height="15" Width="15" Margin="8,0,0,0"></Image>
-        <Button x:Name="UserButton" Height="29" Foreground="White" Cursor="Hand" Click="UserButton_Click" HorizontalAlignment="Stretch" Mouse.MouseEnter="UserButton_MouseEnter" Mouse.MouseLeave="UserButton_MouseLeave" VerticalContentAlignment="Center" Content="Button" Background="{x:Null}" BorderBrush="Black" BorderThickness="1,0,0,0" HorizontalContentAlignment="Left" Padding="5,0,0,0"  VerticalAlignment="Stretch" Margin="28,-1,0,0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Image Source="/Resources/online.png" HorizontalAlignment="Left" Height="15" Width="15" Margin="7,0,0,0" VerticalAlignment="Center" Grid.Row="0"></Image>
+            <Button x:Name="UserButton" Grid.Row="0" Height="29" Foreground="White" Cursor="Hand" Click="UserButton_Click" HorizontalAlignment="Stretch" Mouse.MouseEnter="UserButton_MouseEnter" Mouse.MouseLeave="UserButton_MouseLeave" VerticalContentAlignment="Center" Content="Button" Background="{x:Null}" BorderBrush="Black" BorderThickness="1,0,0,0" HorizontalContentAlignment="Left" Padding="5,0,0,0"  VerticalAlignment="Center" Margin="28,0,0,0"/>
+        </Grid>
+        <Grid Grid.Row="1" Background="#993333">
+            <Border BorderBrush="Black" BorderThickness="0,1,1,0"></Border>
+        </Grid>
     </Grid>
 </UserControl>

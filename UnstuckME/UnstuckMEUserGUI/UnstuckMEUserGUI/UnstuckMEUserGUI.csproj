@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\Notifications\NewMessageNotification.xaml.cs">
+      <DependentUpon>NewMessageNotification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ClassesPage.xaml.cs">
       <DependentUpon>ClassesPage.xaml</DependentUpon>
     </Compile>
@@ -78,7 +81,7 @@
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Contacts\AvailableSticker.xaml.cs">
+    <Compile Include="UserControls\Notifications\AvailableSticker.xaml.cs">
       <DependentUpon>AvailableSticker.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Classes\ClassDisplay.xaml.cs">
@@ -160,6 +163,10 @@
     <Compile Include="UnstuckMEWindow.xaml.cs">
       <DependentUpon>UnstuckMEWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="UserControls\Notifications\NewMessageNotification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ClassesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Contacts\AvailableSticker.xaml">
+    <Page Include="UserControls\Notifications\AvailableSticker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

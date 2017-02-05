@@ -24,5 +24,10 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
         }
+
+        public void NotificationCall(string username)
+        {
+            SocialText.Text = username + " Sent A Message";
+        }
     }
 }

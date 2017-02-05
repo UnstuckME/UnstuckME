@@ -20,11 +20,7 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEWindow : Window
     {
-        private static HomePage _HomePage;
-        private static StickerPage _StickerPage;
-        private static SettingsPage _SettingsPage;
-        private static SocialPage _SocialPage;
-        private static ClassesPage _ClassesPage;
+        public static UnstuckMEPages _pages = new UnstuckMEPages();
 
         private static Brush _UnstuckMEBlue;
         private static Brush _UnstuckMERed;
@@ -33,12 +29,12 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             _UnstuckMERed = HomeButtonBorder.Background;
             _UnstuckMEBlue = StickerButtonBorder.Background;
-
-            _HomePage = new HomePage();
-            _StickerPage = new StickerPage();
-            _SettingsPage = new SettingsPage();
-            _SocialPage = new SocialPage();
-            _ClassesPage = new ClassesPage();
+ 
+            _pages.HomePage = new HomePage();
+            _pages.StickerPage = new StickerPage();
+            _pages.SettingsPage = new SettingsPage();
+            _pages.SocialPage = new SocialPage();
+            _pages.ClassesPage = new ClassesPage();
 
             for (int i = 0; i < 30; i++)
             {
@@ -47,18 +43,18 @@ namespace UnstuckMEUserGUI
 
             for (int i = 0; i < 30; i++)
             {
-                AvailableStickersStack.Children.Add(new OnlineUser("Hello User " + i));
+                AvailableStickersStack.Children.Add(new NewMessageNotification("User " +i, ref _pages, this));
                 AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
             }
 
-            MainFrame.Navigate(_HomePage);
+            MainFrame.Navigate(_pages.HomePage);
             HomeButtonBorder.Background = _UnstuckMERed;
             StickerButtonBorder.Background = _UnstuckMEBlue;
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(_HomePage);
+            MainFrame.Navigate(_pages.HomePage);
             HomeButtonBorder.Background = _UnstuckMERed;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
@@ -68,7 +64,7 @@ namespace UnstuckMEUserGUI
 
         private void StickerButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(_StickerPage);
+            MainFrame.Navigate(_pages.StickerPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMERed;
             SettingButtonBorder.Background = _UnstuckMEBlue;
@@ -76,9 +72,9 @@ namespace UnstuckMEUserGUI
             ClassButtonBorder.Background = _UnstuckMEBlue;
         }
 
-        private void SocialButton_Click(object sender, RoutedEventArgs e)
+        public void SocialButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(_SocialPage);
+            MainFrame.Navigate(_pages.SocialPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
@@ -88,7 +84,7 @@ namespace UnstuckMEUserGUI
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(_SettingsPage);
+            MainFrame.Navigate(_pages.SettingsPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMERed;
@@ -98,12 +94,21 @@ namespace UnstuckMEUserGUI
 
         private void ClassButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(_ClassesPage);
+            MainFrame.Navigate(_pages.ClassesPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
             SocialButtonBorder.Background = _UnstuckMEBlue;
             ClassButtonBorder.Background = _UnstuckMERed;
         }
+    }
+
+    public class UnstuckMEPages
+    {
+        public  HomePage HomePage { get; set; }
+        public  StickerPage StickerPage { get; set; }
+        public  SettingsPage SettingsPage { get; set; }
+        public  SocialPage SocialPage { get; set; }
+        public  ClassesPage ClassesPage { get; set; }
     }
 }
