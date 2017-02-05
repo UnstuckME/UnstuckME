@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d" 
-        Title="UnstuckME" Height="Auto" Width="Auto" MinWidth="392"
+        Title="UnstuckME" Height="Auto" Width="Auto" MinWidth="392" MinHeight="400"
         Background="DimGray" WindowStyle="SingleBorderWindow" ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen" Visibility="Visible">
     <Window.Resources>
@@ -63,24 +63,30 @@
         </Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,0,1,0" MinWidth="300" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="75,0,300,0" Grid.ColumnSpan="3"/>
         <Grid Width="Auto" Height="Auto" MinWidth="75" MaxWidth="75" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="DimGray" Grid.Column="0">
+            
             <Border x:Name="HomeButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#FF993333" Height="60" Margin="10,10,10,0" Cursor="Hand">
                 <Button x:Name="HomeButton" Style="{StaticResource NoHighlightButton}" Click="HomeButton_Click">
-                    <Image Source="Resources/home.png" ></Image>
+                    <Image x:Name="HomeIcon" Source="Resources/Home/HomeWhite.png" Width="45" Height="45"></Image>
                 </Button>
             </Border>
             <Border x:Name="StickerButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,75,10,0" Cursor="Hand">
                 <Button x:Name="StickerButton" Style="{StaticResource NoHighlightButton}" Click="StickerButton_Click">
-                    <Image Source="Resources/Star.png" ></Image>
+                    <Image x:Name="StickerIcon" Source="Resources/Sticker/StickerIconWhite.png" Width="45" Height="45"></Image>
                 </Button>
             </Border>
-            <Border x:Name="ProfileButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,140,10,0" Cursor="Hand">
-                <Button x:Name="ProfileButton" Style="{StaticResource NoHighlightButton}" >
-                    <Image Source="Resources/UnstuckME_Logo.png" ></Image>
+            <Border x:Name="ClassButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,140,10,0" Cursor="Hand">
+                <Button x:Name="ClassButton" Style="{StaticResource NoHighlightButton}" Click="ClassButton_Click">
+                    <Image x:Name="ClassIcon" Source="Resources/Classes/ClassWhite.png" Width="45" Height="45"></Image>
                 </Button>
             </Border>
-            <Border CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,205,10,0" Cursor="Hand">
-                <Button x:Name="FriendsButton" Style="{StaticResource NoHighlightButton}" >
-                    <Image Source="Resources/Right_Arrow.png" ></Image>
+            <Border x:Name="SocialButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,205,10,0" Cursor="Hand">
+                <Button x:Name="SocialButton" Style="{StaticResource NoHighlightButton}" Click="SocialButton_Click">
+                    <Image Source="Resources/Contacts/ContactsWhite.png" Width="45" Height="45"></Image>
+                </Button>
+            </Border>
+            <Border x:Name="SettingButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,270,10,0" Cursor="Hand">
+                <Button x:Name="SettingsButton" Style="{StaticResource NoHighlightButton}" Click="SettingsButton_Click">
+                    <Image Source="Resources/Gear/GearWhite.png" Width="45" Height="45" ></Image>
                 </Button>
             </Border>
         </Grid>

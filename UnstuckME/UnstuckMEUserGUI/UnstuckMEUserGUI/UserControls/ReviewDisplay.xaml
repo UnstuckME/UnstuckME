@@ -9,7 +9,7 @@
     <Canvas x:Name="StickerCanvas" Width="{Binding ActualWidth, ElementName=Review}" Background="DimGray">
         <Label x:Name="DescriptionLabel" Background="White" Height="60" Width="{Binding ActualWidth, ElementName=Review}" BorderThickness="1"
                HorizontalContentAlignment="Left" VerticalContentAlignment="Top" FontSize="8" />
-        <local:StarRankTemplate_UC x:Name="ReviewStarRank" IsEnabled="False" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1,0,0,0" Canvas.Top="60" />
+        <!--<local:StarRankTemplate_UC x:Name="ReviewStarRank" IsEnabled="False" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1,0,0,0" Canvas.Top="60" />-->
         <Button x:Name="ReportBtn" Content="Report" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="20" Width="50" Margin="250,60,0,0" Click="ReportBtn_Click"/>
     </Canvas>
 </UserControl>

@@ -9,10 +9,10 @@
     <Grid>
         <Button x:Name="ClassNameInfoButton" Click="ClassNameInfoButton_Click" BorderThickness="0,0,1,1" BorderBrush="Black" Padding="6,0,0,0" HorizontalAlignment="Left" Mouse.MouseEnter="Button_MouseEnter" Mouse.MouseLeave="Button_MouseLeave" Cursor="Hand" VerticalContentAlignment="Center" Foreground="White" Background="{x:Null}" Width="203" Height="Auto" HorizontalContentAlignment="Left"/>
         <Button x:Name="Decline" Width="40" Margin="243,0,0,0" BorderBrush="Black" BorderThickness="0,0,1,1" Background="{x:Null}" Cursor="Hand" HorizontalAlignment="Left">
-            <Image Source="/Resources/redXMark.png" Height="25" Width="25"></Image>
+            <Image Source="/Resources/Xmark/XmarkRed.png" Height="25" Width="25"></Image>
         </Button>
         <Button x:Name="Accept" Width="40" Margin="203,0,0,0" BorderBrush="Black" BorderThickness="0,0,1,1" Background="{x:Null}" Cursor="Hand" HorizontalAlignment="Left">
-            <Image Source="/Resources/greenCheckMark.png" Height="25" Width="25"></Image>
+            <Image Source="/Resources/CheckMark/CheckGreen.png" Height="25" Width="25"></Image>
         </Button>
     </Grid>
 </UserControl>

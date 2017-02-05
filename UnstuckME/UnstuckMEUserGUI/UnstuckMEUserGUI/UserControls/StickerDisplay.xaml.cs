@@ -39,7 +39,7 @@ namespace UnstuckMEUserGUI
 			CourseNameLabel.Content = _class.CourseName;
 			CourseNumLabel.Content = _class.CourseNumber;
 			ProblemDescriptionLabel.Content = sticker.ProblemDescription;
-			MinimmumStarRank.StarRank = sticker.MinimumStarRanking;
+			//MinimmumStarRank.StarRank = sticker.MinimumStarRanking;
 
 			//if (sticker.TutoringOrganizations.Count != 0)
 			//{

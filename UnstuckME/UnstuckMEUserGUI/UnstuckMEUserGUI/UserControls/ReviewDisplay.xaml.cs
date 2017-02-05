@@ -31,8 +31,8 @@ namespace UnstuckMEUserGUI
 			Server = OpenServer;
 			_review = review;
 
-			DescriptionLabel.Content = _review.Description;
-			ReviewStarRank.StarRank = _review.StarRanking;
+			//DescriptionLabel.Content = _review.Description;
+			//ReviewStarRank.StarRank = _review.StarRanking;
 		}
 
 		private void ReportBtn_Click(object sender, RoutedEventArgs e)

@@ -69,6 +69,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\ClassesPage.xaml.cs">
+      <DependentUpon>ClassesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SocialPage.xaml.cs">
+      <DependentUpon>SocialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\AvailableSticker.xaml.cs">
       <DependentUpon>AvailableSticker.xaml</DependentUpon>
     </Compile>
@@ -151,6 +160,18 @@
     <Compile Include="UnstuckMEWindow.xaml.cs">
       <DependentUpon>UnstuckMEWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\ClassesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SocialPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\AvailableSticker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -276,10 +297,79 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\CloseButton.png" />
-    <Resource Include="Resources\home.png" />
     <Resource Include="Resources\online.png" />
-    <Resource Include="Resources\greenCheckMark.png" />
-    <Resource Include="Resources\redXMark.png" />
+    <Resource Include="Resources\Stars\StarBlue.png" />
+    <Resource Include="Resources\Stars\StarOrange.png" />
+    <Resource Include="Resources\Stars\StarRed.png" />
+    <Resource Include="Resources\Stars\StarYellow.png" />
+    <Resource Include="Resources\AddUser\AddUserBlack.png" />
+    <Resource Include="Resources\AddUser\AddUserBlue.png" />
+    <Resource Include="Resources\AddUser\AddUserRed.png" />
+    <Resource Include="Resources\AddUser\AddUserWhite.png" />
+    <Resource Include="Resources\Chat\ChatBlack.png" />
+    <Resource Include="Resources\Chat\ChatBlue.png" />
+    <Resource Include="Resources\Chat\ChatRed.png" />
+    <Resource Include="Resources\Chat\ChatWhite.png" />
+    <Resource Include="Resources\Checkmark\CheckBlack.png" />
+    <Resource Include="Resources\Checkmark\CheckBlue.png" />
+    <Resource Include="Resources\Checkmark\CheckBrightRed.png" />
+    <Resource Include="Resources\Checkmark\CheckGreen.png" />
+    <Resource Include="Resources\Checkmark\CheckRed.png" />
+    <Resource Include="Resources\Checkmark\CheckWhite.png" />
+    <Resource Include="Resources\Contacts\ContactsBlack.png" />
+    <Resource Include="Resources\Contacts\ContactsBlue.png" />
+    <Resource Include="Resources\Contacts\ContactsRed.png" />
+    <Resource Include="Resources\Contacts\ContactsWhite.png" />
+    <Resource Include="Resources\Home\HomeBlack.png" />
+    <Resource Include="Resources\Home\HomeBlue.png" />
+    <Resource Include="Resources\Home\HomeRed.png" />
+    <Resource Include="Resources\Home\HomeWhite.png" />
+    <Resource Include="Resources\Plus\PlusBlack.png" />
+    <Resource Include="Resources\Plus\PlusBlue.png" />
+    <Resource Include="Resources\Plus\PlusRed.png" />
+    <Resource Include="Resources\Plus\PlusWhite.png" />
+    <Resource Include="Resources\Gear\GearBlack.png" />
+    <Resource Include="Resources\Gear\GearBlue.png" />
+    <Resource Include="Resources\Gear\GearRed.png" />
+    <Resource Include="Resources\Gear\GearWhite.png" />
+    <Resource Include="Resources\Sticker\StickerBlack.png" />
+    <Resource Include="Resources\Sticker\StickerBlue.png" />
+    <Resource Include="Resources\Sticker\StickerRed.png" />
+    <Resource Include="Resources\Sticker\StickerWhite.png" />
+    <Resource Include="Resources\Sticker\TagBlack.png" />
+    <Resource Include="Resources\Sticker\TagBlue.png" />
+    <Resource Include="Resources\Sticker\TagRed.png" />
+    <Resource Include="Resources\Sticker\TagWhite.png" />
+    <Resource Include="Resources\Time\TimeBlack.png" />
+    <Resource Include="Resources\Time\TimeBlue.png" />
+    <Resource Include="Resources\Time\TimeRed.png" />
+    <Resource Include="Resources\Time\TimeWhite.png" />
+    <Resource Include="Resources\Xmark\XmarkBlack.png" />
+    <Resource Include="Resources\Xmark\XmarkBlue.png" />
+    <Resource Include="Resources\Xmark\XmarkBrightRed.png" />
+    <Resource Include="Resources\Xmark\XmarkGreen.png" />
+    <Resource Include="Resources\Xmark\XmarkRed.png" />
+    <Resource Include="Resources\Xmark\XmarkWhite.png" />
+    <Resource Include="Resources\Edit\EditBlack.png" />
+    <Resource Include="Resources\Edit\EditBlue.png" />
+    <Resource Include="Resources\Edit\EditRed.png" />
+    <Resource Include="Resources\Edit\EditWhite.png" />
+    <Resource Include="Resources\Refresh\RefreshBlack.png" />
+    <Resource Include="Resources\Refresh\RefreshBlue.png" />
+    <Resource Include="Resources\Refresh\RefreshRed.png" />
+    <Resource Include="Resources\Refresh\RefreshWhite.png" />
+    <Resource Include="Resources\User\UserBlack.png" />
+    <Resource Include="Resources\User\UserBlue.png" />
+    <Resource Include="Resources\User\UserRed.png" />
+    <Resource Include="Resources\User\UserWhite.png" />
+    <Resource Include="Resources\Sticker\StickerIconBlack.png" />
+    <Resource Include="Resources\Sticker\StickerIconBlue.png" />
+    <Resource Include="Resources\Sticker\StickerIconRed.png" />
+    <Resource Include="Resources\Sticker\StickerIconWhite.png" />
+    <Resource Include="Resources\Classes\ClassBlack.png" />
+    <Resource Include="Resources\Classes\ClassBlue.png" />
+    <Resource Include="Resources\Classes\ClassRed.png" />
+    <Resource Include="Resources\Classes\ClassWhite.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

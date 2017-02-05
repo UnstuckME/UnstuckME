@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UnstuckMEUserGUI"
       mc:Ignorable="d" 
-      d:DesignHeight="400" d:DesignWidth="500"
+      d:DesignHeight="400" d:DesignWidth="700"
       Title="HomePage">
 
     <Grid >
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="86*"/>
         </Grid.ColumnDefinitions>
         <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.Column="0">
-            <Image x:Name="ProfilePicture" Source="/Resources/UnstuckME_Logo.png" HorizontalAlignment="Center" Width="Auto" Height="Auto" VerticalAlignment="Center"/>
+            <Image x:Name="ProfilePicture" Source="/Resources/User/UserBlue.png" HorizontalAlignment="Center" Width="Auto" Height="Auto" VerticalAlignment="Center"/>
         </Border>
         <TextBox Grid.Column="1" Grid.Row="0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="First Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,10,0,0" TextWrapping="NoWrap"></TextBox>
         <TextBox Grid.Column="1" Grid.Row="0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Last Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,40,0,0" TextWrapping="NoWrap"></TextBox>
@@ -26,8 +26,9 @@
         
         <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="250*"/>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Black" BorderThickness="0,1,1,0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">

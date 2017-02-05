@@ -17,7 +17,7 @@
                HorizontalContentAlignment="Left" VerticalContentAlignment="Top" FontSize="8" Margin="0,20,0,0" />
         <Label x:Name="ProblemDescriptionLabel" Background="White" Height="60" Width="{Binding ActualWidth, ElementName=Sticker}" BorderThickness="1" Margin="0,60,0,0"
                HorizontalContentAlignment="Left" VerticalContentAlignment="Top" FontSize="8" />
-        <local:StarRankTemplate_UC x:Name="MinimmumStarRank" IsEnabled="False" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,120,0,0" BorderThickness="1,0,0,0" />
+        <!--<local:StarRankTemplate_UC x:Name="MinimmumStarRank" IsEnabled="False" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,120,0,0" BorderThickness="1,0,0,0" /> -->
         <ListView x:Name="TutoringOrganizations" Height="20" Width="200" Margin="100,120,100,100" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" BorderThickness="1,0">
             <ListViewItem x:Name="NoOrganizationFilter" Content="No specific tutors/organizations" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" FontStyle="Italic" Foreground="#FF727272" />
         </ListView>
