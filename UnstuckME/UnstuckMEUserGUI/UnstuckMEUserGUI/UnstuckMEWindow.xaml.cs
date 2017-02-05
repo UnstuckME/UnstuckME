@@ -42,11 +42,12 @@ namespace UnstuckMEUserGUI
 
             for (int i = 0; i < 30; i++)
             {
-                OnlineUsersStack.Children.Add(new OnlineUser("Hello User " + i ));
+                OnlineUsersStack.Children.Add(new OnlineUser("Hello User " + i));
             }
 
             for (int i = 0; i < 30; i++)
             {
+                AvailableStickersStack.Children.Add(new OnlineUser("Hello User " + i));
                 AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
             }
 

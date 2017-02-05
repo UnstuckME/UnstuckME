@@ -40,26 +40,30 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="36"/>
                 <RowDefinition Height="107*"/>
-                <RowDefinition Height="5"/>
                 <RowDefinition Height="33"/>
                 <RowDefinition Height="104*"/>
             </Grid.RowDefinitions>
-            <Separator Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Background="Black" ></Separator>
-            <Label x:Name="AvailableStickerLabel" Content="Available Stickers:" Padding="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="18" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="290" Height="33"/>
-            <Grid Margin="0,5,0,0" Grid.Row="1">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto" VerticalAlignment="Top" Margin="0,-5,0,0" RenderTransformOrigin="0.5,0.5">
+            <Grid Grid.Row="0" Background="#336699">
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
+                    <Label x:Name="AvailableStickerLabel" Background="#336699" Content="Notifications:" Padding="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="18" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Height="Auto"/>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto" VerticalAlignment="Top">
                     <StackPanel x:Name="AvailableStickersStack" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
                 </ScrollViewer>
 
             </Grid>
-            <Separator Grid.Row="2" Foreground="Black" Background="Black" VerticalContentAlignment="Center" VerticalAlignment="Center"></Separator>
-            <Separator Grid.Row="4" Foreground="Black" Background="Black" VerticalContentAlignment="Top" VerticalAlignment="Top" ></Separator>
-            <Grid Grid.Row="4" Margin="0,3,0,0">
+            <Grid Grid.Row="2" Background="#336699">
+                <Border BorderBrush="Black" BorderThickness="0,1,0,1">
+                    <Label x:Name="OnlineUsersLabel" Foreground="White" Content="Contacts: " VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Height="30"/>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="3">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="OnlineUsersStack" Height="Auto" VerticalAlignment="Top" Grid.Row="4"/>
+                    <StackPanel x:Name="OnlineUsersStack" Height="Auto" VerticalAlignment="Top"/>
                 </ScrollViewer>
             </Grid>
-            <Label x:Name="OnlineUsersLabel" Foreground="White" Content="Contacts: " VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="300" Height="30" Grid.Row="3"/>
         </Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,0,1,0" MinWidth="300" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="75,0,300,0" Grid.ColumnSpan="3"/>
         <Grid Width="Auto" Height="Auto" MinWidth="75" MaxWidth="75" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="DimGray" Grid.Column="0">
