@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="250*"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Black" BorderThickness="0,1,1,0">
-                <ScrollViewer>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="BottomLeftStack" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
 
                     </StackPanel>
