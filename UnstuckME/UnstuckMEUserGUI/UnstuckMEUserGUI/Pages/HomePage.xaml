@@ -9,14 +9,33 @@
       Title="HomePage">
 
     <Grid >
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="150" Width="150">
-            <Border BorderBrush="Black" BorderThickness="0,0,1,1">
-                <Image x:Name="image" Source="/Resources/UnstuckME_Logo.png" HorizontalAlignment="Center" Width="Auto" Height="Auto" VerticalAlignment="Center"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="33*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="86*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.Column="0">
+            <Image x:Name="ProfilePicture" Source="/Resources/UnstuckME_Logo.png" HorizontalAlignment="Center" Width="Auto" Height="Auto" VerticalAlignment="Center"/>
+        </Border>
+        <TextBox Grid.Column="1" Grid.Row="0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="First Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,10,0,0" TextWrapping="NoWrap"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Last Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,40,0,0" TextWrapping="NoWrap"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Email Address" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,70,0,0" TextWrapping="NoWrap"></TextBox>
+        
+        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="250*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="0,1,1,0">
+                <ScrollViewer>
+                    <StackPanel x:Name="BottomLeftStack" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+                    </StackPanel>
+                </ScrollViewer>
             </Border>
-        </Grid>
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="150" Width="200" Margin="155,0,0,0">
-            <TextBox Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="First Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,10,0,0"></TextBox>
-            <TextBox Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Last Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,40,0,0"></TextBox>
         </Grid>
     </Grid>
 </Page>

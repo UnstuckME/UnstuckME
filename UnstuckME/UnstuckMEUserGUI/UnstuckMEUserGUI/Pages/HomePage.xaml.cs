@@ -23,6 +23,10 @@ namespace UnstuckMEUserGUI
         public HomePage()
         {
             InitializeComponent();
+            for (int i = 0; i < 30; i++)
+            {
+                BottomLeftStack.Children.Add(new AvailableSticker("CST 11" + i));
+            }
         }
     }
 }
