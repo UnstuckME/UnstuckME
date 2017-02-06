@@ -9,7 +9,7 @@
         Title="AdminSchoolChange" Height="250" Width="424.762" WindowStyle="None" BorderThickness="2"
         MaxHeight="250" MaxWidth="500" MinHeight="250" MinWidth="500" WindowStartupLocation="CenterScreen">
     <Grid Height="Auto" Width="Auto" Margin="0,0,0,-2">
-        <ComboBox x:Name="comboBoxSchools" Background="White"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="243" SelectedIndex="0" Margin="237,67,8,146" Height="27" TabIndex="0">
+        <ComboBox x:Name="comboBoxSchools" Background="White"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="243" SelectedIndex="0" Margin="235,62,10,151" Height="27" TabIndex="0">
             <ComboBoxItem Name="Default" Content="(Select School)" Visibility="Hidden" Height="0" Width="0"/>
         </ComboBox>
         <Label x:Name="labelSchoolSelection" Content="School Selection " HorizontalContentAlignment="Center" FontFamily="Times New Roman" Background="{x:Null}" BorderThickness="2" Panel.ZIndex="-1" VerticalAlignment="Top" Height="33" Foreground="White" Margin="0,10,0,0" FontSize="14"/>

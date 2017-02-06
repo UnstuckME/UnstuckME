@@ -39,19 +39,26 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         public ChangeUnstuckMEServerIP()
         {
             InitializeComponent();
-
-            using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
+            try
             {
-                var serverInfo = (from Servers in schoolDB.Servers
-                    where Servers.School.SchoolName == m_SchoolName
-                    select new {Servers.ServerID, Servers.ServerIPAddress, Servers.ServerName}).First();
-                if (serverInfo != null)
+                using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
                 {
-                    textBoxNewIP.Text = serverInfo.ServerIPAddress;
-                    textBoxServerName.Text = serverInfo.ServerName;
-                    m_serverID = serverInfo.ServerID;
+                    var serverInfo = (from Servers in schoolDB.Servers
+                                      where Servers.School.SchoolName == m_SchoolName
+                                      select new { Servers.ServerID, Servers.ServerIPAddress, Servers.ServerName }).First();
+                    if (serverInfo != null)
+                    {
+                        textBoxNewIP.Text = serverInfo.ServerIPAddress;
+                        textBoxServerName.Text = serverInfo.ServerName;
+                        m_serverID = serverInfo.ServerID;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("We seem to experiencing some difficulties connecting to the UnstuckMe Server", "Unable To Connect to UnstuckME Server", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -91,6 +98,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                         }
 
                         schoolDB.SaveChanges();
+                        System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] = textBoxNewIP.Text;
                     }
 
                     this.Close();
@@ -294,7 +302,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
                         DuplexChannelFactory<IUnstuckMEServer> channelFactory =
                             new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(),
-                                "UnstuckMEServerLocalHostEndPoint");
+                                "UnstuckMEServerEndPoint");
                         IUnstuckMEServer testingChannel = channelFactory.CreateChannel();
 
                         if (testingChannel.TestNewConfig() == true)

@@ -23,37 +23,46 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
     public partial class ChangeDabaseConnectionSettings : Window
     {
         private string schoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
-
+        private int? m_databaseID = null;
         private bool useWindowsAuthenfication = false;
 
         public ChangeDabaseConnectionSettings()
         {
             InitializeComponent();
 
-
-            
-            //Load in content from school_DB (Tranlated SQL Query)
-            using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
+            try
             {
-                var firstDatabse = (from Databases in db.Databases where Databases.School.SchoolName == schoolName select Databases).First();
-                if (firstDatabse != null)
+
+                //Load in content from school_DB (Tranlated SQL Query)
+                using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
                 {
-                    textBoxDatabaseName.Text = firstDatabse.DatabaseName;
-                    textBoxUsername.Text = firstDatabse.DatabaseAdminUsername;
-                    if (firstDatabse.DatabaseUsingWindowsAuthen == true)
+                    var firstDatabse =
+                        (from Databases in db.Databases where Databases.School.SchoolName == schoolName select Databases).First();
+
+                    if (firstDatabse != null)
                     {
-                        useWindowsAuthenfication = true;
-                        checkBox.IsChecked = true;
+                        textBoxDatabaseName.Text = firstDatabse.DatabaseName;
+                        textBoxUsername.Text = firstDatabse.DatabaseAdminUsername;
+                        if (firstDatabse.DatabaseUsingWindowsAuthen == true)
+                        {
+                            useWindowsAuthenfication = true;
+                            checkBox.IsChecked = true;
+                        }
+                        textBoxDataSource.Text = firstDatabse.DatabaseIP;
+                        m_databaseID = firstDatabse.DatabaseID;
                     }
-                    textBoxDataSource.Text = firstDatabse.DatabaseIP;
+                    else
+                    {
+                        MessageBox.Show( "It appears you have never configured your School's MSSQL Database with us. Please enter your database information so we can connect your new UnstuckME server to it.", "UnstuckME MSSQL Server Configuration", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
+
                 }
-                else
-                {
-                    MessageBox.Show("It appears you have never configured your School's MSSQL Database with us. Please enter your database information so we can connect your new UnstuckME server to it.", "UnstuckME MSSQL Server Configuration", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                }
-                
             }
-            
+            catch (Exception ex)
+            {
+                MessageBox.Show("We seem to experiencing some difficulties connecting to the UnstuckMe Server", "Unable To Connect to UnstuckME Server", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
@@ -117,13 +126,6 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                 //MessageBox.Show(SelectedDB.Database.Connection.ConnectionString.ToString());
 
                 SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckMEServer_DBEntities",initialCatalog: textBoxDatabaseName.Text, userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
-
-                //string message = "Connecting to " + SelectedDB.Database.Connection.ConnectionString.ToString();
-                //if (displayOutput == true)
-                 //MessageBox.Show(message);
-
-                //var entityCnxStringBuilder = new EntityConnectionStringBuilder(SelectedDB.Configuration.ToString());
-                //MessageBox.Show(entityCnxStringBuilder.ToString());                
                            
                 using (var connection = new SqlConnection(SelectedDB.Database.Connection.ConnectionString))
                 {
@@ -153,16 +155,34 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                             using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
                             {
 
-                                var firstDatabse =
-                                (from Databases in schoolDB.Databases
-                                    where Databases.School.SchoolName == schoolName
-                                    select Databases).First();
+                                if (m_databaseID != null)
+                                {
 
+                                    var firstDatabse = (from Databases in schoolDB.Databases
+                                                        where Databases.DatabaseID == m_databaseID.Value
+                                                        select Databases).First();
 
-                                firstDatabse.DatabaseName = textBoxDatabaseName.Text;
-                                firstDatabse.DatabaseAdminUsername = textBoxUsername.Text;
-                                firstDatabse.DatabaseUsingWindowsAuthen = checkBox.IsChecked;
-                                firstDatabse.DatabaseIP = textBoxDataSource.Text;
+                                    firstDatabse.DatabaseName = textBoxDatabaseName.Text;
+                                    firstDatabse.DatabaseAdminUsername = textBoxUsername.Text;
+                                    firstDatabse.DatabaseUsingWindowsAuthen = checkBox.IsChecked;
+                                    firstDatabse.DatabaseIP = textBoxDataSource.Text;
+                                }
+
+                                else
+                                {
+                                    int schoolID = (from Schools in schoolDB.Schools where Schools.SchoolName == schoolName select Schools.SchoolID).First();
+
+                                    UnstuckMEServerGUI.Database tempServer = new UnstuckMEServerGUI.Database()
+                                    {
+                                        SchoolID = schoolID,
+                                        DatabaseName = textBoxDatabaseName.Text,
+                                        DatabaseIP = textBoxDataSource.Text,
+                                        DatabaseAdminUsername = textBoxUsername.Text,
+                                        DatabaseUsingWindowsAuthen = useWindowsAuthenfication
+                                    };
+
+                                    schoolDB.Databases.Add(tempServer);
+                                }
 
                                 schoolDB.SaveChanges();
                             }
