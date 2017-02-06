@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace UnstuckMEUserGUI
 {
     /// <summary>
-    /// Interaction logic for ClassesPage.xaml
+    /// Interaction logic for UserProfilePage.xaml
     /// </summary>
-    public partial class ClassesPage : Page
+    public partial class UserProfilePage : Page
     {
-        public ClassesPage()
+        public UserProfilePage()
         {
             InitializeComponent();
         }

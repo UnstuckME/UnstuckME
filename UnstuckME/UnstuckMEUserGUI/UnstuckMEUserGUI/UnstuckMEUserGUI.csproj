@@ -69,14 +69,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Notifications\NewMessageNotification.xaml.cs">
       <DependentUpon>NewMessageNotification.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ClassesPage.xaml.cs">
-      <DependentUpon>ClassesPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SocialPage.xaml.cs">
-      <DependentUpon>SocialPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -96,9 +93,6 @@
     </Compile>
     <Compile Include="GetSchoolServerInfo_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -163,15 +157,14 @@
     <Compile Include="UnstuckMEWindow.xaml.cs">
       <DependentUpon>UnstuckMEWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\UserProfilePage.xaml.cs">
+      <DependentUpon>UserProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Pages\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Notifications\NewMessageNotification.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\ClassesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SocialPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -184,10 +177,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Classes\ClassDisplay.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UnstuckMEWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UserProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -377,6 +370,10 @@
     <Resource Include="Resources\Classes\ClassBlue.png" />
     <Resource Include="Resources\Classes\ClassRed.png" />
     <Resource Include="Resources\Classes\ClassWhite.png" />
+    <Resource Include="Resources\Sticker\BlackSticker.png" />
+    <Resource Include="Resources\Sticker\BlueSticker.png" />
+    <Resource Include="Resources\Sticker\RedSticker.png" />
+    <Resource Include="Resources\Sticker\WhiteSticker.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

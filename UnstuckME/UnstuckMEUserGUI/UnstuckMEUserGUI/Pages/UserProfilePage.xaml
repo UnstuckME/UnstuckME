@@ -1,4 +1,4 @@
-﻿<Page x:Class="UnstuckMEUserGUI.HomePage"
+﻿<Page x:Class="UnstuckMEUserGUI.UserProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:UnstuckMEUserGUI"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="700"
-      Title="HomePage">
+      Title="UserProfilePage">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -37,14 +37,26 @@
             <Border BorderBrush="Black" BorderThickness="0,1,1,1">
                 <Grid Grid.Column="0" Grid.Row="0" Background="#336699" Grid.ColumnSpan="2">
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0">
-                        <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Recent Activity" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,-1,0,0" TextWrapping="NoWrap"></TextBox>
+                        <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Recent Tutor Reviews" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
                     </Border>
                 </Grid>
             </Border>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" Background="#336699" >
-            <Border BorderBrush="Black" BorderThickness="0,1,0,1"> 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="150*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
                 
+            </Grid>
+            <Grid Grid.Column="1">
+                <Border BorderBrush="Black" BorderThickness="0,0,0,0">
+                    <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Recent Student Reviews" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
+                </Border>
+            </Grid>
+            <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.ColumnSpan="2">
+
             </Border>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">

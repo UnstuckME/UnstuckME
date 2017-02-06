@@ -1,0 +1,53 @@
+﻿<Page x:Class="UnstuckMEUserGUI.ChatPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UnstuckMEUserGUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="500"
+      Title="ChatPage" xmlns:my="clr-namespace:UnstuckMEUserGUI">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="203*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Border BorderBrush="Black" BorderThickness="0,0,1,0">
+
+            </Border>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="133*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Background="#336699">
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
+                    <StackPanel></StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel>
+                    
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="19*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <TextBox x:Name="MessageTextBox" Padding="5,0,0,0" SizeChanged="MessageTextBox_SizeChanged" BorderBrush="{x:Null}" BorderThickness="4,4,4,4"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBox>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Button x:Name="SendButton" Content="Send" Background="#336699" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}" BorderThickness="3,3,3,3"></Button>
+                </Grid>
+
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Page>

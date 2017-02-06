@@ -27,14 +27,13 @@ namespace UnstuckMEUserGUI
         public UnstuckMEWindow()
         {
             InitializeComponent();
-            _UnstuckMERed = HomeButtonBorder.Background;
-            _UnstuckMEBlue = StickerButtonBorder.Background;
+            _UnstuckMERed = StickerButtonBorder.Background;
+            _UnstuckMEBlue = ChatButtonBorder.Background;
  
-            _pages.HomePage = new HomePage();
             _pages.StickerPage = new StickerPage();
             _pages.SettingsPage = new SettingsPage();
-            _pages.SocialPage = new SocialPage();
-            _pages.ClassesPage = new ClassesPage();
+            _pages.ChatPage = new ChatPage();
+            _pages.UserProfilePage = new UserProfilePage();
 
             for (int i = 0; i < 30; i++)
             {
@@ -47,14 +46,8 @@ namespace UnstuckMEUserGUI
                 AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
             }
 
-            MainFrame.Navigate(_pages.HomePage);
-            HomeButtonBorder.Background = _UnstuckMERed;
-            StickerButtonBorder.Background = _UnstuckMEBlue;
-        }
-
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchToHomeTab();
+            MainFrame.Navigate(_pages.StickerPage);
+            StickerButtonBorder.Background = _UnstuckMERed;
         }
 
         private void StickerButton_Click(object sender, RoutedEventArgs e)
@@ -62,75 +55,60 @@ namespace UnstuckMEUserGUI
             SwitchToStickerTab();
         }
 
-        private void SocialButton_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchToSocialTab();
-        }
-
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             SwitchToSettingsTab();
         }
 
-        private void ClassButton_Click(object sender, RoutedEventArgs e)
+        private void ChatButton_Click(object sender, RoutedEventArgs e)
         {
-            SwitchToClassTab();
+            SwitchToChatTab();
         }
 
-        public void SwitchToHomeTab()
+        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(_pages.HomePage);
-            HomeButtonBorder.Background = _UnstuckMERed;
+            SwitchToUserProfileTab();
+        }
+
+        public void SwitchToChatTab()
+        {
+            MainFrame.Navigate(_pages.ChatPage);
+            ChatButtonBorder.Background = _UnstuckMERed;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
-            SocialButtonBorder.Background = _UnstuckMEBlue;
-            ClassButtonBorder.Background = _UnstuckMEBlue;
+            UserProfileButtonBorder.Background = _UnstuckMEBlue;
         }
         public void SwitchToStickerTab()
         {
             MainFrame.Navigate(_pages.StickerPage);
-            HomeButtonBorder.Background = _UnstuckMEBlue;
+            ChatButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMERed;
             SettingButtonBorder.Background = _UnstuckMEBlue;
-            SocialButtonBorder.Background = _UnstuckMEBlue;
-            ClassButtonBorder.Background = _UnstuckMEBlue;
+            UserProfileButtonBorder.Background = _UnstuckMEBlue;
         }
-        public void SwitchToSocialTab()
+        public void SwitchToUserProfileTab()
         {
-            MainFrame.Navigate(_pages.SocialPage);
-            HomeButtonBorder.Background = _UnstuckMEBlue;
+            MainFrame.Navigate(_pages.UserProfilePage);
+            ChatButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
-            SocialButtonBorder.Background = _UnstuckMERed;
-            ClassButtonBorder.Background = _UnstuckMEBlue;
+            UserProfileButtonBorder.Background = _UnstuckMERed;
         }
         public void SwitchToSettingsTab()
         {
             MainFrame.Navigate(_pages.SettingsPage);
-            HomeButtonBorder.Background = _UnstuckMEBlue;
+            ChatButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMERed;
-            SocialButtonBorder.Background = _UnstuckMEBlue;
-            ClassButtonBorder.Background = _UnstuckMEBlue;
+            UserProfileButtonBorder.Background = _UnstuckMEBlue;
         }
-        public void SwitchToClassTab()
-        {
-            MainFrame.Navigate(_pages.ClassesPage);
-            HomeButtonBorder.Background = _UnstuckMEBlue;
-            StickerButtonBorder.Background = _UnstuckMEBlue;
-            SettingButtonBorder.Background = _UnstuckMEBlue;
-            SocialButtonBorder.Background = _UnstuckMEBlue;
-            ClassButtonBorder.Background = _UnstuckMERed;
-        }
-
     }
 
     public class UnstuckMEPages
     {
-        public  HomePage HomePage { get; set; }
         public  StickerPage StickerPage { get; set; }
         public  SettingsPage SettingsPage { get; set; }
-        public  SocialPage SocialPage { get; set; }
-        public  ClassesPage ClassesPage { get; set; }
+        public UserProfilePage UserProfilePage { get; set; }
+        public ChatPage ChatPage { get; set; }
     }
 }
