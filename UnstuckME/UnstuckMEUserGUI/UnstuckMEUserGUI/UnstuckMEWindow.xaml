@@ -34,12 +34,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="75"/>
-            <ColumnDefinition Width="192*"/>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-        <Grid Width="300" Height="Auto" MinWidth="100" MaxWidth="300" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="DimGray" Grid.Column="1">
+        <Grid Width="300" Height="Auto" MinWidth="100" MaxWidth="300" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="DimGray" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
-                <RowDefinition Height="107*"/>
+                <RowDefinition Height="100*"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="104*"/>
             </Grid.RowDefinitions>
@@ -65,9 +66,15 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,0,1,0" MinWidth="300" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto" Margin="75,0,300,0" Grid.ColumnSpan="3"/>
+        <Grid Grid.Column="1" HorizontalAlignment="Stretch">
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,0,1,0" MinWidth="300" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto"/>
+            <Border x:Name="CreateStickerButtonBorder" CornerRadius="25" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="2,2,2,2" Background="#993333" Height="40" Width="40" Cursor="Hand" Margin="0,5,5,0">
+                    <Button x:Name="CreateStickerButton" Style="{StaticResource NoHighlightButton}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <Image x:Name="CreateStickerIcon" Source="Resources/Plus/PlusWhite.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="30"></Image>
+                    </Button>
+                </Border>
+        </Grid>
         <Grid Width="Auto" Height="Auto" MinWidth="75" MaxWidth="75" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="DimGray" Grid.Column="0">
-           
             <Border x:Name="StickerButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#993333" Height="60" Margin="10,10,10,0" Cursor="Hand">
                 <Button x:Name="StickerButton" Style="{StaticResource NoHighlightButton}" Click="StickerButton_Click">
                     <Image x:Name="StickerIcon" Source="Resources/Sticker/WhiteSticker.png" Width="45" Height="45"></Image>

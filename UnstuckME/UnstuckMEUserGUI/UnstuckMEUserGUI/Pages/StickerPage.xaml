@@ -5,11 +5,73 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UnstuckMEUserGUI"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="StickerPage" >
+      d:DesignHeight="500" d:DesignWidth="500"
+      Title="StickerPage">
+    <Page.Resources>
+        <Style TargetType="Button" x:Key="NoHighlightButton">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="15" Background="{x:Null}">
+                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Width" Value="Auto" />
+                                        <Setter Property="Margin" Value="Auto" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid HorizontalAlignment="Stretch">
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="250" Width="250*"/>
+                <ColumnDefinition MinWidth="250" Width="250*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="200" Height="200*"/>
+                <RowDefinition MinHeight="200" Height="200*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
+                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
 
-    <Grid>
-        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="Auto" Width="Auto" FontSize="24" Text="Sticker Page"></TextBox>
-        
+                    </Border>
+                </Border>
+                <Label x:Name="StickerTabLabel" Content="Sticker Submit/Statistics" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
+                <Border BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
+
+                    </Border>
+                </Border>
+                <Label x:Name="StickerTabLabel1" Content="Open Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
+                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
+
+                    </Border>
+                </Border>
+                <Label x:Name="StickerTabLabel2" Content="Tutorable Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
+                <Border BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
+
+                    </Border>
+                </Border>
+                <Label x:Name="StickerTabLabel3" Content="Sticker History" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

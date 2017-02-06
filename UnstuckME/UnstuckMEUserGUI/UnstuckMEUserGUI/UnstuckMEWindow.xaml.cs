@@ -46,8 +46,7 @@ namespace UnstuckMEUserGUI
                 AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
             }
 
-            MainFrame.Navigate(_pages.StickerPage);
-            StickerButtonBorder.Background = _UnstuckMERed;
+            SwitchToStickerTab();
         }
 
         private void StickerButton_Click(object sender, RoutedEventArgs e)
@@ -77,6 +76,7 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
             UserProfileButtonBorder.Background = _UnstuckMEBlue;
+            DisableStickerSubmit();
         }
         public void SwitchToStickerTab()
         {
@@ -85,6 +85,7 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMERed;
             SettingButtonBorder.Background = _UnstuckMEBlue;
             UserProfileButtonBorder.Background = _UnstuckMEBlue;
+            EnableStickerSubmit();
         }
         public void SwitchToUserProfileTab()
         {
@@ -93,6 +94,7 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
             UserProfileButtonBorder.Background = _UnstuckMERed;
+            DisableStickerSubmit();
         }
         public void SwitchToSettingsTab()
         {
@@ -101,6 +103,26 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMERed;
             UserProfileButtonBorder.Background = _UnstuckMEBlue;
+            DisableStickerSubmit();
+        }
+
+        private void DisableStickerSubmit()
+        {
+            CreateStickerButton.Visibility = Visibility.Hidden;
+            CreateStickerButtonBorder.Visibility = Visibility.Hidden;
+            CreateStickerIcon.Visibility = Visibility.Hidden;
+            CreateStickerIcon.IsEnabled = false;
+            CreateStickerButtonBorder.IsEnabled = false;
+            CreateStickerButton.IsEnabled = false;
+        }
+        private void EnableStickerSubmit()
+        {
+            CreateStickerButton.Visibility = Visibility.Visible;
+            CreateStickerButtonBorder.Visibility = Visibility.Visible;
+            CreateStickerIcon.Visibility = Visibility.Visible;
+            CreateStickerIcon.IsEnabled = true;
+            CreateStickerButtonBorder.IsEnabled = true;
+            CreateStickerButton.IsEnabled = true;
         }
     }
 

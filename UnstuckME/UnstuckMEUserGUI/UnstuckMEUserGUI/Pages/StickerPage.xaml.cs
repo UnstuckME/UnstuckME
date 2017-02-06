@@ -23,6 +23,7 @@ namespace UnstuckMEUserGUI
         public StickerPage()
         {
             InitializeComponent();
+
         }
 
         public void HelloWorld()

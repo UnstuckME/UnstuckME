@@ -324,10 +324,6 @@
     <Resource Include="Resources\Home\HomeBlue.png" />
     <Resource Include="Resources\Home\HomeRed.png" />
     <Resource Include="Resources\Home\HomeWhite.png" />
-    <Resource Include="Resources\Plus\PlusBlack.png" />
-    <Resource Include="Resources\Plus\PlusBlue.png" />
-    <Resource Include="Resources\Plus\PlusRed.png" />
-    <Resource Include="Resources\Plus\PlusWhite.png" />
     <Resource Include="Resources\Gear\GearBlack.png" />
     <Resource Include="Resources\Gear\GearBlue.png" />
     <Resource Include="Resources\Gear\GearRed.png" />
@@ -374,6 +370,10 @@
     <Resource Include="Resources\Sticker\BlueSticker.png" />
     <Resource Include="Resources\Sticker\RedSticker.png" />
     <Resource Include="Resources\Sticker\WhiteSticker.png" />
+    <Resource Include="Resources\Plus\PlusBlack.png" />
+    <Resource Include="Resources\Plus\PlusBlue.png" />
+    <Resource Include="Resources\Plus\PlusRed.png" />
+    <Resource Include="Resources\Plus\PlusWhite.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
