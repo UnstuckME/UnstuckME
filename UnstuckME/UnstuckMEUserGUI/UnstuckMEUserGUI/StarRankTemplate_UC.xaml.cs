@@ -26,13 +26,21 @@ namespace UnstuckMEUserGUI
 		public float StarRank
 		{
 			get { return _starrank; }
-			set { SetStarRank(value); }
+			set { _starrank = value; }
 		}
 
-		public bool IsReadOnly
+		public bool ReadOnly
 		{
 			get { return _readonly; }
-			set { ReadOnly(value); }
+			set
+			{
+				_readonly = value;
+
+				if (!_readonly) //false
+					IsHitTestVisible = false;
+				else    //true
+					IsHitTestVisible = true;
+			}
 		}
 
 		public StarRankTemplate_UC()
@@ -40,111 +48,80 @@ namespace UnstuckMEUserGUI
 			InitializeComponent();
 		}
 
-		private void ReadOnly(bool value)
+		private void OneStar_Checked(object sender, RoutedEventArgs e)
 		{
-			_readonly = value;
-
-			if (!_readonly) //false
-			{
-				FiveStarBtn.IsEnabled = false;
-				FourStarBtn.IsEnabled = false;
-				ThreeStarBtn.IsEnabled = false;
-				TwoStarBtn.IsEnabled = false;
-				OneStarBtn.IsEnabled = false;
-			}
-			else	//true
-			{
-				FiveStarBtn.IsEnabled = true;
-				FourStarBtn.IsEnabled = true;
-				ThreeStarBtn.IsEnabled = true;
-				TwoStarBtn.IsEnabled = true;
-				OneStarBtn.IsEnabled = true;
-			}
+			_starrank = 1;
+			StarFill.Width = 20;
 		}
 
-		private void SetStarRank(float value)
+		private void OneStar_Unchecked(object sender, RoutedEventArgs e)
 		{
-			_starrank = value;
-			//bool temp = _readonly;
-			//_readonly = false;
-
-			//if (_starrank <= 1)
-			//	OneStarBtn_Click(this, null);
-			//else if (_starrank <= 2)
-			//	TwoStarBtn_Click(this, null);
-			//else if (_starrank <= 3)
-			//	ThreeStarBtn_Click(this, null);
-			//else if (_starrank <= 4)
-			//	FourStarBtn_Click(this, null);
-			//else
-			//	FiveStarBtn_Click(this, null);
-
-			//_readonly = temp;
+			_starrank = 0;
+			StarFill.Width = 0;
 		}
 
-		private void OneStarBtn_Click(object sender, RoutedEventArgs e)
+		private void TwoStar_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_readonly)
-			{
-				//need to figure out how to shade images if possible
-
-				if (StarRank % 10 == 0)
-					StarRank = 0.5f;
-				else
-					StarRank = 1.0f;
-			}
+			_starrank = 2;
+			StarFill.Width = 40;
 		}
 
-		private void TwoStarBtn_Click(object sender, RoutedEventArgs e)
+		private void ThreeStar_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_readonly)
-			{
-				//need to figure out how to shade images if possible
-
-				if (StarRank % 10 == 0)
-					StarRank = 1.5f;
-				else
-					StarRank = 2.0f;
-			}
+			_starrank = 3;
+			StarFill.Width = 60;
 		}
 
-		private void ThreeStarBtn_Click(object sender, RoutedEventArgs e)
+		private void FourStar_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_readonly)
-			{
-				//need to figure out how to shade images if possible
-
-				if (StarRank % 10 == 0)
-					StarRank = 2.5f;
-				else
-					StarRank = 3.0f;
-			}
+			_starrank = 4;
+			StarFill.Width = 80;
 		}
 
-		private void FourStarBtn_Click(object sender, RoutedEventArgs e)
+		private void FiveStar_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_readonly)
-			{
-				//need to figure out how to shade images if possible
-
-				if (StarRank % 10 == 0)
-					StarRank = 3.5f;
-				else
-					StarRank = 4.0f;
-			}
+			_starrank = 5;
+			StarFill.Width = 100;
 		}
 
-		private void FiveStarBtn_Click(object sender, RoutedEventArgs e)
+		private void OneStar_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			if (!_readonly)
-			{
-				//need to figure out how to shade images if possible
+			if (_starrank == 1)
+				OneStar_Unchecked(sender, e);
+			else
+				OneStar_Checked(sender, e);
+		}
 
-				if (StarRank % 10 == 0)
-					StarRank = 4.5f;
-				else
-					StarRank = 5.0f;
-			}
+		private void TwoStar_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (_starrank == 2)
+				OneStar_Checked(sender, e);
+			else
+				TwoStar_Checked(sender, e);
+		}
+
+		private void ThreeStar_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (_starrank == 3)
+				TwoStar_Checked(sender, e);
+			else
+				ThreeStar_Checked(sender, e);
+		}
+
+		private void FourStar_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (_starrank == 4)
+				ThreeStar_Checked(sender, e);
+			else
+				FourStar_Checked(sender, e);
+		}
+
+		private void FiveStar_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			if (_starrank == 5)
+				FourStar_Checked(sender, e);
+			else
+				FiveStar_Checked(sender, e);
 		}
 	}
 }

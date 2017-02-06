@@ -244,6 +244,7 @@
     <Resource Include="Resources\CloseButton.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\InvertedStar.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

@@ -73,6 +73,16 @@ namespace UnstuckMEUserGUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap InvertedStar {
+            get {
+                object obj = ResourceManager.GetObject("InvertedStar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Refresh_Icon {
             get {
                 object obj = ResourceManager.GetObject("Refresh_Icon", resourceCulture);

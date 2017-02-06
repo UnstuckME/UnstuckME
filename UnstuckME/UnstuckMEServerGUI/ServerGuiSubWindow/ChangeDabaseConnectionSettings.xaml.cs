@@ -58,9 +58,9 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("We seem to experiencing some difficulties connecting to the UnstuckMe Server", "Unable To Connect to UnstuckME Server", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("We seem to experiencing some difficulties connecting to the UnstuckME Server", "Unable To Connect to UnstuckME Server", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }

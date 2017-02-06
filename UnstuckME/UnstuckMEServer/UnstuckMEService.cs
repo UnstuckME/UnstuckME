@@ -536,6 +536,9 @@ namespace UnstuckMEInterfaces
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
 				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, (int)((newSticker.SubmitTime - newSticker.Timeout).TotalSeconds));
+
+				foreach (var org in newSticker.TutoringOrganizations)
+					db.AddOrgToSticker(newSticker.StickerID, org.MentorID);
 			}
 		}
 
@@ -861,7 +864,7 @@ namespace UnstuckMEInterfaces
 								 where reportID == u.ReportID
 								 select new { ReportID = u.ReportID, ReporterID = u.FlaggerID };
 					
-					if(report.First().ReporterID == userID)
+					if (report.First().ReporterID == userID)
 					{
 						db.DeleteReportByReportID(reportID);
 					}
@@ -950,8 +953,7 @@ namespace UnstuckMEInterfaces
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
-				var organizations = from u in db.OfficialMentors
-									select new { u.MentorID, u.OrganizationName };   //db.GetAllOrganizations();
+				var organizations = db.GetAllOrganizations();
 
 				List<Organization> orgs = new List<Organization>();
 				Organization new_org = new Organization();
