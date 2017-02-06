@@ -54,6 +54,31 @@ namespace UnstuckMEUserGUI
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
+            SwitchToHomeTab();
+        }
+
+        private void StickerButton_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchToStickerTab();
+        }
+
+        private void SocialButton_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchToSocialTab();
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchToSettingsTab();
+        }
+
+        private void ClassButton_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchToClassTab();
+        }
+
+        public void SwitchToHomeTab()
+        {
             MainFrame.Navigate(_pages.HomePage);
             HomeButtonBorder.Background = _UnstuckMERed;
             StickerButtonBorder.Background = _UnstuckMEBlue;
@@ -61,8 +86,7 @@ namespace UnstuckMEUserGUI
             SocialButtonBorder.Background = _UnstuckMEBlue;
             ClassButtonBorder.Background = _UnstuckMEBlue;
         }
-
-        private void StickerButton_Click(object sender, RoutedEventArgs e)
+        public void SwitchToStickerTab()
         {
             MainFrame.Navigate(_pages.StickerPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
@@ -71,8 +95,7 @@ namespace UnstuckMEUserGUI
             SocialButtonBorder.Background = _UnstuckMEBlue;
             ClassButtonBorder.Background = _UnstuckMEBlue;
         }
-
-        public void SocialButton_Click(object sender, RoutedEventArgs e)
+        public void SwitchToSocialTab()
         {
             MainFrame.Navigate(_pages.SocialPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
@@ -81,8 +104,7 @@ namespace UnstuckMEUserGUI
             SocialButtonBorder.Background = _UnstuckMERed;
             ClassButtonBorder.Background = _UnstuckMEBlue;
         }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        public void SwitchToSettingsTab()
         {
             MainFrame.Navigate(_pages.SettingsPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
@@ -91,8 +113,7 @@ namespace UnstuckMEUserGUI
             SocialButtonBorder.Background = _UnstuckMEBlue;
             ClassButtonBorder.Background = _UnstuckMEBlue;
         }
-
-        private void ClassButton_Click(object sender, RoutedEventArgs e)
+        public void SwitchToClassTab()
         {
             MainFrame.Navigate(_pages.ClassesPage);
             HomeButtonBorder.Background = _UnstuckMEBlue;
@@ -101,6 +122,7 @@ namespace UnstuckMEUserGUI
             SocialButtonBorder.Background = _UnstuckMEBlue;
             ClassButtonBorder.Background = _UnstuckMERed;
         }
+
     }
 
     public class UnstuckMEPages

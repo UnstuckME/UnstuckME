@@ -20,8 +20,8 @@
                 <Image Source="/Resources/CheckMark/CheckGreen.png" Height="25" Width="25"></Image>
             </Button>
         </Grid>
-        <Grid Grid.Row="1" Background="#993333">
-            <Border BorderBrush="Black" BorderThickness="0,1,1,0"></Border>
+        <Grid Grid.Row="1" Background="LightGray">
+            <Border BorderBrush="Black" BorderThickness="0,3,1,2"></Border>
         </Grid>
     </Grid>
 </UserControl>

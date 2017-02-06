@@ -34,7 +34,7 @@ namespace UnstuckMEUserGUI
 
         private void NewMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            _Window.SocialButton_Click(sender, e);
+            _Window.SwitchToSocialTab();
             _pages.SocialPage.NotificationCall(_username);
             //Removes from stack panel.
             ((StackPanel)this.Parent).Children.Remove(this);

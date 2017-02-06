@@ -16,8 +16,8 @@
             <Button x:Name="NewMessageButton" Click="NewMessageButton_Click" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Height="Auto" Width="270" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" Cursor="Hand" Margin="30,0,0,0" ></Button>
         </Grid>
 
-        <Grid Grid.Row="1" Background="#993333">
-            <Border BorderBrush="Black" BorderThickness="0,1,1,0"></Border>
+        <Grid Grid.Row="1" Background="LightGray">
+            <Border BorderBrush="Black" BorderThickness="0,3,1,2"></Border>
             
         </Grid>
     </Grid>
