@@ -32,6 +32,11 @@ namespace UnstuckMEServerGUI
 			var entityConnectionString = new EntityConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString);
 			var basicConnectionString = new SqlConnectionStringBuilder(entityConnectionString.ProviderConnectionString);
 			textBoxDatabaseIP.Text = basicConnectionString.DataSource;
+
+		    textBoxSchoolName.Text = System.Configuration.ConfigurationManager.AppSettings["SchoolName"];
+            textBoxDatabaseIP.Text = System.Configuration.ConfigurationManager.AppSettings["DatabaseName"];
+		    textBoxUnstuckMEServerIP.Text = System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"];
+
 		}
 		
 
@@ -140,5 +145,7 @@ namespace UnstuckMEServerGUI
 			wConfig.Save();
 
 		}
-	}
+
+       
+    }
 }

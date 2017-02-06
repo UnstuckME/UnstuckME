@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:UnstuckMEServerGUI"
              StartupUri="ServerLogin.xaml">
     <Application.Resources>
-         
+
+        <Color x:Key="UMBlue">#FF336699</Color>
+        <Color x:Key="UMRed">#FF993333</Color>
+
     </Application.Resources>
 </Application>

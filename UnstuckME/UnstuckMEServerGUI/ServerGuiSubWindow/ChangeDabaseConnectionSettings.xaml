@@ -8,6 +8,10 @@
         Title="Change Connection Settings for UnstuckME MSSQL Server" Height="300" Width="500" WindowStartupLocation="CenterScreen" WindowStyle="None"
         MinHeight="300" MinWidth="500" MaxHeight="300" MaxWidth="500">
     <Grid Background="DimGray">
+
+
+
+
         <TextBox x:Name="textBoxDataSource" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="18,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="376" TabIndex="0" Padding="4,0,0,0"/>
         <TextBox x:Name="textBoxDatabaseName" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="19,84,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="375" TabIndex="1" Padding="4,0,0,0"/>
         <TextBox x:Name="textBoxUsername" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="19,135,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="215" TabIndex="2" Padding="4,0,0,0"/>
