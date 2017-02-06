@@ -95,6 +95,11 @@
                     <Image Source="Resources/Gear/GearWhite.png" Width="45" Height="45" ></Image>
                 </Button>
             </Border>
+            <Border x:Name="AdminButtonBorder" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2,2,2,2" Background="#336699" Height="60" Margin="10,270,10,0" Cursor="Hand">
+                <Button x:Name="AdminButton" Style="{StaticResource NoHighlightButton}" Click="AdminButton_Click">
+                    <Image Source="Resources/Admin/AdminWhite.png" Width="45" Height="45" ></Image>
+                </Button>
+            </Border>
         </Grid>
     </Grid>
 </Window>

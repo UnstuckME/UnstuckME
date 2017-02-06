@@ -122,6 +122,20 @@ namespace UnstuckMEUserGUI
             StickerCreationWindow window = new StickerCreationWindow();
             window.ShowDialog();
         }
+
+        private void DisableAdmin()
+        {
+            //I'll Implement this later
+        }
+        private void EnableAdmin()
+        {
+            //I'll Implement this later
+        }
+
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Case Statement for Admin/Moderator Status.
+        }
     }
 
     public class UnstuckMEPages

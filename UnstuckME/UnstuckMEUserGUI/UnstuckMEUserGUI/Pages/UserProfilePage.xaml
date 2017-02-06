@@ -37,7 +37,7 @@
             <Border BorderBrush="Black" BorderThickness="0,1,1,1">
                 <Grid Grid.Column="0" Grid.Row="0" Background="#336699" Grid.ColumnSpan="2">
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0">
-                        <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Recent Tutor Reviews" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
+                        <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Classes" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
                     </Border>
                 </Grid>
             </Border>
@@ -52,7 +52,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Border BorderBrush="Black" BorderThickness="0,0,0,0">
-                    <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Recent Student Reviews" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
+                    <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Recent Reviews" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
                 </Border>
             </Grid>
             <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.ColumnSpan="2">

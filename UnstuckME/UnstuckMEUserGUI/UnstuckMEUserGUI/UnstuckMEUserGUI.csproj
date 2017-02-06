@@ -381,6 +381,10 @@
     <Resource Include="Resources\Plus\PlusBlue.png" />
     <Resource Include="Resources\Plus\PlusRed.png" />
     <Resource Include="Resources\Plus\PlusWhite.png" />
+    <Resource Include="Resources\Admin\AdminBlack.png" />
+    <Resource Include="Resources\Admin\AdminBlue.png" />
+    <Resource Include="Resources\Admin\AdminRed.png" />
+    <Resource Include="Resources\Admin\AdminWhite.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
