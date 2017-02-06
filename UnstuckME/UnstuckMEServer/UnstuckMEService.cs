@@ -308,8 +308,6 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-
-
 		public void Logout()
 		{
 			ConnectedClient client = GetMyClient();
@@ -844,12 +842,14 @@ namespace UnstuckMEInterfaces
 				return -1; //If Failure to create chat.
 			}
 		}
-		/// <summary>
-		/// This function will only allow a user to delete their own report.
-		/// </summary>
-		/// <param name="userID"></param>
-		/// <param name="reportID"></param>
-		/// <returns></returns>
+		
+		// <summary>
+		// This function will only allow a user to delete their own report.
+		// </summary>
+		// <param name="userID"></param>
+		// <param name="reportID"></param>
+		// <returns></returns>
+		
 		public int DeleteReportByUser(int userID, int reportID)
 		{
 			try
@@ -966,5 +966,12 @@ namespace UnstuckMEInterfaces
 				return orgs;
 			}
 		}
+
+		public bool TestNewConfig()
+		{
+			return true;
+		}
+
+
 	}
 }

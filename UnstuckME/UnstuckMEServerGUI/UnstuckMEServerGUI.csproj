@@ -66,108 +66,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AdminPullReportsForOptionalUser_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Chat.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Class.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
+    <Compile Include="ConfigsClass.cs" />
     <Compile Include="ConnectionTools.cs" />
-    <Compile Include="FilterUserReviewsByEqualStarRank_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FilterUserReviewsByGreaterThanStarRank_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Friend.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickersWithStarRankOrMentorOrganization_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllActiveStickers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllChatIDsAUserIsPartOF_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllOrganizations_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllResolvedStickers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+    <Compile Include="Database.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllSchoolLogos_Result.cs">
-      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllSchools_Result.cs">
-      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllStickers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllStudentReviews_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllTutorReviews_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetDisplayNameAndEmail_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetSchoolServerInfo_Result.cs">
-      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserClasses_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserFriends_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserPasswordAndSalt_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserStickersAndReviews_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUsersWithOverallStarRank_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Message.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OfficialMentor.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Picture.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PullActiveClassSpecificStickers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PullChatMessagesAndFilesBetweenUsers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Report.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Review.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="School.cs">
-      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="SchoolLogo.cs">
-      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Server.cs">
-      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ServerAdmin.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ServerGuiSubWindow\AdminCreation.xaml.cs">
       <DependentUpon>AdminCreation.xaml</DependentUpon>
@@ -178,48 +98,54 @@
     <Compile Include="ServerGuiSubWindow\AdminNameChange.xaml.cs">
       <DependentUpon>AdminNameChange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerGuiSubWindow\AdminSchoolChange.xaml.cs">
+      <DependentUpon>AdminSchoolChange.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServerGuiSubWindow\ChangeDabaseConnectionSettings.xaml.cs">
       <DependentUpon>ChangeDabaseConnectionSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServerGuiSubWindow\ChangeUnstuckMEServerIP.xaml.cs">
+      <DependentUpon>ChangeUnstuckMEServerIP.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServerGuiSubWindow\DeleteAdmin.xaml.cs">
       <DependentUpon>DeleteAdmin.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServerCallback.cs" />
+    <Compile Include="ServerGuiSubWindow\UnstuckMeCredChange.xaml.cs">
+      <DependentUpon>UnstuckMeCredChange.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServerLogin.xaml.cs">
       <DependentUpon>ServerLogin.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServerRunning.xaml.cs">
       <DependentUpon>ServerRunning.xaml</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Sticker.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UnstuckMESchool_DB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckMESchool_DB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UnstuckMESchool_DB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckMESchool_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UnstuckMESchool_DB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="ServerGuiSubWindow\ChangeDBSchoolInfo.xaml.cs">
       <DependentUpon>ChangeDBSchoolInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchools_DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchools_DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchools_DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMESchools_DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMEServer_DB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -236,12 +162,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="UserProfile.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewAllUsers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Page Include="ServerGuiSubWindow\AdminCreation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -254,7 +174,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ServerGuiSubWindow\AdminSchoolChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ServerGuiSubWindow\ChangeDabaseConnectionSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServerGuiSubWindow\ChangeUnstuckMEServerIP.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,6 +202,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ServerGuiSubWindow\UnstuckMeCredChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ServerLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,17 +243,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EntityDeploy Include="UnstuckMESchool_DB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UnstuckMESchool_DB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="UnstuckMESchool_DB.edmx.diagram">
-      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
-    </None>
     <EntityDeploy Include="UnstuckMEServer_DB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UnstuckMEServer_DB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="UnstuckMESchools_DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UnstuckMESchools_DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="UnstuckMESchools_DB.edmx.diagram">
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+    </None>
     <None Include="UnstuckMEServer_DB.edmx.diagram">
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
     </None>
@@ -346,6 +278,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\SimpleAvatarWhite.png" />
+    <Content Include="UnstuckMESchools_DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckMESchools_DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="UnstuckMESchools_DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+      <LastGenOutput>UnstuckMESchools_DB.cs</LastGenOutput>
+    </Content>
     <Content Include="UnstuckMEServer_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
@@ -360,16 +303,6 @@
     <Resource Include="Resources\GearIcon.png" />
     <Resource Include="Resources\SimpleAvatar.png" />
     <Resource Include="Resources\UnstuckME_Logo.png" />
-    <Content Include="UnstuckMESchool_DB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
-      <LastGenOutput>UnstuckMESchool_DB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="UnstuckMESchool_DB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UnstuckMESchool_DB.edmx</DependentUpon>
-      <LastGenOutput>UnstuckMESchool_DB.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

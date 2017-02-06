@@ -32,6 +32,11 @@ namespace UnstuckMEServerGUI
 			var entityConnectionString = new EntityConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString);
 			var basicConnectionString = new SqlConnectionStringBuilder(entityConnectionString.ProviderConnectionString);
 			textBoxDatabaseIP.Text = basicConnectionString.DataSource;
+
+		    textBoxSchoolName.Text = System.Configuration.ConfigurationManager.AppSettings["SchoolName"];
+            textBoxDatabaseIP.Text = System.Configuration.ConfigurationManager.AppSettings["DatabaseName"];
+		    textBoxUnstuckMEServerIP.Text = System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"];
+
 		}
 		
 
@@ -71,7 +76,7 @@ namespace UnstuckMEServerGUI
 				{
 					throw new Exception("Please Enter a valid file path for the image");
 				}
-				using (UnstuckME_SchoolsEntities1 schoolDB = new UnstuckME_SchoolsEntities1())
+				using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
 				{
 					var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
 					if (schoolIDs.Count() < 1)
@@ -140,5 +145,7 @@ namespace UnstuckMEServerGUI
 			wConfig.Save();
 
 		}
-	}
+
+       
+    }
 }

@@ -73,6 +73,7 @@ namespace UnstuckMEUserGUI
             return tempSchools;
         }
 
+        
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = false;

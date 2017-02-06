@@ -128,6 +128,9 @@ namespace UnstuckMEInterfaces
 	public interface IUnstuckMEServer
 	{
 		[OperationContract]
+		bool TestNewConfig();
+
+		[OperationContract]
 		void RegisterServerAdmin(AdminInfo admin);
 
 		[OperationContract]

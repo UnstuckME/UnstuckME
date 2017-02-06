@@ -18,8 +18,16 @@
         <Label x:Name="label_Copy1" Foreground="White" Content="Last Name" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Label x:Name="label_Copy2" Foreground="White" Content="Password" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
         <Label x:Name="label_Copy3" Foreground="White" Content="Confirm Password" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
-        <Button x:Name="buttonCancel" Background="#FF993333" Foreground="White" Content="Cancel" HorizontalAlignment="Left" Margin="196,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="5" Click="buttonCancel_Click" IsCancel="True"/>
-        <Button x:Name="buttonCreate" Background="#336699" Foreground="White" Content="Create" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonCreate_Click" IsDefault="True"/>
+        <Button x:Name="buttonCancel" Foreground="White" Content="Cancel" HorizontalAlignment="Left" Margin="196,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="5" Click="buttonCancel_Click" IsCancel="True">
+            <Button.Background>
+                <SolidColorBrush Color="{DynamicResource UMRed}"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="buttonCreate" Foreground="White" Content="Create" HorizontalAlignment="Left" Margin="315,241,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" Click="buttonCreate_Click" IsDefault="True">
+            <Button.Background>
+                <SolidColorBrush Color="{DynamicResource UMBlue}"/>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

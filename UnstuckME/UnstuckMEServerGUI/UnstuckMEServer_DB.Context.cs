@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using UnstuckMEServer;
+
 namespace UnstuckMEServerGUI
 {
     using System;

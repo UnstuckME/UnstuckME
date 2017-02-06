@@ -48,7 +48,7 @@ namespace UnstuckMEServerGUI
                     UnstuckMEPassword hashedPassword = UnstuckMEHashing.GetHashedPassword(passwordBox.Password);
                     db.CreateServerAdmin(textBoxFirstName.Text, textBoxLastName.Text, textBoxEmailAddress.Text, hashedPassword.Password, hashedPassword.Salt);
                 }
-                MessageBox.Show("Administrator Succesfully Created", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Administrator Successfully Created", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
             }
             catch(Exception ex)
