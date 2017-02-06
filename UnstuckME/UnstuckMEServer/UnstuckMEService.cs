@@ -252,6 +252,7 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
+        //Checks to see if email address exists on the database.
 		public bool IsValidUser(string emailAddress)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
