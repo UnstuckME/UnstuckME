@@ -71,6 +71,9 @@
       <DependentUpon>ClassDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientCallback.cs" />
+    <Compile Include="Database.cs">
+      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllSchoolLogos_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
@@ -85,6 +88,9 @@
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReviewDisplay.xaml.cs">
+      <DependentUpon>ReviewDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="School.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
@@ -101,9 +107,6 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ReviewDisplay.xaml.cs">
-      <DependentUpon>ReviewDisplay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="StarRankTemplate_UC.xaml.cs">
       <DependentUpon>StarRankTemplate_UC.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,9 @@
     </Compile>
     <Compile Include="UnstuckMEMessageBox.xaml.cs">
       <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StickerDisplay.xaml.cs">
+      <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMESchools_DB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -130,9 +136,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="StickerDisplay.xaml.cs">
-      <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
     <Page Include="ClassDisplay.xaml">
       <SubType>Designer</SubType>
@@ -239,6 +242,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\CloseButton.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

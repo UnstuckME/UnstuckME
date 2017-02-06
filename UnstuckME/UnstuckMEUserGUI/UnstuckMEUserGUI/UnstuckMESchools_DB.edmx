@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="UnstuckME_SchoolsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Database">
+          <Key>
+            <PropertyRef Name="DatabaseID" />
+          </Key>
+          <Property Name="DatabaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchoolID" Type="int" Nullable="false" />
+          <Property Name="DatabaseName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="DatabaseIP" Type="varchar" MaxLength="39" Nullable="false" />
+          <Property Name="DatabaseAdminUsername" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="DatabaseUsingWindowsAuthen" Type="bit" />
+        </EntityType>
         <EntityType Name="School">
           <Key>
             <PropertyRef Name="SchoolID" />
@@ -12,6 +23,9 @@
           <Property Name="SchoolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SchoolName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="EmailCredentials" Type="varchar" MaxLength="64" />
+          <Property Name="SchoolAdminUsername" Type="nvarchar" MaxLength="256" />
+          <Property Name="SchoolAdminPassword" Type="nvarchar" MaxLength="256" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="SchoolLogo">
           <Key>
@@ -40,7 +54,19 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK__SchoolLog__LogoI__54CB950F">
+        <Association Name="FK__Database__School__703EA55A">
+          <End Role="School" Type="Self.School" Multiplicity="1" />
+          <End Role="Database" Type="Self.Database" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="Database">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SchoolLog__LogoI__75035A77">
           <End Role="School" Type="Self.School" Multiplicity="1" />
           <End Role="SchoolLogo" Type="Self.SchoolLogo" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -52,7 +78,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Server__SchoolID__5006DFF2">
+        <Association Name="FK__Server__SchoolID__6B79F03D">
           <End Role="School" Type="Self.School" Multiplicity="1" />
           <End Role="Server" Type="Self.Server" Multiplicity="*" />
           <ReferentialConstraint>
@@ -136,15 +162,20 @@
           <Parameter Name="IPAddress" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="UnstuckME_SchoolsModelStoreContainer">
+          <EntitySet Name="Database" EntityType="Self.Database" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="School" EntityType="Self.School" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolLogo" EntityType="Self.SchoolLogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Server" EntityType="Self.Server" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__SchoolLog__LogoI__54CB950F" Association="Self.FK__SchoolLog__LogoI__54CB950F">
+          <AssociationSet Name="FK__Database__School__703EA55A" Association="Self.FK__Database__School__703EA55A">
+            <End Role="School" EntitySet="School" />
+            <End Role="Database" EntitySet="Database" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SchoolLog__LogoI__75035A77" Association="Self.FK__SchoolLog__LogoI__75035A77">
             <End Role="School" EntitySet="School" />
             <End Role="SchoolLogo" EntitySet="SchoolLogo" />
           </AssociationSet>
-          <AssociationSet Name="FK__Server__SchoolID__5006DFF2" Association="Self.FK__Server__SchoolID__5006DFF2">
+          <AssociationSet Name="FK__Server__SchoolID__6B79F03D" Association="Self.FK__Server__SchoolID__6B79F03D">
             <End Role="School" EntitySet="School" />
             <End Role="Server" EntitySet="Server" />
           </AssociationSet>
@@ -154,6 +185,18 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UnstuckME_SchoolsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Database">
+          <Key>
+            <PropertyRef Name="DatabaseID" />
+          </Key>
+          <Property Name="DatabaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SchoolID" Type="Int32" Nullable="false" />
+          <Property Name="DatabaseName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DatabaseIP" Type="String" MaxLength="39" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DatabaseAdminUsername" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DatabaseUsingWindowsAuthen" Type="Boolean" />
+          <NavigationProperty Name="School" Relationship="Self.FK__Database__School__703EA55A" FromRole="Database" ToRole="School" />
+        </EntityType>
         <EntityType Name="School">
           <Key>
             <PropertyRef Name="SchoolID" />
@@ -161,8 +204,12 @@
           <Property Name="SchoolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SchoolName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmailCredentials" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SchoolLogo" Relationship="Self.FK__SchoolLog__LogoI__54CB950F" FromRole="School" ToRole="SchoolLogo" />
-          <NavigationProperty Name="Servers" Relationship="Self.FK__Server__SchoolID__5006DFF2" FromRole="School" ToRole="Server" />
+          <Property Name="SchoolAdminUsername" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolAdminPassword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Databases" Relationship="Self.FK__Database__School__703EA55A" FromRole="School" ToRole="Database" />
+          <NavigationProperty Name="SchoolLogo" Relationship="Self.FK__SchoolLog__LogoI__75035A77" FromRole="School" ToRole="SchoolLogo" />
+          <NavigationProperty Name="Servers" Relationship="Self.FK__Server__SchoolID__6B79F03D" FromRole="School" ToRole="Server" />
         </EntityType>
         <EntityType Name="SchoolLogo">
           <Key>
@@ -170,7 +217,7 @@
           </Key>
           <Property Name="LogoID" Type="Int32" Nullable="false" />
           <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <NavigationProperty Name="School" Relationship="Self.FK__SchoolLog__LogoI__54CB950F" FromRole="SchoolLogo" ToRole="School" />
+          <NavigationProperty Name="School" Relationship="Self.FK__SchoolLog__LogoI__75035A77" FromRole="SchoolLogo" ToRole="School" />
         </EntityType>
         <EntityType Name="Server">
           <Key>
@@ -181,7 +228,7 @@
           <Property Name="ServerDomain" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="ServerName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ServerIPAddress" Type="String" MaxLength="39" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="School" Relationship="Self.FK__Server__SchoolID__5006DFF2" FromRole="Server" ToRole="School" />
+          <NavigationProperty Name="School" Relationship="Self.FK__Server__SchoolID__6B79F03D" FromRole="Server" ToRole="School" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -193,7 +240,19 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK__SchoolLog__LogoI__54CB950F">
+        <Association Name="FK__Database__School__703EA55A">
+          <End Role="School" Type="Self.School" Multiplicity="1" />
+          <End Role="Database" Type="Self.Database" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="Database">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SchoolLog__LogoI__75035A77">
           <End Role="School" Type="Self.School" Multiplicity="1" />
           <End Role="SchoolLogo" Type="Self.SchoolLogo" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -205,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Server__SchoolID__5006DFF2">
+        <Association Name="FK__Server__SchoolID__6B79F03D">
           <End Role="School" Type="Self.School" Multiplicity="1" />
           <End Role="Server" Type="Self.Server" Multiplicity="*" />
           <ReferentialConstraint>
@@ -217,16 +276,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="UnstuckMESchools_DBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="UnstuckME_SchoolsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Databases" EntityType="Self.Database" />
           <EntitySet Name="Schools" EntityType="Self.School" />
           <EntitySet Name="SchoolLogoes" EntityType="Self.SchoolLogo" />
           <EntitySet Name="Servers" EntityType="Self.Server" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <AssociationSet Name="FK__SchoolLog__LogoI__54CB950F" Association="Self.FK__SchoolLog__LogoI__54CB950F">
+          <AssociationSet Name="FK__Database__School__703EA55A" Association="Self.FK__Database__School__703EA55A">
+            <End Role="School" EntitySet="Schools" />
+            <End Role="Database" EntitySet="Databases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SchoolLog__LogoI__75035A77" Association="Self.FK__SchoolLog__LogoI__75035A77">
             <End Role="School" EntitySet="Schools" />
             <End Role="SchoolLogo" EntitySet="SchoolLogoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Server__SchoolID__5006DFF2" Association="Self.FK__Server__SchoolID__5006DFF2">
+          <AssociationSet Name="FK__Server__SchoolID__6B79F03D" Association="Self.FK__Server__SchoolID__6B79F03D">
             <End Role="School" EntitySet="Schools" />
             <End Role="Server" EntitySet="Servers" />
           </AssociationSet>
@@ -337,13 +401,28 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="UnstuckME_SchoolsModelStoreContainer" CdmEntityContainer="UnstuckMESchools_DBEntities">
+        <EntityContainerMapping StorageEntityContainer="UnstuckME_SchoolsModelStoreContainer" CdmEntityContainer="UnstuckME_SchoolsEntities">
+          <EntitySetMapping Name="Databases">
+            <EntityTypeMapping TypeName="UnstuckME_SchoolsModel.Database">
+              <MappingFragment StoreEntitySet="Database">
+                <ScalarProperty Name="DatabaseID" ColumnName="DatabaseID" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="DatabaseName" ColumnName="DatabaseName" />
+                <ScalarProperty Name="DatabaseIP" ColumnName="DatabaseIP" />
+                <ScalarProperty Name="DatabaseAdminUsername" ColumnName="DatabaseAdminUsername" />
+                <ScalarProperty Name="DatabaseUsingWindowsAuthen" ColumnName="DatabaseUsingWindowsAuthen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Schools">
             <EntityTypeMapping TypeName="UnstuckME_SchoolsModel.School">
               <MappingFragment StoreEntitySet="School">
                 <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
                 <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
                 <ScalarProperty Name="EmailCredentials" ColumnName="EmailCredentials" />
+                <ScalarProperty Name="SchoolAdminUsername" ColumnName="SchoolAdminUsername" />
+                <ScalarProperty Name="SchoolAdminPassword" ColumnName="SchoolAdminPassword" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

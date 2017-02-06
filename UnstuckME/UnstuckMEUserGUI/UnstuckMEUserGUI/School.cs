@@ -16,13 +16,18 @@ namespace UnstuckMEUserGUI
     {
         public School()
         {
+            this.Databases = new HashSet<Database>();
             this.Servers = new HashSet<Server>();
         }
     
         public int SchoolID { get; set; }
         public string SchoolName { get; set; }
         public string EmailCredentials { get; set; }
+        public string SchoolAdminUsername { get; set; }
+        public string SchoolAdminPassword { get; set; }
+        public string Salt { get; set; }
     
+        public virtual ICollection<Database> Databases { get; set; }
         public virtual SchoolLogo SchoolLogo { get; set; }
         public virtual ICollection<Server> Servers { get; set; }
     }

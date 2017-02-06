@@ -16,10 +16,10 @@ namespace UnstuckMEUserGUI
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class UnstuckMESchools_DBEntities : DbContext
+    public partial class UnstuckME_SchoolsEntities : DbContext
     {
-        public UnstuckMESchools_DBEntities()
-            : base("name=UnstuckMESchools_DBEntities")
+        public UnstuckME_SchoolsEntities()
+            : base("name=UnstuckME_SchoolsEntities")
         {
         }
     
@@ -28,6 +28,7 @@ namespace UnstuckMEUserGUI
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Database> Databases { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<SchoolLogo> SchoolLogoes { get; set; }
         public DbSet<Server> Servers { get; set; }

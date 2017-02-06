@@ -299,7 +299,6 @@
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
       <LastGenOutput>UnstuckMEServer_DB.cs</LastGenOutput>
     </Content>
-    <Resource Include="SimpleAvatarWhite.png" />
     <Resource Include="Resources\GearIcon.png" />
     <Resource Include="Resources\SimpleAvatar.png" />
     <Resource Include="Resources\UnstuckME_Logo.png" />

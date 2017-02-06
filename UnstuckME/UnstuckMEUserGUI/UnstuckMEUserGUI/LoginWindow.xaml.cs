@@ -50,7 +50,7 @@ namespace UnstuckMEUserGUI
         List<UnstuckMESchool> LoadSchools()
         {
             List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
-            using (UnstuckMESchools_DBEntities db = new UnstuckMESchools_DBEntities())
+            using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
             {
                 var dbSchools = from s in db.Schools
                                     //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
