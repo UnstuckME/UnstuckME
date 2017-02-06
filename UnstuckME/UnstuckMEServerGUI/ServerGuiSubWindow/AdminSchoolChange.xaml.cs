@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -41,21 +42,25 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         List<UnstuckMESchool> LoadSchools()
         {
             List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
-            using (UnstuckMEServerGUI.UnstuckME_SchoolsEntities db = new UnstuckMEServerGUI.UnstuckME_SchoolsEntities())
-            { 
-
-                var dbSchools = from s in db.Schools select new {
-                                                                    SchoolName = s.SchoolName,
-                                                                    SchoolID = s.SchoolID
-                                                                };
-
-                foreach (var dbschool in dbSchools)
+            try
+            {
+                using (UnstuckMEServerGUI.UnstuckME_SchoolsEntities db = new UnstuckMEServerGUI.UnstuckME_SchoolsEntities())
                 {
-                    UnstuckMESchool newSchool = new UnstuckMESchool();
-                    newSchool.SchoolName = dbschool.SchoolName;
-                    newSchool.SchoolID = dbschool.SchoolID;
-                    tempSchools.Add(newSchool);
+
+                    var dbSchools = from s in db.Schools select new {SchoolName = s.SchoolName, SchoolID = s.SchoolID};
+
+                    foreach (var dbschool in dbSchools)
+                    {
+                        UnstuckMESchool newSchool = new UnstuckMESchool();
+                        newSchool.SchoolName = dbschool.SchoolName;
+                        newSchool.SchoolID = dbschool.SchoolID;
+                        tempSchools.Add(newSchool);
+                    }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("We seem to experiencing some difficulties connecting to the UnstuckMe Server", "Unable To Connect to UnstuckME Server", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             return tempSchools;
         }
@@ -72,22 +77,39 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                     var admin = (from u in db.Schools
                                  where u.SchoolID == selectedSchoolID
                                  select u).First();
-
-                    string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passwordBoxUnstuckMEPassword.Password, admin.Salt);
-                    if (stringOfPassword == admin.SchoolAdminPassword)
+                    if (textBoxUnstuckMEUsername.Text == admin.SchoolAdminUsername)
                     {
-                        System.Configuration.ConfigurationManager.AppSettings["SchoolName"] = comboBoxSchools.SelectionBoxItem.ToString();
 
-                        if ((admin.SchoolAdminUsername == "admin" && UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) == admin.SchoolAdminPassword) || (admin.Salt == "salt"))
+
+                        string stringOfPassword =
+                            UnstuckMEHashing.RecreateHashedPassword(passwordBoxUnstuckMEPassword.Password, admin.Salt);
+                        if (stringOfPassword == admin.SchoolAdminPassword)
                         {
-                            MessageBox.Show("It looks like you are new to the UnstuckME program, please update your UnstuckME Credentials","New To UnstuckME",MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                            this.Close();
-                            UnstuckMeCredChange unstuckMECredChangeWindow = new UnstuckMeCredChange(selectedSchoolID);
-                            Application.Current.MainWindow = unstuckMECredChangeWindow;
-                            unstuckMECredChangeWindow.ShowDialog();
-                        }
+                            System.Configuration.Configuration config =
+                                ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                            config.AppSettings.Settings["SchoolName"].Value =
+                                comboBoxSchools.SelectionBoxItem.ToString();
+                            config.Save(ConfigurationSaveMode.Modified);
 
-                        this.Close();
+                            if ((admin.SchoolAdminUsername == "admin" &&
+                                 UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) ==
+                                 admin.SchoolAdminPassword) || (admin.Salt == "salt"))
+                            {
+                                MessageBox.Show(
+                                    "It looks like you are new to the UnstuckME program, please update your UnstuckME Credentials",
+                                    "New To UnstuckME", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                this.Close();
+                                UnstuckMeCredChange unstuckMECredChangeWindow = new UnstuckMeCredChange(selectedSchoolID);
+                                Application.Current.MainWindow = unstuckMECredChangeWindow;
+                                unstuckMECredChangeWindow.ShowDialog();
+                            }
+
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid Login");
+                        }
                     }
                     else
                     {

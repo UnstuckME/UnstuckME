@@ -98,7 +98,12 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                         }
 
                         schoolDB.SaveChanges();
-                        System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] = textBoxNewIP.Text;
+
+                        System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                        config.AppSettings.Settings["UnstuckMEServerIP"].Value = textBoxNewIP.Text;
+                        config.Save(ConfigurationSaveMode.Modified);
+                        
                     }
 
                     this.Close();
@@ -300,9 +305,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                         startServer.Start();
 
 
-                        DuplexChannelFactory<IUnstuckMEServer> channelFactory =
-                            new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(),
-                                "UnstuckMEServerEndPoint");
+                        DuplexChannelFactory<IUnstuckMEServer> channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(),"UnstuckMEServerEndPoint");
                         IUnstuckMEServer testingChannel = channelFactory.CreateChannel();
 
                         if (testingChannel.TestNewConfig() == true)

@@ -142,7 +142,10 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
                     if (displayOutput == false) // Actually modify the app.config here
                     {
-                        System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] = textBoxDatabaseName.Text;
+                        System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                        config.AppSettings.Settings["DatabaseName"].Value = textBoxDatabaseName.Text;
+                        config.Save(ConfigurationSaveMode.Modified);
 
                         Configuration exeConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 

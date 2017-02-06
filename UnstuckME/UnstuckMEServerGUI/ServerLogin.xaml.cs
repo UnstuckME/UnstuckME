@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -120,15 +121,17 @@ namespace UnstuckMEServerGUI
 
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
-           
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.Save(ConfigurationSaveMode.Modified);
 
-            if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] == "")
+            if (config.AppSettings.Settings["SchoolName"].Value == "")
             {
                 MessageBox.Show("It Looks like you have not stated what school you are trying to configure on this machine before. Select your school and login with the credentials provided to you by an UnstuckME associate.\n\n NOTE: Your login information will be updated to use the same credentials as your MSSQL database once you connect one.", "School Information Not Set", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 AdminSchoolChange changeSchool = new AdminSchoolChange();
                 Application.Current.MainWindow = changeSchool;
                 changeSchool.ShowDialog();
             }
+            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
 
             if (System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] == "" && System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "")
             {
@@ -137,6 +140,8 @@ namespace UnstuckMEServerGUI
                 Application.Current.MainWindow = changeDBString;
                 changeDBString.ShowDialog();
             }
+
+            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
 
             if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" &&
                 System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "" &&
@@ -147,6 +152,9 @@ namespace UnstuckMEServerGUI
                 Application.Current.MainWindow = changeIPString;
                 changeIPString.ShowDialog();
             }
+
+            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
+
             if (System.Configuration.ConfigurationManager.AppSettings["SchoolName"] != "" && System.Configuration.ConfigurationManager.AppSettings["DatabaseName"] != "" && System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"] != "")
             {
                 ChangeDBSchoolInfo schoolInfoWindow = new ChangeDBSchoolInfo();

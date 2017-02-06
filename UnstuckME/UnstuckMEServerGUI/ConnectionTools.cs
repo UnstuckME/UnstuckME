@@ -59,8 +59,7 @@ namespace UnstuckMEServerGUI
                 sqlCnxStringBuilder.IntegratedSecurity = integratedSecuity;
 
                 // now flip the properties that were changed
-                source.Database.Connection.ConnectionString
-                    = sqlCnxStringBuilder.ConnectionString;
+                source.Database.Connection.ConnectionString = sqlCnxStringBuilder.ConnectionString;
 
                 entityCnxStringBuilder.ProviderConnectionString = sqlCnxStringBuilder.ToString();
             }
