@@ -72,6 +72,9 @@
     <Compile Include="Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StickerCreationWindow.xaml.cs">
+      <DependentUpon>StickerCreationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Notifications\NewMessageNotification.xaml.cs">
       <DependentUpon>NewMessageNotification.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,10 @@
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
     <Page Include="Pages\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StickerCreationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

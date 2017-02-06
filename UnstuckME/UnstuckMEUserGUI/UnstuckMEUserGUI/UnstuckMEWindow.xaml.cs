@@ -108,21 +108,19 @@ namespace UnstuckMEUserGUI
 
         private void DisableStickerSubmit()
         {
-            CreateStickerButton.Visibility = Visibility.Hidden;
             CreateStickerButtonBorder.Visibility = Visibility.Hidden;
-            CreateStickerIcon.Visibility = Visibility.Hidden;
-            CreateStickerIcon.IsEnabled = false;
             CreateStickerButtonBorder.IsEnabled = false;
-            CreateStickerButton.IsEnabled = false;
         }
         private void EnableStickerSubmit()
         {
-            CreateStickerButton.Visibility = Visibility.Visible;
             CreateStickerButtonBorder.Visibility = Visibility.Visible;
-            CreateStickerIcon.Visibility = Visibility.Visible;
-            CreateStickerIcon.IsEnabled = true;
             CreateStickerButtonBorder.IsEnabled = true;
-            CreateStickerButton.IsEnabled = true;
+        }
+
+        private void CreateStickerButton_Click(object sender, RoutedEventArgs e)
+        {
+            StickerCreationWindow window = new StickerCreationWindow();
+            window.ShowDialog();
         }
     }
 

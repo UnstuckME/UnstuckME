@@ -69,8 +69,8 @@
         <Grid Grid.Column="1" HorizontalAlignment="Stretch">
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" BorderBrush="Black" BorderThickness="1,0,1,0" MinWidth="300" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto"/>
             <Border x:Name="CreateStickerButtonBorder" CornerRadius="25" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="2,2,2,2" Background="#993333" Height="40" Width="40" Cursor="Hand" Margin="0,5,5,0">
-                    <Button x:Name="CreateStickerButton" Style="{StaticResource NoHighlightButton}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                        <Image x:Name="CreateStickerIcon" Source="Resources/Plus/PlusWhite.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="30"></Image>
+                    <Button x:Name="CreateStickerButton" Style="{StaticResource NoHighlightButton}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="CreateStickerButton_Click">
+                        <Image x:Name="CreateStickerIcon" Source="Resources/Plus/PlusWhite.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="20"></Image>
                     </Button>
                 </Border>
         </Grid>
