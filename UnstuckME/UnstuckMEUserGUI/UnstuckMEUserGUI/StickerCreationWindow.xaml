@@ -11,15 +11,31 @@
     <Grid>
         <Rectangle Fill="Black" Opacity=".7" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown">
         </Rectangle>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="500" MaxWidth="450" MinHeight="500" MinWidth="450" Height="500" Width="450">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="500" MaxWidth="600" MinHeight="500" MinWidth="600" Height="500" Width="600">
             <Border BorderBrush="LightGray" BorderThickness="4,4,4,4" CornerRadius="5">
-                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5"></Border>
+                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5"/>
             </Border>
-            <Border Cursor="Hand" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" Margin="0,0,50,50" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Label x:Name="labelSliderValue" Foreground="White" Width="45" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Content="0" Margin="0,150,40,0"/>
+            <Label x:Name="labelSliderMinimumRating" FontSize="18" Foreground="White" Height="35" Width="190" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Minimum Tutor Rating" Margin="0,146,295,0"/>
+            <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".25" ValueChanged="slider_ValueChanged"  VerticalContentAlignment="Center" Maximum="5" Minimum="0" Margin="310,157,90,323"/>
+            <Label x:Name="labelTitle" Content="Sticker Submission" Foreground="White" FontSize="35" Margin="0,15,0,0" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Comic Sans MS"/>
+            <ComboBox x:Name="ComboBoxCourseName" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" Height="35" Width="350" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,40,0">
+                <ComboBoxItem Content="(Course Name)" Height="0"></ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="ComboBoxCourseNumber" SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="35" Width="85" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,400,0">
+                <ComboBoxItem Content="(CRN)" Height="0"></ComboBoxItem>
+            </ComboBox>
+            <ScrollViewer Height="100" Width="500" VerticalScrollBarVisibility="Auto" Margin="50,222,50,178">
+                <TextBox MaxLength="450" Padding="8,8,8,8" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            </ScrollViewer>
+            <Label x:Name="label" Content="Class:" Height="45" FontSize="24"  Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,93,500,0"/>
+            <Label x:Name="labelProblemDescription" Content="Problem Description:" Height="45" FontSize="24"  Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,177,0,0" Width="296"/>
+
+            <Border Cursor="Hand" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" Margin="0,0,50,30" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                 <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Click="Submit_Click"></Button>
             </Border>
 
-            <Border Cursor="Hand" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#993333" Margin="50,0,0,50" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Border Cursor="Hand" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#993333" Margin="0,0,230,30" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                 <Button x:Name="Cancel" Width="155" Content="Cancel" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#993333" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Cancel_Click"></Button>
             </Border>
 

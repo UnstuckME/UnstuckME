@@ -38,5 +38,10 @@ namespace UnstuckMEUserGUI
         {
             this.Close();
         }
+
+        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            labelSliderValue.Content = sliderRating.Value;
+        }
     }
 }
