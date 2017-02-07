@@ -20,10 +20,13 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEWindow : Window
     {
+        public enum Privileges { InvalidUser, Admin, Moderator, User }
         public static UnstuckMEPages _pages = new UnstuckMEPages();
+        private static Privileges fakePriviliges;
 
         public static Brush _UnstuckMEBlue;
         public static Brush _UnstuckMERed;
+
         public UnstuckMEWindow()
         {
             InitializeComponent();
@@ -34,6 +37,10 @@ namespace UnstuckMEUserGUI
             _pages.SettingsPage = new SettingsPage();
             _pages.ChatPage = new ChatPage();
             _pages.UserProfilePage = new UserProfilePage();
+            _pages.ModeratorPage = new ModeratorPage();
+            _pages.AdminPage = new AdminPage();
+
+            fakePriviliges = Privileges.Admin; //Privileges fakePriviliges = (Privileges)privilegesInt;
 
             for (int i = 0; i < 30; i++)
             {
@@ -45,7 +52,7 @@ namespace UnstuckMEUserGUI
                 AvailableStickersStack.Children.Add(new NewMessageNotification("User " +i, ref _pages, this));
                 AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
             }
-
+            CheckAdminPrivledges(fakePriviliges); //Eventually Pass In User Privleges From Database 1 = Admin, 2 = Moderator, 3 = User.
             SwitchToStickerTab();
         }
 
@@ -69,6 +76,36 @@ namespace UnstuckMEUserGUI
             SwitchToUserProfileTab();
         }
 
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchToAdminTab(fakePriviliges);
+        }
+
+        public void CheckAdminPrivledges(Privileges inPrivleges)
+        {
+            switch(inPrivleges)
+            {
+                case Privileges.Admin: //Admin
+                    {
+                        AdminButtonBorder.Visibility = Visibility.Visible;
+                        AdminButtonBorder.IsEnabled = true;
+                        break;
+                    }
+                case Privileges.Moderator: //Moderator
+                    {
+                        AdminButtonBorder.Visibility = Visibility.Visible;
+                        AdminButtonBorder.IsEnabled = true;
+                        break;
+                    }
+                case Privileges.User: //User
+                    {
+                        AdminButtonBorder.Visibility = Visibility.Hidden;
+                        AdminButtonBorder.IsEnabled = false;
+                        break;
+                    }
+            }
+        }
+
         public void SwitchToChatTab()
         {
             MainFrame.Navigate(_pages.ChatPage);
@@ -76,6 +113,7 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
             UserProfileButtonBorder.Background = _UnstuckMEBlue;
+            AdminButtonBorder.Background = _UnstuckMEBlue;
             DisableStickerSubmit();
         }
         public void SwitchToStickerTab()
@@ -85,6 +123,7 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMERed;
             SettingButtonBorder.Background = _UnstuckMEBlue;
             UserProfileButtonBorder.Background = _UnstuckMEBlue;
+            AdminButtonBorder.Background = _UnstuckMEBlue;
             EnableStickerSubmit();
         }
         public void SwitchToUserProfileTab()
@@ -94,6 +133,7 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
             UserProfileButtonBorder.Background = _UnstuckMERed;
+            AdminButtonBorder.Background = _UnstuckMEBlue;
             DisableStickerSubmit();
         }
         public void SwitchToSettingsTab()
@@ -103,6 +143,33 @@ namespace UnstuckMEUserGUI
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMERed;
             UserProfileButtonBorder.Background = _UnstuckMEBlue;
+            AdminButtonBorder.Background = _UnstuckMEBlue;
+            DisableStickerSubmit();
+        }
+        public void SwitchToAdminTab(Privileges inPriviledges)
+        {
+            switch(inPriviledges)
+            {
+                case Privileges.Admin: //Admin
+                    {
+                        MainFrame.Navigate(_pages.AdminPage);
+                        break;
+                    }
+                case Privileges.Moderator: //Moderator
+                    {
+                        MainFrame.Navigate(_pages.ModeratorPage);
+                        break;
+                    }
+                default: //In case someone figures out a way to make admin button show
+                    {
+                        return;
+                    }
+            }
+            ChatButtonBorder.Background = _UnstuckMEBlue;
+            StickerButtonBorder.Background = _UnstuckMEBlue;
+            SettingButtonBorder.Background = _UnstuckMEBlue;
+            UserProfileButtonBorder.Background = _UnstuckMEBlue;
+            AdminButtonBorder.Background = _UnstuckMERed;
             DisableStickerSubmit();
         }
 
@@ -123,19 +190,7 @@ namespace UnstuckMEUserGUI
             window.ShowDialog();
         }
 
-        private void DisableAdmin()
-        {
-            //I'll Implement this later
-        }
-        private void EnableAdmin()
-        {
-            //I'll Implement this later
-        }
 
-        private void AdminButton_Click(object sender, RoutedEventArgs e)
-        {
-            //Case Statement for Admin/Moderator Status.
-        }
     }
 
     public class UnstuckMEPages
@@ -144,5 +199,7 @@ namespace UnstuckMEUserGUI
         public  SettingsPage SettingsPage { get; set; }
         public UserProfilePage UserProfilePage { get; set; }
         public ChatPage ChatPage { get; set; }
+        public AdminPage AdminPage { get; set; }
+        public ModeratorPage ModeratorPage { get; set; }
     }
 }

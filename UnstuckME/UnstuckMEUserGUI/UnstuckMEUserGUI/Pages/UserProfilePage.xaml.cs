@@ -26,7 +26,7 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             float studentRatingValue = 2.5f; //Eventually Get This From Database
-            float tutorRatingValue = 1.275555555f; //Eventually Get This From Database
+            float tutorRatingValue = 4.66666666f; //Eventually Get This From Database
 
             FirstName.Text = "Arthur"; //Eventually Get This From DataBase
             LastName.Text = "Clark"; //Eventually Get This From Database
