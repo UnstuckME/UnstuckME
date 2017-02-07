@@ -79,7 +79,7 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                // your code here.
+                // your asynchronous code here.
             });
         }
 
@@ -87,7 +87,7 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                // your code here.
+                // your asynchronous code here.
             });
         }
 
@@ -107,7 +107,7 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                // your code here.
+                // your asynchronous code here.
             });
         }
 
@@ -115,7 +115,7 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                // your code here.
+                // your asynchronous code here.
             });
         }
 
@@ -136,7 +136,7 @@ namespace UnstuckMEUserGUI
             });
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////END ASYNCHRONOUS LOADING SECTION///////////////////////////////////////////////////////////////
         private void StickerButton_Click(object sender, RoutedEventArgs e)
         {
             SwitchToStickerTab();

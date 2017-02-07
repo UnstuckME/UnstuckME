@@ -73,10 +73,10 @@ namespace UnstuckMEUserGUI
             return tempSchools;
         }
 
-        private void buttonLogin_Click(object sender, RoutedEventArgs e)
+        async private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = false;
-            int userID = 0;
+            
             string emailAttempt = textBoxUserName.Text;
             string passwordAttempt = passwordBox.Password;
             _labelInvalidLogin.Visibility = Visibility.Hidden;
@@ -101,7 +101,7 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    isValid = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+                    isValid = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
                     if (!isValid)
                     {
                         _labelInvalidLogin.Content = "Invalid Username/Password";
@@ -111,10 +111,19 @@ namespace UnstuckMEUserGUI
                 catch (Exception)
                 {
                     //MessageBox.Show("Please check that you entered the correct credentials.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    isValid = false;
                     _labelInvalidLogin.Visibility = Visibility.Visible;
-                    _channelFactory.Abort();
-                    _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-                    Server = _channelFactory.CreateChannel();
+                    try
+                    {
+                        _channelFactory.Abort();
+                        _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                        Server = _channelFactory.CreateChannel();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        this.Close();
+                    }
                 }
             }
             if (isValid)
@@ -122,9 +131,8 @@ namespace UnstuckMEUserGUI
 
                 try
                 {
-                    userID = Server.GetUserID(emailAttempt);
-                    UserInfo loggedInUser = Server.GetUserInfo(userID);
-                    byte[] img = Server.GetProfilePicture(loggedInUser.UserID);
+                    UserInfo loggedInUser = await Task.Factory.StartNew(() => GetUserInfoAsynch(emailAttempt));
+                    byte[] img = await Task.Factory.StartNew(() => GetProfilePictureAsynch(loggedInUser.UserID));
                     UnstuckMEWindow mainWindow = new UnstuckMEWindow(ref Server, ref loggedInUser, ref img);
                     mainWindow.Show();
                     this.Close();
@@ -133,20 +141,51 @@ namespace UnstuckMEUserGUI
                 {
                     try
                     {
-                        MessageBox.Show("Unable to successfully contact the server. Please Contact Your Server Administrator", "Connection Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         _channelFactory.Abort();
                         _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
                         Server = _channelFactory.CreateChannel();
                     }
-                    catch(Exception ex)
+                    catch (Exception)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        this.Close();
                     }
                 }
             }
         }
 
-        private void buttonCreate_Click(object sender, RoutedEventArgs e)
+        private bool ServerLoginAttemptAsynch(string emailAttempt, string passwordAttempt)
+        {
+            bool retVal = false;
+            this.Dispatcher.Invoke(() =>
+            {
+                retVal = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+            });
+            return retVal;
+        }
+
+        private UserInfo GetUserInfoAsynch(string emailAttempt)
+        {
+            UserInfo temp = new UserInfo();
+            this.Dispatcher.Invoke(() =>
+            {
+                int userID = Server.GetUserID(emailAttempt);
+                temp = Server.GetUserInfo(userID);
+            });
+            return temp;
+        }
+
+        private byte [] GetProfilePictureAsynch(int userID)
+        {
+            byte[] temp = null;
+            this.Dispatcher.Invoke(() =>
+            {
+                temp = Server.GetProfilePicture(userID);
+            });
+            return temp;
+        }
+
+        async private void buttonCreate_Click(object sender, RoutedEventArgs e)
         {
             bool validCredentials = false;
             try
@@ -176,12 +215,10 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    if (Server.CreateNewUser(textBoxCreateFirstName.Text, textBoxCreateLastName.Text, textBoxCreateEmailAddress.Text, passwordBoxCreate.Password))
+                    if (await Task.Factory.StartNew(() => CreateUserAsynch()))
                     {
-                        int userID = Server.GetUserID(textBoxCreateEmailAddress.Text);
-                        ImageConverter converter = new ImageConverter();
-                        byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
-                        Server.InsertProfilePicture(userID, avatar);
+                        int userID = await Task.Factory.StartNew(() => GetUserIDAsynch());
+                        await Task.Factory.StartNew(() => InsertProfilePictureAsynch(userID));
                     }
                     else
                     {
@@ -197,13 +234,50 @@ namespace UnstuckMEUserGUI
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    _channelFactory.Abort();
-                    _channelFactory.Open();
-                    Server = _channelFactory.CreateChannel();
+                    try
+                    {
+                        _channelFactory.Abort();
+                        _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                        Server = _channelFactory.CreateChannel();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("There is a problem re-connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        this.Close();
+                    }
                 }
             }
         }
 
+        private bool CreateUserAsynch()
+        {
+            bool temp = false;
+            this.Dispatcher.Invoke(() =>
+            {
+                temp = Server.CreateNewUser(textBoxCreateFirstName.Text, textBoxCreateLastName.Text, textBoxCreateEmailAddress.Text, passwordBoxCreate.Password);
+            });
+            return temp;
+        }
+
+        private int GetUserIDAsynch()
+        {
+            int temp = -1;
+            this.Dispatcher.Invoke(() =>
+            {
+                temp = Server.GetUserID(textBoxCreateEmailAddress.Text);
+            });
+            return temp;
+        }
+
+        private void InsertProfilePictureAsynch(int userID)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                ImageConverter converter = new ImageConverter();
+                byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
+                Server.InsertProfilePicture(userID, avatar);
+            });
+        }
         private void buttonCreateAccount_MouseEnter(object sender, MouseEventArgs e)
         {
             buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
