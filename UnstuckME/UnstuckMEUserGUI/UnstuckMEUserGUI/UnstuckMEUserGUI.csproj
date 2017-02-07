@@ -412,6 +412,7 @@
     <Resource Include="Resources\Ranking\RankingWhite.png" />
     <Resource Include="Resources\Ranking\RankingDimGray.png" />
     <Resource Include="Resources\Ranking\RankingGray.png" />
+    <None Include="Resources\DefaultUserProfilePicture.bmp" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

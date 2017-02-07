@@ -46,31 +46,23 @@
 
                     </Border>
                 </Border>
-                <Label x:Name="StickerTabLabel" Content="Sticker Submit/Statistics" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
+                <Label x:Name="StickerTabLabel" Content="Available Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
-            <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
-                <Border BorderBrush="Black" BorderThickness="1,0,0,1">
+            <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch">
+                <Border BorderBrush="Black" BorderThickness="1,0,0,0">
                     <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
-
+                        
                     </Border>
                 </Border>
-                <Label x:Name="StickerTabLabel1" Content="Open Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
+                <Label x:Name="StickerTabLabel1" Content="Sticker History" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
-                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
-                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
+                <Border BorderBrush="Black" BorderThickness="0,0,0,0">
+                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0">
 
                     </Border>
                 </Border>
-                <Label x:Name="StickerTabLabel2" Content="Tutorable Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
-                <Border BorderBrush="Black" BorderThickness="1,0,0,1">
-                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
-
-                    </Border>
-                </Border>
-                <Label x:Name="StickerTabLabel3" Content="Sticker History" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
+                <Label x:Name="StickerTabLabel2" Content="Open Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
         </Grid>
     </Grid>

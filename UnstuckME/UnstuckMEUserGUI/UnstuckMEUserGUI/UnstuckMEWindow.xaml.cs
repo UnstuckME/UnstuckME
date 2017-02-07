@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
+using UnstuckMEInterfaces;
 
 namespace UnstuckMEUserGUI
 {
@@ -20,19 +23,29 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEWindow : Window
     {
+        public static IUnstuckMEService Server;
+        public static UserInfo User;
+        public static byte[] UserProfilePictureBytes;
         public enum Privileges { InvalidUser, Admin, Moderator, User }
         public static UnstuckMEPages _pages = new UnstuckMEPages();
-        private static Privileges fakePriviliges;
+        private static Privileges userPriviliges;
 
         public static Brush _UnstuckMEBlue;
         public static Brush _UnstuckMERed;
 
-        public UnstuckMEWindow()
+        public UnstuckMEWindow(ref IUnstuckMEService inServer, ref UserInfo inUser, ref byte[] inImg)
         {
             InitializeComponent();
             _UnstuckMERed = StickerButtonBorder.Background;
             _UnstuckMEBlue = ChatButtonBorder.Background;
- 
+
+            Server = inServer;
+            User = inUser;
+            UserProfilePictureBytes = inImg;
+        }
+
+        async private void Window_ContentRendered(object sender, EventArgs e)
+        {
             _pages.StickerPage = new StickerPage();
             _pages.SettingsPage = new SettingsPage();
             _pages.ChatPage = new ChatPage();
@@ -40,22 +53,90 @@ namespace UnstuckMEUserGUI
             _pages.ModeratorPage = new ModeratorPage();
             _pages.AdminPage = new AdminPage();
 
-            fakePriviliges = Privileges.Admin; //Privileges fakePriviliges = (Privileges)privilegesInt;
+            //userPriviliges = (Privileges)User.Privileges; //This Works But for Design Purposes is commented out.
+            userPriviliges = Privileges.Admin; //This will be replaced with above line
 
-            for (int i = 0; i < 30; i++)
-            {
-                OnlineUsersStack.Children.Add(new OnlineUser("Hello User " + i));
-            }
-
-            for (int i = 0; i < 30; i++)
-            {
-                AvailableStickersStack.Children.Add(new NewMessageNotification("User " +i, ref _pages, this));
-                AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
-            }
-            CheckAdminPrivledges(fakePriviliges); //Eventually Pass In User Privleges From Database 1 = Admin, 2 = Moderator, 3 = User.
+            CheckAdminPrivledges(userPriviliges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
             SwitchToStickerTab();
+            try
+            {
+                await Task.Factory.StartNew(() => LoadStickerPageAsync());
+                await Task.Factory.StartNew(() => LoadChatPageAsync());
+                await Task.Factory.StartNew(() => LoadUserProfilePageAsync());
+                await Task.Factory.StartNew(() => LoadSettingsPageAsync());
+                await Task.Factory.StartNew(() => LoadAdminPageAsync());
+                await Task.Factory.StartNew(() => LoadSideBarsAsync());
+
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show("Source: " + ex.Source + "\nMessage: " + ex.Message);
+            }
         }
 
+        ///////////////////////////////////////////////ASYNCRONOUS LOADING SECTION/////////////////////////////////////////////////////////////////
+        private void LoadStickerPageAsync()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                // your code here.
+            });
+        }
+
+        private void LoadChatPageAsync()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                // your code here.
+            });
+        }
+
+        private void LoadUserProfilePageAsync()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                ImageSourceConverter ic = new ImageSourceConverter();
+                _pages.UserProfilePage.ProfilePicture.Source = ic.ConvertFrom(UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
+                _pages.UserProfilePage.FirstName.Text = User.FirstName;
+                _pages.UserProfilePage.LastName.Text = User.LastName;
+                _pages.UserProfilePage.EmailAddress.Text = User.EmailAddress;
+            });
+        }
+
+        private void LoadSettingsPageAsync()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                // your code here.
+            });
+        }
+
+        private void LoadAdminPageAsync()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                // your code here.
+            });
+        }
+
+        private void LoadSideBarsAsync()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                for (int i = 0; i < 30; i++)
+                {
+                    OnlineUsersStack.Children.Add(new OnlineUser("Hello User " + i));
+                }
+
+                for (int i = 0; i < 30; i++)
+                {
+                    AvailableStickersStack.Children.Add(new NewMessageNotification("User " + i, ref _pages, this));
+                    AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
+                }
+            });
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void StickerButton_Click(object sender, RoutedEventArgs e)
         {
             SwitchToStickerTab();
@@ -78,12 +159,12 @@ namespace UnstuckMEUserGUI
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            SwitchToAdminTab(fakePriviliges);
+            SwitchToAdminTab(userPriviliges);
         }
 
         public void CheckAdminPrivledges(Privileges inPrivleges)
         {
-            switch(inPrivleges)
+            switch (inPrivleges)
             {
                 case Privileges.Admin: //Admin
                     {
@@ -148,7 +229,7 @@ namespace UnstuckMEUserGUI
         }
         public void SwitchToAdminTab(Privileges inPriviledges)
         {
-            switch(inPriviledges)
+            switch (inPriviledges)
             {
                 case Privileges.Admin: //Admin
                     {
@@ -162,6 +243,7 @@ namespace UnstuckMEUserGUI
                     }
                 default: //In case someone figures out a way to make admin button show
                     {
+                        MessageBox.Show("You do not have access to this tab.", "Unauthorized Access", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
                     }
             }
@@ -189,14 +271,12 @@ namespace UnstuckMEUserGUI
             StickerCreationWindow window = new StickerCreationWindow();
             window.ShowDialog();
         }
-
-
     }
 
     public class UnstuckMEPages
     {
-        public  StickerPage StickerPage { get; set; }
-        public  SettingsPage SettingsPage { get; set; }
+        public StickerPage StickerPage { get; set; }
+        public SettingsPage SettingsPage { get; set; }
         public UserProfilePage UserProfilePage { get; set; }
         public ChatPage ChatPage { get; set; }
         public AdminPage AdminPage { get; set; }

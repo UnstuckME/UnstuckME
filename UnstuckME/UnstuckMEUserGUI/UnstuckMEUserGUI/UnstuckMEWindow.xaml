@@ -7,7 +7,7 @@
         mc:Ignorable="d" 
         Title="UnstuckME" Height="Auto" Width="Auto" MinWidth="392" MinHeight="400"
         Background="DimGray" WindowStyle="SingleBorderWindow" ResizeMode="CanResize"
-        WindowStartupLocation="CenterScreen" Visibility="Visible">
+        WindowStartupLocation="CenterScreen" Visibility="Visible" ContentRendered="Window_ContentRendered">
     <Window.Resources>
         <Style TargetType="Button" x:Key="NoHighlightButton">
             <Setter Property="Cursor" Value="Hand" />

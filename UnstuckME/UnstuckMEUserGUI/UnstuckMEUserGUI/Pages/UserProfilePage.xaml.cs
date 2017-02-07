@@ -28,10 +28,6 @@ namespace UnstuckMEUserGUI
             float studentRatingValue = 2.5f; //Eventually Get This From Database
             float tutorRatingValue = 4.66666666f; //Eventually Get This From Database
 
-            FirstName.Text = "Arthur"; //Eventually Get This From DataBase
-            LastName.Text = "Clark"; //Eventually Get This From Database
-            EmailAddress.Text = "arthur.clark@oit.edu"; //Eventually Get This From DataBase
-
             studentRanking = new StarRanking(StarRanking.BoxColor.Gray, "Avg Student Rating: (" + Math.Round(studentRatingValue, 2) + ")", studentRatingValue);
             tutorRanking = new StarRanking(StarRanking.BoxColor.Gray, "Avg Tutor Rating: (" + Math.Round(tutorRatingValue, 2) + ")", tutorRatingValue);
             RatingsStack.Children.Add(studentRanking);

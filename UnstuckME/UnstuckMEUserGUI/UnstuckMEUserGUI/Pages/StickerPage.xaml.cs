@@ -26,10 +26,6 @@ namespace UnstuckMEUserGUI
 
         }
 
-        public void HelloWorld()
-        {
-
-        }
     }
 
 }

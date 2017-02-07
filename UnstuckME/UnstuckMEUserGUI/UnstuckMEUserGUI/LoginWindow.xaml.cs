@@ -125,7 +125,7 @@ namespace UnstuckMEUserGUI
                     userID = Server.GetUserID(emailAttempt);
                     UserInfo loggedInUser = Server.GetUserInfo(userID);
                     byte[] img = Server.GetProfilePicture(loggedInUser.UserID);
-                    StartWindow mainWindow = new StartWindow(ref Server, ref loggedInUser, ref img);
+                    UnstuckMEWindow mainWindow = new UnstuckMEWindow(ref Server, ref loggedInUser, ref img);
                     mainWindow.Show();
                     this.Close();
                 }
@@ -180,7 +180,7 @@ namespace UnstuckMEUserGUI
                     {
                         int userID = Server.GetUserID(textBoxCreateEmailAddress.Text);
                         ImageConverter converter = new ImageConverter();
-                        byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.SimpleAvatar, typeof(byte[]));
+                        byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
                         Server.InsertProfilePicture(userID, avatar);
                     }
                     else
