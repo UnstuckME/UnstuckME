@@ -44,7 +44,7 @@
         </Grid.ColumnDefinitions>
         <!--GRID GO TOP LEFT TO RIGHT-->
         <Grid Grid.Row="0" Grid.Column="0">
-            <Border BorderBrush="Black" BorderThickness="0,0,0,0">
+            <Border BorderBrush="Black" BorderThickness="0,0,1,1">
                 <Image x:Name="ProfilePicture" Stretch="UniformToFill" Source="/Resources/User/UserBlue.png" HorizontalAlignment="Stretch" Width="Auto" Height="150" VerticalAlignment="Top">
 
                 </Image>
@@ -52,9 +52,9 @@
         </Grid>
         <Grid x:Name="UserInfoGrid" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
             <Grid Grid.Column="0">
-                <TextBox Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="First Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,8,0,0" TextWrapping="NoWrap" Grid.ColumnSpan="2"></TextBox>
-                <TextBox Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Last Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,38,0,0" TextWrapping="NoWrap" Grid.ColumnSpan="2"></TextBox>
-                <TextBox Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Email Address" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,68,0,0" TextWrapping="NoWrap" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="FirstName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="First Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,8,0,0" TextWrapping="NoWrap" Grid.ColumnSpan="2"></TextBox>
+                <TextBox x:Name="LastName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Last Name" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,38,0,0" TextWrapping="NoWrap" Grid.ColumnSpan="2"></TextBox>
+                <TextBox x:Name="EmailAddress" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="Email Address" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"  IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,68,0,0" TextWrapping="NoWrap" Grid.ColumnSpan="2"/>
                 <StackPanel x:Name="RatingsStack" Height="105" Width="250" HorizontalAlignment="Left" VerticalAlignment="Bottom" ></StackPanel>
             </Grid>
         </Grid>
