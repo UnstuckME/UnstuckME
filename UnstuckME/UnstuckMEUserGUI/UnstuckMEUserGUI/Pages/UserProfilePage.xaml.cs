@@ -25,13 +25,22 @@ namespace UnstuckMEUserGUI
         public UserProfilePage()
         {
             InitializeComponent();
-            float studentRatingValue = 2.5f; //Eventually Get This From Database
-            float tutorRatingValue = 4.66666666f; //Eventually Get This From Database
 
-            studentRanking = new StarRanking(StarRanking.BoxColor.Gray, "Avg Student Rating: (" + Math.Round(studentRatingValue, 2) + ")", studentRatingValue);
-            tutorRanking = new StarRanking(StarRanking.BoxColor.Gray, "Avg Tutor Rating: (" + Math.Round(tutorRatingValue, 2) + ")", tutorRatingValue);
+            studentRanking = new StarRanking(StarRanking.BoxColor.Gray);
+            tutorRanking = new StarRanking(StarRanking.BoxColor.Gray);
             RatingsStack.Children.Add(studentRanking);
             RatingsStack.Children.Add(tutorRanking);
+        }
+
+        public void SetStudentRating(float inRating)
+        {
+            studentRanking.SetRatingText("Avg Student Rating: (" + Math.Round(inRating, 2) + ")");
+            studentRanking.SetRatingValue(inRating);
+        }
+        public void SetTutorRating(float inRating)
+        {
+            tutorRanking.SetRatingText("Avg Tutor Rating: (" + Math.Round(inRating, 2) + ")");
+            tutorRanking.SetRatingValue(inRating);
         }
     }
 }

@@ -25,7 +25,6 @@ namespace UnstuckMEUserGUI
     {
         public static IUnstuckMEService Server;
         public static UserInfo User;
-        public static byte[] UserProfilePictureBytes;
         public enum Privileges { InvalidUser, Admin, Moderator, User }
         public static UnstuckMEPages _pages = new UnstuckMEPages();
         private static Privileges userPriviliges;
@@ -33,7 +32,7 @@ namespace UnstuckMEUserGUI
         public static Brush _UnstuckMEBlue;
         public static Brush _UnstuckMERed;
 
-        public UnstuckMEWindow(ref IUnstuckMEService inServer, ref UserInfo inUser, ref byte[] inImg)
+        public UnstuckMEWindow(ref IUnstuckMEService inServer, ref UserInfo inUser)
         {
             InitializeComponent();
             _UnstuckMERed = StickerButtonBorder.Background;
@@ -41,7 +40,6 @@ namespace UnstuckMEUserGUI
 
             Server = inServer;
             User = inUser;
-            UserProfilePictureBytes = inImg;
         }
 
         async private void Window_ContentRendered(object sender, EventArgs e)
@@ -96,10 +94,12 @@ namespace UnstuckMEUserGUI
             this.Dispatcher.Invoke(() =>
             {
                 ImageSourceConverter ic = new ImageSourceConverter();
-                _pages.UserProfilePage.ProfilePicture.Source = ic.ConvertFrom(UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
+                _pages.UserProfilePage.ProfilePicture.Source = ic.ConvertFrom(User.UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
                 _pages.UserProfilePage.FirstName.Text = User.FirstName;
                 _pages.UserProfilePage.LastName.Text = User.LastName;
                 _pages.UserProfilePage.EmailAddress.Text = User.EmailAddress;
+                _pages.UserProfilePage.SetStudentRating(User.AvgStudentRank);
+                _pages.UserProfilePage.SetTutorRating(User.AvgTutorRank);
             });
         }
 

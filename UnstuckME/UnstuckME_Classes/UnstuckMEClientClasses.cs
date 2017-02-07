@@ -13,6 +13,9 @@ namespace UnstuckME_Classes
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public int Privileges { get; set; }
+        public float AvgTutorRank { get; set; }
+        public float AvgStudentRank { get; set; }
+        public byte [] UserProfilePictureBytes { get; set; }
     }
 
     public class UserClass

@@ -101,11 +101,17 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    isValid = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
-                    if (!isValid)
+                    UserInfo loggedInUser = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
+                    if (loggedInUser == null)
                     {
                         _labelInvalidLogin.Content = "Invalid Username/Password";
                         throw new Exception();
+                    }
+                    else
+                    {
+                        UnstuckMEWindow mainWindow = new UnstuckMEWindow(ref Server, ref loggedInUser);
+                        mainWindow.Show();
+                        this.Close();
                     }
                 }
                 catch (Exception)
@@ -126,61 +132,14 @@ namespace UnstuckMEUserGUI
                     }
                 }
             }
-            if (isValid)
-            {
-
-                try
-                {
-                    UserInfo loggedInUser = await Task.Factory.StartNew(() => GetUserInfoAsynch(emailAttempt));
-                    byte[] img = await Task.Factory.StartNew(() => GetProfilePictureAsynch(loggedInUser.UserID));
-                    UnstuckMEWindow mainWindow = new UnstuckMEWindow(ref Server, ref loggedInUser, ref img);
-                    mainWindow.Show();
-                    this.Close();
-                }
-                catch (Exception)
-                {
-                    try
-                    {
-                        _channelFactory.Abort();
-                        _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-                        Server = _channelFactory.CreateChannel();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        this.Close();
-                    }
-                }
-            }
         }
 
-        private bool ServerLoginAttemptAsynch(string emailAttempt, string passwordAttempt)
-        {
-            bool retVal = false;
-            this.Dispatcher.Invoke(() =>
-            {
-                retVal = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
-            });
-            return retVal;
-        }
-
-        private UserInfo GetUserInfoAsynch(string emailAttempt)
+        private UserInfo ServerLoginAttemptAsynch(string emailAttempt, string passwordAttempt)
         {
             UserInfo temp = new UserInfo();
             this.Dispatcher.Invoke(() =>
             {
-                int userID = Server.GetUserID(emailAttempt);
-                temp = Server.GetUserInfo(userID);
-            });
-            return temp;
-        }
-
-        private byte [] GetProfilePictureAsynch(int userID)
-        {
-            byte[] temp = null;
-            this.Dispatcher.Invoke(() =>
-            {
-                temp = Server.GetProfilePicture(userID);
+                temp = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
             });
             return temp;
         }

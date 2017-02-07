@@ -28,12 +28,10 @@ namespace UnstuckMEUserGUI
         BitmapImage WhiteStar = new BitmapImage(new Uri("/Resources/Ranking/RankingWhite.png", UriKind.Relative));
         BitmapImage GrayStar = new BitmapImage(new Uri("/Resources/Ranking/RankingGray.png", UriKind.Relative));
         BitmapImage DimGrayStar = new BitmapImage(new Uri("/Resources/Ranking/RankingDimGray.png", UriKind.Relative));
-        public StarRanking(BoxColor inColor, string inText, float inRating)
+        public StarRanking(BoxColor inColor)
         {
             InitializeComponent();
             ChangeBoxColor(inColor);
-            RankingTextBox.Text = inText;
-            StarRankingValue.Value = inRating;
         }
 
         private void ChangeBoxColor(BoxColor color)
@@ -135,6 +133,11 @@ namespace UnstuckMEUserGUI
         public void SetRatingValue(float inValue)
         {
             StarRankingValue.Value = inValue;
+        }
+
+        public void SetRatingText(string inString)
+        {
+            RankingTextBox.Text = inString;
         }
     }
 }

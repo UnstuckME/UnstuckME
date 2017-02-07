@@ -147,11 +147,10 @@ namespace UnstuckMEInterfaces
 			return userID;
 		}
 
-		public bool UserLoginAttempt(string emailAddress, string passWord)
+		public UserInfo UserLoginAttempt(string emailAddress, string passWord)
 		{
-			bool loginAttempt = false;
-
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            ConnectedClient newClient = new ConnectedClient();
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
 				try
 				{
@@ -169,14 +168,13 @@ namespace UnstuckMEInterfaces
 						{
 							if (client.Key == userID)
 							{
-								return false;
+								return null;
 							}
 						}
-						loginAttempt = true;
+						
 
 						//Stores Client into Logged in Users List
 						var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
-						ConnectedClient newClient = new ConnectedClient();
 						newClient.connection = establishedUserConnection;
 						newClient.User = GetUserInfo(userID);
 						newClient.returnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
@@ -193,10 +191,10 @@ namespace UnstuckMEInterfaces
 				}
 				catch (Exception)
 				{
-					loginAttempt = false;
+                    return null;
 				}
 			}
-			return loginAttempt;
+			return newClient.User;
 		}
 
 		public List<UserClass> GetUserClasses(int UserID)
@@ -248,6 +246,9 @@ namespace UnstuckMEInterfaces
 				newClient.LastName = users.DisplayLName;
 				newClient.EmailAddress = users.EmailAddress;
 				newClient.Privileges = users.Privileges;
+                newClient.AvgStudentRank = (float)users.AverageStudentRank;
+                newClient.AvgTutorRank = (float)users.AverageTutorRank;
+                newClient.UserProfilePictureBytes = GetProfilePicture(newClient.UserID);
 				return newClient;
 			}
 		}
