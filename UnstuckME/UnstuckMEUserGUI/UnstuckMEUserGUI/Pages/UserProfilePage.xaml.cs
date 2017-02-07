@@ -20,9 +20,17 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UserProfilePage : Page
     {
+        private static StarRanking studentRanking;
+        private static StarRanking tutorRanking;
         public UserProfilePage()
         {
             InitializeComponent();
+            float studentRatingValue = 2.5f; //Eventually Get This From Database
+            float tutorRatingValue = 1.275555555f; //Eventually Get This From Database
+            studentRanking = new StarRanking(StarRanking.BoxColor.Gray, "Avg Student Rating: (" + Math.Round(studentRatingValue, 3) + ")", studentRatingValue);
+            tutorRanking = new StarRanking(StarRanking.BoxColor.Gray, "Avg Tutor Rating: (" + Math.Round(tutorRatingValue, 3) + ")", tutorRatingValue);
+            RatingsStack.Children.Add(studentRanking);
+            RatingsStack.Children.Add(tutorRanking);
         }
     }
 }

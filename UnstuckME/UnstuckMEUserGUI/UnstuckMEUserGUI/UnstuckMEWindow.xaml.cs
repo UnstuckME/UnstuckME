@@ -22,8 +22,8 @@ namespace UnstuckMEUserGUI
     {
         public static UnstuckMEPages _pages = new UnstuckMEPages();
 
-        private static Brush _UnstuckMEBlue;
-        private static Brush _UnstuckMERed;
+        public static Brush _UnstuckMEBlue;
+        public static Brush _UnstuckMERed;
         public UnstuckMEWindow()
         {
             InitializeComponent();
