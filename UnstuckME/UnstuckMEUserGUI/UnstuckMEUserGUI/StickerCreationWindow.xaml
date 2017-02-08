@@ -58,11 +58,13 @@
             <ScrollViewer Height="111" Width="250" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,450,0,0">
                 <StackPanel Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
             </ScrollViewer>
-            <Label x:Name="labelDuration" Content="Sticker Duration:" Height="40" FontSize="20"  Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,311,0,0" Width="166"/>
-            <DatePicker Height="35" Width="160"  BorderThickness="0,0,0,0" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="512,315,0,0">
-            
-            </DatePicker>
+            <Label x:Name="labelDuration" Content="Sticker Deadline:" Height="36" FontSize="20"  Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,311,0,0" Width="166"/>
+            <DatePicker x:Name="DatePickerSticker" Height="30" Width="135"  BorderThickness="0,0,0,0" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="481,315,0,0"></DatePicker>
             <Button Height="35" Width="70" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="305,406,0,0" Content="Add" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF11850A" />
+            <ComboBox x:Name="comboBoxHour" SelectedIndex="0" HorizontalAlignment="Left" Margin="224,315,0,0" VerticalAlignment="Top" Width="62" Height="30"/>
+            <ComboBox x:Name="comboBoxMinute" SelectedIndex="0" HorizontalAlignment="Left" Margin="325,315,0,0" VerticalAlignment="Top" Width="59" Height="30"/>
+            <ComboBox x:Name="comboBoxAMPM" SelectedIndex="1" HorizontalAlignment="Left" Margin="398,315,0,0" VerticalAlignment="Top" Width="68" Height="30"/>
+            <Label x:Name="labelDurationColon" Content=":" Height="36" FontSize="20"  Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="291,311,0,0" Width="29"/>
         </Grid>
     </Grid>
 </Window>

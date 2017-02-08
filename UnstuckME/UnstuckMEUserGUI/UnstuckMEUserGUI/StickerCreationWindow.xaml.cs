@@ -22,6 +22,24 @@ namespace UnstuckMEUserGUI
         public StickerCreationWindow()
         {
             InitializeComponent();
+            DatePickerSticker.DisplayDateStart = DateTime.Now;
+            DatePickerSticker.SelectedDate = DateTime.Now;
+            List<string> hourList = new List<string>();
+            List<string> minutesList = new List<string>();
+            List<string> AMPMList = new List<string>();
+            for (int i = 1; i <= 12; i++)
+            {
+                hourList.Add(i.ToString());
+            }
+            minutesList.Add("00");
+            minutesList.Add("15");
+            minutesList.Add("30");
+            minutesList.Add("45");
+            AMPMList.Add("A.M.");
+            AMPMList.Add("P.M.");
+            comboBoxAMPM.ItemsSource = AMPMList;
+            comboBoxHour.ItemsSource = hourList;
+            comboBoxMinute.ItemsSource = minutesList;
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
