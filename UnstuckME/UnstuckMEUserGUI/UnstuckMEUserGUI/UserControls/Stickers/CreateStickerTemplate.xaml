@@ -11,7 +11,7 @@
         <ComboBox x:Name="CourseNumandNameComboBox" SelectionChanged="CourseNumandNameComboBox_SelectionChanged" Width="150" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="150,0,0,0"/>
         <TextBlock x:Name="CourseNameTextblock" Background="White" Height="20" Width="{Binding ActualWidth, ElementName=StickerDisplay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,20,0,0" />
         <TextBox x:Name="ProblemDescriptionBox" Height="60" Width="{Binding ActualWidth, ElementName=StickerDisplay}" TextWrapping="Wrap" MaxLength="500" Canvas.Top="40" />
-        <local:StarRankTemplate_UC x:Name="MinimmumStarRank" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,100,0,0" />
+        
         <ListBox x:Name="TutoringOrganizations" Height="20" Width="200" Margin="100,100" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="Multiple">
             <ListBoxItem x:Name="DefaultUserOrganization" Content="There are no Tutoring Organizations available" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" FontStyle="Italic" Foreground="#FF727272" />
             <ListBoxItem x:Name="NoOrganizationFilter" Content="No specific tutors/organizations" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="9" FontStyle="Italic" Foreground="#FF727272" />

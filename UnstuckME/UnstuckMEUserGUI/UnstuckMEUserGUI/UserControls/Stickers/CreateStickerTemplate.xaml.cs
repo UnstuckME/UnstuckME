@@ -59,7 +59,7 @@ namespace UnstuckMEUserGUI
 
 			sticker.ClassID = Server.GetCourseIdNumberByCodeAndNumber(CourseCodeComboBox.SelectedValue as string, CourseNumandNameComboBox.SelectedValue as string);
 			sticker.ProblemDescription = ProblemDescriptionBox.Text;
-			sticker.MinimumStarRanking = MinimmumStarRank.StarRank;
+			//sticker.MinimumStarRanking = MinimmumStarRank.StarRank;
 			sticker.StudentID = User;
 
 			//are we adding tutoring organizations on stickers into the database?
