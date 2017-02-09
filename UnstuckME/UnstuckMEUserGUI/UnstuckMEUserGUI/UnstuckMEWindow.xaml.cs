@@ -268,7 +268,7 @@ namespace UnstuckMEUserGUI
 
         private void CreateStickerButton_Click(object sender, RoutedEventArgs e)
         {
-            StickerCreationWindow window = new StickerCreationWindow();
+            StickerCreationWindow window = new StickerCreationWindow(ref Server, ref User);
             window.ShowDialog();
         }
     }

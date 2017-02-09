@@ -466,7 +466,7 @@ namespace UnstuckMEInterfaces
 					usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
 					usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
 					usSticker.SubmitTime = sticker.Sticker.SubmitTime;
-					usSticker.Timeout = sticker.Sticker.Timeout;
+					usSticker.Timeout = (int)(sticker.Sticker.Timeout - DateTime.Now).TotalSeconds;
 					stickerList.Add(usSticker);
 				}
 				return stickerList;
@@ -492,7 +492,7 @@ namespace UnstuckMEInterfaces
 					usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
 					usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
 					usSticker.SubmitTime = sticker.Sticker.SubmitTime;
-					usSticker.Timeout = sticker.Sticker.Timeout;
+					usSticker.Timeout = (int)(sticker.Sticker.Timeout - DateTime.Now).TotalSeconds;
 					stickerList.Add(usSticker);
 				}
 				return stickerList;
@@ -518,7 +518,7 @@ namespace UnstuckMEInterfaces
 					usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
 					usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
 					usSticker.SubmitTime = sticker.Sticker.SubmitTime;
-					usSticker.Timeout = sticker.Sticker.Timeout;
+					usSticker.Timeout = (int)(sticker.Sticker.Timeout - DateTime.Now).TotalSeconds;
 					stickerList.Add(usSticker);
 				}
 				return stickerList;
@@ -537,7 +537,7 @@ namespace UnstuckMEInterfaces
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
-				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, (int)((newSticker.SubmitTime - newSticker.Timeout).TotalSeconds));
+				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
 			}
 		}
 

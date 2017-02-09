@@ -48,19 +48,19 @@ namespace UnstuckMEUserGUI
 			//	//add listviewitems for each tutoring organization in the sticker.TutoringOrganizations list
 			//}
 
-			if (sticker.Timeout.Hour > 12)
-			{
-				Hours.Content = sticker.Timeout.Hour - 12;
-				AM_PM.Content = "PM";
-			}
-			else
-			{
-				Hours.Content = sticker.Timeout.Hour;
-				AM_PM.Content = "AM";
-			}
+			//if (sticker.Timeout.Hour > 12)
+			//{
+			//	Hours.Content = sticker.Timeout.Hour - 12;
+			//	AM_PM.Content = "PM";
+			//}
+			//else
+			//{
+			//	Hours.Content = sticker.Timeout.Hour;
+			//	AM_PM.Content = "AM";
+			//}
 
-			Minutes.Content = sticker.Timeout.Minute;
-			LastDayAvailable.Text = sticker.Timeout.Month + "/" + sticker.Timeout.Day + "/" + sticker.Timeout.Year;
+			//Minutes.Content = sticker.Timeout.Minute;
+			//LastDayAvailable.Text = sticker.Timeout.Month + "/" + sticker.Timeout.Day + "/" + sticker.Timeout.Year;
 		}
 	}
 }

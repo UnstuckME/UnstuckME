@@ -72,7 +72,7 @@ namespace UnstuckMEUserGUI
 			if (AM_PM.SelectedValue as string == "PM")
 				hour += 12;
 
-			sticker.Timeout = new DateTime(timeout.Year, timeout.Month, timeout.Day, hour, Convert.ToInt32(MinutesLeft.SelectedValue as string), 0);
+			//sticker.Timeout = new DateTime(timeout.Year, timeout.Month, timeout.Day, hour, Convert.ToInt32(MinutesLeft.SelectedValue as string), 0);
 
 			//Server.SubmitSticker(sticker);
 			App.Current.MainWindow.Close();
