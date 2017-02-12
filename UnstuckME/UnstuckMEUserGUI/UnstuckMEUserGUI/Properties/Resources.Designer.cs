@@ -73,6 +73,16 @@ namespace UnstuckMEUserGUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Refresh_Icon {
+            get {
+                object obj = ResourceManager.GetObject("Refresh_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Right_Arrow {
             get {
                 object obj = ResourceManager.GetObject("Right_Arrow", resourceCulture);
@@ -93,9 +103,29 @@ namespace UnstuckMEUserGUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Star {
+            get {
+                object obj = ResourceManager.GetObject("Star", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UnstuckME_Logo {
             get {
                 object obj = ResourceManager.GetObject("UnstuckME_Logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UserBlue {
+            get {
+                object obj = ResourceManager.GetObject("UserBlue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

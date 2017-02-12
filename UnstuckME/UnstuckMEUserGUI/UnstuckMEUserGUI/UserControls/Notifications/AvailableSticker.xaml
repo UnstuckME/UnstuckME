@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="UnstuckMEUserGUI.AvailableSticker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnstuckMEUserGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="300" BorderBrush="Black" BorderThickness="0,0,0,0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button x:Name="ClassNameInfoButton" Click="ClassNameInfoButton_Click" BorderThickness="0,0,1,0" BorderBrush="Black" Padding="6,0,0,0" HorizontalAlignment="Left" Mouse.MouseEnter="Button_MouseEnter" Mouse.MouseLeave="Button_MouseLeave" Cursor="Hand" VerticalContentAlignment="Center" Foreground="White" Background="{x:Null}" Width="203" Height="Auto" HorizontalContentAlignment="Left" Grid.RowSpan="2"/>
+        <Button x:Name="Decline" Click="Decline_Click" Width="40" Margin="243,0,0,0" BorderBrush="Black" BorderThickness="0,0,1,0" Background="{x:Null}" Cursor="Hand" HorizontalAlignment="Left" Grid.RowSpan="2">
+            <Image Source="/Resources/Xmark/XmarkRed.png" Height="25" Width="25"></Image>
+        </Button>
+            <Button x:Name="Accept" Click="Accept_Click" Width="40" Margin="203,0,0,0" BorderBrush="Black" BorderThickness="0,0,1,0" Background="{x:Null}" Cursor="Hand" HorizontalAlignment="Left" Grid.RowSpan="2">
+                <Image Source="/Resources/CheckMark/CheckGreen.png" Height="25" Width="25"></Image>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" Background="LightGray">
+            <Border BorderBrush="Black" BorderThickness="0,3,1,2"></Border>
+        </Grid>
+    </Grid>
+</UserControl>

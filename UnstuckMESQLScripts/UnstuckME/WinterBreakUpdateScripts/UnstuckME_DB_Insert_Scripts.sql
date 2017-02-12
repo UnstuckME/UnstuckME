@@ -8,6 +8,16 @@ USE UnstuckME_DB;
 GO
 
 /******DROP PROCEDURE STATEMENTS*************************/
+--IF OBJECT_ID('CreateOfficialMentor') is not null
+--	DROP PROCEDURE CreateOfficialMentor;
+IF OBJECT_ID('CreateNewAdminUser') is not null
+	DROP PROCEDURE CreateNewAdminUser;
+IF OBJECT_ID('AddTutorStarRankToUser') is not null
+	DROP PROCEDURE AddTutorStarRankToUser;
+IF OBJECT_ID('AddStudentStarRankToUser') is not null
+	DROP PROCEDURE AddStudentStarRankToUser;
+IF OBJECT_ID('AddOrgToSticker') is not null
+	DROP PROCEDURE AddOrgToSticker;
 IF OBJECT_ID('CreateServerAdmin') is not null
 	DROP PROCEDURE CreateServerAdmin;
 IF OBJECT_ID('CreateNewUser') is not null
@@ -18,8 +28,8 @@ IF OBJECT_ID('CreateNewClass') is not null
 	DROP PROCEDURE CreateNewClass;
 IF OBJECT_ID('CreateSticker') is not null
 	DROP PROCEDURE CreateSticker;
-IF OBJECT_ID('CreateOfficialMentor') is not null
-	DROP PROCEDURE CreateOfficialMentor;
+IF OBJECT_ID('CreateMentorOrganization') is not null
+	DROP PROCEDURE CreateMentorOrganization;
 IF OBJECT_ID('CreateReview') is not null
 	DROP PROCEDURE CreateReview;
 IF OBJECT_ID('CreateReport') is not null
@@ -40,9 +50,81 @@ IF OBJECT_ID('AddFriend') is not null
 	DROP PROCEDURE AddFriend;
 IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
 	DROP PROCEDURE [InsertUserIntoMentorProgram];
-
 GO
-/****************BEGIN CREATION SCRIPTS******************/
+
+CREATE PROC [dbo].[AddTutorStarRankToUser]
+(
+	@UserID INT,
+	@StarRanking FLOAT
+)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+			RETURN 1;
+		ELSE IF (@StarRanking > 5 OR @StarRanking < 0)
+			RETURN 1;
+		ELSE
+			DECLARE @AverageTutorRank FLOAT;
+			SELECT @AverageTutorRank = (AverageTutorRank * TotalTutorReviews)
+			FROM UserProfile
+			WHERE UserID = @UserID;
+
+			UPDATE UserProfile
+			SET TotalTutorReviews = (TotalTutorReviews + 1)
+			WHERE @UserID = UserID;
+
+			UPDATE UserProfile
+			SET AverageTutorRank = ((@AverageTutorRank + @StarRanking)/ TotalTutorReviews)
+			WHERE @UserID = UserID;
+	END
+GO
+
+--Adds A rating to a user and updates current value.
+CREATE PROC [dbo].[AddStudentStarRankToUser]
+(
+	@UserID INT,
+	@StarRanking FLOAT
+)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
+			RETURN 1;
+		ELSE IF (@StarRanking > 5 OR @StarRanking < 0)
+			RETURN 1;
+		ELSE
+			DECLARE @AverageStudentRank FLOAT;
+			SELECT @AverageStudentRank = (AverageStudentRank * TotalStudentReviews)
+			FROM UserProfile
+			WHERE UserID = @UserID;
+
+			UPDATE UserProfile
+			SET TotalStudentReviews = (TotalStudentReviews + 1)
+			WHERE @UserID = UserID;
+
+			UPDATE UserProfile
+			SET AverageStudentRank = ((@AverageStudentRank + @StarRanking)/ TotalStudentReviews)
+			WHERE @UserID = UserID;
+	END
+GO
+
+
+/****************BEGIN Insert/Create SCRIPTS******************/
+--Add Sticker/Mentor Organization Relationship
+CREATE PROC [dbo].[AddOrgToSticker]
+(
+	@StickerID INT,
+	@OrganizationID INT
+)
+AS
+	BEGIN
+		IF(EXISTS(SELECT StickerID, MentorID FROM StickerToMentor WHERE StickerID = @StickerID AND MentorID = @OrganizationID))
+			RETURN 1;
+		ELSE
+			INSERT INTO StickerToMentor
+			VALUES(@StickerID, @OrganizationID);
+		END
+GO
+
 --CREATE NEW SERVER ADMIN
 CREATE PROC [dbo].[CreateServerAdmin]
 	(
@@ -63,14 +145,12 @@ AS
 	END
 GO
 
---CREATE NEW USER
-CREATE PROC [dbo].[CreateNewUser]
+CREATE PROC [dbo].[CreateNewAdminUser]
     (
     @FirstName VARCHAR(30),
 	@LastName VARCHAR(30),
 	@EmailAddress VARCHAR(50),
 	@Password NVARCHAR(256),
-	@Privileges NVARCHAR(32),
 	@Salt NVARCHAR(256)
     )
 AS
@@ -82,7 +162,31 @@ AS
         else
             BEGIN
                 INSERT INTO UserProfile
-				VALUES(@FirstName, @LastName, @EmailAddress, @Password, @Privileges, @Salt)
+				VALUES(@FirstName, @LastName, @EmailAddress, @Password, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 1, @Salt)
+				RETURN 0;
+            END
+
+    END
+GO
+
+CREATE PROC [dbo].[CreateNewUser]
+    (
+    @FirstName VARCHAR(30),
+	@LastName VARCHAR(30),
+	@EmailAddress VARCHAR(50),
+	@Password NVARCHAR(256),
+	@Salt NVARCHAR(256)
+    )
+AS
+    BEGIN
+        if  (Exists(Select EmailAddress from UserProfile where EmailAddress = @EmailAddress))
+            BEGIN
+				RETURN 1;
+			END
+        else
+            BEGIN
+                INSERT INTO UserProfile
+				VALUES(@FirstName, @LastName, @EmailAddress, @Password, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, @Salt)
 				RETURN 0;
             END
 
@@ -117,8 +221,7 @@ CREATE PROC [dbo].[CreateNewClass]
     (
     @CourseName VARCHAR(50),
 	@CourseCode VARCHAR(5),
-	@CourseNumber SMALLINT,
-	@TermOffered TINYINT
+	@CourseNumber SMALLINT
     )
 AS
     BEGIN
@@ -130,7 +233,7 @@ AS
         else
             BEGIN
                 INSERT INTO Classes
-				VALUES(@CourseName, @CourseCode, @CourseNumber, @TermOffered)
+				VALUES(@CourseName, @CourseCode, @CourseNumber)
 				RETURN 0;
             END
 
@@ -155,8 +258,8 @@ AS
 			END
         else
             BEGIN
-                INSERT INTO Sticker (ProblemDescription, ClassID, StudentID, MinimumStarRanking, SubmitTime, [Timeout])
-				VALUES(@ProblemDescription, @ClassID, @StudentID, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))
+                INSERT INTO Sticker
+				VALUES(@ProblemDescription, @ClassID, DEFAULT, @StudentID, DEFAULT, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))
 				RETURN 0;
             END
 
@@ -164,7 +267,7 @@ AS
 GO
 
 --CREATE AN OFFICIAL MENTOR
-CREATE PROC [dbo].[CreateOfficialMentor]
+CREATE PROC [dbo].[CreateMentorOrganization]
     (
     @OrganizationName	NVARCHAR(100)
     )
@@ -203,7 +306,6 @@ AS
             BEGIN
                 INSERT INTO Review
 				VALUES(@StickerID, @ReviewerID, @StarRanking, @Description)
-				RETURN 0;
 			END
 
     END
@@ -213,7 +315,7 @@ CREATE PROC [dbo].[CreateReport]
     (
 	@ReportDescription		NVARCHAR(200),
 	@FlaggerID		INT,
-    @ReviewID		FLOAT
+    @ReviewID		INT
     )
 AS
     BEGIN
@@ -321,6 +423,9 @@ AS
 	BEGIN CATCH
 		ROLLBACK TRAN;
 	END CATCH
+	BEGIN
+		SELECT @NewChatID
+	END
 GO
 
 CREATE PROC [dbo].[InsertUserIntoChat]
@@ -361,7 +466,7 @@ AS
         else
             BEGIN
                INSERT INTO [Messages]
-				VALUES(@ChatID, @Message, @UserID, GETDATE())
+				VALUES(@ChatID, @Message, DEFAULT, DEFAULT, @UserID, GETDATE())
 				RETURN 0;
             END
     END
@@ -370,7 +475,7 @@ GO
 CREATE PROC [dbo].[InsertFile]
     (
 	@ChatID		INT,
-	@FileData	VARBINARY(MAX),
+	@FilePath	VARCHAR(MAX),
 	@UserID		INT
     )
 AS
@@ -383,7 +488,7 @@ AS
         else
             BEGIN
                 INSERT INTO Files
-				VALUES(@ChatID, @FileData, @UserID, GETDATE())
+				VALUES(@ChatID, DEFAULT, @FilePath, 1, @UserID, GETDATE())
 				RETURN 0;
             END
     END

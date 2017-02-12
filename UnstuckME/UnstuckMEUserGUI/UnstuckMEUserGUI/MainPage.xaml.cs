@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckMEInterfaces;
 using UnstuckME_Classes;
+using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace UnstuckMEUserGUI
 {
@@ -27,25 +29,33 @@ namespace UnstuckMEUserGUI
 		public static IUnstuckMEService Server;
 		public static UserInfo User;
 
-		public MainPage(int UserID, IUnstuckMEService OpenServer)
+		public MainPage(ref IUnstuckMEService OpenServer, ref UserInfo inboundUser, ref byte [] inboundImg)
 		{
             ImageSourceConverter ic = new ImageSourceConverter();
 
             //Opens a connection to UnstuckME Server.
             Server = OpenServer;
-			User = Server.GetUserInfo(UserID);
+            User = inboundUser;
 			InitializeComponent();
 			FNameTxtBx.Text = User.FirstName; // get the name from the server and show it
 			LNameTxtBx.Text = User.LastName;
 			EmailtextBlock.Text = User.EmailAddress; // get the email and show it
-			byte[] imgByte = Server.GetProfilePicture(UserID);
+            byte[] imgByte = inboundImg;
 			UserPhoto.Source = ic.ConvertFrom(imgByte) as ImageSource;	//convert image so it can be displayed
 
-            for (int i = 0; i < 5; i++)
+            RepopulateClasses();
+			PopulateStudentReviews();
+			PopulateMentorReviews();
+			//RefreshBtn_Click(this, null);
+			//GetNewStickers_Click(this, null);
+
+			List<Organization> orgs = Server.GetAllOrganizations();
+			ComboBoxItem item = new ComboBoxItem();
+
+			foreach (var org in orgs)
 			{
-				TextBlock test = new TextBlock();
-				test.Text = "test text" + i;
-				ClassesStack.Children.Add(test);
+				item.Content = org;
+				//TutoringOrgComboBox.Items.Add(item);
 			}
             List<UserClasses> enrolledClasses = Server.GetUserClasses(UserID);
             foreach (UserClasses UserClass in enrolledClasses)
@@ -63,10 +73,6 @@ namespace UnstuckMEUserGUI
 			{
 				ClassesView.Visibility = Visibility.Collapsed;
 				AddRemoveClassesView.Visibility = Visibility.Visible;
-                CourseCodeDropdown.Visibility = Visibility.Visible;
-                CourseNumberDropdown.Visibility = Visibility.Visible;
-
-                CourseCodeDropdown.Items.Add("test");
 			}
 			else
 			{
@@ -76,13 +82,20 @@ namespace UnstuckMEUserGUI
                 CourseNumberDropdown.Visibility = Visibility.Collapsed;
 			}
 
+			List<string> codes = Server.GetCourseCodes();
+            codes[0] = "Select Class";
+            CourseCodeComboBox.ItemsSource = codes;
 		}
 
 		//Commits changes to the user's classes to mentor
 		private void Commit_Click(object sender, RoutedEventArgs e)
 		{
+            int classid = Server.GetCourseIdNumberByCodeAndNumber(CourseCodeComboBox.SelectedValue as string, CourseNumandNameComboBox.SelectedValue as string);
+            Server.InsertStudentIntoClass(User.UserID, classid);
 			ClassesView.Visibility = Visibility.Visible;
 			AddRemoveClassesView.Visibility = Visibility.Collapsed;
+            CourseNumandNameComboBox.Visibility = Visibility.Collapsed;
+            RepopulateClasses();
 		}
 
 		//Uploads a new photo from the user's computer and inserts it as the user's new profile picture
@@ -97,31 +110,18 @@ namespace UnstuckMEUserGUI
 
 			if (file_browser.ShowDialog() == DialogResult.OK)
 			{
-				//FileStream file = new FileStream(file_browser.FileName, FileMode.Open, FileAccess.Read);
-				////FileStream file = file_browser.OpenFile() as FileStream;
-				//int stream_length = (int)file.Length;
-				//byte[] byte_array = new byte[stream_length];
-				//file.Read(byte_array, 0, stream_length);
-				//file.Close();
-
-				/********************************************************************************
-				System.Drawing.Image image = System.Drawing.Image.FromStream(file);
+				Stream file = file_browser.OpenFile();
+				byte[] byte_array = null;
 
 				using (MemoryStream ms = new MemoryStream())
 				{
-					if (file_browser.SafeFileName.Split('.').Last() == "jpeg" || file_browser.SafeFileName.Split('.').Last() == "jpg")
-						image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-					else if (file_browser.SafeFileName.Split('.').Last() == "png")
-						image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-
+					file.CopyTo(ms);
 					byte_array = ms.ToArray();
 				}
-				********************************************************************************/
 
-				//Server.SetProfilePicture(User.UserID, byte_array);
-
-				//ImageSourceConverter ic = new ImageSourceConverter();
-				//UserPhoto.Source = ic.ConvertFrom(byte_array) as ImageSource;
+				Server.SetProfilePicture(User.UserID, byte_array);
+				ImageSourceConverter ic = new ImageSourceConverter();
+				UserPhoto.Source = ic.ConvertFrom(byte_array) as ImageSource;
 			}
 		}
 
@@ -165,7 +165,133 @@ namespace UnstuckMEUserGUI
 		{
 			Server.Logout();
 			Server.DeleteUserAccount(User.UserID);
-			NavigationService.Navigate(new LoginPage(Server));
+			//NavigationService.Navigate(new LoginPage(ref Server));
+		}
+
+        private void RepopulateClasses()
+        {
+            ClassesStack.Children.Clear();
+            List<UserClass> classes = Server.GetUserClasses(User.UserID);
+            foreach (UserClass C in classes)
+            {
+				//change GetUserClasses in future to return ClassID as well
+				int ID = Server.GetCourseIdNumberByCodeAndNumber(C.CourseCode, C.CourseNumber.ToString());
+                ClassDisplay usersClass = new ClassDisplay(ClassesStack, User.UserID, Server, C.CourseCode, C.CourseNumber, C.CourseName, ID);
+                ClassesStack.Children.Add(usersClass);
+            }
+            //var text = (TextBlock)ClassesStack.Children[0];
+            //text.Text = "Potato";
+            CourseCodeComboBox.SelectedIndex = 0;
+            //((ClassDisplay)CourseCodeComboBox.Items.CurrentItem).Content = ;
+        }
+
+		private void PopulateStudentReviews()
+		{
+			StudentReviewsStack.Children.Clear();
+			List<UnstuckMEReview> reviews = Server.GetUserStudentReviews(User.UserID);
+
+			foreach (UnstuckMEReview review in reviews)
+			{
+				ReviewDisplay new_review = new ReviewDisplay(ref Server, review);
+				StudentReviewsStack.Children.Add(new_review);
+			}
+		}
+
+		private void PopulateMentorReviews()
+		{
+			MentorReviewsStack.Children.Clear();
+			List<UnstuckMEReview> reviews = Server.GetUserTutorReviews(User.UserID);
+
+			foreach (UnstuckMEReview review in reviews)
+			{
+				ReviewDisplay new_review = new ReviewDisplay(ref Server, review);
+				MentorReviewsStack.Children.Add(new_review);
+			}
+		}
+
+        private void CourseCodeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CourseNumandNameComboBox.Visibility = Visibility.Visible;
+            string selected = CourseCodeComboBox.SelectedValue as string;
+
+			if (selected != null)
+            {
+                List<string> coursenums = Server.GetCourseNumbersByCourseCode(selected);
+                CourseNumandNameComboBox.ItemsSource = coursenums;
+            }
+        }
+
+		private void LogoutBtn_Click(object sender, RoutedEventArgs e)
+		{
+			Server.Logout();
+            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            Process.Start(unstuckME);
+            System.Windows.Application.Current.Shutdown();
+        }
+
+		private void SubmitStickerBtn_Click(object sender, RoutedEventArgs e)
+		{
+			var new_sticker = new CreateStickerTemplate(User.UserID, ref Server);
+			new_sticker.InitializeComponent();
+			Window window = new Window();
+			window.Content = new_sticker;
+			App.Current.MainWindow = window;
+            //window.SizeToContent = SizeToContent.WidthAndHeight;  // this didnt work right
+            
+            
+            window.Show();
+		}
+
+		private void RefreshBtn_Click(object sender, RoutedEventArgs e)
+		{
+			MySubmittedStickersView.Children.Clear();
+
+			List<UnstuckMESticker> sub_stickers = Server.GetUserSubmittedStickers(User.UserID);
+			List<UnstuckMESticker> tut_stickers = Server.GetUserTutoredStickers(User.UserID);
+
+			foreach (UnstuckMESticker sticker in sub_stickers)
+			{
+				StickerDisplay new_sticker = new StickerDisplay(User.UserID, ref Server, sticker);
+				MySubmittedStickersView.Children.Add(new_sticker);
+			}
+
+			foreach (UnstuckMESticker sticker in tut_stickers)
+			{
+				StickerDisplay new_sticker = new StickerDisplay(User.UserID, ref Server, sticker);
+				MyTutoredStickersView.Children.Add(new_sticker);
+			}
+		}
+
+		private void GetNewStickers_Click(object sender, RoutedEventArgs e)
+		{
+			StickersView.Children.Clear();
+
+			List<UnstuckMESticker> stickers = Server.GetAllStickers();
+
+			foreach (UnstuckMESticker sticker in stickers)
+			{
+				StickerDisplay new_sticker = new StickerDisplay(User.UserID, ref Server, sticker);
+				StickersView.Children.Add(new_sticker);
+			}
+		}
+
+		private void AddToTutoringOrg_Click(object sender, RoutedEventArgs e)
+		{
+			List<Organization> orgs = Server.GetAllOrganizations();
+			int org_ID = 0;
+
+			while (org_ID < orgs.Count || orgs[org_ID].OrganizationName == TutoringOrgComboBox.SelectedValue as string)
+				org_ID++;
+
+			Server.AddUserToTutoringOrganization(User.UserID, orgs[org_ID].MentorID);
+			TutoringOrgComboBox.SelectedIndex = 0;
+			AddToTutoringOrg.Visibility = Visibility.Collapsed;
+		}
+
+		private void TutoringOrgComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (AddToTutoringOrg.Visibility == Visibility.Collapsed)
+				AddToTutoringOrg.Visibility = Visibility.Visible;
 		}
 	}
 }

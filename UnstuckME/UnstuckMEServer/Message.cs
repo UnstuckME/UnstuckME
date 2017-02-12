@@ -17,6 +17,8 @@ namespace UnstuckMEServer
         public int MessageID { get; set; }
         public int ChatID { get; set; }
         public string MessageData { get; set; }
+        public string FilePath { get; set; }
+        public bool IsFile { get; set; }
         public int SentBy { get; set; }
         public System.DateTime SentTime { get; set; }
     

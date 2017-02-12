@@ -48,7 +48,6 @@ namespace UnstuckMEServerGUI
         /// </summary>
         private void button_RunServer_Click(object sender, RoutedEventArgs e)
         {
-            
             try
             {
                 Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
@@ -60,14 +59,14 @@ namespace UnstuckMEServerGUI
                     currentDir = currentDir.Parent.Parent.Parent;
                     string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
                     Process startServer = new Process();
-                    startServer.StartInfo.RedirectStandardOutput = true;
-                    startServer.StartInfo.UseShellExecute = false;
-                    startServer.StartInfo.CreateNoWindow = true;
+                    //startServer.StartInfo.RedirectStandardOutput = true;
+                    //startServer.StartInfo.UseShellExecute = false;
+                    //startServer.StartInfo.CreateNoWindow = true;
                     startServer.StartInfo.Verb = "runas";
                     startServer.StartInfo.FileName = serverPath;
                     startServer.Start();
 
-                    ServerRunning window = new ServerRunning(ref Admin);
+					ServerRunning window = new ServerRunning(ref Admin);
                     App.Current.MainWindow = window;
                     this.Close();
                     window.Show();
@@ -126,7 +125,14 @@ namespace UnstuckMEServerGUI
             AdminNameChange nameChange = new AdminNameChange(ref Admin);
             App.Current.MainWindow = nameChange;
             nameChange.ShowDialog();
-            labelName.Content = Admin.FirstName + " " + Admin.LastName;
+            labelName.Content = "Name: " + Admin.FirstName + " " + Admin.LastName;
+        }
+
+        private void MenuItemLogout_Click(object sender, RoutedEventArgs e)
+        {
+            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            Process.Start(unstuckME);
+            Application.Current.Shutdown();
         }
     }
 }

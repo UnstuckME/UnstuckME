@@ -12,14 +12,18 @@ namespace UnstuckME_Classes
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
-        public string Privileges { get; set; }
+        public int Privileges { get; set; }
+        public float AvgTutorRank { get; set; }
+        public float AvgStudentRank { get; set; }
+        public byte [] UserProfilePictureBytes { get; set; }
     }
 
-    public class UserClasses
+    public class UserClass
     {
         public string CourseCode { set; get; }
         public string CourseName { set; get; }
         public short CourseNumber { set; get; }
+        public int ClassID { set; get; }
     }
     public class UnstuckMEMessage
     {
@@ -50,7 +54,28 @@ namespace UnstuckME_Classes
         public int StudentID { get; set; }
         public int TutorID { get; set; }
         public float MinimumStarRanking { get; set; }
-        public DateTime SubmitTime { get; set; }
-        public DateTime Timeout { get; set; }
+		public List<string> TutoringOrganizations { get; set; }
+		public DateTime SubmitTime { get; set; }
+        public int Timeout { get; set; }
     }
+
+	public class CourseCodes
+    {
+        public string Code { get; set; }
+    }
+
+    public class UnstuckMESchool
+    {
+        public int SchoolID { get; set; }
+        public string SchoolName { get; set; }
+        public string SchoolDomain { get; set; }
+        public string SchoolEmailCredentials { get; set; }
+        public string ServerIPAdress { get; set; }
+        public string ServerName { get; set; }
+    }
+	public class Organization
+	{
+		public int MentorID { get; set; }
+		public string OrganizationName { get; set; }
+	}
 }

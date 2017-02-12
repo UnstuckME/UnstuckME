@@ -147,8 +147,7 @@ end;
 go
 create proc ViewAllClasses as 
 begin
-	select CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
-		TermOffered
+	select CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course
 	from Classes;
 end;
 
@@ -158,7 +157,7 @@ end;
 go
 create proc GetAllOrganizations as
 begin
-	select OrganizationName
+	select *
 	from OfficialMentor;
 end;
 
@@ -205,7 +204,7 @@ go
 create proc GetUserClasses
 (	@userid int	) as
 begin
-	select Classes.CourseName, Classes.CourseCode, Classes.CourseNumber
+	select Classes.ClassID, Classes.CourseName, Classes.CourseCode, Classes.CourseNumber
 	from UserProfile join UserToClass	on UserProfile.UserID = UserToClass.UserID
 		join Classes					on UserToClass.ClassID = Classes.ClassID
 	where UserProfile.UserID = @userid;
@@ -314,7 +313,7 @@ create proc GetAllActiveStickers
 begin
 	select DisplayFName + ' ' + DisplayLName as Student,
 		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
-		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+		ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
 	where datediff(minute, getdate(), Timeout) > 0 and
@@ -333,17 +332,16 @@ create proc PullActiveClassSpecificStickers
 (	@Name varchar(50),
 	@Code varchar(5),
 	@Number smallint,
-	@Term tinyint,
 	@userid int = null
 ) as
 begin
 	select DisplayFName + ' ' + DisplayLName as Student,
 		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
-		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+		ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
 	where CourseName = @Name and CourseCode = @Code
-		and CourseNumber = @Number and TermOffered = @Term
+		and CourseNumber = @Number
 		and UserID = case when @userid is not null
 							then @userid
 						  else UserID
@@ -364,7 +362,7 @@ create proc GetActiveStickersWithStarRankOrMentorOrganization
 begin
 	select DisplayFName + ' ' + DisplayLName as Student,
 		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
-		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout, OrganizationName
+		ProblemDescription, MinimumStarRanking, SubmitTime, Timeout, OrganizationName
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
 		join OmToUser				on UserProfile.UserID = OmToUser.UserID
@@ -392,7 +390,7 @@ create proc GetAllResolvedStickers
 begin
 	select DisplayFName + ' ' + DisplayLName as Student,
 		CourseCode + ' ' + convert(varchar, CourseNumber) + ' - ' + CourseName as Course,
-		TermOffered, ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
+		ProblemDescription, MinimumStarRanking, SubmitTime, Timeout
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
 	where datediff(minute, getdate(), Timeout) < 0 and

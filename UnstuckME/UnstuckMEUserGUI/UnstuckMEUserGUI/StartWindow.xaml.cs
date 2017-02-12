@@ -15,36 +15,40 @@ using System.Windows.Shapes;
 using System.ServiceModel;
 using UnstuckMEInterfaces;
 using System.Configuration;
+using System.Threading;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class StartWindow : Window
-    {
-        public static IUnstuckMEService Server;
-        private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class StartWindow : Window
+	{
+		public static IUnstuckMEService Server;
 
-        public StartWindow()
+		public StartWindow(ref IUnstuckMEService inboundServer, ref UserInfo inboundUser, ref byte [] inboundImg)
+		{
+			InitializeComponent();
+            Server = inboundServer;
+			_mainFrame.Navigate(new MainPage(ref Server, ref inboundUser, ref inboundImg));
+		}
+
+        StartWindow returnCurrent()
         {
-            InitializeComponent();
-            _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-            Server = _channelFactory.CreateChannel();
-			_mainFrame.Navigate(new LoginPage(Server));
+            return this;
         }
 
-        private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
+		private void UnstuckME_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
 			try
 			{
-                this.Hide();
+				this.Hide();
 				Server.Logout();
 			}
 			catch (Exception)
 			{
-                this.Show();
-            }
-        }
-    }
+			}
+		}
+	}
 }

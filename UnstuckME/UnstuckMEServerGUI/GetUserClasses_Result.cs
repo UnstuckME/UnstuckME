@@ -13,6 +13,7 @@ namespace UnstuckMEServerGUI
     
     public partial class GetUserClasses_Result
     {
+        public int ClassID { get; set; }
         public string CourseName { get; set; }
         public string CourseCode { get; set; }
         public short CourseNumber { get; set; }

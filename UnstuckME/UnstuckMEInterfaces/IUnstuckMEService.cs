@@ -8,89 +8,154 @@ using System.ServiceModel;
 using System.Text;
 using System.Windows.Media;
 using UnstuckME_Classes;
-
 namespace UnstuckMEInterfaces
 {
 
-    [ServiceContract(CallbackContract = typeof(IClient))]
-    public interface IUnstuckMEService
-    {
-        [OperationContract]
-        UserInfo GetUserInfo(int userID);
+	[ServiceContract(CallbackContract = typeof(IClient))]
+	public interface IUnstuckMEService
+	{
+		[OperationContract]
+		int AddFriend(int userId, int friendUserID);
 
-        [OperationContract]
-        int GetUserID(string emailAddress);
+		[OperationContract]
+		int CreateChat(int userID);
 
-        [OperationContract]
-        void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
+		[OperationContract]
+		UserInfo GetUserInfo(int userID);
 
-        [OperationContract]
-        bool UserLoginAttempt(string emailAddress, string passWord);
+		[OperationContract]
+		int GetUserID(string emailAddress);
 
-        [OperationContract]
-        bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword);
+		[OperationContract]
+		void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
-        [OperationContract]
-        List<UserClasses> GetUserClasses(int UserID);
+		[OperationContract]
+		UserInfo UserLoginAttempt(string emailAddress, string passWord);
 
-        [OperationContract]
-        void InsertStudentIntoClass(int UserID, int ClassID);
+		[OperationContract]
+		bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword);
 
-        //Checks to see if specified email address exists in the database.
-        [OperationContract]
-        bool IsValidUser(string emailAddress);
+		[OperationContract]
+		List<UserClass> GetUserClasses(int UserID);
 
-        [OperationContract]
-        void Logout();
+		[OperationContract]
+		void RemoveUserFromClass(int UserID, int ClassID);
 
-        [OperationContract]
-        void ChangePassword(UserInfo User, string newPassword);
+		[OperationContract]
+		void InsertStudentIntoClass(int UserID, int ClassID);
 
-        [OperationContract]
-        void DeleteUserAccount(int userID);
+		//Checks to see if specified email address exists in the database.
+		[OperationContract]
+		bool IsValidUser(string emailAddress);
 
-        [OperationContract]
-        List<UnstuckMEReview> GetUserStudentReviews (int userID);
+		[OperationContract]
+		void Logout();
 
-        [OperationContract]
-        List<UnstuckMEReview> GetUserTutorReviews(int userID);
+		[OperationContract]
+		void ChangePassword(UserInfo User, string newPassword);
 
-        [OperationContract]
-        List<UnstuckMESticker> GetUserSubmittedStickers(int userID);
+		[OperationContract]
+		void DeleteUserAccount(int userID);
 
-        [OperationContract]
-        List<UnstuckMESticker> GetUserTutoredStickers(int userID);
+		[OperationContract]
+		List<UnstuckMEReview> GetUserStudentReviews (int userID);
 
-        [OperationContract]
-        void AddUserToTutoringOrganization(int userID, int organizationID);
+		[OperationContract]
+		List<UnstuckMEReview> GetUserTutorReviews(int userID);
 
-        [OperationContract]
-        void SubmitSticker(UnstuckMESticker newSticker, int timoutInSeconds);
-        [OperationContract]
-        byte[] GetProfilePicture(int userID);
+		[OperationContract]
+		List<UnstuckMESticker> GetUserSubmittedStickers(int userID);
 
-        [OperationContract]
-        void SetProfilePicture(int userID, byte[] image);
+		[OperationContract]
+		List<UnstuckMESticker> GetUserTutoredStickers(int userID);
+
+		[OperationContract]
+		List<UnstuckMESticker> GetAllStickers();
+
+		[OperationContract]
+		void AddUserToTutoringOrganization(int userID, int organizationID);
+
+		[OperationContract]
+		void SubmitSticker(UnstuckMESticker newSticker);
+
+		[OperationContract]
+		byte[] GetProfilePicture(int userID);
+
+		[OperationContract]
+		void SetProfilePicture(int userID, byte[] image);
+
+		[OperationContract]
+		List<string> GetCourseCodes();
+
+		[OperationContract]
+		int GetCourseIdNumberByCodeAndNumber(string code, string number);
+
+		[OperationContract]
+		string GetCourseNameByCodeAndNumber(string code, string number);
+
+		[OperationContract]
+		List<string> GetCourseNumbersByCourseCode(String CourseCode);
 
 		[OperationContract]
 		void InsertProfilePicture(int userID, byte[] image);
-    }
 
-    [ServiceContract(CallbackContract = typeof(IServer))]
-    public interface IUnstuckMEServer
-    {
+		[OperationContract]
+		UserClass GetCourseCode_Name_NumberByID(int ClassID);
+
+		[OperationContract]
+		List<Organization> GetAllOrganizations();
+
+		[OperationContract]
+		int CreateReport(string reportDescription, int flaggerID, int reviewID);
+
+		[OperationContract]
+		int CreateReview(int stickerID, int reviewerID, double starRanking, string description);
+
+		[OperationContract]
+		int DeleteFriend(int userID, int friendID);
+
+		[OperationContract]
+		int DeleteMessage(int messageID);
+
+		[OperationContract]
+		int DeleteReportByUser(int userID, int reportID);
+
+		[OperationContract]
+		int InsertUserInToChat(int userID, int chatID);
+	}
+
+	[ServiceContract(CallbackContract = typeof(IServer))]
+	public interface IUnstuckMEServer
+	{
+		[OperationContract]
+		void RegisterServerAdmin(AdminInfo admin);
+
+		[OperationContract]
+		void AdminLogout();
+
+		[OperationContract]
+		void AdminLogMessage(string message);
+
+		[OperationContract]
+		List<string> AdminGetAllOnlineUsers();
+
+		[OperationContract]
+		void AdminServerShuttingDown();
+
+		[OperationContract]
+		int AdminCreateMentoringOrganization(string organizationName);
+
         [OperationContract]
-        void RegisterServerAdmin(AdminInfo admin);
+        int AdminCreateClass(string courseName, string courseCode, int courseNumber);
+
 
         [OperationContract]
-        void AdminLogout();
+		int AdminDeleteClass(int classID);
 
-        [OperationContract]
-        void AdminLogMessage(string message);
+		[OperationContract]
+		int AdminDeleteMentoringOrganization(int organizationID);
 
-        [OperationContract]
-        List<string> GetAllOnlineUsers();
-
-
-    }
+		[OperationContract]
+		int AdminDeleteReport(int reportID);
+	}
 }

@@ -16,15 +16,15 @@ namespace UnstuckMEServer
     {
         public Chat()
         {
-            this.Files = new HashSet<File>();
             this.Messages = new HashSet<Message>();
+            this.Stickers = new HashSet<Sticker>();
             this.UserProfiles = new HashSet<UserProfile>();
         }
     
         public int ChatID { get; set; }
     
-        public virtual ICollection<File> Files { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Sticker> Stickers { get; set; }
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
     }
 }

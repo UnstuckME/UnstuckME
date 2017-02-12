@@ -24,13 +24,14 @@
                                Cursor="Hand"/>
                     </Button>
                     <Button x:Name="AllowChangeUsernameBtn" HorizontalAlignment="Left" Margin="175,50,0,0" VerticalAlignment="Top" Width="20" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUserName_Click">
-                        <Image x:Name="ChangeFirstName" Height="{Binding ActualHeight, ElementName=ChangeFirstNameBtn}" Width="{Binding ActualWidth, ElementName=ChangeFirstNameBtn}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Cursor="Hand" Source="Edit Icon (32x32).png"/>
+                        <Image x:Name="ChangeFirstName" Height="{Binding ActualHeight, ElementName=AllowChangeUsernameBtn}" Width="{Binding ActualWidth, ElementName=AllowChangeUsernameBtn}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Cursor="Hand" Source="Resources/Edit Icon (32x32).png"/>
                     </Button>
                     <Button x:Name="AllowChangePasswordBtn" Content="Change Password" Width="100" Height="20" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Click="AllowChangePasswordBtn_Click" />
                     <Button x:Name="ChangeUsernameBtn" Content="Submit" Width="50" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangeUsernameBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Visibility="Hidden" />
                     <Button x:Name="ChangePasswordBtn" Content="Submit" Width="50" Height="20" Grid.Column="0" Grid.Row="0" Click="ChangePasswordBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="199,197,0,0" Visibility="Hidden" />
                     <Button x:Name="DeleteAccountBtn" Content="Delete Account" Width="100" Height="20" Background="Red" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="DeleteAccountBtn_Click" />
+                    <Button x:Name="LogoutBtn" Content="Logout" Width="100" Height="20" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="LogoutBtn_Click" Margin="0,0,0,25" />
                     <TextBox x:Name="FNameTxtBx" HorizontalAlignment="Left" Height="30" Margin="199,47,0,0" TextWrapping="Wrap" Text="FName" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0"/>
                     <TextBox x:Name="LNameTxtBx" HorizontalAlignment="Left" Height="30" Margin="199,97,0,0" TextWrapping="Wrap" Text="LName" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0"/>
                     <TextBox x:Name="ChangePasswordBx" HorizontalAlignment="Left" Height="30" Margin="199,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Grid.Column="0" Grid.Row="0" Visibility="Hidden" />
@@ -39,10 +40,14 @@
                     <TextBlock x:Name="EmailtextBlock" HorizontalAlignment="Left" Margin="199,20,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
                     <Label x:Name="labelClasses" Content="Classes" HorizontalAlignment="Left" Margin="0,10.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="112"/>
                     <ScrollViewer Name="ClassesView" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,36.4,0.4,-8.6">
-                        <StackPanel HorizontalAlignment="Left" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" VerticalAlignment="Top" Width="248" Name="ClassesStack" CanVerticallyScroll="True"/>
+                        <StackPanel HorizontalAlignment="Left" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" VerticalAlignment="Top" Width="494" Name="ClassesStack" CanVerticallyScroll="True"/>
                     </ScrollViewer>
-                    <ScrollViewer Name="AddRemoveClassesView" Visibility="Visible" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,27.4,0.4,0.4">
-                        <Button x:Name="Commit" Content="Commit Changes" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Commit_Click"/>
+                    <ScrollViewer Name="AddRemoveClassesView" Visibility="Collapsed" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,27.4,0.4,0.4">
+                        <Grid>
+                            <Button x:Name="Commit" Content="Commit Changes" Height="30" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Commit_Click"/>
+                            <ComboBox x:Name="CourseCodeComboBox" SelectionChanged="CourseCodeComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Height="30"/>
+                            <ComboBox x:Name="CourseNumandNameComboBox" Visibility="Collapsed" HorizontalAlignment="Left" Margin="161,10,0,0" VerticalAlignment="Top" Width="307" Height="30"/>
+                        </Grid>
                     </ScrollViewer>
                     <Button x:Name="AddRemoveClasses" Content="|||" HorizontalAlignment="Left" Margin="466,1.4,0,0" VerticalAlignment="Top" Width="28" Height="29" RenderTransformOrigin="0.5,0.5" Grid.Row="1" Click="AddRemoveClasses_Click">
                         <Button.RenderTransform>
@@ -54,19 +59,34 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
-                    <ComboBox x:Name="CourseCodeDropdown" Visibility="Collapsed" HorizontalAlignment="Left" Height="28" Margin="10,36.4,0,0" VerticalAlignment="Top" Width="138" Grid.Row="1"/>
-                    <ComboBox x:Name="CourseNumberDropdown" Visibility="Collapsed"  HorizontalAlignment="Left" Height="28" Margin="153,36.4,0,0" VerticalAlignment="Top" Width="245" Grid.Row="1"/>
-
+                    <ComboBox x:Name="TutoringOrgComboBox" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Width="138" SelectionChanged="TutoringOrgComboBox_SelectionChanged" />
+                    <Button x:Name="AddToTutoringOrg" Content="Button" HorizontalAlignment="Left" Margin="0,251,0,0" VerticalAlignment="Top" Width="100" Click="AddToTutoringOrg_Click" Visibility="Collapsed" />
+                    <ScrollViewer Name="MentordReviewsView" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Margin="0,36,0,0" Grid.Column="1">
+                        <StackPanel HorizontalAlignment="Left" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" VerticalAlignment="Top" Width="494" Name="MentorReviewsStack" CanVerticallyScroll="True"/>
+                    </ScrollViewer>
+                    <ScrollViewer Name="StudentReviewsView" Width="{Binding BindsDirectlyToSource=True}" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" Margin="0,36,0,0" Grid.Column="1">
+                        <StackPanel HorizontalAlignment="Left" Height="{Binding BindsDirectlyToSource=True}" Grid.Row="1" VerticalAlignment="Top" Width="494" Name="StudentReviewsStack" CanVerticallyScroll="True"/>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="My Stickers">
-                <Grid Background="#FFE5E5E5">
-                    
+                <Grid x:Name="MyStickersGrid" Background="#FFE5E5E5">
+                    <Button x:Name="SubmitStickerBtn" Content="Submit New Sticker" HorizontalAlignment="Left" Margin="75,10,0,0" VerticalAlignment="Top" Width="125" Click="SubmitStickerBtn_Click" />
+                    <Button x:Name="RefreshBtn1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="30" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="RefreshBtn_Click">
+                        <Image x:Name="RefreshImage1" Source="Resources/Refresh Icon.png" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True"/>
+                    </Button>
+                    <Label x:Name="SubmittedStickers" Content="Submitted Stickers" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="TutoredStickers" Content="Tutored Stickers" HorizontalAlignment="Right" Margin="0,50,385,0" VerticalAlignment="Top"/>
+                    <StackPanel x:Name="MySubmittedStickersView" HorizontalAlignment="Left" Height="556" Margin="10,76,0,0" VerticalAlignment="Top" Width="480" Background="White"/>
+                    <StackPanel x:Name="MyTutoredStickersView" HorizontalAlignment="Right" Height="556" Margin="0,76,0,0" VerticalAlignment="Top" Width="480" Background="White"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Stickers">
-                <Grid Background="#FFE5E5E5">
-                    
+                <Grid x:Name="StickersGrid" Background="#FFE5E5E5">
+                    <Button x:Name="RefreshBtn" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="30" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="GetNewStickers_Click">
+                        <Image x:Name="RefreshImage" Source="Resources/Refresh Icon.png" Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" />
+                    </Button>
+                    <StackPanel x:Name="StickersView" HorizontalAlignment="Left" Height="582" Margin="10,50,0,0" VerticalAlignment="Top" Width="968" Background="White"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Chat">

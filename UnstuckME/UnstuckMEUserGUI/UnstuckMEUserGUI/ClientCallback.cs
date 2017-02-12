@@ -4,22 +4,21 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using UnstuckMEInterfaces;
+using System.Threading;
+using System.Diagnostics;
 
 namespace UnstuckMEUserGUI
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ClientCallback : IClient
     {
+        //Forces The Cient to close with a messagebox popup.
         public void ForceClose()
         {
-            App.Current.MainWindow.Hide();
-            App.Current.Shutdown();
-        }
-
-        public void GetMessage(string message, string emailAddress)
-        {
-            throw new NotImplementedException();
+            UnstuckMEMessageBox messageBox = new UnstuckMEMessageBox(0, "UnstuckME Server has shutdown. Please Contact Your Server Administrator", "Server Shutdown");
+            messageBox.Show();
         }
 
         public bool isOnline()

@@ -24,7 +24,6 @@ namespace UnstuckMEServerGUI
         public string CourseName { get; set; }
         public string CourseCode { get; set; }
         public short CourseNumber { get; set; }
-        public byte TermOffered { get; set; }
     
         public virtual ICollection<Sticker> Stickers { get; set; }
         public virtual ICollection<UserProfile> UserProfiles { get; set; }

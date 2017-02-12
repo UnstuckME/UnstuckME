@@ -6,24 +6,26 @@ GO
 /***************************************************
 DROP STORED PROCEDURES
 ***************************************************/
+IF OBJECT_ID('DeleteUserFromClass') is not null
+	DROP PROCEDURE [DeleteUserFromClass];
 IF OBJECT_ID('DeleteServerAdmin') is not null
 	DROP PROCEDURE [DeleteServerAdmin];
 IF OBJECT_ID('DeleteUserProfileByUserID') is not null
 	DROP PROCEDURE [DeleteUserProfileByUserID];
 IF OBJECT_ID('DeleteUserPictureByUserID') is not null
 	DROP PROCEDURE [DeleteUserPictureByUserID];
-IF OBJECT_ID('DeleteFileByFileID') is not null
-	DROP PROCEDURE [DeleteFileByFileID];
+--IF OBJECT_ID('DeleteFileByFileID') is not null
+--	DROP PROCEDURE [DeleteFileByFileID];
 IF OBJECT_ID('DeleteMessageByMessageID') is not null
 	DROP PROCEDURE [DeleteMessageByMessageID];
 IF OBJECT_ID('DeleteMentorOrganizationByMentorID') is not null
 	DROP PROCEDURE [DeleteMentorOrganizationByMentorID];
 IF OBJECT_ID('DeleteClassByClassID') is not null
 	DROP PROCEDURE [DeleteClassByClassID];
---IF OBJECT_ID('DeleteStickerByStickerID') is not null
---	DROP PROCEDURE DeleteStickerByStickerID;
---IF OBJECT_ID('DeleteReviewByReviewID') is not null
---	DROP PROCEDURE DeleteReviewByReviewID;
+IF OBJECT_ID('DeleteStickerByStickerID') is not null
+	DROP PROCEDURE DeleteStickerByStickerID;
+IF OBJECT_ID('DeleteReviewByReviewID') is not null
+	DROP PROCEDURE DeleteReviewByReviewID;
 IF OBJECT_ID('ClearReviewDescriptionByReviewID') is not null
 	DROP PROCEDURE ClearReviewDescriptionByReviewID;
 IF OBJECT_ID('DeleteReportByReportID') is not null
@@ -57,8 +59,8 @@ IF OBJECT_ID('UpdateCourseCodeByClassID') is not null
 	DROP PROCEDURE UpdateCourseCodeByClassID;
 IF OBJECT_ID('UpdateCourseNumberByClassID') is not null
 	DROP PROCEDURE UpdateCourseNumberByClassID;
-IF OBJECT_ID('UpdateTermsOfferedByClassID') is not null
-	DROP PROCEDURE UpdateTermsOfferedByClassID;
+--IF OBJECT_ID('UpdateTermsOfferedByClassID') is not null
+--	DROP PROCEDURE UpdateTermsOfferedByClassID;
 IF OBJECT_ID('UpdateStarRankingByReviewID') is not null
 	DROP PROCEDURE UpdateStarRankingByReviewID;
 IF OBJECT_ID('UpdateReviewDescriptionByReviewID') is not null
@@ -71,6 +73,25 @@ IF OBJECT_ID('UpdateTutorIDByTutorIDAndStickerID') is not null
 GO
 --START CREATION SCRIPTS
 /*********************************************************/
+/*********************************************************
+--Delete User From Class Stored Procedure
+*********************************************************/
+CREATE PROC [dbo].[DeleteUserFromClass]
+	(
+		@UserID INT,
+		@ClassID INT
+	)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT UserID FROM UserToClass WHERE UserID = @UserID AND ClassID = @ClassID))
+			RETURN 1;
+		ELSE
+			DELETE FROM UserToClass 
+			WHERE UserID = @UserID AND @ClassID = ClassID
+			RETURN 0;
+	END
+GO
+ 
 /*********************************************************
 --Delete ServerAdmin PROCEDURE Creation Script
 *********************************************************/
@@ -152,25 +173,25 @@ AS
 GO
 
 /*********************************************************
---Delete File PROCEDURE Creation Script
+--Delete File PROCEDURE Creation Script (Delete Message Can now be used instead)
 *********************************************************/
-CREATE PROC [dbo].[DeleteFileByFileID]
-    (
-    @FileID INT
-    )
-AS
-    BEGIN
-        IF  (NOT Exists(SELECT FileID FROM Files WHERE FileID = @FileID))
-            RETURN 1;
-        ELSE
-            BEGIN
-                DELETE Files
-				WHERE FileID = @fileID;
-                RETURN 0;
-            END
+--CREATE PROC [dbo].[DeleteFileByFileID]
+--    (
+--    @FileID INT
+--    )
+--AS
+--    BEGIN
+--        IF  (NOT Exists(SELECT FileID FROM Files WHERE FileID = @FileID))
+--            RETURN 1;
+--        ELSE
+--            BEGIN
+--                DELETE Files
+--				WHERE FileID = @fileID;
+--                RETURN 0;
+--            END
 
-    END
-GO
+--    END
+--GO
 
 /*********************************************************
 --Delete Message PROCEDURE Creation Script
@@ -206,6 +227,8 @@ AS
             RETURN 1;
         ELSE
             BEGIN
+				DELETE FROM StickerToMentor
+				WHERE @MentorID = MentorID;
 				DELETE OmToUser
 				WHERE @MentorID = MentorID;
 				DELETE OfficialMentor
@@ -233,7 +256,7 @@ AS
 				SET ClassID = 1
 				WHERE ClassID = @ClassID;
 				DELETE UserToClass
-				WHERE ClassID = @ClassID
+				WHERE ClassID = @ClassID;
 				DELETE Classes
 				WHERE ClassID = @classID;
                 RETURN 0;
@@ -245,44 +268,46 @@ GO
 /*********************************************************
 --Delete Sticker PROCEDURE Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
---CREATE PROC [dbo].[DeleteStickerByStickerID]
---    (
---    @StickerID INT
---    )
---AS
---    BEGIN
---        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
---            RETURN 1;
---        ELSE
---            BEGIN
---				DELETE Sticker
---				WHERE StickerID = @stickerID;
---                RETURN 0;
---            END
+CREATE PROC [dbo].[DeleteStickerByStickerID]
+    (
+    @StickerID INT
+    )
+AS
+    BEGIN
+        IF  (NOT Exists(SELECT StickerID FROM Sticker WHERE StickerID = @StickerID))
+            RETURN 1;
+        ELSE
+            BEGIN
+				DELETE FROM StickerToMentor
+				WHERE StickerID = @StickerID;
+				DELETE Sticker
+				WHERE StickerID = @stickerID;
+                RETURN 0;
+            END
 
---    END
---GO
+    END
+GO
 
 /*********************************************************
 --Delete Review PROCEDURE Creation Script NOT NEEDED AS OF NOW
 *********************************************************/
---CREATE PROC [dbo].[DeleteReviewByReviewID]
---    (
---    @ReviewID INT
---    )
---AS
---    BEGIN
---        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
---            RETURN 1;
---        ELSE
---            BEGIN
---				DELETE Review
---				WHERE ReviewID = @reviewID;
---                RETURN 0;
---            END
+CREATE PROC [dbo].[DeleteReviewByReviewID]
+    (
+    @ReviewID INT
+    )
+AS
+    BEGIN
+        IF  (NOT Exists(SELECT ReviewID FROM Review WHERE ReviewID = @ReviewID))
+            RETURN 1;
+        ELSE
+            BEGIN
+				DELETE Review
+				WHERE ReviewID = @reviewID;
+                RETURN 0;
+            END
 
---    END
---GO
+    END
+GO
 
 /*********************************************************
 --Delete Review Description PROCEDURE Creation Script
@@ -298,7 +323,7 @@ AS
         ELSE
             BEGIN
 				UPDATE Review
-				SET [Description] = ''
+				SET [Description] = 'This Review Has Been Removed'
 				WHERE ReviewID = @reviewID;
                 RETURN 0;
             END
@@ -336,7 +361,7 @@ CREATE PROC [dbo].[DeleteFriend]
 	)
 AS
 	BEGIN
-		IF (NOT NOT EXISTS(SELECT UserID, FriendUserID
+		IF (NOT EXISTS(SELECT UserID, FriendUserID
 						FROM Friends
 						WHERE UserID = @CurrentUserID AND FriendUserID = @TargetFriendUserID))
 						RETURN 1;
@@ -507,7 +532,7 @@ GO
 CREATE PROC [dbo].[UpdatePrivilegesByUserID]
     (
     @UserID INT,
-	@Privileges BINARY(4)
+	@Privileges INT
     )
 AS
     BEGIN
@@ -642,25 +667,25 @@ GO
 /*********************************************************
 --Update Terms Offered
 *********************************************************/
-CREATE PROC [dbo].[UpdateTermsOfferedByClassID]
-    (
-    @ClassID INT,
-	@TermOffered TINYINT
-    )
-AS
-    BEGIN
-        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
-            RETURN 1;
-        ELSE
-            BEGIN
-				UPDATE Classes
-				SET TermOffered = @TermOffered
-				WHERE ClassID = @ClassID;
-                RETURN 0;
-            END
+--CREATE PROC [dbo].[UpdateTermsOfferedByClassID]
+--    (
+--    @ClassID INT,
+--	@TermOffered TINYINT
+--    )
+--AS
+--    BEGIN
+--        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
+--            RETURN 1;
+--        ELSE
+--            BEGIN
+--				UPDATE Classes
+--				SET TermOffered = @TermOffered
+--				WHERE ClassID = @ClassID;
+--                RETURN 0;
+--            END
 
-    END
-GO
+--    END
+--GO
 
 /*********************************************************
 --Update Review Star Ranking
@@ -747,7 +772,7 @@ AS
             BEGIN
 				UPDATE Sticker
 				SET TutorID = @TutorID
-				WHERE StickerID = @StickeriD;
+				WHERE StickerID = @StickerID;
                 RETURN 0;
             END
 

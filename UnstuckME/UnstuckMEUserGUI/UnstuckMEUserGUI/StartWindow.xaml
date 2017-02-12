@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UnstuckME" Height="800" Width="1750"
+        Title="UnstuckME" Height="Auto" Width="Auto"
         Name="UnstuckME_Window"
         MinHeight="500" MinWidth="600"
         Background="DimGray"
         WindowStartupLocation="CenterScreen" WindowState="Normal" WindowStyle="ThreeDBorderWindow"
-        Icon="UnstuckME_Logo.png" Closing="UnstuckME_Window_Closing">
-    <DockPanel>
-        <Frame x:Name="_mainFrame" Source="LoginPage.xaml" NavigationUIVisibility="Hidden" />
+        Icon="Resources/UnstuckME_Logo.png" Closing="UnstuckME_Window_Closing">
+    <DockPanel >
+        <Frame x:Name="_mainFrame" NavigationUIVisibility="Hidden" />
     </DockPanel>
 </Window>

@@ -1,0 +1,34 @@
+﻿<Window x:Class="UnstuckMEUserGUI.UnstuckMEMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEUserGUI"
+        mc:Ignorable="d"
+        Title="UnstuckMEMessageBox" MaxHeight="205" MaxWidth="405" MinHeight="205" MinWidth="405" Height="205" Width="405" Background="DimGray" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!--IF YOU NEED A NEW LAYOUT MAKE A NEW GRID (CHECK BELOW FOR EXAMPLES)-->
+        <!--LAYOUT 0 ShutdownServer-->
+        <Grid Name="_GridServerShutdown" Visibility="Hidden" IsEnabled="false">
+            <Rectangle Fill="#FF323232" HorizontalAlignment="Left" Height="34"  VerticalAlignment="Top" Width="397" Margin="0,-3,0,0"/>
+            <Button x:Name="buttonOKServerShutdown" Background="#336699" Foreground="White" Content="OK" HorizontalAlignment="Left" Margin="295,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonOKServerShutdown_Click"/>
+            <TextBox x:Name="textBoxServerShutdownMessage" BorderThickness="0" IsReadOnly="True" Margin="0,31,0,38" Background="{x:Null}" Foreground="White" TextWrapping="Wrap" Text="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" FontSize="14"></TextBox>
+            <Button x:Name="buttonCloseServerShutdown"  HorizontalAlignment="Left" Margin="360,1,0,0" VerticalAlignment="Top" Width="27" Height="26" Background="#FF323232" BorderBrush="{x:Null}" Click="buttonCloseServerShutdown_Click">
+                <Image Source="Resources/CloseButton.png" Stretch="Fill"/>
+            </Button>
+            <Label x:Name="labelTitleServerShutdown" Foreground="White" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="355" FontFamily="Lucida Sans Unicode"/>
+        </Grid>
+        <!--LAYOUT 1 OK/CANCEL-->
+        <Grid x:Name="_GridOKCancel" Visibility="Hidden" IsEnabled="False">
+            <Rectangle Fill="#FF323232" HorizontalAlignment="Left" Height="34"  VerticalAlignment="Top" Width="397" Margin="0,-3,0,0"/>
+            <Button x:Name="buttonOK" Background="#336699" Foreground="White" Content="OK" HorizontalAlignment="Left" Margin="295,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonOK_Click"/>
+            <Button x:Name="buttonCancel" Background="#336699" Foreground="White" Content="Cancel" HorizontalAlignment="Left" Margin="203,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonCancel_Click"/>
+            <TextBox x:Name="textBoxOKCancel" BorderThickness="0"  IsReadOnly="True" Margin="0,31,0,38" Background="{x:Null}" Foreground="White" TextWrapping="Wrap" Text="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" FontSize="14"></TextBox>
+            <Button x:Name="buttonCloseOKCancel"  HorizontalAlignment="Left" Margin="360,1,0,0" VerticalAlignment="Top" Width="27" Height="26" Background="#FF323232" BorderBrush="{x:Null}" Click="buttonCloseOKCancel_Click">
+                <Image Source="Resources/CloseButton.png" Stretch="Fill"/>
+            </Button>
+            <Label x:Name="labelTitleOKCancel" Foreground="White" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="355" FontFamily="Lucida Sans Unicode"/>
+        </Grid>
+        <!--INSERT GRID 2 BELOW-->
+    </Grid>
+</Window>

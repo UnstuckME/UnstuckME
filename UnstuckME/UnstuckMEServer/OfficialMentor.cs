@@ -17,11 +17,13 @@ namespace UnstuckMEServer
         public OfficialMentor()
         {
             this.UserProfiles = new HashSet<UserProfile>();
+            this.Stickers = new HashSet<Sticker>();
         }
     
         public int MentorID { get; set; }
         public string OrganizationName { get; set; }
     
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
+        public virtual ICollection<Sticker> Stickers { get; set; }
     }
 }
