@@ -54,7 +54,7 @@ namespace UnstuckME_Classes
         public int StudentID { get; set; }
         public int TutorID { get; set; }
         public float MinimumStarRanking { get; set; }
-		public List<string> TutoringOrganizations { get; set; }
+		public List<int> AttachedOrganizations { get; set; }
 		public DateTime SubmitTime { get; set; }
         public int Timeout { get; set; }
     }
