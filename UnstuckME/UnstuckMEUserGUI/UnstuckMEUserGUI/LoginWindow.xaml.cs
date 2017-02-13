@@ -146,8 +146,8 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
-                    logger.WriteError(exp.Message);
+                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR,exp.Message);
                 }
             });
             return temp;
@@ -174,8 +174,10 @@ namespace UnstuckMEUserGUI
 
                 validCredentials = true;
             }
-            catch(Exception)
+            catch(Exception exp)
             {
+                UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                logger.WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
                 validCredentials = false;
                 labelCreateIncorrectCreds.Visibility = Visibility.Visible;
             }
@@ -201,6 +203,9 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
+                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+
                     MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     try
                     {
@@ -208,9 +213,10 @@ namespace UnstuckMEUserGUI
                         _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
                         Server = _channelFactory.CreateChannel();
                     }
-                    catch (Exception)
+                    catch (Exception exp)
                     {
                         MessageBox.Show("There is a problem re-connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                         this.Close();
                     }
                 }
@@ -229,8 +235,8 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
-                    logger.WriteError(exp.Message);                    
+                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);                    
                 }
                 });
             return temp;
@@ -247,8 +253,8 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
-                    logger.WriteError(exp.Message);
+                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                 }
             });
             return temp;
@@ -266,8 +272,8 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
-                    logger.WriteError(exp.Message);
+                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                 }
             });
         }

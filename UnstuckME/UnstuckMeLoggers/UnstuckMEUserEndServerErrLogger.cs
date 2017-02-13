@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnstuckMeLoggers
 {
-    public class UnstuckMEUserEndServerErrLogger
+    internal class UnstuckMEUserEndServerErrLogger
     {
         string filePath = "./UserGuiServerErrors.txt";
         string errTypeStartMark = "<UserServerConnectionError>";
