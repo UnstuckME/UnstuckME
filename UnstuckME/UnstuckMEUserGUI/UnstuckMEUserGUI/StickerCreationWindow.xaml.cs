@@ -65,7 +65,8 @@ namespace UnstuckMEUserGUI
                 logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
             }
 
-            courseNameList.Add("(Course Name)");
+            coursenumberList[0] = "(Class)";
+            //coursenumberList.Add("(Class)");
             //coursenumberList.Add("(CRN)");
 
             //for (int i = 0; i < 10; i++)
@@ -107,6 +108,12 @@ namespace UnstuckMEUserGUI
                     DateTime selectedDate = DatePickerSticker.SelectedDate.Value;
                     TimeSpan timedays = selectedDate - DateTime.Now;
                     int secondsCalc = 0;
+                    bool isStickerSubmittedForToday = false;
+
+                    if(selectedDate.DayOfYear == DateTime.Now.DayOfYear)
+                    {
+                        isStickerSubmittedForToday = true;
+                    }
 
                     //Convert days to Seconds, Set to zero if same day.
                     int totalSeconds = (int)timedays.TotalSeconds;
@@ -132,7 +139,7 @@ namespace UnstuckMEUserGUI
                     {
                         secondsCalc += 12;
                     }
-                    totalSeconds += (secondsCalc * 60 * 60);
+                    totalSeconds += (secondsCalc * 3600);
 
                     //If selected time is has already passed, throw exception.
                     if(selectedDate.Year == DateTime.Now.Year)
@@ -146,7 +153,10 @@ namespace UnstuckMEUserGUI
                             }
                         }
                     }
-
+                    if(isStickerSubmittedForToday)
+                    {
+                        totalSeconds = (totalSeconds - (int)DateTime.Now.TimeOfDay.TotalSeconds);
+                    }
                     temp.Timeout = totalSeconds;
                     temp.MinimumStarRanking = (float)sliderRating.Value;
                     temp.ProblemDescription = ProblemDescription.Text;
@@ -198,6 +208,7 @@ namespace UnstuckMEUserGUI
                 try
                 { 
                     courseNameList = Server.GetCourseNumbersByCourseCode(selected);
+                    courseNameList.Insert(0, "(Select Class)");
                 }
                 catch (Exception exp)
                 {

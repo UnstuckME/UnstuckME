@@ -17,7 +17,7 @@
             </Border>
             <Label x:Name="labelSliderValue" Foreground="White" Width="56" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Right" VerticalAlignment="Top" Content="0" Margin="0,270,165,0" Height="40"/>
             <Label x:Name="labelSliderMinimumRating" FontSize="20" Foreground="White" Height="40" Width="222" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Minimum Tutor Rating:" Margin="0,270,446,0"/>
-            <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".25" ValueChanged="slider_ValueChanged"  VerticalContentAlignment="Center" Maximum="5" Minimum="0" Margin="266,282,234,294"/>
+            <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="slider_ValueChanged"  VerticalContentAlignment="Center" Maximum="5" Minimum="0" Margin="266,282,234,294"/>
             <Label x:Name="labelTitle" Content="Sticker Submission" Foreground="White" FontSize="35" Margin="0,15,0,0" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Global User Interface"/>
             <ComboBox x:Name="ComboBoxCourseName" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" Height="35" Width="350" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,84,0">
             </ComboBox>

@@ -271,6 +271,11 @@ namespace UnstuckMEUserGUI
             StickerCreationWindow window = new StickerCreationWindow(ref Server, ref User);
             window.ShowDialog();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 
     public class UnstuckMEPages
