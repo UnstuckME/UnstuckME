@@ -109,9 +109,6 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Contacts\OnlineUser.xaml.cs">
       <DependentUpon>OnlineUser.xaml</DependentUpon>
     </Compile>
@@ -212,10 +209,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\Contacts\OnlineUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,16 +221,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="StartWindow.xaml.cs">
-      <DependentUpon>StartWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControls\Stickers\CreateStickerTemplate.xaml">
@@ -304,6 +289,10 @@
     <ProjectReference Include="..\..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
       <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
       <Name>UnstuckMEInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UnstuckMeLoggers\UnstuckMeLoggers.csproj">
+      <Project>{f98412b3-db0d-4847-98b5-d602838923f5}</Project>
+      <Name>UnstuckMeLoggers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\UnstuckME_Classes\UnstuckME_Classes.csproj">
       <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>

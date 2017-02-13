@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
@@ -54,14 +55,24 @@ namespace UnstuckMEUserGUI
             List<string> coursenumberList = new List<string>();
             List<string> courseNameList = new List<string>();
 
-            courseNameList.Add("(Course Name)");
-            coursenumberList.Add("(CRN)");
-
-            for (int i = 0; i < 10; i++)
-            {
-                courseNameList.Add(i.ToString());
-                coursenumberList.Add(i.ToString());
+            try
+            { 
+                coursenumberList = Server.GetCourseCodes();
             }
+            catch (Exception exp)
+            {
+                UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                logger.WriteError(exp.Message);
+            }
+
+            courseNameList.Add("(Course Name)");
+            //coursenumberList.Add("(CRN)");
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    courseNameList.Add(i.ToString());
+            //    coursenumberList.Add(i.ToString());
+            //}
             ComboBoxCourseName.MaxDropDownHeight = 200;
             ComboBoxCourseNumber.MaxDropDownHeight = 200;
             comboBoxAMPM.MaxDropDownHeight = 75;
@@ -140,8 +151,24 @@ namespace UnstuckMEUserGUI
                     temp.MinimumStarRanking = (float)sliderRating.Value;
                     temp.ProblemDescription = ProblemDescription.Text;
                     temp.StudentID = User.UserID;
-                    temp.ClassID = 2; ////////////////////////////////////THIS NEEDS TO CHANGE EVENTUALLY///////////////////////////////////////////////
-                    Server.SubmitSticker(temp);
+                    try
+                    { 
+                        temp.ClassID = Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
+                    }
+                    catch (Exception exp)
+                    {
+                        UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                        logger.WriteError(exp.Message);
+                    }
+                    try
+                    { 
+                        Server.SubmitSticker(temp);
+                    }
+                    catch (Exception exp)
+                    {
+                        UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                        logger.WriteError(exp.Message);
+                    }
                     MessageBox.Show("Sticker Submitted Successfully");
                     this.Close();
                 }
@@ -160,6 +187,26 @@ namespace UnstuckMEUserGUI
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             labelSliderValue.Content = sliderRating.Value;
+        }
+
+        private void ComboBoxCourseNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<string> courseNameList = new List<string>();
+            string selected = ComboBoxCourseNumber.SelectedValue as string;
+            if (selected != null)
+            {
+                try
+                { 
+                    courseNameList = Server.GetCourseNumbersByCourseCode(selected);
+                }
+                catch (Exception exp)
+                {
+                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                    logger.WriteError(exp.Message);
+                }
+                ComboBoxCourseName.ItemsSource = courseNameList;
+            }
+            
         }
     }
 }

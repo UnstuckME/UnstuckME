@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
@@ -139,7 +140,15 @@ namespace UnstuckMEUserGUI
             UserInfo temp = new UserInfo();
             this.Dispatcher.Invoke(() =>
             {
-                temp = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+                try
+                {
+                    temp = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+                }
+                catch (Exception exp)
+                {
+                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                    logger.WriteError(exp.Message);
+                }
             });
             return temp;
         }
@@ -213,8 +222,17 @@ namespace UnstuckMEUserGUI
             bool temp = false;
             this.Dispatcher.Invoke(() =>
             {
-                temp = Server.CreateNewUser(textBoxCreateFirstName.Text, textBoxCreateLastName.Text, textBoxCreateEmailAddress.Text, passwordBoxCreate.Password);
-            });
+                try
+                {
+                    temp = Server.CreateNewUser(textBoxCreateFirstName.Text, textBoxCreateLastName.Text, textBoxCreateEmailAddress.Text, passwordBoxCreate.Password);
+            
+                }
+                catch (Exception exp)
+                {
+                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                    logger.WriteError(exp.Message);                    
+                }
+                });
             return temp;
         }
 
@@ -223,7 +241,15 @@ namespace UnstuckMEUserGUI
             int temp = -1;
             this.Dispatcher.Invoke(() =>
             {
-                temp = Server.GetUserID(textBoxCreateEmailAddress.Text);
+                try
+                { 
+                    temp = Server.GetUserID(textBoxCreateEmailAddress.Text);
+                }
+                catch (Exception exp)
+                {
+                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                    logger.WriteError(exp.Message);
+                }
             });
             return temp;
         }
@@ -234,7 +260,15 @@ namespace UnstuckMEUserGUI
             {
                 ImageConverter converter = new ImageConverter();
                 byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
-                Server.InsertProfilePicture(userID, avatar);
+                try
+                { 
+                    Server.InsertProfilePicture(userID, avatar);
+                }
+                catch (Exception exp)
+                {
+                    UnstuckMEUserEndServerErrLogger logger = new UnstuckMEUserEndServerErrLogger();
+                    logger.WriteError(exp.Message);
+                }
             });
         }
         private void buttonCreateAccount_MouseEnter(object sender, MouseEventArgs e)
