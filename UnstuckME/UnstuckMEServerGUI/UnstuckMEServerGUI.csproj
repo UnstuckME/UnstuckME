@@ -394,6 +394,10 @@
       <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
       <Name>UnstuckMEInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnstuckMeLoggers\UnstuckMeLoggers.csproj">
+      <Project>{f98412b3-db0d-4847-98b5-d602838923f5}</Project>
+      <Name>UnstuckMeLoggers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnstuckMEServer\UnstuckMEServer.csproj">
       <Project>{855a456b-216a-46a4-bf20-a04c9639c04c}</Project>
       <Name>UnstuckMEServer</Name>

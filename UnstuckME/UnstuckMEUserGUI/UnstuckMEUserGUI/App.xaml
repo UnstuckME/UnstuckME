@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

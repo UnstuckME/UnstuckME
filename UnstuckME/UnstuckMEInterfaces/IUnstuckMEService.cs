@@ -30,7 +30,7 @@ namespace UnstuckMEInterfaces
 		void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
 		[OperationContract]
-		bool UserLoginAttempt(string emailAddress, string passWord);
+		UserInfo UserLoginAttempt(string emailAddress, string passWord);
 
 		[OperationContract]
 		bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword);

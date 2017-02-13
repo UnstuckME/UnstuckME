@@ -17,6 +17,9 @@ namespace UnstuckME_Classes
 		public int TotalTutorReviews { get; set; }
 		public int TotalStudentReviews { get; set; }
         public int Privileges { get; set; }
+        public float AvgTutorRank { get; set; }
+        public float AvgStudentRank { get; set; }
+        public byte [] UserProfilePictureBytes { get; set; }
     }
 
     public class UserClass
@@ -58,10 +61,10 @@ namespace UnstuckME_Classes
         public int StudentID { get; set; }
         public int TutorID { get; set; }
         public float MinimumStarRanking { get; set; }
-		public List<Organization> TutoringOrganizations { get; set; }
+		public List<int> AttachedOrganizations { get; set; }
 		public DateTime SubmitTime { get; set; }
-		public DateTime Timeout { get; set; }
-	}
+        public int Timeout { get; set; }
+    }
 
     public class UnstuckMESchool
     {

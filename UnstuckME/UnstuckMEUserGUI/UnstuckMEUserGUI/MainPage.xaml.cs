@@ -57,7 +57,14 @@ namespace UnstuckMEUserGUI
 				item.Content = org;
 				//TutoringOrgComboBox.Items.Add(item);
 			}
-		}
+            List<UserClasses> enrolledClasses = Server.GetUserClasses(UserID);
+            foreach (UserClasses UserClass in enrolledClasses)
+            {
+                TextBlock test = new TextBlock();
+                test.Text = UserClass.CourseCode + UserClass.CourseNumber + UserClass.CourseName;
+                ClassesStack.Children.Add(test);
+            }
+        }
 
 		//Adds/removes classes from the list of classes user can mentor for
 		private void AddRemoveClasses_Click(object sender, RoutedEventArgs e)
@@ -71,6 +78,8 @@ namespace UnstuckMEUserGUI
 			{
 				ClassesView.Visibility = Visibility.Visible;
 				AddRemoveClassesView.Visibility = Visibility.Collapsed;
+                CourseCodeDropdown.Visibility = Visibility.Collapsed;
+                CourseNumberDropdown.Visibility = Visibility.Collapsed;
 			}
 
 			List<string> codes = Server.GetCourseCodes();

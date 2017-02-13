@@ -147,11 +147,10 @@ namespace UnstuckMEInterfaces
 			return userID;
 		}
 
-		public bool UserLoginAttempt(string emailAddress, string passWord)
+		public UserInfo UserLoginAttempt(string emailAddress, string passWord)
 		{
-			bool loginAttempt = false;
-
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            ConnectedClient newClient = new ConnectedClient();
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
 				try
 				{
@@ -169,14 +168,13 @@ namespace UnstuckMEInterfaces
 						{
 							if (client.Key == userID)
 							{
-								return false;
+								return null;
 							}
 						}
-						loginAttempt = true;
+						
 
 						//Stores Client into Logged in Users List
 						var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
-						ConnectedClient newClient = new ConnectedClient();
 						newClient.connection = establishedUserConnection;
 						newClient.User = GetUserInfo(userID);
 						newClient.returnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
@@ -193,10 +191,10 @@ namespace UnstuckMEInterfaces
 				}
 				catch (Exception)
 				{
-					loginAttempt = false;
+                    return null;
 				}
 			}
-			return loginAttempt;
+			return newClient.User;
 		}
 
 		public List<UserClass> GetUserClasses(int UserID)
@@ -248,6 +246,9 @@ namespace UnstuckMEInterfaces
 				newClient.LastName = users.DisplayLName;
 				newClient.EmailAddress = users.EmailAddress;
 				newClient.Privileges = users.Privileges;
+                newClient.AvgStudentRank = (float)users.AverageStudentRank;
+                newClient.AvgTutorRank = (float)users.AverageTutorRank;
+                newClient.UserProfilePictureBytes = GetProfilePicture(newClient.UserID);
 				return newClient;
 			}
 		}
@@ -464,7 +465,7 @@ namespace UnstuckMEInterfaces
 					usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
 					usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
 					usSticker.SubmitTime = sticker.Sticker.SubmitTime;
-					usSticker.Timeout = sticker.Sticker.Timeout;
+					usSticker.Timeout = (int)(sticker.Sticker.Timeout - DateTime.Now).TotalSeconds;
 					stickerList.Add(usSticker);
 				}
 				return stickerList;
@@ -490,7 +491,7 @@ namespace UnstuckMEInterfaces
 					usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
 					usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
 					usSticker.SubmitTime = sticker.Sticker.SubmitTime;
-					usSticker.Timeout = sticker.Sticker.Timeout;
+					usSticker.Timeout = (int)(sticker.Sticker.Timeout - DateTime.Now).TotalSeconds;
 					stickerList.Add(usSticker);
 				}
 				return stickerList;
@@ -516,7 +517,7 @@ namespace UnstuckMEInterfaces
 					usSticker.TutorID = (sticker.Sticker.TutorID.HasValue) ? sticker.Sticker.TutorID.Value : 1;
 					usSticker.MinimumStarRanking = (sticker.Sticker.MinimumStarRanking.HasValue) ? (float)sticker.Sticker.MinimumStarRanking : 0;
 					usSticker.SubmitTime = sticker.Sticker.SubmitTime;
-					usSticker.Timeout = sticker.Sticker.Timeout;
+					usSticker.Timeout = (int)(sticker.Sticker.Timeout - DateTime.Now).TotalSeconds;
 					stickerList.Add(usSticker);
 				}
 				return stickerList;
@@ -535,8 +536,7 @@ namespace UnstuckMEInterfaces
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
-				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, (int)((newSticker.SubmitTime - newSticker.Timeout).TotalSeconds));
-
+				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
 				foreach (var org in newSticker.TutoringOrganizations)
 					db.AddOrgToSticker(newSticker.StickerID, org.MentorID);
 			}

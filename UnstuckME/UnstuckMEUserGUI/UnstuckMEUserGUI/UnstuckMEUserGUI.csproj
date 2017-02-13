@@ -58,16 +58,42 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClassDisplay.xaml.cs">
+    <Compile Include="Pages\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ModeratorPage.xaml.cs">
+      <DependentUpon>ModeratorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StarRanking\StarRanking.xaml.cs">
+      <DependentUpon>StarRanking.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StickerCreationWindow.xaml.cs">
+      <DependentUpon>StickerCreationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Notifications\NewMessageNotification.xaml.cs">
+      <DependentUpon>NewMessageNotification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Notifications\AvailableSticker.xaml.cs">
+      <DependentUpon>AvailableSticker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Classes\ClassDisplay.xaml.cs">
       <DependentUpon>ClassDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientCallback.cs" />
@@ -86,8 +112,8 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="UserControls\Contacts\OnlineUser.xaml.cs">
+      <DependentUpon>OnlineUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReviewDisplay.xaml.cs">
       <DependentUpon>ReviewDisplay.xaml</DependentUpon>
@@ -107,16 +133,22 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="StarRankTemplate_UC.xaml.cs">
+    <Compile Include="UserControls\Reviews\ReviewDisplay.xaml.cs">
+      <DependentUpon>ReviewDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StarRanking\StarRankTemplate_UC.xaml.cs">
       <DependentUpon>StarRankTemplate_UC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateStickerTemplate.xaml.cs">
+    <Compile Include="UserControls\Stickers\CreateStickerTemplate.xaml.cs">
       <DependentUpon>CreateStickerTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StickerPage.xaml.cs">
+      <DependentUpon>StickerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnstuckMEMessageBox.xaml.cs">
+    <Compile Include="SubWindows\UnstuckMEMessageBox.xaml.cs">
       <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="StickerDisplay.xaml.cs">
@@ -137,7 +169,48 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
     </Compile>
-    <Page Include="ClassDisplay.xaml">
+    <Compile Include="UserControls\Stickers\StickerDisplay.xaml.cs">
+      <DependentUpon>StickerDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckMEWindow.xaml.cs">
+      <DependentUpon>UnstuckMEWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UserProfilePage.xaml.cs">
+      <DependentUpon>UserProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Pages\AdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ModeratorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\StarRanking\StarRanking.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StickerCreationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Notifications\NewMessageNotification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Notifications\AvailableSticker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Classes\ClassDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,39 +218,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="UserControls\Contacts\OnlineUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ReviewDisplay.xaml">
+    <Page Include="UserControls\Reviews\ReviewDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StarRankTemplate_UC.xaml">
+    <Page Include="UserControls\StarRanking\StarRankTemplate_UC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StartWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StartWindow.xaml.cs">
-      <DependentUpon>StartWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="CreateStickerTemplate.xaml">
+    <Page Include="UserControls\Stickers\CreateStickerTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UnstuckMEMessageBox.xaml">
+    <Page Include="Pages\StickerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StickerDisplay.xaml">
+    <Page Include="SubWindows\UnstuckMEMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Stickers\StickerDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnstuckMEWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UserProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +299,10 @@
       <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
       <Name>UnstuckMEInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\UnstuckMeLoggers\UnstuckMeLoggers.csproj">
+      <Project>{f98412b3-db0d-4847-98b5-d602838923f5}</Project>
+      <Name>UnstuckMeLoggers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\UnstuckME_Classes\UnstuckME_Classes.csproj">
       <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>
       <Name>UnstuckME_Classes</Name>
@@ -242,9 +323,94 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\CloseButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\InvertedStar.png" />
+    <Resource Include="Resources\online.png" />
+    <Resource Include="Resources\Stars\StarBlue.png" />
+    <Resource Include="Resources\Stars\StarOrange.png" />
+    <Resource Include="Resources\Stars\StarRed.png" />
+    <Resource Include="Resources\Stars\StarYellow.png" />
+    <Resource Include="Resources\AddUser\AddUserBlack.png" />
+    <Resource Include="Resources\AddUser\AddUserBlue.png" />
+    <Resource Include="Resources\AddUser\AddUserRed.png" />
+    <Resource Include="Resources\AddUser\AddUserWhite.png" />
+    <Resource Include="Resources\Chat\ChatBlack.png" />
+    <Resource Include="Resources\Chat\ChatBlue.png" />
+    <Resource Include="Resources\Chat\ChatRed.png" />
+    <Resource Include="Resources\Chat\ChatWhite.png" />
+    <Resource Include="Resources\Checkmark\CheckBlack.png" />
+    <Resource Include="Resources\Checkmark\CheckBlue.png" />
+    <Resource Include="Resources\Checkmark\CheckBrightRed.png" />
+    <Resource Include="Resources\Checkmark\CheckGreen.png" />
+    <Resource Include="Resources\Checkmark\CheckRed.png" />
+    <Resource Include="Resources\Checkmark\CheckWhite.png" />
+    <Resource Include="Resources\Contacts\ContactsBlack.png" />
+    <Resource Include="Resources\Contacts\ContactsBlue.png" />
+    <Resource Include="Resources\Contacts\ContactsRed.png" />
+    <Resource Include="Resources\Contacts\ContactsWhite.png" />
+    <Resource Include="Resources\Home\HomeBlack.png" />
+    <Resource Include="Resources\Home\HomeBlue.png" />
+    <Resource Include="Resources\Home\HomeRed.png" />
+    <Resource Include="Resources\Home\HomeWhite.png" />
+    <Resource Include="Resources\Gear\GearBlack.png" />
+    <Resource Include="Resources\Gear\GearBlue.png" />
+    <Resource Include="Resources\Gear\GearRed.png" />
+    <Resource Include="Resources\Gear\GearWhite.png" />
+    <Resource Include="Resources\Sticker\StickerBlack.png" />
+    <Resource Include="Resources\Sticker\StickerBlue.png" />
+    <Resource Include="Resources\Sticker\StickerRed.png" />
+    <Resource Include="Resources\Sticker\StickerWhite.png" />
+    <Resource Include="Resources\Sticker\TagBlack.png" />
+    <Resource Include="Resources\Sticker\TagBlue.png" />
+    <Resource Include="Resources\Sticker\TagRed.png" />
+    <Resource Include="Resources\Sticker\TagWhite.png" />
+    <Resource Include="Resources\Time\TimeBlack.png" />
+    <Resource Include="Resources\Time\TimeBlue.png" />
+    <Resource Include="Resources\Time\TimeRed.png" />
+    <Resource Include="Resources\Time\TimeWhite.png" />
+    <Resource Include="Resources\Xmark\XmarkBlack.png" />
+    <Resource Include="Resources\Xmark\XmarkBlue.png" />
+    <Resource Include="Resources\Xmark\XmarkBrightRed.png" />
+    <Resource Include="Resources\Xmark\XmarkGreen.png" />
+    <Resource Include="Resources\Xmark\XmarkRed.png" />
+    <Resource Include="Resources\Xmark\XmarkWhite.png" />
+    <Resource Include="Resources\Edit\EditBlack.png" />
+    <Resource Include="Resources\Edit\EditBlue.png" />
+    <Resource Include="Resources\Edit\EditRed.png" />
+    <Resource Include="Resources\Edit\EditWhite.png" />
+    <Resource Include="Resources\Refresh\RefreshBlack.png" />
+    <Resource Include="Resources\Refresh\RefreshBlue.png" />
+    <Resource Include="Resources\Refresh\RefreshRed.png" />
+    <Resource Include="Resources\Refresh\RefreshWhite.png" />
+    <Resource Include="Resources\User\UserBlack.png" />
+    <Resource Include="Resources\User\UserBlue.png" />
+    <Resource Include="Resources\User\UserRed.png" />
+    <Resource Include="Resources\User\UserWhite.png" />
+    <Resource Include="Resources\Sticker\StickerIconBlack.png" />
+    <Resource Include="Resources\Sticker\StickerIconBlue.png" />
+    <Resource Include="Resources\Sticker\StickerIconRed.png" />
+    <Resource Include="Resources\Sticker\StickerIconWhite.png" />
+    <Resource Include="Resources\Classes\ClassBlack.png" />
+    <Resource Include="Resources\Classes\ClassBlue.png" />
+    <Resource Include="Resources\Classes\ClassRed.png" />
+    <Resource Include="Resources\Classes\ClassWhite.png" />
+    <Resource Include="Resources\Sticker\BlackSticker.png" />
+    <Resource Include="Resources\Sticker\BlueSticker.png" />
+    <Resource Include="Resources\Sticker\RedSticker.png" />
+    <Resource Include="Resources\Sticker\WhiteSticker.png" />
+    <Resource Include="Resources\Plus\PlusBlack.png" />
+    <Resource Include="Resources\Plus\PlusBlue.png" />
+    <Resource Include="Resources\Plus\PlusRed.png" />
+    <Resource Include="Resources\Plus\PlusWhite.png" />
+    <Resource Include="Resources\Admin\AdminBlack.png" />
+    <Resource Include="Resources\Admin\AdminBlue.png" />
+    <Resource Include="Resources\Admin\AdminRed.png" />
+    <Resource Include="Resources\Admin\AdminWhite.png" />
+    <Resource Include="Resources\Ranking\RankingBlack.png" />
+    <Resource Include="Resources\Ranking\RankingBlue.png" />
+    <Resource Include="Resources\Ranking\RankingRed.png" />
+    <Resource Include="Resources\Ranking\RankingWhite.png" />
+    <Resource Include="Resources\Ranking\RankingDimGray.png" />
+    <Resource Include="Resources\Ranking\RankingGray.png" />
+    <None Include="Resources\DefaultUserProfilePicture.bmp" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
@@ -256,6 +422,7 @@
       <LastGenOutput>UnstuckMESchools_DB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
