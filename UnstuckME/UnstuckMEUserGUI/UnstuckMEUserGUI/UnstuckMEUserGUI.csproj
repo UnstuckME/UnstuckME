@@ -115,9 +115,6 @@
     <Compile Include="UserControls\Contacts\OnlineUser.xaml.cs">
       <DependentUpon>OnlineUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ReviewDisplay.xaml.cs">
-      <DependentUpon>ReviewDisplay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="School.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
@@ -150,9 +147,6 @@
     </Compile>
     <Compile Include="SubWindows\UnstuckMEMessageBox.xaml.cs">
       <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StickerDisplay.xaml.cs">
-      <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMESchools_DB.Context.cs">
       <AutoGen>True</AutoGen>

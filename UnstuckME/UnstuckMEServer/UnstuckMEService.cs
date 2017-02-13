@@ -537,8 +537,8 @@ namespace UnstuckMEInterfaces
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
 				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
-				foreach (var org in newSticker.TutoringOrganizations)
-					db.AddOrgToSticker(newSticker.StickerID, org.MentorID);
+				//foreach (var org in newSticker.TutoringOrganizations)
+				//	db.AddOrgToSticker(newSticker.StickerID, org.MentorID);
 			}
 		}
 

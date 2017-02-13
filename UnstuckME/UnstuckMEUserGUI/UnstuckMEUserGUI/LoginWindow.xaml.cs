@@ -103,7 +103,7 @@ namespace UnstuckMEUserGUI
                 try
                 {
                     UserInfo loggedInUser = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
-                    if (loggedInUser == null)
+                    if (loggedInUser.EmailAddress != emailAttempt)
                     {
                         _labelInvalidLogin.Content = "Invalid Username/Password";
                         throw new Exception();
@@ -148,6 +148,7 @@ namespace UnstuckMEUserGUI
                 {
                     UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR,exp.Message);
+                    _labelInvalidLogin.Content = "Server Unavailable!";
                 }
             });
             return temp;
