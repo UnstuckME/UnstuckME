@@ -61,7 +61,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception exp)
             {
-                UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                 logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
             }
 
@@ -167,7 +167,7 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception exp)
                     {
-                        UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                        UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                         logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                     }
                     try
@@ -176,7 +176,7 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception exp)
                     {
-                        UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                        UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                         logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                     }
                     MessageBox.Show("Sticker Submitted Successfully");
@@ -212,7 +212,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                 }
                 ComboBoxCourseName.ItemsSource = courseNameList;

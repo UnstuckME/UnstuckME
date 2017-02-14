@@ -146,7 +146,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR,exp.Message);
                     _labelInvalidLogin.Content = "Server Unavailable!";
                 }
@@ -177,7 +177,7 @@ namespace UnstuckMEUserGUI
             }
             catch(Exception exp)
             {
-                UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                 logger.WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
                 validCredentials = false;
                 labelCreateIncorrectCreds.Visibility = Visibility.Visible;
@@ -204,7 +204,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
 
                     MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -236,7 +236,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);                    
                 }
                 });
@@ -254,7 +254,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                 }
             });
@@ -273,7 +273,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                 }
             });
