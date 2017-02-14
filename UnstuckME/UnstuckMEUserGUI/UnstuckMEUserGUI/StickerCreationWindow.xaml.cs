@@ -193,7 +193,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception exp)
             {
-                UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                 logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
             }
             ComboboxItem temp1 = new ComboboxItem();
