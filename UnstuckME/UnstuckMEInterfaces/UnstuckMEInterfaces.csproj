@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IClient.cs" />
+    <Compile Include="IFileStream.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="IUnstuckMEService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

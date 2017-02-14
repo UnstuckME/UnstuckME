@@ -31,6 +31,11 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         public AdminSchoolChange()
         {
             InitializeComponent();
+
+            DuplexChannelFactory<IUnstuckMEServer> channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
+            IUnstuckMEServer testingChannel = channelFactory.CreateChannel();
+
+            testingChannel.UploadDocument();
         }
   
 

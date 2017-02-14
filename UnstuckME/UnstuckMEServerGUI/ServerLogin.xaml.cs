@@ -121,6 +121,7 @@ namespace UnstuckMEServerGUI
 
         private void buttonSetting_Click(object sender, RoutedEventArgs e)
         {
+
             System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             config.Save(ConfigurationSaveMode.Modified);
 

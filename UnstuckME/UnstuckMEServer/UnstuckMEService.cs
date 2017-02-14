@@ -24,7 +24,7 @@ namespace UnstuckMEInterfaces
 	/// <summary>
 	/// Implement any Operation Contracts from IUnstuckMEService.cs in this file.
 	/// </summary>
-	public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer
+	public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
 	{
 		public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 		public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
@@ -537,8 +537,10 @@ namespace UnstuckMEInterfaces
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
 				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
-				//foreach (var org in newSticker.TutoringOrganizations)
-				//	db.AddOrgToSticker(newSticker.StickerID, org.MentorID);
+                foreach (int orgID in newSticker.AttachedOrganizations)
+                {
+                    Console.WriteLine("OrganizationID: " + orgID);
+                }
 			}
 		}
 
@@ -956,11 +958,12 @@ namespace UnstuckMEInterfaces
 				var organizations = db.GetAllOrganizations();
 
 				List<Organization> orgs = new List<Organization>();
-				Organization new_org = new Organization();
+				
 
 				foreach (var org in organizations)
 				{
-					new_org.MentorID = org.MentorID;
+                    Organization new_org = new Organization();
+                    new_org.MentorID = org.MentorID;
 					new_org.OrganizationName = org.OrganizationName;
 					orgs.Add(new_org);
 				}
@@ -974,6 +977,18 @@ namespace UnstuckMEInterfaces
 			return true;
 		}
 
+	    public File UploadDocument()
+	    {
+	        File file = new File();
+	        file.Content = System.IO.File.ReadAllBytes(@"C:\Data\Introduction to WCF.ppt");
+	        file.Name = "Introduction to WCF.ppt";
 
-	}
+            return file;
+	    }
+
+        public void HelloWorld()
+        {
+            Console.WriteLine("Hello World");
+        }
+    }
 }

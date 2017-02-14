@@ -22,8 +22,25 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class StickerCreationWindow : Window
     {
+        private class ComboboxItem
+        {
+            public string Text { get; set; }
+            public int Value { get; set; }
+
+            public override string ToString()
+            {
+                return Text;
+            }
+        }
         public static IUnstuckMEService Server;
         public static UserInfo User;
+
+        List<int> hourList = new List<int>();
+        List<string> minutesList = new List<string>();
+        List<string> AMPMList = new List<string>();
+        List<string> coursenumberList = new List<string>();
+        List<string> courseNameList = new List<string>();
+        List<Organization> orgList;
         public StickerCreationWindow(ref IUnstuckMEService inServer, ref UserInfo inUser)
         {
             InitializeComponent();
@@ -31,57 +48,7 @@ namespace UnstuckMEUserGUI
             Server = inServer;
             User = inUser;
 
-            DatePickerSticker.DisplayDateStart = DateTime.Now;
-            DatePickerSticker.SelectedDate = DateTime.Now;
-            DatePickerSticker.DisplayDateEnd = DateTime.Now.AddDays(56);
-            List<int> hourList = new List<int>();
-            List<string> minutesList = new List<string>();
-            List<string> AMPMList = new List<string>();
-            hourList.Add(12);
-            for (int i = 1; i < 12; i++)
-            {
-                hourList.Add(i);
-            }
-            minutesList.Add("00");
-            minutesList.Add("15");
-            minutesList.Add("30");
-            minutesList.Add("45");
-            AMPMList.Add("A.M.");
-            AMPMList.Add("P.M.");
-            comboBoxAMPM.ItemsSource = AMPMList;
-            comboBoxHour.ItemsSource = hourList;
-            comboBoxMinute.ItemsSource = minutesList;
-
-            List<string> coursenumberList = new List<string>();
-            List<string> courseNameList = new List<string>();
-
-            try
-            { 
-                coursenumberList = Server.GetCourseCodes();
-            }
-            catch (Exception exp)
-            {
-                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
-            }
-
-            coursenumberList[0] = "(Class)";
-            //coursenumberList.Add("(Class)");
-            //coursenumberList.Add("(CRN)");
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    courseNameList.Add(i.ToString());
-            //    coursenumberList.Add(i.ToString());
-            //}
-            ComboBoxCourseName.MaxDropDownHeight = 200;
-            ComboBoxCourseNumber.MaxDropDownHeight = 200;
-            comboBoxAMPM.MaxDropDownHeight = 75;
-            comboBoxHour.MaxDropDownHeight = 200;
-            comboBoxMinute.MaxDropDownHeight = 125;
-            ComboBoxCourseNumber.ItemsSource = coursenumberList;
-            ComboBoxCourseName.ItemsSource = courseNameList;
-
+            LoadDataIntoComboBoxes();
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -161,6 +128,14 @@ namespace UnstuckMEUserGUI
                     temp.MinimumStarRanking = (float)sliderRating.Value;
                     temp.ProblemDescription = ProblemDescription.Text;
                     temp.StudentID = User.UserID;
+
+                    temp.AttachedOrganizations = new List<int>();
+                    //Gets any filtered organizations.
+                    foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
+                    {
+                        temp.AttachedOrganizations.Add(a.GetOrganizationID());
+                    }
+
                     try
                     { 
                         temp.ClassID = Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
@@ -189,6 +164,56 @@ namespace UnstuckMEUserGUI
             }
         }
 
+        public void LoadDataIntoComboBoxes()
+        {
+            DatePickerSticker.DisplayDateStart = DateTime.Now;
+            DatePickerSticker.SelectedDate = DateTime.Now;
+            DatePickerSticker.DisplayDateEnd = DateTime.Now.AddDays(56); //56 = 8 weeks
+
+            hourList.Add(12);
+            for (int i = 1; i < 12; i++)
+            {
+                hourList.Add(i);
+            }
+            minutesList.Add("00");
+            minutesList.Add("15");
+            minutesList.Add("30");
+            minutesList.Add("45");
+            AMPMList.Add("A.M.");
+            AMPMList.Add("P.M.");
+            comboBoxAMPM.ItemsSource = AMPMList;
+            comboBoxHour.ItemsSource = hourList;
+            comboBoxMinute.ItemsSource = minutesList;
+            ComboBoxCourseName.IsEnabled = false;
+
+            try
+            {
+                coursenumberList = Server.GetCourseCodes();
+                orgList = Server.GetAllOrganizations();
+            }
+            catch (Exception exp)
+            {
+                UnstuckMEUserEndMasterErrLogger logger = new UnstuckMEUserEndMasterErrLogger();
+                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+            }
+            ComboboxItem temp1 = new ComboboxItem();
+            temp1.Text = "(OfficialMentors)";
+            temp1.Value = 0;
+            ComboBoxOrgName.Items.Add(temp1);
+            foreach (Organization org in orgList)
+            {
+                ComboboxItem temp = new ComboboxItem();
+                temp.Text = org.OrganizationName;
+                temp.Value = org.MentorID;
+                ComboBoxOrgName.Items.Add(temp);
+            }
+
+            coursenumberList[0] = "(Class)";
+            ComboBoxCourseNumber.ItemsSource = coursenumberList;
+            ComboBoxCourseName.ItemsSource = courseNameList;
+
+        }
+
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -202,12 +227,12 @@ namespace UnstuckMEUserGUI
         private void ComboBoxCourseNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List<string> courseNameList = new List<string>();
-            string selected = ComboBoxCourseNumber.SelectedValue as string;
-            if (selected != null)
+            int selected = ComboBoxCourseNumber.SelectedIndex;
+            if (selected != 0)
             {
                 try
                 { 
-                    courseNameList = Server.GetCourseNumbersByCourseCode(selected);
+                    courseNameList = Server.GetCourseNumbersByCourseCode(ComboBoxCourseNumber.SelectedValue as string);
                     courseNameList.Insert(0, "(Select Class)");
                 }
                 catch (Exception exp)
@@ -215,9 +240,34 @@ namespace UnstuckMEUserGUI
                     UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                     logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                 }
+                ComboBoxCourseName.IsEnabled = true;
                 ComboBoxCourseName.ItemsSource = courseNameList;
+                ComboBoxCourseName.SelectedIndex = 0;
+            }
+            else
+            {
+                ComboBoxCourseName.SelectedIndex = 0;
+                ComboBoxCourseName.IsEnabled = false;
             }
             
+        }
+
+        private void ButtonAddOrganization_Click(object sender, RoutedEventArgs e)
+        {
+            ComboboxItem temp = ComboBoxOrgName.SelectedItem as ComboboxItem;
+            bool exists = false;
+            if (ComboBoxOrgName.SelectedIndex == 0) return;
+            foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
+            {
+                if(temp.Value == a.GetOrganizationID())
+                {
+                    exists = true;
+                }
+            }
+            if(!exists)
+            {
+                StackPanelOrganization.Children.Add(new TutorStickerSubmit(temp.Value, temp.Text));
+            }
         }
     }
 }
