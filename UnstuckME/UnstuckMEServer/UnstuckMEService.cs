@@ -537,8 +537,10 @@ namespace UnstuckMEInterfaces
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
 				db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
-				//foreach (var org in newSticker.TutoringOrganizations)
-				//	db.AddOrgToSticker(newSticker.StickerID, org.MentorID);
+                foreach (int orgID in newSticker.AttachedOrganizations)
+                {
+                    Console.WriteLine("OrganizationID: " + orgID);
+                }
 			}
 		}
 
@@ -956,11 +958,12 @@ namespace UnstuckMEInterfaces
 				var organizations = db.GetAllOrganizations();
 
 				List<Organization> orgs = new List<Organization>();
-				Organization new_org = new Organization();
+				
 
 				foreach (var org in organizations)
 				{
-					new_org.MentorID = org.MentorID;
+                    Organization new_org = new Organization();
+                    new_org.MentorID = org.MentorID;
 					new_org.OrganizationName = org.OrganizationName;
 					orgs.Add(new_org);
 				}

@@ -19,9 +19,9 @@
             <Label x:Name="labelSliderMinimumRating" FontSize="20" Foreground="White" Height="40" Width="222" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Minimum Tutor Rating:" Margin="0,270,446,0"/>
             <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="slider_ValueChanged"  VerticalContentAlignment="Center" Maximum="5" Minimum="0" Margin="266,282,234,294"/>
             <Label x:Name="labelTitle" Content="Sticker Submission" Foreground="White" FontSize="35" Margin="0,15,0,0" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Global User Interface"/>
-            <ComboBox x:Name="ComboBoxCourseName" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" Height="35" Width="350" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,84,0">
+            <ComboBox x:Name="ComboBoxCourseName" MaxDropDownHeight="200" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" Height="35" Width="350" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,84,0">
             </ComboBox>
-            <ComboBox x:Name="ComboBoxCourseNumber" SelectionChanged="ComboBoxCourseNumber_SelectionChanged" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" SelectedIndex="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="35" Width="86" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,472,0">
+            <ComboBox x:Name="ComboBoxCourseNumber" MaxDropDownHeight="200" SelectionChanged="ComboBoxCourseNumber_SelectionChanged" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" SelectedIndex="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="35" Width="86" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,472,0">
             </ComboBox>
             <ScrollViewer Height="75" Width="550" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalScrollBarVisibility="Auto" Margin="75,190,0,0">
                 <TextBox x:Name="ProblemDescription" MaxLength="450" Padding="8,8,8,8" TextWrapping="Wrap" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
@@ -50,18 +50,17 @@
                     </Border>
                 </Label.ToolTip>
             </Label>
-            <ComboBox Height="35" Width="250" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,406,0,0">
-                <ComboBoxItem Height="0" Content="(Official Tutors)"></ComboBoxItem>
+            <ComboBox x:Name="ComboBoxOrgName" MaxDropDownHeight="150" Height="35" Width="250" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,406,0,0">
             </ComboBox>
-            <ScrollViewer Height="111" Width="250" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,450,0,0">
-                <StackPanel Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
+            <ScrollViewer Height="115" Width="250" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,450,0,0">
+                <StackPanel x:Name="StackPanelOrganization" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
             </ScrollViewer>
             <Label x:Name="labelDuration" Content="Sticker Deadline:" Height="36" FontSize="20"  Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,311,0,0" Width="166"/>
             <DatePicker x:Name="DatePickerSticker" Height="30" Width="135"  BorderThickness="0,0,0,0" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="481,315,0,0"></DatePicker>
-            <Button Height="35" Width="70" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="305,406,0,0" Content="Add" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF11850A" />
-            <ComboBox x:Name="comboBoxHour" SelectedIndex="0" HorizontalAlignment="Left" Margin="224,315,0,0" VerticalAlignment="Top" Width="62" Height="30"/>
-            <ComboBox x:Name="comboBoxMinute" SelectedIndex="0" HorizontalAlignment="Left" Margin="325,315,0,0" VerticalAlignment="Top" Width="59" Height="30"/>
-            <ComboBox x:Name="comboBoxAMPM" SelectedIndex="0" HorizontalAlignment="Left" Margin="398,315,0,0" VerticalAlignment="Top" Width="68" Height="30"/>
+            <Button x:Name="ButtonAddOrganization" Click="ButtonAddOrganization_Click" Height="35" Width="70" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="305,406,0,0" Content="Add" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF11850A" />
+            <ComboBox x:Name="comboBoxHour" MaxDropDownHeight="200" SelectedIndex="0" HorizontalAlignment="Left" Margin="224,315,0,0" VerticalAlignment="Top" Width="62" Height="30"/>
+            <ComboBox x:Name="comboBoxMinute" MaxDropDownHeight="125" SelectedIndex="0" HorizontalAlignment="Left" Margin="325,315,0,0" VerticalAlignment="Top" Width="59" Height="30"/>
+            <ComboBox x:Name="comboBoxAMPM" MaxDropDownHeight="75" SelectedIndex="0" HorizontalAlignment="Left" Margin="398,315,0,0" VerticalAlignment="Top" Width="68" Height="30"/>
             <Label x:Name="labelDurationColon" Content=":" Height="36" FontSize="20"  Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="291,311,0,0" Width="29"/>
         </Grid>
     </Grid>
