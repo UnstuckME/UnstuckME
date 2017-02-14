@@ -24,7 +24,7 @@ namespace UnstuckMEInterfaces
 	/// <summary>
 	/// Implement any Operation Contracts from IUnstuckMEService.cs in this file.
 	/// </summary>
-	public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer
+	public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
 	{
 		public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 		public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
@@ -985,5 +985,10 @@ namespace UnstuckMEInterfaces
 
             return file;
 	    }
-	}
+
+        public void HelloWorld()
+        {
+            Console.WriteLine("Hello World");
+        }
+    }
 }

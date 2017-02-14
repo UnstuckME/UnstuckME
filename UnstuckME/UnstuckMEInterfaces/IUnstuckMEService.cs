@@ -164,4 +164,11 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		File UploadDocument();
 	}
+
+    [ServiceContract(CallbackContract = typeof(IFileStream))]
+    public interface IUnstuckMEFileStream
+    {
+        [OperationContract]
+        void HelloWorld();
+    }
 }
