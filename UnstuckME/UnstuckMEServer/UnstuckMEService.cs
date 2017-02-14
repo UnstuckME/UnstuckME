@@ -977,6 +977,13 @@ namespace UnstuckMEInterfaces
 			return true;
 		}
 
+	    public File UploadDocument()
+	    {
+	        File file = new File();
+	        file.Content = System.IO.File.ReadAllBytes(@"C:\Data\Introduction to WCF.ppt");
+	        file.Name = "Introduction to WCF.ppt";
 
+            return file;
+	    }
 	}
 }

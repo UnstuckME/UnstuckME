@@ -148,11 +148,11 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int AdminCreateMentoringOrganization(string organizationName);
 
-        [OperationContract]
-        int AdminCreateClass(string courseName, string courseCode, int courseNumber);
+		[OperationContract]
+		int AdminCreateClass(string courseName, string courseCode, int courseNumber);
 
 
-        [OperationContract]
+		[OperationContract]
 		int AdminDeleteClass(int classID);
 
 		[OperationContract]
@@ -160,5 +160,8 @@ namespace UnstuckMEInterfaces
 
 		[OperationContract]
 		int AdminDeleteReport(int reportID);
+
+		[OperationContract]
+		File UploadDocument();
 	}
 }
