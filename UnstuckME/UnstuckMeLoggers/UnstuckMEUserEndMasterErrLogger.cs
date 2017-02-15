@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace UnstuckMeLoggers
 {
+    
     public enum ERR_TYPES
     {
+        // if you add one of these please add it in the switch statement to be handled
         USER_GUI_LOGIN,
         USER_GUI_LOGOUT,
         USER_SERVER_CONNECTION_ERROR,
@@ -33,13 +35,13 @@ namespace UnstuckMeLoggers
             return _instance;
         }
 
-        public void WriteError(ERR_TYPES err_type, string err)
+        public void WriteError(ERR_TYPES err_type, string err, string additionalInfo = null)
         {
             if (err != null)
             {
                 errorDesc = err;
             }
-            AddErrorsToList(err_type, err);
+            AddErrorsToList(err_type, err, additionalInfo);
             if (ErrorsList.Count > 10)
             {
                 outputErrors();
@@ -89,7 +91,7 @@ namespace UnstuckMeLoggers
 
             }
         }
-        private void AddErrorsToList(ERR_TYPES errType, string errMsg)
+        private void AddErrorsToList(ERR_TYPES errType, string errMsg, string additionalInfo = null)
         {
             string errTypeStartMark = "<UserServerConnectionError>";
             string errTypeEndMark = "<UserServerConnectionError/>";
@@ -99,22 +101,22 @@ namespace UnstuckMeLoggers
                     // write to the master log file
                     errTypeStartMark = "<UserServerConnectionError>";
                     errTypeEndMark = "<UserServerConnectionError/>";
-                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString()));                    
+                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString(), additionalInfo));                    
                     break;
                 case (ERR_TYPES.USER_GUI_INTERACTION_ERROR):
                     errTypeStartMark = "<UserGUIInteractionError>";
                     errTypeEndMark = "<UserGUIInteractionError/>";
-                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString()));
+                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString(), additionalInfo));
                     break;
                 case (ERR_TYPES.USER_GUI_LOGIN):
                     errTypeStartMark = "<UserGUILogin>";
                     errTypeEndMark = "<UserGUILogin/>";
-                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString()));
+                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString(), additionalInfo));
                     break;
                 case (ERR_TYPES.USER_GUI_LOGOUT):
                     errTypeStartMark = "<UserGUILogOut>";
                     errTypeEndMark = "<UserGUILogOut/>";
-                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString()));
+                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString(), additionalInfo));
                     break;
                 default:
                     break;

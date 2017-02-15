@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErrContainer.cs" />
+    <Compile Include="ErrContainerServer.cs" />
+    <Compile Include="UnstuckMEServerEndMasterErrLogger.cs" />
     <Compile Include="UnstuckMEUserEndMasterErrLogger.cs" />
     <Compile Include="UnstuckMEUserEndServerErrLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

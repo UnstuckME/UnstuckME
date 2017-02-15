@@ -93,6 +93,7 @@ namespace UnstuckMEUserGUI
             }
             catch(Exception ex)
             {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
                 _labelInvalidLogin.Content = ex.Message;
                 passwordBox.Password = string.Empty;
                 _labelInvalidLogin.Visibility = Visibility.Visible;
@@ -115,20 +116,22 @@ namespace UnstuckMEUserGUI
                         this.Close();
                     }
                 }
-                catch (Exception)
+                catch (Exception exp)
                 {
                     //MessageBox.Show("Please check that you entered the correct credentials.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     isValid = false;
                     _labelInvalidLogin.Visibility = Visibility.Visible;
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
                     try
                     {
                         _channelFactory.Abort();
                         _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
                         Server = _channelFactory.CreateChannel();
                     }
-                    catch (Exception)
+                    catch (Exception exp2)
                     {
                         MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp2.Message);
                         this.Close();
                     }
                 }

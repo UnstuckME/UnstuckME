@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
@@ -40,6 +41,7 @@ namespace UnstuckMEUserGUI
 
             Server = inServer;
             User = inUser;
+            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, User.EmailAddress);
         }
 
         async private void Window_ContentRendered(object sender, EventArgs e)
@@ -274,7 +276,7 @@ namespace UnstuckMEUserGUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, User.EmailAddress);
         }
     }
 
