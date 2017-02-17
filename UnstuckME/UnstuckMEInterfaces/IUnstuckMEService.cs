@@ -21,7 +21,7 @@ namespace UnstuckMEInterfaces
         int CreateChat(int userID);
 
         [OperationContract]
-        UserInfo GetUserInfo(int userID);
+        UserInfo GetUserInfo(Nullable<int> userID, string emailAddress);
 
         [OperationContract]
         int GetUserID(string emailAddress);
@@ -58,21 +58,21 @@ namespace UnstuckMEInterfaces
         void DeleteUserAccount(int userID);
 
         [OperationContract]
-        List<UnstuckMEReview> GetUserStudentReviews (int userID);
+		List<UnstuckMEReview> GetUserStudentReviews(int userID, short firstrow = 0, short lastrow = 50, float minstarrank = 0);
 
-        [OperationContract]
-        List<UnstuckMEReview> GetUserTutorReviews(int userID);
+		[OperationContract]
+		List<UnstuckMEReview> GetUserTutorReviews(int userID, short firstrow = 0, short lastrow = 50, float minstarrank = 0);
 
-        [OperationContract]
-        List<UnstuckMESticker> GetUserSubmittedStickers(int userID);
+		[OperationContract]
+		List<UnstuckMESticker> GetUserSubmittedStickers(int userID, short firstrow = 0, short lastrow = 0, float minstarrank = 0, Nullable<int> classID = null);
 
-        [OperationContract]
-        List<UnstuckMESticker> GetUserTutoredStickers(int userID);
+		[OperationContract]
+		List<UnstuckMESticker> GetUserTutoredStickers(int userID, short firstrow = 0, short lastrow = 0, float minstarrank = 0, Nullable<int> classID = null);
 
-        [OperationContract]
-        List<UnstuckMESticker> GetAllStickers();
+		[OperationContract]
+		List<UnstuckMESticker> GetActiveStickers(float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
 
-        [OperationContract]
+		[OperationContract]
         void AddUserToTutoringOrganization(int userID, int organizationID);
 
         [OperationContract]
@@ -94,10 +94,10 @@ namespace UnstuckMEInterfaces
         string GetCourseNameByCodeAndNumber(string code, string number);
 
         [OperationContract]
-        List<string> GetCourseNumbersByCourseCode(String CourseCode);
+        List<string> GetCourseNumbersByCourseCode(string CourseCode);
 
-        [OperationContract]
-        void InsertProfilePicture(int userID, byte[] image);
+        //[OperationContract]
+        //void InsertProfilePicture(int userID, byte[] image);
 
         [OperationContract]
         UserClass GetCourseCode_Name_NumberByID(int ClassID);
@@ -121,7 +121,7 @@ namespace UnstuckMEInterfaces
         int DeleteReportByUser(int userID, int reportID);
 
         [OperationContract]
-        int InsertUserInToChat(int userID, int chatID);
+        int InsertUserIntoChat(int userID, int chatID);
 
         [OperationContract]
         List<UnstuckMEChat> GetUserChats(int userID, string userName);
@@ -146,7 +146,7 @@ namespace UnstuckMEInterfaces
         void AdminLogMessage(string message);
 
         [OperationContract]
-        List<string> AdminGetAllOnlineUsers();
+        List<UserInfo> AdminGetAllOnlineUsers();
 
         [OperationContract]
         void AdminServerShuttingDown();
@@ -156,7 +156,6 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         int AdminCreateClass(string courseName, string courseCode, int courseNumber);
-
 
         [OperationContract]
         int AdminDeleteClass(int classID);

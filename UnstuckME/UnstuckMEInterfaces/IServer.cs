@@ -9,12 +9,13 @@ namespace UnstuckMEInterfaces
 {
     public interface IServer
     {
+		[OperationContract]
+		void GetMessage();
 
-        [OperationContract]
+		[OperationContract]
         bool isOnline();
 
         [OperationContract]
-        void GetUpdate(int value, string emailAddress);
-
+        void GetUpdate(int value, UnstuckME_Classes.UserInfo user);
     }
 }

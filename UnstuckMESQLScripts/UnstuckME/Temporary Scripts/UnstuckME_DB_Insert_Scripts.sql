@@ -240,6 +240,8 @@ AS
     BEGIN
         IF (EXISTS(Select StudentID, ClassID from Sticker where StudentID = @StudentID AND ClassID = @ClassID))
 			RETURN 1;
+		ELSE IF (select count(*) from (select StudentID from Sticker where StudentID = @StudentID and DATEDIFF(second, GETDATE(), Timeout) > 0) as ActiveStickers) > 3
+			RETURN 1;
         ELSE BEGIN
             INSERT INTO Sticker
 			VALUES(@ProblemDescription, @ClassID, DEFAULT, @StudentID, DEFAULT, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))

@@ -154,11 +154,29 @@ namespace UnstuckMEServerGUI
             }
         }
 
-        public void AddUser(string emailAddress)
+        public void AddUser(string emailAddress, int privileges)
         {
-            TextBlock newUser = new TextBlock();
-            newUser.Text = emailAddress;
-            newUser.FontSize = 14;
+			string priv = string.Empty;
+
+			switch (privileges)
+			{
+				case '1':
+					priv = "U"; //User
+					break;
+				case '2':
+					priv = "M"; //Moderator
+					break;
+				case '3':
+					priv = "A"; //Administrator
+					break;
+				default:
+					//broadcast to disabled user they can't log in
+					break;
+			}
+
+			TextBlock newUser = new TextBlock();
+			newUser.Text = priv + ' ' + emailAddress;
+			newUser.FontSize = 14;
             StackPanelOnlineUsers.Children.Add(newUser);
             labelOnlineUsers.Content = "Online Users: " + StackPanelOnlineUsers.Children.Count;
         }
@@ -181,11 +199,11 @@ namespace UnstuckMEServerGUI
             Server = _channelFactory.CreateChannel();
             Server.RegisterServerAdmin(Admin);
 
-            List<string> userList = Server.AdminGetAllOnlineUsers();
+            List<UserInfo> userList = Server.AdminGetAllOnlineUsers();
 
-            foreach (string email in userList)
+            foreach (var user in userList)
             {
-                AddUser(email);
+                AddUser(user.EmailAddress, user.Privileges);
             }
         }
 

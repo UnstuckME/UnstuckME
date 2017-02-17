@@ -205,6 +205,8 @@ CREATE INDEX StickerClassIDIndex on Sticker (ClassID);
 CREATE INDEX StickerStudentIDIndex on Sticker (StudentID);
 CREATE INDEX StickerTutorIDIndex on Sticker (TutorID);
 CREATE INDEX UserProfileEmailAddress on UserProfile (EmailAddress);
+CREATE INDEX UserProfileAverageStudentStarRank on UserProfile (AverageStudentRank);
+CREATE INDEX UserProfileAverageTutorStarRank on UserProfile (AverageTutorRank);
 GO
 
 /*******************************************************************************

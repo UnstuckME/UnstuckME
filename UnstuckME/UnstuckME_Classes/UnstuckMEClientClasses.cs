@@ -18,10 +18,10 @@ namespace UnstuckME_Classes
         public int TotalTutorReviews { get; set; }
         public int TotalStudentReviews { get; set; }
         public int Privileges { get; set; }
-        public float AvgTutorRank { get; set; }
-        public float AvgStudentRank { get; set; }
         public byte[] UserProfilePictureBytes { get; set; }
-    }
+		public string UserPassword { get; set; }
+		public string Salt { get; set; }
+	}
 
     public class UserClass
     {

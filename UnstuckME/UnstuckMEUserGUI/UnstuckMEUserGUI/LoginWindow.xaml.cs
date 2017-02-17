@@ -272,7 +272,7 @@ namespace UnstuckMEUserGUI
                 byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
                 try
                 { 
-                    Server.InsertProfilePicture(userID, avatar);
+                    Server.SetProfilePicture(userID, avatar);
                 }
                 catch (Exception exp)
                 {

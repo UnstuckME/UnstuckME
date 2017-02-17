@@ -12,23 +12,28 @@ namespace UnstuckMEServerGUI
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ServerCallback : IServer
     {
-        public bool isOnline()
+		public void GetMessage()
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool isOnline()
         {
             return true;
         }
 
-        public void GetUpdate(int value , string emailAddress)
+        public void GetUpdate(int value, UnstuckME_Classes.UserInfo user)
         {
             switch(value)
             {
                 case 0:
                     {
-                        ((ServerRunning)Application.Current.MainWindow).AddUser(emailAddress);
+                        ((ServerRunning)Application.Current.MainWindow).AddUser(user.EmailAddress, user.Privileges);
                         break;
                     }
                 case 1:
                     {
-                        ((ServerRunning)Application.Current.MainWindow).RemoveUser(emailAddress);
+                        ((ServerRunning)Application.Current.MainWindow).RemoveUser(user.EmailAddress);
                         break;
                     }
             }

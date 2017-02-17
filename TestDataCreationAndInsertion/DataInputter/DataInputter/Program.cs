@@ -42,7 +42,6 @@ namespace DataInputter
         public String CourseName;
         public String Code;
         public String Number;
-        public String Term;
     }
 
     public class DataHolderStickers
@@ -201,7 +200,6 @@ namespace DataInputter
                         cont.CourseName = values[1];
                         cont.Code = values[2];
                         cont.Number = values[3];
-                        cont.Term = values[4];
                         
                         listA.Add(cont);
                     }
@@ -218,9 +216,7 @@ namespace DataInputter
                     cmd.Connection = connection;
                     cmd.Parameters.AddWithValue("@CourseName", item.CourseName);
                     cmd.Parameters.AddWithValue("@CourseCode", item.Code);
-                    cmd.Parameters.AddWithValue("@CourseNumber", Convert.ToInt16(item.Number));
-                    cmd.Parameters.AddWithValue("@TermOffered", 2);
-                    
+                    cmd.Parameters.AddWithValue("@CourseNumber", Convert.ToInt16(item.Number));                    
                     
                     cmd.ExecuteNonQuery();
                     

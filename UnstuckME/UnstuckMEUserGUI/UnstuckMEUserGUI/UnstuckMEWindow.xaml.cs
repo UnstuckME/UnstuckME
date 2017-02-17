@@ -101,8 +101,8 @@ namespace UnstuckMEUserGUI
                 _pages.UserProfilePage.FirstName.Text = User.FirstName;
                 _pages.UserProfilePage.LastName.Text = User.LastName;
                 _pages.UserProfilePage.EmailAddress.Text = User.EmailAddress;
-                _pages.UserProfilePage.SetStudentRating(User.AvgStudentRank);
-                _pages.UserProfilePage.SetTutorRating(User.AvgTutorRank);
+                _pages.UserProfilePage.SetStudentRating(User.AverageStudentRank);
+                _pages.UserProfilePage.SetTutorRating(User.AverageTutorRank);
             });
         }
 
