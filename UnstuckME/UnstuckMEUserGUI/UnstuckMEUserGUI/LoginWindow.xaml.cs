@@ -118,6 +118,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
+                    //
                     //MessageBox.Show("Please check that you entered the correct credentials.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     isValid = false;
                     _labelInvalidLogin.Visibility = Visibility.Visible;
