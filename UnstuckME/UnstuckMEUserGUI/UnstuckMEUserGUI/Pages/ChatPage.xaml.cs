@@ -39,6 +39,7 @@ namespace UnstuckMEUserGUI
             for (int i = 0; i < 10; i++)
             {
                 StackPanelConversations.Children.Add(new Conversation());
+                StackPanelAddContacts.Children.Add(new ContactAddToConversation());
             }
         }
 
@@ -110,18 +111,23 @@ namespace UnstuckMEUserGUI
 
         private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
         {
-            UnstuckMEChat temp = new UnstuckMEChat();
-            try
-            {
-                temp.ChatID = Server.CreateChat(User.UserID);
-                if (temp.ChatID == -1)
-                    throw new Exception("Chat Creation Failed!");/////////////////////////////////////////////////////THIS NEEDS TO BE CHANGED LATER.
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            Server.InsertUserInToChat(12 /*Default Ryan*/, temp.ChatID);
+            ButtonCreateChat.Visibility = Visibility.Hidden;
+            ButtonCreateChat.IsEnabled = false;
+            GridConversations.Visibility = Visibility.Hidden;
+            GridConversations.IsEnabled = false;
+            GridNewConversation.Visibility = Visibility.Visible;
+            GridNewConversation.IsEnabled = true;
+        }
+
+        private void ButtonAddUserDone_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonCreateChat.Visibility = Visibility.Visible;
+            ButtonCreateChat.IsEnabled = true;
+            GridConversations.Visibility = Visibility.Visible;
+            GridConversations.IsEnabled = true;
+            GridNewConversation.Visibility = Visibility.Hidden;
+            GridNewConversation.IsEnabled = false;
+            TextBoxManualUserNameSearch.Text = string.Empty;
         }
     }
 }

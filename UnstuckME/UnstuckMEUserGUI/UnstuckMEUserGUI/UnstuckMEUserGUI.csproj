@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\Contacts\ContactAddToConversation.xaml.cs">
+      <DependentUpon>ContactAddToConversation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Chat\Conversation.xaml.cs">
       <DependentUpon>Conversation.xaml</DependentUpon>
     </Compile>
@@ -187,6 +190,10 @@
     <Compile Include="Pages\UserProfilePage.xaml.cs">
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="UserControls\Contacts\ContactAddToConversation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Chat\Conversation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -448,6 +455,10 @@
     <Resource Include="Resources\Group\GroupBlue.png" />
     <Resource Include="Resources\Group\GroupRed.png" />
     <Resource Include="Resources\Group\GroupWhite.png" />
+    <Resource Include="Resources\Speech\SpeechBlack.png" />
+    <Resource Include="Resources\Speech\SpeechBlue.png" />
+    <Resource Include="Resources\Speech\SpeechRed.png" />
+    <Resource Include="Resources\Speech\SpeechWhite.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
