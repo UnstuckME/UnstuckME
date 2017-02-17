@@ -1,7 +1,7 @@
 /**************************************************************************
 * UnstuckME Common Queries
 **************************************************************************/
-use UnstuckME_DB
+use UnstuckME_OSU_DB
 go
 
 /**************************************************************************
@@ -55,14 +55,30 @@ if object_id('GetAllUsersInAnOrganization') is not null
 --	drop procedure GetAllActiveStickers;
 --if object_id('PullActiveClassSpecificStickers') is not null
 --	drop procedure PullActiveClassSpecificStickers;
-if object_id('GetActiveStickers') is not null
-	drop procedure GetActiveStickers;
-if object_id('GetActiveStickersWithOrganization') is not null
-	drop procedure GetActiveStickersWithOrganization;
-if object_id('GetResolvedStickers') is not null
-	drop procedure GetResolvedStickers;
-if object_id('GetTimedOutStickers') is not null
-	drop procedure GetTimedOutStickers;
+if object_id('GetActiveStickers_ClassASC') is not null
+	drop procedure GetActiveStickers_ClassASC;
+if object_id('GetActiveStickers_ClassDESC') is not null
+	drop procedure GetActiveStickers_ClassDESC;
+
+if object_id('GetActiveStickersWithOrganization_OrgClassASC') is not null
+	drop procedure GetActiveStickersWithOrganization_OrgClassASC;
+if object_id('GetActiveStickersWithOrganization_OrgDESC') is not null
+	drop procedure GetActiveStickersWithOrganization_OrgDESC;
+if object_id('GetActiveStickersWithOrganization_ClassDESC') is not null
+	drop procedure GetActiveStickersWithOrganization_ClassDESC;
+if object_id('GetActiveStickersWithOrganization_OrgClassDESC') is not null
+	drop procedure GetActiveStickersWithOrganization_OrgClassDESC;
+
+if object_id('GetResolvedStickers_ClassASC') is not null
+	drop procedure GetResolvedStickers_ClassASC;
+if object_id('GetResolvedStickers_ClassDESC') is not null
+	drop procedure GetResolvedStickers_ClassDESC;
+
+if object_id('GetTimedOutStickers_ClassASC') is not null
+	drop procedure GetTimedOutStickers_ClassASC;
+if object_id('GetTimedOutStickers_ClassDESC') is not null
+	drop procedure GetTimedOutStickers_ClassDESC;
+
 if object_id('GetUsersOverallStarRank') is not null
 	drop procedure GetUsersOverallStarRank;
 if object_id('GetUserAvgStudentStarRank') is not null
@@ -79,10 +95,17 @@ if object_id('GetUserPasswordAndSalt') is not null
 	drop procedure GetUserPasswordAndSalt;
 if object_id('GetUserFriends') is not null
 	drop procedure GetUserFriends;
-if object_id('GetUserStudentReviews') is not null
-	drop procedure GetUserStudentReviews;
-if object_id('GetUserTutorReviews') is not null
-	drop procedure GetUserTutorReviews;
+
+if object_id('GetUserStudentReviews_RankASC') is not null
+	drop procedure GetUserStudentReviews_RankASC;
+if object_id('GetUserStudentReviews_RankDESC') is not null
+	drop procedure GetUserStudentReviews_RankDESC;
+
+if object_id('GetUserTutorReviews_RankASC') is not null
+	drop procedure GetUserTutorReviews_RankASC;
+if object_id('GetUserTutorReviews_RankDESC') is not null
+	drop procedure GetUserTutorReviews_RankDESC;
+
 if object_id('GetCourseCodes') is not null
 	drop procedure GetCourseCodes;
 if object_id('GetCourseIDByCodeAndNumber') is not null
@@ -91,12 +114,19 @@ if object_id('GetCourseNameByCodeAndNumber') is not null
 	drop procedure GetCourseNameByCodeAndNumber;
 if object_id('GetCourseNumberByCourseCode') is not null
 	drop procedure GetCourseNumberByCourseCode;
+
 if object_id('GetReportsSubmittedByUser') is not null
 	drop procedure GetReportsSubmittedByUser;
-if object_id('GetUserSubmittedStickers') is not null
-	drop procedure GetUserSubmittedStickers;
-if object_id('GetUserTutoredStickers') is not null
-	drop procedure GetUserTutoredStickers;
+
+if object_id('GetUserSubmittedStickers_ClassASC') is not null
+	drop procedure GetUserSubmittedStickers_ClassASC;
+if object_id('GetUserSubmittedStickers_ClassDESC') is not null
+	drop procedure GetUserSubmittedStickers_ClassDESC;
+
+if object_id('GetUserTutoredStickers_ClassASC') is not null
+	drop procedure GetUserTutoredStickers_ClassASC;
+if object_id('GetUserTutoredStickers_ClassDESC') is not null
+	drop procedure GetUserTutoredStickers_ClassDESC;
 
 /**************************************************************************
 * Gets all Stickers for Admin
@@ -423,7 +453,7 @@ end;
 * specification is optional)
 **************************************************************************/
 go
-create proc GetActiveStickers
+create proc GetActiveStickers_ClassASC
 (	@starrank float = 0,
 	@startrow smallint = 0,
 	@endrow smallint = 50,
@@ -460,7 +490,44 @@ end;
 * specification is optional)
 **************************************************************************/
 go
-create proc GetActiveStickersWithOrganization
+create proc GetActiveStickers_ClassDESC
+(	@starrank float = 0,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@userid int = null,
+	@classid int = null
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @classid desc) as [Row],
+			DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, StudentID, TutorID,
+			CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
+		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+			join Classes				on Sticker.ClassID = Classes.ClassID
+		where UserProfile.UserID = case when @userid is not null
+											then @userid
+										else UserProfile.UserID
+								   end
+			and MinimumStarRanking >= case when @starrank <> 0
+												then @starrank
+										   else MinimumStarRanking
+									  end
+			and Classes.ClassID = case when @classid is not null
+											then @classid
+									   else Classes.ClassID
+								  end
+			and DATEDIFF(second, GETDATE(), [Timeout]) > 0
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
+/**************************************************************************
+* Pull active Stickers available with a certain star ranking and/or a
+* specific mentor organization (mentor specification, and user
+* specification is optional)
+**************************************************************************/
+go
+create proc GetActiveStickersWithOrganization_OrgClassASC
 (	@organization int,
 	@starrank float = 0,
 	@startrow smallint = 0,
@@ -495,11 +562,131 @@ begin
 end;
 
 /**************************************************************************
+* Pull active Stickers available with a certain star ranking and/or a
+* specific mentor organization (mentor specification, and user
+* specification is optional)
+**************************************************************************/
+go
+create proc GetActiveStickersWithOrganization_OrgDESC
+(	@organization int,
+	@starrank float = 0,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@userid int = null,
+	@classid int = null
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @organization desc, @classid asc) as [Row],
+			DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, StudentID, TutorID,
+			CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
+		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+			join Classes				on Sticker.ClassID = Classes.ClassID
+			join StickerToMentor		on Sticker.StickerID = StickerToMentor.StickerID
+		where UserProfile.UserID = case when @userid is not null
+											then @userid
+										else UserProfile.UserID
+								   end
+			and MinimumStarRanking >= case when @starrank <> 0
+												then @starrank
+										   else MinimumStarRanking
+									  end
+			and Classes.ClassID = case when @classid is not null
+										then @classid
+									   else Classes.ClassID
+							   end
+			and MentorID in (0, @organization)
+			and DATEDIFF(second, GETDATE(), [Timeout]) > 0
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
+/**************************************************************************
+* Pull active Stickers available with a certain star ranking and/or a
+* specific mentor organization (mentor specification, and user
+* specification is optional)
+**************************************************************************/
+go
+create proc GetActiveStickersWithOrganization_ClassDESC
+(	@organization int,
+	@starrank float = 0,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@userid int = null,
+	@classid int = null
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @organization asc, @classid desc) as [Row],
+			DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, StudentID, TutorID,
+			CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
+		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+			join Classes				on Sticker.ClassID = Classes.ClassID
+			join StickerToMentor		on Sticker.StickerID = StickerToMentor.StickerID
+		where UserProfile.UserID = case when @userid is not null
+											then @userid
+										else UserProfile.UserID
+								   end
+			and MinimumStarRanking >= case when @starrank <> 0
+												then @starrank
+										   else MinimumStarRanking
+									  end
+			and Classes.ClassID = case when @classid is not null
+										then @classid
+									   else Classes.ClassID
+							   end
+			and MentorID in (0, @organization)
+			and DATEDIFF(second, GETDATE(), [Timeout]) > 0
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
+/**************************************************************************
+* Pull active Stickers available with a certain star ranking and/or a
+* specific mentor organization (mentor specification, and user
+* specification is optional)
+**************************************************************************/
+go
+create proc GetActiveStickersWithOrganization_OrgClassDESC
+(	@organization int,
+	@starrank float = 0,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@userid int = null,
+	@classid int = null
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @organization desc, @classid desc) as [Row],
+			DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, StudentID, TutorID,
+			CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
+		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+			join Classes				on Sticker.ClassID = Classes.ClassID
+			join StickerToMentor		on Sticker.StickerID = StickerToMentor.StickerID
+		where UserProfile.UserID = case when @userid is not null
+											then @userid
+										else UserProfile.UserID
+								   end
+			and MinimumStarRanking >= case when @starrank <> 0
+												then @starrank
+										   else MinimumStarRanking
+									  end
+			and Classes.ClassID = case when @classid is not null
+										then @classid
+									   else Classes.ClassID
+							   end
+			and MentorID in (0, @organization)
+			and DATEDIFF(second, GETDATE(), [Timeout]) > 0
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
+/**************************************************************************
 * Pull resolved Stickers: filterable by user, which stickers in table,
 * submit time, and class
 **************************************************************************/
 go
-create proc GetResolvedStickers
+create proc GetResolvedStickers_ClassASC
 (	@starrank float = 0,
 	@startrow smallint = 0,
 	@endrow smallint = 50,
@@ -534,11 +721,50 @@ begin
 end;
 
 /**************************************************************************
+* Pull resolved Stickers: filterable by user, which stickers in table,
+* submit time, and class
+**************************************************************************/
+go
+create proc GetResolvedStickers_ClassDESC
+(	@starrank float = 0,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@userid int = null,
+	@classid int = null
+) as
+begin
+	select * from (
+		select distinct ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @classid desc) as [Row],
+			DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, StudentID, TutorID,
+			CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
+		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+			join Classes				on Sticker.ClassID = Classes.ClassID
+			join Review					on Review.StickerID = Sticker.StickerID
+			join StickerToMentor		on Sticker.StickerID = StickerToMentor.StickerID
+		where datediff(minute, getdate(), [Timeout]) < 0
+			and (select count(*) from Review where Review.StickerID = Sticker.StickerID) = 2
+			and UserID = case when @userid is not null
+								then @userid
+							  else UserID
+						 end
+			and MinimumStarRanking >= case when @starrank <> 0
+												then @starrank
+										   else MinimumStarRanking
+									  end
+			and Classes.ClassID = case when @classid is not null
+										then @classid
+									   else Classes.ClassID
+								  end
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
+/**************************************************************************
 * Pull timed out Stickers: filterable by user, which stickers in table,
 * submit time, and class
 **************************************************************************/
 go
-create proc GetTimedOutStickers
+create proc GetTimedOutStickers_ClassASC
 (	@starrank float = 0,
 	@startrow smallint = 0,
 	@endrow smallint = 50,
@@ -571,6 +797,46 @@ begin
 	) as Stickers
 	where [Row] between @startrow and @endrow;
 end;
+
+/**************************************************************************
+* Pull timed out Stickers: filterable by user, which stickers in table,
+* submit time, and class
+**************************************************************************/
+go
+create proc GetTimedOutStickers_ClassDESC
+(	@starrank float = 0,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@userid int = null,
+	@classid int = null
+) as
+begin
+	select * from (
+		select distinct ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @classid desc) as [Row],
+			DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, StudentID, TutorID,
+			CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
+		from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
+			join Classes				on Sticker.ClassID = Classes.ClassID
+			join Review					on Review.StickerID = Sticker.StickerID
+			join StickerToMentor		on Sticker.StickerID = StickerToMentor.StickerID
+		where datediff(minute, getdate(), [Timeout]) < 0
+			and (select count(*) from Review where Review.StickerID = Sticker.StickerID) <> 2
+			and UserID = case when @userid is not null
+								then @userid
+							  else UserID
+						 end
+			and MinimumStarRanking >= case when @starrank <> 0
+												then @starrank
+										   else MinimumStarRanking
+									  end
+			and Classes.ClassID = case when @classid is not null
+										then @classid
+									   else Classes.ClassID
+								  end
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
 /**************************************************************************
 * Get all users with a specific overall avg star ranking
 **************************************************************************/
@@ -683,7 +949,7 @@ end;
 * Gets the reviews a student has submitted: filterable by star rank, 
 *************************************************************************/
 go
-create proc GetUserStudentReviews
+create proc GetUserStudentReviews_RankASC
 (	@userid int,
 	@startrow smallint = 0,
 	@endrow smallint = 50,
@@ -691,7 +957,31 @@ create proc GetUserStudentReviews
 ) as
 begin
 	select * from (
-		select ROW_NUMBER() over (order by StarRanking) as [Row], ReviewID,
+		select ROW_NUMBER() over (order by StarRanking asc) as [Row], ReviewID,
+			Review.StickerID, ReviewerID, StarRanking, Description--, ProblemDescription,
+			--ClassID, StudentID, TutorID, MinimumStarRanking, SubmitTime, [Timeout]
+		from Review join Sticker	on Review.StickerID = Sticker.StickerID
+		where Sticker.StudentID = @userID
+			and StarRanking = case when @starrank <> 0
+										then @starrank
+								   else StarRanking
+							  end
+	) as Reviews
+	where [Row] between @startrow and @endrow;
+end;
+/*************************************************************************
+* Gets the reviews a student has submitted: filterable by star rank, 
+*************************************************************************/
+go
+create proc GetUserStudentReviews_RankDESC
+(	@userid int,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@starrank float = 0
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by StarRanking desc) as [Row], ReviewID,
 			Review.StickerID, ReviewerID, StarRanking, Description--, ProblemDescription,
 			--ClassID, StudentID, TutorID, MinimumStarRanking, SubmitTime, [Timeout]
 		from Review join Sticker	on Review.StickerID = Sticker.StickerID
@@ -708,7 +998,7 @@ end;
 * Gets the reviews a tutor has submitted
 *************************************************************************/
 go
-create proc GetUserTutorReviews
+create proc GetUserTutorReviews_RankASC
 (	@userid int,
 	@startrow smallint = 0,
 	@endrow smallint = 50,
@@ -716,7 +1006,31 @@ create proc GetUserTutorReviews
 ) as
 begin
 	select * from (
-		select ROW_NUMBER() over (order by StarRanking) as [Row], ReviewID,
+		select ROW_NUMBER() over (order by StarRanking asc) as [Row], ReviewID,
+			Review.StickerID, ReviewerID, StarRanking, Description--, ProblemDescription,
+			--ClassID, StudentID, TutorID, MinimumStarRanking, SubmitTime, [Timeout]
+		from Review join Sticker	on Review.StickerID = Sticker.StickerID
+		where Sticker.TutorID = @userID and Review.ReviewerID = @userid
+			and StarRanking = case when @starrank <> 0
+										then @starrank
+								   else StarRanking
+							  end
+	) as Reviews
+	where [Row] between @startrow and @endrow;
+end;
+/*************************************************************************
+* Gets the reviews a tutor has submitted
+*************************************************************************/
+go
+create proc GetUserTutorReviews_RankDESC
+(	@userid int,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@starrank float = 0
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by StarRanking desc) as [Row], ReviewID,
 			Review.StickerID, ReviewerID, StarRanking, Description--, ProblemDescription,
 			--ClassID, StudentID, TutorID, MinimumStarRanking, SubmitTime, [Timeout]
 		from Review join Sticker	on Review.StickerID = Sticker.StickerID
@@ -795,7 +1109,7 @@ end;
 * Gets Stickers submitted by a user, active and resolved
 *************************************************************************/
 go
-create proc GetUserSubmittedStickers
+create proc GetUserSubmittedStickers_ClassASC
 (	@userID int,
 	@startrow smallint = 0,
 	@endrow smallint = 50,
@@ -820,10 +1134,38 @@ begin
 end;
 
 /*************************************************************************
+* Gets Stickers submitted by a user, active and resolved
+*************************************************************************/
+go
+create proc GetUserSubmittedStickers_ClassDESC
+(	@userID int,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@starrank float = 0,
+	@classID int = null
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @classID desc) as [Row], *
+		from Sticker
+		where Sticker.StudentID = @userID
+			and MinimumStarRanking = case when @starrank <> 0
+											then @starrank
+										  else MinimumStarRanking
+									 end
+			and ClassID = case when @classID is not null
+									then @classID
+							   else ClassID
+						  end
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
+/*************************************************************************
 * Gets the Stickers tutored by a user, active and resolved
 *************************************************************************/
 go
-create proc GetUserTutoredStickers
+create proc GetUserTutoredStickers_ClassASC
 (	@userID int,
 	@startrow smallint = 0,
 	@endrow smallint = 50,
@@ -833,6 +1175,34 @@ create proc GetUserTutoredStickers
 begin
 	select * from (
 		select ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @classID asc) as [Row], *
+		from Sticker
+		where Sticker.TutorID = @userID
+			and MinimumStarRanking = case when @starrank <> 0
+											then @starrank
+										  else MinimumStarRanking
+									 end
+			and ClassID = case when @classID is not null
+									then @classID
+							   else ClassID
+						  end
+	) as Stickers
+	where [Row] between @startrow and @endrow;
+end;
+
+/*************************************************************************
+* Gets the Stickers tutored by a user, active and resolved
+*************************************************************************/
+go
+create proc GetUserTutoredStickers_ClassDESC
+(	@userID int,
+	@startrow smallint = 0,
+	@endrow smallint = 50,
+	@starrank float = 0,
+	@classID int = null
+) as
+begin
+	select * from (
+		select ROW_NUMBER() over (order by [Timeout] asc, SubmitTime asc, @classID desc) as [Row], *
 		from Sticker
 		where Sticker.TutorID = @userID
 			and MinimumStarRanking = case when @starrank <> 0
