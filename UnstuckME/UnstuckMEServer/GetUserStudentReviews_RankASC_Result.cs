@@ -11,14 +11,13 @@ namespace UnstuckMEServer
 {
     using System;
     
-    public partial class AdminPullReportsForOptionalUser_Result
+    public partial class GetUserStudentReviews_RankASC_Result
     {
-        public string DisplayFName { get; set; }
-        public string DisplayLName { get; set; }
-        public int UserID { get; set; }
+        public Nullable<long> Row { get; set; }
         public int ReviewID { get; set; }
-        public Nullable<double> ReviewStarRanking { get; set; }
-        public string ReviewDescription { get; set; }
-        public string ReportDescription { get; set; }
+        public int StickerID { get; set; }
+        public int ReviewerID { get; set; }
+        public Nullable<double> StarRanking { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -7,14 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServerGUI
+namespace UnstuckMEServer
 {
     using System;
     
-    public partial class GetAllResolvedStickers_Result
+    public partial class GetActiveStickers_ClassASC_Result
     {
+        public Nullable<long> Row { get; set; }
         public string DisplayFName { get; set; }
         public string DisplayLName { get; set; }
+        public int StickerID { get; set; }
+        public int ClassID { get; set; }
+        public int StudentID { get; set; }
+        public Nullable<int> TutorID { get; set; }
         public string CourseCode { get; set; }
         public short CourseNumber { get; set; }
         public string CourseName { get; set; }

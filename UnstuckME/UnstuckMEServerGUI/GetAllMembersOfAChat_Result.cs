@@ -11,18 +11,15 @@ namespace UnstuckMEServerGUI
 {
     using System;
     
-    public partial class GetActiveStickers_Result
+    public partial class GetAllMembersOfAChat_Result
     {
-        public Nullable<long> Row { get; set; }
+        public int UserID { get; set; }
         public string DisplayFName { get; set; }
         public string DisplayLName { get; set; }
-        public string CourseCode { get; set; }
-        public short CourseNumber { get; set; }
-        public string CourseName { get; set; }
-        public string ProblemDescription { get; set; }
-        public Nullable<double> MinimumStarRanking { get; set; }
-        public System.DateTime SubmitTime { get; set; }
-        public System.DateTime Timeout { get; set; }
-        public string OrganizationName { get; set; }
+        public string EmailAddress { get; set; }
+        public double AverageStudentRank { get; set; }
+        public double AverageTutorRank { get; set; }
+        public int TotalStudentReviews { get; set; }
+        public int TotalTutorReviews { get; set; }
     }
 }

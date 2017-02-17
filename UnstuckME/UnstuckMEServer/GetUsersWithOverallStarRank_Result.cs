@@ -13,7 +13,8 @@ namespace UnstuckMEServer
     
     public partial class GetUsersWithOverallStarRank_Result
     {
-        public string User { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
         public string EmailAddress { get; set; }
         public Nullable<double> AvgStarRank { get; set; }
     }

@@ -11,14 +11,10 @@ namespace UnstuckMEServerGUI
 {
     using System;
     
-    public partial class GetUserTutorReviews_Result
+    public partial class GetUserSubmittedStickers_ClassDESC_Result
     {
-        public int ReviewID { get; set; }
+        public Nullable<long> Row { get; set; }
         public int StickerID { get; set; }
-        public int ReviewerID { get; set; }
-        public Nullable<double> StarRanking { get; set; }
-        public string Description { get; set; }
-        public int StickerID1 { get; set; }
         public string ProblemDescription { get; set; }
         public int ClassID { get; set; }
         public Nullable<int> ChatID { get; set; }

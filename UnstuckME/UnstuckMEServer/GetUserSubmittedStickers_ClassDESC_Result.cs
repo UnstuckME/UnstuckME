@@ -7,12 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServerGUI
+namespace UnstuckMEServer
 {
     using System;
     
-    public partial class GetUserTutoredStickers_Result
+    public partial class GetUserSubmittedStickers_ClassDESC_Result
     {
+        public Nullable<long> Row { get; set; }
         public int StickerID { get; set; }
         public string ProblemDescription { get; set; }
         public int ClassID { get; set; }

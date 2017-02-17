@@ -7,23 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServer
+namespace UnstuckMEServerGUI
 {
     using System;
     
-    public partial class GetUserStudentReviews_Result
+    public partial class GetActiveStickers_ClassDESC_Result
     {
-        public int ReviewID { get; set; }
+        public Nullable<long> Row { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
         public int StickerID { get; set; }
-        public int ReviewerID { get; set; }
-        public Nullable<double> StarRanking { get; set; }
-        public string Description { get; set; }
-        public int StickerID1 { get; set; }
-        public string ProblemDescription { get; set; }
         public int ClassID { get; set; }
-        public Nullable<int> ChatID { get; set; }
         public int StudentID { get; set; }
         public Nullable<int> TutorID { get; set; }
+        public string CourseCode { get; set; }
+        public short CourseNumber { get; set; }
+        public string CourseName { get; set; }
+        public string ProblemDescription { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
         public System.DateTime SubmitTime { get; set; }
         public System.DateTime Timeout { get; set; }

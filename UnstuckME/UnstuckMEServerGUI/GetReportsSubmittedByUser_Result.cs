@@ -7,18 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServer
+namespace UnstuckMEServerGUI
 {
     using System;
     
-    public partial class AdminPullReportsForOptionalUser_Result
+    public partial class GetReportsSubmittedByUser_Result
     {
-        public string DisplayFName { get; set; }
-        public string DisplayLName { get; set; }
-        public int UserID { get; set; }
-        public int ReviewID { get; set; }
-        public Nullable<double> ReviewStarRanking { get; set; }
-        public string ReviewDescription { get; set; }
+        public int ReportID { get; set; }
         public string ReportDescription { get; set; }
+        public Nullable<int> FlaggerID { get; set; }
+        public int ReviewID { get; set; }
     }
 }

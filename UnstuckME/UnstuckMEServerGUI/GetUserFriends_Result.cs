@@ -13,7 +13,8 @@ namespace UnstuckMEServerGUI
     
     public partial class GetUserFriends_Result
     {
-        public string Friends { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
         public string EmailAddress { get; set; }
     }
 }

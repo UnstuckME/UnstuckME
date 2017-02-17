@@ -14,7 +14,8 @@ namespace UnstuckMEServerGUI
     public partial class GetAllStudentReviews_Result
     {
         public int StickerID { get; set; }
-        public string Reviewer { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
         public Nullable<double> StarRanking { get; set; }
         public string Description { get; set; }
     }

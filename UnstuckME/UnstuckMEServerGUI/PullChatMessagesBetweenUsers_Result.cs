@@ -16,6 +16,8 @@ namespace UnstuckMEServerGUI
         public string DisplayFName { get; set; }
         public string DisplayLName { get; set; }
         public string MessageData { get; set; }
+        public string FilePath { get; set; }
+        public int SentBy { get; set; }
         public System.DateTime SentTime { get; set; }
     }
 }
