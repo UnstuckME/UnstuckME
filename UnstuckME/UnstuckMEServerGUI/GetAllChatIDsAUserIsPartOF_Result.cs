@@ -13,7 +13,8 @@ namespace UnstuckMEServerGUI
     
     public partial class GetAllChatIDsAUserIsPartOF_Result
     {
-        public string User { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
         public int ChatID { get; set; }
     }
 }

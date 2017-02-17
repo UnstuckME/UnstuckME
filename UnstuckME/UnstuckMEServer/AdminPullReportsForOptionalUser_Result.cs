@@ -13,7 +13,8 @@ namespace UnstuckMEServer
     
     public partial class AdminPullReportsForOptionalUser_Result
     {
-        public string Reported_as_Tutor { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
         public int UserID { get; set; }
         public int ReviewID { get; set; }
         public Nullable<double> ReviewStarRanking { get; set; }
