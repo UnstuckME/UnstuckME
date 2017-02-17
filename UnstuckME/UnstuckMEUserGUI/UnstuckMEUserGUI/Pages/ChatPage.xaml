@@ -66,7 +66,11 @@
                     <StackPanel x:Name="StackPanelMessages" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     </StackPanel>
                 </ScrollViewer>
+                <Border x:Name="BorderAddUserToConvo" BorderThickness="1,0,0,1" Cursor="Hand" Height="35" Width="35" BorderBrush="DimGray" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Gray">
+                    <Image x:Name="ImageAddUserToConvo" Cursor="Hand" Source="/Resources/AddUser/AddUserWhite.png" MouseEnter="ImageAddUserToConvo_MouseEnter" MouseLeave="ImageAddUserToConvo_MouseLeave" MouseLeftButtonDown="ImageAddUserToConvo_MouseLeftButtonDown"></Image>
+                </Border>
                 <Border BorderBrush="DimGray" BorderThickness="0,0,0,1"></Border>
+                
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>

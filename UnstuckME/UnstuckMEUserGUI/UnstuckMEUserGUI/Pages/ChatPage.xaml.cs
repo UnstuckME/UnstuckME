@@ -129,5 +129,20 @@ namespace UnstuckMEUserGUI
             GridNewConversation.IsEnabled = false;
             TextBoxManualUserNameSearch.Text = string.Empty;
         }
+
+        private void ImageAddUserToConvo_MouseEnter(object sender, MouseEventArgs e)
+        {
+            BorderAddUserToConvo.Background = Brushes.SteelBlue;
+        }
+
+        private void ImageAddUserToConvo_MouseLeave(object sender, MouseEventArgs e)
+        {
+            BorderAddUserToConvo.Background = Brushes.Gray;
+        }
+
+        private void ImageAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Button Clicked");
+        }
     }
 }
