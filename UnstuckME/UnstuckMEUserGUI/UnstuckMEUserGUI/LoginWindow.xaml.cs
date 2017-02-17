@@ -104,7 +104,7 @@ namespace UnstuckMEUserGUI
                 try
                 {
                     UserInfo loggedInUser = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
-                    if (loggedInUser.EmailAddress != emailAttempt)
+                    if (loggedInUser.EmailAddress.ToLower() != emailAttempt.ToLower())
                     {
                         _labelInvalidLogin.Content = "Invalid Username/Password";
                         throw new Exception();
