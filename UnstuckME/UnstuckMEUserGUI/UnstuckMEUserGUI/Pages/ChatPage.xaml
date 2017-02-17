@@ -35,7 +35,7 @@
                 <Grid Grid.Column="0" Grid.Row="0">
                     <Label Height="25" Width="150" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" VerticalContentAlignment="Stretch" Content="Manual Search" FontSize="12" Margin="25,0" ></Label>
                     <TextBox x:Name="TextBoxManualUserNameSearch" Height="28" Width="150" Padding="5,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="25,25,25,0" ></TextBox>
-                    <Button Height="25" Width="50" Content="Start" FontSize="12" BorderBrush="#336699" Foreground="White" Background="ForestGreen" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="125,58,25,0"></Button>
+                    <Button Height="25" Cursor="Hand" Width="50" Content="Start" FontSize="12" BorderBrush="#336699" Foreground="White" Background="ForestGreen" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="125,58,25,0"></Button>
                     <Label Height="25" Visibility="Hidden" Content="Invalid Username" Foreground="Red" VerticalContentAlignment="Center" Padding="16,0,0,0" FontWeight="Medium" FontSize="12" VerticalAlignment="Top" Margin="10,57,75,0" />
                     <Label Height="25" Content="Contacts:" Foreground="White" VerticalContentAlignment="Center" FontWeight="Medium" FontSize="12" VerticalAlignment="Top" Margin="10,90,75,0" />
                     <ScrollViewer VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" Height="Auto" Margin="0,115,0,0">
@@ -44,7 +44,7 @@
                 </Grid>
                 <Grid Grid.Column="0" Grid.Row="1">
                     <Border BorderBrush="#336699" BorderThickness="0,2,0,0"></Border>
-                    <Button x:Name="ButtonAddUserDone" Click="ButtonAddUserDone_Click" Foreground="White" Background="#993333" HorizontalAlignment="Right" VerticalAlignment="Center" Height="30" Content="Back" FontWeight="DemiBold" Width="75" Margin="0,0,5,0"></Button>
+                    <Button x:Name="ButtonAddUserDone" Cursor="Hand" BorderBrush="White" Click="ButtonAddUserDone_Click" Foreground="White" Background="#993333" HorizontalAlignment="Right" VerticalAlignment="Center" Height="30" Content="Back" FontWeight="DemiBold" Width="75" Margin="0,0,5,0"></Button>
                 </Grid>
             </Grid>
             <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.RowSpan="2"></Border>
