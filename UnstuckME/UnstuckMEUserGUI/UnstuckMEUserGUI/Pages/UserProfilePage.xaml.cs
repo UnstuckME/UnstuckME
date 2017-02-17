@@ -59,5 +59,11 @@ namespace UnstuckMEUserGUI
             tutorRanking.SetRatingText("Avg Tutor Rating: (" + Math.Round(inRating, 2) + ")");
             tutorRanking.SetRatingValue(inRating);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window w = new SubWindows.AddClassWindow(ref UnstuckMEWindow.Server, ref UnstuckMEWindow.User);
+            w.Show();
+        }
     }
 }

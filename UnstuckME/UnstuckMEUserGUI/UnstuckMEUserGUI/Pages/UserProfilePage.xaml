@@ -68,7 +68,7 @@
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0">
                         <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Classes" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
                     </Border>
-                    <Button Style="{StaticResource NoHighlightButton}" Width="35" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource NoHighlightButton}" Width="35" HorizontalAlignment="Right" Height="34" Margin="0,0,-0.4,-0.4" VerticalAlignment="Top" Click="Button_Click">
                         <Image Source="/Resources/Plus/PlusWhite.png" Height="25" Width="25"></Image>
                     </Button>
                 </Grid>
