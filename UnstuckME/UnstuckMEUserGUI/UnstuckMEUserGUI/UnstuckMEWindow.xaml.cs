@@ -29,6 +29,7 @@ namespace UnstuckMEUserGUI
         public enum Privileges { InvalidUser, Admin, Moderator, User }
         public static UnstuckMEPages _pages = new UnstuckMEPages();
         private static Privileges userPriviliges;
+        public UnstuckMEWindow thisWindow;
 
         public static Brush _UnstuckMEBlue;
         public static Brush _UnstuckMERed;
@@ -38,7 +39,7 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             _UnstuckMERed = StickerButtonBorder.Background;
             _UnstuckMEBlue = ChatButtonBorder.Background;
-
+            thisWindow = this;
             Server = inServer;
             User = inUser;
             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, User.EmailAddress);
@@ -48,7 +49,7 @@ namespace UnstuckMEUserGUI
         {
             _pages.StickerPage = new StickerPage();
             _pages.SettingsPage = new SettingsPage();
-            _pages.ChatPage = new ChatPage();
+            _pages.ChatPage = new ChatPage(ref User, ref Server);
             _pages.UserProfilePage = new UserProfilePage();
             _pages.ModeratorPage = new ModeratorPage();
             _pages.AdminPage = new AdminPage();
@@ -132,8 +133,8 @@ namespace UnstuckMEUserGUI
 
                 for (int i = 0; i < 30; i++)
                 {
-                    AvailableStickersStack.Children.Add(new NewMessageNotification("User " + i, ref _pages, this));
-                    AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
+                    //AvailableStickersStack.Children.Add(new NewMessageNotification("User " + i, ref _pages, this));
+                    //AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
                 }
             });
         }
@@ -277,6 +278,18 @@ namespace UnstuckMEUserGUI
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, User.EmailAddress);
+            try
+            {
+                Server.Logout();
+            }
+            catch(Exception)
+            { /*This is empty because we don't want the program to break but we also don't want to catch this exception*/ }
+        }
+
+        public void RecieveChatMessage(UnstuckMESendChatMessage message)
+        {
+            AvailableStickersStack.Children.Add(new NewMessageNotification("User " + message.SenderID, ref _pages, this));
+            _pages.ChatPage.AddMessage(message);
         }
     }
 

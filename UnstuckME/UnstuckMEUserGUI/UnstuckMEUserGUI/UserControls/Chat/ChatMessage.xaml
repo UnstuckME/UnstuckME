@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="UnstuckMEUserGUI.ChatMessage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnstuckMEUserGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="DimGray" BorderThickness="0,1,0,1" Grid.ColumnSpan="2" Grid.RowSpan="2"></Border>
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Image x:Name="ImageProfilePicture" Source="/Resources/User/UserRed.png" Stretch="UniformToFill" VerticalAlignment="Top"></Image>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <Border BorderBrush="Black" BorderThickness="0,0,0,0" Height="40" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <TextBox x:Name="TextBoxUserName" Background="{x:Null}" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="Black" Text="UserName" Foreground="White" Padding="10,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBox>
+            </Border>
+            <Button HorizontalAlignment="Right" Cursor="Hand" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="35" Width="35" Background="{x:Null}">
+                <Image Source="/Resources/Edit/EditWhite.png" Height="20" Width="20" Stretch="UniformToFill"></Image>
+            </Button>
+            <TextBox x:Name="TextBoxChatMessage" Background="{x:Null}" TextWrapping="Wrap" Foreground="White" Cursor="Arrow" Text="HELLO WORLD" HorizontalAlignment="Stretch" Margin="0,40,0,0" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="Black" Padding="10,0,35,15" VerticalAlignment="Top"></TextBox>
+        </Grid>
+    </Grid>
+</UserControl>

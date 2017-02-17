@@ -12,11 +12,6 @@ namespace UnstuckMEServerGUI
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ServerCallback : IServer
     {
-        public void GetMessage()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool isOnline()
         {
             return true;

@@ -69,6 +69,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\Chat\Conversation.xaml.cs">
+      <DependentUpon>Conversation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Stickers\StickerUserControl.xaml.cs">
+      <DependentUpon>StickerUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Chat\ChatFile.xaml.cs">
+      <DependentUpon>ChatFile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Chat\ChatMessage.xaml.cs">
+      <DependentUpon>ChatMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
@@ -175,6 +187,22 @@
     <Compile Include="Pages\UserProfilePage.xaml.cs">
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="UserControls\Chat\Conversation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Stickers\StickerUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Chat\ChatFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Chat\ChatMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -412,6 +440,14 @@
     <Resource Include="Resources\Ranking\RankingDimGray.png" />
     <Resource Include="Resources\Ranking\RankingGray.png" />
     <None Include="Resources\DefaultUserProfilePicture.bmp" />
+    <Resource Include="Resources\Download\DownloadBlack.png" />
+    <Resource Include="Resources\Download\DownloadBlue.png" />
+    <Resource Include="Resources\Download\DownloadRed.png" />
+    <Resource Include="Resources\Download\DownloadWhite.png" />
+    <Resource Include="Resources\Group\GroupBlack.png" />
+    <Resource Include="Resources\Group\GroupBlue.png" />
+    <Resource Include="Resources\Group\GroupRed.png" />
+    <Resource Include="Resources\Group\GroupWhite.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

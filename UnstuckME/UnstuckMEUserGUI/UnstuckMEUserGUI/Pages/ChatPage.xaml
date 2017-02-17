@@ -9,7 +9,7 @@
       Title="ChatPage" xmlns:my="clr-namespace:UnstuckMEUserGUI">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="203*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -18,12 +18,14 @@
                 <RowDefinition Height="67*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="0" Background="#336699">
-                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
-                    <Label Content="Contacts:" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
-                </Border>
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1"></Border>
+                <Label Content="Conversations:" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
+                <Button x:Name="ButtonCreateChat" Click="ButtonCreateChat_Click" HorizontalAlignment="Right" BorderThickness="0,0,0,0" Width="30" Height="30" Background="{x:Null}" Cursor="Hand" VerticalAlignment="Center">
+                    <Image Source="/Resources/Plus/PlusWhite.png" Height="15" Width="15" Stretch="UniformToFill"/>
+                </Button>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="1">
-                
+                <StackPanel x:Name="StackPanelConversations" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
             </Grid>
             <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.RowSpan="2"></Border>
         </Grid>
@@ -40,9 +42,11 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
-                <StackPanel>
-
-                </StackPanel>
+                <ScrollViewer x:Name="ScrollViewerMessagesBox" VerticalScrollBarVisibility="Auto" SizeChanged="ScrollViewerConversationBox_SizeChanged">
+                    <StackPanel x:Name="StackPanelMessages" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    </StackPanel>
+                </ScrollViewer>
+                <Border BorderBrush="DimGray" BorderThickness="0,0,0,1"></Border>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -50,12 +54,14 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <TextBox x:Name="MessageTextBox" Padding="5,0,0,0" SizeChanged="MessageTextBox_SizeChanged" BorderBrush="{x:Null}" BorderThickness="4,4,4,4"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBox>
+                    <Button Width="40" HorizontalAlignment="Left" Background="{x:Null}" BorderThickness="0,0,0,0" Cursor="Hand">
+                        <Image Source="/Resources/Download/DownloadWhite.png" Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <TextBox x:Name="MessageTextBox" Padding="5,0,0,0" MaxLength="450" KeyDown="MessageTextBox_KeyDown" Margin="40,0,0,0" SizeChanged="MessageTextBox_SizeChanged" BorderBrush="{x:Null}" BorderThickness="4,4,4,4"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBox>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Button x:Name="SendButton" Content="Send" Background="#336699" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}" BorderThickness="3,3,3,3"></Button>
+                    <Button x:Name="SendButton" Click="SendButton_Click" Content="Send" Background="#336699" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}" BorderThickness="3,3,3,3"></Button>
                 </Grid>
-
             </Grid>
         </Grid>
 

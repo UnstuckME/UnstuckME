@@ -9,8 +9,6 @@ namespace UnstuckMEInterfaces
 {
     public interface IServer
     {
-        [OperationContract]
-        void GetMessage();
 
         [OperationContract]
         bool isOnline();

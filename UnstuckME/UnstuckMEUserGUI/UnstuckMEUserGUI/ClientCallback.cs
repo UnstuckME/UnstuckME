@@ -8,6 +8,7 @@ using System.Windows;
 using UnstuckMEInterfaces;
 using System.Threading;
 using System.Diagnostics;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -19,6 +20,20 @@ namespace UnstuckMEUserGUI
         {
             UnstuckMEMessageBox messageBox = new UnstuckMEMessageBox(0, "UnstuckME Server has shutdown. Please Contact Your Server Administrator", "Server Shutdown");
             messageBox.Show();
+        }
+
+        //This Will Update a users conversation if they are online and another user sends them a message.
+        public string GetMessage(UnstuckMESendChatMessage message)
+        {
+            try
+            {
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatMessage(message);
+                return "Success";
+            }
+            catch(Exception ex)
+            {
+                return ex.Message + " Object: " + ex.Source;
+            }
         }
 
         public bool isOnline()

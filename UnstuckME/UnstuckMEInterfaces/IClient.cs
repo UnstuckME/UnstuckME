@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
@@ -14,5 +15,8 @@ namespace UnstuckMEInterfaces
 
         [OperationContract(IsOneWay = true)]
         void ForceClose();
+
+        [OperationContract]
+        string GetMessage(UnstuckMESendChatMessage message);
     }
 }
