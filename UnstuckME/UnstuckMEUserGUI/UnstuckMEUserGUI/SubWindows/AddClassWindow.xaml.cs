@@ -64,7 +64,7 @@ namespace UnstuckMEUserGUI.SubWindows
             {
                 try
                 {
-                    courseNameList = Server.GetCourseNumbersByCourseCode(ComboBoxCourseNumberAndName.SelectedValue as string);
+                    courseNameList = Server.GetCourseNumbersByCourseCode(ComboBoxCourseCode.SelectedValue as string);
                     courseNameList.Insert(0, "(Select Class)");
                 }
                 catch (Exception exp)
@@ -82,6 +82,31 @@ namespace UnstuckMEUserGUI.SubWindows
                 ComboBoxCourseNumberAndName.IsEnabled = false;
             }
 
+        }
+
+        private void AddClassesButton_Click(object sender, RoutedEventArgs e)
+        {
+            int ClassID = 0;
+            try
+            {
+                ClassID = Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseCode.SelectedValue as string, ComboBoxCourseNumberAndName.SelectedValue as string);
+            }
+            catch (Exception exp)
+            {
+                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
+                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+            }
+            try
+            {
+                Server.InsertStudentIntoClass(User.UserID, ClassID);
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+            }
+
+            ComboBoxCourseCode.SelectedIndex = 0;
+            ComboBoxCourseNumberAndName.IsEnabled = false;
         }
     }
 }

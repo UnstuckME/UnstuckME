@@ -10,14 +10,17 @@
     <Grid>
         <Rectangle Fill="Black" Opacity=".7" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown">
         </Rectangle>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="600" MaxWidth="600" MinHeight="600" MinWidth="700" Height="600" Width="700">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="300" MaxWidth="600" MinHeight="200" MinWidth="700" Height="600" Width="700">
             <Border BorderBrush="#336699" BorderThickness="4,4,4,4" CornerRadius="5">
-                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5"/>
+                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5">
+                    
+                </Border>
             </Border>
             <ComboBox x:Name="ComboBoxCourseNumberAndName" MaxDropDownHeight="200" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" Height="35" Width="350" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,84,0" IsEnabled="False">
             </ComboBox>
             <ComboBox x:Name="ComboBoxCourseCode" MaxDropDownHeight="200" SelectionChanged="ComboBoxCourseCode_SelectionChanged"  IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" SelectedIndex="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="35" Width="86" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,472,0" IsEnabled="True">
             </ComboBox>
+            <Button x:Name="AddClassesButton" Content="Add Class" Width="75" Height="25" Margin="0,50,0,0" Click="AddClassesButton_Click"/>
         </Grid>
     </Grid>
 </Window>
