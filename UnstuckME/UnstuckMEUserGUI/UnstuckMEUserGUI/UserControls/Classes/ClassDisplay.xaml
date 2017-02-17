@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
-             mc:Ignorable="d" Height="35" Width="500">
-    <Grid>
-        <Button x:Name="MainContainer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="35" Margin="0,-1,0,0" Click="MainContainer_Click">
-            <Grid>
-                  <Button x:Name="Deletebtn" Visibility="Collapsed" Content="Delete" Margin="401,-1,0.4,1.2" Click="Deletebtn_Click"/>
-        <TextBlock x:Name="CourseCode" Margin="0,0,256.4,18.2" TextWrapping="Wrap" Text="CourseCode"/>
-        <TextBlock x:Name="CourseNumber" Margin="99,-1,359.4,18.2" TextWrapping="Wrap" Text="CourseNumber"/>
-        <TextBlock x:Name="Coursedesc" Margin="0,17,359.4,1.2" TextWrapping="Wrap" Text="CourseDesc"/>
+             mc:Ignorable="d" MinHeight="40" MinWidth="350" Height="35" Width="Auto">
+    <Grid Height="Auto" Width="Auto" MinHeight="40" MinWidth="350">
+        <Button x:Name="MainContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="350" Width="Auto" Height="Auto" Margin="0,-1,0,0" Click="MainContainer_Click">
+            <Grid Width="350" Height="Auto">
+                  <Button x:Name="Deletebtn" Visibility="Collapsed" Content="Delete" HorizontalAlignment="Right" Width="75" Click="Deletebtn_Click"/>
+        <TextBlock x:Name="CourseCode" HorizontalAlignment="Left" VerticalAlignment="Top"  TextWrapping="Wrap" Text="CourseCode"/>
+                <TextBlock x:Name="CourseNumber" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" TextWrapping="Wrap" Text="CourseNumber"/>
+        <TextBlock x:Name="Coursedesc" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" TextWrapping="Wrap" Text="CourseDesc"/>
             </Grid>
         </Button>
       

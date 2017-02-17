@@ -106,6 +106,7 @@ namespace UnstuckMEUserGUI.SubWindows
             }
 
             ComboBoxCourseCode.SelectedIndex = 0;
+            ComboBoxCourseNumberAndName.SelectedIndex = 0;
             ComboBoxCourseNumberAndName.IsEnabled = false;
         }
     }
