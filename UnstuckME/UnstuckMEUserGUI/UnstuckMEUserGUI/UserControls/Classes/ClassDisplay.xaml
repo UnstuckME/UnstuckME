@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              mc:Ignorable="d" MinHeight="40" MinWidth="350" Height="35" Width="Auto">
-    <Grid Height="Auto" Width="Auto" MinHeight="40" MinWidth="350">
-        <Button x:Name="MainContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="350" Width="Auto" Height="Auto" Margin="0,-1,0,0" Click="MainContainer_Click">
+    <Grid Height="Auto" Width="Auto" MinHeight="40" MinWidth="350" Background="{x:Null}">
+        <Button x:Name="MainContainer" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="350" Width="Auto" Height="Auto" Margin="0,-1,0,0" Click="MainContainer_Click">
             <Grid Width="350" Height="Auto">
-                  <Button x:Name="Deletebtn" Visibility="Collapsed" Content="Delete" HorizontalAlignment="Right" Width="75" Click="Deletebtn_Click"/>
-        <TextBlock x:Name="CourseCode" HorizontalAlignment="Left" VerticalAlignment="Top"  TextWrapping="Wrap" Text="CourseCode"/>
-                <TextBlock x:Name="CourseNumber" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" TextWrapping="Wrap" Text="CourseNumber"/>
-        <TextBlock x:Name="Coursedesc" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" TextWrapping="Wrap" Text="CourseDesc"/>
+                  <Button x:Name="Deletebtn" Foreground="White" Visibility="Collapsed" Background="#993333" Margin="0,0,5,0" Content="Delete" HorizontalAlignment="Right" Width="75" Click="Deletebtn_Click"/>
+        <TextBlock x:Name="CourseCode" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"  TextWrapping="Wrap" Text="CourseCode"/>
+                <TextBlock x:Name="CourseNumber" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" TextWrapping="Wrap" Text="CourseNumber"/>
+        <TextBlock x:Name="Coursedesc" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" TextWrapping="Wrap" Text="CourseDesc"/>
             </Grid>
         </Button>
       
