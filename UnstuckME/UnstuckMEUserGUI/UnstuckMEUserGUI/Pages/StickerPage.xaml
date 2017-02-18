@@ -37,7 +37,9 @@
                 <ColumnDefinition MinWidth="250" Width="250*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition MinHeight="50" Height="50"/>
                 <RowDefinition MinHeight="200" Height="200*"/>
+                <RowDefinition MinHeight="50" Height="50"/>
                 <RowDefinition MinHeight="200" Height="200*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
@@ -48,7 +50,7 @@
                 </Border>
                 <Label x:Name="StickerTabLabel" Content="Available Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
-            <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch">
+            <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Stretch">
                 <Border BorderBrush="Black" BorderThickness="1,0,0,0">
                     <Border BorderBrush="#336699" BorderThickness="0,50,0,0"  >
                         
@@ -56,7 +58,10 @@
                 </Border>
                 <Label x:Name="StickerTabLabel1" Content="Sticker History" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
-            <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
+            <Grid Grid.Row="1">
+                <StackPanel x:Name="StackPanelAvailableStickers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch">
                 <Border BorderBrush="Black" BorderThickness="0,0,0,0">
                     <Border BorderBrush="#336699" BorderThickness="0,50,0,0">
 

@@ -68,11 +68,11 @@ namespace UnstuckMEUserGUI
             
         }
 
-        async private void resetBtn(FrameworkElement btn)
-        {
-            Thread.Sleep(5000);
-            btn.Visibility = Visibility.Collapsed;
-        }
+        //async private void resetBtn(FrameworkElement btn)
+        //{
+        //    Thread.Sleep(5000);
+        //    btn.Visibility = Visibility.Collapsed;
+        //}
 
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {

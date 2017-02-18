@@ -16,16 +16,15 @@ using System.Windows.Shapes;
 namespace UnstuckMEUserGUI
 {
     /// <summary>
-    /// Interaction logic for AvailableSticker.xaml
+    /// Interaction logic for AvailableStickerNotification.xaml
     /// </summary>
-    public partial class AvailableSticker : UserControl
+    public partial class AvailableStickerNotification : UserControl
     {
-        public AvailableSticker(string inClassName)
+        public AvailableStickerNotification(string inClassName)
         {
             InitializeComponent();
             ClassNameInfoButton.Content = inClassName;
         }
-
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
             ClassNameInfoButton.Foreground = Brushes.Black;

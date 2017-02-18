@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="UnstuckMEUserGUI.AvailableSticker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnstuckMEUserGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="250">
+    <Grid Background="SteelBlue" Cursor="Hand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="3"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.RowSpan="2" Margin="0,0,50,0" HorizontalAlignment="Right">
+            <Border x:Name="BorderCheck" Width="50" BorderBrush="DimGray" BorderThickness="1,0,1,0" HorizontalAlignment="Right" VerticalAlignment="Stretch" MouseEnter="BorderCheck_MouseEnter" MouseLeave="BorderCheck_MouseLeave" Grid.RowSpan="2">
+                <Image Stretch="UniformToFill" Source="/Resources/CheckMark/CheckWhite.png" Height="45" Width="45"></Image>
+            </Border>
+        </Grid>
+        <Grid x:Name="GridClassName" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,100,0" MouseEnter="GridClassName_MouseEnter" MouseLeave="GridClassName_MouseLeave" MouseDown="GridClassName_MouseDown">
+            <Label x:Name="LabelClassName" Padding="10,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Content="Class Name" Foreground="White"></Label>
+        </Grid>
+        <Grid Grid.Row="0" Grid.RowSpan="2" Margin="0,0,0,0" HorizontalAlignment="Right">
+            <Border x:Name="BorderX" Width="50" BorderBrush="DimGray" BorderThickness="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Stretch" MouseLeftButtonDown="BorderX_MouseLeftButtonDown" MouseEnter="BorderX_MouseEnter" MouseLeave="BorderX_MouseLeave" Grid.Row="1">
+                <Image Stretch="UniformToFill" Source="/Resources/Xmark/XmarkWHite.png" Height="45" Width="45"></Image>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="2" Background="DimGray">
+            
+        </Grid>
+        <Border BorderBrush="DimGray" BorderThickness="1,1,1,1" Grid.RowSpan="3"></Border>
+    </Grid>
+
+</UserControl>

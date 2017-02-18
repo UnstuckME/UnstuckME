@@ -69,6 +69,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="StickerInfoWindow.xaml.cs">
+      <DependentUpon>StickerInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Stickers\AvailableSticker.xaml.cs">
+      <DependentUpon>AvailableSticker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Notifications\AvailableStickerNotification.xaml.cs">
+      <DependentUpon>AvailableStickerNotification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\AddClassWindow.xaml.cs">
       <DependentUpon>AddClassWindow.xaml</DependentUpon>
     </Compile>
@@ -110,9 +119,6 @@
     </Compile>
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Notifications\AvailableSticker.xaml.cs">
-      <DependentUpon>AvailableSticker.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Classes\ClassDisplay.xaml.cs">
       <DependentUpon>ClassDisplay.xaml</DependentUpon>
@@ -193,6 +199,18 @@
     <Compile Include="Pages\UserProfilePage.xaml.cs">
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="StickerInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Stickers\AvailableSticker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Notifications\AvailableStickerNotification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SubWindows\AddClassWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -246,10 +264,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Notifications\AvailableSticker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

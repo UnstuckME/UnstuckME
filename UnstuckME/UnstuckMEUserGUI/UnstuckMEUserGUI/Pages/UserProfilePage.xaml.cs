@@ -31,10 +31,10 @@ namespace UnstuckMEUserGUI
             tutorRanking = new StarRanking(StarRanking.BoxColor.Gray);
             RatingsStack.Children.Add(studentRanking);
             RatingsStack.Children.Add(tutorRanking);
-            RepopulateClasses();
+            //RepopulateClasses(); Added this to asynchronous load in UnstuckMEWindow.
             
         }
-        private void RepopulateClasses()
+        public void RepopulateClasses()
         {
             BottomLeftStack.Children.Clear();
             List<UserClass> classes = UnstuckMEWindow.Server.GetUserClasses(UnstuckMEWindow.User.UserID);

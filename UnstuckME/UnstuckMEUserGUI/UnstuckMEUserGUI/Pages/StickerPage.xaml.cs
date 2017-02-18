@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -20,6 +21,9 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class StickerPage : Page
     {
+        public List<UnstuckMESticker> AvailableStickers;
+        public static List<UnstuckMESticker> OpenStickers;
+        public static List<UnstuckMESticker> RecentStickers;
         public StickerPage()
         {
             InitializeComponent();

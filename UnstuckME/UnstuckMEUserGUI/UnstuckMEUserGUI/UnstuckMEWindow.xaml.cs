@@ -80,7 +80,12 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                // your asynchronous code here.
+                _pages.StickerPage.AvailableStickers = Server.GetActiveStickersASC();
+                foreach (UnstuckMESticker sticker in _pages.StickerPage.AvailableStickers)
+                {
+                    UserClass temp = new UserClass();
+                    _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
+                }
             });
         }
 
@@ -103,6 +108,7 @@ namespace UnstuckMEUserGUI
                 _pages.UserProfilePage.EmailAddress.Text = User.EmailAddress;
                 _pages.UserProfilePage.SetStudentRating(User.AverageStudentRank);
                 _pages.UserProfilePage.SetTutorRating(User.AverageTutorRank);
+                _pages.UserProfilePage.RepopulateClasses();
             });
         }
 
@@ -134,7 +140,7 @@ namespace UnstuckMEUserGUI
                 for (int i = 0; i < 30; i++)
                 {
                     //AvailableStickersStack.Children.Add(new NewMessageNotification("User " + i, ref _pages, this));
-                    //AvailableStickersStack.Children.Add(new AvailableSticker("CST 11" + i));
+                    AvailableStickersStack.Children.Add(new AvailableStickerNotification("CST 11" + i));
                 }
             });
         }
