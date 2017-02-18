@@ -26,7 +26,7 @@ namespace UnstuckMEUserGUI
         private static ImageSource UserImage;
         public static IUnstuckMEService Server;
         public static UnstuckMEChat currentChat;
-        public static List<UnstuckMEChat> allChats;
+        public List<UnstuckMEChat> allChats;
         public static ImageSourceConverter ic;
         public ChatPage(ref UserInfo inUser, ref IUnstuckMEService inServer)
         {

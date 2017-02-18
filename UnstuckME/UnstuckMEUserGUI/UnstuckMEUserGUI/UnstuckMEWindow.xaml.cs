@@ -92,7 +92,7 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                Server.GetUserChats(User.UserID);
+                _pages.ChatPage.allChats = Server.GetUserChats(User.UserID);
             });
         }
 

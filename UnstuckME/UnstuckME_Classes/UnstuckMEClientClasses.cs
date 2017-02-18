@@ -35,7 +35,6 @@ namespace UnstuckME_Classes
     public class UnstuckMEChat
     {
         public int ChatID { get; set; }
-        public List<int> UserIDList { get; set; }
         public List<UnstuckMEChatUser> Users { get; set; }
         public List<UnstuckMEMessage> Messages { get; set; }
     }
@@ -51,8 +50,11 @@ namespace UnstuckME_Classes
     //This Represents a Message in an UnstuckMEChat.
     public class UnstuckMEMessage
     {
+        public int ChatID { get; set; }
+        public string FilePath { get; set; }
         public int MessageID { get; set; }
         public DateTime Time { get; set; }
+        public bool IsFile { get; set; }
         public string Message { get; set; }
         public int UserID { get; set; }
     }
