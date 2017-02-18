@@ -80,10 +80,9 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                _pages.StickerPage.AvailableStickers = Server.GetActiveStickersASC();
-                foreach (UnstuckMESticker sticker in _pages.StickerPage.AvailableStickers)
+                _pages.StickerPage.AvailableStickers = Server.InitialAvailableStickerPull(User.UserID);
+                foreach (UnstuckMEAvailableSticker sticker in _pages.StickerPage.AvailableStickers)
                 {
-                    UserClass temp = new UserClass();
                     _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
                 }
             });

@@ -97,6 +97,19 @@ namespace UnstuckME_Classes
         public int Timeout { get; set; }
     }
 
+    public class UnstuckMEAvailableSticker
+    {
+        public int StickerID { get; set; }
+        public string ProblemDescription { get; set; }
+        public int ClassID { get; set; }
+        public string CourseCode { set; get; }
+        public string CourseName { set; get; }
+        public short CourseNumber { set; get; }
+        public int StudentID { get; set; }
+        public double StudentRanking { get; set; }
+        public DateTime Timeout { get; set; }
+    }
+
     public class UnstuckMESchool
     {
         public int SchoolID { get; set; }

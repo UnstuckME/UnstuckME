@@ -20,9 +20,9 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class StickerInfoWindow : Window
     {
-        public static UnstuckMESticker Sticker;
+        public UnstuckMEAvailableSticker Sticker;
         public static UserClass Class;
-        public StickerInfoWindow(ref UnstuckMESticker inSticker)
+        public StickerInfoWindow(ref UnstuckMEAvailableSticker inSticker)
         {
             InitializeComponent();
             Sticker = inSticker;
@@ -35,8 +35,9 @@ namespace UnstuckMEUserGUI
             {
                 TextBoxProblemDescription.Text = Sticker.ProblemDescription;
             }
-            LabelLongTimeout.Content = "Timeout: " + DateTime.Now.AddSeconds(Sticker.Timeout).ToLongDateString() + "  " + DateTime.Now.AddSeconds(Sticker.Timeout).ToShortTimeString();
-            LabelClassName.Content = "Class: " + Sticker.ClassID;
+            LabelLongTimeout.Content = "Timeout: " + DateTime.Now.AddSeconds((Sticker.Timeout - DateTime.Now).TotalSeconds).ToLongDateString() + " " + DateTime.Now.AddSeconds((Sticker.Timeout - DateTime.Now).TotalSeconds).ToShortTimeString();
+            LabelClassName.Content = "Class: " + Sticker.CourseCode  + " " + Sticker.CourseNumber + " " + Sticker.CourseName;
+
         }
 
         private void MoveBottomRightEdgeOfWindowToMousePosition()

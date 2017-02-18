@@ -1290,5 +1290,62 @@ namespace UnstuckMEInterfaces
 				Console.WriteLine(ex.Message);
 			}
 		}
-	}
+        //public int StickerID { get; set; }
+        //public string ProblemDescription { get; set; }
+        //public int ClassID { get; set; }
+        //public string CourseCode { set; get; }
+        //public string CourseName { set; get; }
+        //public short CourseNumber { set; get; }
+        //public int StudentID { get; set; }
+        //public float StudentRanking { get; set; }
+        //public DateTime Timeout { get; set; }
+        public List<UnstuckMEAvailableSticker> InitialAvailableStickerPull(int userID)
+        {
+            try
+            {
+                List<UnstuckMEAvailableSticker> stickerList = new List<UnstuckMEAvailableSticker>();
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var dbStickers = from a in db.Stickers
+                                     where (a.StudentID != userID) && (a.MinimumStarRanking <= (from b in db.UserProfiles where b.UserID == userID select b.AverageTutorRank).FirstOrDefault())
+                                     join c in db.Classes on a.ClassID equals c.ClassID
+                                     join d in db.UserProfiles on a.StudentID equals d.UserID
+                                     select new
+                                     {
+                                         StickerID = a.StickerID,
+                                         StickerTimeout = a.Timeout,
+                                         ProblemDescription = a.ProblemDescription,
+                                         StudentID = a.StudentID,
+                                         StudentRanking = d.AverageStudentRank,
+                                         ClassID = c.ClassID,
+                                         CourseCode = c.CourseCode,
+                                         CourseName = c.CourseName,
+                                         CourseNumber = c.CourseNumber,
+                                     };
+
+                    foreach (var sticker in dbStickers)
+                    {
+                        UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
+                        temp.ClassID = sticker.ClassID;
+                        temp.CourseCode = sticker.CourseCode;
+                        temp.CourseName = sticker.CourseName;
+                        temp.CourseNumber = sticker.CourseNumber;
+                        temp.ProblemDescription = sticker.ProblemDescription;
+                        temp.StickerID = sticker.StickerID;
+                        temp.StudentID = sticker.StudentID;
+                        temp.StudentRanking = sticker.StudentRanking;
+                        temp.Timeout = sticker.StickerTimeout;
+                        stickerList.Add(temp);
+                    }
+
+                }
+                return stickerList;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return null;
+            }
+        }
+    }
 }

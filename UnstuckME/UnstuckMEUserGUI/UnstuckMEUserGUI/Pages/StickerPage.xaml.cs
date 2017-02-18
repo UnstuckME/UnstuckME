@@ -21,9 +21,9 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class StickerPage : Page
     {
-        public List<UnstuckMESticker> AvailableStickers;
-        public static List<UnstuckMESticker> OpenStickers;
-        public static List<UnstuckMESticker> RecentStickers;
+        public List<UnstuckMEAvailableSticker> AvailableStickers;
+        public static List<UnstuckMEAvailableSticker> OpenStickers;
+        public static List<UnstuckMEAvailableSticker> RecentStickers;
         public StickerPage()
         {
             InitializeComponent();

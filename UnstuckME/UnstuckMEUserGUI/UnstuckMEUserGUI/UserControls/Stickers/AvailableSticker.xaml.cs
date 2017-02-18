@@ -32,13 +32,13 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class AvailableSticker : UserControl
     {
-        public static UnstuckMESticker Sticker;
-        public static UserClass Class;
-        public AvailableSticker(UnstuckMESticker inSticker)
+        public UnstuckMEAvailableSticker Sticker;
+        public UserClass Class;
+        public AvailableSticker(UnstuckMEAvailableSticker inSticker)
         {
             InitializeComponent();
             Sticker = inSticker;
-            LabelClassName.Content = "Class ID: " + Sticker.ClassID;
+            LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + "   " + "Student Rating = " + Sticker.StudentRanking;
         }
 
         private void BorderCheck_MouseEnter(object sender, MouseEventArgs e)

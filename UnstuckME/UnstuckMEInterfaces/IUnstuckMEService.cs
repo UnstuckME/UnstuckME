@@ -152,6 +152,8 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void SendMessage(UnstuckMESendChatMessage message);
+        [OperationContract]
+        List<UnstuckMEAvailableSticker> InitialAvailableStickerPull(int userID);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]
