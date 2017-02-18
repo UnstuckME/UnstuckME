@@ -12,6 +12,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="151*"/>
             <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#336699">
             <Label IsEnabled="True" Margin="10,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="50" HorizontalContentAlignment="Left" VerticalAlignment="Top" Padding="10,0,0,0" FontSize="20" FontWeight="UltraBold" Content="ProblemDescription:" Foreground="White"></Label>
@@ -22,6 +23,9 @@
         </Grid>
         <Grid Background="#336699" Grid.Row="2">
             <Label x:Name="LabelClassName" Content="ClassName" Foreground="White" FontWeight="Bold" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Padding="20,0,0,0"></Label>
+        </Grid>
+        <Grid Background="#336699" Grid.Row="3">
+            <Label x:Name="LabelLongTimeout" Content="Timeout"  Foreground="White" FontWeight="Bold" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Padding="20,0,0,0"></Label>
         </Grid>
     </Grid>
 </Window>

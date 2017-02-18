@@ -35,6 +35,8 @@ namespace UnstuckMEUserGUI
             {
                 TextBoxProblemDescription.Text = Sticker.ProblemDescription;
             }
+            LabelLongTimeout.Content = "Timeout: " + DateTime.Now.AddSeconds(Sticker.Timeout).ToLongDateString() + "  " + DateTime.Now.AddSeconds(Sticker.Timeout).ToShortTimeString();
+            LabelClassName.Content = "Class: " + Sticker.ClassID;
         }
 
         private void MoveBottomRightEdgeOfWindowToMousePosition()
