@@ -80,15 +80,6 @@
     <Compile Include="Database.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="FilterUserReviewsByEqualStarRank_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FilterUserReviewsByGreaterThanStarRank_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FilterUserReviewsByStarRank_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Friend.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -104,28 +95,16 @@
     <Compile Include="GetActiveStickersWithOrganization_OrgDESC_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetActiveStickersWithStarRankOrMentorOrganization_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="GetActiveStickers_ClassASC_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetActiveStickers_ClassDESC_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetAllActiveStickers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllChatIDsAUserIsPartOF_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="GetAllMembersOfAChat_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllOrganizations_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllResolvedStickers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllSchoolLogos_Result.cs">
@@ -149,13 +128,13 @@
     <Compile Include="GetDisplayNameAndEmail_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetReportsByUser_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="GetReportsSubmittedByUser_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetResolvedStickers_Result.cs">
+    <Compile Include="GetResolvedStickers_ClassASC_Result.cs">
+      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetResolvedStickers_ClassDESC_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetSchoolServerInfo_Result.cs">
@@ -185,9 +164,6 @@
     <Compile Include="GetUsersOverallStarRank_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserStickersAndReviews_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="GetUserStudentReviews_RankASC_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -198,9 +174,6 @@
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserSubmittedStickers_ClassDESC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUsersWithOverallStarRank_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserTutoredStickers_ClassASC_Result.cs">
@@ -222,12 +195,6 @@
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Picture.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PullActiveClassSpecificStickers_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PullChatMessagesAndFilesBetweenUsers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="PullChatMessagesBetweenUsers_Result.cs">
@@ -326,6 +293,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UnstuckMEServer_DB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateUserTotalReviews_Result.cs">
+      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>

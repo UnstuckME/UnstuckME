@@ -156,7 +156,7 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ClassID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Friends__UserID__68A0B0EE">
+        <Association Name="FK__Friends__UserID__76D9C1AC">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
           <ReferentialConstraint>
@@ -168,7 +168,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__ChatID__6B7D1D99">
+        <Association Name="FK__Messages__ChatID__79B62E57">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,7 +180,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__6F4DAE7D">
+        <Association Name="FK__Messages__SentBy__7D86BF3B">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -192,7 +192,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__Mentor__750687D3">
+        <Association Name="FK__OmToUser__Mentor__033F9891">
           <End Role="OfficialMentor" Type="Self.OfficialMentor" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -204,7 +204,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OmToUser__UserID__7412639A">
+        <Association Name="FK__OmToUser__UserID__024B7458">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="OmToUser" Type="Self.OmToUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -216,7 +216,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__7BB38562">
+        <Association Name="FK__Picture__UserID__09EC9620">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -228,7 +228,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__175B9FD7">
+        <Association Name="FK__Report__FlaggerI__2594B095">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -240,7 +240,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__184FC410">
+        <Association Name="FK__Report__ReviewID__2688D4CE">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -252,7 +252,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__11A2C681">
+        <Association Name="FK__Review__Reviewer__1FDBD73F">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -264,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__10AEA248">
+        <Association Name="FK__Review__StickerI__1EE7B306">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -276,7 +276,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ChatID__063113D5">
+        <Association Name="FK__Sticker__ChatID__146A2493">
           <End Role="Chat" Type="Self.Chat" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -288,7 +288,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__0448CB63">
+        <Association Name="FK__Sticker__ClassID__1281DC21">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -300,7 +300,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__0725380E">
+        <Association Name="FK__Sticker__Student__155E48CC">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -312,7 +312,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__090D8080">
+        <Association Name="FK__Sticker__TutorID__1746913E">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -324,7 +324,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__StickerTo__Mento__0DD2359D">
+        <Association Name="FK__StickerTo__Mento__1C0B465B">
           <End Role="OfficialMentor" Type="Self.OfficialMentor" Multiplicity="1" />
           <End Role="StickerToMentor" Type="Self.StickerToMentor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -336,7 +336,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__StickerTo__Stick__0CDE1164">
+        <Association Name="FK__StickerTo__Stick__1B172222">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="StickerToMentor" Type="Self.StickerToMentor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -348,7 +348,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__ChatI__78D718B7">
+        <Association Name="FK__UserToCha__ChatI__07102975">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -360,7 +360,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCha__UserI__77E2F47E">
+        <Association Name="FK__UserToCha__UserI__061C053C">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToChat" Type="Self.UserToChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -372,7 +372,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__Class__016C5EB8">
+        <Association Name="FK__UserToCla__Class__0FA56F76">
           <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -384,7 +384,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserToCla__UserI__00783A7F">
+        <Association Name="FK__UserToCla__UserI__0EB14B3D">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserToClass" Type="Self.UserToClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -414,10 +414,6 @@
         </Function>
         <Function Name="AdminPullReportsForOptionalUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
-        <Function Name="ChangeProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="Photo" Type="varbinary(max)" Mode="In" />
         </Function>
         <Function Name="ClearReviewDescriptionByReviewID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReviewID" Type="int" Mode="In" />
@@ -507,18 +503,6 @@
         <Function Name="DeleteUserProfileByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
-        <Function Name="FilterUserReviewsByEqualStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="starfilter" Type="float" Mode="In" />
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
-        <Function Name="FilterUserReviewsByGreaterThanStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="starfilter" Type="float" Mode="In" />
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
-        <Function Name="FilterUserReviewsByStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="starfilter" Type="float" Mode="In" />
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetActiveStickers_ClassASC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starrank" Type="float" Mode="In" />
@@ -566,17 +550,6 @@
           <Parameter Name="userid" Type="int" Mode="In" />
           <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetActiveStickersWithStarRankOrMentorOrganization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="starrank" Type="float" Mode="In" />
-          <Parameter Name="userid" Type="int" Mode="In" />
-          <Parameter Name="organization" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="GetAllActiveStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetAllChatIDsAUserIsPartOF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
         <Function Name="GetAllChatsAUserIsPartOF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
@@ -584,9 +557,6 @@
           <Parameter Name="chatid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetAllOrganizations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetAllResolvedStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
         <Function Name="GetAllStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllStudentReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllTutorReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -611,13 +581,17 @@
         <Function Name="GetProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetReportsByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
         <Function Name="GetReportsSubmittedByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetResolvedStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetResolvedStickers_ClassASC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="starrank" Type="float" Mode="In" />
+          <Parameter Name="startrow" Type="smallint" Mode="In" />
+          <Parameter Name="endrow" Type="smallint" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="classid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetResolvedStickers_ClassDESC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
           <Parameter Name="endrow" Type="smallint" Mode="In" />
@@ -669,9 +643,6 @@
         <Function Name="GetUsersOverallStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starrank" Type="float" Mode="In" />
         </Function>
-        <Function Name="GetUserStickersAndReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
         <Function Name="GetUserStudentReviews_RankASC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
@@ -697,9 +668,6 @@
           <Parameter Name="endrow" Type="smallint" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="classID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetUsersWithOverallStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="starrank" Type="float" Mode="In" />
         </Function>
         <Function Name="GetUserTutoredStickers_ClassASC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
@@ -737,10 +705,6 @@
           <Parameter Name="Message" Type="nvarchar" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
-        <Function Name="InsertProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="Photo" Type="varbinary(max)" Mode="In" />
-        </Function>
         <Function Name="InsertStudentIntoClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="ClassID" Type="int" Mode="In" />
@@ -755,21 +719,6 @@
         </Function>
         <Function Name="MarkStickerAsResolved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StickerID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="OpenProfilePage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
-        <Function Name="PullActiveClassSpecificStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Name" Type="varchar" Mode="In" />
-          <Parameter Name="Code" Type="varchar" Mode="In" />
-          <Parameter Name="Number" Type="smallint" Mode="In" />
-          <Parameter Name="startrow" Type="smallint" Mode="In" />
-          <Parameter Name="endrow" Type="smallint" Mode="In" />
-          <Parameter Name="userid" Type="int" Mode="In" />
-        </Function>
-        <Function Name="PullChatMessagesAndFilesBetweenUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-          <Parameter Name="tutorid" Type="int" Mode="In" />
         </Function>
         <Function Name="PullChatMessagesBetweenUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
@@ -882,7 +831,6 @@
         <Function Name="UpdateUserTotalReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
-        <Function Name="ViewAllClasses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ViewAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ViewClasses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClassID" Type="int" Mode="In" />
@@ -904,83 +852,83 @@
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToChat" EntityType="Self.UserToChat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserToClass" EntityType="Self.UserToClass" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Friends__UserID__68A0B0EE" Association="Self.FK__Friends__UserID__68A0B0EE">
+          <AssociationSet Name="FK__Friends__UserID__76D9C1AC" Association="Self.FK__Friends__UserID__76D9C1AC">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__ChatID__6B7D1D99" Association="Self.FK__Messages__ChatID__6B7D1D99">
+          <AssociationSet Name="FK__Messages__ChatID__79B62E57" Association="Self.FK__Messages__ChatID__79B62E57">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__6F4DAE7D" Association="Self.FK__Messages__SentBy__6F4DAE7D">
+          <AssociationSet Name="FK__Messages__SentBy__7D86BF3B" Association="Self.FK__Messages__SentBy__7D86BF3B">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__Mentor__750687D3" Association="Self.FK__OmToUser__Mentor__750687D3">
+          <AssociationSet Name="FK__OmToUser__Mentor__033F9891" Association="Self.FK__OmToUser__Mentor__033F9891">
             <End Role="OfficialMentor" EntitySet="OfficialMentor" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__OmToUser__UserID__7412639A" Association="Self.FK__OmToUser__UserID__7412639A">
+          <AssociationSet Name="FK__OmToUser__UserID__024B7458" Association="Self.FK__OmToUser__UserID__024B7458">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="OmToUser" EntitySet="OmToUser" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__7BB38562" Association="Self.FK__Picture__UserID__7BB38562">
+          <AssociationSet Name="FK__Picture__UserID__09EC9620" Association="Self.FK__Picture__UserID__09EC9620">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Picture" EntitySet="Picture" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__175B9FD7" Association="Self.FK__Report__FlaggerI__175B9FD7">
+          <AssociationSet Name="FK__Report__FlaggerI__2594B095" Association="Self.FK__Report__FlaggerI__2594B095">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__184FC410" Association="Self.FK__Report__ReviewID__184FC410">
+          <AssociationSet Name="FK__Report__ReviewID__2688D4CE" Association="Self.FK__Report__ReviewID__2688D4CE">
             <End Role="Review" EntitySet="Review" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__11A2C681" Association="Self.FK__Review__Reviewer__11A2C681">
+          <AssociationSet Name="FK__Review__Reviewer__1FDBD73F" Association="Self.FK__Review__Reviewer__1FDBD73F">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__10AEA248" Association="Self.FK__Review__StickerI__10AEA248">
+          <AssociationSet Name="FK__Review__StickerI__1EE7B306" Association="Self.FK__Review__StickerI__1EE7B306">
             <End Role="Sticker" EntitySet="Sticker" />
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ChatID__063113D5" Association="Self.FK__Sticker__ChatID__063113D5">
+          <AssociationSet Name="FK__Sticker__ChatID__146A2493" Association="Self.FK__Sticker__ChatID__146A2493">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__0448CB63" Association="Self.FK__Sticker__ClassID__0448CB63">
+          <AssociationSet Name="FK__Sticker__ClassID__1281DC21" Association="Self.FK__Sticker__ClassID__1281DC21">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__0725380E" Association="Self.FK__Sticker__Student__0725380E">
+          <AssociationSet Name="FK__Sticker__Student__155E48CC" Association="Self.FK__Sticker__Student__155E48CC">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__090D8080" Association="Self.FK__Sticker__TutorID__090D8080">
+          <AssociationSet Name="FK__Sticker__TutorID__1746913E" Association="Self.FK__Sticker__TutorID__1746913E">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Sticker" EntitySet="Sticker" />
           </AssociationSet>
-          <AssociationSet Name="FK__StickerTo__Mento__0DD2359D" Association="Self.FK__StickerTo__Mento__0DD2359D">
+          <AssociationSet Name="FK__StickerTo__Mento__1C0B465B" Association="Self.FK__StickerTo__Mento__1C0B465B">
             <End Role="OfficialMentor" EntitySet="OfficialMentor" />
             <End Role="StickerToMentor" EntitySet="StickerToMentor" />
           </AssociationSet>
-          <AssociationSet Name="FK__StickerTo__Stick__0CDE1164" Association="Self.FK__StickerTo__Stick__0CDE1164">
+          <AssociationSet Name="FK__StickerTo__Stick__1B172222" Association="Self.FK__StickerTo__Stick__1B172222">
             <End Role="Sticker" EntitySet="Sticker" />
             <End Role="StickerToMentor" EntitySet="StickerToMentor" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__ChatI__78D718B7" Association="Self.FK__UserToCha__ChatI__78D718B7">
+          <AssociationSet Name="FK__UserToCha__ChatI__07102975" Association="Self.FK__UserToCha__ChatI__07102975">
             <End Role="Chat" EntitySet="Chat" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCha__UserI__77E2F47E" Association="Self.FK__UserToCha__UserI__77E2F47E">
+          <AssociationSet Name="FK__UserToCha__UserI__061C053C" Association="Self.FK__UserToCha__UserI__061C053C">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToChat" EntitySet="UserToChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__Class__016C5EB8" Association="Self.FK__UserToCla__Class__016C5EB8">
+          <AssociationSet Name="FK__UserToCla__Class__0FA56F76" Association="Self.FK__UserToCla__Class__0FA56F76">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserToCla__UserI__00783A7F" Association="Self.FK__UserToCla__UserI__00783A7F">
+          <AssociationSet Name="FK__UserToCla__UserI__0EB14B3D" Association="Self.FK__UserToCla__UserI__0EB14B3D">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
@@ -995,8 +943,8 @@
             <PropertyRef Name="ChatID" />
           </Key>
           <Property Name="ChatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__6B7D1D99" FromRole="Chat" ToRole="Messages" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ChatID__063113D5" FromRole="Chat" ToRole="Sticker" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__ChatID__79B62E57" FromRole="Chat" ToRole="Messages" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ChatID__146A2493" FromRole="Chat" ToRole="Sticker" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToChat" FromRole="Chat" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Class">
@@ -1007,7 +955,7 @@
           <Property Name="CourseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseNumber" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__0448CB63" FromRole="Classes" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__ClassID__1281DC21" FromRole="Classes" ToRole="Sticker" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserToClass" FromRole="Classes" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Friend">
@@ -1017,7 +965,7 @@
           <Property Name="FriendID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="FriendUserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Friends__UserID__68A0B0EE" FromRole="Friends" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Friends__UserID__76D9C1AC" FromRole="Friends" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -1030,8 +978,8 @@
           <Property Name="IsFile" Type="Boolean" Nullable="false" />
           <Property Name="SentBy" Type="Int32" Nullable="false" />
           <Property Name="SentTime" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__6B7D1D99" FromRole="Messages" ToRole="Chat" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__6F4DAE7D" FromRole="Messages" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Messages__ChatID__79B62E57" FromRole="Messages" ToRole="Chat" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Messages__SentBy__7D86BF3B" FromRole="Messages" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="OfficialMentor">
           <Key>
@@ -1048,7 +996,7 @@
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__7BB38562" FromRole="Picture" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Picture__UserID__09EC9620" FromRole="Picture" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -1058,8 +1006,8 @@
           <Property Name="ReportDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FlaggerID" Type="Int32" />
           <Property Name="ReviewID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__175B9FD7" FromRole="Report" ToRole="UserProfile" />
-          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__184FC410" FromRole="Report" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Report__FlaggerI__2594B095" FromRole="Report" ToRole="UserProfile" />
+          <NavigationProperty Name="Review" Relationship="Self.FK__Report__ReviewID__2688D4CE" FromRole="Report" ToRole="Review" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -1070,9 +1018,9 @@
           <Property Name="ReviewerID" Type="Int32" Nullable="false" />
           <Property Name="StarRanking" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__184FC410" FromRole="Review" ToRole="Report" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__11A2C681" FromRole="Review" ToRole="UserProfile" />
-          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__10AEA248" FromRole="Review" ToRole="Sticker" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__ReviewID__2688D4CE" FromRole="Review" ToRole="Report" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Review__Reviewer__1FDBD73F" FromRole="Review" ToRole="UserProfile" />
+          <NavigationProperty Name="Sticker" Relationship="Self.FK__Review__StickerI__1EE7B306" FromRole="Review" ToRole="Sticker" />
         </EntityType>
         <EntityType Name="ServerAdmin">
           <Key>
@@ -1098,11 +1046,11 @@
           <Property Name="MinimumStarRanking" Type="Double" />
           <Property Name="SubmitTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Timeout" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="Chat" Relationship="Self.FK__Sticker__ChatID__063113D5" FromRole="Sticker" ToRole="Chat" />
-          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__0448CB63" FromRole="Sticker" ToRole="Classes" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__10AEA248" FromRole="Sticker" ToRole="Review" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__0725380E" FromRole="Sticker" ToRole="UserProfile" />
-          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__090D8080" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="Chat" Relationship="Self.FK__Sticker__ChatID__146A2493" FromRole="Sticker" ToRole="Chat" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Sticker__ClassID__1281DC21" FromRole="Sticker" ToRole="Classes" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__StickerI__1EE7B306" FromRole="Sticker" ToRole="Review" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__Sticker__Student__155E48CC" FromRole="Sticker" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="Self.FK__Sticker__TutorID__1746913E" FromRole="Sticker" ToRole="UserProfile" />
           <NavigationProperty Name="OfficialMentors" Relationship="Self.StickerToMentor" FromRole="Sticker" ToRole="OfficialMentor" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -1130,18 +1078,18 @@
           <Property Name="TotalStudentReviews" Type="Int32" Nullable="false" />
           <Property Name="Privileges" Type="Int32" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__UserID__68A0B0EE" FromRole="UserProfile" ToRole="Friends" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__6F4DAE7D" FromRole="UserProfile" ToRole="Messages" />
-          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__7BB38562" FromRole="UserProfile" ToRole="Picture" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__175B9FD7" FromRole="UserProfile" ToRole="Report" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__11A2C681" FromRole="UserProfile" ToRole="Review" />
-          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__0725380E" FromRole="UserProfile" ToRole="Sticker" />
-          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__090D8080" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__UserID__76D9C1AC" FromRole="UserProfile" ToRole="Friends" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__SentBy__7D86BF3B" FromRole="UserProfile" ToRole="Messages" />
+          <NavigationProperty Name="Picture" Relationship="Self.FK__Picture__UserID__09EC9620" FromRole="UserProfile" ToRole="Picture" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK__Report__FlaggerI__2594B095" FromRole="UserProfile" ToRole="Report" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Reviewer__1FDBD73F" FromRole="UserProfile" ToRole="Review" />
+          <NavigationProperty Name="Stickers" Relationship="Self.FK__Sticker__Student__155E48CC" FromRole="UserProfile" ToRole="Sticker" />
+          <NavigationProperty Name="Stickers1" Relationship="Self.FK__Sticker__TutorID__1746913E" FromRole="UserProfile" ToRole="Sticker" />
           <NavigationProperty Name="OfficialMentors" Relationship="Self.OmToUser" FromRole="UserProfile" ToRole="OfficialMentor" />
           <NavigationProperty Name="Chats" Relationship="Self.UserToChat" FromRole="UserProfile" ToRole="Chat" />
           <NavigationProperty Name="Classes" Relationship="Self.UserToClass" FromRole="UserProfile" ToRole="Classes" />
         </EntityType>
-        <Association Name="FK__Messages__ChatID__6B7D1D99">
+        <Association Name="FK__Messages__ChatID__79B62E57">
           <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1153,7 +1101,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ChatID__063113D5">
+        <Association Name="FK__Sticker__ChatID__146A2493">
           <End Role="Chat" Type="Self.Chat" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1165,7 +1113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__ClassID__0448CB63">
+        <Association Name="FK__Sticker__ClassID__1281DC21">
           <End Role="Classes" Type="Self.Class" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1177,7 +1125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Friends__UserID__68A0B0EE">
+        <Association Name="FK__Friends__UserID__76D9C1AC">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Friends" Type="Self.Friend" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1189,7 +1137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__SentBy__6F4DAE7D">
+        <Association Name="FK__Messages__SentBy__7D86BF3B">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1201,7 +1149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Picture__UserID__7BB38562">
+        <Association Name="FK__Picture__UserID__09EC9620">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Picture" Type="Self.Picture" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -1213,7 +1161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__FlaggerI__175B9FD7">
+        <Association Name="FK__Report__FlaggerI__2594B095">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1225,7 +1173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Report__ReviewID__184FC410">
+        <Association Name="FK__Report__ReviewID__2688D4CE">
           <End Role="Review" Type="Self.Review" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1237,7 +1185,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__Reviewer__11A2C681">
+        <Association Name="FK__Review__Reviewer__1FDBD73F">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1249,7 +1197,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Review__StickerI__10AEA248">
+        <Association Name="FK__Review__StickerI__1EE7B306">
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1261,7 +1209,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__Student__0725380E">
+        <Association Name="FK__Sticker__Student__155E48CC">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1273,7 +1221,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sticker__TutorID__090D8080">
+        <Association Name="FK__Sticker__TutorID__1746913E">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Sticker" Type="Self.Sticker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1314,51 +1262,51 @@
           <EntitySet Name="Stickers" EntityType="Self.Sticker" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
-          <AssociationSet Name="FK__Messages__ChatID__6B7D1D99" Association="Self.FK__Messages__ChatID__6B7D1D99">
+          <AssociationSet Name="FK__Messages__ChatID__79B62E57" Association="Self.FK__Messages__ChatID__79B62E57">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ChatID__063113D5" Association="Self.FK__Sticker__ChatID__063113D5">
+          <AssociationSet Name="FK__Sticker__ChatID__146A2493" Association="Self.FK__Sticker__ChatID__146A2493">
             <End Role="Chat" EntitySet="Chats" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__ClassID__0448CB63" Association="Self.FK__Sticker__ClassID__0448CB63">
+          <AssociationSet Name="FK__Sticker__ClassID__1281DC21" Association="Self.FK__Sticker__ClassID__1281DC21">
             <End Role="Classes" EntitySet="Classes" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Friends__UserID__68A0B0EE" Association="Self.FK__Friends__UserID__68A0B0EE">
+          <AssociationSet Name="FK__Friends__UserID__76D9C1AC" Association="Self.FK__Friends__UserID__76D9C1AC">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Friends" EntitySet="Friends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__SentBy__6F4DAE7D" Association="Self.FK__Messages__SentBy__6F4DAE7D">
+          <AssociationSet Name="FK__Messages__SentBy__7D86BF3B" Association="Self.FK__Messages__SentBy__7D86BF3B">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Picture__UserID__7BB38562" Association="Self.FK__Picture__UserID__7BB38562">
+          <AssociationSet Name="FK__Picture__UserID__09EC9620" Association="Self.FK__Picture__UserID__09EC9620">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Picture" EntitySet="Pictures" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__FlaggerI__175B9FD7" Association="Self.FK__Report__FlaggerI__175B9FD7">
+          <AssociationSet Name="FK__Report__FlaggerI__2594B095" Association="Self.FK__Report__FlaggerI__2594B095">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Report__ReviewID__184FC410" Association="Self.FK__Report__ReviewID__184FC410">
+          <AssociationSet Name="FK__Report__ReviewID__2688D4CE" Association="Self.FK__Report__ReviewID__2688D4CE">
             <End Role="Review" EntitySet="Reviews" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__Reviewer__11A2C681" Association="Self.FK__Review__Reviewer__11A2C681">
+          <AssociationSet Name="FK__Review__Reviewer__1FDBD73F" Association="Self.FK__Review__Reviewer__1FDBD73F">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Review__StickerI__10AEA248" Association="Self.FK__Review__StickerI__10AEA248">
+          <AssociationSet Name="FK__Review__StickerI__1EE7B306" Association="Self.FK__Review__StickerI__1EE7B306">
             <End Role="Sticker" EntitySet="Stickers" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__Student__0725380E" Association="Self.FK__Sticker__Student__0725380E">
+          <AssociationSet Name="FK__Sticker__Student__155E48CC" Association="Self.FK__Sticker__Student__155E48CC">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sticker__TutorID__090D8080" Association="Self.FK__Sticker__TutorID__090D8080">
+          <AssociationSet Name="FK__Sticker__TutorID__1746913E" Association="Self.FK__Sticker__TutorID__1746913E">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Sticker" EntitySet="Stickers" />
           </AssociationSet>
@@ -1396,10 +1344,6 @@
           </FunctionImport>
           <FunctionImport Name="AdminPullReportsForOptionalUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ChangeProfilePicture">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="Photo" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="ClearReviewDescriptionByReviewID">
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
@@ -1489,18 +1433,6 @@
           <FunctionImport Name="DeleteUserProfileByUserID">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="FilterUserReviewsByEqualStarRank" ReturnType="Collection(UnstuckME_DBModel.FilterUserReviewsByEqualStarRank_Result)">
-            <Parameter Name="starfilter" Mode="In" Type="Double" />
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="FilterUserReviewsByGreaterThanStarRank" ReturnType="Collection(UnstuckME_DBModel.FilterUserReviewsByGreaterThanStarRank_Result)">
-            <Parameter Name="starfilter" Mode="In" Type="Double" />
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="FilterUserReviewsByStarRank" ReturnType="Collection(UnstuckME_DBModel.FilterUserReviewsByStarRank_Result)">
-            <Parameter Name="starfilter" Mode="In" Type="Double" />
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetActiveStickers_ClassASC" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickers_ClassASC_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
@@ -1547,17 +1479,6 @@
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetActiveStickersWithStarRankOrMentorOrganization" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickersWithStarRankOrMentorOrganization_Result)">
-            <Parameter Name="starrank" Mode="In" Type="Double" />
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-            <Parameter Name="organization" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetAllActiveStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllActiveStickers_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetAllChatIDsAUserIsPartOF" ReturnType="Collection(UnstuckME_DBModel.GetAllChatIDsAUserIsPartOF_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetAllChatsAUserIsPartOF" ReturnType="Collection(Int32)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1565,9 +1486,6 @@
             <Parameter Name="chatid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllOrganizations" ReturnType="Collection(UnstuckME_DBModel.GetAllOrganizations_Result)" />
-          <FunctionImport Name="GetAllResolvedStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllResolvedStickers_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetAllStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllStickers_Result)" />
           <FunctionImport Name="GetAllStudentReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllStudentReviews_Result)" />
           <FunctionImport Name="GetAllTutorReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllTutorReviews_Result)" />
@@ -1592,13 +1510,17 @@
           <FunctionImport Name="GetProfilePicture" ReturnType="Collection(Binary)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetReportsByUser" ReturnType="Collection(UnstuckME_DBModel.GetReportsByUser_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetReportsSubmittedByUser" ReturnType="Collection(UnstuckME_DBModel.GetReportsSubmittedByUser_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetResolvedStickers" ReturnType="Collection(UnstuckME_DBModel.GetResolvedStickers_Result)">
+          <FunctionImport Name="GetResolvedStickers_ClassASC" ReturnType="Collection(UnstuckME_DBModel.GetResolvedStickers_ClassASC_Result)">
+            <Parameter Name="starrank" Mode="In" Type="Double" />
+            <Parameter Name="startrow" Mode="In" Type="Int16" />
+            <Parameter Name="endrow" Mode="In" Type="Int16" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="classid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetResolvedStickers_ClassDESC" ReturnType="Collection(UnstuckME_DBModel.GetResolvedStickers_ClassDESC_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
             <Parameter Name="endrow" Mode="In" Type="Int16" />
@@ -1650,9 +1572,6 @@
           <FunctionImport Name="GetUsersOverallStarRank" ReturnType="Collection(UnstuckME_DBModel.GetUsersOverallStarRank_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="GetUserStickersAndReviews" ReturnType="Collection(UnstuckME_DBModel.GetUserStickersAndReviews_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetUserStudentReviews_RankASC" ReturnType="Collection(UnstuckME_DBModel.GetUserStudentReviews_RankASC_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
@@ -1678,9 +1597,6 @@
             <Parameter Name="endrow" Mode="In" Type="Int16" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="classID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetUsersWithOverallStarRank" ReturnType="Collection(UnstuckME_DBModel.GetUsersWithOverallStarRank_Result)">
-            <Parameter Name="starrank" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="GetUserTutoredStickers_ClassASC" ReturnType="Collection(UnstuckME_DBModel.GetUserTutoredStickers_ClassASC_Result)">
             <Parameter Name="userID" Mode="In" Type="Int32" />
@@ -1718,10 +1634,6 @@
             <Parameter Name="Message" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="InsertProfilePicture">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="Photo" Mode="In" Type="Binary" />
-          </FunctionImport>
           <FunctionImport Name="InsertStudentIntoClass">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
@@ -1736,21 +1648,6 @@
           </FunctionImport>
           <FunctionImport Name="MarkStickerAsResolved">
             <Parameter Name="StickerID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="OpenProfilePage" ReturnType="Collection(Binary)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="PullActiveClassSpecificStickers" ReturnType="Collection(UnstuckME_DBModel.PullActiveClassSpecificStickers_Result)">
-            <Parameter Name="Name" Mode="In" Type="String" />
-            <Parameter Name="Code" Mode="In" Type="String" />
-            <Parameter Name="Number" Mode="In" Type="Int16" />
-            <Parameter Name="startrow" Mode="In" Type="Int16" />
-            <Parameter Name="endrow" Mode="In" Type="Int16" />
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="PullChatMessagesAndFilesBetweenUsers" ReturnType="Collection(UnstuckME_DBModel.PullChatMessagesAndFilesBetweenUsers_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-            <Parameter Name="tutorid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PullChatMessagesBetweenUsers" ReturnType="Collection(UnstuckME_DBModel.PullChatMessagesBetweenUsers_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
@@ -1860,10 +1757,9 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="UserPassword" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UpdateUserTotalReviews">
+          <FunctionImport Name="UpdateUserTotalReviews" ReturnType="Collection(UnstuckME_DBModel.UpdateUserTotalReviews_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="ViewAllClasses" ReturnType="Collection(String)" />
           <FunctionImport Name="ViewAllUsers" ReturnType="Collection(UnstuckME_DBModel.ViewAllUsers_Result)" />
           <FunctionImport Name="ViewClasses" ReturnType="Collection(UnstuckME_DBModel.ViewClasses_Result)">
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
@@ -1877,22 +1773,6 @@
           <Property Type="Double" Name="ReviewStarRanking" Nullable="true" />
           <Property Type="String" Name="ReviewDescription" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="FilterUserReviewsByEqualStarRank_Result">
-          <Property Type="String" Name="User" Nullable="false" MaxLength="65" />
-          <Property Type="Double" Name="StarRanking" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
-        </ComplexType>
-        <ComplexType Name="FilterUserReviewsByGreaterThanStarRank_Result">
-          <Property Type="String" Name="User" Nullable="false" MaxLength="65" />
-          <Property Type="Double" Name="StarRanking" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
-        </ComplexType>
-        <ComplexType Name="FilterUserReviewsByStarRank_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="Double" Name="StarRanking" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
         <ComplexType Name="GetActiveStickers_ClassASC_Result">
           <Property Type="Int64" Name="Row" Nullable="true" />
@@ -1990,28 +1870,6 @@
           <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
           <Property Type="DateTime" Name="Timeout" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="GetActiveStickersWithStarRankOrMentorOrganization_Result">
-          <Property Type="String" Name="Student" Nullable="false" MaxLength="65" />
-          <Property Type="String" Name="Course" Nullable="true" MaxLength="139" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
-          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
-          <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="GetAllActiveStickers_Result">
-          <Property Type="String" Name="Student" Nullable="false" MaxLength="65" />
-          <Property Type="String" Name="Course" Nullable="true" MaxLength="139" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
-          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetAllChatIDsAUserIsPartOF_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="Int32" Name="ChatID" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="GetAllMembersOfAChat_Result">
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
@@ -2025,17 +1883,6 @@
         <ComplexType Name="GetAllOrganizations_Result">
           <Property Type="Int32" Name="MentorID" Nullable="false" />
           <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="GetAllResolvedStickers_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
-          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetAllStickers_Result">
           <Property Type="Int32" Name="StickerID" Nullable="false" />
@@ -2077,19 +1924,29 @@
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="GetReportsByUser_Result">
-          <Property Type="Int32" Name="ReportID" Nullable="false" />
-          <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="FlaggerID" Nullable="true" />
-          <Property Type="Int32" Name="ReviewID" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="GetReportsSubmittedByUser_Result">
           <Property Type="Int32" Name="ReportID" Nullable="false" />
           <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="FlaggerID" Nullable="true" />
           <Property Type="Int32" Name="ReviewID" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="GetResolvedStickers_Result">
+        <ComplexType Name="GetResolvedStickers_ClassASC_Result">
+          <Property Type="Int64" Name="Row" Nullable="true" />
+          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
+          <Property Type="Int32" Name="StickerID" Nullable="false" />
+          <Property Type="Int32" Name="ClassID" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="TutorID" Nullable="true" />
+          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
+          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetResolvedStickers_ClassDESC_Result">
           <Property Type="Int64" Name="Row" Nullable="true" />
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
@@ -2181,14 +2038,6 @@
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
           <Property Type="Double" Name="AvgStarRank" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetUserStickersAndReviews_Result">
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
-          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="Double" Name="StarRanking" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
-        </ComplexType>
         <ComplexType Name="GetUserStudentReviews_RankASC_Result">
           <Property Type="Int64" Name="Row" Nullable="true" />
           <Property Type="Int32" Name="ReviewID" Nullable="false" />
@@ -2228,12 +2077,6 @@
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
           <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
           <Property Type="DateTime" Name="Timeout" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetUsersWithOverallStarRank_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="AvgStarRank" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetUserTutoredStickers_ClassASC_Result">
           <Property Type="Int64" Name="Row" Nullable="true" />
@@ -2275,23 +2118,6 @@
           <Property Type="Double" Name="StarRanking" Nullable="true" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
-        <ComplexType Name="PullActiveClassSpecificStickers_Result">
-          <Property Type="Int64" Name="Row" Nullable="true" />
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
-          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="PullChatMessagesAndFilesBetweenUsers_Result">
-          <Property Type="String" Name="Sender" Nullable="false" MaxLength="65" />
-          <Property Type="String" Name="MessageData" Nullable="true" MaxLength="500" />
-          <Property Type="DateTime" Name="SentTime" Nullable="false" Precision="16" />
-        </ComplexType>
         <ComplexType Name="PullChatMessagesBetweenUsers_Result">
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
@@ -2310,6 +2136,14 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateUserTotalReviews_Result">
+          <Property Type="Int64" Name="Row" Nullable="true" />
+          <Property Type="Int32" Name="ReviewID" Nullable="false" />
+          <Property Type="Int32" Name="StickerID" Nullable="false" />
+          <Property Type="Int32" Name="ReviewerID" Nullable="false" />
+          <Property Type="Double" Name="StarRanking" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
         <ComplexType Name="ViewAllUsers_Result">
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
@@ -2513,7 +2347,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ChangeProfilePicture" FunctionName="UnstuckME_DBModel.Store.ChangeProfilePicture" />
           <FunctionImportMapping FunctionImportName="ClearReviewDescriptionByReviewID" FunctionName="UnstuckME_DBModel.Store.ClearReviewDescriptionByReviewID" />
           <FunctionImportMapping FunctionImportName="CreateChat" FunctionName="UnstuckME_DBModel.Store.CreateChat" />
           <FunctionImportMapping FunctionImportName="CreateMentorOrganization" FunctionName="UnstuckME_DBModel.Store.CreateMentorOrganization" />
@@ -2535,34 +2368,6 @@
           <FunctionImportMapping FunctionImportName="DeleteUserFromClass" FunctionName="UnstuckME_DBModel.Store.DeleteUserFromClass" />
           <FunctionImportMapping FunctionImportName="DeleteUserPictureByUserID" FunctionName="UnstuckME_DBModel.Store.DeleteUserPictureByUserID" />
           <FunctionImportMapping FunctionImportName="DeleteUserProfileByUserID" FunctionName="UnstuckME_DBModel.Store.DeleteUserProfileByUserID" />
-          <FunctionImportMapping FunctionImportName="FilterUserReviewsByEqualStarRank" FunctionName="UnstuckME_DBModel.Store.FilterUserReviewsByEqualStarRank">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.FilterUserReviewsByEqualStarRank_Result">
-                <ScalarProperty Name="User" ColumnName="User" />
-                <ScalarProperty Name="StarRanking" ColumnName="StarRanking" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FilterUserReviewsByGreaterThanStarRank" FunctionName="UnstuckME_DBModel.Store.FilterUserReviewsByGreaterThanStarRank">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.FilterUserReviewsByGreaterThanStarRank_Result">
-                <ScalarProperty Name="User" ColumnName="User" />
-                <ScalarProperty Name="StarRanking" ColumnName="StarRanking" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FilterUserReviewsByStarRank" FunctionName="UnstuckME_DBModel.Store.FilterUserReviewsByStarRank">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.FilterUserReviewsByStarRank_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
-                <ScalarProperty Name="StarRanking" ColumnName="StarRanking" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetActiveStickers_ClassASC" FunctionName="UnstuckME_DBModel.Store.GetActiveStickers_ClassASC">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetActiveStickers_ClassASC_Result">
@@ -2683,40 +2488,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetActiveStickersWithStarRankOrMentorOrganization" FunctionName="UnstuckME_DBModel.Store.GetActiveStickersWithStarRankOrMentorOrganization">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetActiveStickersWithStarRankOrMentorOrganization_Result">
-                <ScalarProperty Name="Student" ColumnName="Student" />
-                <ScalarProperty Name="Course" ColumnName="Course" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
-                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
-                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllActiveStickers" FunctionName="UnstuckME_DBModel.Store.GetAllActiveStickers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetAllActiveStickers_Result">
-                <ScalarProperty Name="Student" ColumnName="Student" />
-                <ScalarProperty Name="Course" ColumnName="Course" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
-                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllChatIDsAUserIsPartOF" FunctionName="UnstuckME_DBModel.Store.GetAllChatIDsAUserIsPartOF">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetAllChatIDsAUserIsPartOF_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
-                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllChatsAUserIsPartOF" FunctionName="UnstuckME_DBModel.Store.GetAllChatsAUserIsPartOF" />
           <FunctionImportMapping FunctionImportName="GetAllMembersOfAChat" FunctionName="UnstuckME_DBModel.Store.GetAllMembersOfAChat">
             <ResultMapping>
@@ -2737,21 +2508,6 @@
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetAllOrganizations_Result">
                 <ScalarProperty Name="MentorID" ColumnName="MentorID" />
                 <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllResolvedStickers" FunctionName="UnstuckME_DBModel.Store.GetAllResolvedStickers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetAllResolvedStickers_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
-                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
-                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
-                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2820,16 +2576,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetProfilePicture" FunctionName="UnstuckME_DBModel.Store.GetProfilePicture" />
-          <FunctionImportMapping FunctionImportName="GetReportsByUser" FunctionName="UnstuckME_DBModel.Store.GetReportsByUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetReportsByUser_Result">
-                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
-                <ScalarProperty Name="ReportDescription" ColumnName="ReportDescription" />
-                <ScalarProperty Name="FlaggerID" ColumnName="FlaggerID" />
-                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetReportsSubmittedByUser" FunctionName="UnstuckME_DBModel.Store.GetReportsSubmittedByUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetReportsSubmittedByUser_Result">
@@ -2840,9 +2586,29 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetResolvedStickers" FunctionName="UnstuckME_DBModel.Store.GetResolvedStickers">
+          <FunctionImportMapping FunctionImportName="GetResolvedStickers_ClassASC" FunctionName="UnstuckME_DBModel.Store.GetResolvedStickers_ClassASC">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetResolvedStickers_Result">
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetResolvedStickers_ClassASC_Result">
+                <ScalarProperty Name="Row" ColumnName="Row" />
+                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
+                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
+                <ScalarProperty Name="StickerID" ColumnName="StickerID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
+                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetResolvedStickers_ClassDESC" FunctionName="UnstuckME_DBModel.Store.GetResolvedStickers_ClassDESC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetResolvedStickers_ClassDESC_Result">
                 <ScalarProperty Name="Row" ColumnName="Row" />
                 <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
                 <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
@@ -2972,18 +2738,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetUserStickersAndReviews" FunctionName="UnstuckME_DBModel.Store.GetUserStickersAndReviews">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUserStickersAndReviews_Result">
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
-                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
-                <ScalarProperty Name="StarRanking" ColumnName="StarRanking" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetUserStudentReviews_RankASC" FunctionName="UnstuckME_DBModel.Store.GetUserStudentReviews_RankASC">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUserStudentReviews_RankASC_Result">
@@ -3037,16 +2791,6 @@
                 <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
                 <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
                 <ScalarProperty Name="Timeout" ColumnName="Timeout" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetUsersWithOverallStarRank" FunctionName="UnstuckME_DBModel.Store.GetUsersWithOverallStarRank">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUsersWithOverallStarRank_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="AvgStarRank" ColumnName="AvgStarRank" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3108,37 +2852,10 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertFile" FunctionName="UnstuckME_DBModel.Store.InsertFile" />
           <FunctionImportMapping FunctionImportName="InsertMessage" FunctionName="UnstuckME_DBModel.Store.InsertMessage" />
-          <FunctionImportMapping FunctionImportName="InsertProfilePicture" FunctionName="UnstuckME_DBModel.Store.InsertProfilePicture" />
           <FunctionImportMapping FunctionImportName="InsertStudentIntoClass" FunctionName="UnstuckME_DBModel.Store.InsertStudentIntoClass" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoChat" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoChat" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoMentorProgram" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoMentorProgram" />
           <FunctionImportMapping FunctionImportName="MarkStickerAsResolved" FunctionName="UnstuckME_DBModel.Store.MarkStickerAsResolved" />
-          <FunctionImportMapping FunctionImportName="OpenProfilePage" FunctionName="UnstuckME_DBModel.Store.OpenProfilePage" />
-          <FunctionImportMapping FunctionImportName="PullActiveClassSpecificStickers" FunctionName="UnstuckME_DBModel.Store.PullActiveClassSpecificStickers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.PullActiveClassSpecificStickers_Result">
-                <ScalarProperty Name="Row" ColumnName="Row" />
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
-                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
-                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
-                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PullChatMessagesAndFilesBetweenUsers" FunctionName="UnstuckME_DBModel.Store.PullChatMessagesAndFilesBetweenUsers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.PullChatMessagesAndFilesBetweenUsers_Result">
-                <ScalarProperty Name="Sender" ColumnName="Sender" />
-                <ScalarProperty Name="MessageData" ColumnName="MessageData" />
-                <ScalarProperty Name="SentTime" ColumnName="SentTime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PullChatMessagesBetweenUsers" FunctionName="UnstuckME_DBModel.Store.PullChatMessagesBetweenUsers">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.PullChatMessagesBetweenUsers_Result">
@@ -3193,8 +2910,18 @@
           <FunctionImportMapping FunctionImportName="UpdateTutorIDByTutorIDAndStickerID" FunctionName="UnstuckME_DBModel.Store.UpdateTutorIDByTutorIDAndStickerID" />
           <FunctionImportMapping FunctionImportName="UpdateUserAverageRank" FunctionName="UnstuckME_DBModel.Store.UpdateUserAverageRank" />
           <FunctionImportMapping FunctionImportName="UpdateUserPasswordByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateUserPasswordByUserID" />
-          <FunctionImportMapping FunctionImportName="UpdateUserTotalReviews" FunctionName="UnstuckME_DBModel.Store.UpdateUserTotalReviews" />
-          <FunctionImportMapping FunctionImportName="ViewAllClasses" FunctionName="UnstuckME_DBModel.Store.ViewAllClasses" />
+          <FunctionImportMapping FunctionImportName="UpdateUserTotalReviews" FunctionName="UnstuckME_DBModel.Store.UpdateUserTotalReviews">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.UpdateUserTotalReviews_Result">
+                <ScalarProperty Name="Row" ColumnName="Row" />
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
+                <ScalarProperty Name="StickerID" ColumnName="StickerID" />
+                <ScalarProperty Name="ReviewerID" ColumnName="ReviewerID" />
+                <ScalarProperty Name="StarRanking" ColumnName="StarRanking" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ViewAllUsers" FunctionName="UnstuckME_DBModel.Store.ViewAllUsers">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.ViewAllUsers_Result">

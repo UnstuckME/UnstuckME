@@ -11,14 +11,13 @@ namespace UnstuckMEServer
 {
     using System;
     
-    public partial class GetActiveStickersWithStarRankOrMentorOrganization_Result
+    public partial class UpdateUserTotalReviews_Result
     {
-        public string Student { get; set; }
-        public string Course { get; set; }
-        public string ProblemDescription { get; set; }
-        public Nullable<double> MinimumStarRanking { get; set; }
-        public System.DateTime SubmitTime { get; set; }
-        public System.DateTime Timeout { get; set; }
-        public string OrganizationName { get; set; }
+        public Nullable<long> Row { get; set; }
+        public int ReviewID { get; set; }
+        public int StickerID { get; set; }
+        public int ReviewerID { get; set; }
+        public Nullable<double> StarRanking { get; set; }
+        public string Description { get; set; }
     }
 }

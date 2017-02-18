@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a82f20f510bd47bda14aff8a6e378021" Name="Diagram1">
+      <Diagram DiagramId="487243e344d441cca120dc679d5a69b8" Name="Diagram1">
         <EntityTypeShape EntityType="UnstuckME_DBModel.Chat" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="UnstuckME_DBModel.Class" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="UnstuckME_DBModel.Friend" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
@@ -17,18 +17,18 @@
         <EntityTypeShape EntityType="UnstuckME_DBModel.Sticker" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="UnstuckME_DBModel.sysdiagram" Width="1.5" PointX="8.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="UnstuckME_DBModel.UserProfile" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Messages__ChatID__6B7D1D99" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__ChatID__063113D5" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__ClassID__0448CB63" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Friends__UserID__68A0B0EE" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Messages__SentBy__6F4DAE7D" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Picture__UserID__7BB38562" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Report__FlaggerI__175B9FD7" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Report__ReviewID__184FC410" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Review__Reviewer__11A2C681" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Review__StickerI__10AEA248" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__Student__0725380E" ManuallyRouted="false" />
-        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__TutorID__090D8080" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Messages__ChatID__79B62E57" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__ChatID__146A2493" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__ClassID__1281DC21" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Friends__UserID__76D9C1AC" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Messages__SentBy__7D86BF3B" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Picture__UserID__09EC9620" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Report__FlaggerI__2594B095" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Report__ReviewID__2688D4CE" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Review__Reviewer__1FDBD73F" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Review__StickerI__1EE7B306" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__Student__155E48CC" ManuallyRouted="false" />
+        <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__TutorID__1746913E" ManuallyRouted="false" />
         <AssociationConnector Association="UnstuckME_DBModel.OmToUser" ManuallyRouted="false" />
         <AssociationConnector Association="UnstuckME_DBModel.StickerToMentor" ManuallyRouted="false" />
         <AssociationConnector Association="UnstuckME_DBModel.UserToChat" ManuallyRouted="false" />

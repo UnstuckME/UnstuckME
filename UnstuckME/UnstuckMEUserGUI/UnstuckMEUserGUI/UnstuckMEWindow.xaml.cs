@@ -92,7 +92,7 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                // your asynchronous code here.
+                Server.GetUserChats(User.UserID);
             });
         }
 

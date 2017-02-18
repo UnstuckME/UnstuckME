@@ -11,11 +11,13 @@ namespace UnstuckMEServerGUI
 {
     using System;
     
-    public partial class GetUsersWithOverallStarRank_Result
+    public partial class UpdateUserTotalReviews_Result
     {
-        public string DisplayFName { get; set; }
-        public string DisplayLName { get; set; }
-        public string EmailAddress { get; set; }
-        public Nullable<double> AvgStarRank { get; set; }
+        public Nullable<long> Row { get; set; }
+        public int ReviewID { get; set; }
+        public int StickerID { get; set; }
+        public int ReviewerID { get; set; }
+        public Nullable<double> StarRanking { get; set; }
+        public string Description { get; set; }
     }
 }

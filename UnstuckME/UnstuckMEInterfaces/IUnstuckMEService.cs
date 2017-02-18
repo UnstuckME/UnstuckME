@@ -148,7 +148,7 @@ namespace UnstuckMEInterfaces
         int InsertUserIntoChat(int userID, int chatID);
 
         [OperationContract]
-        List<UnstuckMEChat> GetUserChats(int userID, string userName);
+        List<UnstuckMEChat> GetUserChats(int userID);
 
         [OperationContract]
         void SendMessage(UnstuckMESendChatMessage message);

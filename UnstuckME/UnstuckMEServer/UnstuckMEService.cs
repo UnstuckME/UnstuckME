@@ -37,7 +37,7 @@ namespace UnstuckMEInterfaces
 			{
 				try
 				{
-					db.CreateChat(3);
+					db.CreateChat(2);
 				}
 				catch (Exception ex)
 				{
@@ -1233,17 +1233,18 @@ namespace UnstuckMEInterfaces
 			Console.WriteLine("Hello World");
 		}
 
-		public List<UnstuckMEChat> GetUserChats(int userID, string userName)
+		public List<UnstuckMEChat> GetUserChats(int userID)
 		{
 			try
 			{
 				List<UnstuckMEChat> chats = new List<UnstuckMEChat>();
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
-					var dbChats = db.GetAllChatIDsAUserIsPartOF(userID);
+					var dbChats = db.GetAllChatsAUserIsPartOF(userID);
 
 					foreach (var chatItem in dbChats)
 					{
+                        Console.WriteLine("Chat ID: " + chatItem.Value);
 						//chats.Add(new UnstuckMEChat(chatItem.ChatID, userID, userName));
 						//var test = from a in db.Get
 						//           where a.ChatID == chatItem.ChatID

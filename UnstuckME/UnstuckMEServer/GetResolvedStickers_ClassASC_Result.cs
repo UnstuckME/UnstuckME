@@ -11,10 +11,18 @@ namespace UnstuckMEServer
 {
     using System;
     
-    public partial class GetAllActiveStickers_Result
+    public partial class GetResolvedStickers_ClassASC_Result
     {
-        public string Student { get; set; }
-        public string Course { get; set; }
+        public Nullable<long> Row { get; set; }
+        public string DisplayFName { get; set; }
+        public string DisplayLName { get; set; }
+        public int StickerID { get; set; }
+        public int ClassID { get; set; }
+        public int StudentID { get; set; }
+        public Nullable<int> TutorID { get; set; }
+        public string CourseCode { get; set; }
+        public short CourseNumber { get; set; }
+        public string CourseName { get; set; }
         public string ProblemDescription { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
         public System.DateTime SubmitTime { get; set; }
