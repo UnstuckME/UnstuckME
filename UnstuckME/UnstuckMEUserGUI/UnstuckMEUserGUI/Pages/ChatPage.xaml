@@ -58,7 +58,11 @@
 
             <Grid Grid.Row="0" Background="#336699">
                 <Border BorderBrush="Black" BorderThickness="0,0,0,1">
-                    <StackPanel></StackPanel>
+                    
+                </Border>
+                <Label x:Name="LabelConversationName" Foreground="White" Content="Conversation Name" FontSize="16" VerticalContentAlignment="Center" VerticalAlignment="Stretch"></Label>
+                <Border x:Name="BorderAddUserToConvo" Margin="0,0,5,0" BorderThickness="1,1,1,1" Cursor="Hand" Height="30" Width="30" BorderBrush="DimGray" VerticalAlignment="Center" HorizontalAlignment="Right" Background="SteelBlue">
+                    <Image x:Name="ImageAddUserToConvo" Cursor="Hand" Source="/Resources/AddUser/AddUserWhite.png" MouseEnter="ImageAddUserToConvo_MouseEnter" MouseLeave="ImageAddUserToConvo_MouseLeave" MouseLeftButtonDown="ImageAddUserToConvo_MouseLeftButtonDown"></Image>
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
@@ -66,9 +70,7 @@
                     <StackPanel x:Name="StackPanelMessages" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     </StackPanel>
                 </ScrollViewer>
-                <Border x:Name="BorderAddUserToConvo" BorderThickness="1,0,0,1" Cursor="Hand" Height="35" Width="35" BorderBrush="DimGray" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Gray">
-                    <Image x:Name="ImageAddUserToConvo" Cursor="Hand" Source="/Resources/AddUser/AddUserWhite.png" MouseEnter="ImageAddUserToConvo_MouseEnter" MouseLeave="ImageAddUserToConvo_MouseLeave" MouseLeftButtonDown="ImageAddUserToConvo_MouseLeftButtonDown"></Image>
-                </Border>
+        
                 <Border BorderBrush="DimGray" BorderThickness="0,0,0,1"></Border>
                 
             </Grid>

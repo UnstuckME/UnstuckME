@@ -132,12 +132,12 @@ namespace UnstuckMEUserGUI
 
         private void ImageAddUserToConvo_MouseEnter(object sender, MouseEventArgs e)
         {
-            BorderAddUserToConvo.Background = Brushes.SteelBlue;
+            BorderAddUserToConvo.Background = Brushes.LightBlue;
         }
 
         private void ImageAddUserToConvo_MouseLeave(object sender, MouseEventArgs e)
         {
-            BorderAddUserToConvo.Background = Brushes.Gray;
+            BorderAddUserToConvo.Background = Brushes.SteelBlue;
         }
 
         private void ImageAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

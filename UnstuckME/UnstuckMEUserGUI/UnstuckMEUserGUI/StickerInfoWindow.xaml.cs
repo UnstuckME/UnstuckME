@@ -26,6 +26,7 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             Sticker = inSticker;
+            Topmost = true;
             if(Sticker.ProblemDescription == string.Empty)
             {
                 TextBoxProblemDescription.Text = "(No Description Given)";
@@ -34,7 +35,6 @@ namespace UnstuckMEUserGUI
             {
                 TextBoxProblemDescription.Text = Sticker.ProblemDescription;
             }
-            
         }
 
         private void MoveBottomRightEdgeOfWindowToMousePosition()

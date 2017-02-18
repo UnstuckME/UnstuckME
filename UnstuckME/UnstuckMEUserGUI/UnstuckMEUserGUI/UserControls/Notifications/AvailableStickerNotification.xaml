@@ -19,9 +19,10 @@
             <Button x:Name="Accept" Click="Accept_Click" Width="40" Margin="203,0,0,0" BorderBrush="Black" BorderThickness="0,0,1,0" Background="{x:Null}" Cursor="Hand" HorizontalAlignment="Left" Grid.RowSpan="2">
                 <Image Source="/Resources/CheckMark/CheckGreen.png" Height="25" Width="25"></Image>
             </Button>
+            <Border BorderThickness="0,0,0,1" BorderBrush="Black"></Border>
         </Grid>
-        <Grid Grid.Row="1" Background="LightGray">
-            <Border BorderBrush="Black" BorderThickness="0,3,1,2"></Border>
+        <Grid Grid.Row="1" Background="SteelBlue">
+            <Border BorderBrush="Black" BorderThickness="0,0,0,1"></Border>
         </Grid>
     </Grid>
 </UserControl>

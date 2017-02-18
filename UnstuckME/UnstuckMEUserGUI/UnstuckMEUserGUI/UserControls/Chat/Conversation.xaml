@@ -6,10 +6,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="175" Cursor="Hand" MouseLeftButtonDown="ConversationUserControl_MouseLeftButtonDown" MouseEnter="ConversationUserControl_MouseEnter" MouseLeave="ConversationUserControl_MouseLeave">
-    <Grid HorizontalAlignment="Stretch" Height="40">
-        <Image x:Name="ConversationImage" Source="/Resources/Group/GroupWhite.png" Width="40" HorizontalAlignment="Left" Cursor="Hand"></Image>
-        <Label x:Name="ConversationLabel" Margin="45,0,0,0" Content="Hello" Foreground="White" MouseLeftButtonDown="ConversationUserControl_MouseLeftButtonDown" VerticalContentAlignment="Center" Padding="8,0,8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Label>
-        <Border BorderBrush="DimGray" BorderThickness="1,1,1,1" Background="{x:Null}"></Border>
+             d:DesignHeight="45" d:DesignWidth="175" Cursor="Hand" MouseLeftButtonDown="ConversationUserControl_MouseLeftButtonDown" MouseEnter="ConversationUserControl_MouseEnter" MouseLeave="ConversationUserControl_MouseLeave">
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Image x:Name="ConversationImage" Source="/Resources/Group/GroupWhite.png" Width="40" HorizontalAlignment="Left" Cursor="Hand"></Image>
+            <Label x:Name="ConversationLabel" Margin="45,0,0,0" Content="Hello" Foreground="White" MouseLeftButtonDown="ConversationUserControl_MouseLeftButtonDown" VerticalContentAlignment="Center" Padding="8,0,8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Label>
+            <Border BorderBrush="DimGray" BorderThickness="1,1,1,1" Background="{x:Null}"></Border>
+        </Grid>
+        <Grid Grid.Row="1" Background="SteelBlue"></Grid>
     </Grid>
 </UserControl>
