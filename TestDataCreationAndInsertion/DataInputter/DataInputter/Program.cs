@@ -98,7 +98,7 @@ namespace DataInputter
             Console.ResetColor();
 
             Console.WriteLine("Begining Inserting Users");
-            InsertUsers(connectionString);
+            //InsertUsers(connectionString);
             Console.WriteLine("         Inserting Users Complete");
             Console.WriteLine("Begining Inserting Classes");
             InsertClasses(connectionString);
@@ -211,7 +211,7 @@ namespace DataInputter
                 connection.Open();
                 foreach (DataHolderClasses item in listA)
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO Classes (CourseName, CourseCode, CourseNumber, TermOffered) VALUES (@CourseName, @CourseCode, @CourseNumber, @TermOffered)");
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Classes (CourseName, CourseCode, CourseNumber) VALUES (@CourseName, @CourseCode, @CourseNumber)");
                     cmd.CommandType = CommandType.Text;
                     cmd.Connection = connection;
                     cmd.Parameters.AddWithValue("@CourseName", item.CourseName);

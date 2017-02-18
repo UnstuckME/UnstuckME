@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using System.Threading;
 
 
 namespace UnstuckMEUserGUI
@@ -52,13 +53,31 @@ namespace UnstuckMEUserGUI
 
         private void MainContainer_Click(object sender, RoutedEventArgs e)
         {
-            Deletebtn.Visibility = Visibility.Visible;
+            if (Deletebtn.Visibility == Visibility.Visible)
+            {
+                Deletebtn.Visibility = Visibility.Collapsed;
+            }
+            else
+                Deletebtn.Visibility = Visibility.Visible;
             lastClick = e.Source as FrameworkElement;
+            //this.Dispatcher.Invoke(() =>
+            //{
+            //    Thread.CurrentThread.IsBackground = true;
+            //    resetBtn(Deletebtn);
+            //});
+            
+        }
+
+        async private void resetBtn(FrameworkElement btn)
+        {
+            Thread.Sleep(5000);
+            btn.Visibility = Visibility.Collapsed;
         }
 
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {
-            m_OpenServer.RemoveUserFromClass(m_UserID, m_IDnum);    //this call currently does nothing but if it did this function would work
+            
+            m_OpenServer.RemoveUserFromClass(m_UserID, m_IDnum);
             lastClick.Visibility = Visibility.Collapsed;    // this line may not even be needed
 			ItemContainer.Children.Remove(this);
         }
