@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
+using UnstuckMEInterfaces;
 
 namespace UnstuckMEUserGUI
 {
@@ -27,6 +28,7 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             TextBoxUserName.Text = inMessage.Username;
             TextBoxChatMessage.Text = inMessage.Message;
+
             ImageProfilePicture.Source = inMessage.ProfilePic;
             Message = inMessage;
         }

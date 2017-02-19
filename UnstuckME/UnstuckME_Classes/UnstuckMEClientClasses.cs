@@ -56,24 +56,52 @@ namespace UnstuckME_Classes
         public DateTime Time { get; set; }
         public bool IsFile { get; set; }
         public string Message { get; set; }
-        public int UserID { get; set; }
+        //public int UserID { get; set; }
+        public string Username { get; set; }
+        public int SenderID { get; set; }
+        public List<int> UsersInConvo { get; set; }
     }
 
     //This Will be passed into the ChatMessage UserControl everytime a message is submitted.
     public class UnstuckMEGUIChatMessage
     {
-        public string Message { get; set; }
-        public string Username { get; set; }
-        public ImageSource ProfilePic { get; set; }
-    }
-
-    //This will be sent across the network to all users in a chat.
-    public class UnstuckMESendChatMessage
-    {
-        public int SenderID { get; set; }
-        public List<int> UsersInConvo { get; set; }
-        public string Message { get; set; }
         public int ChatID { get; set; }
+        public string FilePath { get; set; }
+        public int MessageID { get; set; }
+        public DateTime Time { get; set; }
+        public bool IsFile { get; set; }
+        public string Message { get; set; }
+        public int SenderID { get; set; }
+        public string Username { get; set; }
+        public List<int> UsersInConvo { get; set; }
+        public ImageSource ProfilePic { get; set; }
+
+
+        public UnstuckMEGUIChatMessage(UnstuckMEMessage inMessage, UnstuckMEChat inChat)
+        {
+            UsersInConvo = new List<int>();
+            ChatID = inMessage.ChatID;
+            FilePath = inMessage.FilePath;
+            MessageID = inMessage.MessageID;
+            Time = inMessage.Time;
+            IsFile = inMessage.IsFile;
+            Message = inMessage.Message;
+            SenderID = inMessage.SenderID;
+            Username = inMessage.Username;
+            foreach (UnstuckMEChatUser User in inChat.Users)
+            {
+                if(User.UserID == SenderID)
+                {
+                    ProfilePic = User.ProfilePicture;
+                }
+                UsersInConvo.Add(User.UserID);
+            }
+        }
+
+        public void SetProfilePic (ImageSource inProfilePic)
+        {
+            ProfilePic = inProfilePic;
+        }
     }
 
     public class UnstuckMEReview

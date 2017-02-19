@@ -22,12 +22,12 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ChatPage : Page
     {
-        public static UserInfo User;
-        private static ImageSource UserImage;
+        public UserInfo User;
+        public ImageSource UserImage;
         public static IUnstuckMEService Server;
-        public static UnstuckMEChat currentChat;
+        public UnstuckMEChat currentChat;
         public List<UnstuckMEChat> allChats;
-        public static ImageSourceConverter ic;
+        public ImageSourceConverter ic;
         public ChatPage(ref UserInfo inUser, ref IUnstuckMEService inServer)
         {
             InitializeComponent();
@@ -35,10 +35,10 @@ namespace UnstuckMEUserGUI
             User = inUser;
             ic = new ImageSourceConverter();
             UserImage = ic.ConvertFrom(User.UserProfilePictureBytes) as ImageSource;
-
+            currentChat = new UnstuckMEChat();
+            currentChat.ChatID = -1;
             for (int i = 0; i < 10; i++)
             {
-                StackPanelConversations.Children.Add(new Conversation());
                 StackPanelAddContacts.Children.Add(new ContactAddToConversation());
             }
         }
@@ -54,6 +54,11 @@ namespace UnstuckMEUserGUI
             MessageTextBox.CaretIndex = MessageTextBox.Text.Length;
         }
 
+        public void AddConversation(UnstuckMEChat inChat)
+        {
+            StackPanelConversations.Children.Add(new Conversation(inChat, this, ref Server));
+        }
+
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             if (MessageTextBox.Text != string.Empty)
@@ -64,13 +69,20 @@ namespace UnstuckMEUserGUI
 
         }
 
-        public void AddMessage(UnstuckMESendChatMessage message)
+        public void AddMessage(UnstuckMEMessage message)
         {
-            UnstuckMEGUIChatMessage test2 = new UnstuckMEGUIChatMessage();
-            test2.Message = message.Message;
-            test2.ProfilePic = UserImage;
-            test2.Username = message.SenderID.ToString();
-            StackPanelMessages.Children.Add(new ChatMessage(test2));
+            try
+            {
+                var temp = from a in allChats
+                           where a.ChatID == message.ChatID
+                           select a;
+                UnstuckMEChat chat = temp.First();
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Add Message Failed" + ": " + ex.Message);
+            }
         }
 
         private void ScrollViewerConversationBox_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -90,18 +102,8 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckMESendChatMessage temp = new UnstuckMESendChatMessage();
-                temp.UsersInConvo = new List<int>();
-                temp.ChatID = 5;
-                temp.Message = message;
-                temp.SenderID = User.UserID;
-                temp.UsersInConvo.Add(12);
-                Server.SendMessage(temp);
-                UnstuckMEGUIChatMessage temp2 = new UnstuckMEGUIChatMessage();
-                temp2.Message = message;
-                temp2.Username = User.FirstName;
-                temp2.ProfilePic = UserImage;
-                StackPanelMessages.Children.Add(new ChatMessage(temp2));
+                if(currentChat.ChatID < 0) { throw new Exception(); }
+
             }
             catch(Exception ex)
             {

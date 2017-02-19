@@ -23,7 +23,7 @@ namespace UnstuckMEUserGUI
         }
 
         //This Will Update a users conversation if they are online and another user sends them a message.
-        public string GetMessage(UnstuckMESendChatMessage message)
+        public string GetMessage(UnstuckMEMessage message)
         {
             try
             {

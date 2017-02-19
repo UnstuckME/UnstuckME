@@ -93,6 +93,10 @@ namespace UnstuckMEUserGUI
             this.Dispatcher.Invoke(() =>
             {
                 _pages.ChatPage.allChats = Server.GetUserChats(User.UserID);
+                foreach (UnstuckMEChat chat in _pages.ChatPage.allChats)
+                {
+                    _pages.ChatPage.AddConversation(chat);
+                }
             });
         }
 
@@ -291,7 +295,7 @@ namespace UnstuckMEUserGUI
             { /*This is empty because we don't want the program to break but we also don't want to catch this exception*/ }
         }
 
-        public void RecieveChatMessage(UnstuckMESendChatMessage message)
+        public void RecieveChatMessage(UnstuckMEMessage message)
         {
             AvailableStickersStack.Children.Add(new NewMessageNotification("User " + message.SenderID, ref _pages, this));
             _pages.ChatPage.AddMessage(message);

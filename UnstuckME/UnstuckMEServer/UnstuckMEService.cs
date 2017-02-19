@@ -1301,9 +1301,11 @@ namespace UnstuckMEInterfaces
                         temp.Message = message.a.MessageData;
                         temp.MessageID = message.a.MessageID;
                         temp.Time = message.a.SentTime;
-                        temp.UserID = message.a.SentBy;
                         temp.IsFile = message.a.IsFile;
                         temp.FilePath = message.a.FilePath;
+                        temp.ChatID = chatID;
+                        temp.SenderID = message.a.SentBy;
+                        temp.Username = message.a.UserProfile.DisplayFName;
                         MessageList.Add(temp);
                     }
                 }
@@ -1336,7 +1338,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void SendMessage(UnstuckMESendChatMessage message)
+        public void SendMessage(UnstuckMEMessage message)
         {
             try
             {
