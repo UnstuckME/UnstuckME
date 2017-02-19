@@ -71,7 +71,12 @@ namespace UnstuckMEUserGUI
             Background = null;
         }
 
-        private void ConversationUserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void ShowConversation()
+        {
+            ConversationUserControl_MouseLeftButtonDown(null, null);
+        }
+
+        public void ConversationUserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _ChatPage.LabelConversationName.Content = ConversationLabel.Content;
             foreach (UnstuckMEChatUser user in Chat.Users)
@@ -95,6 +100,7 @@ namespace UnstuckMEUserGUI
                 UnstuckMEGUIChatMessage guiMessage = new UnstuckMEGUIChatMessage(message, Chat);
                 _ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
             }
+            _ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
         }
     }
 }

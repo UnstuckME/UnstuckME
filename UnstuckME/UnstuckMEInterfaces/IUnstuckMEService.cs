@@ -151,6 +151,9 @@ namespace UnstuckMEInterfaces
         List<UnstuckMEChat> GetUserChats(int userID);
 
         [OperationContract]
+        UnstuckMEChat GetSingleChat(int chatID);
+
+        [OperationContract]
         void SendMessage(UnstuckMEMessage message);
         [OperationContract]
         List<UnstuckMEAvailableSticker> InitialAvailableStickerPull(int userID);

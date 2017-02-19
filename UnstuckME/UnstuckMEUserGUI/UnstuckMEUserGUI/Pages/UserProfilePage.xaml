@@ -32,7 +32,7 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <Grid x:Name="GridDefault" Visibility="Hidden">
+        <Grid x:Name="GridDefault">
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
                 <RowDefinition Height="50"/>
@@ -125,7 +125,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid x:Name="GridEditProfile" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid x:Name="GridEditProfile" Visibility="Hidden" IsEnabled="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="351*"/>

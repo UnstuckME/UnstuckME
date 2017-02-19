@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace UnstuckMEUserGUI
     public partial class UnstuckMEWindow : Window
     {
         public static IUnstuckMEService Server;
+        public static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         public static UserInfo User;
         public enum Privileges { InvalidUser, Admin, Moderator, User }
         public static UnstuckMEPages _pages = new UnstuckMEPages();
@@ -144,7 +146,7 @@ namespace UnstuckMEUserGUI
                 for (int i = 0; i < 30; i++)
                 {
                     //AvailableStickersStack.Children.Add(new NewMessageNotification("User " + i, ref _pages, this));
-                    AvailableStickersStack.Children.Add(new AvailableStickerNotification("CST 11" + i));
+                    NotificationStack.Children.Add(new AvailableStickerNotification("CST 11" + i));
                 }
             });
         }
@@ -298,8 +300,11 @@ namespace UnstuckMEUserGUI
 
         public void RecieveChatMessage(UnstuckMEMessage message)
         {
-            AvailableStickersStack.Children.Add(new NewMessageNotification("User " + message.SenderID, ref _pages, this));
             _pages.ChatPage.AddMessage(message);
+            if (_pages.ChatPage.currentChat.ChatID != message.ChatID)
+            {
+                NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref _pages, this));
+            }
         }
     }
 

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -22,20 +23,20 @@ namespace UnstuckMEUserGUI
     {
         UnstuckMEPages _pages;
         UnstuckMEWindow _Window;
-        string _username;
-        public NewMessageNotification(string inUserName, ref UnstuckMEPages inPages, UnstuckMEWindow inWindow)
+        UnstuckMEMessage message;
+        public NewMessageNotification(UnstuckMEMessage inMessage, ref UnstuckMEPages inPages, UnstuckMEWindow inWindow)
         {
             InitializeComponent();
-            NewMessageButton.Content = "New Message From: " + inUserName;
+            NewMessageButton.Content = "New Message From: " + inMessage.Username;
             _pages = inPages;
             _Window = inWindow;
-            _username = inUserName;
+            message = inMessage;
         }
 
         private void NewMessageButton_Click(object sender, RoutedEventArgs e)
         {
             _Window.SwitchToChatTab();
-            _pages.ChatPage.NotificationCall(_username);
+            _pages.ChatPage.NotificationCall(message);
             //Removes from stack panel.
             ((StackPanel)this.Parent).Children.Remove(this);
         }

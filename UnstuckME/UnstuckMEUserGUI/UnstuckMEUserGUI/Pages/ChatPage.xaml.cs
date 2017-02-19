@@ -44,9 +44,15 @@ namespace UnstuckMEUserGUI
         }
 
         //This Box Determines what happens when a user clicks a new message notification.
-        public void NotificationCall(string userName)
+        public void NotificationCall(UnstuckMEMessage message)
         {
-            MessageTextBox.Text = "Message From " + userName;
+            foreach (Conversation item in StackPanelConversations.Children.OfType<Conversation>())
+            {
+                if(item.Chat.ChatID == message.ChatID)
+                {
+                    item.ShowConversation();
+                }
+            }
         }
 
         private void MessageTextBox_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -71,13 +77,30 @@ namespace UnstuckMEUserGUI
 
         public void AddMessage(UnstuckMEMessage message)
         {
+            bool chatIDExists = false;
+
             try
             {
-                var temp = from a in allChats
-                           where a.ChatID == message.ChatID
-                           select a;
-                UnstuckMEChat chat = temp.First();
-
+                foreach (UnstuckMEChat chat in allChats)
+                {
+                    if(chat.ChatID == message.ChatID)
+                    {
+                        chatIDExists = true;
+                        chat.Messages.Add(message);
+                        if(currentChat.ChatID == chat.ChatID)
+                        {
+                            UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
+                            StackPanelMessages.Children.Add(new ChatMessage(temp));
+                            ScrollViewerMessagesBox.ScrollToBottom();
+                        }
+                    }
+                }
+                if(!chatIDExists)
+                {
+                    UnstuckMEChat temp = Server.GetSingleChat(message.ChatID);
+                    allChats.Add(temp);
+                    StackPanelConversations.Children.Add(new Conversation(temp, this, ref Server));
+                }
             }
             catch(Exception ex)
             {
@@ -102,8 +125,29 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                if(currentChat.ChatID < 0) { throw new Exception(); }
-
+                if(currentChat.ChatID < 0) { throw new Exception(); } //If no conversation is chosen
+                UnstuckMEMessage sendingMessage = new UnstuckMEMessage();
+                sendingMessage.ChatID = currentChat.ChatID;
+                sendingMessage.FilePath = string.Empty;
+                sendingMessage.IsFile = false;
+                sendingMessage.Message = message;
+                sendingMessage.MessageID = 0;
+                sendingMessage.SenderID = User.UserID;
+                sendingMessage.Time = DateTime.Now;
+                sendingMessage.Username = User.FirstName;
+                sendingMessage.UsersInConvo = new List<int>();
+                foreach (UnstuckMEChatUser user in currentChat.Users)
+                {
+                    if(user.UserID != User.UserID)
+                    {
+                        sendingMessage.UsersInConvo.Add(user.UserID);
+                    }
+                }
+                Server.SendMessage(sendingMessage);
+                currentChat.Messages.Add(sendingMessage);
+                UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(sendingMessage, currentChat);
+                StackPanelMessages.Children.Add(new ChatMessage(temp));
+                ScrollViewerMessagesBox.ScrollToBottom();
             }
             catch(Exception ex)
             {
@@ -145,6 +189,46 @@ namespace UnstuckMEUserGUI
         private void ImageAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("Button Clicked");
+        }
+
+        private void ButtonStartConversation_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LabelInvalidUserNameSearch.Visibility = Visibility.Hidden;
+                int searchedUserID = -1;
+                int chatID;
+                if(Server.IsValidUser(TextBoxManualUserNameSearch.Text))
+                {
+                    chatID = Server.CreateChat(User.UserID);
+                    searchedUserID = Server.GetUserID(TextBoxManualUserNameSearch.Text);
+                    Server.InsertUserIntoChat(searchedUserID, chatID);
+                    UnstuckMEMessage temp = new UnstuckMEMessage();
+                    temp.ChatID = chatID;
+                    temp.FilePath = string.Empty;
+                    temp.IsFile = false;
+                    temp.Message = "New Conversation with " + User.FirstName + " " + User.LastName + " started.";
+                    temp.MessageID = 0;
+                    temp.SenderID = User.UserID;
+                    temp.UsersInConvo = new List<int>();
+                    temp.UsersInConvo.Add(User.UserID);
+                    temp.UsersInConvo.Add(searchedUserID);
+                    Server.SendMessage(temp);
+                    AddMessage(temp);
+                    ButtonAddUserDone_Click(null, null);
+                    foreach (Conversation convo  in StackPanelConversations.Children.OfType<Conversation>())
+                    {
+                        if(convo.Chat.ChatID == chatID)
+                        {
+                            convo.ConversationUserControl_MouseLeftButtonDown(null, null);
+                        }
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
+            }
         }
     }
 }

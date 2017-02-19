@@ -51,8 +51,8 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto" VerticalAlignment="Top">
-                    <StackPanel x:Name="AvailableStickersStack" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
+                <ScrollViewer x:Name="ScrollViewerNotifications" VerticalScrollBarVisibility="Auto" Height="Auto" VerticalAlignment="Top">
+                    <StackPanel x:Name="NotificationStack" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
                 </ScrollViewer>
 
             </Grid>

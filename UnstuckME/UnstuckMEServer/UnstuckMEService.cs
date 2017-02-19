@@ -1292,8 +1292,8 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var messages = from a in db.Messages
-                                  where a.ChatID == chatID
-                                  select new { a };
+                                   where a.ChatID == chatID
+                                   select new { a };
 
                     foreach (var message in messages)
                     {
@@ -1311,7 +1311,7 @@ namespace UnstuckMEInterfaces
                 }
                 return MessageList;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
@@ -1327,7 +1327,7 @@ namespace UnstuckMEInterfaces
                 foreach (UnstuckMEChat chat in chatList)
                 {
                     chat.Users = GetChatMembers(chat.ChatID);
-                    chat.Messages = GetChatMessages(chat.ChatID); 
+                    chat.Messages = GetChatMessages(chat.ChatID);
                 }
                 return chatList;
             }
@@ -1346,25 +1346,28 @@ namespace UnstuckMEInterfaces
                 {
                     db.InsertMessage(message.ChatID, message.Message, message.SenderID);
                 }
-                //foreach (int client in message.UsersInConvo)
-                //{
-                //    if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
-                //    {
-                //        string test = _connectedClients[client].connection.GetMessage(message);
-                //        Console.WriteLine(test);
-                //    }
-                //}
-                foreach (var user in _connectedClients)
+                foreach (int client in message.UsersInConvo)
                 {
-                    if (user.Key != message.SenderID)
+                    if (client != message.SenderID)
                     {
-                        string test = user.Value.connection.GetMessage(message);
+                        if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
+                        {
+                            _connectedClients[client].connection.GetMessage(message);
+                        }
                     }
                 }
+                //foreach (var user in _connectedClients)
+                //{
+                //    if (user.Key != message.SenderID)
+                //    {
+                //        string test = user.Value.connection.GetMessage(message);
+                //    }
+                //}
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return;
             }
         }
         //public int StickerID { get; set; }
@@ -1421,6 +1424,29 @@ namespace UnstuckMEInterfaces
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+                return null;
+            }
+        }
+
+        public UnstuckMEChat GetSingleChat(int chatID)
+        {
+            try
+            {
+                UnstuckMEChat returnedChat = new UnstuckMEChat();
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var dbChat = from a in db.Chats
+                                 where a.ChatID == chatID
+                                 select a;
+                    returnedChat.ChatID = chatID;
+                    returnedChat.Messages = GetChatMessages(chatID);
+                    returnedChat.Users = GetChatMembers(chatID);
+                }
+                return returnedChat;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }

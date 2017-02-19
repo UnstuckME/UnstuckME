@@ -23,17 +23,10 @@ namespace UnstuckMEUserGUI
         }
 
         //This Will Update a users conversation if they are online and another user sends them a message.
-        public string GetMessage(UnstuckMEMessage message)
+        public void GetMessage(UnstuckMEMessage message)
         {
-            try
-            {
-                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatMessage(message);
-                return "Success";
-            }
-            catch(Exception ex)
-            {
-                return ex.Message + " Object: " + ex.Source;
-            }
+            Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatMessage(message);
+
         }
 
         public bool isOnline()

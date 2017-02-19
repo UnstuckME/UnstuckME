@@ -102,28 +102,37 @@ namespace UnstuckMEUserGUI
 
         private void ButtonBrowseProfilePicture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog file_browser = new Microsoft.Win32.OpenFileDialog();
-            file_browser.AddExtension = true;
-            file_browser.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            file_browser.Multiselect = false;
-            file_browser.ValidateNames = true;
-            file_browser.Filter = "Image Files (*.jpeg;*.png;*.jpg)|*.jpeg;*.png;*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
-
-            if (file_browser.ShowDialog().Value)
+            try
             {
-                Stream file = file_browser.OpenFile();
-                byte[] byte_array = null;
+                Microsoft.Win32.OpenFileDialog file_browser = new Microsoft.Win32.OpenFileDialog();
+                file_browser.AddExtension = true;
+                file_browser.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                file_browser.Multiselect = false;
+                file_browser.ValidateNames = true;
+                file_browser.Filter = "Image Files (*.jpeg;*.png;*.jpg)|*.jpeg;*.png;*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
 
-                using (MemoryStream ms = new MemoryStream())
+                if (file_browser.ShowDialog().Value)
                 {
-                    file.CopyTo(ms);
-                    byte_array = ms.ToArray();
-                }
+                    Stream file = file_browser.OpenFile();
+                    byte[] byte_array = null;
 
-                Server.SetProfilePicture(UnstuckMEWindow.User.UserID, byte_array);
-                ImageSourceConverter ic = new ImageSourceConverter();
-                ImageEditProfilePicture.Source = ic.ConvertFrom(byte_array) as ImageSource;
-                ProfilePicture.Source = ImageEditProfilePicture.Source;
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        file.CopyTo(ms);
+                        byte_array = ms.ToArray();
+                    }
+
+                    Server.SetProfilePicture(UnstuckMEWindow.User.UserID, byte_array);
+                    ImageSourceConverter ic = new ImageSourceConverter();
+                    ImageEditProfilePicture.Source = ic.ConvertFrom(byte_array) as ImageSource;
+                    ProfilePicture.Source = ImageEditProfilePicture.Source;
+                }
+            }
+            catch(Exception)
+            {
+                System.Windows.MessageBox.Show("Image too large!", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                UnstuckMEWindow._channelFactory = new System.ServiceModel.DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                Server = UnstuckMEWindow._channelFactory.CreateChannel();
             }
         }
 
