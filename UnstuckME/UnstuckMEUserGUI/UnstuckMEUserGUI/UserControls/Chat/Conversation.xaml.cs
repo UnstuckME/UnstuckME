@@ -73,6 +73,7 @@ namespace UnstuckMEUserGUI
 
         private void ConversationUserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            _ChatPage.LabelConversationName.Content = ConversationLabel.Content;
             foreach (UnstuckMEChatUser user in Chat.Users)
             {
                 if(user.ProfilePicture == null)

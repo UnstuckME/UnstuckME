@@ -50,7 +50,7 @@ namespace UnstuckMEUserGUI
             _pages.StickerPage = new StickerPage();
             _pages.SettingsPage = new SettingsPage();
             _pages.ChatPage = new ChatPage(ref User, ref Server);
-            _pages.UserProfilePage = new UserProfilePage();
+            _pages.UserProfilePage = new UserProfilePage(this, Server);
             _pages.ModeratorPage = new ModeratorPage();
             _pages.AdminPage = new AdminPage();
 
@@ -106,6 +106,7 @@ namespace UnstuckMEUserGUI
             {
                 ImageSourceConverter ic = new ImageSourceConverter();
                 _pages.UserProfilePage.ProfilePicture.Source = ic.ConvertFrom(User.UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
+                _pages.UserProfilePage.ImageEditProfilePicture.Source = _pages.UserProfilePage.ProfilePicture.Source;
                 _pages.UserProfilePage.FirstName.Text = User.FirstName;
                 _pages.UserProfilePage.LastName.Text = User.LastName;
                 _pages.UserProfilePage.EmailAddress.Text = User.EmailAddress;
