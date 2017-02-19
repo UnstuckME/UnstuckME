@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -130,9 +131,10 @@ namespace UnstuckMEUserGUI
             }
             catch(Exception)
             {
-                System.Windows.MessageBox.Show("Image too large!", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                UnstuckMEWindow._channelFactory = new System.ServiceModel.DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-                Server = UnstuckMEWindow._channelFactory.CreateChannel();
+                System.Windows.MessageBox.Show("Image too large! This Needs to be fixed, it causes a communication fault and currently the app has to be shut down.", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                Process.Start(unstuckME);
+                System.Windows.Application.Current.Shutdown();
             }
         }
 

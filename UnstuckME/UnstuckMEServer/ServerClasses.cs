@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace UnstuckMEServer
         public IClient connection;
         public UserInfo User;
         public RemoteEndpointMessageProperty returnAddress;
+        public OperationContext ChannelInfo;
     }
 
     public class ConnectedServerAdmin

@@ -79,6 +79,14 @@ namespace UnstuckMEInterfaces
                             }
                         }
                     }
+                    foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
+                    {
+                        if(client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
+                        {
+                            Console.WriteLine(client.Value.User.EmailAddress + " Channel Not Open, Will now be logged off server.");
+                            offlineUsers.Add(client.Key);
+                        }
+                    }
                     foreach (int user in offlineUsers)
                     {
                         ConnectedClient removedClient = new ConnectedClient();
@@ -175,6 +183,7 @@ namespace UnstuckMEInterfaces
 
                         //Stores Client into Logged in Users List
                         var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
+                        newClient.ChannelInfo = OperationContext.Current;
                         newClient.connection = establishedUserConnection;
                         newClient.User = GetUserInfo(users.UserID, users.EmailAddress);
                         newClient.returnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
