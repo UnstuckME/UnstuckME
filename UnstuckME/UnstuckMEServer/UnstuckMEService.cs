@@ -49,41 +49,14 @@ namespace UnstuckMEInterfaces
         public void CheckUserStatus()
         {
             List<int> offlineUsers = new List<int>();
-            List<Task<PingReply>> pingTasks = new List<Task<PingReply>>();
-            int count = 1;
             try
             {
                 while (true)
                 {
-                    //Console.WriteLine("Loop: {0}", count);
-                    count++;
-                    foreach (var address in _connectedClients)
-                    {
-                        pingTasks.Add(PingAsync(address.Value.returnAddress.Address));
-                    }
-                    //Wait for all the tasks to complete
-                    Task.WaitAll(pingTasks.ToArray());
-
-                    //Now you can iterate over your list of pingTasks
-                    foreach (var pingTask in pingTasks)
-                    {
-                        //Console.WriteLine("PingTask Foreach");
-                        if (pingTask.Result.Status != IPStatus.Success)
-                        {
-                            foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
-                            {
-                                if (client.Value.returnAddress.Address == pingTask.Result.Address.ToString())
-                                {
-                                    offlineUsers.Add(client.Key);
-                                }
-                            }
-                        }
-                    }
                     foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
                     {
-                        if(client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
+                        if (client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
                         {
-                            Console.WriteLine(client.Value.User.EmailAddress + " Channel Not Open, Will now be logged off server.");
                             offlineUsers.Add(client.Key);
                         }
                     }
@@ -91,28 +64,18 @@ namespace UnstuckMEInterfaces
                     {
                         ConnectedClient removedClient = new ConnectedClient();
                         _connectedClients.TryRemove(user, out removedClient);
-                        Console.WriteLine(removedClient.User.EmailAddress + " did not respond to a ping from the server. They are now considered offline");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine(removedClient.User.EmailAddress + "'s socket is in a faulted state. They are now considered offline");
+                        Console.ResetColor();
                     }
                     offlineUsers.Clear();
-                    pingTasks.Clear();
-                    Thread.Sleep(10000);
+                    Thread.Sleep(5000);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-        }
-        static Task<PingReply> PingAsync(string address)
-        {
-            var tcs = new TaskCompletionSource<PingReply>();
-            Ping ping = new Ping();
-            ping.PingCompleted += (obj, sender) =>
-            {
-                tcs.SetResult(sender.Reply);
-            };
-            ping.SendAsync(address, 5000, new object());
-            return tcs.Task;
         }
 
         public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
@@ -1457,6 +1420,63 @@ namespace UnstuckMEInterfaces
             {
                 Console.WriteLine(ex.Message);
                 return null;
+            }
+        }
+
+        public UserClass GetSingleClass(int classID)
+        {
+            try
+            {
+                UserClass temp = new UserClass();
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var classDB = from a in db.Classes
+                                  where a.ClassID == classID
+                                  select new { ClassID = a.ClassID, CourseCode = a.CourseCode, CourseName = a.CourseName, CourseNumber = a.CourseNumber };
+
+                    temp.ClassID = classDB.First().ClassID;
+                    temp.CourseNumber = classDB.First().CourseNumber;
+                    temp.CourseName = classDB.First().CourseName;
+                    temp.CourseCode = classDB.First().CourseCode;
+                }
+                return temp;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public void AddClassesToClient(int inClass, int userID)
+        {
+            try
+            {
+                UserClass temp = new UserClass();
+
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var c = from a in db.Classes
+                            where a.ClassID == inClass
+                            select new { a.ClassID, a.CourseCode, a.CourseName, a.CourseNumber };
+
+                    temp.CourseNumber = c.First().CourseNumber;
+                    temp.CourseName = c.First().CourseName;
+                    temp.CourseCode = c.First().CourseCode;
+                    temp.ClassID = c.First().ClassID;
+                }
+
+                foreach (var client in _connectedClients)
+                {
+                    if (client.Key == userID)
+                    {
+                        client.Value.connection.AddClasses(temp);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

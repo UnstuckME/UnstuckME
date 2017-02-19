@@ -294,17 +294,34 @@ namespace UnstuckMEUserGUI
             {
                 Server.Logout();
             }
-            catch(Exception)
+            catch (Exception)
             { /*This is empty because we don't want the program to break but we also don't want to catch this exception*/ }
         }
 
         public void RecieveChatMessage(UnstuckMEMessage message)
         {
             _pages.ChatPage.AddMessage(message);
-            if (_pages.ChatPage.currentChat.ChatID != message.ChatID)
+            if ((_pages.ChatPage.currentChat.ChatID != message.ChatID) || (MainFrame.Content != _pages.ChatPage))
             {
                 NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref _pages, this));
             }
+        }
+
+        public void RecieveAddedClasses(UserClass inClass)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    ClassDisplay temp = new ClassDisplay(_pages.UserProfilePage.BottomLeftStack, User.UserID, Server, inClass.CourseCode, inClass.CourseNumber, inClass.CourseCode + " " + inClass.CourseNumber + " " + inClass.CourseName, inClass.ClassID);
+                    _pages.UserProfilePage.BottomLeftStack.Children.Add(temp);
+
+                }
+                catch (Exception)
+                {
+
+                }
+            });
         }
     }
 

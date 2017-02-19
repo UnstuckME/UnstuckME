@@ -18,5 +18,8 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void GetMessage(UnstuckMEMessage message);
+
+        [OperationContract]
+        void AddClasses(UserClass inClass);
     }
 }

@@ -15,6 +15,18 @@ namespace UnstuckMEUserGUI
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ClientCallback : IClient
     {
+        public void AddClasses(UserClass inClass)
+        {
+            try
+            {
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveAddedClasses(inClass);
+            }
+            catch(InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         //Forces The Cient to close with a messagebox popup.
         public void ForceClose()
         {
@@ -33,5 +45,6 @@ namespace UnstuckMEUserGUI
         {
             return true;
         }
+
     }
 }

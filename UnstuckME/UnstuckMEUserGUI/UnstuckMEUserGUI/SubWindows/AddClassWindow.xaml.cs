@@ -36,7 +36,7 @@ namespace UnstuckMEUserGUI.SubWindows
         public AddClassWindow(ref IUnstuckMEService inServer, ref UserInfo inUser)
         {
             InitializeComponent();
-
+            
             Server = inServer;
             User = inUser;
             try
@@ -99,6 +99,7 @@ namespace UnstuckMEUserGUI.SubWindows
             try
             {
                 Server.InsertStudentIntoClass(User.UserID, ClassID);
+                Server.AddClassesToClient(ClassID, User.UserID);
             }
             catch (Exception ex)
             {
