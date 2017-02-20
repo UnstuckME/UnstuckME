@@ -101,6 +101,9 @@
                     <Image Source="Resources/Admin/AdminWhite.png" Width="45" Height="45" ></Image>
                 </Button>
             </Border>
+            <Border x:Name="ButtonLogout" MouseEnter="ButtonLogout_MouseEnter" MouseLeave="ButtonLogout_MouseLeave" MouseLeftButtonDown="ButtonLogout_MouseLeftButtonDown" Background="#993333" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="35" Margin="5,0,5,10">
+                <Label Content="Logout" FontSize="14" Foreground="White" FontWeight="Medium" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+            </Border>
         </Grid>
     </Grid>
 </Window>

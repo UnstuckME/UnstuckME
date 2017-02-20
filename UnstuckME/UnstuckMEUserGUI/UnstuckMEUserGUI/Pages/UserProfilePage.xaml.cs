@@ -127,6 +127,16 @@ namespace UnstuckMEUserGUI
                     ImageSourceConverter ic = new ImageSourceConverter();
                     ImageEditProfilePicture.Source = ic.ConvertFrom(byte_array) as ImageSource;
                     ProfilePicture.Source = ImageEditProfilePicture.Source;
+                    foreach (UnstuckMEChat chat in UnstuckMEWindow._pages.ChatPage.allChats)
+                    {
+                        foreach (UnstuckMEChatUser user in chat.Users)
+                        {
+                            if(user.UserID == UnstuckMEWindow.User.UserID)
+                            {
+                                user.ProfilePicture = ProfilePicture.Source;
+                            }
+                        }
+                    }
                 }
             }
             catch(Exception)

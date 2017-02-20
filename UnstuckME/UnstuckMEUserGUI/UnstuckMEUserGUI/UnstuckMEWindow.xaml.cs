@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -322,6 +323,24 @@ namespace UnstuckMEUserGUI
 
                 }
             });
+        }
+
+        private void ButtonLogout_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonLogout.Background = Brushes.IndianRed;
+        }
+
+        private void ButtonLogout_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonLogout.Background = _UnstuckMERed;
+        }
+
+        private void ButtonLogout_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Server.Logout();
+            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            Process.Start(unstuckME);
+            System.Windows.Application.Current.Shutdown();
         }
     }
 
