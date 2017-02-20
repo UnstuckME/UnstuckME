@@ -31,10 +31,10 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         {
             InitializeComponent();
 
-            DuplexChannelFactory<IUnstuckMEServer> channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
-            IUnstuckMEServer testingChannel = channelFactory.CreateChannel();
+            //DuplexChannelFactory<IUnstuckMEServer> channelFactory = new DuplexChannelFactory<IUnstuckMEServer>(new ServerCallback(), "UnstuckMEServerEndPoint");
+            //IUnstuckMEServer testingChannel = channelFactory.CreateChannel();
 
-            testingChannel.UploadDocument();
+            //testingChannel.UploadDocument();
         }
   
 
