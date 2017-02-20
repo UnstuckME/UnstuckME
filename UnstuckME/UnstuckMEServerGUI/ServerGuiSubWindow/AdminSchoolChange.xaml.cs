@@ -17,7 +17,6 @@ using UnstuckMEInterfaces;
 using UnstuckME_Classes;
 using System.ServiceModel.Channels;
 using UnstuckMEServer;
-using UnstuckMEServerGUI;
 
 namespace UnstuckMEServerGUI.ServerGuiSubWindow
 {
@@ -49,7 +48,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
             try
             {
-                using (UnstuckMEServerGUI.UnstuckME_SchoolsEntities db = new UnstuckMEServerGUI.UnstuckME_SchoolsEntities())
+                using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
                 {
 
                     var dbSchools = from s in db.Schools select new {SchoolName = s.SchoolName, SchoolID = s.SchoolID};
@@ -77,17 +76,14 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             {
                 int selectedSchoolID = schools[(comboBoxSchools.SelectedIndex) - 1].SchoolID;
 
-                using (UnstuckMEServerGUI.UnstuckME_SchoolsEntities db = new UnstuckMEServerGUI.UnstuckME_SchoolsEntities())
+                using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
                 {
                     var admin = (from u in db.Schools
                                  where u.SchoolID == selectedSchoolID
                                  select u).First();
                     if (textBoxUnstuckMEUsername.Text == admin.SchoolAdminUsername)
                     {
-
-
-                        string stringOfPassword =
-                            UnstuckMEHashing.RecreateHashedPassword(passwordBoxUnstuckMEPassword.Password, admin.Salt);
+                        string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passwordBoxUnstuckMEPassword.Password, admin.Salt);
                         if (stringOfPassword == admin.SchoolAdminPassword)
                         {
                             System.Configuration.Configuration config =
@@ -142,7 +138,5 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                 comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
             }
         }
-
-     
     }
 }

@@ -44,8 +44,8 @@ IF OBJECT_ID('InsertUserIntoChat') is not null
 	DROP PROCEDURE InsertUserIntoChat;
 IF OBJECT_ID('InsertMessage') is not null
 	DROP PROCEDURE InsertMessage;
-IF OBJECT_ID('InsertFile') is not null
-	DROP PROCEDURE InsertFile;
+--IF OBJECT_ID('InsertFile') is not null
+--	DROP PROCEDURE InsertFile;
 IF OBJECT_ID('AddFriend') is not null
 	DROP PROCEDURE AddFriend;
 IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
@@ -387,6 +387,8 @@ CREATE PROC [dbo].[InsertMessage]
     (
 	@ChatID		INT,
 	@Message	NVARCHAR(500),
+	@FilePath	VARCHAR(MAX) = null,
+	@IsFile		BIT = 0,
 	@UserID		INT
     )
 AS
@@ -395,29 +397,29 @@ AS
 			RETURN 1;
         ELSE BEGIN
 			INSERT INTO [Messages]
-			VALUES(@ChatID, @Message, DEFAULT, DEFAULT, @UserID, GETDATE())
+			VALUES (@ChatID, @Message, @FilePath, @IsFile, @UserID, GETDATE())
 			RETURN 0;
         END
     END
 GO
 
-CREATE PROC [dbo].[InsertFile]
-    (
-	@ChatID		INT,
-	@FilePath	VARCHAR(MAX),
-	@UserID		INT
-    )
-AS
-    BEGIN
-        IF (NOT Exists(Select ChatID from UserToChat WHERE ChatID = @ChatID and UserID = @UserID))
-			RETURN 1;
-        ELSE BEGIN
-            INSERT INTO [Messages]
-			VALUES(@ChatID, DEFAULT, @FilePath, 1, @UserID, GETDATE())
-			RETURN 0;
-        END
-    END
-GO
+--CREATE PROC [dbo].[InsertFile]
+--    (
+--	@ChatID		INT,
+--	@FilePath	VARCHAR(MAX),
+--	@UserID		INT
+--    )
+--AS
+--    BEGIN
+--        IF (NOT Exists(Select ChatID from UserToChat WHERE ChatID = @ChatID and UserID = @UserID))
+--			RETURN 1;
+--        ELSE BEGIN
+--            INSERT INTO [Messages]
+--			VALUES(@ChatID, DEFAULT, @FilePath, 1, @UserID, GETDATE())
+--			RETURN 0;
+--        END
+--    END
+--GO
 
 CREATE PROC [dbo].[AddFriend]
 	(

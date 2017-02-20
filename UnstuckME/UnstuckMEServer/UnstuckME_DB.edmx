@@ -563,6 +563,9 @@
         <Function Name="GetAllUsersInAnOrganization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="orgid" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetChatMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chatid" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetCourseCodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetCourseIDByCodeAndNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Code" Type="varchar" Mode="In" />
@@ -695,14 +698,11 @@
           <Parameter Name="endrow" Type="smallint" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
         </Function>
-        <Function Name="InsertFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ChatID" Type="int" Mode="In" />
-          <Parameter Name="FilePath" Type="varchar(max)" Mode="In" />
-          <Parameter Name="UserID" Type="int" Mode="In" />
-        </Function>
         <Function Name="InsertMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ChatID" Type="int" Mode="In" />
           <Parameter Name="Message" Type="nvarchar" Mode="In" />
+          <Parameter Name="FilePath" Type="varchar(max)" Mode="In" />
+          <Parameter Name="IsFile" Type="bit" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
         <Function Name="InsertStudentIntoClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -719,10 +719,6 @@
         </Function>
         <Function Name="MarkStickerAsResolved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StickerID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="PullChatMessagesBetweenUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="int" Mode="In" />
-          <Parameter Name="tutorid" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -1492,6 +1488,9 @@
           <FunctionImport Name="GetAllUsersInAnOrganization" ReturnType="Collection(UnstuckME_DBModel.GetAllUsersInAnOrganization_Result)">
             <Parameter Name="orgid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetChatMessages" ReturnType="Collection(UnstuckME_DBModel.GetChatMessages_Result)">
+            <Parameter Name="chatid" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetCourseCodes" ReturnType="Collection(String)" />
           <FunctionImport Name="GetCourseIDByCodeAndNumber" ReturnType="Collection(Int32)">
             <Parameter Name="Code" Mode="In" Type="String" />
@@ -1624,14 +1623,11 @@
             <Parameter Name="endrow" Mode="In" Type="Int16" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="InsertFile">
-            <Parameter Name="ChatID" Mode="In" Type="Int32" />
-            <Parameter Name="FilePath" Mode="In" Type="String" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="InsertMessage">
             <Parameter Name="ChatID" Mode="In" Type="Int32" />
             <Parameter Name="Message" Mode="In" Type="String" />
+            <Parameter Name="FilePath" Mode="In" Type="String" />
+            <Parameter Name="IsFile" Mode="In" Type="Boolean" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertStudentIntoClass">
@@ -1648,10 +1644,6 @@
           </FunctionImport>
           <FunctionImport Name="MarkStickerAsResolved">
             <Parameter Name="StickerID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="PullChatMessagesBetweenUsers" ReturnType="Collection(UnstuckME_DBModel.PullChatMessagesBetweenUsers_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-            <Parameter Name="tutorid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1919,6 +1911,15 @@
           <Property Type="Double" Name="AverageTutorRank" Nullable="false" />
           <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="GetChatMessages_Result">
+          <Property Type="Int32" Name="MessageID" Nullable="false" />
+          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="MessageData" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="FilePath" Nullable="true" />
+          <Property Type="Int32" Name="SentBy" Nullable="false" />
+          <Property Type="DateTime" Name="SentTime" Nullable="false" Precision="16" />
+        </ComplexType>
         <ComplexType Name="GetDisplayNameAndEmail_Result">
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
@@ -2117,14 +2118,6 @@
           <Property Type="Int32" Name="ReviewerID" Nullable="false" />
           <Property Type="Double" Name="StarRanking" Nullable="true" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
-        </ComplexType>
-        <ComplexType Name="PullChatMessagesBetweenUsers_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="MessageData" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="FilePath" Nullable="true" />
-          <Property Type="Int32" Name="SentBy" Nullable="false" />
-          <Property Type="DateTime" Name="SentTime" Nullable="false" Precision="16" />
         </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2562,6 +2555,19 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetChatMessages" FunctionName="UnstuckME_DBModel.Store.GetChatMessages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetChatMessages_Result">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
+                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
+                <ScalarProperty Name="MessageData" ColumnName="MessageData" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+                <ScalarProperty Name="SentTime" ColumnName="SentTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetCourseCodes" FunctionName="UnstuckME_DBModel.Store.GetCourseCodes" />
           <FunctionImportMapping FunctionImportName="GetCourseIDByCodeAndNumber" FunctionName="UnstuckME_DBModel.Store.GetCourseIDByCodeAndNumber" />
           <FunctionImportMapping FunctionImportName="GetCourseNameByCodeAndNumber" FunctionName="UnstuckME_DBModel.Store.GetCourseNameByCodeAndNumber" />
@@ -2850,24 +2856,11 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertFile" FunctionName="UnstuckME_DBModel.Store.InsertFile" />
           <FunctionImportMapping FunctionImportName="InsertMessage" FunctionName="UnstuckME_DBModel.Store.InsertMessage" />
           <FunctionImportMapping FunctionImportName="InsertStudentIntoClass" FunctionName="UnstuckME_DBModel.Store.InsertStudentIntoClass" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoChat" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoChat" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoMentorProgram" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoMentorProgram" />
           <FunctionImportMapping FunctionImportName="MarkStickerAsResolved" FunctionName="UnstuckME_DBModel.Store.MarkStickerAsResolved" />
-          <FunctionImportMapping FunctionImportName="PullChatMessagesBetweenUsers" FunctionName="UnstuckME_DBModel.Store.PullChatMessagesBetweenUsers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.PullChatMessagesBetweenUsers_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
-                <ScalarProperty Name="MessageData" ColumnName="MessageData" />
-                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
-                <ScalarProperty Name="SentTime" ColumnName="SentTime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="UnstuckME_DBModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="UnstuckME_DBModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="UnstuckME_DBModel.Store.sp_dropdiagram" />

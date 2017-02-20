@@ -104,6 +104,9 @@
     <Compile Include="GetAllUsersInAnOrganization_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetChatMessages_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetDisplayNameAndEmail_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -175,9 +178,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PullChatMessagesBetweenUsers_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Report.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>

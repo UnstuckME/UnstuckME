@@ -41,10 +41,14 @@ namespace UnstuckMEUserGUI
 
         }
 
-        public bool isOnline()
+		public void GetFile(UnstuckMEMessage message, UnstuckMEFile file)
+		{
+			Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatFile(message, file);
+		}
+
+		public bool isOnline()
         {
             return true;
         }
-
     }
 }

@@ -180,6 +180,7 @@ namespace UnstuckMEServerGUI
             StackPanelOnlineUsers.Children.Add(newUser);
             labelOnlineUsers.Content = "Online Users: " + StackPanelOnlineUsers.Children.Count;
         }
+
         public void RemoveUser(string emailAddress)
         {
             foreach (TextBlock block in StackPanelOnlineUsers.Children)

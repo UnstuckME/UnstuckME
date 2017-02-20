@@ -7,7 +7,10 @@ using System.Windows.Media;
 
 namespace UnstuckME_Classes
 {
-    public class UserInfo
+	public enum Privileges
+	{ InvalidUser, Admin, Moderator, User }
+
+	public class UserInfo
     {
         public int UserID { get; set; }
         public string FirstName { get; set; }
@@ -50,20 +53,20 @@ namespace UnstuckME_Classes
     //This Represents a Message in an UnstuckMEChat.
     public class UnstuckMEMessage
     {
-        public int ChatID { get; set; }
-        public string FilePath { get; set; }
         public int MessageID { get; set; }
-        public DateTime Time { get; set; }
-        public bool IsFile { get; set; }
+		public int ChatID { get; set; }
         public string Message { get; set; }
+		public string FilePath { get; set; }
+        public bool IsFile { get; set; }
+        public int SenderID { get; set; }
+		public DateTime Time { get; set; }
         //public int UserID { get; set; }
         public string Username { get; set; }
-        public int SenderID { get; set; }
         public List<int> UsersInConvo { get; set; }
-    }
+	}
 
-    //This Will be passed into the ChatMessage UserControl everytime a message is submitted.
-    public class UnstuckMEGUIChatMessage
+	//This Will be passed into the ChatMessage UserControl everytime a message is submitted.
+	public class UnstuckMEGUIChatMessage
     {
         public int ChatID { get; set; }
         public string FilePath { get; set; }
@@ -149,6 +152,7 @@ namespace UnstuckME_Classes
         public string ServerIPAdress { get; set; }
         public string ServerName { get; set; }
     }
+
     public class Organization
     {
         public int MentorID { get; set; }

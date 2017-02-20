@@ -604,6 +604,15 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllUsersInAnOrganization_Result>("GetAllUsersInAnOrganization", orgidParameter);
         }
     
+        public virtual ObjectResult<GetChatMessages_Result> GetChatMessages(Nullable<int> chatid)
+        {
+            var chatidParameter = chatid.HasValue ?
+                new ObjectParameter("chatid", chatid) :
+                new ObjectParameter("chatid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetChatMessages_Result>("GetChatMessages", chatidParameter);
+        }
+    
         public virtual ObjectResult<string> GetCourseCodes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetCourseCodes");
@@ -1049,24 +1058,7 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutorReviews_RankDESC_Result>("GetUserTutorReviews_RankDESC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
         }
     
-        public virtual int InsertFile(Nullable<int> chatID, string filePath, Nullable<int> userID)
-        {
-            var chatIDParameter = chatID.HasValue ?
-                new ObjectParameter("ChatID", chatID) :
-                new ObjectParameter("ChatID", typeof(int));
-    
-            var filePathParameter = filePath != null ?
-                new ObjectParameter("FilePath", filePath) :
-                new ObjectParameter("FilePath", typeof(string));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertFile", chatIDParameter, filePathParameter, userIDParameter);
-        }
-    
-        public virtual int InsertMessage(Nullable<int> chatID, string message, Nullable<int> userID)
+        public virtual int InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<bool> isFile, Nullable<int> userID)
         {
             var chatIDParameter = chatID.HasValue ?
                 new ObjectParameter("ChatID", chatID) :
@@ -1076,11 +1068,19 @@ namespace UnstuckMEServer
                 new ObjectParameter("Message", message) :
                 new ObjectParameter("Message", typeof(string));
     
+            var filePathParameter = filePath != null ?
+                new ObjectParameter("FilePath", filePath) :
+                new ObjectParameter("FilePath", typeof(string));
+    
+            var isFileParameter = isFile.HasValue ?
+                new ObjectParameter("IsFile", isFile) :
+                new ObjectParameter("IsFile", typeof(bool));
+    
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertMessage", chatIDParameter, messageParameter, userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertMessage", chatIDParameter, messageParameter, filePathParameter, isFileParameter, userIDParameter);
         }
     
         public virtual int InsertStudentIntoClass(Nullable<int> userID, Nullable<int> classID)
@@ -1129,19 +1129,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("StickerID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkStickerAsResolved", stickerIDParameter);
-        }
-    
-        public virtual ObjectResult<PullChatMessagesBetweenUsers_Result> PullChatMessagesBetweenUsers(Nullable<int> userid, Nullable<int> tutorid)
-        {
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var tutoridParameter = tutorid.HasValue ?
-                new ObjectParameter("tutorid", tutorid) :
-                new ObjectParameter("tutorid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PullChatMessagesBetweenUsers_Result>("PullChatMessagesBetweenUsers", useridParameter, tutoridParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

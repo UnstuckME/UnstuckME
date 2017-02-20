@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UnstuckME_Classes
 {
-    public class AdminInfo
+	public class AdminInfo
     {
         public int ServerAdminID { get; set; }
         public string EmailAddress { get; set; }
@@ -17,8 +17,8 @@ namespace UnstuckME_Classes
     }
 
     [DataContract]
-    public class File
-    {
+    public class UnstuckMEFile
+	{
         [DataMember]
         public string Name { get; set; }
 

@@ -19,6 +19,9 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         void GetMessage(UnstuckMEMessage message);
 
+		[OperationContract]
+		void GetFile(UnstuckMEMessage message, UnstuckMEFile file);
+
         [OperationContract]
         void AddClasses(UserClass inClass);
     }

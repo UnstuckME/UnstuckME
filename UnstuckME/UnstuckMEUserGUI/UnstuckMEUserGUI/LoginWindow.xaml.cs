@@ -163,7 +163,7 @@ namespace UnstuckMEUserGUI
             bool validCredentials = false;
             try
             {
-                Exception invalidCreds = new Exception("Invalid Credintials!");
+                Exception invalidCreds = new Exception("Invalid Credentials!");
                 if (textBoxCreateEmailAddress.Text.Length <= 0)
                     throw invalidCreds;
                 if (textBoxCreateFirstName.Text.Length <= 0)
@@ -269,12 +269,15 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
+				//System.IO.FileStream file = new System.IO.FileStream(System.IO.Path.Combine(Environment.CurrentDirectory, "..\\Resources\\User\\UserBlue.png"), System.IO.FileMode.Open);
+
                 ImageConverter converter = new ImageConverter();
                 byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
                 try
-                { 
-                    Server.SetProfilePicture(userID, avatar);
-                }
+                {
+					//Server.SetProfilePicture(userID, file);
+					Server.SetProfilePicture(userID, avatar);
+				}
                 catch (Exception exp)
                 {
                     UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();

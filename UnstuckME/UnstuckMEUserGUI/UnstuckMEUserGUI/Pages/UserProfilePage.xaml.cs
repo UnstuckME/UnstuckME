@@ -111,22 +111,35 @@ namespace UnstuckMEUserGUI
                 file_browser.Multiselect = false;
                 file_browser.ValidateNames = true;
                 file_browser.Filter = "Image Files (*.jpeg;*.png;*.jpg)|*.jpeg;*.png;*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
+				file_browser.Title = "Open Image";
 
-                if (file_browser.ShowDialog().Value)
-                {
-                    Stream file = file_browser.OpenFile();
-                    byte[] byte_array = null;
+				if (file_browser.ShowDialog().Value)
+				{
+					Stream file = file_browser.OpenFile();
+					byte[] byte_array = null;
 
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        file.CopyTo(ms);
-                        byte_array = ms.ToArray();
-                    }
+					if (file.Length > 26214400)
+						throw new Exception("The image you have selected exceeds the 25 MB limit. Please select a different file that is within the size limit.");
 
-                    Server.SetProfilePicture(UnstuckMEWindow.User.UserID, byte_array);
-                    ImageSourceConverter ic = new ImageSourceConverter();
-                    ImageEditProfilePicture.Source = ic.ConvertFrom(byte_array) as ImageSource;
-                    ProfilePicture.Source = ImageEditProfilePicture.Source;
+					System.Drawing.Image image = System.Drawing.Image.FromStream(file);
+					System.Drawing.Image thumbnail = image.GetThumbnailImage(Convert.ToInt32(0.6 * image.Width), Convert.ToInt32(0.6 * image.Height), null, IntPtr.Zero);
+
+					using (MemoryStream ms = new MemoryStream())
+					{
+						thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+						byte_array = ms.ToArray();
+
+						BitmapImage ix = new BitmapImage();
+						ix.BeginInit();
+						ix.CacheOption = BitmapCacheOption.OnLoad;
+						ix.StreamSource = ms;
+						ix.EndInit();
+
+						ImageEditProfilePicture.Source = ix;
+					}
+
+					ProfilePicture.Source = ImageEditProfilePicture.Source;
+					Server.SetProfilePicture(UnstuckMEWindow.User.UserID, byte_array);
                     foreach (UnstuckMEChat chat in UnstuckMEWindow._pages.ChatPage.allChats)
                     {
                         foreach (UnstuckMEChatUser user in chat.Users)
@@ -137,16 +150,22 @@ namespace UnstuckMEUserGUI
                             }
                         }
                     }
+
+					image.Dispose();		//avoids memory leaks
+					thumbnail.Dispose();	//avoids memory leaks
+					file.Dispose();			//avoids memory leaks
                 }
-            }
-            catch(Exception)
+			}
+            catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Image too large! This Needs to be fixed, it causes a communication fault and currently the app has to be shut down.", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
-                Process.Start(unstuckME);
-                System.Windows.Application.Current.Shutdown();
-            }
-        }
+				UnstuckMEMessageBox message = new UnstuckMEMessageBox(1, ex.Message, "Image Size Error");
+				message.Show();
+				//System.Windows.MessageBox.Show("Image too large! This Needs to be fixed, it causes a communication fault and currently the app has to be shut down.", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+				//string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+				//Process.Start(unstuckME);
+				//System.Windows.Application.Current.Shutdown();
+			}
+		}
 
         private void ButtonBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -158,7 +177,17 @@ namespace UnstuckMEUserGUI
 
         private void ButtonSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Windows.MessageBox.Show("This Does Nothing Yet!");
-        }
+			if (PasswordBoxNewPassword.Password != PasswordBoxConfirm.Password)
+			{
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, "Your passwords do not match, please reenter your password.", "Incorrect Password");
+				messagebox.Show();
+			}
+			else
+			{
+				Server.ChangeUserName(UnstuckMEWindow.User.EmailAddress, TextBoxNewFirstName.Text, TextBoxNewLastName.Text);
+				Server.ChangePassword(UnstuckMEWindow.User, PasswordBoxConfirm.Password);
+				ButtonBack_MouseLeftButtonDown(sender, e);
+			}
+		}
     }
 }

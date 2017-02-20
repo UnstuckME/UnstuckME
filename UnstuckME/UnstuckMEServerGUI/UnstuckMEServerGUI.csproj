@@ -125,6 +125,9 @@
     <Compile Include="GetAllUsersInAnOrganization_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetChatMessages_Result.cs">
+      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetDisplayNameAndEmail_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
@@ -195,9 +198,6 @@
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Picture.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PullChatMessagesBetweenUsers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Report.cs">

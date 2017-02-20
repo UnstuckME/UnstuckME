@@ -7,12 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnstuckMEServerGUI
+namespace UnstuckMEServer
 {
     using System;
     
-    public partial class PullChatMessagesBetweenUsers_Result
+    public partial class GetChatMessages_Result
     {
+        public int MessageID { get; set; }
         public string DisplayFName { get; set; }
         public string DisplayLName { get; set; }
         public string MessageData { get; set; }

@@ -89,8 +89,8 @@ if object_id('GetAllChatsAUserIsPartOF') is not null
 	drop procedure GetAllChatsAUserIsPartOF;
 if object_id('GetAllMembersOfAChat') is not null
 	drop procedure GetAllMembersOfAChat;
-if object_id('PullChatMessagesBetweenUsers') is not null
-	drop procedure PullChatMessagesBetweenUsers;
+if object_id('GetChatMessages') is not null
+	drop procedure GetChatMessages;
 if object_id('GetUserPasswordAndSalt') is not null
 	drop procedure GetUserPasswordAndSalt;
 if object_id('GetUserFriends') is not null
@@ -904,21 +904,18 @@ begin
 end;
 
 /**************************************************************************
-* Pull chat messages and files between two users
+* Pull chat messages and files between users
 **************************************************************************/
 go
-create proc PullChatMessagesBetweenUsers
-(	@userid int,
-	@tutorid int
-) as
+create proc GetChatMessages
+(	@chatid int	) as
 begin
-	select DisplayFName, DisplayLName, MessageData, FilePath, SentBy, SentTime
+	select MessageID, DisplayFName, DisplayLName, MessageData, FilePath, SentBy, SentTime
 	from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
 		join Chat						on UserToChat.ChatID = Chat.ChatID
 		join [Messages]					on Chat.ChatID = [Messages].ChatID
-	where (UserProfile.UserID = @userid and SentBy = UserProfile.UserID)
-							or
-		  (UserProfile.UserID = @tutorid and SentBy = UserProfile.UserID);
+	where UserToChat.ChatID = @chatid and UserProfile.UserID = [Messages].SentBy
+	order by SentTime desc;
 end;
 
 /**************************************************************************

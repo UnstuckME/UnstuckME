@@ -108,6 +108,46 @@ namespace UnstuckMEUserGUI
             }
         }
 
+		//should make a new GUIChatMessagethat can contain a file
+		/// <summary>
+		/// Currently doesn't implement the file, use first overload instead
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="file"></param>
+		public void AddMessage(UnstuckMEMessage message, UnstuckMEFile file)
+		{
+			bool chatIDexists = false;
+
+			try
+			{
+				foreach (UnstuckMEChat chat in allChats)
+				{
+					if (chat.ChatID == message.ChatID)
+					{
+						chatIDexists = true;
+						chat.Messages.Add(message);
+						if (currentChat.ChatID == chat.ChatID)
+						{
+							UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
+							StackPanelMessages.Children.Add(new ChatMessage(temp));
+							ScrollViewerMessagesBox.ScrollToBottom();
+						}
+					}
+				}
+
+				if (!chatIDexists)
+				{
+					UnstuckMEChat temp = Server.GetSingleChat(message.ChatID);
+					allChats.Add(temp);
+					StackPanelConversations.Children.Add(new Conversation(temp, this, ref Server));
+				}
+			}
+			catch (Exception ex)
+			{
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.Message, "Add Message Failed");
+			}
+		}
+
         private void ScrollViewerConversationBox_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ScrollViewerMessagesBox.ScrollToBottom();

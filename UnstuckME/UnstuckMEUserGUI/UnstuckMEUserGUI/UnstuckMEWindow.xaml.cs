@@ -29,9 +29,8 @@ namespace UnstuckMEUserGUI
         public static IUnstuckMEService Server;
         public static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         public static UserInfo User;
-        public enum Privileges { InvalidUser, Admin, Moderator, User }
         public static UnstuckMEPages _pages = new UnstuckMEPages();
-        private static Privileges userPriviliges;
+        private static Privileges userPrivileges;
         public UnstuckMEWindow thisWindow;
 
         public static Brush _UnstuckMEBlue;
@@ -58,9 +57,9 @@ namespace UnstuckMEUserGUI
             _pages.AdminPage = new AdminPage();
 
             //userPriviliges = (Privileges)User.Privileges; //This Works But for Design Purposes is commented out.
-            userPriviliges = Privileges.Admin; //This will be replaced with above line
+            userPrivileges = Privileges.Admin; //This will be replaced with above line
 
-            CheckAdminPrivledges(userPriviliges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
+            CheckAdminPrivledges(userPrivileges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
             SwitchToStickerTab();
             try
             {
@@ -78,12 +77,12 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        ///////////////////////////////////////////////ASYNCRONOUS LOADING SECTION/////////////////////////////////////////////////////////////////
-        private void LoadStickerPageAsync()
+		#region Asynchronous Loading Section
+		private void LoadStickerPageAsync()
         {
             this.Dispatcher.Invoke(() =>
             {
-                _pages.StickerPage.AvailableStickers = Server.InitialAvailableStickerPull(User.UserID);
+                _pages.StickerPage.AvailableStickers = Server.GetActiveStickersASC(User.AverageTutorRank, 0, 50, User.UserID);
                 foreach (UnstuckMEAvailableSticker sticker in _pages.StickerPage.AvailableStickers)
                 {
                     _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
@@ -151,9 +150,9 @@ namespace UnstuckMEUserGUI
                 }
             });
         }
+		#endregion
 
-        /////////////////////////////////////////////////////END ASYNCHRONOUS LOADING SECTION///////////////////////////////////////////////////////////////
-        private void StickerButton_Click(object sender, RoutedEventArgs e)
+		private void StickerButton_Click(object sender, RoutedEventArgs e)
         {
             SwitchToStickerTab();
         }
@@ -175,7 +174,7 @@ namespace UnstuckMEUserGUI
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            SwitchToAdminTab(userPriviliges);
+            SwitchToAdminTab(userPrivileges);
         }
 
         public void CheckAdminPrivledges(Privileges inPrivleges)
@@ -205,6 +204,7 @@ namespace UnstuckMEUserGUI
 
         public void SwitchToChatTab()
         {
+			MainFrame.NavigationService.RemoveBackEntry();
             MainFrame.Navigate(_pages.ChatPage);
             ChatButtonBorder.Background = _UnstuckMERed;
             StickerButtonBorder.Background = _UnstuckMEBlue;
@@ -215,7 +215,8 @@ namespace UnstuckMEUserGUI
         }
         public void SwitchToStickerTab()
         {
-            MainFrame.Navigate(_pages.StickerPage);
+			MainFrame.NavigationService.RemoveBackEntry();
+			MainFrame.Navigate(_pages.StickerPage);
             ChatButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMERed;
             SettingButtonBorder.Background = _UnstuckMEBlue;
@@ -225,7 +226,8 @@ namespace UnstuckMEUserGUI
         }
         public void SwitchToUserProfileTab()
         {
-            MainFrame.Navigate(_pages.UserProfilePage);
+			MainFrame.NavigationService.RemoveBackEntry();
+			MainFrame.Navigate(_pages.UserProfilePage);
             ChatButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMEBlue;
@@ -235,7 +237,8 @@ namespace UnstuckMEUserGUI
         }
         public void SwitchToSettingsTab()
         {
-            MainFrame.Navigate(_pages.SettingsPage);
+			MainFrame.NavigationService.RemoveBackEntry();
+			MainFrame.Navigate(_pages.SettingsPage);
             ChatButtonBorder.Background = _UnstuckMEBlue;
             StickerButtonBorder.Background = _UnstuckMEBlue;
             SettingButtonBorder.Background = _UnstuckMERed;
@@ -308,6 +311,20 @@ namespace UnstuckMEUserGUI
             }
         }
 
+		/// <summary>
+		/// Currently does nothing with the file
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="file"></param>
+		public void RecieveChatFile(UnstuckMEMessage message, UnstuckMEFile file)
+		{
+			if ((_pages.ChatPage.currentChat.ChatID != message.ChatID) || (MainFrame.Content != _pages.ChatPage))
+			{
+				_pages.ChatPage.AddMessage(message, file);
+				NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref _pages, this));
+			}
+		}
+
         public void RecieveAddedClasses(UserClass inClass)
         {
             this.Dispatcher.Invoke(() =>
@@ -344,13 +361,13 @@ namespace UnstuckMEUserGUI
         }
     }
 
-    public class UnstuckMEPages
-    {
-        public StickerPage StickerPage { get; set; }
-        public SettingsPage SettingsPage { get; set; }
-        public UserProfilePage UserProfilePage { get; set; }
-        public ChatPage ChatPage { get; set; }
-        public AdminPage AdminPage { get; set; }
-        public ModeratorPage ModeratorPage { get; set; }
-    }
+	public class UnstuckMEPages
+	{
+		public StickerPage StickerPage { get; set; }
+		public SettingsPage SettingsPage { get; set; }
+		public UserProfilePage UserProfilePage { get; set; }
+		public ChatPage ChatPage { get; set; }
+		public AdminPage AdminPage { get; set; }
+		public ModeratorPage ModeratorPage { get; set; }
+	}
 }

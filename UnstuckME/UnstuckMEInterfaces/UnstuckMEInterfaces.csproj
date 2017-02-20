@@ -49,9 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\UnstuckME_Classes\UnstuckME_Classes.csproj">
       <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>
       <Name>UnstuckME_Classes</Name>

@@ -82,22 +82,22 @@ namespace UnstuckMEInterfaces
 		List<UnstuckMESticker> GetUserTutoredStickersDESC(int userID, short firstrow = 0, short lastrow = 0, float minstarrank = 0, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickersASC(float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickersASC(float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickersDESC(float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickersDESC(float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickersWithOrg_OrgClassASC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgClassASC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickersWithOrg_OrgDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickersWithOrg_ClassDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_ClassDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickersWithOrg_OrgClassDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgClassDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
         void AddUserToTutoringOrganization(int userID, int organizationID);
@@ -109,9 +109,12 @@ namespace UnstuckMEInterfaces
         byte[] GetProfilePicture(int userID);
 
         [OperationContract]
-        void SetProfilePicture(int userID, byte[] image);
+		void SetProfilePicture(int userID, byte[] image);
 
-        [OperationContract]
+		//[OperationContract]
+		//void SetProfilePicture(int userID, System.IO.FileStream image);
+
+		[OperationContract]
         List<string> GetCourseCodes();
 
         [OperationContract]
@@ -155,7 +158,11 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void SendMessage(UnstuckMEMessage message);
-        [OperationContract]
+
+		[OperationContract]
+		void UploadFile(UnstuckMEMessage message, UnstuckMEFile file);
+
+		[OperationContract]	//this is completely unnecessary
         List<UnstuckMEAvailableSticker> InitialAvailableStickerPull(int userID);
 
         [OperationContract]
@@ -202,13 +209,13 @@ namespace UnstuckMEInterfaces
         int AdminDeleteReport(int reportID);
 
         [OperationContract]
-        File UploadDocument();
+		UnstuckMEFile UploadDocument();
     }
 
     [ServiceContract(CallbackContract = typeof(IFileStream))]
     public interface IUnstuckMEFileStream
     {
-        [OperationContract]
-        void HelloWorld();
+		[OperationContract]
+		System.IO.Stream Test(System.IO.Stream stream);
     }
 }
