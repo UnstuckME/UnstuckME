@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UnstuckME_SchoolsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UnstuckME_SchoolsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Database">
           <Key>
             <PropertyRef Name="DatabaseID" />
@@ -33,6 +33,7 @@
           </Key>
           <Property Name="LogoID" Type="int" Nullable="false" />
           <Property Name="Logo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" />
         </EntityType>
         <EntityType Name="Server">
           <Key>
@@ -54,7 +55,7 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK__Database__School__703EA55A">
+        <Association Name="FK__Database__School__0FB750B3">
           <End Role="School" Type="Self.School" Multiplicity="1" />
           <End Role="Database" Type="Self.Database" Multiplicity="*" />
           <ReferentialConstraint>
@@ -66,7 +67,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SchoolLog__LogoI__75035A77">
+        <Association Name="FK__SchoolLog__LogoI__147C05D0">
           <End Role="School" Type="Self.School" Multiplicity="1" />
           <End Role="SchoolLogo" Type="Self.SchoolLogo" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -78,7 +79,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Server__SchoolID__6B79F03D">
+        <Association Name="FK__Server__SchoolID__0AF29B96">
           <End Role="School" Type="Self.School" Multiplicity="1" />
           <End Role="Server" Type="Self.Server" Multiplicity="*" />
           <ReferentialConstraint>
@@ -167,21 +168,20 @@
           <EntitySet Name="SchoolLogo" EntityType="Self.SchoolLogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Server" EntityType="Self.Server" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Database__School__703EA55A" Association="Self.FK__Database__School__703EA55A">
+          <AssociationSet Name="FK__Database__School__0FB750B3" Association="Self.FK__Database__School__0FB750B3">
             <End Role="School" EntitySet="School" />
             <End Role="Database" EntitySet="Database" />
           </AssociationSet>
-          <AssociationSet Name="FK__SchoolLog__LogoI__75035A77" Association="Self.FK__SchoolLog__LogoI__75035A77">
+          <AssociationSet Name="FK__SchoolLog__LogoI__147C05D0" Association="Self.FK__SchoolLog__LogoI__147C05D0">
             <End Role="School" EntitySet="School" />
             <End Role="SchoolLogo" EntitySet="SchoolLogo" />
           </AssociationSet>
-          <AssociationSet Name="FK__Server__SchoolID__6B79F03D" Association="Self.FK__Server__SchoolID__6B79F03D">
+          <AssociationSet Name="FK__Server__SchoolID__0AF29B96" Association="Self.FK__Server__SchoolID__0AF29B96">
             <End Role="School" EntitySet="School" />
             <End Role="Server" EntitySet="Server" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UnstuckME_SchoolsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -218,6 +218,7 @@
           <Property Name="LogoID" Type="Int32" Nullable="false" />
           <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <NavigationProperty Name="School" Relationship="Self.FK__SchoolLog__LogoI__75035A77" FromRole="SchoolLogo" ToRole="School" />
+          <Property Name="LastModified" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Server">
           <Key>
@@ -295,21 +296,21 @@
             <End Role="Server" EntitySet="Servers" />
           </AssociationSet>
           <FunctionImport Name="DeleteSchool">
-            <Parameter Name="SchoolName" Mode="In" Type="String" />
+          <Parameter Name="SchoolName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteServer">
-            <Parameter Name="ServerName" Mode="In" Type="String" />
+          <Parameter Name="ServerName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllSchoolLogos" ReturnType="Collection(UnstuckME_SchoolsModel.GetAllSchoolLogos_Result)" />
           <FunctionImport Name="GetAllSchools" ReturnType="Collection(UnstuckME_SchoolsModel.GetAllSchools_Result)" />
           <FunctionImport Name="GetSchoolEmailCredentials" ReturnType="Collection(String)">
-            <Parameter Name="SchoolName" Mode="In" Type="String" />
+          <Parameter Name="SchoolName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetSchoolID" ReturnType="Collection(Int32)">
-            <Parameter Name="SchoolName" Mode="In" Type="String" />
+          <Parameter Name="SchoolName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetSchoolServerInfo" ReturnType="Collection(UnstuckME_SchoolsModel.GetSchoolServerInfo_Result)">
-            <Parameter Name="SchoolName" Mode="In" Type="String" />
+          <Parameter Name="SchoolName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertSchool">
             <Parameter Name="SchooName" Mode="In" Type="String" />
@@ -429,6 +430,7 @@
           <EntitySetMapping Name="SchoolLogoes">
             <EntityTypeMapping TypeName="UnstuckME_SchoolsModel.SchoolLogo">
               <MappingFragment StoreEntitySet="SchoolLogo">
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
                 <ScalarProperty Name="LogoID" ColumnName="LogoID" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
               </MappingFragment>

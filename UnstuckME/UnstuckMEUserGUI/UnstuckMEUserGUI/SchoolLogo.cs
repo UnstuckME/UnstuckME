@@ -16,6 +16,7 @@ namespace UnstuckMEUserGUI
     {
         public int LogoID { get; set; }
         public byte[] Logo { get; set; }
+        public Nullable<System.DateTime> LastModified { get; set; }
     
         public virtual School School { get; set; }
     }

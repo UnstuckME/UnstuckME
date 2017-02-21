@@ -145,12 +145,13 @@ namespace UnstuckME_Classes
 
     public class UnstuckMESchool
     {
-        public int SchoolID { get; set; }
+        public int    SchoolID { get; set; }
         public string SchoolName { get; set; }
         public string SchoolDomain { get; set; }
         public string SchoolEmailCredentials { get; set; }
         public string ServerIPAdress { get; set; }
         public string ServerName { get; set; }
+        public string LogoLastModified { get; set; }
     }
 
     public class Organization

@@ -27,6 +27,8 @@ namespace UnstuckMEUserGUI
         public static IUnstuckMEService Server;
         private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         private static List<UnstuckMESchool> schools;
+        private string m_SchoolName = "";
+
         public LoginWindow()
         { 
             InitializeComponent();
@@ -41,26 +43,37 @@ namespace UnstuckMEUserGUI
             {
                 comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
             }
+
+            m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
+            if (m_SchoolName != "")
+            {
+                comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf(m_SchoolName);
+            }
+            
         }
 
         private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
         {
-            return Task.Factory.StartNew(() => LoadSchools());     
+            return Task.Factory.StartNew(() => LoadSchools());
         }
 
         List<UnstuckMESchool> LoadSchools()
         {
+
+            //PRETTY sure you could pass a list of schools to the LINQ to fill
+            //
             List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
             using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
             {
-                var dbSchools = from s in db.Schools
+                var dbSchools = from s in db.Schools join l in db.SchoolLogoes on s.SchoolID equals l.LogoID
                                     //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
                                     //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/
                                 select new
                                 {
                                     SchoolName = s.SchoolName,
                                     EmailCredentials = s.EmailCredentials,
-                                    SchoolID = s.SchoolID
+                                    SchoolID = s.SchoolID,
+                                    LastModified = l.LastModified
                                 };
                 foreach (var dbschool in dbSchools)
                 {
@@ -68,13 +81,14 @@ namespace UnstuckMEUserGUI
                     newSchool.SchoolName = dbschool.SchoolName;
                     newSchool.SchoolID = dbschool.SchoolID;
                     newSchool.SchoolEmailCredentials = dbschool.EmailCredentials;
+                    newSchool.LogoLastModified = dbschool.LastModified.ToString();
                     tempSchools.Add(newSchool);
                 }
             }
             return tempSchools;
         }
 
-        async private void buttonLogin_Click(object sender, RoutedEventArgs e)
+        private async void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = false;
             
@@ -85,9 +99,7 @@ namespace UnstuckMEUserGUI
             {
                 if (textBoxUserName.Text.Length <= 0)
                     throw new Exception("Enter an Email Address");
-                if (passwordBox.Password.Length <= 6)
-                    throw new Exception("Enter a Valid Password");
-                if (passwordBox.Password.Length >= 32)
+                if (passwordBox.Password.Length <= 6 || passwordBox.Password.Length >= 32)
                     throw new Exception("Enter a Valid Password");
                 isValid = true;
             }
@@ -139,6 +151,15 @@ namespace UnstuckMEUserGUI
             }
         }
 
+        private async void LoadSchoolLogo()
+        { 
+            using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
+            {
+                var dbSchools = (from schoolLogos in db.Schools select new { logo = schoolLogos.SchoolLogo }).First();
+            }
+
+        }
+
         private UserInfo ServerLoginAttemptAsynch(string emailAttempt, string passwordAttempt)
         {
             UserInfo temp = new UserInfo();
@@ -158,7 +179,7 @@ namespace UnstuckMEUserGUI
             return temp;
         }
 
-        async private void buttonCreate_Click(object sender, RoutedEventArgs e)
+        private async void buttonCreate_Click(object sender, RoutedEventArgs e)
         {
             bool validCredentials = false;
             try
