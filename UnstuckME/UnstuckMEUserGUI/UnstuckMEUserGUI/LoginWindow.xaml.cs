@@ -353,9 +353,40 @@ namespace UnstuckMEUserGUI
 
         private void textBoxUserName_GotFocus(object sender, RoutedEventArgs e)
         {
-            textBoxUserName.Text = string.Empty;
-            textBoxUserName.Foreground = System.Windows.Media.Brushes.Black;
-            textBoxUserName.FontStyle = FontStyles.Normal;
+            if (textBoxUserName.Text == "Example@oit.edu")
+            {
+                textBoxUserName.Text = string.Empty;
+                textBoxUserName.Foreground = System.Windows.Media.Brushes.Black;
+                textBoxUserName.FontStyle = FontStyles.Normal;
+            }
+        }
+
+        private void textBoxPasswordPreview_GotFocus(object sender, RoutedEventArgs e)
+        {
+            textBoxPasswordPreview.Visibility = Visibility.Hidden;
+            textBoxPasswordPreview.IsEnabled = false;
+            passwordBox.Visibility = Visibility.Visible;
+            passwordBox.Focus();
+        }
+
+        private void textBoxUserName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(textBoxUserName.Text == string.Empty)
+            {
+                textBoxUserName.Text = "Example@oit.edu";
+                textBoxUserName.Foreground = System.Windows.Media.Brushes.Gray;
+                textBoxUserName.FontStyle = FontStyles.Italic;
+            }
+        }
+
+        private void passwordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(passwordBox.Password == string.Empty)
+            {
+                textBoxPasswordPreview.Visibility = Visibility.Visible;
+                textBoxPasswordPreview.IsEnabled = true;
+                passwordBox.Visibility = Visibility.Hidden;
+            }
         }
     }
 }
