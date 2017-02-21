@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -32,6 +33,19 @@ namespace UnstuckMEUserGUI
         public LoginWindow()
         { 
             InitializeComponent();
+            try
+            {
+                string driveToUse = FindDrive();
+                //This will not recreate the driectory if it already exist 
+                //(MSDN: "Creates all directories and subdirectories in the specified path unless they already exist.")
+                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(driveToUse, "UnstuckMETemp"));
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected beahvior may occur");
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message);
+            }
         }
 
         private async void Window_ContentRendered(object sender, EventArgs e)
@@ -356,6 +370,30 @@ namespace UnstuckMEUserGUI
             textBoxUserName.Text = string.Empty;
             textBoxUserName.Foreground = System.Windows.Media.Brushes.Black;
             textBoxUserName.FontStyle = FontStyles.Normal;
+        }
+
+        private string FindDrive()
+        {
+            bool foundCDrive = false;
+            string driveToUse = null;
+            DriveInfo[] myDrives = DriveInfo.GetDrives();
+
+            foreach (DriveInfo drive in myDrives)
+            {
+                if (drive.Name.ToLower() == @"c:\")
+                {
+                    foundCDrive = true;
+                    driveToUse = drive.Name;
+                    break;
+                }
+            }
+
+            if (foundCDrive != true)
+            {
+                driveToUse = myDrives[0].Name;
+            }
+
+            return driveToUse;
         }
     }
 }

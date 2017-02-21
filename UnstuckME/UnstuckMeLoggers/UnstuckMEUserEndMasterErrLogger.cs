@@ -14,7 +14,9 @@ namespace UnstuckMeLoggers
         USER_GUI_LOGIN,
         USER_GUI_LOGOUT,
         USER_SERVER_CONNECTION_ERROR,
-        USER_GUI_INTERACTION_ERROR
+        USER_GUI_INTERACTION_ERROR,
+        USER_UNABLE_TO_READWRITE
+        
     }
     public class UnstuckMEUserEndMasterErrLogger
     {
@@ -116,6 +118,11 @@ namespace UnstuckMeLoggers
                 case (ERR_TYPES.USER_GUI_LOGOUT):
                     errTypeStartMark = "<UserGUILogOut>";
                     errTypeEndMark = "<UserGUILogOut/>";
+                    ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString(), additionalInfo));
+                    break;
+                case (ERR_TYPES.USER_UNABLE_TO_READWRITE):
+                    errTypeStartMark = "<UserUnableToReadOrWrite>";
+                    errTypeEndMark = "<UserUnableToReadOrWrite/>";
                     ErrorsList.Add(new ErrContainer(errMsg, errTypeStartMark, errTypeEndMark, DateTime.Now.ToString(), additionalInfo));
                     break;
                 default:
