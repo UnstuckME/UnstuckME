@@ -6,25 +6,20 @@
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="250">
-    <Grid Background="DimGray" Cursor="Hand">
+    <Grid Background="SteelBlue" Cursor="Hand">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,50,0" HorizontalAlignment="Right">
-            <Border x:Name="BorderCheck" Width="50" BorderBrush="DimGray" BorderThickness="1,0,1,0" HorizontalAlignment="Right" VerticalAlignment="Stretch" MouseEnter="BorderCheck_MouseEnter" MouseLeave="BorderCheck_MouseLeave">
-                <Image Stretch="UniformToFill" Source="/Resources/CheckMark/CheckWhite.png" Height="45" Width="45"></Image>
+        <Grid Grid.Row="0" Margin="0,0,10,0" HorizontalAlignment="Right">
+            <Border x:Name="ButtonAccept" Background="ForestGreen" Width="75" Height="30" BorderBrush="DimGray" BorderThickness="1,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch" MouseEnter="ButtonAccept_MouseEnter" MouseLeave="ButtonAccept_MouseLeave" MouseLeftButtonDown="ButtonAccept_MouseLeftButtonDown">
+                <Label  Content="Accept" HorizontalContentAlignment="Center" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" FontWeight="Medium"></Label>
             </Border>
         </Grid>
-        <Grid x:Name="GridClassName" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,100,0" MouseEnter="GridClassName_MouseEnter" MouseLeave="GridClassName_MouseLeave" MouseDown="GridClassName_MouseDown">
+        <Grid x:Name="GridClassName" Grid.Row="0" Margin="0,0,100,0" MouseEnter="GridClassName_MouseEnter" MouseLeave="GridClassName_MouseLeave" MouseDown="GridClassName_MouseDown">
             <Label x:Name="LabelClassName" Padding="10,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Content="Class Name" Foreground="White"></Label>
         </Grid>
-        <Grid Grid.Row="0" Grid.RowSpan="2" Margin="0,0,0,0" HorizontalAlignment="Right">
-            <Border x:Name="BorderX" Width="50" BorderBrush="DimGray" BorderThickness="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Stretch" MouseLeftButtonDown="BorderX_MouseLeftButtonDown" MouseEnter="BorderX_MouseEnter" MouseLeave="BorderX_MouseLeave">
-                <Image Stretch="UniformToFill" Source="/Resources/Xmark/XmarkWHite.png" Height="45" Width="45"></Image>
-            </Border>
-        </Grid>
-        <Grid Grid.Row="2" Background="SteelBlue">
+        <Grid Grid.Row="2" Background="DimGray">
             
         </Grid>
         <Border BorderBrush="DimGray" BorderThickness="1,1,1,1" Grid.RowSpan="2"></Border>

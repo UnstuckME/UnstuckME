@@ -14,6 +14,9 @@ namespace UnstuckMEInterfaces
     [ServiceContract(CallbackContract = typeof(IClient))]
     public interface IUnstuckMEService
     {
+        [OperationContract(IsOneWay = true)]
+        void AcceptSticker(int userID, int stickerID);
+
         [OperationContract]
         int AddFriend(int userId, int friendUserID);
 
@@ -162,7 +165,7 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void UploadFile(UnstuckMEMessage message, UnstuckMEFile file);
 
-		[OperationContract]	//this is completely unnecessary
+		[OperationContract]	
         List<UnstuckMEAvailableSticker> InitialAvailableStickerPull(int userID);
 
         [OperationContract]

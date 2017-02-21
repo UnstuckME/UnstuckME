@@ -1325,7 +1325,6 @@ namespace UnstuckMEInterfaces
                         MessageList.Add(temp);
                     }
                 }
-
                 return MessageList;
             }
             catch (Exception ex)
@@ -1422,7 +1421,7 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var dbStickers = from a in db.Stickers
-                                     where (a.StudentID != userID) && (a.MinimumStarRanking <= (from b in db.UserProfiles where b.UserID == userID select b.AverageTutorRank).FirstOrDefault())
+                                     where (a.StudentID != userID) && (a.MinimumStarRanking <= (from b in db.UserProfiles where b.UserID == userID select b.AverageTutorRank).FirstOrDefault()) && a.TutorID == null
                                      join c in db.Classes on a.ClassID equals c.ClassID
                                      join d in db.UserProfiles on a.StudentID equals d.UserID
                                      select new
@@ -1545,5 +1544,27 @@ namespace UnstuckMEInterfaces
                 Console.WriteLine(ex.Message);
             }
         }
-	}
+
+        public void AcceptSticker(int tutorID, int stickerID)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    db.UpdateTutorIDByTutorIDAndStickerID(tutorID, stickerID);
+                }
+                foreach (var client in _connectedClients)
+                {
+                    if(client.Key != tutorID)
+                    {
+                        client.Value.connection.RemoveGUISticker(stickerID);
+                    }  
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
 }

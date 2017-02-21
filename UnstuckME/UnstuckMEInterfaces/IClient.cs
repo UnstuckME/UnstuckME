@@ -10,9 +10,6 @@ namespace UnstuckMEInterfaces
 {
     public interface IClient
     {
-        [OperationContract]
-        bool isOnline();
-
         [OperationContract(IsOneWay = true)]
         void ForceClose();
 
@@ -24,5 +21,8 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void AddClasses(UserClass inClass);
+
+        [OperationContract]
+        void RemoveGUISticker(int stickerID);
     }
 }

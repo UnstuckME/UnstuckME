@@ -205,7 +205,7 @@ namespace UnstuckMEUserGUI
             GridNewConversation.IsEnabled = true;
         }
 
-        private void ButtonAddUserDone_Click(object sender, RoutedEventArgs e)
+        public void ButtonAddUserDone_Click(object sender, RoutedEventArgs e)
         {
             ButtonCreateChat.Visibility = Visibility.Visible;
             ButtonCreateChat.IsEnabled = true;
@@ -249,6 +249,7 @@ namespace UnstuckMEUserGUI
                     temp.IsFile = false;
                     temp.Message = "New Conversation with " + User.FirstName + " " + User.LastName + " started.";
                     temp.MessageID = 0;
+                    temp.Username = User.FirstName;
                     temp.SenderID = User.UserID;
                     temp.UsersInConvo = new List<int>();
                     temp.UsersInConvo.Add(User.UserID);
@@ -263,6 +264,10 @@ namespace UnstuckMEUserGUI
                             convo.ConversationUserControl_MouseLeftButtonDown(null, null);
                         }
                     }
+                }
+                else
+                {
+                    LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
                 }
             }
             catch(Exception)

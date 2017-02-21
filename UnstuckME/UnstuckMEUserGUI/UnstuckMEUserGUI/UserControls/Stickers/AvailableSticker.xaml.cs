@@ -41,24 +41,10 @@ namespace UnstuckMEUserGUI
             LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + "   " + "Student Rating = " + Sticker.StudentRanking;
         }
 
-        private void BorderCheck_MouseEnter(object sender, MouseEventArgs e)
+        public void RemoveFromStackPanel()
         {
-            BorderCheck.Background = Brushes.ForestGreen;
-        }
-
-        private void BorderCheck_MouseLeave(object sender, MouseEventArgs e)
-        {
-            BorderCheck.Background = null;
-        }
-
-        private void BorderX_MouseEnter(object sender, MouseEventArgs e)
-        {
-            BorderX.Background = UnstuckMEWindow._UnstuckMERed;
-        }
-
-        private void BorderX_MouseLeave(object sender, MouseEventArgs e)
-        {
-            BorderX.Background = null;
+            //Removes Sticker From Stack Panel
+            ((StackPanel)this.Parent).Children.Remove(this);
         }
 
         private void GridClassName_MouseEnter(object sender, MouseEventArgs e)
@@ -81,6 +67,30 @@ namespace UnstuckMEUserGUI
         {
             //Removes Sticker From Stack Panel
             ((StackPanel)this.Parent).Children.Remove(this);
+        }
+
+        private void ButtonAccept_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonAccept.Background = Brushes.LimeGreen;
+        }
+
+        private void ButtonAccept_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonAccept.Background = Brushes.ForestGreen;
+        }
+
+        private void ButtonAccept_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                UnstuckMEWindow.Server.AcceptSticker(UnstuckMEWindow.User.UserID, Sticker.StickerID);
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker.StudentID, UnstuckMEWindow.User.UserID);
+                ((StackPanel)this.Parent).Children.Remove(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Accept Failed In Available Sticker User Control. " + ex.Message);
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveAddedClasses(inClass);
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveAddedClass(inClass);
             }
             catch(InvalidOperationException ex)
             {
@@ -46,9 +46,16 @@ namespace UnstuckMEUserGUI
 			Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatFile(message, file);
 		}
 
-		public bool isOnline()
+        public void RemoveGUISticker(int stickerID)
         {
-            return true;
+            try
+            {
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RemoveStickerFromAvailableStickers(stickerID);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
