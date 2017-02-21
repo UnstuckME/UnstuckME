@@ -21,12 +21,12 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ContactAddToConversation : UserControl
     {
-        public UserInfo Contact;
-        public ContactAddToConversation(UserInfo inContact)
+        public UnstuckMEChatUser Contact;
+        public ContactAddToConversation(UnstuckMEChatUser inContact)
         {
             InitializeComponent();
             Contact = inContact;
-            LabelUsername.Content = Contact.FirstName + " " + Contact.LastName;
+            LabelUsername.Content = Contact.UserName;
         }
 
         private void ButtonAddUser_Click(object sender, RoutedEventArgs e)

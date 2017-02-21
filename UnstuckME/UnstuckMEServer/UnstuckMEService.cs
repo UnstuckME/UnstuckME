@@ -1322,7 +1322,7 @@ namespace UnstuckMEInterfaces
                         temp.FilePath = message.FilePath;
                         temp.ChatID = chatID;
                         temp.SenderID = message.SentBy;
-                        temp.Username = message.DisplayFName + " " + message.DisplayLName;
+                        temp.Username = message.DisplayFName;
                         MessageList.Add(temp);
                     }
                 }
@@ -1568,11 +1568,11 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public List<UserInfo> GetFriends(int userID)
+        public List<UnstuckMEChatUser> GetFriends(int userID)
         {
             try
             {
-                List<UserInfo> FriendsList = new List<UserInfo>();
+                List<UnstuckMEChatUser> FriendsList = new List<UnstuckMEChatUser>();
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var dbFriends = from a in db.Friends
@@ -1582,12 +1582,9 @@ namespace UnstuckMEInterfaces
 
                     foreach (var friend in dbFriends)
                     {
-                        UserInfo temp = new UserInfo();
-                        temp.AverageStudentRank = Convert.ToSingle(friend.b.AverageStudentRank);
-                        temp.AverageTutorRank = Convert.ToSingle(friend.b.AverageTutorRank);
-                        temp.EmailAddress = friend.b.EmailAddress;
-                        temp.FirstName = friend.b.DisplayFName;
-                        temp.LastName = friend.b.DisplayLName;
+                        UnstuckMEChatUser temp = new UnstuckMEChatUser();
+                        temp.ProfilePicture = null;
+                        temp.UserName = friend.b.DisplayFName;
                         temp.UserID = friend.a.FriendUserID;
                         FriendsList.Add(temp);
                     }
