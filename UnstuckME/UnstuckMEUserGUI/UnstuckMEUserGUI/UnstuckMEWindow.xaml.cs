@@ -398,39 +398,22 @@ namespace UnstuckMEUserGUI
                     //Chat Not Found. Creating a new one.
                     PreExistingChatID = Server.CreateChat(User.UserID);
                     Server.InsertUserIntoChat(studentID, PreExistingChatID);
-                    UnstuckMEMessage temp = new UnstuckMEMessage();
-                    temp.ChatID = PreExistingChatID;
-                    temp.FilePath = string.Empty;
-                    temp.IsFile = false;
-                    temp.Message = User.FirstName + " " + User.LastName + " has accepted a sticker you submitted!";
-                    temp.MessageID = 0;
-                    temp.SenderID = User.UserID;
-                    temp.Username = User.FirstName;
-                    temp.UsersInConvo = new List<int>();
-                    temp.UsersInConvo.Add(User.UserID);
-                    temp.UsersInConvo.Add(studentID);
-                    Server.SendMessage(temp);
-                    temp.Message = "Your have accepted a Sticker!";
-                    _pages.ChatPage.AddMessage(temp);
                 }
-                else
-                {
-                    //Pre Existing Chat Found.
-                    UnstuckMEMessage temp = new UnstuckMEMessage();
-                    temp.ChatID = PreExistingChatID;
-                    temp.FilePath = string.Empty;
-                    temp.IsFile = false;
-                    temp.Message = User.FirstName + " " + User.LastName + " has accepted another sticker you submitted!";
-                    temp.MessageID = 0;
-                    temp.SenderID = User.UserID;
-                    temp.Username = User.FirstName;
-                    temp.UsersInConvo = new List<int>();
-                    temp.UsersInConvo.Add(User.UserID);
-                    temp.UsersInConvo.Add(studentID);
-                    Server.SendMessage(temp);
-                    temp.Message = "Your have accepted a Sticker!";
-                    _pages.ChatPage.AddMessage(temp);
-                }
+                UnstuckMEMessage temp = new UnstuckMEMessage();
+                temp.ChatID = PreExistingChatID;
+                temp.FilePath = string.Empty;
+                temp.IsFile = false;
+                temp.Message = User.FirstName + " " + User.LastName + " has accepted a sticker you submitted!";
+                temp.MessageID = 0;
+                temp.SenderID = User.UserID;
+                temp.Username = User.FirstName;
+                temp.UsersInConvo = new List<int>();
+                temp.UsersInConvo.Add(User.UserID);
+                temp.UsersInConvo.Add(studentID);
+                Server.SendMessage(temp);
+                temp.Message = "Your have accepted a Sticker!";
+                _pages.ChatPage.AddMessage(temp);
+
                 SwitchToChatTab();
                 _pages.ChatPage.ButtonAddUserDone_Click(null, null);
                 foreach (Conversation convo in _pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
@@ -440,7 +423,7 @@ namespace UnstuckMEUserGUI
                         convo.ConversationUserControl_MouseLeftButtonDown(null, null);
                     }
                 }
-            } );
+            });
         }
 
         private void ButtonLogout_MouseEnter(object sender, MouseEventArgs e)
