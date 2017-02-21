@@ -330,5 +330,11 @@ namespace UnstuckMEUserGUI
             _LoginGrid.Visibility = Visibility.Visible;
         }
 
+        private void textBoxUserName_GotFocus(object sender, RoutedEventArgs e)
+        {
+            textBoxUserName.Text = string.Empty;
+            textBoxUserName.Foreground = System.Windows.Media.Brushes.Black;
+            textBoxUserName.FontStyle = FontStyles.Normal;
+        }
     }
 }

@@ -29,7 +29,8 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             Server = inServer;
             CurrentChat = inCurrentChat;
-            FriendsList = inFriendsList;
+            FriendsList = inFriendsList.ToList();
+
             foreach (UserInfo friend in FriendsList)
             {
                 StackPanelFriendsList.Children.Add(new ContactAddToConversation(friend));
@@ -72,7 +73,17 @@ namespace UnstuckMEUserGUI
 
         private void ButtonAddUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Button Clicked");
+            LabelInvalidUsername.Visibility = Visibility.Hidden;
+            if(Server.IsValidUser(TextBoxManualSearch.Text) || TextBoxManualSearch.Text.Length > 6)
+            {
+                int userID = Server.GetUserID(TextBoxManualSearch.Text);
+                Server.InsertUserIntoChat(userID, CurrentChat.ChatID);
+                
+            }
+            else
+            {
+                LabelInvalidUsername.Visibility = Visibility.Visible;
+            }
         }
     }
 }
