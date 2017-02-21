@@ -1361,7 +1361,7 @@ namespace UnstuckMEInterfaces
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    db.InsertMessage(message.ChatID, message.Message, null, null, message.SenderID);
+                    db.InsertMessage(message.ChatID, message.Message, null, false, message.SenderID);
                 }
                 foreach (int client in message.UsersInConvo)
                 {
