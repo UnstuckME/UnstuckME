@@ -32,6 +32,8 @@ namespace UnstuckMEUserGUI
         public static UnstuckMEPages _pages = new UnstuckMEPages();
         private static Privileges userPrivileges;
         public UnstuckMEWindow thisWindow;
+        public static List<UserInfo> FriendsList;
+
 
         public static Brush _UnstuckMEBlue;
         public static Brush _UnstuckMERed;
@@ -138,15 +140,11 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                for (int i = 0; i < 30; i++)
-                {
-                    OnlineUsersStack.Children.Add(new OnlineUser("Hello User " + i));
-                }
 
-                for (int i = 0; i < 30; i++)
+                FriendsList = Server.GetFriends(User.UserID);
+                foreach (UserInfo friend in FriendsList)
                 {
-                    //AvailableStickersStack.Children.Add(new NewMessageNotification("User " + i, ref _pages, this));
-                    NotificationStack.Children.Add(new AvailableStickerNotification("CST 11" + i));
+                    OnlineUsersStack.Children.Add(new OnlineUser(friend));
                 }
             });
         }

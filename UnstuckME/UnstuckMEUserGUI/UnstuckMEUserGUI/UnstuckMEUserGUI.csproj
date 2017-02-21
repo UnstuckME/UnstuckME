@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddUserToConversationWindow.xaml.cs">
+      <DependentUpon>AddUserToConversationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StickerInfoWindow.xaml.cs">
       <DependentUpon>StickerInfoWindow.xaml</DependentUpon>
     </Compile>
@@ -199,6 +202,10 @@
     <Compile Include="Pages\UserProfilePage.xaml.cs">
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddUserToConversationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StickerInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

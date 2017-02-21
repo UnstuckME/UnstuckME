@@ -736,6 +736,7 @@ namespace UnstuckMEInterfaces
 
                 foreach (int orgID in newSticker.AttachedOrganizations)
                 {
+                    //newSticker.StickerID Currently is 0. So this breaks.
                     db.AddOrgToSticker(newSticker.StickerID, orgID);
                     Console.WriteLine("OrganizationID: " + orgID);
                 }
@@ -1564,6 +1565,39 @@ namespace UnstuckMEInterfaces
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        public List<UserInfo> GetFriends(int userID)
+        {
+            try
+            {
+                List<UserInfo> FriendsList = new List<UserInfo>();
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var dbFriends = from a in db.Friends
+                                    where a.UserID == userID
+                                    join b in db.UserProfiles on a.FriendUserID equals b.UserID
+                                    select new { a, b };
+
+                    foreach (var friend in dbFriends)
+                    {
+                        UserInfo temp = new UserInfo();
+                        temp.AverageStudentRank = Convert.ToSingle(friend.b.AverageStudentRank);
+                        temp.AverageTutorRank = Convert.ToSingle(friend.b.AverageTutorRank);
+                        temp.EmailAddress = friend.b.EmailAddress;
+                        temp.FirstName = friend.b.DisplayFName;
+                        temp.LastName = friend.b.DisplayLName;
+                        temp.UserID = friend.a.FriendUserID;
+                        FriendsList.Add(temp);
+                    }
+                }
+                return FriendsList;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
     }

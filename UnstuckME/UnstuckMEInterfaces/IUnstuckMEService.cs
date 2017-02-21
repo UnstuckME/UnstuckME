@@ -173,6 +173,9 @@ namespace UnstuckMEInterfaces
 
         [OperationContract(IsOneWay = true)]
         void AddClassesToClient(int inClass, int userID);
+
+        [OperationContract]
+        List<UserInfo> GetFriends(int userID);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

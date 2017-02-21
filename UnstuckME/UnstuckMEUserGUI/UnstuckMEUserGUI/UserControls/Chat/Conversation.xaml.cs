@@ -78,6 +78,8 @@ namespace UnstuckMEUserGUI
 
         public void ConversationUserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            _ChatPage.ButtonAddUserToConvo.Visibility = Visibility.Visible;
+            _ChatPage.ButtonAddUserToConvo.IsEnabled = true;
             _ChatPage.LabelConversationName.Content = ConversationLabel.Content;
             foreach (UnstuckMEChatUser user in Chat.Users)
             {

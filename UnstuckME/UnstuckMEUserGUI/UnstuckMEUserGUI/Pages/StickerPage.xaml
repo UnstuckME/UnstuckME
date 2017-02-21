@@ -7,29 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="500"
       Title="StickerPage">
-    <Page.Resources>
-        <Style TargetType="Button" x:Key="NoHighlightButton">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Height" Value="Auto" />
-            <Setter Property="Width" Value="Auto" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" CornerRadius="15" Background="{x:Null}">
-                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <ContentPresenter.Resources>
-                                    <Style TargetType="Image">
-                                        <Setter Property="Width" Value="Auto" />
-                                        <Setter Property="Margin" Value="Auto" />
-                                    </Style>
-                                </ContentPresenter.Resources>
-                            </ContentPresenter>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
     <Grid HorizontalAlignment="Stretch">
         <Grid HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -42,46 +19,41 @@
                 <RowDefinition MinHeight="50" Height="50"/>
                 <RowDefinition MinHeight="200" Height="200*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
-                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
-                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"></Border>
-                </Border>
+            <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" Background="#336699">
+                <Border BorderBrush="Black" BorderThickness="0,0,0,0"></Border>
                 <Label x:Name="StickerTabLabel" Content="Available Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
-            <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
-                <Border BorderBrush="Black" BorderThickness="1,0,0,0">
-                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"></Border>
-                </Border>
+            <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Background="#336699">
+                <Border BorderBrush="Black" BorderThickness="1,0,0,0"></Border>
                 <Label x:Name="StickerTabLabel1" Content="My Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="1">
+                <Border BorderBrush="Black" BorderThickness="1,1,0,1"></Border>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
                     <StackPanel x:Name="StackPanelMyStickers" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></StackPanel>
                 </ScrollViewer>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="2">
-                <Border BorderBrush="Black" BorderThickness="0,0,0,0">
-                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"></Border>
-                </Border>
+            <Grid Grid.Column="1" Grid.Row="2" Background="#336699">
+                <Border BorderBrush="Black" BorderThickness="1,0,0,0"></Border>
                 <Label x:Name="StickerTabLabel4" Content="Sticker History" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="3">
+                <Border BorderBrush="Black" BorderThickness="1,1,0,0"></Border>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
                     <StackPanel x:Name="StackPanelStickerHistory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></StackPanel>
                 </ScrollViewer>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
+                <Border BorderBrush="Black" BorderThickness="0,1,0,1"></Border>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
                     <StackPanel x:Name="StackPanelAvailableStickers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></StackPanel>
                 </ScrollViewer>
             </Grid>
-            <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch">
-                <Border BorderBrush="Black" BorderThickness="0,0,0,0">
-                    <Border BorderBrush="#336699" BorderThickness="0,50,0,0"></Border>
-                </Border>
+            <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Background="#336699">
                 <Label x:Name="StickerTabLabel2" Content="Open Stickers" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></Label>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="3">
+                <Border BorderBrush="Black" BorderThickness="0,1,0,0"> </Border>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
                     <StackPanel x:Name="StackPanelOpenStickers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></StackPanel>
                 </ScrollViewer>

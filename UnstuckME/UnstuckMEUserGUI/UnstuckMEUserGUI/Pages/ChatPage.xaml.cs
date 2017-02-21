@@ -37,10 +37,8 @@ namespace UnstuckMEUserGUI
             UserImage = ic.ConvertFrom(User.UserProfilePictureBytes) as ImageSource;
             currentChat = new UnstuckMEChat();
             currentChat.ChatID = -1;
-            for (int i = 0; i < 10; i++)
-            {
-                StackPanelAddContacts.Children.Add(new ContactAddToConversation());
-            }
+            ButtonAddUserToConvo.Visibility = Visibility.Hidden;
+            ButtonAddUserToConvo.IsEnabled = false;
         }
 
         //This Box Determines what happens when a user clicks a new message notification.
@@ -216,21 +214,6 @@ namespace UnstuckMEUserGUI
             TextBoxManualUserNameSearch.Text = string.Empty;
         }
 
-        private void ImageAddUserToConvo_MouseEnter(object sender, MouseEventArgs e)
-        {
-            BorderAddUserToConvo.Background = Brushes.LightBlue;
-        }
-
-        private void ImageAddUserToConvo_MouseLeave(object sender, MouseEventArgs e)
-        {
-            BorderAddUserToConvo.Background = Brushes.SteelBlue;
-        }
-
-        private void ImageAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Button Clicked");
-        }
-
         private void ButtonStartConversation_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -274,6 +257,22 @@ namespace UnstuckMEUserGUI
             {
                 LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
             }
+        }
+
+        private void ButtonAddUserToConvo_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonAddUserToConvo.Background = Brushes.LightBlue;
+        }
+
+        private void ButtonAddUserToConvo_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonAddUserToConvo.Background = Brushes.SteelBlue;
+        }
+
+        private void ButtonAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(Server, currentChat, UnstuckMEWindow.FriendsList);
+            addUserWindow.Show();
         }
     }
 }

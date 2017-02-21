@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -20,10 +21,12 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class OnlineUser : UserControl
     {
-        public OnlineUser(string username)
+        public UserInfo Friend;
+        public OnlineUser(UserInfo inFriend)
         {
             InitializeComponent();
-            UserButton.Content = username;
+            Friend = inFriend;
+            UserButton.Content = Friend.FirstName + " " + Friend.LastName;
         }
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
