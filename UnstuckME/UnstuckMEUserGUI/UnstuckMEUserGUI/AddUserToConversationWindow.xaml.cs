@@ -23,15 +23,17 @@ namespace UnstuckMEUserGUI
     {
         public IUnstuckMEService Server;
         public UnstuckMEChat CurrentChat;
-        public List<UserInfo> FriendsList;
-        public AddUserToConversationWindow(IUnstuckMEService inServer, UnstuckMEChat inCurrentChat, List<UserInfo> inFriendsList)
+        public List<UnstuckMEChatUser> FriendsList;
+        public AddUserToConversationWindow(IUnstuckMEService inServer, UnstuckMEChat inCurrentChat, List<UnstuckMEChatUser> inFriendsList)
         {
             InitializeComponent();
             Server = inServer;
             CurrentChat = inCurrentChat;
             FriendsList = inFriendsList.ToList();
 
-            foreach (UserInfo friend in FriendsList)
+
+
+            foreach (UnstuckMEChatUser friend in FriendsList)
             {
                 StackPanelFriendsList.Children.Add(new ContactAddToConversation(friend));
             }
@@ -74,11 +76,25 @@ namespace UnstuckMEUserGUI
         private void ButtonAddUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelInvalidUsername.Visibility = Visibility.Hidden;
-            if(Server.IsValidUser(TextBoxManualSearch.Text) || TextBoxManualSearch.Text.Length > 6)
+            if(Server.IsValidUser(TextBoxManualSearch.Text) && TextBoxManualSearch.Text.Length > 6)
             {
                 int userID = Server.GetUserID(TextBoxManualSearch.Text);
                 Server.InsertUserIntoChat(userID, CurrentChat.ChatID);
-                
+                UnstuckMEMessage temp = new UnstuckMEMessage();
+                temp.ChatID = CurrentChat.ChatID;
+                temp.FilePath = string.Empty;
+                temp.IsFile = false;
+                temp.Message = "A new member has joined the conversation!";
+                temp.MessageID = 0;
+                temp.SenderID = UnstuckMEWindow.User.UserID;
+                temp.Username = UnstuckMEWindow.User.FirstName;
+                temp.UsersInConvo = new List<int>();
+                foreach (UnstuckMEChatUser user in CurrentChat.Users)
+                {
+                    temp.UsersInConvo.Add(user.UserID);
+                }
+                Server.SendMessage(temp);
+                UnstuckMEWindow._pages.ChatPage.AddMessage(temp);
             }
             else
             {

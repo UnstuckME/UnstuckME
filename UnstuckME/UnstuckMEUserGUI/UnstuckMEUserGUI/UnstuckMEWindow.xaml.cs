@@ -32,7 +32,7 @@ namespace UnstuckMEUserGUI
         public static UnstuckMEPages _pages = new UnstuckMEPages();
         private static Privileges userPrivileges;
         public UnstuckMEWindow thisWindow;
-        public static List<UserInfo> FriendsList;
+        public static List<UnstuckMEChatUser> FriendsList;
 
 
         public static Brush _UnstuckMEBlue;
@@ -142,7 +142,7 @@ namespace UnstuckMEUserGUI
             {
 
                 FriendsList = Server.GetFriends(User.UserID);
-                foreach (UserInfo friend in FriendsList)
+                foreach (UnstuckMEChatUser friend in FriendsList)
                 {
                     OnlineUsersStack.Children.Add(new OnlineUser(friend));
                 }

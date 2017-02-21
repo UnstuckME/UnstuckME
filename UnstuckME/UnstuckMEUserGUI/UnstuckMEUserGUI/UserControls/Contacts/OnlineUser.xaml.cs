@@ -21,32 +21,33 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class OnlineUser : UserControl
     {
-        public UserInfo Friend;
-        public OnlineUser(UserInfo inFriend)
+        public UnstuckMEChatUser Friend;
+        public OnlineUser(UnstuckMEChatUser inFriend)
         {
             InitializeComponent();
             Friend = inFriend;
-            UserButton.Content = Friend.FirstName + " " + Friend.LastName;
-        }
-
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            UserButton.Content = "Clicked";
-        }
-
-        private void UserButton_Click(object sender, RoutedEventArgs e)
-        {
-            UserButton.Content = "Clicked";
+            LabelUserName.Content = Friend.UserName;
+            if(Friend.ProfilePicture == null)
+            {
+                UnstuckMEWindow.Server.GetProfilePicture(Friend.UserID);
+                Friend.ProfilePicture = UnstuckMEWindow._pages.ChatPage.ic.ConvertFrom(UnstuckMEWindow.Server.GetProfilePicture(Friend.UserID)) as ImageSource;
+                ImageUser.Source = Friend.ProfilePicture;
+            }
         }
 
         private void UserButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            UserButton.Foreground = Brushes.Black;
+            OnlineUserGrid.Background = Brushes.SteelBlue;
         }
 
         private void UserButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            UserButton.Foreground = Brushes.White;
+            OnlineUserGrid.Background = null;
+        }
+
+        private void UserButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Clicked");
         }
     }
 }
