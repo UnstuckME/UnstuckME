@@ -181,15 +181,15 @@ namespace UnstuckMEUserGUI
                 }
             }
         }
+        //Warning was bothering me. Sorry If I forget to uncomment this.
+        //private async void LoadSchoolLogo()
+        //{ 
+        //    using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
+        //    {
+        //        var dbSchools = (from schoolLogos in db.Schools select new { logo = schoolLogos.SchoolLogo }).First();
+        //    }
 
-        private async void LoadSchoolLogo()
-        { 
-            using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
-            {
-                var dbSchools = (from schoolLogos in db.Schools select new { logo = schoolLogos.SchoolLogo }).First();
-            }
-
-        }
+        //}
 
         private UserInfo ServerLoginAttemptAsynch(string emailAttempt, string passwordAttempt)
         {
@@ -257,6 +257,7 @@ namespace UnstuckMEUserGUI
                     _AccountCreationGrid.IsEnabled = false;
                     _AccountCreationGrid.Visibility = Visibility.Hidden;
                     _LoginGrid.Visibility = Visibility.Visible;
+                    AfterUserCreationTextBoxandPasswordBoxUpdate();
                 }
                 catch (Exception ex)
                 {
@@ -380,6 +381,15 @@ namespace UnstuckMEUserGUI
             _AccountCreationGrid.Visibility = Visibility.Hidden;
             _LoginGrid.IsEnabled = true;
             _LoginGrid.Visibility = Visibility.Visible;
+        }
+
+        private void AfterUserCreationTextBoxandPasswordBoxUpdate()
+        {
+            textBoxUserName.Foreground = System.Windows.Media.Brushes.Black;
+            textBoxUserName.FontStyle = FontStyles.Normal;
+            textBoxPasswordPreview.Visibility = Visibility.Hidden;
+            textBoxPasswordPreview.IsEnabled = false;
+            passwordBox.Visibility = Visibility.Visible;
         }
 
         private void textBoxUserName_GotFocus(object sender, RoutedEventArgs e)

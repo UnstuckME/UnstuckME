@@ -179,6 +179,9 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         string GetUserDisplayName(int userID);
+
+        [OperationContract(IsOneWay = true)]
+        void SendStickerToClients(UnstuckMEAvailableSticker inSticker);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

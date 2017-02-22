@@ -9,6 +9,6 @@
       Title="ModeratorPage">
 
     <Grid>
-        <TextBox Text="Moderator Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
+        <Label Foreground="White" FontWeight="Heavy" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="32" Content="Moderator Page" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
     </Grid>
 </Page>

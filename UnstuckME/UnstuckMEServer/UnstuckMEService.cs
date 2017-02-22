@@ -733,13 +733,57 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
-
-                foreach (int orgID in newSticker.AttachedOrganizations)
+                //foreach (int orgID in newSticker.AttachedOrganizations)
+                //{
+                //    //newSticker.StickerID Currently is 0. So this breaks.
+                //    //db.AddOrgToSticker(newSticker.StickerID, orgID);
+                //    //Console.WriteLine("OrganizationID: " + orgID);
+                //}
+            }
+            using (UnstuckME_DBEntities bb = new UnstuckME_DBEntities())
+            {
+                var stickerInfo = from b in bb.Stickers
+                                  where b.StudentID == newSticker.StudentID
+                                  join a in bb.UserProfiles on b.StudentID equals a.UserID
+                                  join c in bb.Classes on b.ClassID equals c.ClassID
+                                  select new { a, b, c };
+                foreach (var item in stickerInfo)
                 {
-                    //newSticker.StickerID Currently is 0. So this breaks.
-                    db.AddOrgToSticker(newSticker.StickerID, orgID);
-                    Console.WriteLine("OrganizationID: " + orgID);
+                    if(item.b.ClassID == newSticker.ClassID)
+                    {
+                        UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
+                        temp.ClassID = newSticker.ClassID;
+                        temp.CourseCode = item.c.CourseCode;
+                        temp.CourseName = item.c.CourseName;
+                        temp.CourseNumber = item.c.CourseNumber;
+                        temp.ProblemDescription = newSticker.ProblemDescription;
+                        temp.StickerID = item.b.StickerID;
+                        temp.StudentID = newSticker.StudentID;
+                        temp.StudentRanking = item.a.AverageStudentRank;
+                        temp.Timeout = item.b.Timeout;
+                        SendStickerToClients(temp);
+                    }
                 }
+            }
+
+
+        }
+
+        public void SendStickerToClients(UnstuckMEAvailableSticker inSticker)
+        {
+            try
+            {
+                foreach (var client in _connectedClients)
+                {
+                    if(client.Key != inSticker.StudentID)
+                    {
+                        client.Value.connection.RecieveNewSticker(inSticker);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("SendStickerToClients Function Error: " + ex.Message);
             }
         }
 
@@ -1621,5 +1665,6 @@ namespace UnstuckMEInterfaces
                 return string.Empty;
             }
         }
+
     }
 }
