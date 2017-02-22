@@ -57,8 +57,20 @@ CREATE TABLE [Database]
 * Logo table containing the logo of the school. A school can only have one
 * logo, and a logo can belong to only one school
 *************************************************************************/
-CREATE TABLE SchoolLogo	(
+CREATE TABLE SchoolLogo	
+(
 	LogoID		INT				NOT NULL UNIQUE REFERENCES School(SchoolID),
 	Logo		VARBINARY(MAX)	NOT NULL,
 	LastModified DATETIME		NULL	DEFAULT(SYSDATETIME()),		
-	PRIMARY KEY(LogoID))
+	PRIMARY KEY(LogoID)
+)
+GO
+
+CREATE TRIGGER updateToLogo
+ON [SchoolLogo]
+AFTER UPDATE
+AS
+	UPDATE [SchoolLogo]
+	SET LastModified = SYSDATETIME()
+	FROM Inserted i
+	WHERE SchoolLogo.LogoID = i.LogoID
