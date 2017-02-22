@@ -69,16 +69,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddFriendWindow.xaml.cs">
+    <Compile Include="SubWindows\AddFriendWindow.xaml.cs">
       <DependentUpon>AddFriendWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddUserToConversationWindow.xaml.cs">
+    <Compile Include="SubWindows\AddUserToConversationWindow.xaml.cs">
       <DependentUpon>AddUserToConversationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Contacts\ContactCreateConversatoin.xaml.cs">
       <DependentUpon>ContactCreateConversatoin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StickerInfoWindow.xaml.cs">
+    <Compile Include="SubWindows\StickerInfoWindow.xaml.cs">
       <DependentUpon>StickerInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Stickers\AvailableSticker.xaml.cs">
@@ -120,7 +120,7 @@
     <Compile Include="UserControls\StarRanking\StarRanking.xaml.cs">
       <DependentUpon>StarRanking.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StickerCreationWindow.xaml.cs">
+    <Compile Include="SubWindows\StickerCreationWindow.xaml.cs">
       <DependentUpon>StickerCreationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Notifications\NewMessageNotification.xaml.cs">
@@ -208,11 +208,11 @@
     <Compile Include="Pages\UserProfilePage.xaml.cs">
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddFriendWindow.xaml">
+    <Page Include="SubWindows\AddFriendWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddUserToConversationWindow.xaml">
+    <Page Include="SubWindows\AddUserToConversationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -220,7 +220,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StickerInfoWindow.xaml">
+    <Page Include="SubWindows\StickerInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -276,7 +276,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StickerCreationWindow.xaml">
+    <Page Include="SubWindows\StickerCreationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

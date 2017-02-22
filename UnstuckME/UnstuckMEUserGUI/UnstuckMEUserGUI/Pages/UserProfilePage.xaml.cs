@@ -160,11 +160,11 @@ namespace UnstuckMEUserGUI
             {
 				UnstuckMEMessageBox message = new UnstuckMEMessageBox(1, ex.Message, "Image Size Error");
 				message.Show();
-				//System.Windows.MessageBox.Show("Image too large! This Needs to be fixed, it causes a communication fault and currently the app has to be shut down.", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-				//string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
-				//Process.Start(unstuckME);
-				//System.Windows.Application.Current.Shutdown();
-			}
+                //System.Windows.MessageBox.Show("Image too large! This Needs to be fixed, it causes a communication fault and currently the app has to be shut down.", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                Process.Start(unstuckME);
+                System.Windows.Application.Current.Shutdown();
+            }
 		}
 
         private void ButtonBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
