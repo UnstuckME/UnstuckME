@@ -29,7 +29,7 @@ namespace UnstuckMEInterfaces
     {
         public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
-
+        private static List<UnstuckMEMessage> _MessageList;
         //This function is for testing stored procedures. In program.cs replace:
         //Thread userStatusCheck = new Thread(_server.CheckStatus); with Thread userStatusCheck = new Thread(_server.SPTest); 
         public void SPTest()
@@ -43,6 +43,34 @@ namespace UnstuckMEInterfaces
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public void CheckForNewMessages()
+        {
+            _MessageList = new List<UnstuckMEMessage>();
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                while (true)
+                {
+                    if (_MessageList.Count != 0)
+                    {
+                        UnstuckMEMessage temp = new UnstuckMEMessage();
+                        temp = _MessageList.First();
+                        db.InsertMessage(temp.ChatID, temp.Message, null, false, temp.SenderID);
+                        foreach (int client in temp.UsersInConvo)
+                        {
+                            if (client != temp.SenderID)
+                            {
+                                if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
+                                {
+                                    _connectedClients[client].connection.GetMessage(temp);
+                                }
+                            }
+                        }
+                        _MessageList.Remove(_MessageList.First());
+                    }
                 }
             }
         }
@@ -1403,27 +1431,7 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    db.InsertMessage(message.ChatID, message.Message, null, false, message.SenderID);
-                }
-                foreach (int client in message.UsersInConvo)
-                {
-                    if (client != message.SenderID)
-                    {
-                        if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
-                        {
-                            _connectedClients[client].connection.GetMessage(message);
-                        }
-                    }
-                }
-                //foreach (var user in _connectedClients)
-                //{
-                //    if (user.Key != message.SenderID)
-                //    {
-                //        string test = user.Value.connection.GetMessage(message);
-                //    }
-                //}
+                _MessageList.Add(message);
             }
             catch (Exception ex)
             {

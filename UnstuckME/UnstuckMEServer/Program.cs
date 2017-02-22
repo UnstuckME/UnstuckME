@@ -22,6 +22,8 @@ namespace UnstuckMEInterfaces
                     host.Open();
                     Thread userStatusCheck = new Thread(_server.CheckUserStatus);
                     userStatusCheck.Start();
+                    Thread newMessageCheck = new Thread(_server.CheckForNewMessages);
+                    newMessageCheck.Start();
                     Console.WriteLine("Server is Running...");
                     Console.WriteLine("<Press Enter to Shut Down Server>");
                     Console.ReadLine();

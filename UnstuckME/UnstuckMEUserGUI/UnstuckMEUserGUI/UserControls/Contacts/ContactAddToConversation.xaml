@@ -19,7 +19,6 @@
             <Label x:Name="LabelUsername" HorizontalAlignment="Stretch" Content="UserName" Foreground="White" FontSize="12" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Margin="30,0" Grid.RowSpan="2"></Label>
         </Grid>
         <Grid Grid.Row="1" Background="#336699">
-            
         </Grid>
     </Grid>
 </UserControl>
