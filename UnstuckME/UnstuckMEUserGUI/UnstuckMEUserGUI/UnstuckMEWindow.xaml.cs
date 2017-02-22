@@ -66,11 +66,11 @@ namespace UnstuckMEUserGUI
             try
             {
                 await Task.Factory.StartNew(() => LoadStickerPageAsync());
+                await Task.Factory.StartNew(() => LoadSideBarsAsync());
                 await Task.Factory.StartNew(() => LoadChatPageAsync());
                 await Task.Factory.StartNew(() => LoadUserProfilePageAsync());
                 await Task.Factory.StartNew(() => LoadSettingsPageAsync());
                 await Task.Factory.StartNew(() => LoadAdminPageAsync());
-                await Task.Factory.StartNew(() => LoadSideBarsAsync());
 
             }
             catch (InvalidOperationException ex)
@@ -100,6 +100,10 @@ namespace UnstuckMEUserGUI
                 foreach (UnstuckMEChat chat in _pages.ChatPage.allChats)
                 {
                     _pages.ChatPage.AddConversation(chat);
+                }
+                foreach (UnstuckMEChatUser user in FriendsList)
+                {
+                    _pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversatoin(user));
                 }
             });
         }
@@ -140,7 +144,6 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-
                 FriendsList = Server.GetFriends(User.UserID);
                 foreach (UnstuckMEChatUser friend in FriendsList)
                 {

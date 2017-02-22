@@ -25,7 +25,9 @@
                 </Button>
             </Grid>
             <Grid x:Name="GridConversations" Visibility="Visible" IsEnabled="True" Grid.Column="0" Grid.Row="1">
-                <StackPanel x:Name="StackPanelConversations" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
+                <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="StackPanelConversations" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
+                </ScrollViewer>
             </Grid>
             <Grid x:Name="GridNewConversation" Grid.Column="0" Grid.Row="1" Background="SteelBlue" Visibility="Hidden" IsEnabled="False">
                 <Grid.RowDefinitions>
