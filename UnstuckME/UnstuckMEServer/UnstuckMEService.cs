@@ -733,33 +733,39 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
-                //This is gross but I am going to change this after the presentation.
-                var stickersClass = from a in db.Classes
-                                    where a.ClassID == newSticker.ClassID
-                                    select a;
-                var User = from b in db.UserProfiles
-                           where b.UserID == newSticker.StudentID
-                           select b;
-                UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
-                temp.ClassID = newSticker.ClassID;
-                temp.CourseCode = stickersClass.First().CourseCode;
-                temp.CourseName = stickersClass.First().CourseName;
-                temp.CourseNumber = stickersClass.First().CourseNumber;
-                temp.ProblemDescription = newSticker.ProblemDescription;
-                temp.StickerID = newSticker.StickerID;
-                temp.StudentID = newSticker.StudentID;
-                temp.StudentRanking = User.First().AverageStudentRank;
-
-                SendStickerToClients(temp);
-                foreach (int orgID in newSticker.AttachedOrganizations)
+                //foreach (int orgID in newSticker.AttachedOrganizations)
+                //{
+                //    //newSticker.StickerID Currently is 0. So this breaks.
+                //    //db.AddOrgToSticker(newSticker.StickerID, orgID);
+                //    //Console.WriteLine("OrganizationID: " + orgID);
+                //}
+            }
+            using (UnstuckME_DBEntities bb = new UnstuckME_DBEntities())
+            {
+                var stickerInfo = from b in bb.Stickers
+                                  where b.StudentID == newSticker.StudentID
+                                  join a in bb.UserProfiles on b.StudentID equals a.UserID
+                                  join c in bb.Classes on b.ClassID equals c.ClassID
+                                  select new { a, b, c };
+                foreach (var item in stickerInfo)
                 {
-                    //newSticker.StickerID Currently is 0. So this breaks.
-                    //db.AddOrgToSticker(newSticker.StickerID, orgID);
-                    //Console.WriteLine("OrganizationID: " + orgID);
+                    if(item.b.ClassID == newSticker.ClassID)
+                    {
+                        UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
+                        temp.ClassID = newSticker.ClassID;
+                        temp.CourseCode = item.c.CourseCode;
+                        temp.CourseName = item.c.CourseName;
+                        temp.CourseNumber = item.c.CourseNumber;
+                        temp.ProblemDescription = newSticker.ProblemDescription;
+                        temp.StickerID = item.b.StickerID;
+                        temp.StudentID = newSticker.StudentID;
+                        temp.StudentRanking = item.a.AverageStudentRank;
+                        temp.Timeout = item.b.Timeout;
+                        SendStickerToClients(temp);
+                    }
                 }
             }
-            
-            
+
 
         }
 
@@ -767,13 +773,6 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    var timeout = from d in db.Stickers
-                                  where d.StickerID == inSticker.StickerID
-                                  select new { Timeout = d.Timeout }; // This is currently Required for this function to work when submitting a sticker. DONT CHANGE.
-                    inSticker.Timeout = timeout.First().Timeout;
-                }
                 foreach (var client in _connectedClients)
                 {
                     if(client.Key != inSticker.StudentID)
