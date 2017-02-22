@@ -456,13 +456,16 @@ namespace UnstuckMEUserGUI
 
         private void comboBoxSchools_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ComboBox changedCombo = (ComboBox) sender;
+            string selectedItem = changedCombo.SelectedItem.ToString();
+
             if (comboBoxSchools.SelectedIndex != 0)
             {
                 //Choose a new school
                 if(m_SchoolName != comboBoxSchools.SelectedValue.ToString())
                 {
-                    System.Configuration.ConfigurationManager.AppSettings["SchoolName"] = comboBoxSchools.SelectionBoxItem.ToString();
-                    m_SchoolName = comboBoxSchools.SelectionBoxItem.ToString();
+                    System.Configuration.ConfigurationManager.AppSettings["SchoolName"] = selectedItem;
+                    m_SchoolName = selectedItem;
                 }
 
                 foreach (UnstuckMESchool school in schools)
@@ -495,7 +498,7 @@ namespace UnstuckMEUserGUI
                     string line = "";
                     System.IO.StreamReader file = new System.IO.StreamReader(m_SchoolInfoFilePath);
 
-                    while (((line = file.ReadLine()) != null) && stopCheck != true)
+                    while (stopCheck != true && ((line = file.ReadLine()) != null))
                     {
                         if (line.Contains("Last Modified ="))
                         {
@@ -545,17 +548,6 @@ namespace UnstuckMEUserGUI
             }
             
             
-        }
-
-        // Convert an object to a byte array
-        private static byte[] ObjectToByteArray(Object obj)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (var ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                return ms.ToArray();
-            }
         }
 
         private static BitmapImage ConvertByteArrayToBitmapImage(Byte[] bytes)
