@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,22 +29,42 @@ namespace UnstuckMEUserGUI
         public static IUnstuckMEService Server;
         private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         private static List<UnstuckMESchool> schools;
-        private string m_SchoolName = "";
+        private string m_SchoolName = null;
+        private string m_SchoolInfoFilePath = null;
 
         public LoginWindow()
         { 
             InitializeComponent();
+            m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
+
             try
             {
-                string driveToUse = FindDrive();
+                string tempDirectory = System.IO.Path.Combine(FindDrive(), "UnstuckMETemp");
+                
                 //This will not recreate the driectory if it already exist 
                 //(MSDN: "Creates all directories and subdirectories in the specified path unless they already exist.")
-                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(driveToUse, "UnstuckMETemp"));
+                System.IO.Directory.CreateDirectory(tempDirectory);
+                string schoolLogoDir = System.IO.Path.Combine(tempDirectory, "SchoolLogo");
+                System.IO.Directory.CreateDirectory(schoolLogoDir);
+                m_SchoolInfoFilePath = System.IO.Path.Combine(schoolLogoDir, "schoolLogo.dat");
 
+                if (File.Exists(m_SchoolInfoFilePath) != true)
+                {
+                    FileStream fs = new FileStream(m_SchoolInfoFilePath, FileMode.CreateNew);
+                    fs.Close();
+
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(m_SchoolInfoFilePath, false))
+                    {
+                        file.WriteLine("Last Modified = NULL");
+                        file.WriteLine("Photo ID = NULL");
+                        file.WriteLine("Photo Info = NULL");
+                    }
+                   
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected beahvior may occur");
+                MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message);
             }
         }
@@ -58,8 +79,7 @@ namespace UnstuckMEUserGUI
                 comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
             }
 
-            m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
-            if (m_SchoolName != "")
+            if (!string.IsNullOrEmpty(m_SchoolName))
             {
                 comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf(m_SchoolName);
             }
@@ -79,16 +99,13 @@ namespace UnstuckMEUserGUI
             List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
             using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
             {
-                var dbSchools = from s in db.Schools join l in db.SchoolLogoes on s.SchoolID equals l.LogoID
-                                    //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
-                                    //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/
-                                select new
-                                {
-                                    SchoolName = s.SchoolName,
-                                    EmailCredentials = s.EmailCredentials,
-                                    SchoolID = s.SchoolID,
-                                    LastModified = l.LastModified
-                                };
+                var dbSchools = from s in db.Schools join l in db.SchoolLogoes on s.SchoolID equals l.LogoID //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
+                                select new { SchoolName = s.SchoolName,                                      //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/   
+                                             EmailCredentials = s.EmailCredentials,
+                                             SchoolID = s.SchoolID,
+                                             LastModified = l.LastModified
+                                           };
+
                 foreach (var dbschool in dbSchools)
                 {
                     UnstuckMESchool newSchool = new UnstuckMESchool();
@@ -425,6 +442,121 @@ namespace UnstuckMEUserGUI
             }
 
             return driveToUse;
+        }
+
+        private void comboBoxSchools_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxSchools.SelectedIndex != 0)
+            {
+                //Choose a new school
+                if(m_SchoolName != comboBoxSchools.SelectedValue.ToString())
+                {
+                    System.Configuration.ConfigurationManager.AppSettings["SchoolName"] = comboBoxSchools.SelectionBoxItem.ToString();
+                    m_SchoolName = comboBoxSchools.SelectionBoxItem.ToString();
+                }
+
+                foreach (UnstuckMESchool school in schools)
+                {
+                    if (school.SchoolName == m_SchoolName)
+                    {
+                        CheckSchoolLogo(school.SchoolID);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void CheckSchoolLogo(int logoID)
+        {
+            string lastmodifiedDate = null;
+
+            bool lastModifiedMatches = false;
+            bool logoIdMatches = false;
+            bool stopCheck = false;
+            bool newLogoNeeded = true;
+
+            using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
+            {
+                lastmodifiedDate = (from l in db.SchoolLogoes where l.LogoID == logoID select new { lastModified = l.LastModified}).First().ToString();
+
+
+                try
+                {
+                    string line = "";
+                    System.IO.StreamReader file = new System.IO.StreamReader(m_SchoolInfoFilePath);
+
+                    while (((line = file.ReadLine()) != null) && stopCheck != true)
+                    {
+                        if (line.Contains("Last Modified ="))
+                        {
+                            if (line.Contains(lastmodifiedDate))
+                            {
+                                lastModifiedMatches = true;
+                            }
+                            else
+                            {
+                                stopCheck = true;
+                            }
+                        }
+                        else if (line.Contains("Photo ID ="))
+                        {
+                            if (line.Contains(logoID.ToString()))
+                            {
+                                logoIdMatches = true;
+                            }
+                            else
+                            {
+                                stopCheck = true;
+                            }
+                        }
+
+                        if (lastModifiedMatches == true && logoIdMatches == true)
+                        {
+                            stopCheck = true;
+                            newLogoNeeded = false;
+                        }
+                    }
+
+                    if (newLogoNeeded == true)
+                    {
+                        var schoolLogoObj = (from l in db.SchoolLogoes where l.LogoID == logoID select new { logo = l.Logo }).First();
+                        byte[] imgByteArray = schoolLogoObj.logo;
+                        ImageSource imageSource = ConvertByteArrayToBitmapImage(imgByteArray);
+                        imageForSchoolLogo.Source = imageSource;
+                    }
+
+                    file.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message);
+                }
+            }
+            
+            
+        }
+
+        // Convert an object to a byte array
+        private static byte[] ObjectToByteArray(Object obj)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (var ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+        }
+
+        private static BitmapImage ConvertByteArrayToBitmapImage(Byte[] bytes)
+        {
+            var stream = new MemoryStream(bytes);
+            stream.Seek(0, SeekOrigin.Begin);
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.StreamSource = stream;
+            image.EndInit();
+            return image;
         }
     }
 }
