@@ -31,7 +31,22 @@ namespace UnstuckMEUserGUI
             CurrentChat = inCurrentChat;
             FriendsList = inFriendsList.ToList();
 
+            List<UnstuckMEChatUser> AlreadyInChatList = new List<UnstuckMEChatUser>();
+            foreach (UnstuckMEChatUser friend in FriendsList)
+            {
+                foreach (UnstuckMEChatUser user in CurrentChat.Users)
+                {
+                    if(friend.UserID == user.UserID)
+                    {
+                        AlreadyInChatList.Add(friend);
+                    }
+                }
+            }
 
+            foreach (UnstuckMEChatUser alreadyInChatUser in AlreadyInChatList)
+            {
+                FriendsList.Remove(alreadyInChatUser);
+            }
 
             foreach (UnstuckMEChatUser friend in FriendsList)
             {
@@ -95,6 +110,7 @@ namespace UnstuckMEUserGUI
                 }
                 Server.SendMessage(temp);
                 UnstuckMEWindow._pages.ChatPage.AddMessage(temp);
+
             }
             else
             {

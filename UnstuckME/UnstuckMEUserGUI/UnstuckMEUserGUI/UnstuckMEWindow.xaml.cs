@@ -170,6 +170,11 @@ namespace UnstuckMEUserGUI
             SwitchToUserProfileTab();
         }
 
+        public void AddUserToContactsStack(UnstuckMEChatUser inChatUser)
+        {
+            OnlineUsersStack.Children.Add(new OnlineUser(inChatUser));
+        }
+
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
             SwitchToAdminTab(userPrivileges);
@@ -440,6 +445,22 @@ namespace UnstuckMEUserGUI
             string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
             Process.Start(unstuckME);
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void ButtonAddContact_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonAddContact.Background = Brushes.LightSteelBlue;
+        }
+
+        private void ButtonAddContact_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonAddContact.Background = null;
+        }
+
+        private void ButtonAddContact_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AddFriendWindow friendWindow = new AddFriendWindow();
+            friendWindow.Show();
         }
     }
 

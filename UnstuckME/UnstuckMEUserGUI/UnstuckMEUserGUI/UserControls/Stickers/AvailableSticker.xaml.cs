@@ -38,7 +38,7 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             Sticker = inSticker;
-            LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + "   " + "Student Rating = " + Sticker.StudentRanking;
+            LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + " " + Sticker.CourseName + "   " + "Student Rating = " + Sticker.StudentRanking;
         }
 
         public void RemoveFromStackPanel()
