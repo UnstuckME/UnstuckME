@@ -34,11 +34,14 @@ namespace UnstuckMEUserGUI
     {
         public UnstuckMEAvailableSticker Sticker;
         public UserClass Class;
+        BitmapImage BlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlue.png", UriKind.Relative));
+        BitmapImage SteelBlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingSteelBlue.png", UriKind.Relative));
         public AvailableSticker(UnstuckMEAvailableSticker inSticker)
         {
             InitializeComponent();
             Sticker = inSticker;
-            LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + " " + Sticker.CourseName + "   " + "Student Rating = " + Sticker.StudentRanking;
+            LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + " " + Sticker.CourseName;
+            StarRankingValue.Value = inSticker.StudentRanking;
         }
 
         public void RemoveFromStackPanel()
@@ -49,12 +52,42 @@ namespace UnstuckMEUserGUI
 
         private void GridClassName_MouseEnter(object sender, MouseEventArgs e)
         {
-            GridClassName.Background = UnstuckMEWindow._UnstuckMEBlue;
+            FullBackGround.Background = Brushes.SteelBlue;
+            ChangeToSteelBlue();
+        }
+
+        public void ChangeToSteelBlue()
+        {
+            Border1.BorderBrush = Brushes.SteelBlue;
+            Border2.BorderBrush = Brushes.SteelBlue;
+            Border3.BorderBrush = Brushes.SteelBlue;
+            Border4.BorderBrush = Brushes.SteelBlue;
+            Border5.BorderBrush = Brushes.SteelBlue;
+            Image1.Source = SteelBlueStar;
+            Image2.Source = SteelBlueStar;
+            Image3.Source = SteelBlueStar;
+            Image4.Source = SteelBlueStar;
+            Image5.Source = SteelBlueStar;
+        }
+
+        public void ChangeToUnstuckMEBlue()
+        {
+            Border1.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
+            Border2.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
+            Border3.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
+            Border4.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
+            Border5.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
+            Image1.Source = BlueStar;
+            Image2.Source = BlueStar;
+            Image3.Source = BlueStar;
+            Image4.Source = BlueStar;
+            Image5.Source = BlueStar;
         }
 
         private void GridClassName_MouseLeave(object sender, MouseEventArgs e)
         {
-            GridClassName.Background = null;
+            FullBackGround.Background = UnstuckMEWindow._UnstuckMEBlue;
+            ChangeToUnstuckMEBlue();
         }
 
         private void GridClassName_MouseDown(object sender, MouseButtonEventArgs e)

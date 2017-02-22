@@ -494,6 +494,7 @@
     <Resource Include="Resources\Speech\SpeechBlue.png" />
     <Resource Include="Resources\Speech\SpeechRed.png" />
     <Resource Include="Resources\Speech\SpeechWhite.png" />
+    <Resource Include="Resources\Ranking\RankingSteelBlue.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
