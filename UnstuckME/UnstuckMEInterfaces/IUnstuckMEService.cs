@@ -176,6 +176,9 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         List<UnstuckMEChatUser> GetFriends(int userID);
+
+        [OperationContract]
+        string GetUserDisplayName(int userID);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

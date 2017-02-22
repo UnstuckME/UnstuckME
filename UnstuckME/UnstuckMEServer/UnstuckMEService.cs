@@ -1597,5 +1597,29 @@ namespace UnstuckMEInterfaces
                 return null;
             }
         }
+
+        public string GetUserDisplayName(int userID)
+        {
+            try
+            {
+                string username = string.Empty;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                   var dbusername = from a in db.UserProfiles
+                                   where a.UserID == userID
+                                   select a.DisplayFName;
+                    foreach (string name in dbusername)
+                    {
+                        username = name;
+                    }
+                }
+                return username;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return string.Empty;
+            }
+        }
     }
 }

@@ -31,8 +31,8 @@ namespace UnstuckMEUserGUI
             {
                 UnstuckMEWindow.Server.GetProfilePicture(Friend.UserID);
                 Friend.ProfilePicture = UnstuckMEWindow._pages.ChatPage.ic.ConvertFrom(UnstuckMEWindow.Server.GetProfilePicture(Friend.UserID)) as ImageSource;
-                ImageUser.Source = Friend.ProfilePicture;
             }
+            ImageUser.Source = Friend.ProfilePicture;
         }
 
         private void UserButton_MouseEnter(object sender, MouseEventArgs e)

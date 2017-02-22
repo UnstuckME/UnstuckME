@@ -12,9 +12,9 @@
             <RowDefinition Height="3"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Image x:Name="ImageUserProfilePic" Source="/Resources/User/UserWhite.png" Width="30" VerticalAlignment="Stretch" Stretch="UniformToFill" HorizontalAlignment="Left" Grid.RowSpan="2"></Image>
+            <Image x:Name="ImageUserProfilePic" Source="/Resources/User/UserWhite.png" Width="30" Height="30" VerticalAlignment="Stretch" Stretch="UniformToFill" HorizontalAlignment="Left" Grid.RowSpan="2"></Image>
             <Button x:Name="ButtonAddUser" Cursor="Hand" Click="ButtonAddUser_Click" HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderThickness="0,0,0,0" Grid.RowSpan="2">
-                <Image x:Name="ImageAddUser" Source="/Resources/Speech/SpeechWhite.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="20" ></Image>
+                <Image x:Name="ImageAddUser" Source="/Resources/Plus/PlusWhite.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="20" ></Image>
             </Button>
             <Label x:Name="LabelUsername" HorizontalAlignment="Stretch" Content="UserName" Foreground="White" FontSize="12" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Margin="30,0" Grid.RowSpan="2"></Label>
         </Grid>
