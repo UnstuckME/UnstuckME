@@ -345,6 +345,22 @@ namespace UnstuckMEUserGUI
             });
         }
 
+        public void RecieveNewAvailableSticker(UnstuckMEAvailableSticker sticker)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    _pages.StickerPage.AvailableStickers.Add(sticker);
+                    _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Sticker Update Failed");
+                }
+            });
+        }
+
         public void RemoveStickerFromAvailableStickers(int stickerID)
         {
             this.Dispatcher.Invoke(() =>

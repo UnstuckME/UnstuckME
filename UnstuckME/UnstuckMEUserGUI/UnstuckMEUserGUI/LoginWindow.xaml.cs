@@ -181,15 +181,15 @@ namespace UnstuckMEUserGUI
                 }
             }
         }
+        //Warning was bothering me. Sorry If I forget to uncomment this.
+        //private async void LoadSchoolLogo()
+        //{ 
+        //    using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
+        //    {
+        //        var dbSchools = (from schoolLogos in db.Schools select new { logo = schoolLogos.SchoolLogo }).First();
+        //    }
 
-        private async void LoadSchoolLogo()
-        { 
-            using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
-            {
-                var dbSchools = (from schoolLogos in db.Schools select new { logo = schoolLogos.SchoolLogo }).First();
-            }
-
-        }
+        //}
 
         private UserInfo ServerLoginAttemptAsynch(string emailAttempt, string passwordAttempt)
         {

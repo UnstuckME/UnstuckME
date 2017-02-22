@@ -24,5 +24,8 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void RemoveGUISticker(int stickerID);
+
+        [OperationContract(IsOneWay = true)]
+        void RecieveNewSticker(UnstuckMEAvailableSticker inSticker);
     }
 }

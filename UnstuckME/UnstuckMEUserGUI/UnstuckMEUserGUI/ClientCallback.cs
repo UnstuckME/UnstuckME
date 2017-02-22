@@ -57,5 +57,17 @@ namespace UnstuckMEUserGUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public void RecieveNewSticker(UnstuckMEAvailableSticker inSticker)
+        {
+            try
+            {
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveNewAvailableSticker(inSticker);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
