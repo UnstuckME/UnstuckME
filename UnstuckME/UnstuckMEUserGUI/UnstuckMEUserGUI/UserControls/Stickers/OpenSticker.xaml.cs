@@ -38,12 +38,12 @@ namespace UnstuckMEUserGUI
 
         private void ButtonRemove_MouseEnter(object sender, MouseEventArgs e)
         {
-
+            ButtonRemove.Background = Brushes.MistyRose;
         }
 
         private void ButtonRemove_MouseLeave(object sender, MouseEventArgs e)
         {
-
+            ButtonRemove.Background = UnstuckMEWindow._UnstuckMERed;
         }
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -53,12 +53,12 @@ namespace UnstuckMEUserGUI
 
         private void ButtonCompleted_MouseEnter(object sender, MouseEventArgs e)
         {
-
+            ButtonCompleted.Background = Brushes.LimeGreen;
         }
 
         private void ButtonCompleted_MouseLeave(object sender, MouseEventArgs e)
         {
-
+            ButtonCompleted.Background = Brushes.ForestGreen;
         }
 
         private void ButtonCompleted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

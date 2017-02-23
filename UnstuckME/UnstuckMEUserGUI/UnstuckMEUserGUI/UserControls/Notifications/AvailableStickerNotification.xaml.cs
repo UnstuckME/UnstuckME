@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -20,10 +21,12 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class AvailableStickerNotification : UserControl
     {
-        public AvailableStickerNotification(string inClassName)
+        public UnstuckMEAvailableSticker Sticker;
+        public AvailableStickerNotification(UnstuckMEAvailableSticker inSticker)
         {
             InitializeComponent();
-            ClassNameInfoButton.Content = inClassName;
+            Sticker = inSticker;
+            ClassNameInfoButton.Content = Sticker.CourseNumber + " " + Sticker.CourseCode + ": " + Sticker.CourseName;
         }
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {

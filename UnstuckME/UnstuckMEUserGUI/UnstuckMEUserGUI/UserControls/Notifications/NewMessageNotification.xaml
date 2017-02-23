@@ -12,8 +12,7 @@
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Image x:Name="NewMessageIcon" Source="/Resources/User/UserWhite.png" Width="30" Stretch="UniformToFill" HorizontalAlignment="Left"></Image>
-            <Button x:Name="NewMessageButton" Click="NewMessageButton_Click" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Height="Auto" Width="270" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" Cursor="Hand" Margin="30,0,0,0" ></Button>
+            <Button x:Name="NewMessageButton" Click="NewMessageButton_Click" FontWeight="Medium" Padding="8,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" Cursor="Hand"></Button>
             <Border BorderBrush="Black" BorderThickness="0,0,0,1"></Border>
         </Grid>
 

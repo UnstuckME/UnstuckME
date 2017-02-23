@@ -367,6 +367,7 @@ namespace UnstuckMEUserGUI
                 {
                     _pages.StickerPage.AvailableStickers.Add(sticker);
                     _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
+                    //NotificationStack.Children.Add(new AvailableStickerNotification(sticker));  This looks gross currently so I'm not going to use it.
                 }
                 catch (Exception)
                 {
