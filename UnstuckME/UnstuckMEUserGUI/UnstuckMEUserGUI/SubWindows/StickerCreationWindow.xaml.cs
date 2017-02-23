@@ -34,6 +34,7 @@ namespace UnstuckMEUserGUI
         }
         public static IUnstuckMEService Server;
         public static UserInfo User;
+        public UnstuckMEWindow window;
 
         List<int> hourList = new List<int>();
         List<string> minutesList = new List<string>();
@@ -41,13 +42,13 @@ namespace UnstuckMEUserGUI
         List<string> coursenumberList = new List<string>();
         List<string> courseNameList = new List<string>();
         List<Organization> orgList;
-        public StickerCreationWindow(ref IUnstuckMEService inServer, ref UserInfo inUser)
+        public StickerCreationWindow(ref IUnstuckMEService inServer, ref UserInfo inUser, UnstuckMEWindow inWindow)
         {
             InitializeComponent();
 
             Server = inServer;
             User = inUser;
-
+            window = inWindow;
             LoadDataIntoComboBoxes();
         }
 
@@ -149,13 +150,13 @@ namespace UnstuckMEUserGUI
                     try
                     { 
                         Server.SubmitSticker(temp);
+                        window.AddStickerToMyStickers(temp);
                     }
                     catch (Exception exp)
                     {
                         UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                         logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                     }
-                    MessageBox.Show("Sticker Submitted Successfully");
                     this.Close();
                 }
             }

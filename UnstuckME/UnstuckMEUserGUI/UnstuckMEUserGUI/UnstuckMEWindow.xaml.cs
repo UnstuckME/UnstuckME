@@ -304,8 +304,13 @@ namespace UnstuckMEUserGUI
 
         private void CreateStickerButton_Click(object sender, RoutedEventArgs e)
         {
-            StickerCreationWindow window = new StickerCreationWindow(ref Server, ref User);
+            StickerCreationWindow window = new StickerCreationWindow(ref Server, ref User, this);
             window.ShowDialog();
+        }
+
+        public void AddStickerToMyStickers(UnstuckMESticker inSticker)
+        {
+            _pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(inSticker));
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
