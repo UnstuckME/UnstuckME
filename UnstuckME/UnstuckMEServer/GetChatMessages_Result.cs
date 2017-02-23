@@ -13,6 +13,7 @@ namespace UnstuckMEServer
     
     public partial class GetChatMessages_Result
     {
+        public Nullable<long> Row { get; set; }
         public int MessageID { get; set; }
         public string DisplayFName { get; set; }
         public string DisplayLName { get; set; }

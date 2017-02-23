@@ -85,10 +85,32 @@ namespace UnstuckMEUserGUI
             this.Dispatcher.Invoke(() =>
             {
                 _pages.StickerPage.AvailableStickers = Server.InitialAvailableStickerPull(User.UserID);
+
                 foreach (UnstuckMEAvailableSticker sticker in _pages.StickerPage.AvailableStickers)
                 {
                     _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
                 }
+
+				//_pages.StickerPage.OpenStickers = Server.GetUserTutoredStickersASC(User.UserID);
+
+				//foreach (UnstuckMESticker sticker in _pages.StickerPage.OpenStickers)
+				//{
+				//	_pages.StickerPage.StackPanelOpenStickers.Children.Add(new StickerDisplay(User.UserID, ref Server, sticker));
+				//}
+
+				//_pages.StickerPage.MyStickers = Server.GetUserSubmittedStickersASC(User.UserID);
+
+				//foreach (UnstuckMESticker sticker in _pages.StickerPage.MyStickers)
+				//{
+				//	_pages.StickerPage.StackPanelMyStickers.Children.Add(new StickerDisplay(User.UserID, ref Server, sticker));
+				//}
+
+				//_pages.StickerPage.History = Server.GetStickerHistory(userID: User.UserID);
+
+				//foreach (UnstuckMESticker sticker in _pages.StickerPage.History)
+				//{
+				//	_pages.StickerPage.StackPanelStickerHistory.Children.Add(new StickerDisplay(User.UserID, ref Server, sticker));
+				//}
             });
         }
 

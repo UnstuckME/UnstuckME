@@ -109,7 +109,7 @@ namespace UnstuckMEUserGUI
                     totalSeconds += (secondsCalc * 3600);
 
                     //If selected time is has already passed, throw exception.
-                    if(selectedDate.Year == DateTime.Now.Year)
+                    if (selectedDate.Year == DateTime.Now.Year)
                     {
                         if(DateTime.Now.DayOfYear == selectedDate.DayOfYear)
                         {
@@ -120,10 +120,11 @@ namespace UnstuckMEUserGUI
                             }
                         }
                     }
-                    if(isStickerSubmittedForToday)
+                    if (isStickerSubmittedForToday)
                     {
                         totalSeconds = (totalSeconds - (int)DateTime.Now.TimeOfDay.TotalSeconds);
                     }
+					
                     temp.Timeout = totalSeconds;
                     temp.MinimumStarRanking = (float)sliderRating.Value;
                     temp.ProblemDescription = ProblemDescription.Text;

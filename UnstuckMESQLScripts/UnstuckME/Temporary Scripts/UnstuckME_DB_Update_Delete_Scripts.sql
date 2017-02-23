@@ -76,6 +76,8 @@ IF OBJECT_ID('UpdateUserAverageRank') is not null
 	DROP PROCEDURE UpdateUserAverageRank;
 IF OBJECT_ID('UpdateUserTotalReviews') is not null
 	DROP PROCEDURE UpdateUserTotalReviews;
+IF OBJECT_ID('UpdateStickerByChatID') is not null
+	DROP PROCEDURE UpdateStickerByChatID;
 GO
 --START CREATION SCRIPTS
 /*********************************************************/
@@ -837,5 +839,24 @@ BEGIN
 		SET TotalStudentReviews = @StudentReviews,
 			TotalTutorReviews = @TutorReviews
 		WHERE UserID = @UserID;
+	END
+END
+
+GO
+
+/******************************************************************
+--Update the ChatID for a given sticker
+******************************************************************/
+CREATE PROC UpdateStickerByChatID
+(	@ChatID int,
+	@StickerID int
+) as
+BEGIN
+	IF (NOT EXISTS(SELECT StickerID, ChatID from Sticker where StickerID = @StickerID and (ChatID is null or ChatID <> @ChatID)))
+		RETURN -1;
+	ELSE BEGIN
+		UPDATE Sticker
+		SET ChatID = @ChatID
+		WHERE StickerID = @StickerID
 	END
 END

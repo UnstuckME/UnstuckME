@@ -61,52 +61,67 @@ namespace UnstuckMEInterfaces
         void DeleteUserAccount(int userID);
 
 		[OperationContract]
-		List<UnstuckMEReview> GetUserStudentReviewsASC(int userID, short firstrow = 0, short lastrow = 50, float minstarrank = 0);
+		List<UnstuckMESticker> GetStickerHistory(double minstarrank = 0, short firstrow = 0, short lastrow = 0, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMEReview> GetUserStudentReviewsDESC(int userID, short firstrow = 0, short lastrow = 50, float minstarrank = 0);
+		List<UnstuckMESticker> GetResolvedStickers_ClassASC(double minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMEReview> GetUserTutorReviewsASC(int userID, short firstrow = 0, short lastrow = 50, float minstarrank = 0);
+		List<UnstuckMESticker> GetResolvedStickers_ClassDESC(double minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMEReview> GetUserTutorReviewsDESC(int userID, short firstrow = 0, short lastrow = 50, float minstarrank = 0);
+		List<UnstuckMESticker> GetTimedOutStickers_ClassASC(double minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetUserSubmittedStickersASC(int userID, short firstrow = 0, short lastrow = 0, float minstarrank = 0, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetTimedOutStickers_ClassDESC(double minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetUserSubmittedStickersDESC(int userID, short firstrow = 0, short lastrow = 0, float minstarrank = 0, Nullable<int> classID = null);
+		List<UnstuckMEReview> GetUserStudentReviewsASC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetUserTutoredStickersASC(int userID, short firstrow = 0, short lastrow = 0, float minstarrank = 0, Nullable<int> classID = null);
+		List<UnstuckMEReview> GetUserStudentReviewsDESC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0);
 
 		[OperationContract]
-		List<UnstuckMESticker> GetUserTutoredStickersDESC(int userID, short firstrow = 0, short lastrow = 0, float minstarrank = 0, Nullable<int> classID = null);
+		List<UnstuckMEReview> GetUserTutorReviewsASC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0);
 
 		[OperationContract]
-		List<UnstuckMEAvailableSticker> GetActiveStickersASC(float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEReview> GetUserTutorReviewsDESC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0);
 
 		[OperationContract]
-		List<UnstuckMEAvailableSticker> GetActiveStickersDESC(float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetUserSubmittedStickersASC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgClassASC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetUserSubmittedStickersDESC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetUserTutoredStickersASC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_ClassDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetUserTutoredStickersDESC(int userID, short firstrow = 0, short lastrow = 10, float minstarrank = 0, Nullable<int> classID = null);
 
 		[OperationContract]
-		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgClassDESC(int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 50, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickersASC(int caller, float minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
+
+		[OperationContract]
+		List<UnstuckMEAvailableSticker> GetActiveStickersDESC(int caller, float minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
+
+		[OperationContract]
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgClassASC(int caller, int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
+
+		[OperationContract]
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgDESC(int caller, int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
+
+		[OperationContract]
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_ClassDESC(int caller, int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
+
+		[OperationContract]
+		List<UnstuckMEAvailableSticker> GetActiveStickersWithOrg_OrgClassDESC(int caller, int orgID, float minstarrank = 0, short firstrow = 0, short lastrow = 10, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		[OperationContract]
         void AddUserToTutoringOrganization(int userID, int organizationID);
 
         [OperationContract]
-        void SubmitSticker(UnstuckMESticker newSticker);
+        int SubmitSticker(UnstuckMESticker newSticker);
 
         [OperationContract]
         byte[] GetProfilePicture(int userID);
@@ -158,6 +173,12 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         UnstuckMEChat GetSingleChat(int chatID);
+
+		[OperationContract]
+		int CheckIfChatAlreadyExists(int studentID, int tutorID);
+
+		[OperationContract]
+		void AddChatToSticker(int chatID, int stickerID);
 
         [OperationContract]
         void SendMessage(UnstuckMEMessage message);

@@ -415,6 +415,10 @@
         <Function Name="AdminPullReportsForOptionalUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
+        <Function Name="CheckIfAChatBetweenTwoUsersExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentID" Type="int" Mode="In" />
+          <Parameter Name="tutorID" Type="int" Mode="In" />
+        </Function>
         <Function Name="ClearReviewDescriptionByReviewID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReviewID" Type="int" Mode="In" />
         </Function>
@@ -505,6 +509,7 @@
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetActiveStickers_ClassASC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="loggedin_user" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
           <Parameter Name="endrow" Type="smallint" Mode="In" />
@@ -512,6 +517,7 @@
           <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetActiveStickers_ClassDESC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="loggedin_user" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
           <Parameter Name="endrow" Type="smallint" Mode="In" />
@@ -519,6 +525,7 @@
           <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetActiveStickersWithOrganization_ClassDESC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="loggedin_user" Type="int" Mode="In" />
           <Parameter Name="organization" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
@@ -527,6 +534,7 @@
           <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetActiveStickersWithOrganization_OrgClassASC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="loggedin_user" Type="int" Mode="In" />
           <Parameter Name="organization" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
@@ -535,6 +543,7 @@
           <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetActiveStickersWithOrganization_OrgClassDESC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="loggedin_user" Type="int" Mode="In" />
           <Parameter Name="organization" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
@@ -543,6 +552,7 @@
           <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetActiveStickersWithOrganization_OrgDESC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="loggedin_user" Type="int" Mode="In" />
           <Parameter Name="organization" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
@@ -557,6 +567,13 @@
           <Parameter Name="chatid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetAllOrganizations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllResolvedOrTimedOutStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
+          <Parameter Name="startrow" Type="smallint" Mode="In" />
+          <Parameter Name="endrow" Type="smallint" Mode="In" />
+          <Parameter Name="starrank" Type="float" Mode="In" />
+          <Parameter Name="classID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetAllStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllStudentReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllTutorReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -565,6 +582,8 @@
         </Function>
         <Function Name="GetChatMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="chatid" Type="int" Mode="In" />
+          <Parameter Name="startrow" Type="smallint" Mode="In" />
+          <Parameter Name="endrow" Type="smallint" Mode="In" />
         </Function>
         <Function Name="GetCourseCodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetCourseIDByCodeAndNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -804,6 +823,10 @@
         <Function Name="UpdateStarRankingByReviewID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReviewID" Type="int" Mode="In" />
           <Parameter Name="StarRanking" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="UpdateStickerByChatID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChatID" Type="int" Mode="In" />
+          <Parameter Name="StickerID" Type="int" Mode="In" />
         </Function>
         <Function Name="UpdateStickerProblemDescriptionByStickerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StickerID" Type="int" Mode="In" />
@@ -1341,6 +1364,10 @@
           <FunctionImport Name="AdminPullReportsForOptionalUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="CheckIfAChatBetweenTwoUsersExists">
+            <Parameter Name="studentID" Mode="In" Type="Int32" />
+            <Parameter Name="tutorID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="ClearReviewDescriptionByReviewID">
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1430,6 +1457,7 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickers_ClassASC" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickers_ClassASC_Result)">
+            <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
             <Parameter Name="endrow" Mode="In" Type="Int16" />
@@ -1437,6 +1465,7 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickers_ClassDESC" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickers_ClassDESC_Result)">
+            <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
             <Parameter Name="endrow" Mode="In" Type="Int16" />
@@ -1444,6 +1473,7 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickersWithOrganization_ClassDESC" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickersWithOrganization_ClassDESC_Result)">
+            <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
             <Parameter Name="organization" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
@@ -1452,6 +1482,7 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickersWithOrganization_OrgClassASC" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickersWithOrganization_OrgClassASC_Result)">
+            <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
             <Parameter Name="organization" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
@@ -1460,6 +1491,7 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickersWithOrganization_OrgClassDESC" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickersWithOrganization_OrgClassDESC_Result)">
+            <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
             <Parameter Name="organization" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
@@ -1468,6 +1500,7 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickersWithOrganization_OrgDESC" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickersWithOrganization_OrgDESC_Result)">
+            <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
             <Parameter Name="organization" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="startrow" Mode="In" Type="Int16" />
@@ -1482,6 +1515,13 @@
             <Parameter Name="chatid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllOrganizations" ReturnType="Collection(UnstuckME_DBModel.GetAllOrganizations_Result)" />
+          <FunctionImport Name="GetAllResolvedOrTimedOutStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllResolvedOrTimedOutStickers_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="startrow" Mode="In" Type="Int16" />
+            <Parameter Name="endrow" Mode="In" Type="Int16" />
+            <Parameter Name="starrank" Mode="In" Type="Double" />
+            <Parameter Name="classID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetAllStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllStickers_Result)" />
           <FunctionImport Name="GetAllStudentReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllStudentReviews_Result)" />
           <FunctionImport Name="GetAllTutorReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllTutorReviews_Result)" />
@@ -1490,6 +1530,8 @@
           </FunctionImport>
           <FunctionImport Name="GetChatMessages" ReturnType="Collection(UnstuckME_DBModel.GetChatMessages_Result)">
             <Parameter Name="chatid" Mode="In" Type="Int32" />
+            <Parameter Name="startrow" Mode="In" Type="Int16" />
+            <Parameter Name="endrow" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="GetCourseCodes" ReturnType="Collection(String)" />
           <FunctionImport Name="GetCourseIDByCodeAndNumber" ReturnType="Collection(Int32)">
@@ -1730,6 +1772,10 @@
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
             <Parameter Name="StarRanking" Mode="In" Type="Byte" />
           </FunctionImport>
+          <FunctionImport Name="UpdateStickerByChatID">
+            <Parameter Name="ChatID" Mode="In" Type="Int32" />
+            <Parameter Name="StickerID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="UpdateStickerProblemDescriptionByStickerID">
             <Parameter Name="StickerID" Mode="In" Type="Int32" />
             <Parameter Name="ProblemDescription" Mode="In" Type="String" />
@@ -1768,35 +1814,35 @@
         </ComplexType>
         <ComplexType Name="GetActiveStickers_ClassASC_Result">
           <Property Type="Int64" Name="Row" Nullable="true" />
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="Int32" Name="StickerID" Nullable="false" />
-          <Property Type="Int32" Name="ClassID" Nullable="false" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="String" Name="DisplayFName" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="true" MaxLength="32" />
+          <Property Type="Int32" Name="StickerID" Nullable="true" />
+          <Property Type="Int32" Name="ClassID" Nullable="true" />
+          <Property Type="Int32" Name="StudentID" Nullable="true" />
           <Property Type="Int32" Name="TutorID" Nullable="true" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CourseCode" Nullable="true" MaxLength="5" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="true" />
+          <Property Type="String" Name="CourseName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProblemDescription" Nullable="true" MaxLength="500" />
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetActiveStickers_ClassDESC_Result">
           <Property Type="Int64" Name="Row" Nullable="true" />
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="Int32" Name="StickerID" Nullable="false" />
-          <Property Type="Int32" Name="ClassID" Nullable="false" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="String" Name="DisplayFName" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="true" MaxLength="32" />
+          <Property Type="Int32" Name="StickerID" Nullable="true" />
+          <Property Type="Int32" Name="ClassID" Nullable="true" />
+          <Property Type="Int32" Name="StudentID" Nullable="true" />
           <Property Type="Int32" Name="TutorID" Nullable="true" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CourseCode" Nullable="true" MaxLength="5" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="true" />
+          <Property Type="String" Name="CourseName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProblemDescription" Nullable="true" MaxLength="500" />
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetActiveStickersWithOrganization_ClassDESC_Result">
           <Property Type="Int64" Name="Row" Nullable="true" />
@@ -1876,6 +1922,22 @@
           <Property Type="Int32" Name="MentorID" Nullable="false" />
           <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="GetAllResolvedOrTimedOutStickers_Result">
+          <Property Type="Int64" Name="Row" Nullable="true" />
+          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
+          <Property Type="Int32" Name="StickerID" Nullable="false" />
+          <Property Type="Int32" Name="ClassID" Nullable="false" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="TutorID" Nullable="true" />
+          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
+          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="GetAllStickers_Result">
           <Property Type="Int32" Name="StickerID" Nullable="false" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
@@ -1912,6 +1974,7 @@
           <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="GetChatMessages_Result">
+          <Property Type="Int64" Name="Row" Nullable="true" />
           <Property Type="Int32" Name="MessageID" Nullable="false" />
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
@@ -2340,6 +2403,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CheckIfAChatBetweenTwoUsersExists" FunctionName="UnstuckME_DBModel.Store.CheckIfAChatBetweenTwoUsersExists" />
           <FunctionImportMapping FunctionImportName="ClearReviewDescriptionByReviewID" FunctionName="UnstuckME_DBModel.Store.ClearReviewDescriptionByReviewID" />
           <FunctionImportMapping FunctionImportName="CreateChat" FunctionName="UnstuckME_DBModel.Store.CreateChat" />
           <FunctionImportMapping FunctionImportName="CreateMentorOrganization" FunctionName="UnstuckME_DBModel.Store.CreateMentorOrganization" />
@@ -2504,6 +2568,26 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllResolvedOrTimedOutStickers" FunctionName="UnstuckME_DBModel.Store.GetAllResolvedOrTimedOutStickers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetAllResolvedOrTimedOutStickers_Result">
+                <ScalarProperty Name="Row" ColumnName="Row" />
+                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
+                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
+                <ScalarProperty Name="StickerID" ColumnName="StickerID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
+                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllStickers" FunctionName="UnstuckME_DBModel.Store.GetAllStickers">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetAllStickers_Result">
@@ -2558,6 +2642,7 @@
           <FunctionImportMapping FunctionImportName="GetChatMessages" FunctionName="UnstuckME_DBModel.Store.GetChatMessages">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetChatMessages_Result">
+                <ScalarProperty Name="Row" ColumnName="Row" />
                 <ScalarProperty Name="MessageID" ColumnName="MessageID" />
                 <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
                 <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
@@ -2898,6 +2983,7 @@
           <FunctionImportMapping FunctionImportName="UpdateReviewDescriptionByReviewID" FunctionName="UnstuckME_DBModel.Store.UpdateReviewDescriptionByReviewID" />
           <FunctionImportMapping FunctionImportName="UpdateServerAdmin" FunctionName="UnstuckME_DBModel.Store.UpdateServerAdmin" />
           <FunctionImportMapping FunctionImportName="UpdateStarRankingByReviewID" FunctionName="UnstuckME_DBModel.Store.UpdateStarRankingByReviewID" />
+          <FunctionImportMapping FunctionImportName="UpdateStickerByChatID" FunctionName="UnstuckME_DBModel.Store.UpdateStickerByChatID" />
           <FunctionImportMapping FunctionImportName="UpdateStickerProblemDescriptionByStickerID" FunctionName="UnstuckME_DBModel.Store.UpdateStickerProblemDescriptionByStickerID" />
           <FunctionImportMapping FunctionImportName="UpdateTimeoutByStickerIDAndSeconds" FunctionName="UnstuckME_DBModel.Store.UpdateTimeoutByStickerIDAndSeconds" />
           <FunctionImportMapping FunctionImportName="UpdateTutorIDByTutorIDAndStickerID" FunctionName="UnstuckME_DBModel.Store.UpdateTutorIDByTutorIDAndStickerID" />

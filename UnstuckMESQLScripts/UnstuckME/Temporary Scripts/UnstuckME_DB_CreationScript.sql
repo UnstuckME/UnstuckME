@@ -103,7 +103,7 @@ CREATE TABLE [Messages]
 	FilePath				VARCHAR(MAX)	DEFAULT NULL,  
 	IsFile                  BIT				NOT NULL DEFAULT(0),                
 	SentBy					INT				NOT NULL REFERENCES UserProfile(UserID),
-	SentTime				SMALLDATETIME	NOT NULL)
+	SentTime				DATETIME2		NOT NULL)
 GO
 
 --Create File Table
@@ -140,7 +140,7 @@ GO
 --Create Classes Table
 CREATE TABLE Picture
 	(UserID				INT						NOT NULL	REFERENCES UserProfile(UserID),
-	Photo				VARBINARY(MAX)			NULL
+	Photo				VARBINARY(MAX)			NULL	--change to VARCHAR(MAX)
 	PRIMARY KEY (UserID))	
 GO	
 

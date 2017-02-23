@@ -141,6 +141,7 @@ namespace UnstuckMEUserGUI
 					ProfilePicture.Source = ImageEditProfilePicture.Source;
 					Server.SetProfilePicture(UnstuckMEWindow.User.UserID, byte_array);
                     foreach (UnstuckMEChat chat in UnstuckMEWindow._pages.ChatPage.allChats)
+
                     {
                         foreach (UnstuckMEChatUser user in chat.Users)
                         {
@@ -159,8 +160,7 @@ namespace UnstuckMEUserGUI
             catch (Exception ex)
             {
 				UnstuckMEMessageBox message = new UnstuckMEMessageBox(1, ex.Message, "Image Size Error");
-				message.Show();
-                //System.Windows.MessageBox.Show("Image too large! This Needs to be fixed, it causes a communication fault and currently the app has to be shut down.", "Image Size Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+				message.ShowDialog();
                 string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
                 Process.Start(unstuckME);
                 System.Windows.Application.Current.Shutdown();
@@ -180,12 +180,27 @@ namespace UnstuckMEUserGUI
 			if (PasswordBoxNewPassword.Password != PasswordBoxConfirm.Password)
 			{
 				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, "Your passwords do not match, please reenter your password.", "Incorrect Password");
-				messagebox.Show();
+				messagebox.ShowDialog();
 			}
 			else
 			{
-				Server.ChangeUserName(UnstuckMEWindow.User.EmailAddress, TextBoxNewFirstName.Text, TextBoxNewLastName.Text);
-				Server.ChangePassword(UnstuckMEWindow.User, PasswordBoxConfirm.Password);
+				string newfirstname = TextBoxNewFirstName.Text != string.Empty ? UnstuckMEWindow.User.FirstName : TextBoxNewFirstName.Text;
+				string newlastname = TextBoxNewLastName.Text != string.Empty ? UnstuckMEWindow.User.LastName : TextBoxNewLastName.Text;
+				string newpassword = PasswordBoxConfirm.Password != string.Empty ? UnstuckMEWindow.User.UserPassword : PasswordBoxConfirm.Password;
+
+				try
+				{
+					Server.ChangeUserName(UnstuckMEWindow.User.EmailAddress, newfirstname, newlastname);
+					Server.ChangePassword(UnstuckMEWindow.User, newpassword);
+					FirstName.Text = newfirstname;
+					LastName.Text = newlastname;
+				}
+				catch (Exception ex)
+				{
+					UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.Message, "Username/Password Change Failed");
+					messagebox.ShowDialog();
+				}
+
 				ButtonBack_MouseLeftButtonDown(sender, e);
 			}
 		}

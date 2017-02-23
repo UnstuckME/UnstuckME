@@ -245,7 +245,7 @@ AS
         ELSE BEGIN
             INSERT INTO Sticker
 			VALUES(@ProblemDescription, @ClassID, DEFAULT, @StudentID, DEFAULT, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))
-			RETURN 0;
+			RETURN @@IDENTITY
         END
     END
 GO

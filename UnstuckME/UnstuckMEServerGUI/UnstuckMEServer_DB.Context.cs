@@ -102,6 +102,19 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminPullReportsForOptionalUser_Result>("AdminPullReportsForOptionalUser", useridParameter);
         }
     
+        public virtual int CheckIfAChatBetweenTwoUsersExists(Nullable<int> studentID, Nullable<int> tutorID)
+        {
+            var studentIDParameter = studentID.HasValue ?
+                new ObjectParameter("studentID", studentID) :
+                new ObjectParameter("studentID", typeof(int));
+    
+            var tutorIDParameter = tutorID.HasValue ?
+                new ObjectParameter("tutorID", tutorID) :
+                new ObjectParameter("tutorID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckIfAChatBetweenTwoUsersExists", studentIDParameter, tutorIDParameter);
+        }
+    
         public virtual int ClearReviewDescriptionByReviewID(Nullable<int> reviewID)
         {
             var reviewIDParameter = reviewID.HasValue ?
@@ -604,13 +617,21 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllUsersInAnOrganization_Result>("GetAllUsersInAnOrganization", orgidParameter);
         }
     
-        public virtual ObjectResult<GetChatMessages_Result> GetChatMessages(Nullable<int> chatid)
+        public virtual ObjectResult<GetChatMessages_Result> GetChatMessages(Nullable<int> chatid, Nullable<short> startrow, Nullable<short> endrow)
         {
             var chatidParameter = chatid.HasValue ?
                 new ObjectParameter("chatid", chatid) :
                 new ObjectParameter("chatid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetChatMessages_Result>("GetChatMessages", chatidParameter);
+            var startrowParameter = startrow.HasValue ?
+                new ObjectParameter("startrow", startrow) :
+                new ObjectParameter("startrow", typeof(short));
+    
+            var endrowParameter = endrow.HasValue ?
+                new ObjectParameter("endrow", endrow) :
+                new ObjectParameter("endrow", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetChatMessages_Result>("GetChatMessages", chatidParameter, startrowParameter, endrowParameter);
         }
     
         public virtual ObjectResult<string> GetCourseCodes()

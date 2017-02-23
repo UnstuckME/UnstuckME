@@ -415,6 +415,10 @@
         <Function Name="AdminPullReportsForOptionalUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
+        <Function Name="CheckIfAChatBetweenTwoUsersExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentID" Type="int" Mode="In" />
+          <Parameter Name="tutorID" Type="int" Mode="In" />
+        </Function>
         <Function Name="ClearReviewDescriptionByReviewID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ReviewID" Type="int" Mode="In" />
         </Function>
@@ -565,6 +569,8 @@
         </Function>
         <Function Name="GetChatMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="chatid" Type="int" Mode="In" />
+          <Parameter Name="startrow" Type="smallint" Mode="In" />
+          <Parameter Name="endrow" Type="smallint" Mode="In" />
         </Function>
         <Function Name="GetCourseCodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetCourseIDByCodeAndNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1341,6 +1347,10 @@
           <FunctionImport Name="AdminPullReportsForOptionalUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="CheckIfAChatBetweenTwoUsersExists">
+            <Parameter Name="studentID" Mode="In" Type="Int32" />
+            <Parameter Name="tutorID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="ClearReviewDescriptionByReviewID">
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1490,6 +1500,8 @@
           </FunctionImport>
           <FunctionImport Name="GetChatMessages" ReturnType="Collection(UnstuckME_DBModel.GetChatMessages_Result)">
             <Parameter Name="chatid" Mode="In" Type="Int32" />
+            <Parameter Name="startrow" Mode="In" Type="Int16" />
+            <Parameter Name="endrow" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="GetCourseCodes" ReturnType="Collection(String)" />
           <FunctionImport Name="GetCourseIDByCodeAndNumber" ReturnType="Collection(Int32)">
@@ -1912,6 +1924,7 @@
           <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="GetChatMessages_Result">
+          <Property Type="Int64" Name="Row" Nullable="true" />
           <Property Type="Int32" Name="MessageID" Nullable="false" />
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
@@ -2340,6 +2353,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CheckIfAChatBetweenTwoUsersExists" FunctionName="UnstuckME_DBModel.Store.CheckIfAChatBetweenTwoUsersExists" />
           <FunctionImportMapping FunctionImportName="ClearReviewDescriptionByReviewID" FunctionName="UnstuckME_DBModel.Store.ClearReviewDescriptionByReviewID" />
           <FunctionImportMapping FunctionImportName="CreateChat" FunctionName="UnstuckME_DBModel.Store.CreateChat" />
           <FunctionImportMapping FunctionImportName="CreateMentorOrganization" FunctionName="UnstuckME_DBModel.Store.CreateMentorOrganization" />
@@ -2558,6 +2572,7 @@
           <FunctionImportMapping FunctionImportName="GetChatMessages" FunctionName="UnstuckME_DBModel.Store.GetChatMessages">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetChatMessages_Result">
+                <ScalarProperty Name="Row" ColumnName="Row" />
                 <ScalarProperty Name="MessageID" ColumnName="MessageID" />
                 <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
                 <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
