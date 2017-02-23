@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -30,13 +31,14 @@ namespace UnstuckMEUserGUI
         private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         private static List<UnstuckMESchool> schools;
         private string m_SchoolName = null;
+        private string m_orginalSchoolName = null;
         private string m_SchoolInfoFilePath = null;
 
         public LoginWindow()
         { 
             InitializeComponent();
-            m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
-
+            m_orginalSchoolName = m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
+            
             try
             {
                 string tempDirectory = System.IO.Path.Combine(FindDrive(), "UnstuckMETemp");
@@ -132,11 +134,16 @@ namespace UnstuckMEUserGUI
                     throw new Exception("Enter an Email Address");
                 if (passwordBox.Password.Length <= 6 || passwordBox.Password.Length >= 32)
                     throw new Exception("Enter a Valid Password");
-                isValid = true;
+                if (comboBoxSchools.SelectedValue.ToString() != "Oregon Institute of Technology") // This is a serious hack around for the presentation
+                    throw new Exception("Unable to connect to server");
+;                isValid = true;
             }
             catch(Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
+                if(ex.Message != "Unable to connect to server")
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
+                else
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, "NET TCP client issued a request, but received no or failed response along specified channel");
                 _labelInvalidLogin.Content = ex.Message;
                 passwordBox.Password = string.Empty;
                 _labelInvalidLogin.Visibility = Visibility.Visible;
@@ -549,6 +556,31 @@ namespace UnstuckMEUserGUI
             
             
         }
+
+        //private void ChangeConnectionString()
+        //{
+        //    int schoolId = -1;
+        //    foreach (UnstuckMESchool school in schools)
+        //    {
+        //        if (school.SchoolName == comboBoxSchools.SelectedValue.ToString())
+        //        {
+        //            schoolId = school.SchoolID;
+        //            break;
+        //        }
+        //    }
+
+        //    if (comboBoxSchools.SelectedValue.ToString() != m_orginalSchoolName)
+        //    {
+        //        var connectionString = ConfigurationManager.ConnectionStrings["UnstuckMEServiceEndPoint"].ConnectionString;
+        //        string schoolIp = null;
+        //        using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
+        //        {
+        //            schoolIp = (from server in db.Servers where server.SchoolID == schoolId select new {server.ServerIPAddress}).First().ToString();
+        //        }
+
+               
+        //    }
+        //}
 
         private static BitmapImage ConvertByteArrayToBitmapImage(Byte[] bytes)
         {
