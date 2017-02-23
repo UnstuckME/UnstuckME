@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="UnstuckMEUserGUI.OpenSticker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnstuckMEUserGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Margin="5,5,5,0">
+    <Border BorderBrush="White" BorderThickness="1" CornerRadius="5" Background="#336699">
+        <Grid x:Name="MainGrid" Background="{x:Null}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Label x:Name="LabelStudentName" Content="Student Name" Foreground="White" FontSize="18" FontWeight="ExtraBold" Margin="0,0,50,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"></Label>
+                <Border x:Name="ButtonRemove" Cursor="Hand" Margin="0,0,5,0" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" Background="#993333" CornerRadius="90" MouseEnter="ButtonRemove_MouseEnter" MouseLeave="ButtonRemove_MouseLeave" MouseLeftButtonDown="ButtonRemove_MouseLeftButtonDown">
+                    <Image Source="/Resources/Xmark/XmarkWhite.png" Height="10" Width="10"></Image>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Border BorderBrush="Gray" BorderThickness="0,1,0,0">
+                    <Label x:Name="LabelClassName" Content="Class Name" FontSize="12" FontWeight="SemiBold" Foreground="WhiteSmoke" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"></Label>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Border BorderBrush="Gray" BorderThickness="0,1,0,0">
+                    <Label x:Name="LabelDescription" Content="Description" FontSize="12" FontWeight="SemiBold" Foreground="WhiteSmoke" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"></Label>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Border BorderBrush="Gray" BorderThickness="0,0,0,0">
+                    <Label x:Name="LabelTimeout" Content="Timeout" FontWeight="SemiBold" Foreground="WhiteSmoke" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"></Label>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Border x:Name="ButtonCompleted" MouseEnter="ButtonCompleted_MouseEnter" MouseLeave="ButtonCompleted_MouseLeave" MouseLeftButtonDown="ButtonCompleted_MouseLeftButtonDown" BorderBrush="DimGray" Cursor="Hand" BorderThickness="1" CornerRadius="5" Width="90" Height="30" HorizontalAlignment="Right" Margin="0,0,5,0" Background="ForestGreen">
+                    <Label x:Name="LabelCompleted" Content="Completed" FontSize="12" FontWeight="Medium" Foreground="WhiteSmoke" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"></Label>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

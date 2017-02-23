@@ -69,6 +69,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\Stickers\OpenSticker.xaml.cs">
+      <DependentUpon>OpenSticker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Stickers\MySticker.xaml.cs">
+      <DependentUpon>MySticker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\AddFriendWindow.xaml.cs">
       <DependentUpon>AddFriendWindow.xaml</DependentUpon>
     </Compile>
@@ -95,9 +101,6 @@
     </Compile>
     <Compile Include="UserControls\Chat\Conversation.xaml.cs">
       <DependentUpon>Conversation.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Stickers\StickerUserControl.xaml.cs">
-      <DependentUpon>StickerUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Chat\ChatFile.xaml.cs">
       <DependentUpon>ChatFile.xaml</DependentUpon>
@@ -208,6 +211,14 @@
     <Compile Include="Pages\UserProfilePage.xaml.cs">
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="UserControls\Stickers\OpenSticker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Stickers\MySticker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SubWindows\AddFriendWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -241,10 +252,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Chat\Conversation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Stickers\StickerUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

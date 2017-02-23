@@ -23,12 +23,11 @@ namespace UnstuckMEUserGUI
     {
         public List<UnstuckMEAvailableSticker> AvailableStickers;
         public List<UnstuckMESticker> OpenStickers;
-        public List<UnstuckMESticker> MyStickers;
-		public List<UnstuckMESticker> History;
+        public List<UnstuckMEAvailableSticker> RecentStickers;
+        public List<UnstuckMESticker> MyStickersList;
         public StickerPage()
         {
             InitializeComponent();
-
         }
 
     }
