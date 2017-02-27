@@ -203,6 +203,9 @@ namespace UnstuckMEInterfaces
 
         [OperationContract(IsOneWay = true)]
         void SendStickerToClients(UnstuckMEAvailableSticker inSticker);
+
+        [OperationContract]
+        void SetUserPrivileges(Privileges userPrivs, int userID);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

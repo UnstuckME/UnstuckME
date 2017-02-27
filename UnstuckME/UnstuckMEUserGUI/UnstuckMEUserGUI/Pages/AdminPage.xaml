@@ -9,6 +9,8 @@
       Title="AdminPage">
 
     <Grid>
-        <Label Foreground="White" FontWeight="Heavy" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="32" Content="Admin Page" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+        <Label Foreground="White" FontWeight="Heavy" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="32" Content="Admin Page" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,249"></Label>
+        <Button x:Name="AddRemoveClassesBtn" Content="Add/Remove Classes" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="132" Click="AddRemoveClassesBtn_Click"/>
+        <Button x:Name="AddRemoveUserRoleBtn" Content="Add/Remove User Role" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Width="132" Click="AddRemoveUserRoleBtn_Click"/>
     </Grid>
 </Page>

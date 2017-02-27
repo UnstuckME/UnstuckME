@@ -1850,5 +1850,12 @@ namespace UnstuckMEInterfaces
             }
         }
 
+        public void SetUserPrivileges(Privileges userPrivs, int userID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.UpdatePrivilegesByUserID(userID, (int)userPrivs);
+            }
+        }
     }
 }

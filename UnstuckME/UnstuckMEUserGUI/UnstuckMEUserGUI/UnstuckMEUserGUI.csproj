@@ -69,6 +69,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SubWindows\AddClassToServerWindow.xaml.cs">
+      <DependentUpon>AddClassToServerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\AddUserRoleWindow.xaml.cs">
+      <DependentUpon>AddUserRoleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Stickers\OpenSticker.xaml.cs">
       <DependentUpon>OpenSticker.xaml</DependentUpon>
     </Compile>
@@ -211,6 +217,14 @@
     <Compile Include="Pages\UserProfilePage.xaml.cs">
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="SubWindows\AddClassToServerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\AddUserRoleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Stickers\OpenSticker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

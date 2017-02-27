@@ -47,9 +47,7 @@ namespace UnstuckMeLoggers
             if (ErrorsList.Count > 10)
             {
                 outputErrors();
-            }
-             
-           
+            }         
         }
         private void outputErrors()
         {

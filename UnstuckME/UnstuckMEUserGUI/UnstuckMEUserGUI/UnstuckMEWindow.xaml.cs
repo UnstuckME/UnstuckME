@@ -56,7 +56,7 @@ namespace UnstuckMEUserGUI
             _pages.ChatPage = new ChatPage(ref User, ref Server);
             _pages.UserProfilePage = new UserProfilePage(this, Server);
             _pages.ModeratorPage = new ModeratorPage();
-            _pages.AdminPage = new AdminPage();
+            _pages.AdminPage = new AdminPage(ref Server);
 
             //userPriviliges = (Privileges)User.Privileges; //This Works But for Design Purposes is commented out.
             userPrivileges = Privileges.Admin; //This will be replaced with above line
