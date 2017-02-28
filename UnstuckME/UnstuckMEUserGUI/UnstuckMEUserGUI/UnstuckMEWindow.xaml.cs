@@ -58,8 +58,8 @@ namespace UnstuckMEUserGUI
             _pages.ModeratorPage = new ModeratorPage();
             _pages.AdminPage = new AdminPage(ref Server);
 
-            //userPriviliges = (Privileges)User.Privileges; //This Works But for Design Purposes is commented out.
-            userPrivileges = Privileges.Admin; //This will be replaced with above line
+            userPrivileges = (Privileges)User.Privileges; //This Works But for Design Purposes is commented out.
+            //userPrivileges = Privileges.Admin; //This will be replaced with above line
 
             CheckAdminPrivledges(userPrivileges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
             SwitchToStickerTab();
