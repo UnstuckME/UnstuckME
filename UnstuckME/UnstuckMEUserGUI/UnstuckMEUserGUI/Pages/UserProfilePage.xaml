@@ -159,13 +159,13 @@
                 </Grid>
                 <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                     <Label Margin="75,20,0,0" Content="New First Name" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <TextBox x:Name="TextBoxNewFirstName" Margin="80,55,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></TextBox>
+                    <TextBox x:Name="TextBoxNewFirstName" MouseLeave="TextBoxNewFirstName_MouseLeave" Margin="80,55,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></TextBox>
                     <Label Margin="75,100,0,0" Content="New Last Name" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <TextBox x:Name="TextBoxNewLastName" Margin="80,135,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></TextBox>
+                    <TextBox x:Name="TextBoxNewLastName" MouseLeave="TextBoxNewLastName_MouseLeave" Margin="80,135,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></TextBox>
                     <Label Margin="75,180,0,0" Content="New Password" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <PasswordBox x:Name="PasswordBoxNewPassword" Margin="80,215,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></PasswordBox>
+                    <PasswordBox x:Name="PasswordBoxNewPassword" MouseLeave="PasswordBoxNewPassword_MouseLeave" Margin="80,215,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></PasswordBox>
                     <Label Margin="75,260,0,0" Content="Confirm Password" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <PasswordBox x:Name="PasswordBoxConfirm" Margin="80,295,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></PasswordBox>
+                    <PasswordBox x:Name="PasswordBoxConfirm" MouseLeave="PasswordBoxConfirm_MouseLeave" Margin="80,295,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></PasswordBox>
                 </Grid>
             </Grid>
 

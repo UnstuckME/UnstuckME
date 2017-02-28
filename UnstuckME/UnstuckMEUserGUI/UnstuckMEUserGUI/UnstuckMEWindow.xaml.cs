@@ -54,7 +54,7 @@ namespace UnstuckMEUserGUI
             _pages.StickerPage = new StickerPage();
             _pages.SettingsPage = new SettingsPage();
             _pages.ChatPage = new ChatPage(ref User, ref Server);
-            _pages.UserProfilePage = new UserProfilePage(this, Server);
+            _pages.UserProfilePage = new UserProfilePage(this, Server, ref User);
             _pages.ModeratorPage = new ModeratorPage();
             _pages.AdminPage = new AdminPage(ref Server);
 

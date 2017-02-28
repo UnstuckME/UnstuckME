@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
@@ -30,7 +31,8 @@ namespace UnstuckMEUserGUI
         private static StarRanking tutorRanking;
         public static UnstuckMEWindow CurrentWindow;
         public static IUnstuckMEService Server;
-        public UserProfilePage(UnstuckMEWindow inWindow, IUnstuckMEService inServer)
+        UserInfo UsersInfo;
+        public UserProfilePage(UnstuckMEWindow inWindow, IUnstuckMEService inServer, ref UserInfo info)
         {
             InitializeComponent();
             Server = inServer;
@@ -39,7 +41,11 @@ namespace UnstuckMEUserGUI
             RatingsStack.Children.Add(studentRanking);
             RatingsStack.Children.Add(tutorRanking);
             //RepopulateClasses(); Added this to asynchronous load in UnstuckMEWindow.
-            
+            UsersInfo = info;
+
+            TextBoxNewFirstName.Text = UsersInfo.FirstName;
+            TextBoxNewLastName.Text = UsersInfo.LastName;
+
         }
         public void RepopulateClasses()
         {
@@ -184,25 +190,100 @@ namespace UnstuckMEUserGUI
 			}
 			else
 			{
-				string newfirstname = TextBoxNewFirstName.Text != string.Empty ? UnstuckMEWindow.User.FirstName : TextBoxNewFirstName.Text;
-				string newlastname = TextBoxNewLastName.Text != string.Empty ? UnstuckMEWindow.User.LastName : TextBoxNewLastName.Text;
-				string newpassword = PasswordBoxConfirm.Password != string.Empty ? UnstuckMEWindow.User.UserPassword : PasswordBoxConfirm.Password;
+                // this doesnt seem to work, im not sure who wrote it but i was assigned to make it work so im just going to do it
+                // if you dont like it, then fix it. -K
 
-				try
-				{
-					Server.ChangeUserName(UnstuckMEWindow.User.EmailAddress, newfirstname, newlastname);
-					Server.ChangePassword(UnstuckMEWindow.User, newpassword);
-					FirstName.Text = newfirstname;
-					LastName.Text = newlastname;
-				}
-				catch (Exception ex)
-				{
-					UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.Message, "Username/Password Change Failed");
-					messagebox.ShowDialog();
-				}
+                //string newfirstname = TextBoxNewFirstName.Text != string.Empty ? UnstuckMEWindow.User.FirstName : TextBoxNewFirstName.Text;
+                //string newlastname = TextBoxNewLastName.Text != string.Empty ? UnstuckMEWindow.User.LastName : TextBoxNewLastName.Text;
+                //string newpassword = PasswordBoxConfirm.Password != string.Empty ? UnstuckMEWindow.User.UserPassword : PasswordBoxConfirm.Password;
+    //            try
+				//{
+				//	Server.ChangeUserName(UnstuckMEWindow.User.EmailAddress, newfirstname, newlastname);
+				//	Server.ChangePassword(UnstuckMEWindow.User, newpassword);
+				//	FirstName.Text = newfirstname;
+				//	LastName.Text = newlastname;
+				//}
+				//catch (Exception ex)
+				//{
+				//	UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.Message, "Username/Password Change Failed");
+				//	messagebox.ShowDialog();
+				//}
 
-				ButtonBack_MouseLeftButtonDown(sender, e);
+                if (TextBoxNewFirstName.Text != UsersInfo.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
+                {
+                    try
+                    {
+                        Server.ChangeUserName(UsersInfo.EmailAddress, TextBoxNewFirstName.Text, UsersInfo.LastName);
+                    }
+                    catch (Exception ex)
+                    {
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
+                    }
+                }
+                if (TextBoxNewLastName.Text != UsersInfo.LastName && TextBoxNewLastName.Text != "" && TextBoxNewLastName.Text != null)
+                {
+                    try
+                    {
+                        Server.ChangeUserName(UsersInfo.EmailAddress, UsersInfo.FirstName, TextBoxNewLastName.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName");
+                    }
+                }
+                if (PasswordBoxNewPassword.Password != null && PasswordBoxNewPassword.Password != "" && PasswordBoxConfirm.Password != null && PasswordBoxConfirm.Password != "")
+                {
+                    if (PasswordBoxNewPassword.Password == PasswordBoxConfirm.Password)
+                    {
+                        try
+                        {
+                            Server.ChangePassword(UnstuckMEWindow.User, PasswordBoxNewPassword.Password);
+                        }
+                        catch (Exception ex)
+                        {
+                            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password");
+                        }
+                    }
+                    else
+                    {
+                        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, "The passwords that you entered do not match.", "Username/Password Change Failed");
+                        messagebox.ShowDialog();
+                    }
+                }
+
+
+                ButtonBack_MouseLeftButtonDown(sender, e);
 			}
 		}
+
+        private void TextBoxNewFirstName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (TextBoxNewFirstName.Text != UsersInfo.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
+            {
+                try
+                {
+                    Server.ChangeUserName(UsersInfo.EmailAddress, TextBoxNewFirstName.Text, UsersInfo.LastName);
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
+                }
+            }
+        }
+
+        private void TextBoxNewLastName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+
+        }
+
+        private void PasswordBoxNewPassword_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+
+        }
+
+        private void PasswordBoxConfirm_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+
+        }
     }
 }
