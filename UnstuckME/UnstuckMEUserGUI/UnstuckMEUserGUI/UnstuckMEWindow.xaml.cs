@@ -312,7 +312,6 @@ namespace UnstuckMEUserGUI
         {
             _pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(inSticker));
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, User.EmailAddress);
@@ -407,7 +406,7 @@ namespace UnstuckMEUserGUI
             });
         }
 
-        public void StickerAcceptedStartConversation(int studentID, int tutorID)
+        public void StickerAcceptedStartConversation(UnstuckMEAvailableSticker sticker, int tutorID)
         {
             this.Dispatcher.Invoke(() =>
             {
@@ -421,7 +420,7 @@ namespace UnstuckMEUserGUI
                     {
                         foreach (UnstuckMEChatUser user in chat.Users)
                         {
-                            if (user.UserID == studentID)
+                            if (user.UserID == sticker.StudentID)
                             { studentFound = true; }
                             if (user.UserID == tutorID)
                             { tutorFound = true; }
@@ -436,7 +435,7 @@ namespace UnstuckMEUserGUI
                 {
                     //Chat Not Found. Creating a new one.
                     PreExistingChatID = Server.CreateChat(User.UserID);
-                    Server.InsertUserIntoChat(studentID, PreExistingChatID);
+                    Server.InsertUserIntoChat(sticker.StudentID, PreExistingChatID);
                 }
                 UnstuckMEMessage temp = new UnstuckMEMessage();
                 temp.ChatID = PreExistingChatID;
@@ -448,11 +447,20 @@ namespace UnstuckMEUserGUI
                 temp.Username = User.FirstName;
                 temp.UsersInConvo = new List<int>();
                 temp.UsersInConvo.Add(User.UserID);
-                temp.UsersInConvo.Add(studentID);
+                temp.UsersInConvo.Add(sticker.StudentID);
                 Server.SendMessage(temp);
                 temp.Message = "Your have accepted a Sticker!";
+                UnstuckMESticker tempSticker = new UnstuckMESticker();
+                tempSticker.ChatID = PreExistingChatID;
+                tempSticker.ClassID = sticker.ClassID;
+                //tempSticker.MinimumStarRanking = sticker.s
+                tempSticker.ProblemDescription = sticker.ProblemDescription;
+                tempSticker.StickerID = sticker.StickerID;
+                tempSticker.StudentID = sticker.StudentID;
+                tempSticker.Timeout = Convert.ToInt32((DateTime.Now - sticker.Timeout).TotalSeconds);
+                tempSticker.TutorID = User.UserID;
+                _pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(tempSticker));
                 _pages.ChatPage.AddMessage(temp);
-
                 SwitchToChatTab();
                 _pages.ChatPage.ButtonAddUserDone_Click(null, null);
                 foreach (Conversation convo in _pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())

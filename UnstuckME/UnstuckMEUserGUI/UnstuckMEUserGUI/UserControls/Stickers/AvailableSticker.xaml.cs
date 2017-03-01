@@ -117,7 +117,7 @@ namespace UnstuckMEUserGUI
             try
             {
                 UnstuckMEWindow.Server.AcceptSticker(UnstuckMEWindow.User.UserID, Sticker.StickerID);
-                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker.StudentID, UnstuckMEWindow.User.UserID);
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker, UnstuckMEWindow.User.UserID);
                 ((StackPanel)this.Parent).Children.Remove(this);
             }
             catch (Exception ex)
