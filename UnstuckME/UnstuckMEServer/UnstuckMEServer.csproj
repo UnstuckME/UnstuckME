@@ -170,6 +170,9 @@
     <Compile Include="GetUserTutorReviews_RankDESC_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="InitialStickerPull_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Message.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>

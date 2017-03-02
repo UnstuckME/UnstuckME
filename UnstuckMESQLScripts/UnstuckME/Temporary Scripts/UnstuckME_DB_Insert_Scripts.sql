@@ -240,14 +240,16 @@ CREATE PROC [dbo].[CreateSticker]
     )
 AS
     BEGIN
+		DECLARE @Return INT
         IF (EXISTS(Select StudentID, ClassID from Sticker where StudentID = @StudentID AND ClassID = @ClassID))
-			SELECT -1;
+			SELECT 0;
 		ELSE IF (select count(*) from (select StudentID from Sticker where StudentID = @StudentID and DATEDIFF(second, GETDATE(), Timeout) > 0) as ActiveStickers) > 3
-			SELECT -1;
+			SELECT 0;
         ELSE BEGIN
             INSERT INTO Sticker
 			VALUES(@ProblemDescription, @ClassID, DEFAULT, @StudentID, DEFAULT, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))
-			SELECT @@IDENTITY
+			SET @Return = @@IDENTITY
+			SELECT @Return
         END
     END
 GO

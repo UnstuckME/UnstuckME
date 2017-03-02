@@ -156,22 +156,19 @@ CREATE PROC [dbo].[InitialStickerPull]
 	@InUserID		INT
 )
 AS
-	BEGIN 
-		IF (NOT EXISTS (SELECT UserID FROM UserProfile WHERE UserID = @InUserID))
-			SELECT NULL;
-		ELSE 
-		  BEGIN
-			SELECT DISTINCT Sticker.StickerID, ProblemDescription, Sticker.ClassID, ChatID, StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout FROM Sticker
-			JOIN Classes ON Sticker.ClassID = Classes.ClassID
-			JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
-			JOIN UserProfile ON UserToClass.UserID = UserProfile.UserID
-			JOIN OmToUser ON OmToUser.UserID = UserProfile.UserID
-			FULL JOIN StickerToMentor ON Sticker.StickerID = StickerToMentor.StickerID			
-			WHERE	(Sticker.TutorID IS NULL) 
-					AND UserProfile.UserID = 2 
-					AND UserProfile.AverageTutorRank > Sticker.MinimumStarRanking
-					AND Sticker.Timeout > GETDATE()
-		  END
+	BEGIN
+		SELECT DISTINCT Sticker.StickerID, ProblemDescription,b.AverageStudentRank as StudentRanking, Classes.CourseCode, Classes.CourseName, Classes.CourseNumber, Sticker.ClassID, ChatID, StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout FROM Sticker
+		JOIN Classes ON Sticker.ClassID = Classes.ClassID
+		JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
+		JOIN UserProfile as a ON UserToClass.UserID = a.UserID
+		JOIN UserProfile as b ON Sticker.StudentID = b.UserID
+		JOIN OmToUser ON OmToUser.UserID = a.UserID
+		FULL JOIN StickerToMentor ON Sticker.StickerID = StickerToMentor.StickerID			
+		WHERE	(Sticker.TutorID IS NULL) 
+				AND a.UserID = @InUserID
+				AND Sticker.StudentID != a.UserID
+				AND a.AverageTutorRank >= Sticker.MinimumStarRanking
+				AND Sticker.Timeout > GETDATE()
 	END
 GO
 

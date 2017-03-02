@@ -1128,13 +1128,13 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutorReviews_RankDESC_Result>("GetUserTutorReviews_RankDESC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> InitialStickerPull(Nullable<int> inUserID)
+        public virtual ObjectResult<InitialStickerPull_Result> InitialStickerPull(Nullable<int> inUserID)
         {
             var inUserIDParameter = inUserID.HasValue ?
                 new ObjectParameter("InUserID", inUserID) :
                 new ObjectParameter("InUserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InitialStickerPull", inUserIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InitialStickerPull_Result>("InitialStickerPull", inUserIDParameter);
         }
     
         public virtual int InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<bool> isFile, Nullable<int> userID)

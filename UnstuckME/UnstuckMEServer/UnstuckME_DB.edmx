@@ -1668,7 +1668,7 @@
             <Parameter Name="endrow" Mode="In" Type="Int16" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="InitialStickerPull" ReturnType="Collection(Int32)">
+          <FunctionImport Name="InitialStickerPull" ReturnType="Collection(UnstuckME_DBModel.InitialStickerPull_Result)">
             <Parameter Name="InUserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertMessage">
@@ -2187,6 +2187,21 @@
           <Property Type="Int32" Name="ReviewerID" Nullable="false" />
           <Property Type="Double" Name="StarRanking" Nullable="true" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="InitialStickerPull_Result">
+          <Property Type="Int32" Name="StickerID" Nullable="true" />
+          <Property Type="String" Name="ProblemDescription" Nullable="true" MaxLength="500" />
+          <Property Type="Double" Name="StudentRanking" Nullable="true" />
+          <Property Type="String" Name="CourseCode" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="CourseName" Nullable="true" MaxLength="100" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="true" />
+          <Property Type="Int32" Name="ClassID" Nullable="true" />
+          <Property Type="Int32" Name="ChatID" Nullable="true" />
+          <Property Type="Int32" Name="StudentID" Nullable="true" />
+          <Property Type="Int32" Name="TutorID" Nullable="true" />
+          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2947,7 +2962,25 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InitialStickerPull" FunctionName="UnstuckME_DBModel.Store.InitialStickerPull" />
+          <FunctionImportMapping FunctionImportName="InitialStickerPull" FunctionName="UnstuckME_DBModel.Store.InitialStickerPull">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.InitialStickerPull_Result">
+                <ScalarProperty Name="StickerID" ColumnName="StickerID" />
+                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
+                <ScalarProperty Name="StudentRanking" ColumnName="StudentRanking" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertMessage" FunctionName="UnstuckME_DBModel.Store.InsertMessage" />
           <FunctionImportMapping FunctionImportName="InsertStudentIntoClass" FunctionName="UnstuckME_DBModel.Store.InsertStudentIntoClass" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoChat" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoChat" />

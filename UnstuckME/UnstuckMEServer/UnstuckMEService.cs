@@ -944,58 +944,52 @@ namespace UnstuckMEInterfaces
             //    Console.WriteLine("SubmitSticker Error: " + ex.Message);
             //    return;
             //}
-            ObjectResult<int?> stickerID;
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            try
             {
-                stickerID = db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout);
-                Console.WriteLine("StickerID: " + stickerID);
-				if (newSticker.AttachedOrganizations.Count != 0)
-				{
-					foreach (int orgID in newSticker.AttachedOrganizations)
-						db.AddOrgToSticker(stickerID.First(), orgID);
-				}
-			}
 
-            System.Data.DataTable UserProfile = new System.Data.DataTable("UserProfile");
-            UserProfile.Columns.Add("DisplayFName", typeof(string));
-            UserProfile.Columns.Add("DisplayLName", typeof(string));
-            UserProfile.Columns.Add("EmailAddress", typeof(string));
-            UserProfile.Columns.Add("UserPassword", typeof(string));
-            UserProfile.Columns.Add("AverageStudentRank", typeof(float));
-            UserProfile.Columns.Add("AverageTutorRank", typeof(float));
-            UserProfile.Columns.Add("TotalReviews", typeof(int));
-            UserProfile.Columns.Add("TotalStudentReviews", typeof(int));
-            UserProfile.Columns.Add("Privileges", typeof(int));
-            UserProfile.Columns.Add("Salt", typeof(string));
-
-            UserProfile.Rows.Add("Billy", "Bob", "BillyBob@oit.edu", "Password", 3.4, 3.4, 10, 10, 1, "Salty");
-
-            using (UnstuckME_DBEntities bb = new UnstuckME_DBEntities())
-            {
-                var stickerInfo = from b in bb.Stickers
-                                  where b.StudentID == newSticker.StudentID
-                                  join a in bb.UserProfiles on b.StudentID equals a.UserID
-                                  join c in bb.Classes on b.ClassID equals c.ClassID
-                                  select new { a, b, c };
-                foreach (var item in stickerInfo)
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    if (item.b.ClassID == newSticker.ClassID)
+                    var stickerID = db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout).First();
+                    //Console.WriteLine("StickerID: " + stickerID.First().Value);
+                    if (newSticker.AttachedOrganizations.Count != 0)
                     {
-                        UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
-                        temp.ClassID = newSticker.ClassID;
-                        temp.CourseCode = item.c.CourseCode;
-                        temp.CourseName = item.c.CourseName;
-                        temp.CourseNumber = item.c.CourseNumber;
-                        temp.ProblemDescription = newSticker.ProblemDescription;
-                        temp.StickerID = item.b.StickerID;
-                        temp.StudentID = newSticker.StudentID;
-                        temp.StudentRanking = item.a.AverageStudentRank;
-                        temp.Timeout = item.b.Timeout;
-                        SendStickerToClients(temp);
+                        foreach (int orgID in newSticker.AttachedOrganizations)
+                            db.AddOrgToSticker(stickerID.Value, orgID);
                     }
                 }
+
+                using (UnstuckME_DBEntities bb = new UnstuckME_DBEntities())
+                {
+                    var stickerInfo = from b in bb.Stickers
+                                      where b.StudentID == newSticker.StudentID
+                                      join a in bb.UserProfiles on b.StudentID equals a.UserID
+                                      join c in bb.Classes on b.ClassID equals c.ClassID
+                                      select new { a, b, c };
+                    foreach (var item in stickerInfo)
+                    {
+                        if (item.b.ClassID == newSticker.ClassID)
+                        {
+                            UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
+                            temp.ClassID = newSticker.ClassID;
+                            temp.CourseCode = item.c.CourseCode;
+                            temp.CourseName = item.c.CourseName;
+                            temp.CourseNumber = item.c.CourseNumber;
+                            temp.ProblemDescription = newSticker.ProblemDescription;
+                            temp.StickerID = item.b.StickerID;
+                            temp.StudentID = newSticker.StudentID;
+                            temp.StudentRanking = item.a.AverageStudentRank;
+                            temp.Timeout = item.b.Timeout;
+                            SendStickerToClients(temp);
+                        }
+                    }
+                }
+                return 0;
             }
-            return stickerID.First().Value;
+            catch(Exception ex)
+            {
+                Console.WriteLine("Sticker Submit Error: " + ex.Message);
+                return -1;
+            }
         }
 
         public void SendStickerToClients(UnstuckMEAvailableSticker inSticker)
@@ -1684,35 +1678,20 @@ namespace UnstuckMEInterfaces
                 List<UnstuckMEAvailableSticker> stickerList = new List<UnstuckMEAvailableSticker>();
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var dbStickers = from a in db.Stickers
-                                     where (a.StudentID != userID) && (a.MinimumStarRanking <= (from b in db.UserProfiles where b.UserID == userID select b.AverageTutorRank).FirstOrDefault()) && a.TutorID == null
-                                     join c in db.Classes on a.ClassID equals c.ClassID
-                                     join d in db.UserProfiles on a.StudentID equals d.UserID
-                                     select new
-                                     {
-                                         StickerID = a.StickerID,
-                                         StickerTimeout = a.Timeout,
-                                         ProblemDescription = a.ProblemDescription,
-                                         StudentID = a.StudentID,
-                                         StudentRanking = d.AverageStudentRank,
-                                         ClassID = c.ClassID,
-                                         CourseCode = c.CourseCode,
-                                         CourseName = c.CourseName,
-                                         CourseNumber = c.CourseNumber,
-                                     };
+                    var dbStickers = db.InitialStickerPull(userID);
 
                     foreach (var sticker in dbStickers)
                     {
                         UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
-                        temp.ClassID = sticker.ClassID;
+                        temp.ClassID = sticker.ClassID.Value; 
                         temp.CourseCode = sticker.CourseCode;
                         temp.CourseName = sticker.CourseName;
-                        temp.CourseNumber = sticker.CourseNumber;
+                        temp.CourseNumber = sticker.CourseNumber.Value;
                         temp.ProblemDescription = sticker.ProblemDescription;
-                        temp.StickerID = sticker.StickerID;
-                        temp.StudentID = sticker.StudentID;
-                        temp.StudentRanking = sticker.StudentRanking;
-                        temp.Timeout = sticker.StickerTimeout;
+                        temp.StickerID = sticker.StickerID.Value;
+                        temp.StudentID = sticker.StudentID.Value;
+                        temp.StudentRanking = sticker.StudentRanking.Value;
+                        temp.Timeout = sticker.Timeout.Value;
                         stickerList.Add(temp);
                     }
 
