@@ -27,8 +27,8 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public static IUnstuckMEService Server;
-        private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
+        //public static IUnstuckMEService Server;
+        //private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
         private static List<UnstuckMESchool> schools;
         private string m_SchoolName = null;
         private string m_orginalSchoolName = null;
@@ -73,8 +73,8 @@ namespace UnstuckMEUserGUI
 
         private async void Window_ContentRendered(object sender, EventArgs e)
         {
-            _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-            Server = _channelFactory.CreateChannel();
+            UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+            UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
             schools = await LoadSchoolsAsync();
             foreach (UnstuckMESchool school in schools)
             {
@@ -153,15 +153,15 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    UserInfo loggedInUser = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
-                    if (loggedInUser.EmailAddress.ToLower() != emailAttempt.ToLower())
+                    UnstuckME.User = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
+                    if (UnstuckME.User.EmailAddress.ToLower() != emailAttempt.ToLower())
                     {
                         _labelInvalidLogin.Content = "Invalid Username/Password";
                         throw new Exception();
                     }
                     else
                     {
-                        UnstuckMEWindow mainWindow = new UnstuckMEWindow(ref Server, ref loggedInUser);
+                        UnstuckMEWindow mainWindow = new UnstuckMEWindow();
                         mainWindow.Show();
                         this.Close();
                     }
@@ -175,9 +175,9 @@ namespace UnstuckMEUserGUI
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
                     try
                     {
-                        _channelFactory.Abort();
-                        _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-                        Server = _channelFactory.CreateChannel();
+                        UnstuckME.ChannelFactory.Abort();
+                        UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                        UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
                     }
                     catch (Exception exp2)
                     {
@@ -205,7 +205,7 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    temp = Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+                    temp = UnstuckME.Server.UserLoginAttempt(emailAttempt, passwordAttempt);
                 }
                 catch (Exception exp)
                 {
@@ -274,9 +274,9 @@ namespace UnstuckMEUserGUI
                     MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     try
                     {
-                        _channelFactory.Abort();
-                        _channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-                        Server = _channelFactory.CreateChannel();
+                        UnstuckME.ChannelFactory.Abort();
+                        UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                        UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
                     }
                     catch (Exception exp)
                     {
@@ -295,7 +295,7 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    temp = Server.CreateNewUser(textBoxCreateFirstName.Text, textBoxCreateLastName.Text, textBoxCreateEmailAddress.Text, passwordBoxCreate.Password);
+                    temp = UnstuckME.Server.CreateNewUser(textBoxCreateFirstName.Text, textBoxCreateLastName.Text, textBoxCreateEmailAddress.Text, passwordBoxCreate.Password);
             
                 }
                 catch (Exception exp)
@@ -314,7 +314,7 @@ namespace UnstuckMEUserGUI
             {
                 try
                 { 
-                    temp = Server.GetUserID(textBoxCreateEmailAddress.Text);
+                    temp = UnstuckME.Server.GetUserID(textBoxCreateEmailAddress.Text);
                 }
                 catch (Exception exp)
                 {
@@ -335,8 +335,8 @@ namespace UnstuckMEUserGUI
                 byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
                 try
                 {
-					//Server.SetProfilePicture(userID, file);
-					Server.SetProfilePicture(userID, avatar);
+                    //Server.SetProfilePicture(userID, file);
+                    UnstuckME.Server.SetProfilePicture(userID, avatar);
 				}
                 catch (Exception exp)
                 {

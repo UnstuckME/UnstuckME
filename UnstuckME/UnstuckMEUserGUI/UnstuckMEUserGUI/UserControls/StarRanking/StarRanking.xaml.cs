@@ -45,12 +45,12 @@ namespace UnstuckMEUserGUI
                         Image3.Source = BlueStar;
                         Image4.Source = BlueStar;
                         Image5.Source = BlueStar;
-                        Border1.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-                        Border2.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-                        Border3.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-                        Border4.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-                        Border5.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-                        BackGroundColor.Background = UnstuckMEWindow._UnstuckMEBlue;
+                        Border1.BorderBrush = UnstuckME.Blue;
+                        Border2.BorderBrush = UnstuckME.Blue;
+                        Border3.BorderBrush = UnstuckME.Blue;
+                        Border4.BorderBrush = UnstuckME.Blue;
+                        Border5.BorderBrush = UnstuckME.Blue;
+                        BackGroundColor.Background = UnstuckME.Blue;
                         break;
                     }
                 case BoxColor.Red:
@@ -60,12 +60,12 @@ namespace UnstuckMEUserGUI
                         Image3.Source = RedStar;
                         Image4.Source = RedStar;
                         Image5.Source = RedStar;
-                        Border1.BorderBrush = UnstuckMEWindow._UnstuckMERed;
-                        Border2.BorderBrush = UnstuckMEWindow._UnstuckMERed;
-                        Border3.BorderBrush = UnstuckMEWindow._UnstuckMERed;
-                        Border4.BorderBrush = UnstuckMEWindow._UnstuckMERed;
-                        Border5.BorderBrush = UnstuckMEWindow._UnstuckMERed;
-                        BackGroundColor.Background = UnstuckMEWindow._UnstuckMERed;
+                        Border1.BorderBrush = UnstuckME.Red;
+                        Border2.BorderBrush = UnstuckME.Red;
+                        Border3.BorderBrush = UnstuckME.Red;
+                        Border4.BorderBrush = UnstuckME.Red;
+                        Border5.BorderBrush = UnstuckME.Red;
+                        BackGroundColor.Background = UnstuckME.Red;
                         break;
                     }
                 case BoxColor.White:

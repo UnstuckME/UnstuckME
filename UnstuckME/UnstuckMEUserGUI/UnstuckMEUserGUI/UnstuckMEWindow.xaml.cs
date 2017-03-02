@@ -26,39 +26,28 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEWindow : Window
     {
-        public static IUnstuckMEService Server;
-        public static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
-        public static UserInfo User;
-        public static UnstuckMEPages _pages = new UnstuckMEPages();
         private static Privileges userPrivileges;
-        public UnstuckMEWindow thisWindow;
-        public static List<UnstuckMEChatUser> FriendsList;
 
-
-        public static Brush _UnstuckMEBlue;
-        public static Brush _UnstuckMERed;
-
-        public UnstuckMEWindow(ref IUnstuckMEService inServer, ref UserInfo inUser)
+        public UnstuckMEWindow()
         {
             InitializeComponent();
-            _UnstuckMERed = StickerButtonBorder.Background;
-            _UnstuckMEBlue = ChatButtonBorder.Background;
-            thisWindow = this;
-            Server = inServer;
-            User = inUser;
-            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, User.EmailAddress);
+            UnstuckME.Red = StickerButtonBorder.Background;
+            UnstuckME.Blue = ChatButtonBorder.Background;
+            UnstuckME.MainWindow = this;
+            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
         }
 
         async private void Window_ContentRendered(object sender, EventArgs e)
         {
-            _pages.StickerPage = new StickerPage();
-            _pages.SettingsPage = new SettingsPage();
-            _pages.ChatPage = new ChatPage(ref User, ref Server);
-            _pages.UserProfilePage = new UserProfilePage(this, Server, ref User);
-            _pages.ModeratorPage = new ModeratorPage();
-            _pages.AdminPage = new AdminPage(ref Server);
+            await Task.Factory.StartNew(() => InitializeStaticMembers());
+            UnstuckME.Pages.StickerPage = new StickerPage();
+            UnstuckME.Pages.SettingsPage = new SettingsPage();
+            UnstuckME.Pages.ChatPage = new ChatPage();
+            UnstuckME.Pages.UserProfilePage = new UserProfilePage();
+            UnstuckME.Pages.ModeratorPage = new ModeratorPage();
+            UnstuckME.Pages.AdminPage = new AdminPage();
 
-            userPrivileges = (Privileges)User.Privileges; //This Works But for Design Purposes is commented out.
+            userPrivileges = (Privileges)UnstuckME.User.Privileges; //This Works But for Design Purposes is commented out.
             //userPrivileges = Privileges.Admin; //This will be replaced with above line
 
             CheckAdminPrivledges(userPrivileges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
@@ -80,25 +69,32 @@ namespace UnstuckMEUserGUI
         }
 
         #region Asynchronous Loading Section
+
+        private void InitializeStaticMembers()
+        {
+            UnstuckME.ImageConverter = new ImageSourceConverter();
+            UnstuckME.Pages = new UnstuckMEPages();
+            UnstuckME.UserProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.User.UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
+        }
         private void LoadStickerPageAsync()
         {
             this.Dispatcher.Invoke(() =>
             {
-                _pages.StickerPage.AvailableStickers = Server.InitialAvailableStickerPull(User.UserID);
+                UnstuckME.Pages.StickerPage.AvailableStickers = UnstuckME.Server.InitialAvailableStickerPull(UnstuckME.User.UserID);
 
-                foreach (UnstuckMEAvailableSticker sticker in _pages.StickerPage.AvailableStickers)
+                foreach (UnstuckMEAvailableSticker sticker in UnstuckME.Pages.StickerPage.AvailableStickers)
                 {
-                    _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
+                    UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
                 }
-                _pages.StickerPage.MyStickersList = Server.GetUserSubmittedStickersASC(User.UserID, 0, 100, 0, null);
-                foreach (UnstuckMESticker sticker in _pages.StickerPage.MyStickersList)
+                UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickersASC(UnstuckME.User.UserID, 0, 100, 0, null);
+                foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.MyStickersList)
                 {
-                    _pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
+                    UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
                 }
-                _pages.StickerPage.OpenStickers = Server.GetUserTutoredStickersASC(User.UserID, 0, 100, 0, null);
-                foreach (UnstuckMESticker sticker in _pages.StickerPage.OpenStickers)
+                UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickersASC(UnstuckME.User.UserID, 0, 100, 0, null);
+                foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
                 {
-                    _pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
+                    UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
                 }
             });
         }
@@ -107,14 +103,14 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                _pages.ChatPage.allChats = Server.GetUserChats(User.UserID);
-                foreach (UnstuckMEChat chat in _pages.ChatPage.allChats)
+                UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
+                foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
                 {
-                    _pages.ChatPage.AddConversation(chat);
+                    UnstuckME.Pages.ChatPage.AddConversation(chat);
                 }
-                foreach (UnstuckMEChatUser user in FriendsList)
+                foreach (UnstuckMEChatUser user in UnstuckME.FriendsList)
                 {
-                    _pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversatoin(user));
+                    UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversatoin(user));
                 }
             });
         }
@@ -123,15 +119,14 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                ImageSourceConverter ic = new ImageSourceConverter();
-                _pages.UserProfilePage.ProfilePicture.Source = ic.ConvertFrom(User.UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
-                _pages.UserProfilePage.ImageEditProfilePicture.Source = _pages.UserProfilePage.ProfilePicture.Source;
-                _pages.UserProfilePage.FirstName.Text = User.FirstName;
-                _pages.UserProfilePage.LastName.Text = User.LastName;
-                _pages.UserProfilePage.EmailAddress.Text = User.EmailAddress;
-                _pages.UserProfilePage.SetStudentRating(User.AverageStudentRank);
-                _pages.UserProfilePage.SetTutorRating(User.AverageTutorRank);
-                _pages.UserProfilePage.RepopulateClasses();
+                UnstuckME.Pages.UserProfilePage.ProfilePicture.Source = UnstuckME.UserProfilePicture;  //convert image so it can be displayed
+                UnstuckME.Pages.UserProfilePage.ImageEditProfilePicture.Source = UnstuckME.UserProfilePicture;
+                UnstuckME.Pages.UserProfilePage.FirstName.Text = UnstuckME.User.FirstName;
+                UnstuckME.Pages.UserProfilePage.LastName.Text = UnstuckME.User.LastName;
+                UnstuckME.Pages.UserProfilePage.EmailAddress.Text = UnstuckME.User.EmailAddress;
+                UnstuckME.Pages.UserProfilePage.SetStudentRating(UnstuckME.User.AverageStudentRank);
+                UnstuckME.Pages.UserProfilePage.SetTutorRating(UnstuckME.User.AverageTutorRank);
+                UnstuckME.Pages.UserProfilePage.RepopulateClasses();
             });
         }
 
@@ -155,8 +150,8 @@ namespace UnstuckMEUserGUI
         {
             this.Dispatcher.Invoke(() =>
             {
-                FriendsList = Server.GetFriends(User.UserID);
-                foreach (UnstuckMEChatUser friend in FriendsList)
+                UnstuckME.FriendsList = UnstuckME.Server.GetFriends(UnstuckME.User.UserID);
+                foreach (UnstuckMEChatUser friend in UnstuckME.FriendsList)
                 {
                     OnlineUsersStack.Children.Add(new OnlineUser(friend));
                 }
@@ -222,45 +217,45 @@ namespace UnstuckMEUserGUI
         public void SwitchToChatTab()
         {
             MainFrame.NavigationService.RemoveBackEntry();
-            MainFrame.Navigate(_pages.ChatPage);
-            ChatButtonBorder.Background = _UnstuckMERed;
-            StickerButtonBorder.Background = _UnstuckMEBlue;
-            SettingButtonBorder.Background = _UnstuckMEBlue;
-            UserProfileButtonBorder.Background = _UnstuckMEBlue;
-            AdminButtonBorder.Background = _UnstuckMEBlue;
+            MainFrame.Navigate(UnstuckME.Pages.ChatPage);
+            ChatButtonBorder.Background = UnstuckME.Red;
+            StickerButtonBorder.Background = UnstuckME.Blue;
+            SettingButtonBorder.Background = UnstuckME.Blue;
+            UserProfileButtonBorder.Background = UnstuckME.Blue;
+            AdminButtonBorder.Background = UnstuckME.Blue;
             DisableStickerSubmit();
         }
         public void SwitchToStickerTab()
         {
             MainFrame.NavigationService.RemoveBackEntry();
-            MainFrame.Navigate(_pages.StickerPage);
-            ChatButtonBorder.Background = _UnstuckMEBlue;
-            StickerButtonBorder.Background = _UnstuckMERed;
-            SettingButtonBorder.Background = _UnstuckMEBlue;
-            UserProfileButtonBorder.Background = _UnstuckMEBlue;
-            AdminButtonBorder.Background = _UnstuckMEBlue;
+            MainFrame.Navigate(UnstuckME.Pages.StickerPage);
+            ChatButtonBorder.Background = UnstuckME.Blue;
+            StickerButtonBorder.Background = UnstuckME.Red;
+            SettingButtonBorder.Background = UnstuckME.Blue;
+            UserProfileButtonBorder.Background = UnstuckME.Blue;
+            AdminButtonBorder.Background = UnstuckME.Blue;
             EnableStickerSubmit();
         }
         public void SwitchToUserProfileTab()
         {
             MainFrame.NavigationService.RemoveBackEntry();
-            MainFrame.Navigate(_pages.UserProfilePage);
-            ChatButtonBorder.Background = _UnstuckMEBlue;
-            StickerButtonBorder.Background = _UnstuckMEBlue;
-            SettingButtonBorder.Background = _UnstuckMEBlue;
-            UserProfileButtonBorder.Background = _UnstuckMERed;
-            AdminButtonBorder.Background = _UnstuckMEBlue;
+            MainFrame.Navigate(UnstuckME.Pages.UserProfilePage);
+            ChatButtonBorder.Background = UnstuckME.Blue;
+            StickerButtonBorder.Background = UnstuckME.Blue;
+            SettingButtonBorder.Background = UnstuckME.Blue;
+            UserProfileButtonBorder.Background = UnstuckME.Red;
+            AdminButtonBorder.Background = UnstuckME.Blue;
             DisableStickerSubmit();
         }
         public void SwitchToSettingsTab()
         {
             MainFrame.NavigationService.RemoveBackEntry();
-            MainFrame.Navigate(_pages.SettingsPage);
-            ChatButtonBorder.Background = _UnstuckMEBlue;
-            StickerButtonBorder.Background = _UnstuckMEBlue;
-            SettingButtonBorder.Background = _UnstuckMERed;
-            UserProfileButtonBorder.Background = _UnstuckMEBlue;
-            AdminButtonBorder.Background = _UnstuckMEBlue;
+            MainFrame.Navigate(UnstuckME.Pages.SettingsPage);
+            ChatButtonBorder.Background = UnstuckME.Blue;
+            StickerButtonBorder.Background = UnstuckME.Blue;
+            SettingButtonBorder.Background = UnstuckME.Red;
+            UserProfileButtonBorder.Background = UnstuckME.Blue;
+            AdminButtonBorder.Background = UnstuckME.Blue;
             DisableStickerSubmit();
         }
         public void SwitchToAdminTab(Privileges inPriviledges)
@@ -269,12 +264,12 @@ namespace UnstuckMEUserGUI
             {
                 case Privileges.Admin: //Admin
                     {
-                        MainFrame.Navigate(_pages.AdminPage);
+                        MainFrame.Navigate(UnstuckME.Pages.AdminPage);
                         break;
                     }
                 case Privileges.Moderator: //Moderator
                     {
-                        MainFrame.Navigate(_pages.ModeratorPage);
+                        MainFrame.Navigate(UnstuckME.Pages.ModeratorPage);
                         break;
                     }
                 default: //In case someone figures out a way to make admin button show
@@ -283,11 +278,11 @@ namespace UnstuckMEUserGUI
                         return;
                     }
             }
-            ChatButtonBorder.Background = _UnstuckMEBlue;
-            StickerButtonBorder.Background = _UnstuckMEBlue;
-            SettingButtonBorder.Background = _UnstuckMEBlue;
-            UserProfileButtonBorder.Background = _UnstuckMEBlue;
-            AdminButtonBorder.Background = _UnstuckMERed;
+            ChatButtonBorder.Background = UnstuckME.Blue;
+            StickerButtonBorder.Background = UnstuckME.Blue;
+            SettingButtonBorder.Background = UnstuckME.Blue;
+            UserProfileButtonBorder.Background = UnstuckME.Blue;
+            AdminButtonBorder.Background = UnstuckME.Red;
             DisableStickerSubmit();
         }
 
@@ -304,20 +299,20 @@ namespace UnstuckMEUserGUI
 
         private void CreateStickerButton_Click(object sender, RoutedEventArgs e)
         {
-            StickerCreationWindow window = new StickerCreationWindow(ref Server, ref User, this);
+            StickerCreationWindow window = new StickerCreationWindow();
             window.ShowDialog();
         }
 
         public void AddStickerToMyStickers(UnstuckMESticker inSticker)
         {
-            _pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(inSticker));
+            UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(inSticker));
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, User.EmailAddress);
+            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, UnstuckME.User.EmailAddress);
             try
             {
-                Server.Logout();
+                UnstuckME.Server.Logout();
             }
             catch (Exception)
             { /*This is empty because we don't want the program to break but we also don't want to catch this exception*/ }
@@ -325,10 +320,10 @@ namespace UnstuckMEUserGUI
 
         public void RecieveChatMessage(UnstuckMEMessage message)
         {
-            _pages.ChatPage.AddMessage(message);
-            if ((_pages.ChatPage.currentChat.ChatID != message.ChatID) || (MainFrame.Content != _pages.ChatPage))
+            UnstuckME.Pages.ChatPage.AddMessage(message);
+            if ((UnstuckME.CurrentChatSession.ChatID != message.ChatID) || (MainFrame.Content != UnstuckME.Pages.ChatPage))
             {
-                NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref _pages, this));
+                NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref UnstuckME.Pages, this));
             }
         }
 
@@ -339,10 +334,10 @@ namespace UnstuckMEUserGUI
         /// <param name="file"></param>
         public void RecieveChatFile(UnstuckMEMessage message, UnstuckMEFile file)
         {
-            if ((_pages.ChatPage.currentChat.ChatID != message.ChatID) || (MainFrame.Content != _pages.ChatPage))
+            if ((UnstuckME.CurrentChatSession.ChatID != message.ChatID) || (MainFrame.Content != UnstuckME.Pages.ChatPage))
             {
-                _pages.ChatPage.AddMessage(message, file);
-                NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref _pages, this));
+                UnstuckME.Pages.ChatPage.AddMessage(message, file);
+                NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref UnstuckME.Pages, this));
             }
         }
 
@@ -352,8 +347,8 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    ClassDisplay temp = new ClassDisplay(_pages.UserProfilePage.BottomLeftStack, User.UserID, Server, inClass.CourseCode, inClass.CourseNumber, inClass.CourseCode + " " + inClass.CourseNumber + " " + inClass.CourseName, inClass.ClassID);
-                    _pages.UserProfilePage.BottomLeftStack.Children.Add(temp);
+                    ClassDisplay temp = new ClassDisplay(inClass);
+                    UnstuckME.Pages.UserProfilePage.BottomLeftStack.Children.Add(temp);
 
                 }
                 catch (Exception)
@@ -369,8 +364,8 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    _pages.StickerPage.AvailableStickers.Add(sticker);
-                    _pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
+                    UnstuckME.Pages.StickerPage.AvailableStickers.Add(sticker);
+                    UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
                     //NotificationStack.Children.Add(new AvailableStickerNotification(sticker));  This looks gross currently so I'm not going to use it.
                 }
                 catch (Exception)
@@ -387,7 +382,7 @@ namespace UnstuckMEUserGUI
                 try
                 {
                     AvailableSticker temp = null;
-                    foreach (var control in _pages.StickerPage.StackPanelAvailableStickers.Children.OfType<AvailableSticker>())
+                    foreach (var control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.OfType<AvailableSticker>())
                     {
                         if (control.Sticker.StickerID == stickerID)
                         {
@@ -396,7 +391,7 @@ namespace UnstuckMEUserGUI
                     }
                     if (temp != null)
                     {
-                        _pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
+                        UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
                     }
                 }
                 catch (Exception)
@@ -412,7 +407,7 @@ namespace UnstuckMEUserGUI
             {
                 int PreExistingChatID = -1;
                 //Search For Pre-Existing Conversation
-                foreach (UnstuckMEChat chat in _pages.ChatPage.allChats)
+                foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
                 {
                     bool studentFound = false;
                     bool tutorFound = false;
@@ -434,21 +429,21 @@ namespace UnstuckMEUserGUI
                 if (PreExistingChatID == -1)
                 {
                     //Chat Not Found. Creating a new one.
-                    PreExistingChatID = Server.CreateChat(User.UserID);
-                    Server.InsertUserIntoChat(sticker.StudentID, PreExistingChatID);
+                    PreExistingChatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
+                    UnstuckME.Server.InsertUserIntoChat(sticker.StudentID, PreExistingChatID);
                 }
                 UnstuckMEMessage temp = new UnstuckMEMessage();
                 temp.ChatID = PreExistingChatID;
                 temp.FilePath = string.Empty;
                 temp.IsFile = false;
-                temp.Message = User.FirstName + " " + User.LastName + " has accepted a sticker you submitted!";
+                temp.Message = UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " has accepted a sticker you submitted!";
                 temp.MessageID = 0;
-                temp.SenderID = User.UserID;
-                temp.Username = User.FirstName;
+                temp.SenderID = UnstuckME.User.UserID;
+                temp.Username = UnstuckME.User.FirstName;
                 temp.UsersInConvo = new List<int>();
-                temp.UsersInConvo.Add(User.UserID);
+                temp.UsersInConvo.Add(UnstuckME.User.UserID);
                 temp.UsersInConvo.Add(sticker.StudentID);
-                Server.SendMessage(temp);
+                UnstuckME.Server.SendMessage(temp);
                 temp.Message = "Your have accepted a Sticker!";
                 UnstuckMESticker tempSticker = new UnstuckMESticker();
                 tempSticker.ChatID = PreExistingChatID;
@@ -458,12 +453,12 @@ namespace UnstuckMEUserGUI
                 tempSticker.StickerID = sticker.StickerID;
                 tempSticker.StudentID = sticker.StudentID;
                 tempSticker.Timeout = Convert.ToInt32((DateTime.Now - sticker.Timeout).TotalSeconds);
-                tempSticker.TutorID = User.UserID;
-                _pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(tempSticker));
-                _pages.ChatPage.AddMessage(temp);
+                tempSticker.TutorID = UnstuckME.User.UserID;
+                UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(tempSticker));
+                UnstuckME.Pages.ChatPage.AddMessage(temp);
                 SwitchToChatTab();
-                _pages.ChatPage.ButtonAddUserDone_Click(null, null);
-                foreach (Conversation convo in _pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+                UnstuckME.Pages.ChatPage.ButtonAddUserDone_Click(null, null);
+                foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
                 {
                     if (convo.Chat.ChatID == PreExistingChatID)
                     {
@@ -480,12 +475,12 @@ namespace UnstuckMEUserGUI
 
         private void ButtonLogout_MouseLeave(object sender, MouseEventArgs e)
         {
-            ButtonLogout.Background = _UnstuckMERed;
+            ButtonLogout.Background = UnstuckME.Red;
         }
 
         private void ButtonLogout_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Server.Logout();
+            UnstuckME.Server.Logout();
             string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
             Process.Start(unstuckME);
             System.Windows.Application.Current.Shutdown();

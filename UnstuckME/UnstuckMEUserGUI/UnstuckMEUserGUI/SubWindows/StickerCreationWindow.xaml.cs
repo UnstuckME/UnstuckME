@@ -32,9 +32,6 @@ namespace UnstuckMEUserGUI
                 return Text;
             }
         }
-        public static IUnstuckMEService Server;
-        public static UserInfo User;
-        public UnstuckMEWindow window;
 
         List<int> hourList = new List<int>();
         List<string> minutesList = new List<string>();
@@ -42,13 +39,9 @@ namespace UnstuckMEUserGUI
         List<string> coursenumberList = new List<string>();
         List<string> courseNameList = new List<string>();
         List<Organization> orgList;
-        public StickerCreationWindow(ref IUnstuckMEService inServer, ref UserInfo inUser, UnstuckMEWindow inWindow)
+        public StickerCreationWindow()
         {
             InitializeComponent();
-
-            Server = inServer;
-            User = inUser;
-            window = inWindow;
             LoadDataIntoComboBoxes();
         }
 
@@ -129,7 +122,7 @@ namespace UnstuckMEUserGUI
                     temp.Timeout = totalSeconds;
                     temp.MinimumStarRanking = (float)sliderRating.Value;
                     temp.ProblemDescription = ProblemDescription.Text;
-                    temp.StudentID = User.UserID;
+                    temp.StudentID = UnstuckME.User.UserID;
 
                     temp.AttachedOrganizations = new List<int>();
                     //Gets any filtered organizations.
@@ -140,7 +133,7 @@ namespace UnstuckMEUserGUI
 
                     try
                     { 
-                        temp.ClassID = Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
+                        temp.ClassID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
                     }
                     catch (Exception exp)
                     {
@@ -149,8 +142,8 @@ namespace UnstuckMEUserGUI
                     }
                     try
                     { 
-                        Server.SubmitSticker(temp);
-                        window.AddStickerToMyStickers(temp);
+                        UnstuckME.Server.SubmitSticker(temp);
+                        UnstuckME.MainWindow.AddStickerToMyStickers(temp);
                     }
                     catch (Exception exp)
                     {
@@ -191,8 +184,8 @@ namespace UnstuckMEUserGUI
 
             try
             {
-                coursenumberList = Server.GetCourseCodes();
-                orgList = Server.GetAllOrganizations();
+                coursenumberList = UnstuckME.Server.GetCourseCodes();
+                orgList = UnstuckME.Server.GetAllOrganizations();
             }
             catch (Exception exp)
             {
@@ -235,7 +228,7 @@ namespace UnstuckMEUserGUI
             {
                 try
                 { 
-                    courseNameList = Server.GetCourseNumbersByCourseCode(ComboBoxCourseNumber.SelectedValue as string);
+                    courseNameList = UnstuckME.Server.GetCourseNumbersByCourseCode(ComboBoxCourseNumber.SelectedValue as string);
                     courseNameList.Insert(0, "(Select Class)");
                 }
                 catch (Exception exp)

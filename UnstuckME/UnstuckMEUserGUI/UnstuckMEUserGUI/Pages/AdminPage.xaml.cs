@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckMEInterfaces;
+using UnstuckMEUserGUI.SubWindows;
 
 namespace UnstuckMEUserGUI
 {
@@ -21,10 +22,9 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class AdminPage : Page
     {
-        IUnstuckMEService Server;
-        public AdminPage(ref IUnstuckMEService inServer)
+
+        public AdminPage()
         {
-            Server = inServer;
             InitializeComponent();
         }
 
@@ -35,7 +35,7 @@ namespace UnstuckMEUserGUI
 
         private void AddRemoveUserRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            Window win = new SubWindows.AddUserRoleWindow(ref Server);
+            AddUserRoleWindow win = new AddUserRoleWindow();
             win.Show();
         }
     }

@@ -29,8 +29,8 @@ namespace UnstuckMEUserGUI
             LabelUserName.Content = Friend.UserName;
             if(Friend.ProfilePicture == null)
             {
-                UnstuckMEWindow.Server.GetProfilePicture(Friend.UserID);
-                Friend.ProfilePicture = UnstuckMEWindow._pages.ChatPage.ic.ConvertFrom(UnstuckMEWindow.Server.GetProfilePicture(Friend.UserID)) as ImageSource;
+                UnstuckME.Server.GetProfilePicture(Friend.UserID);
+                Friend.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(Friend.UserID)) as ImageSource;
             }
             ImageUser.Source = Friend.ProfilePicture;
         }

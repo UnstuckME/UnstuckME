@@ -27,7 +27,7 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             Sticker = inSticker;
-            Class = UnstuckMEWindow.Server.GetSingleClass(Sticker.ClassID);
+            Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
             LabelDescription.Content = Sticker.ProblemDescription;
             LabelTimeout.Content = "Timeout: " + DateTime.Now.AddSeconds(Sticker.Timeout).ToLongDateString() + " " + DateTime.Now.AddSeconds(Sticker.Timeout).ToShortTimeString();
@@ -40,7 +40,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonRemove_MouseLeave(object sender, MouseEventArgs e)
         {
-            ButtonRemove.Background = UnstuckMEWindow._UnstuckMERed;
+            ButtonRemove.Background = UnstuckME.Red;
         }
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

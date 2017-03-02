@@ -75,6 +75,7 @@
     <Compile Include="SubWindows\AddUserRoleWindow.xaml.cs">
       <DependentUpon>AddUserRoleWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UnstuckME.cs" />
     <Compile Include="UserControls\Stickers\OpenSticker.xaml.cs">
       <DependentUpon>OpenSticker.xaml</DependentUpon>
     </Compile>

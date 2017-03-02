@@ -52,14 +52,14 @@ namespace UnstuckMEUserGUI
         private void ButtonAddContact_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelInvalidUser.Visibility = Visibility.Hidden;
-            if(UnstuckMEWindow.Server.IsValidUser(TextBoxUsername.Text))
+            if(UnstuckME.Server.IsValidUser(TextBoxUsername.Text))
             {
                 UnstuckMEChatUser temp = new UnstuckMEChatUser();
-                temp.UserID = UnstuckMEWindow.Server.GetUserID(TextBoxUsername.Text);
-                temp.ProfilePicture = UnstuckMEWindow._pages.ChatPage.ic.ConvertFrom(UnstuckMEWindow.Server.GetProfilePicture(temp.UserID)) as ImageSource;
-                temp.UserName = UnstuckMEWindow.Server.GetUserDisplayName(temp.UserID);
-                UnstuckMEWindow.Server.AddFriend(UnstuckMEWindow.User.UserID, temp.UserID);
-                UnstuckMEWindow.FriendsList.Add(temp);
+                temp.UserID = UnstuckME.Server.GetUserID(TextBoxUsername.Text);
+                temp.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(temp.UserID)) as ImageSource;
+                temp.UserName = UnstuckME.Server.GetUserDisplayName(temp.UserID);
+                UnstuckME.Server.AddFriend(UnstuckME.User.UserID, temp.UserID);
+                UnstuckME.FriendsList.Add(temp);
                 Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().AddUserToContactsStack(temp);
                 TextBoxUsername.Text = string.Empty;
                 Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().Focus();

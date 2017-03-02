@@ -22,15 +22,13 @@ namespace UnstuckMEUserGUI.SubWindows
     /// </summary>
     public partial class AddUserRoleWindow : Window
     {
-        IUnstuckMEService Server;
         bool isUser = false;
         bool isModerator = false;
         bool isAdmin = false;
         UserInfo targetUser;
         int userId = -1;
-        public AddUserRoleWindow(ref IUnstuckMEService server)
+        public AddUserRoleWindow()
         {
-            Server = server;
             InitializeComponent();
         }
 
@@ -38,15 +36,15 @@ namespace UnstuckMEUserGUI.SubWindows
         {
             if (isUser)
             {
-                Server.SetUserPrivileges(Privileges.User, userId);
+                UnstuckME.Server.SetUserPrivileges(Privileges.User, userId);
             }
             else if (isModerator)
             {
-                Server.SetUserPrivileges(Privileges.Moderator, userId);
+                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userId);
             }
             else if (isAdmin)
             {
-                Server.SetUserPrivileges(Privileges.Admin, userId);
+                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userId);
             }
         }
 
@@ -54,7 +52,7 @@ namespace UnstuckMEUserGUI.SubWindows
         {
             try
             {
-                userId = Server.GetUserID(UserEmailTxtBx.Text);
+                userId = UnstuckME.Server.GetUserID(UserEmailTxtBx.Text);
             }
             catch (Exception ex)
             {
@@ -62,7 +60,7 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             if (userId != -1)
             {
-                targetUser = Server.GetUserInfo(userId, UserEmailTxtBx.Text);
+                targetUser = UnstuckME.Server.GetUserInfo(userId, UserEmailTxtBx.Text);
                 if (targetUser.Privileges == (int)Privileges.User)
                 {
                     isUser = true;

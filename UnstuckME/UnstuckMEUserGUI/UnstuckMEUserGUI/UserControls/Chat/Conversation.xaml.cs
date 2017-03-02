@@ -23,16 +23,12 @@ namespace UnstuckMEUserGUI
     public partial class Conversation : UserControl
     {
         public UnstuckMEChat Chat;
-        public ChatPage _ChatPage;
-        public static IUnstuckMEService Server;
-        public Conversation(UnstuckMEChat inChat, ChatPage inChatPage, ref IUnstuckMEService inServer)
+        public Conversation(UnstuckMEChat inChat)
         {
             InitializeComponent();
             Chat = inChat;
-            _ChatPage = inChatPage;
-            Server = inServer;
             var test = from a in inChat.Users
-                       where a.UserID != _ChatPage.User.UserID
+                       where a.UserID != UnstuckME.User.UserID
                        select new { ConversationName = a.UserName };
             if (test.Count() == 0)
             {
@@ -52,9 +48,9 @@ namespace UnstuckMEUserGUI
             {
                 foreach (UnstuckMEChatUser user in Chat.Users)
                 {
-                    if(user.UserID != _ChatPage.User.UserID)
+                    if(user.UserID != UnstuckME.User.UserID)
                     {
-                       ConversationImage.Source =  _ChatPage.ic.ConvertFrom(Server.GetProfilePicture(user.UserID)) as ImageSource;
+                       ConversationImage.Source =  UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(user.UserID)) as ImageSource;
                     }
                 }
                 ConversationLabel.Content = test.First().ConversationName;
@@ -78,31 +74,31 @@ namespace UnstuckMEUserGUI
 
         public void ConversationUserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _ChatPage.ButtonAddUserToConvo.Visibility = Visibility.Visible;
-            _ChatPage.ButtonAddUserToConvo.IsEnabled = true;
-            _ChatPage.LabelConversationName.Content = ConversationLabel.Content;
+            UnstuckME.Pages.ChatPage.ButtonAddUserToConvo.Visibility = Visibility.Visible;
+            UnstuckME.Pages.ChatPage.ButtonAddUserToConvo.IsEnabled = true;
+            UnstuckME.Pages.ChatPage.LabelConversationName.Content = ConversationLabel.Content;
             foreach (UnstuckMEChatUser user in Chat.Users)
             {
                 if(user.ProfilePicture == null)
                 {
-                    if(user.UserID == _ChatPage.User.UserID)
+                    if(user.UserID == UnstuckME.User.UserID)
                     {
-                        user.ProfilePicture = _ChatPage.UserImage;
+                        user.ProfilePicture = UnstuckME.UserProfilePicture;
                     }
                     else
                     {
-                        user.ProfilePicture = _ChatPage.ic.ConvertFrom(Server.GetProfilePicture(user.UserID)) as ImageSource;
+                        user.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(user.UserID)) as ImageSource;
                     }
                 }
             }
-            _ChatPage.currentChat = Chat;
-            _ChatPage.StackPanelMessages.Children.Clear();
+            UnstuckME.CurrentChatSession = Chat;
+            UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Clear();
             foreach (UnstuckMEMessage message in Chat.Messages)
             {
                 UnstuckMEGUIChatMessage guiMessage = new UnstuckMEGUIChatMessage(message, Chat);
-                _ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
+                UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
             }
-            _ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
+            UnstuckME.Pages.ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
         }
     }
 }

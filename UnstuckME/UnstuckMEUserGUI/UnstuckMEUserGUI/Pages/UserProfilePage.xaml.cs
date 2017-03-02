@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
+using UnstuckMEUserGUI.SubWindows;
 
 namespace UnstuckMEUserGUI
 {
@@ -29,33 +30,31 @@ namespace UnstuckMEUserGUI
     {
         private static StarRanking studentRanking;
         private static StarRanking tutorRanking;
-        public static UnstuckMEWindow CurrentWindow;
-        public static IUnstuckMEService Server;
-        UserInfo UsersInfo;
-        public UserProfilePage(UnstuckMEWindow inWindow, IUnstuckMEService inServer, ref UserInfo info)
+
+        //public static IUnstuckMEService Server;
+        public UserProfilePage()
         {
             InitializeComponent();
-            Server = inServer;
+
             studentRanking = new StarRanking(StarRanking.BoxColor.Gray);
             tutorRanking = new StarRanking(StarRanking.BoxColor.Gray);
             RatingsStack.Children.Add(studentRanking);
             RatingsStack.Children.Add(tutorRanking);
             //RepopulateClasses(); Added this to asynchronous load in UnstuckMEWindow.
-            UsersInfo = info;
 
-            TextBoxNewFirstName.Text = UsersInfo.FirstName;
-            TextBoxNewLastName.Text = UsersInfo.LastName;
+            TextBoxNewFirstName.Text = UnstuckME.User.FirstName;
+            TextBoxNewLastName.Text = UnstuckME.User.LastName;
 
         }
         public void RepopulateClasses()
         {
             BottomLeftStack.Children.Clear();
-            List<UserClass> classes = UnstuckMEWindow.Server.GetUserClasses(UnstuckMEWindow.User.UserID);
+            List<UserClass> classes = UnstuckME.Server.GetUserClasses(UnstuckME.User.UserID);
             foreach (UserClass C in classes)
             {
                 //change GetUserClasses in future to return ClassID as well
-                int ID = UnstuckMEWindow.Server.GetCourseIdNumberByCodeAndNumber(C.CourseCode, C.CourseNumber.ToString());
-                ClassDisplay usersClass = new ClassDisplay(BottomLeftStack, UnstuckMEWindow.User.UserID, UnstuckMEWindow.Server, C.CourseCode, C.CourseNumber, C.CourseName, ID);
+                int ID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(C.CourseCode, C.CourseNumber.ToString());
+                ClassDisplay usersClass = new ClassDisplay(C);
                 BottomLeftStack.Children.Add(usersClass);
             }
             //CourseCodeComboBox.SelectedIndex = 0;
@@ -75,7 +74,7 @@ namespace UnstuckMEUserGUI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Window w = new SubWindows.AddClassWindow(ref UnstuckMEWindow.Server, ref UnstuckMEWindow.User);
+            AddClassWindow w = new AddClassWindow();
             w.Show();
         }
 
@@ -86,7 +85,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonEditProfile_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            ButtonEditProfile.Background = UnstuckMEWindow._UnstuckMEBlue;
+            ButtonEditProfile.Background = UnstuckME.Blue;
         }
 
         private void ButtonEditProfile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -99,7 +98,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonBrowseProfilePicture_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            ButtonBrowseProfilePicture.Background = UnstuckMEWindow._UnstuckMEBlue;
+            ButtonBrowseProfilePicture.Background = UnstuckME.Blue;
         }
 
         private void ButtonBrowseProfilePicture_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -145,13 +144,13 @@ namespace UnstuckMEUserGUI
 					}
 
 					ProfilePicture.Source = ImageEditProfilePicture.Source;
-					Server.SetProfilePicture(UnstuckMEWindow.User.UserID, byte_array);
-                    foreach (UnstuckMEChat chat in UnstuckMEWindow._pages.ChatPage.allChats)
+					UnstuckME.Server.SetProfilePicture(UnstuckME.User.UserID, byte_array);
+                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
 
                     {
                         foreach (UnstuckMEChatUser user in chat.Users)
                         {
-                            if(user.UserID == UnstuckMEWindow.User.UserID)
+                            if(user.UserID == UnstuckME.User.UserID)
                             {
                                 user.ProfilePicture = ProfilePicture.Source;
                             }
@@ -209,22 +208,22 @@ namespace UnstuckMEUserGUI
 				//	messagebox.ShowDialog();
 				//}
 
-                if (TextBoxNewFirstName.Text != UsersInfo.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
+                if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
                 {
                     try
                     {
-                        Server.ChangeUserName(UsersInfo.EmailAddress, TextBoxNewFirstName.Text, UsersInfo.LastName);
+                       UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, TextBoxNewFirstName.Text, UnstuckME.User.LastName);
                     }
                     catch (Exception ex)
                     {
                         UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
                     }
                 }
-                if (TextBoxNewLastName.Text != UsersInfo.LastName && TextBoxNewLastName.Text != "" && TextBoxNewLastName.Text != null)
+                if (TextBoxNewLastName.Text != UnstuckME.User.LastName && TextBoxNewLastName.Text != "" && TextBoxNewLastName.Text != null)
                 {
                     try
                     {
-                        Server.ChangeUserName(UsersInfo.EmailAddress, UsersInfo.FirstName, TextBoxNewLastName.Text);
+                        UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, UnstuckME.User.FirstName, TextBoxNewLastName.Text);
                     }
                     catch (Exception ex)
                     {
@@ -237,7 +236,7 @@ namespace UnstuckMEUserGUI
                     {
                         try
                         {
-                            Server.ChangePassword(UnstuckMEWindow.User, PasswordBoxNewPassword.Password);
+                            UnstuckME.Server.ChangePassword(UnstuckME.User, PasswordBoxNewPassword.Password);
                         }
                         catch (Exception ex)
                         {
@@ -258,11 +257,11 @@ namespace UnstuckMEUserGUI
 
         private void TextBoxNewFirstName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if (TextBoxNewFirstName.Text != UsersInfo.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
+            if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
             {
                 try
                 {
-                    Server.ChangeUserName(UsersInfo.EmailAddress, TextBoxNewFirstName.Text, UsersInfo.LastName);
+                    UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, TextBoxNewFirstName.Text, UnstuckME.User.LastName);
                 }
                 catch (Exception ex)
                 {
