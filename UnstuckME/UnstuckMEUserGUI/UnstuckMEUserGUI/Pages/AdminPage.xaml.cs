@@ -30,13 +30,19 @@ namespace UnstuckMEUserGUI
 
         private void AddRemoveClassesBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Window win = new SubWindows.AddClassToServerWindow();
+            win.Show();
         }
 
         private void AddRemoveUserRoleBtn_Click(object sender, RoutedEventArgs e)
         {
             Window win = new SubWindows.AddUserRoleWindow(ref Server);
             win.Show();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

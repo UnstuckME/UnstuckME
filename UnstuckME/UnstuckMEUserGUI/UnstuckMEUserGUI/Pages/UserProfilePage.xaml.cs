@@ -258,17 +258,7 @@ namespace UnstuckMEUserGUI
 
         private void TextBoxNewFirstName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if (TextBoxNewFirstName.Text != UsersInfo.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
-            {
-                try
-                {
-                    Server.ChangeUserName(UsersInfo.EmailAddress, TextBoxNewFirstName.Text, UsersInfo.LastName);
-                }
-                catch (Exception ex)
-                {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
-                }
-            }
+
         }
 
         private void TextBoxNewLastName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
