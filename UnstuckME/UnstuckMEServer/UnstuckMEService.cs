@@ -111,10 +111,12 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var users = GetUserInfo(null, emailaddress);
+                var users = (from b in db.UserProfiles
+                             where b.EmailAddress == emailaddress
+                             select b).First();
 
-				users.FirstName = newFirstName;
-                users.LastName = newLastName;
+				users.DisplayFName = newFirstName;
+                users.DisplayLName = newLastName;
                 db.SaveChanges();
             }
         }
@@ -377,8 +379,10 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 UnstuckMEPassword newHashedPassword = UnstuckMEHashing.GetHashedPassword(newPassword);
-                var users = GetUserInfo(User.UserID, User.EmailAddress);
-
+                var users = (from b in db.UserProfiles
+                            where b.UserID == User.UserID
+                            select b).First();
+                
 				users.UserPassword = newHashedPassword.Password;
                 users.Salt = newHashedPassword.Salt;
                 db.SaveChanges();
