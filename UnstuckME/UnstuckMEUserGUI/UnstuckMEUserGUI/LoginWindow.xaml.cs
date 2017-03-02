@@ -292,9 +292,9 @@ namespace UnstuckMEUserGUI
 					MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
 					try
 					{
-						_channelFactory.Abort();
-						_channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-						Server = _channelFactory.CreateChannel();
+						UnstuckME.ChannelFactory.Abort();
+                        UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+						UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
 					}
 					catch (Exception exp)
 					{
