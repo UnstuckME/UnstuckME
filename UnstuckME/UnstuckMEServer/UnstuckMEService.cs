@@ -1032,6 +1032,7 @@ namespace UnstuckMEInterfaces
 			//	profilepic.CopyToAsync(ms);
 			//	imgByte = ms.ToArray();
 			//}
+			//profilepic.Dispose();	   //need this to release memory
 
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
@@ -1131,8 +1132,8 @@ namespace UnstuckMEInterfaces
                 {
                     rlist2.Add(classcode);
                 }
-
-                return rlist2;
+				//codes.Dispose();		//need this to release memory   
+				return rlist2;
             }
         }
 
@@ -1155,11 +1156,13 @@ namespace UnstuckMEInterfaces
             {
                 int num = Convert.ToInt32(number);
                 var name = db.GetCourseNameByCodeAndNumber(code, (short)num).First();
-                //(from u in db.Classes
-                //where u.CourseCode == code && u.CourseNumber == num
-                //select new { CourseName = u }).First();
+				//(from u in db.Classes
+				//where u.CourseCode == code && u.CourseNumber == num
+				//select new { CourseName = u }).First();
+				
+				//name.Dispose();		//need this to release memory   
 
-                return name;
+				return name;
             }
         }
 
@@ -1184,7 +1187,7 @@ namespace UnstuckMEInterfaces
                 {
                     rlist2.Add(classcode);
                 }
-
+				//codes.Dispose();		//need this to release memory   
                 return rlist2;
             }
         }
@@ -1480,8 +1483,9 @@ namespace UnstuckMEInterfaces
                 classinfo.CourseCode = _class.First().CourseCode;
                 classinfo.CourseName = _class.First().CourseName;
                 classinfo.CourseNumber = _class.First().CourseNumber;
+				//_class.Dispose();		//need this to release memory   
 
-                return classinfo;
+				return classinfo;
             }
         }
 
@@ -1500,8 +1504,8 @@ namespace UnstuckMEInterfaces
                     new_org.OrganizationName = org.OrganizationName;
                     orgs.Add(new_org);
                 }
-
-                return orgs;
+				//organizations.Dispose();		//need this to release memory   
+				return orgs;
             }
         }
 
@@ -1540,8 +1544,10 @@ namespace UnstuckMEInterfaces
                         temp.ChatID = chatItem.Value;
                         chatIDList.Add(temp);
                     }
-                }
-                return chatIDList;
+
+					//dbChats.Dispose();		//need this to release memory   
+				}
+				return chatIDList;
             }
             catch (Exception ex)
             {
@@ -1566,8 +1572,10 @@ namespace UnstuckMEInterfaces
                         temp.ProfilePicture = null;
                         UserList.Add(temp);
                     }
-                }
-                return UserList;
+
+					//chatMembers.Dispose();		//need this to release memory   
+				}
+				return UserList;
             }
             catch (Exception ex)
             {
@@ -1598,8 +1606,10 @@ namespace UnstuckMEInterfaces
                         temp.Username = message.DisplayFName;
                         MessageList.Add(temp);
                     }
-                }
-                return MessageList;
+
+					//messages.Dispose();		//need this to release memory   
+				}
+				return MessageList;
             }
             catch (Exception ex)
             {
@@ -1765,16 +1775,6 @@ namespace UnstuckMEInterfaces
                 return null;
             }
         }
-
-		public int CheckIfChatAlreadyExists(int studentID, int tutorID)
-		{
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				var chat = db.CheckIfAChatBetweenTwoUsersExists(studentID, tutorID);
-				Console.WriteLine(chat);
-				return chat;
-			}
-		}
 
 		public void AddChatToSticker(int chatID, int stickerID)
 		{

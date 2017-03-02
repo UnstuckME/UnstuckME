@@ -4,7 +4,9 @@ using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,8 +35,9 @@ namespace UnstuckMEUserGUI
         private string m_SchoolName = null;
         private string m_orginalSchoolName = null;
         private string m_SchoolInfoFilePath = null;
+		private string verification_code = null;
 
-        public LoginWindow()
+		public LoginWindow()
         { 
             InitializeComponent();
             m_orginalSchoolName = m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
@@ -214,78 +217,93 @@ namespace UnstuckMEUserGUI
                     _labelInvalidLogin.Content = "Server Unavailable!";
                 }
             });
+
             return temp;
         }
 
-        private async void buttonCreate_Click(object sender, RoutedEventArgs e)
+		private void sendVerificationCode_Click(object sender, RoutedEventArgs e)
+		{
+			bool validCredentials = false;
+
+			try
+			{
+				Exception invalidCreds = new Exception("Invalid Credentials!");
+				if (textBoxCreateEmailAddress.Text.Length <= 0)
+					throw invalidCreds;
+				if (textBoxCreateFirstName.Text.Length <= 0)
+					throw invalidCreds;
+				if (textBoxCreateLastName.Text.Length <= 0)
+					throw invalidCreds;
+				if (passwordBoxCreate.Password.Length <= 6)
+					throw invalidCreds;
+				if (passwordBoxCreate.Password.Length >= 32)
+					throw invalidCreds;
+				if (passwordBoxCreate.Password != passwordBoxCreateConfirm.Password)
+					throw invalidCreds;
+
+				validCredentials = true;
+			}
+			catch (Exception exp)
+			{
+				UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
+				logger.WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
+				validCredentials = false;
+				labelCreateIncorrectCreds.Visibility = Visibility.Visible;
+			}
+
+			if (validCredentials)
+			{
+				AccountVerificationGrid.IsEnabled = true;
+				AccountVerificationGrid.Visibility = Visibility.Visible;
+				buttonResendVerificationCode_Click(sender, e);
+			}
+		}
+
+		private async void buttonCreate_Click(object sender, RoutedEventArgs e)
         {
-            bool validCredentials = false;
-            try
-            {
-                Exception invalidCreds = new Exception("Invalid Credentials!");
-                if (textBoxCreateEmailAddress.Text.Length <= 0)
-                    throw invalidCreds;
-                if (textBoxCreateFirstName.Text.Length <= 0)
-                    throw invalidCreds;
-                if (textBoxCreateLastName.Text.Length <= 0)
-                    throw invalidCreds;
-                if (passwordBoxCreate.Password.Length <= 6)
-                    throw invalidCreds;
-                if (passwordBoxCreate.Password.Length >= 32)
-                    throw invalidCreds;
-                if (passwordBoxCreate.Password != passwordBoxCreateConfirm.Password)
-                    throw invalidCreds;
+			if (textboxVerificationCode.Text == verification_code)
+			{
+				try
+				{
+					if (await Task.Factory.StartNew(() => CreateUserAsynch()))
+					{
+						int userID = await Task.Factory.StartNew(() => GetUserIDAsynch());
+						await Task.Factory.StartNew(() => InsertProfilePictureAsynch(userID));
+					}
+					else
+					{
+						throw new Exception("Error occurred creating a new user, Please Contact Your Server Administrator");
+					}
+					_LoginGrid.IsEnabled = true;
+					textBoxUserName.Text = textBoxCreateEmailAddress.Text;
+					passwordBox.Password = passwordBoxCreate.Password;
+					_AccountCreationGrid.IsEnabled = false;
+					_AccountCreationGrid.Visibility = Visibility.Hidden;
+					AccountVerificationGrid.IsEnabled = false;
+					AccountVerificationGrid.Visibility = Visibility.Collapsed;
+					_LoginGrid.Visibility = Visibility.Visible;
+					AfterUserCreationTextBoxandPasswordBoxUpdate();
+				}
+				catch (Exception ex)
+				{
+					UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
+					logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
 
-                validCredentials = true;
-            }
-            catch(Exception exp)
-            {
-                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                logger.WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
-                validCredentials = false;
-                labelCreateIncorrectCreds.Visibility = Visibility.Visible;
-            }
-            if (validCredentials)
-            {
-                try
-                {
-                    if (await Task.Factory.StartNew(() => CreateUserAsynch()))
-                    {
-                        int userID = await Task.Factory.StartNew(() => GetUserIDAsynch());
-                        await Task.Factory.StartNew(() => InsertProfilePictureAsynch(userID));
-                    }
-                    else
-                    {
-                        throw new Exception("Error occurred creating a new user, Please Contact Your Server Administrator");
-                    }
-                    _LoginGrid.IsEnabled = true;
-                    textBoxUserName.Text = textBoxCreateEmailAddress.Text;
-                    passwordBox.Password = passwordBoxCreate.Password;
-                    _AccountCreationGrid.IsEnabled = false;
-                    _AccountCreationGrid.Visibility = Visibility.Hidden;
-                    _LoginGrid.Visibility = Visibility.Visible;
-                    AfterUserCreationTextBoxandPasswordBoxUpdate();
-                }
-                catch (Exception ex)
-                {
-                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
-
-                    MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    try
-                    {
-                        UnstuckME.ChannelFactory.Abort();
-                        UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-                        UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
-                    }
-                    catch (Exception exp)
-                    {
-                        MessageBox.Show("There is a problem re-connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
-                        this.Close();
-                    }
-                }
-            }
+					MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+					try
+					{
+						_channelFactory.Abort();
+						_channelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+						Server = _channelFactory.CreateChannel();
+					}
+					catch (Exception exp)
+					{
+						MessageBox.Show("There is a problem re-connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+						logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+						this.Close();
+					}
+				}
+			}
         }
 
         private bool CreateUserAsynch()
@@ -499,7 +517,6 @@ namespace UnstuckMEUserGUI
             {
                 lastmodifiedDate = (from l in db.SchoolLogoes where l.LogoID == logoID select new { lastModified = l.LastModified}).First().ToString();
 
-
                 try
                 {
                     string line = "";
@@ -584,13 +601,129 @@ namespace UnstuckMEUserGUI
 
         private static BitmapImage ConvertByteArrayToBitmapImage(Byte[] bytes)
         {
-            var stream = new MemoryStream(bytes);
+            MemoryStream stream = new MemoryStream(bytes);
             stream.Seek(0, SeekOrigin.Begin);
-            var image = new BitmapImage();
+            BitmapImage image = new BitmapImage();
+
             image.BeginInit();
             image.StreamSource = stream;
             image.EndInit();
+
             return image;
         }
-    }
+
+		private async void buttonResendVerificationCode_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				//generate verification code
+				verification_code = await Task.Factory.StartNew(() => GenerateVerificationCodeAsync());
+
+				MailAddress address = new MailAddress("2016JPTeam8@gmail.com", "UnstuckME");
+				MailMessage email = new MailMessage(address, new MailAddress(textBoxCreateEmailAddress.Text));
+				email.Subject = "Activate your UnstuckME account";
+				email.Body = "Thanks for joining UnstuckME " + textBoxCreateFirstName.Text + "! Please activate your account by entering the verification code below into the prompt in the application.\n\n"
+					+ "By creating an account, you agree to UnstuckME Terms of Service and your University's Student Code of Conduct\n\nYour verification code:\t" + verification_code
+					+ "\n\nIf something is not working, please reply to this email with your problem and we will attempt to solve your issue";          //temporary body, will need to change later
+				email.Priority = MailPriority.Normal;
+
+				SmtpClient client = new SmtpClient("smtp.gmail.com", 587);   //server, port
+				client.DeliveryFormat = SmtpDeliveryFormat.SevenBit;
+				client.DeliveryMethod = SmtpDeliveryMethod.Network;
+				client.UseDefaultCredentials = true;    //gmail requires authentication
+
+				/*need to change network credential, might need to move this onto the server for the sending email account to be flexible based on school*/
+				client.Credentials = new System.Net.NetworkCredential("2016JPTeam8@gmail.com", "*********");
+				/*****************************************************************************************************************************************/
+
+				client.EnableSsl = true;    //gmail requires ssl
+				client.Timeout = 300000;    //300 seconds, or 5 minutes
+
+				try
+				{
+					client.SendAsync(email, "Sending a verification code to the user in the form of an email");
+					UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, "Please check your email for the verification code to verify your account", "Verification Code Sent");
+					messagebox.ShowDialog();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+				finally
+				{
+					email.Dispose();    //clean up memory
+					client.Dispose();
+				}
+			}
+			catch (Exception ex)
+			{
+				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.ToString(), "Email Verification Code Failed to Send");
+				messagebox.ShowDialog();
+			}
+		}
+
+		private string GenerateVerificationCodeAsync()
+		{
+			string value = string.Empty;
+
+			Dispatcher.Invoke(() =>
+			{
+				try
+				{
+					using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+					{
+						byte[] tokenData = new byte[128];
+						rng.GetBytes(tokenData);
+
+						for (int i = 0, bytes_skipped = 0; i < tokenData.Length && value.Length < 8; i++)
+						{
+							byte temp = tokenData[i + bytes_skipped];
+							while ((tokenData[i + bytes_skipped] <= 48 || tokenData[i + bytes_skipped] >= 57) &&
+									(tokenData[i + bytes_skipped] <= 65 || tokenData[i + bytes_skipped] >= 90) &&
+									(tokenData[i + bytes_skipped] <= 97 || tokenData[i + bytes_skipped] >= 122))
+							{
+								bytes_skipped++;
+							}
+
+							value += Convert.ToChar(tokenData[i + bytes_skipped]);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
+				}
+			});
+
+			return value;
+		}
+
+		private void AccountVerificationCanvas_MouseDown(object sender, MouseEventArgs e)
+		{
+			verification_code = string.Empty;
+			AccountVerificationGrid.IsEnabled = false;
+			AccountVerificationGrid.Visibility = Visibility.Collapsed;
+		}
+
+		private void textboxVerificationCode_GotFocus(object sender, RoutedEventArgs e)
+		{
+			if (textboxVerificationCode.Text == "xxxxxxxx")
+			{
+				textboxVerificationCode.Text = string.Empty;
+				textboxVerificationCode.Foreground = System.Windows.Media.Brushes.Black;
+				textboxVerificationCode.FontStyle = FontStyles.Normal;
+			}
+		}
+
+		private void textboxVerificationCode_LostFocus(object sender, RoutedEventArgs e)
+		{
+			if (textboxVerificationCode.Text == string.Empty)
+			{
+				textboxVerificationCode.Text = "xxxxxxxx";
+				textboxVerificationCode.Foreground = System.Windows.Media.Brushes.Gray;
+				textboxVerificationCode.FontStyle = FontStyles.Italic;
+			}
+		}
+	}
 }

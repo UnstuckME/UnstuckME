@@ -49,41 +49,47 @@ namespace UnstuckMEServer
 
         static byte[] GenerateSaltedHash(string stringPassword, string stringSalt)
         {
-
             byte[] plainText = GetBytes(stringPassword);
             byte[] salt = GetBytes(stringSalt);
+			byte[] return_bytestring = new byte[plainText.Length + salt.Length];
 
-            HashAlgorithm algorithm = new SHA256Managed();
+			using (HashAlgorithm algorithm = new SHA256Managed())
+			{
+				byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
 
-            byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
+				for (int i = 0; i < plainText.Length; i++)
+				{
+					plainTextWithSaltBytes[i] = plainText[i];
+				}
+				for (int i = 0; i < salt.Length; i++)
+				{
+					plainTextWithSaltBytes[plainText.Length + i] = salt[i];
+				}
 
-            for (int i = 0; i < plainText.Length; i++)
-            {
-                plainTextWithSaltBytes[i] = plainText[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-            }
+				return_bytestring = algorithm.ComputeHash(plainTextWithSaltBytes);
+			}
 
-            return algorithm.ComputeHash(plainTextWithSaltBytes);
+            return return_bytestring;
         }
         public static UnstuckMEPassword GetHashedPassword(string password)
         {
             UnstuckMEPassword returnPassword = new UnstuckMEPassword();
-            //create the account
-            RandomNumberGenerator rng = new RNGCryptoServiceProvider();
+			//create the account
+			using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+			{
+				byte[] tokenData = new byte[32];
+				rng.GetBytes(tokenData);
+				returnPassword.Salt = Convert.ToBase64String(tokenData);
+			}
 
-            byte[] tokenData = new byte[32];
-            rng.GetBytes(tokenData);
-
-            returnPassword.Salt = Convert.ToBase64String(tokenData);
             byte[] bytePassword = GenerateSaltedHash(password, returnPassword.Salt);
-            string inputPassword = "";
+            string inputPassword = string.Empty;
+
             foreach (byte element in bytePassword)
             {
                 inputPassword += element;
             }
+
             returnPassword.Password = inputPassword;
             return returnPassword;
         }
@@ -92,12 +98,13 @@ namespace UnstuckMEServer
         {
             byte[] bytePassword = GenerateSaltedHash(password, salt);
             string inputPassword = "";
+
             foreach (byte element in bytePassword)
             {
                 inputPassword += element;
             }
+
             return inputPassword;
         }
-
     }
 }

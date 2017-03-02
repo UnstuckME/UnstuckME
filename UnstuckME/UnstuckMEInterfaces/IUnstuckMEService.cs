@@ -175,9 +175,6 @@ namespace UnstuckMEInterfaces
         UnstuckMEChat GetSingleChat(int chatID);
 
 		[OperationContract]
-		int CheckIfChatAlreadyExists(int studentID, int tutorID);
-
-		[OperationContract]
 		void AddChatToSticker(int chatID, int stickerID);
 
         [OperationContract]
