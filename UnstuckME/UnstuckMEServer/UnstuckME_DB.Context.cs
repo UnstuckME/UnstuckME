@@ -272,7 +272,7 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateServerAdmin", firstNameParameter, lastNameParameter, emailAddressParameter, passwordParameter, saltParameter);
         }
     
-        public virtual int CreateSticker(string problemDescription, Nullable<int> classID, Nullable<int> studentID, Nullable<double> minimumStarRanking, Nullable<int> timeout)
+        public virtual ObjectResult<Nullable<int>> CreateSticker(string problemDescription, Nullable<int> classID, Nullable<int> studentID, Nullable<double> minimumStarRanking, Nullable<int> timeout)
         {
             var problemDescriptionParameter = problemDescription != null ?
                 new ObjectParameter("ProblemDescription", problemDescription) :
@@ -294,7 +294,7 @@ namespace UnstuckMEServer
                 new ObjectParameter("Timeout", timeout) :
                 new ObjectParameter("Timeout", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateSticker", problemDescriptionParameter, classIDParameter, studentIDParameter, minimumStarRankingParameter, timeoutParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CreateSticker", problemDescriptionParameter, classIDParameter, studentIDParameter, minimumStarRankingParameter, timeoutParameter);
         }
     
         public virtual int DeleteClassByClassID(Nullable<int> classID)
@@ -1126,6 +1126,15 @@ namespace UnstuckMEServer
                 new ObjectParameter("starrank", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutorReviews_RankDESC_Result>("GetUserTutorReviews_RankDESC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> InitialStickerPull(Nullable<int> inUserID)
+        {
+            var inUserIDParameter = inUserID.HasValue ?
+                new ObjectParameter("InUserID", inUserID) :
+                new ObjectParameter("InUserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InitialStickerPull", inUserIDParameter);
         }
     
         public virtual int InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<bool> isFile, Nullable<int> userID)

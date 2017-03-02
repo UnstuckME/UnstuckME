@@ -107,6 +107,9 @@
     <Compile Include="GetAllOrganizations_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllResolvedOrTimedOutStickers_Result.cs">
+      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllSchoolLogos_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>

@@ -16,16 +16,16 @@ namespace UnstuckMEServerGUI
         public Nullable<long> Row { get; set; }
         public string DisplayFName { get; set; }
         public string DisplayLName { get; set; }
-        public int StickerID { get; set; }
-        public int ClassID { get; set; }
-        public int StudentID { get; set; }
+        public Nullable<int> StickerID { get; set; }
+        public Nullable<int> ClassID { get; set; }
+        public Nullable<int> StudentID { get; set; }
         public Nullable<int> TutorID { get; set; }
         public string CourseCode { get; set; }
-        public short CourseNumber { get; set; }
+        public Nullable<short> CourseNumber { get; set; }
         public string CourseName { get; set; }
         public string ProblemDescription { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
-        public System.DateTime SubmitTime { get; set; }
-        public System.DateTime Timeout { get; set; }
+        public Nullable<System.DateTime> SubmitTime { get; set; }
+        public Nullable<System.DateTime> Timeout { get; set; }
     }
 }

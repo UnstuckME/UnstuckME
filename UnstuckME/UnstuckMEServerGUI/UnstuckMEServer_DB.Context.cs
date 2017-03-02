@@ -272,7 +272,7 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateServerAdmin", firstNameParameter, lastNameParameter, emailAddressParameter, passwordParameter, saltParameter);
         }
     
-        public virtual int CreateSticker(string problemDescription, Nullable<int> classID, Nullable<int> studentID, Nullable<double> minimumStarRanking, Nullable<int> timeout)
+        public virtual ObjectResult<Nullable<int>> CreateSticker(string problemDescription, Nullable<int> classID, Nullable<int> studentID, Nullable<double> minimumStarRanking, Nullable<int> timeout)
         {
             var problemDescriptionParameter = problemDescription != null ?
                 new ObjectParameter("ProblemDescription", problemDescription) :
@@ -294,7 +294,7 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("Timeout", timeout) :
                 new ObjectParameter("Timeout", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateSticker", problemDescriptionParameter, classIDParameter, studentIDParameter, minimumStarRankingParameter, timeoutParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CreateSticker", problemDescriptionParameter, classIDParameter, studentIDParameter, minimumStarRankingParameter, timeoutParameter);
         }
     
         public virtual int DeleteClassByClassID(Nullable<int> classID)
@@ -404,8 +404,12 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserProfileByUserID", userIDParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickers_ClassASC_Result> GetActiveStickers_ClassASC(Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetActiveStickers_ClassASC_Result> GetActiveStickers_ClassASC(Nullable<int> loggedin_user, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
         {
+            var loggedin_userParameter = loggedin_user.HasValue ?
+                new ObjectParameter("loggedin_user", loggedin_user) :
+                new ObjectParameter("loggedin_user", typeof(int));
+    
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
@@ -426,11 +430,15 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_ClassASC_Result>("GetActiveStickers_ClassASC", starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_ClassASC_Result>("GetActiveStickers_ClassASC", loggedin_userParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickers_ClassDESC_Result> GetActiveStickers_ClassDESC(Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetActiveStickers_ClassDESC_Result> GetActiveStickers_ClassDESC(Nullable<int> loggedin_user, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
         {
+            var loggedin_userParameter = loggedin_user.HasValue ?
+                new ObjectParameter("loggedin_user", loggedin_user) :
+                new ObjectParameter("loggedin_user", typeof(int));
+    
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
@@ -451,11 +459,15 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_ClassDESC_Result>("GetActiveStickers_ClassDESC", starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_ClassDESC_Result>("GetActiveStickers_ClassDESC", loggedin_userParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickersWithOrganization_ClassDESC_Result> GetActiveStickersWithOrganization_ClassDESC(Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetActiveStickersWithOrganization_ClassDESC_Result> GetActiveStickersWithOrganization_ClassDESC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
         {
+            var loggedin_userParameter = loggedin_user.HasValue ?
+                new ObjectParameter("loggedin_user", loggedin_user) :
+                new ObjectParameter("loggedin_user", typeof(int));
+    
             var organizationParameter = organization.HasValue ?
                 new ObjectParameter("organization", organization) :
                 new ObjectParameter("organization", typeof(int));
@@ -480,11 +492,15 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_ClassDESC_Result>("GetActiveStickersWithOrganization_ClassDESC", organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_ClassDESC_Result>("GetActiveStickersWithOrganization_ClassDESC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgClassASC_Result> GetActiveStickersWithOrganization_OrgClassASC(Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgClassASC_Result> GetActiveStickersWithOrganization_OrgClassASC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
         {
+            var loggedin_userParameter = loggedin_user.HasValue ?
+                new ObjectParameter("loggedin_user", loggedin_user) :
+                new ObjectParameter("loggedin_user", typeof(int));
+    
             var organizationParameter = organization.HasValue ?
                 new ObjectParameter("organization", organization) :
                 new ObjectParameter("organization", typeof(int));
@@ -509,11 +525,15 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgClassASC_Result>("GetActiveStickersWithOrganization_OrgClassASC", organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgClassASC_Result>("GetActiveStickersWithOrganization_OrgClassASC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgClassDESC_Result> GetActiveStickersWithOrganization_OrgClassDESC(Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgClassDESC_Result> GetActiveStickersWithOrganization_OrgClassDESC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
         {
+            var loggedin_userParameter = loggedin_user.HasValue ?
+                new ObjectParameter("loggedin_user", loggedin_user) :
+                new ObjectParameter("loggedin_user", typeof(int));
+    
             var organizationParameter = organization.HasValue ?
                 new ObjectParameter("organization", organization) :
                 new ObjectParameter("organization", typeof(int));
@@ -538,11 +558,15 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgClassDESC_Result>("GetActiveStickersWithOrganization_OrgClassDESC", organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgClassDESC_Result>("GetActiveStickersWithOrganization_OrgClassDESC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgDESC_Result> GetActiveStickersWithOrganization_OrgDESC(Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgDESC_Result> GetActiveStickersWithOrganization_OrgDESC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
         {
+            var loggedin_userParameter = loggedin_user.HasValue ?
+                new ObjectParameter("loggedin_user", loggedin_user) :
+                new ObjectParameter("loggedin_user", typeof(int));
+    
             var organizationParameter = organization.HasValue ?
                 new ObjectParameter("organization", organization) :
                 new ObjectParameter("organization", typeof(int));
@@ -567,7 +591,7 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgDESC_Result>("GetActiveStickersWithOrganization_OrgDESC", organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgDESC_Result>("GetActiveStickersWithOrganization_OrgDESC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> GetAllChatsAUserIsPartOF(Nullable<int> userid)
@@ -591,6 +615,31 @@ namespace UnstuckMEServerGUI
         public virtual ObjectResult<GetAllOrganizations_Result> GetAllOrganizations()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOrganizations_Result>("GetAllOrganizations");
+        }
+    
+        public virtual ObjectResult<GetAllResolvedOrTimedOutStickers_Result> GetAllResolvedOrTimedOutStickers(Nullable<int> userID, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank, Nullable<int> classID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            var startrowParameter = startrow.HasValue ?
+                new ObjectParameter("startrow", startrow) :
+                new ObjectParameter("startrow", typeof(short));
+    
+            var endrowParameter = endrow.HasValue ?
+                new ObjectParameter("endrow", endrow) :
+                new ObjectParameter("endrow", typeof(short));
+    
+            var starrankParameter = starrank.HasValue ?
+                new ObjectParameter("starrank", starrank) :
+                new ObjectParameter("starrank", typeof(double));
+    
+            var classIDParameter = classID.HasValue ?
+                new ObjectParameter("classID", classID) :
+                new ObjectParameter("classID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllResolvedOrTimedOutStickers_Result>("GetAllResolvedOrTimedOutStickers", userIDParameter, startrowParameter, endrowParameter, starrankParameter, classIDParameter);
         }
     
         public virtual ObjectResult<GetAllStickers_Result> GetAllStickers()
@@ -1079,6 +1128,15 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutorReviews_RankDESC_Result>("GetUserTutorReviews_RankDESC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> InitialStickerPull(Nullable<int> inUserID)
+        {
+            var inUserIDParameter = inUserID.HasValue ?
+                new ObjectParameter("InUserID", inUserID) :
+                new ObjectParameter("InUserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InitialStickerPull", inUserIDParameter);
+        }
+    
         public virtual int InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<bool> isFile, Nullable<int> userID)
         {
             var chatIDParameter = chatID.HasValue ?
@@ -1434,6 +1492,19 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("StarRanking", typeof(byte));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateStarRankingByReviewID", reviewIDParameter, starRankingParameter);
+        }
+    
+        public virtual int UpdateStickerByChatID(Nullable<int> chatID, Nullable<int> stickerID)
+        {
+            var chatIDParameter = chatID.HasValue ?
+                new ObjectParameter("ChatID", chatID) :
+                new ObjectParameter("ChatID", typeof(int));
+    
+            var stickerIDParameter = stickerID.HasValue ?
+                new ObjectParameter("StickerID", stickerID) :
+                new ObjectParameter("StickerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateStickerByChatID", chatIDParameter, stickerIDParameter);
         }
     
         public virtual int UpdateStickerProblemDescriptionByStickerID(Nullable<int> stickerID, string problemDescription)

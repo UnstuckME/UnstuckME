@@ -717,6 +717,9 @@
           <Parameter Name="endrow" Type="smallint" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
         </Function>
+        <Function Name="InitialStickerPull" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="InUserID" Type="int" Mode="In" />
+        </Function>
         <Function Name="InsertMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ChatID" Type="int" Mode="In" />
           <Parameter Name="Message" Type="nvarchar" Mode="In" />
@@ -1414,7 +1417,7 @@
             <Parameter Name="Password" Mode="In" Type="String" />
             <Parameter Name="Salt" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="CreateSticker">
+          <FunctionImport Name="CreateSticker" ReturnType="Collection(Int32)">
             <Parameter Name="ProblemDescription" Mode="In" Type="String" />
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
             <Parameter Name="StudentID" Mode="In" Type="Int32" />
@@ -1664,6 +1667,9 @@
             <Parameter Name="startrow" Mode="In" Type="Int16" />
             <Parameter Name="endrow" Mode="In" Type="Int16" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="InitialStickerPull" ReturnType="Collection(Int32)">
+            <Parameter Name="InUserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertMessage">
             <Parameter Name="ChatID" Mode="In" Type="Int32" />
@@ -2941,6 +2947,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InitialStickerPull" FunctionName="UnstuckME_DBModel.Store.InitialStickerPull" />
           <FunctionImportMapping FunctionImportName="InsertMessage" FunctionName="UnstuckME_DBModel.Store.InsertMessage" />
           <FunctionImportMapping FunctionImportName="InsertStudentIntoClass" FunctionName="UnstuckME_DBModel.Store.InsertStudentIntoClass" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoChat" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoChat" />

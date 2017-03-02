@@ -9,6 +9,8 @@ go
 **************************************************************************/
 if object_id('GetSchoolName') is not null
 	drop procedure GetSchoolName;
+if object_id('InitialStickerPull') is not null
+	drop procedure InitialStickerPull;
 if object_id('GetEmailCredentials') is not null
 	drop procedure GetEmailCredentials;
 if object_id('GetAdminInfo') is not null
@@ -143,6 +145,35 @@ begin
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Classes.ClassID = Sticker.ClassID;
 end;
+GO
+
+/**************************************************************************
+* Gets all stickers a user can tutor for (Has all checks)
+**************************************************************************/
+
+CREATE PROC [dbo].[InitialStickerPull]
+(
+	@InUserID		INT
+)
+AS
+	BEGIN 
+		IF (NOT EXISTS (SELECT UserID FROM UserProfile WHERE UserID = @InUserID))
+			SELECT NULL;
+		ELSE 
+		  BEGIN
+			SELECT DISTINCT Sticker.StickerID, ProblemDescription, Sticker.ClassID, ChatID, StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout FROM Sticker
+			JOIN Classes ON Sticker.ClassID = Classes.ClassID
+			JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
+			JOIN UserProfile ON UserToClass.UserID = UserProfile.UserID
+			JOIN OmToUser ON OmToUser.UserID = UserProfile.UserID
+			FULL JOIN StickerToMentor ON Sticker.StickerID = StickerToMentor.StickerID			
+			WHERE	(Sticker.TutorID IS NULL) 
+					AND UserProfile.UserID = 2 
+					AND UserProfile.AverageTutorRank > Sticker.MinimumStarRanking
+					AND Sticker.Timeout > GETDATE()
+		  END
+	END
+GO
 
 /**************************************************************************
 * Gets all Student Reviews for Admin
