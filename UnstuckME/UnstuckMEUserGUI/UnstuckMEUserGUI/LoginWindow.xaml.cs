@@ -642,7 +642,7 @@ namespace UnstuckMEUserGUI
 				try
 				{
 					client.SendAsync(email, "Sending a verification code to the user in the form of an email");
-					UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, "Please check your email for the verification code to verify your account", "Verification Code Sent");
+					UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OKCancel, "Please check your email for the verification code to verify your account", "Verification Code Sent");
 					messagebox.ShowDialog();
 				}
 				catch (Exception ex)
@@ -658,7 +658,7 @@ namespace UnstuckMEUserGUI
 			catch (Exception ex)
 			{
 				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
-				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.ToString(), "Email Verification Code Failed to Send");
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OKCancel, ex.ToString(), "Email Verification Code Failed to Send");
 				messagebox.ShowDialog();
 			}
 		}

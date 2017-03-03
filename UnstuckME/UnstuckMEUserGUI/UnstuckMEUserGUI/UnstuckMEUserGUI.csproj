@@ -524,6 +524,12 @@
     <Resource Include="Resources\Speech\SpeechRed.png" />
     <Resource Include="Resources\Speech\SpeechWhite.png" />
     <Resource Include="Resources\Ranking\RankingSteelBlue.png" />
+    <Resource Include="Resources\Close\CloseBlue.png" />
+    <Resource Include="Resources\Close\CloseRed.png" />
+    <Resource Include="Resources\Minimize\MinimizeBlue.png" />
+    <Resource Include="Resources\Minimize\MinimizeRed.png" />
+    <Resource Include="Resources\Maximize\MaximizeBlue.png" />
+    <Resource Include="Resources\Maximize\MaximizeRed.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

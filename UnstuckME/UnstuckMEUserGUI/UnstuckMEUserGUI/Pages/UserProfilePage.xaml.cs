@@ -164,7 +164,7 @@ namespace UnstuckMEUserGUI
 			}
             catch (Exception ex)
             {
-				UnstuckMEMessageBox message = new UnstuckMEMessageBox(1, ex.Message, "Image Size Error");
+				UnstuckMEMessageBox message = new UnstuckMEMessageBox(UnstuckMEBox.OKCancel, ex.Message, "Image Size Error");
 				message.ShowDialog();
                 string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
                 Process.Start(unstuckME);
@@ -184,7 +184,7 @@ namespace UnstuckMEUserGUI
         {
 			if (PasswordBoxNewPassword.Password != PasswordBoxConfirm.Password)
 			{
-				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, "Your passwords do not match, please reenter your password.", "Incorrect Password");
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OKCancel, "Your passwords do not match, please reenter your password.", "Incorrect Password");
 				messagebox.ShowDialog();
 			}
 			else
@@ -245,7 +245,7 @@ namespace UnstuckMEUserGUI
                     }
                     else
                     {
-                        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, "The passwords that you entered do not match.", "Username/Password Change Failed");
+                        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OKCancel, "The passwords that you entered do not match.", "Username/Password Change Failed");
                         messagebox.ShowDialog();
                     }
                 }

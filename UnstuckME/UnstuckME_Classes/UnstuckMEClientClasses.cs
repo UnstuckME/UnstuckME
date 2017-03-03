@@ -10,7 +10,11 @@ namespace UnstuckME_Classes
 	public enum Privileges
 	{ InvalidUser, Admin, Moderator, User }
 
-	public class UserInfo
+    public enum UnstuckMEBox
+    {
+        Shutdown, OKCancel, OK, YesNo, YesNoCancel
+    }
+    public class UserInfo
     {
         public int UserID { get; set; }
         public string FirstName { get; set; }

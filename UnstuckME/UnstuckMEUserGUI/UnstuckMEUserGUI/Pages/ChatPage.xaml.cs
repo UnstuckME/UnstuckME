@@ -132,7 +132,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception ex)
 			{
-				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.Message, "Add Message Failed");
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Add Message Failed");
+                messagebox.ShowDialog();
 			}
 		}
 
