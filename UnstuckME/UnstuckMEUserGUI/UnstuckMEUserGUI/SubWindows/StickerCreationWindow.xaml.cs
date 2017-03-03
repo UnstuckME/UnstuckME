@@ -65,7 +65,8 @@ namespace UnstuckMEUserGUI
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to submit this sticker?", "Sticker Submission Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
                 if(result == MessageBoxResult.Yes)
                 {
-                    UnstuckMESticker temp = new UnstuckMESticker();
+                    //UnstuckMESticker temp = new UnstuckMESticker();
+                    UnstuckMEBigSticker newSticker = new UnstuckMEBigSticker();
                     DateTime selectedDate = DatePickerSticker.SelectedDate.Value;
                     TimeSpan timedays = selectedDate - DateTime.Now;
                     int secondsCalc = 0;
@@ -118,22 +119,36 @@ namespace UnstuckMEUserGUI
                     {
                         totalSeconds = (totalSeconds - (int)DateTime.Now.TimeOfDay.TotalSeconds);
                     }
-					
-                    temp.Timeout = totalSeconds;
-                    temp.MinimumStarRanking = (float)sliderRating.Value;
-                    temp.ProblemDescription = ProblemDescription.Text;
-                    temp.StudentID = UnstuckME.User.UserID;
 
-                    temp.AttachedOrganizations = new List<int>();
+                    newSticker.TimeoutInt = totalSeconds;
+                    newSticker.MinimumStarRanking = sliderRating.Value;
+                    newSticker.ProblemDescription = ProblemDescription.Text;
+                    newSticker.StudentID = UnstuckME.User.UserID;
+                    newSticker.StudentRanking = UnstuckME.User.AverageStudentRank;
+                    newSticker.SubmitTime = DateTime.Now;
+                    newSticker.Timeout = DateTime.Now.AddSeconds(totalSeconds);
+                    newSticker.AttachedOrganizations = new List<int>();
+                    newSticker.ChatID = 0;
+                    newSticker.TutorID = 0;
+                    newSticker.TutorRanking = 0;
+
+                    //temp.Timeout = totalSeconds;
+                    //temp.MinimumStarRanking = (float)sliderRating.Value;
+                    //temp.ProblemDescription = ProblemDescription.Text;
+                    //temp.StudentID = UnstuckME.User.UserID;
+
+                    //temp.AttachedOrganizations = new List<int>();
                     //Gets any filtered organizations.
                     foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
                     {
-                        temp.AttachedOrganizations.Add(a.GetOrganizationID());
+                        //temp.AttachedOrganizations.Add(a.GetOrganizationID());
+                        newSticker.AttachedOrganizations.Add(a.GetOrganizationID());
                     }
 
                     try
-                    { 
-                        temp.ClassID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
+                    {
+                        //temp.ClassID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
+                        newSticker.Class = UnstuckME.Server.GetSingleClass(UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string));
                     }
                     catch (Exception exp)
                     {
@@ -142,8 +157,8 @@ namespace UnstuckMEUserGUI
                     }
                     try
                     { 
-                        UnstuckME.Server.SubmitSticker(temp);
-                        UnstuckME.MainWindow.AddStickerToMyStickers(temp);
+                        UnstuckME.Server.SubmitSticker(newSticker);
+                        UnstuckME.MainWindow.AddStickerToMyStickers(new UnstuckMESticker(newSticker));
                     }
                     catch (Exception exp)
                     {

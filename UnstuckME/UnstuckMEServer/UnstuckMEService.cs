@@ -30,7 +30,7 @@ namespace UnstuckMEInterfaces
         public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
         private static List<UnstuckMEMessage> _MessageList;
-        private static List<UnstuckMESticker> _StickerList;
+        private static List<UnstuckMEBigSticker> _StickerList;
         //This function is for testing stored procedures. In program.cs replace:
         //Thread userStatusCheck = new Thread(_server.CheckStatus); with Thread userStatusCheck = new Thread(_server.SPTest); 
         public void SPTest()
@@ -48,7 +48,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void CheckForNewMessages()
+        public async void CheckForNewMessages()
         {
             _MessageList = new List<UnstuckMEMessage>();
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -59,26 +59,33 @@ namespace UnstuckMEInterfaces
                     {
                         UnstuckMEMessage temp = new UnstuckMEMessage();
                         temp = _MessageList.First();
-                        db.InsertMessage(temp.ChatID, temp.Message, null, false, temp.SenderID);
-                        foreach (int client in temp.UsersInConvo)
-                        {
-                            if (client != temp.SenderID)
-                            {
-                                if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
-                                {
-                                    _connectedClients[client].connection.GetMessage(temp);
-                                }
-                            }
-                        }
+                        await Task.Factory.StartNew(() => AsyncMessageSendToUsers(temp));
                         _MessageList.Remove(_MessageList.First());
                     }
                 }
             }
         }
-
-        public void CheckForNewStickers()
+        private void AsyncMessageSendToUsers(UnstuckMEMessage inMessage)
         {
-            _StickerList = new List<UnstuckMESticker>();
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.InsertMessage(inMessage.ChatID, inMessage.Message, null, false, inMessage.SenderID);
+                foreach (int client in inMessage.UsersInConvo)
+                {
+                    if (client != inMessage.SenderID)
+                    {
+                        if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
+                        {
+                            _connectedClients[client].connection.GetMessage(inMessage);
+                        }
+                    }
+                }
+            }
+        }
+
+        public async void CheckForNewStickers()
+        {
+            _StickerList = new List<UnstuckMEBigSticker>();
 
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -86,9 +93,44 @@ namespace UnstuckMEInterfaces
                 {
                     if(_StickerList.Count != 0)
                     {
-
+                        UnstuckMEBigSticker temp = _StickerList.First();
+                        if (temp.AttachedOrganizations.Count != 0)
+                        {
+                            foreach (int orgID in temp.AttachedOrganizations)
+                                db.AddOrgToSticker(temp.StickerID, orgID);
+                        }
+                        await Task.Factory.StartNew(() => SendStickerToClients(temp));
+                        _StickerList.Remove(_StickerList.First());
                     }
                 }
+            }
+        }
+
+        public void SendStickerToClients(UnstuckMEBigSticker inSticker)
+        {
+            UnstuckMEAvailableSticker s = new UnstuckMEAvailableSticker();
+            s.ClassID = inSticker.Class.ClassID;
+            s.ProblemDescription = inSticker.ProblemDescription;
+            s.StudentID = inSticker.StudentID;
+            s.StickerID = inSticker.StickerID;
+            s.Timeout = inSticker.Timeout;
+            s.CourseCode = inSticker.Class.CourseCode;
+            s.CourseName = inSticker.Class.CourseName;
+            s.CourseNumber = inSticker.Class.CourseNumber;
+            s.StudentRanking = inSticker.StudentRanking;
+            try
+            {
+                foreach (var client in _connectedClients)
+                {
+                    if (client.Key != inSticker.StudentID)
+                    {
+                        client.Value.connection.RecieveNewSticker(s);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("SendStickerToClients Function Error: " + ex.Message);
             }
         }
 
@@ -933,7 +975,7 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public int SubmitSticker(UnstuckMESticker newSticker)
+        public int SubmitSticker(UnstuckMEBigSticker newSticker)
         {
             //try
             //{
@@ -946,44 +988,22 @@ namespace UnstuckMEInterfaces
             //}
             try
             {
-
+                int retstickerID = 0;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var stickerID = db.CreateSticker(newSticker.ProblemDescription, newSticker.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.Timeout).First();
-                    //Console.WriteLine("StickerID: " + stickerID.First().Value);
-                    if (newSticker.AttachedOrganizations.Count != 0)
+                    var stickerID = db.CreateSticker(newSticker.ProblemDescription, newSticker.Class.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.TimeoutInt).First();
+                    if(stickerID.Value == 0)
                     {
-                        foreach (int orgID in newSticker.AttachedOrganizations)
-                            db.AddOrgToSticker(stickerID.Value, orgID);
+                        throw new Exception("Create Sticker Failed, Returned sticker ID = 0");
                     }
-                }
-
-                using (UnstuckME_DBEntities bb = new UnstuckME_DBEntities())
-                {
-                    var stickerInfo = from b in bb.Stickers
-                                      where b.StudentID == newSticker.StudentID
-                                      join a in bb.UserProfiles on b.StudentID equals a.UserID
-                                      join c in bb.Classes on b.ClassID equals c.ClassID
-                                      select new { a, b, c };
-                    foreach (var item in stickerInfo)
+                    else
                     {
-                        if (item.b.ClassID == newSticker.ClassID)
-                        {
-                            UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker();
-                            temp.ClassID = newSticker.ClassID;
-                            temp.CourseCode = item.c.CourseCode;
-                            temp.CourseName = item.c.CourseName;
-                            temp.CourseNumber = item.c.CourseNumber;
-                            temp.ProblemDescription = newSticker.ProblemDescription;
-                            temp.StickerID = item.b.StickerID;
-                            temp.StudentID = newSticker.StudentID;
-                            temp.StudentRanking = item.a.AverageStudentRank;
-                            temp.Timeout = item.b.Timeout;
-                            SendStickerToClients(temp);
-                        }
+                        retstickerID = stickerID.Value;
                     }
+                    newSticker.StickerID = retstickerID;
+                    _StickerList.Add(newSticker);
                 }
-                return 0;
+                return retstickerID;
             }
             catch(Exception ex)
             {
@@ -992,23 +1012,6 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public void SendStickerToClients(UnstuckMEAvailableSticker inSticker)
-        {
-            try
-            {
-                foreach (var client in _connectedClients)
-                {
-                    if(client.Key != inSticker.StudentID)
-                    {
-                        client.Value.connection.RecieveNewSticker(inSticker);
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("SendStickerToClients Function Error: " + ex.Message);
-            }
-        }
 
         public byte[] GetProfilePicture(int userID)
         {

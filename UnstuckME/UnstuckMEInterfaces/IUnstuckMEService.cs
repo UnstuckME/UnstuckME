@@ -121,7 +121,7 @@ namespace UnstuckMEInterfaces
         void AddUserToTutoringOrganization(int userID, int organizationID);
 
         [OperationContract]
-        int SubmitSticker(UnstuckMESticker newSticker);
+        int SubmitSticker(UnstuckMEBigSticker newSticker);
 
         [OperationContract]
         byte[] GetProfilePicture(int userID);
@@ -198,8 +198,8 @@ namespace UnstuckMEInterfaces
         [OperationContract]
         string GetUserDisplayName(int userID);
 
-        [OperationContract(IsOneWay = true)]
-        void SendStickerToClients(UnstuckMEAvailableSticker inSticker);
+        //[OperationContract(IsOneWay = true)]
+        //void SendStickerToClients(UnstuckMEAvailableSticker inSticker);
 
         [OperationContract]
         void SetUserPrivileges(Privileges userPrivs, int userID);
