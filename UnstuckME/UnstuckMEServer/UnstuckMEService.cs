@@ -29,8 +29,10 @@ namespace UnstuckMEInterfaces
     {
         public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
         public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
-        private static List<UnstuckMEMessage> _MessageList;
-        private static List<UnstuckMEBigSticker> _StickerList;
+        //private static List<UnstuckMEMessage> _MessageList;
+        //private static List<UnstuckMEBigSticker> _StickerList;
+        private static ConcurrentQueue<UnstuckMEBigSticker> _StickerList;
+        private static ConcurrentQueue<UnstuckMEMessage> _MessageList;
         //This function is for testing stored procedures. In program.cs replace:
         //Thread userStatusCheck = new Thread(_server.CheckStatus); with Thread userStatusCheck = new Thread(_server.SPTest); 
         public void SPTest()
@@ -50,17 +52,21 @@ namespace UnstuckMEInterfaces
 
         public async void CheckForNewMessages()
         {
-            _MessageList = new List<UnstuckMEMessage>();
+            _MessageList = new ConcurrentQueue<UnstuckMEMessage>();
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 while (true)
                 {
                     if (_MessageList.Count != 0)
                     {
-                        UnstuckMEMessage temp = new UnstuckMEMessage();
-                        temp = _MessageList.First();
-                        await Task.Factory.StartNew(() => AsyncMessageSendToUsers(temp));
-                        _MessageList.Remove(_MessageList.First());
+                        UnstuckMEMessage temp;
+                        _MessageList.TryDequeue(out temp);
+                        try
+                        {
+                            await Task.Factory.StartNew(() => AsyncMessageSendToUsers(temp));
+                        }
+                        catch (Exception)
+                        { /*If Failure Message Will Be Lost, but server will not fail.*/ }
                     }
                 }
             }
@@ -85,7 +91,7 @@ namespace UnstuckMEInterfaces
 
         public async void CheckForNewStickers()
         {
-            _StickerList = new List<UnstuckMEBigSticker>();
+            _StickerList = new ConcurrentQueue<UnstuckMEBigSticker>();
 
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -93,14 +99,10 @@ namespace UnstuckMEInterfaces
                 {
                     if(_StickerList.Count != 0)
                     {
-                        UnstuckMEBigSticker temp = _StickerList.First();
-                        if (temp.AttachedOrganizations.Count != 0)
-                        {
-                            foreach (int orgID in temp.AttachedOrganizations)
-                                db.AddOrgToSticker(temp.StickerID, orgID);
-                        }
+                        UnstuckMEBigSticker temp;// = _StickerList.First();
+                        _StickerList.TryDequeue(out temp);
                         await Task.Factory.StartNew(() => SendStickerToClients(temp));
-                        _StickerList.Remove(_StickerList.First());
+                        //_StickerList.Remove(_StickerList.First());
                     }
                 }
             }
@@ -977,15 +979,6 @@ namespace UnstuckMEInterfaces
 
         public int SubmitSticker(UnstuckMEBigSticker newSticker)
         {
-            //try
-            //{
-            //    _StickerList.Add(newSticker);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("SubmitSticker Error: " + ex.Message);
-            //    return;
-            //}
             try
             {
                 int retstickerID = 0;
@@ -1000,8 +993,13 @@ namespace UnstuckMEInterfaces
                     {
                         retstickerID = stickerID.Value;
                     }
+                    if (newSticker.AttachedOrganizations.Count != 0)
+                    {
+                        foreach (int orgID in newSticker.AttachedOrganizations)
+                            db.AddOrgToSticker(newSticker.StickerID, orgID);
+                    }
                     newSticker.StickerID = retstickerID;
-                    _StickerList.Add(newSticker);
+                    _StickerList.Enqueue(newSticker);
                 }
                 return retstickerID;
             }
@@ -1639,7 +1637,7 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                _MessageList.Add(message);
+                _MessageList.Enqueue(message);
             }
             catch (Exception ex)
             {
@@ -1882,5 +1880,19 @@ namespace UnstuckMEInterfaces
                 db.UpdatePrivilegesByUserID(userID, (int)userPrivs);
             }
         }
+
+        //public Dictionary<int, UserClass> InitialUserClassesPull()
+        //{
+        //    Dictionary<int, UserClass> temp = new Dictionary<int, UserClass>();
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+                
+        //        return null;
+        //    }
+        //}
     }
 }

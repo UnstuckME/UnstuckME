@@ -132,38 +132,31 @@ namespace UnstuckMEUserGUI
                     newSticker.TutorID = 0;
                     newSticker.TutorRanking = 0;
 
-                    //temp.Timeout = totalSeconds;
-                    //temp.MinimumStarRanking = (float)sliderRating.Value;
-                    //temp.ProblemDescription = ProblemDescription.Text;
-                    //temp.StudentID = UnstuckME.User.UserID;
-
-                    //temp.AttachedOrganizations = new List<int>();
-                    //Gets any filtered organizations.
                     foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
                     {
-                        //temp.AttachedOrganizations.Add(a.GetOrganizationID());
                         newSticker.AttachedOrganizations.Add(a.GetOrganizationID());
                     }
-
                     try
                     {
-                        //temp.ClassID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
                         newSticker.Class = UnstuckME.Server.GetSingleClass(UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string));
                     }
                     catch (Exception exp)
                     {
                         UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                         logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                        throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     try
-                    { 
-                        UnstuckME.Server.SubmitSticker(newSticker);
+                    {
+                        if (UnstuckME.Server.SubmitSticker(newSticker) < 0) //Returns -1 if failed.
+                            throw new Exception("Sticker Submission Failure");
                         UnstuckME.MainWindow.AddStickerToMyStickers(new UnstuckMESticker(newSticker));
                     }
                     catch (Exception exp)
                     {
                         UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                         logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                        throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     this.Close();
                 }
