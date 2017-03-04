@@ -31,8 +31,8 @@ namespace UnstuckMEUserGUI
         public UnstuckMEWindow()
         {
             InitializeComponent();
-            UnstuckME.Red = StickerButtonBorder.Background;
-            UnstuckME.Blue = ChatButtonBorder.Background;
+            UnstuckME.Red = StickerButton.Background;
+            UnstuckME.Blue = ChatButton.Background;
             UnstuckME.MainWindow = this;
             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
         }
@@ -159,34 +159,9 @@ namespace UnstuckMEUserGUI
         }
         #endregion
 
-        private void StickerButton_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchToStickerTab();
-        }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchToSettingsTab();
-        }
-
-        private void ChatButton_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchToChatTab();
-        }
-
-        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchToUserProfileTab();
-        }
-
         public void AddUserToContactsStack(UnstuckMEChatUser inChatUser)
         {
             OnlineUsersStack.Children.Add(new OnlineUser(inChatUser));
-        }
-
-        private void AdminButton_Click(object sender, RoutedEventArgs e)
-        {
-            SwitchToAdminTab(userPrivileges);
         }
 
         public void CheckAdminPrivledges(Privileges inPrivleges)
@@ -195,20 +170,20 @@ namespace UnstuckMEUserGUI
             {
                 case Privileges.Admin: //Admin
                     {
-                        AdminButtonBorder.Visibility = Visibility.Visible;
-                        AdminButtonBorder.IsEnabled = true;
+                        AdminButton.Visibility = Visibility.Visible;
+                        AdminButton.IsEnabled = true;
                         break;
                     }
                 case Privileges.Moderator: //Moderator
                     {
-                        AdminButtonBorder.Visibility = Visibility.Visible;
-                        AdminButtonBorder.IsEnabled = true;
+                        AdminButton.Visibility = Visibility.Visible;
+                        AdminButton.IsEnabled = true;
                         break;
                     }
                 case Privileges.User: //User
                     {
-                        AdminButtonBorder.Visibility = Visibility.Hidden;
-                        AdminButtonBorder.IsEnabled = false;
+                        AdminButton.Visibility = Visibility.Hidden;
+                        AdminButton.IsEnabled = false;
                         break;
                     }
             }
@@ -218,44 +193,44 @@ namespace UnstuckMEUserGUI
         {
             MainFrame.NavigationService.RemoveBackEntry();
             MainFrame.Navigate(UnstuckME.Pages.ChatPage);
-            ChatButtonBorder.Background = UnstuckME.Red;
-            StickerButtonBorder.Background = UnstuckME.Blue;
-            SettingButtonBorder.Background = UnstuckME.Blue;
-            UserProfileButtonBorder.Background = UnstuckME.Blue;
-            AdminButtonBorder.Background = UnstuckME.Blue;
+            ChatButton.Background = UnstuckME.Red;
+            StickerButton.Background = UnstuckME.Blue;
+            SettingButton.Background = UnstuckME.Blue;
+            UserProfileButton.Background = UnstuckME.Blue;
+            AdminButton.Background = UnstuckME.Blue;
             DisableStickerSubmit();
         }
         public void SwitchToStickerTab()
         {
             MainFrame.NavigationService.RemoveBackEntry();
             MainFrame.Navigate(UnstuckME.Pages.StickerPage);
-            ChatButtonBorder.Background = UnstuckME.Blue;
-            StickerButtonBorder.Background = UnstuckME.Red;
-            SettingButtonBorder.Background = UnstuckME.Blue;
-            UserProfileButtonBorder.Background = UnstuckME.Blue;
-            AdminButtonBorder.Background = UnstuckME.Blue;
+            ChatButton.Background = UnstuckME.Blue;
+            StickerButton.Background = UnstuckME.Red;
+            SettingButton.Background = UnstuckME.Blue;
+            UserProfileButton.Background = UnstuckME.Blue;
+            AdminButton.Background = UnstuckME.Blue;
             EnableStickerSubmit();
         }
         public void SwitchToUserProfileTab()
         {
             MainFrame.NavigationService.RemoveBackEntry();
             MainFrame.Navigate(UnstuckME.Pages.UserProfilePage);
-            ChatButtonBorder.Background = UnstuckME.Blue;
-            StickerButtonBorder.Background = UnstuckME.Blue;
-            SettingButtonBorder.Background = UnstuckME.Blue;
-            UserProfileButtonBorder.Background = UnstuckME.Red;
-            AdminButtonBorder.Background = UnstuckME.Blue;
+            ChatButton.Background = UnstuckME.Blue;
+            StickerButton.Background = UnstuckME.Blue;
+            SettingButton.Background = UnstuckME.Blue;
+            UserProfileButton.Background = UnstuckME.Red;
+            AdminButton.Background = UnstuckME.Blue;
             DisableStickerSubmit();
         }
         public void SwitchToSettingsTab()
         {
             MainFrame.NavigationService.RemoveBackEntry();
             MainFrame.Navigate(UnstuckME.Pages.SettingsPage);
-            ChatButtonBorder.Background = UnstuckME.Blue;
-            StickerButtonBorder.Background = UnstuckME.Blue;
-            SettingButtonBorder.Background = UnstuckME.Red;
-            UserProfileButtonBorder.Background = UnstuckME.Blue;
-            AdminButtonBorder.Background = UnstuckME.Blue;
+            ChatButton.Background = UnstuckME.Blue;
+            StickerButton.Background = UnstuckME.Blue;
+            SettingButton.Background = UnstuckME.Red;
+            UserProfileButton.Background = UnstuckME.Blue;
+            AdminButton.Background = UnstuckME.Blue;
             DisableStickerSubmit();
         }
         public void SwitchToAdminTab(Privileges inPriviledges)
@@ -278,29 +253,23 @@ namespace UnstuckMEUserGUI
                         return;
                     }
             }
-            ChatButtonBorder.Background = UnstuckME.Blue;
-            StickerButtonBorder.Background = UnstuckME.Blue;
-            SettingButtonBorder.Background = UnstuckME.Blue;
-            UserProfileButtonBorder.Background = UnstuckME.Blue;
-            AdminButtonBorder.Background = UnstuckME.Red;
+            ChatButton.Background = UnstuckME.Blue;
+            StickerButton.Background = UnstuckME.Blue;
+            SettingButton.Background = UnstuckME.Blue;
+            UserProfileButton.Background = UnstuckME.Blue;
+            AdminButton.Background = UnstuckME.Red;
             DisableStickerSubmit();
         }
 
         private void DisableStickerSubmit()
         {
-            CreateStickerButtonBorder.Visibility = Visibility.Hidden;
-            CreateStickerButtonBorder.IsEnabled = false;
+            CreateStickerButton.Visibility = Visibility.Hidden;
+            CreateStickerButton.IsEnabled = false;
         }
         private void EnableStickerSubmit()
         {
-            CreateStickerButtonBorder.Visibility = Visibility.Visible;
-            CreateStickerButtonBorder.IsEnabled = true;
-        }
-
-        private void CreateStickerButton_Click(object sender, RoutedEventArgs e)
-        {
-            StickerCreationWindow window = new StickerCreationWindow();
-            window.ShowDialog();
+            CreateStickerButton.Visibility = Visibility.Visible;
+            CreateStickerButton.IsEnabled = true;
         }
 
         public void AddStickerToMyStickers(UnstuckMESticker inSticker)
@@ -467,7 +436,7 @@ namespace UnstuckMEUserGUI
                 }
             });
         }
-
+        #region ButtonLogic
         private void ButtonLogout_MouseEnter(object sender, MouseEventArgs e)
         {
             ButtonLogout.Background = Brushes.IndianRed;
@@ -501,6 +470,168 @@ namespace UnstuckMEUserGUI
             AddFriendWindow friendWindow = new AddFriendWindow();
             friendWindow.Show();
         }
+
+        private void CreateStickerButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            CreateStickerButton.Background = Brushes.IndianRed;
+        }
+
+        private void CreateStickerButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            CreateStickerButton.Background = UnstuckME.Red;
+        }
+
+        private void CreateStickerButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            StickerCreationWindow window = new StickerCreationWindow();
+            window.ShowDialog();
+        }
+
+        private void AdminButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(AdminButton.Background == UnstuckME.Blue)
+            {
+                AdminButton.Background = Brushes.SteelBlue;
+            }
+            else
+            {
+                AdminButton.Background = Brushes.IndianRed;
+            }
+        }
+
+        private void AdminButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (AdminButton.Background == Brushes.SteelBlue)
+            {
+                AdminButton.Background = UnstuckME.Blue;
+            }
+            else
+            {
+                AdminButton.Background = UnstuckME.Red;
+            }
+        }
+
+        private void AdminButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchToAdminTab(userPrivileges);
+        }
+
+        private void SettingButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (SettingButton.Background == UnstuckME.Blue)
+            {
+                SettingButton.Background = Brushes.SteelBlue;
+            }
+            else
+            {
+                SettingButton.Background = Brushes.IndianRed;
+            }
+        }
+
+        private void SettingButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (SettingButton.Background == Brushes.SteelBlue)
+            {
+                SettingButton.Background = UnstuckME.Blue;
+            }
+            else
+            {
+                SettingButton.Background = UnstuckME.Red;
+            }
+        }
+
+        private void SettingButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchToSettingsTab();
+        }
+
+        private void UserProfileButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (UserProfileButton.Background == UnstuckME.Blue)
+            {
+                UserProfileButton.Background = Brushes.SteelBlue;
+            }
+            else
+            {
+                UserProfileButton.Background = Brushes.IndianRed;
+            }
+        }
+
+        private void UserProfileButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (UserProfileButton.Background == Brushes.SteelBlue)
+            {
+                UserProfileButton.Background = UnstuckME.Blue;
+            }
+            else
+            {
+                UserProfileButton.Background = UnstuckME.Red;
+            }
+        }
+
+        private void UserProfileButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchToUserProfileTab();
+        }
+
+        private void ChatButtonBorder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (ChatButton.Background == UnstuckME.Blue)
+            {
+                ChatButton.Background = Brushes.SteelBlue;
+            }
+            else
+            {
+                ChatButton.Background = Brushes.IndianRed;
+            }
+        }
+
+        private void ChatButtonBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (ChatButton.Background == Brushes.SteelBlue)
+            {
+                ChatButton.Background = UnstuckME.Blue;
+            }
+            else
+            {
+                ChatButton.Background = UnstuckME.Red;
+            }
+        }
+
+        private void ChatButtonBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchToChatTab();
+        }
+
+        private void StickerButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (StickerButton.Background == UnstuckME.Blue)
+            {
+                StickerButton.Background = Brushes.SteelBlue;
+            }
+            else
+            {
+                StickerButton.Background = Brushes.IndianRed;
+            }
+        }
+
+        private void StickerButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (StickerButton.Background == Brushes.SteelBlue)
+            {
+                StickerButton.Background = UnstuckME.Blue;
+            }
+            else
+            {
+                StickerButton.Background = UnstuckME.Red;
+            }
+        }
+
+        private void StickerButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchToStickerTab();
+        }
+        #endregion
     }
 
     public class UnstuckMEPages
