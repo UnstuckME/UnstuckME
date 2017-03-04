@@ -59,12 +59,26 @@ namespace UnstuckMEUserGUI
 
         private void ConversationUserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            Background = Brushes.LightGray;
+            if(Background == null)
+            {
+                Background = Brushes.Gainsboro;
+            }
+            else
+            {
+                Background = Brushes.LightGray;
+            }
         }
 
         private void ConversationUserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            Background = null;
+            if(Background == Brushes.Gainsboro)
+            {
+                Background = null;
+            }
+            else
+            {
+                Background = Brushes.LightGray;
+            }
         }
 
         public void ShowConversation()
@@ -99,6 +113,19 @@ namespace UnstuckMEUserGUI
                 UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
             }
             UnstuckME.Pages.ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
+
+            foreach (var converstion in ((StackPanel)this.Parent).Children.OfType<Conversation>())
+            {
+                if(converstion.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
+                {
+                    converstion.Background = Brushes.LightGray;
+                }
+                else
+                {
+                    converstion.Background = null;
+                }
+            }
+
         }
     }
 }

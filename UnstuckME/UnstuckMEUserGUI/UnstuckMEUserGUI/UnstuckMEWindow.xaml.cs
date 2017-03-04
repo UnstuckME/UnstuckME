@@ -292,7 +292,23 @@ namespace UnstuckMEUserGUI
             UnstuckME.Pages.ChatPage.AddMessage(message);
             if ((UnstuckME.CurrentChatSession.ChatID != message.ChatID) || (MainFrame.Content != UnstuckME.Pages.ChatPage))
             {
-                NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref UnstuckME.Pages, this));
+                NewMessageNotification temp = null; 
+                foreach (var notification in NotificationStack.Children.OfType<NewMessageNotification>())
+                {
+                    if(notification.Message.Username == message.Username)
+                    {
+                        temp = notification;
+                    }
+                }
+                if(temp == null)
+                {
+                    NotificationStack.Children.Insert(0, new NewMessageNotification(message));
+                }
+                else
+                {
+                    NotificationStack.Children.Insert(0, new NewMessageNotification(message, temp.NotificationCount + 1));
+                    NotificationStack.Children.Remove(temp);
+                }
             }
         }
 
@@ -306,7 +322,7 @@ namespace UnstuckMEUserGUI
             if ((UnstuckME.CurrentChatSession.ChatID != message.ChatID) || (MainFrame.Content != UnstuckME.Pages.ChatPage))
             {
                 UnstuckME.Pages.ChatPage.AddMessage(message, file);
-                NotificationStack.Children.Insert(0, new NewMessageNotification(message, ref UnstuckME.Pages, this));
+                NotificationStack.Children.Insert(0, new NewMessageNotification(message));
             }
         }
 

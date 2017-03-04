@@ -47,11 +47,11 @@ namespace UnstuckMEUserGUI
             temp.SenderID = UnstuckME.User.UserID;
             temp.Username = UnstuckME.User.FirstName;
             temp.UsersInConvo = new List<int>();
+            UnstuckME.CurrentChatSession.Users.Add(Contact);
             foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
             {
                 temp.UsersInConvo.Add(user.UserID);
             }
-            UnstuckME.CurrentChatSession.Users.Add(Contact);
             UnstuckME.Server.SendMessage(temp);
             UnstuckME.Pages.ChatPage.AddMessage(temp);
             //Removes Sticker From Stack Panel
