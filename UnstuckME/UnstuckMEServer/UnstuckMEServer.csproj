@@ -264,11 +264,11 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <EntityDeploy Include="UnstuckME_DB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UnstuckME_DB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="packages.config" />
     <None Include="UnstuckME_DB.edmx.diagram">
       <DependentUpon>UnstuckME_DB.edmx</DependentUpon>
     </None>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UnstuckME_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="UnstuckME_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Chat">
           <Key>
             <PropertyRef Name="ChatID" />
@@ -664,6 +664,9 @@
         </Function>
         <Function Name="GetUsersOverallStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="starrank" Type="float" Mode="In" />
+        </Function>
+        <Function Name="GetUsersThatCanTutorASticker" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="inStickerID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetUserStudentReviews_RankASC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
@@ -1615,6 +1618,9 @@
           </FunctionImport>
           <FunctionImport Name="GetUsersOverallStarRank" ReturnType="Collection(UnstuckME_DBModel.GetUsersOverallStarRank_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="GetUsersThatCanTutorASticker" ReturnType="Collection(Int32)">
+            <Parameter Name="inStickerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserStudentReviews_RankASC" ReturnType="Collection(UnstuckME_DBModel.GetUserStudentReviews_RankASC_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
@@ -2850,6 +2856,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUsersThatCanTutorASticker" FunctionName="UnstuckME_DBModel.Store.GetUsersThatCanTutorASticker" />
           <FunctionImportMapping FunctionImportName="GetUserStudentReviews_RankASC" FunctionName="UnstuckME_DBModel.Store.GetUserStudentReviews_RankASC">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUserStudentReviews_RankASC_Result">
@@ -3081,7 +3088,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

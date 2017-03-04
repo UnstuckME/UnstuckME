@@ -88,20 +88,16 @@ namespace UnstuckMEInterfaces
         public async void CheckForNewStickers()
         {
             _StickerList = new ConcurrentQueue<UnstuckMEBigSticker>();
-
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            UnstuckMEBigSticker temp;
+            while (true)
             {
-                while(true)
+                if (_StickerList.Count != 0)
                 {
-                    if(_StickerList.Count != 0)
-                    {
-                        UnstuckMEBigSticker temp;// = _StickerList.First();
-                        _StickerList.TryDequeue(out temp);
-                        await Task.Factory.StartNew(() => SendStickerToClients(temp));
-                        //_StickerList.Remove(_StickerList.First());
-                    }
+                    _StickerList.TryDequeue(out temp);
+                    await Task.Factory.StartNew(() => SendStickerToClients(temp));
                 }
             }
+
         }
 
         public void SendStickerToClients(UnstuckMEBigSticker inSticker)
@@ -118,11 +114,16 @@ namespace UnstuckMEInterfaces
             s.StudentRanking = inSticker.StudentRanking;
             try
             {
-                foreach (var client in _connectedClients)
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    if (client.Key != inSticker.StudentID)
+                    var tutors = db.GetUsersThatCanTutorASticker(s.StickerID);
+
+                    foreach (var tutor in tutors)
                     {
-                        client.Value.connection.RecieveNewSticker(s);
+                        if(_connectedClients.ContainsKey(tutor.Value))
+                        {
+                            _connectedClients[tutor.Value].connection.RecieveNewSticker(s);
+                        }
                     }
                 }
             }
@@ -981,7 +982,8 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var stickerID = db.CreateSticker(newSticker.ProblemDescription, newSticker.Class.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.TimeoutInt).First();
-                    if(stickerID.Value == 0)
+
+                    if (stickerID.Value == 0)
                     {
                         throw new Exception("Create Sticker Failed, Returned sticker ID = 0");
                     }
@@ -992,7 +994,7 @@ namespace UnstuckMEInterfaces
                     if (newSticker.AttachedOrganizations.Count != 0)
                     {
                         foreach (int orgID in newSticker.AttachedOrganizations)
-                            db.AddOrgToSticker(newSticker.StickerID, orgID);
+                            db.AddOrgToSticker(retstickerID, orgID);
                     }
                     newSticker.StickerID = retstickerID;
                     _StickerList.Enqueue(newSticker);

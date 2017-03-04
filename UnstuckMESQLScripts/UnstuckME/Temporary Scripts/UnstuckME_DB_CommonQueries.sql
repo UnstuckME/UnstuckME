@@ -7,6 +7,8 @@ go
 /**************************************************************************
 * Drop existing stored procedures
 **************************************************************************/
+if object_id('GetUsersThatCanTutorASticker') is not null
+	drop procedure GetUsersThatCanTutorASticker;
 if object_id('GetSchoolName') is not null
 	drop procedure GetSchoolName;
 if object_id('InitialStickerPull') is not null
@@ -61,7 +63,6 @@ if object_id('GetActiveStickers_ClassASC') is not null
 	drop procedure GetActiveStickers_ClassASC;
 if object_id('GetActiveStickers_ClassDESC') is not null
 	drop procedure GetActiveStickers_ClassDESC;
-
 if object_id('GetActiveStickersWithOrganization_OrgClassASC') is not null
 	drop procedure GetActiveStickersWithOrganization_OrgClassASC;
 if object_id('GetActiveStickersWithOrganization_OrgDESC') is not null
@@ -70,17 +71,14 @@ if object_id('GetActiveStickersWithOrganization_ClassDESC') is not null
 	drop procedure GetActiveStickersWithOrganization_ClassDESC;
 if object_id('GetActiveStickersWithOrganization_OrgClassDESC') is not null
 	drop procedure GetActiveStickersWithOrganization_OrgClassDESC;
-
 if object_id('GetResolvedStickers_ClassASC') is not null
 	drop procedure GetResolvedStickers_ClassASC;
 if object_id('GetResolvedStickers_ClassDESC') is not null
 	drop procedure GetResolvedStickers_ClassDESC;
-
 if object_id('GetTimedOutStickers_ClassASC') is not null
 	drop procedure GetTimedOutStickers_ClassASC;
 if object_id('GetTimedOutStickers_ClassDESC') is not null
 	drop procedure GetTimedOutStickers_ClassDESC;
-
 if object_id('GetUsersOverallStarRank') is not null
 	drop procedure GetUsersOverallStarRank;
 if object_id('GetUserAvgStudentStarRank') is not null
@@ -99,17 +97,14 @@ if object_id('GetUserPasswordAndSalt') is not null
 	drop procedure GetUserPasswordAndSalt;
 if object_id('GetUserFriends') is not null
 	drop procedure GetUserFriends;
-
 if object_id('GetUserStudentReviews_RankASC') is not null
 	drop procedure GetUserStudentReviews_RankASC;
 if object_id('GetUserStudentReviews_RankDESC') is not null
 	drop procedure GetUserStudentReviews_RankDESC;
-
 if object_id('GetUserTutorReviews_RankASC') is not null
 	drop procedure GetUserTutorReviews_RankASC;
 if object_id('GetUserTutorReviews_RankDESC') is not null
 	drop procedure GetUserTutorReviews_RankDESC;
-
 if object_id('GetCourseCodes') is not null
 	drop procedure GetCourseCodes;
 if object_id('GetCourseIDByCodeAndNumber') is not null
@@ -118,15 +113,12 @@ if object_id('GetCourseNameByCodeAndNumber') is not null
 	drop procedure GetCourseNameByCodeAndNumber;
 if object_id('GetCourseNumberByCourseCode') is not null
 	drop procedure GetCourseNumberByCourseCode;
-
 if object_id('GetReportsSubmittedByUser') is not null
 	drop procedure GetReportsSubmittedByUser;
-
 if object_id('GetUserSubmittedStickers_ClassASC') is not null
 	drop procedure GetUserSubmittedStickers_ClassASC;
 if object_id('GetUserSubmittedStickers_ClassDESC') is not null
 	drop procedure GetUserSubmittedStickers_ClassDESC;
-
 if object_id('GetUserTutoredStickers_ClassASC') is not null
 	drop procedure GetUserTutoredStickers_ClassASC;
 if object_id('GetUserTutoredStickers_ClassDESC') is not null
@@ -157,18 +149,62 @@ CREATE PROC [dbo].[InitialStickerPull]
 )
 AS
 	BEGIN
-		SELECT DISTINCT Sticker.StickerID, ProblemDescription,b.AverageStudentRank as StudentRanking, Classes.CourseCode, Classes.CourseName, Classes.CourseNumber, Sticker.ClassID, ChatID, StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout FROM Sticker
+		SELECT * From 
+		(SELECT DISTINCT Sticker.StickerID, ProblemDescription, c.AverageStudentRank as StudentRanking, Classes.CourseCode, Classes.CourseName, Classes.CourseNumber, Sticker.ClassID, ChatID, StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout 
+		FROM Sticker 
+		JOIN UserProfile as c ON Sticker.StudentID = c.UserID               /*Gets Student Profile*/
 		JOIN Classes ON Sticker.ClassID = Classes.ClassID
 		JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
-		JOIN UserProfile as a ON UserToClass.UserID = a.UserID
-		JOIN UserProfile as b ON Sticker.StudentID = b.UserID
-		JOIN OmToUser ON OmToUser.UserID = a.UserID
-		FULL JOIN StickerToMentor ON Sticker.StickerID = StickerToMentor.StickerID			
+		JOIN UserProfile as a ON UserToClass.UserID = @InUserID
+		JOIN OmToUser ON OmToUser.UserID = @InUserID
+		FULL JOIN StickerToMentor ON Sticker.StickerID = StickerToMentor.StickerID				
 		WHERE	(Sticker.TutorID IS NULL) 
 				AND a.UserID = @InUserID
-				AND Sticker.StudentID != a.UserID
+				AND Sticker.StudentID != @InUserID
 				AND a.AverageTutorRank >= Sticker.MinimumStarRanking
 				AND Sticker.Timeout > GETDATE()
+				AND StickerToMentor.MentorID = OmToUser.MentorID) AS Result1
+		UNION
+		SELECT DISTINCT Sticker.StickerID, ProblemDescription, c.AverageStudentRank as StudentRanking, Classes.CourseCode, Classes.CourseName, Classes.CourseNumber, Sticker.ClassID, ChatID, StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout
+		FROM Sticker
+		JOIN UserProfile as c ON Sticker.StudentID = c.UserID               /*Gets Student Profile*/
+		JOIN Classes ON Sticker.ClassID = Classes.ClassID
+		JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
+		JOIN UserProfile as a ON UserToClass.UserID = @InUserID
+		FULL JOIN StickerToMentor ON StickerToMentor.StickerID = Sticker.StickerID
+		WHERE (StickerToMentor.StickerID is NULL)
+				AND (Sticker.TutorID IS NULL) 
+				AND a.UserID = @InUserID
+				AND Sticker.StudentID != @InUserID
+				AND a.AverageTutorRank >= Sticker.MinimumStarRanking
+				AND Sticker.Timeout > GETDATE()
+	END
+GO
+
+/**************************************************************************
+* Pull All Users That Can Tutor a Sticker (Tests If Tutoring Filter Is Applied)
+**************************************************************************/
+CREATE PROC GetUsersThatCanTutorASticker
+(
+	@inStickerID INT
+)
+AS
+	BEGIN /*IF TUTORING FILTER IS APPLIED*/
+		IF EXISTS (SELECT * FROM StickerToMentor JOIN Sticker ON Sticker.StickerID = StickerToMentor.StickerID WHERE Sticker.StickerID = @inStickerID)
+			SELECT DISTINCT UserProfile.UserID FROM Sticker
+			JOIN StickerToMentor AS B ON B.StickerID = Sticker.StickerID
+			JOIN Classes ON Sticker.ClassID = Classes.ClassID
+			JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
+			JOIN UserProfile ON UserToClass.UserID = UserProfile.UserID
+			JOIN OmToUser ON UserProfile.UserID = OmToUser.UserID
+			JOIN StickerToMentor AS a ON B.MentorID = OmToUser.MentorID
+			WHERE Sticker.StickerID = @inStickerID AND UserProfile.AverageTutorRank >= Sticker.MinimumStarRanking	AND UserProfile.UserID != Sticker.StudentID
+		ELSE /*NO TUTORING FILTER*/
+			SELECT DISTINCT UserProfile.UserID FROM Sticker
+			JOIN Classes ON Classes.ClassID = Sticker.ClassID
+			JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
+			JOIN UserProfile ON UserToClass.UserID = UserProfile.UserID
+			WHERE Sticker.StickerID = @inStickerID AND UserProfile.AverageTutorRank >= Sticker.MinimumStarRanking AND UserProfile.UserID != Sticker.StudentID
 	END
 GO
 
