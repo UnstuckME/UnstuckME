@@ -22,17 +22,55 @@ namespace UnstuckMEUserGUI
     public partial class UnstuckMEMessageBox : Window
     {
         private UnstuckMEBox _BoxStyle;
-
-        public UnstuckMEMessageBox(UnstuckMEBox BoxStyle, string DisplayMessage, string BoxTitle)
+        private UnstuckMEBoxImage _BoxImage;
+        //WhiteFill Warning: Height = 40 Width = 20 Margin="45,10,0,0"
+        //WhiteFill Error & Info: Margin="40,0,0,0" Width="30" Height="40"
+        public UnstuckMEMessageBox(UnstuckMEBox BoxStyle, string DisplayMessage, string BoxTitle, UnstuckMEBoxImage BoxImage)
         {
+            Uri uri = new Uri("pack://application:,,,/Resources/Box/Error.png");
             _BoxStyle = BoxStyle;
+            _BoxImage = BoxImage;
             InitializeComponent();
-            ShowBox(BoxStyle, DisplayMessage, BoxTitle);   
+            ShowBox(BoxStyle, DisplayMessage, BoxTitle, BoxImage);   
         }
 
         //Legend: 0 - ShutdownAndRestart Application, 1 - OK and Cancel Box, 
-        void ShowBox(UnstuckMEBox boxStyle, string message, string title)
+        void ShowBox(UnstuckMEBox boxStyle, string message, string title, UnstuckMEBoxImage boxImage)
         {
+            switch(boxImage)
+            {
+                case UnstuckMEBoxImage.Error:
+                    {
+                        ImageWhiteFill.Height = 40;
+                        ImageWhiteFill.Width = 30;
+                        ImageWhiteFill.Margin = new Thickness(40, 0, 0, 0);
+                        Uri uri = new Uri("pack://application:,,,/Resources/Box/Error.png");
+                        BitmapImage bitmap = new BitmapImage(uri);
+                        ImageMessageBox.Source = bitmap;
+                        break;
+                    }
+                case UnstuckMEBoxImage.Information:
+                    {
+                        ImageWhiteFill.Height = 40;
+                        ImageWhiteFill.Width = 30;
+                        ImageWhiteFill.Margin = new Thickness(40, 0, 0, 0);
+                        Uri uri = new Uri("pack://application:,,,/Resources/Box/Info.png");
+                        BitmapImage bitmap = new BitmapImage(uri);
+                        ImageMessageBox.Source = bitmap;
+                        break;
+                    }
+                case UnstuckMEBoxImage.Warning:
+                    {
+                        ImageWhiteFill.Height = 40;
+                        ImageWhiteFill.Width = 20;
+                        ImageWhiteFill.Margin = new Thickness(45, 10, 0, 0);
+                        Uri uri = new Uri("pack://application:,,,/Resources/Box/Warning.png");
+                        BitmapImage bitmap = new BitmapImage(uri);
+                        ImageMessageBox.Source = bitmap;
+                        break;
+                    }
+            }
+
             switch(boxStyle)
             {
                 case UnstuckMEBox.Shutdown:

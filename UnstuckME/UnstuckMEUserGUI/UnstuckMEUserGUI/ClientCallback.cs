@@ -30,7 +30,7 @@ namespace UnstuckMEUserGUI
         //Forces The Cient to close with a messagebox popup.
         public void ForceClose()
         {
-            UnstuckMEMessageBox messageBox = new UnstuckMEMessageBox(UnstuckMEBox.Shutdown, "UnstuckME Server has shutdown. Please Contact Your Server Administrator", "Server Shutdown");
+            UnstuckMEMessageBox messageBox = new UnstuckMEMessageBox(UnstuckMEBox.Shutdown, "UnstuckME Server has shutdown. Please Contact Your Server Administrator", "Server Shutdown", UnstuckMEBoxImage.Error);
             messageBox.Show();
         }
 

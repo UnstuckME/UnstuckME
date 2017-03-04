@@ -14,6 +14,11 @@ namespace UnstuckME_Classes
     {
         Shutdown, OKCancel, OK, YesNo, YesNoCancel
     }
+
+    public enum UnstuckMEBoxImage
+    {
+        Error, Warning, Information
+    }
     public class UserInfo
     {
         public int UserID { get; set; }

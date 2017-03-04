@@ -553,6 +553,9 @@
     <Resource Include="Resources\Minimize\MinimizeRed.png" />
     <Resource Include="Resources\Maximize\MaximizeBlue.png" />
     <Resource Include="Resources\Maximize\MaximizeRed.png" />
+    <Resource Include="Resources\Box\Error.png" />
+    <Resource Include="Resources\Box\Info.png" />
+    <Resource Include="Resources\Box\Warning.png" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>

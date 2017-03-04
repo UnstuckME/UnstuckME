@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UnstuckMEMessageBox" MaxWidth="500" MinWidth="500" Topmost="True" SizeToContent="Height"
-        Width="500" Background="DimGray" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="UnstuckMEMessageBox" MaxWidth="550" MinWidth="550" Topmost="True" SizeToContent="Height"
+        Width="550" Background="DimGray" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Border BorderBrush="LightGray" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*" MinHeight="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid x:Name="GridTitleBar" Grid.Column="0" Grid.Row="0" Background="#FF323232">
-                <Label x:Name="LabelTitle" FontSize="18" FontWeight="Medium" Content="UnstuckME Message Box" Foreground="WhiteSmoke" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Left"></Label>
+                <Label x:Name="LabelTitle" FontSize="18" Margin="10,0,0,0" FontWeight="Medium" Content="UnstuckME Message Box" Foreground="WhiteSmoke" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Left"></Label>
                 <Border x:Name="ButtonClose" Cursor="Hand" MouseEnter="ButtonClose_MouseEnter" MouseLeave="ButtonClose_MouseLeave" MouseLeftButtonDown="ButtonClose_MouseLeftButtonDown" Width="35" Height="35" CornerRadius="6" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Background="LightGray">
                     <Image Source="/Resources/Close/CloseRed.png" VerticalAlignment="Center" Stretch="UniformToFill" HorizontalAlignment="Center"  Height="33" Width="33" ></Image>
                 </Border>
@@ -24,11 +24,16 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1" x:Name="GridTextField">
-                <TextBox x:Name="TextBoxMessage" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontWeight="Medium" FontSize="18" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" Margin="20,10,20,10" Text="KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKdddddddddddddddddddddddddddddddddddddddddddddKKK" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBox>
+                <TextBox x:Name="TextBoxMessage" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontWeight="Medium" FontSize="18" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" Margin="100,10,20,10" Text="KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKdddddddddddddddddddddddddddddddddddddddddddddKKK" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBox>
+                <Rectangle x:Name="ImageWhiteFill" Width="30" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0" Fill="White"></Rectangle>
+                <Border Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
+                    <Image x:Name="ImageMessageBox" Source="/Resources/Box/Info.png" />
+                </Border>
+                
             </Grid>
             <Grid x:Name="ButtonGrid" Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="208"/>
+                    <ColumnDefinition Width="258"/>
                     <ColumnDefinition Width="94"/>
                     <ColumnDefinition Width="94"/>
                     <ColumnDefinition Width="94"/>

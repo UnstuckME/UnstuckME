@@ -40,6 +40,9 @@ namespace UnstuckMEUserGUI
 		public LoginWindow()
 		{
 			InitializeComponent();
+            UnstuckME.Blue = buttonCreateAccount.Background;
+            UnstuckME.Red = buttonCancel.Background;
+      
 			m_orginalSchoolName = m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
 
 			try
@@ -629,14 +632,14 @@ namespace UnstuckMEUserGUI
 			try
 			{
 				verification_code = UnstuckME.Server.SendEmail(textBoxCreateEmailAddress.Text, textBoxCreateFirstName.Text);
-				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Please check your email for the verification code to verify your account", "Verification Code Sent");
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Please check your email for the verification code to verify your account", "Verification Code Sent", UnstuckMEBoxImage.Information);
 				messagebox.ShowDialog();
 			}
 			catch (Exception ex)
 			{
 				AccountVerificationCanvas_MouseDown(sender, e as MouseEventArgs);
 				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
-				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "An error occured trying to connect to the server. If this problem persists, please contact an UnstuckME server administrator to resolve this issue. Thank you.", "Email Verification Code Failed to Send");
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "An error occured trying to connect to the server. If this problem persists, please contact an UnstuckME server administrator to resolve this issue. Thank you.", "Email Verification Code Failed to Send", UnstuckMEBoxImage.Warning);
 				messagebox.ShowDialog();
 			}
 		}
