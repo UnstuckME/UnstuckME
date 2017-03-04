@@ -12,9 +12,6 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void GetMessage();
 
-		[OperationContract]
-        bool isOnline();
-
         [OperationContract]
         void GetUpdate(int value, UnstuckME_Classes.UserInfo user);
     }

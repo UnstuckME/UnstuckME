@@ -83,8 +83,8 @@ CREATE TABLE UserProfile
 	UserPassword			NVARCHAR(256)		NOT NULL,
 	AverageStudentRank		FLOAT				DEFAULT(5)  NOT NULL,
 	AverageTutorRank		FLOAT				DEFAULT(5)	NOT NULL,
-	TotalTutorReviews       INT                 DEFAULT(1)  NOT NULL,
-	TotalStudentReviews		INT					DEFAULT(1)  NOT NULL,
+	TotalTutorReviews       INT                 DEFAULT(0)  NOT NULL,
+	TotalStudentReviews		INT					DEFAULT(0)  NOT NULL,
 	Privileges				INT					DEFAULT(3)	NOT NULL,
 	Salt					NVARCHAR(256)		NOT NULL UNIQUE)
 GO

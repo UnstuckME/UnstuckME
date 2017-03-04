@@ -107,22 +107,7 @@
     <Compile Include="Friend.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_ClassDESC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_OrgClassASC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_OrgClassDESC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_OrgDESC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickers_ClassASC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickers_ClassDESC_Result.cs">
+    <Compile Include="GetActiveStickers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllMembersOfAChat_Result.cs">
@@ -161,19 +146,13 @@
     <Compile Include="GetReportsSubmittedByUser_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetResolvedStickers_ClassASC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetResolvedStickers_ClassDESC_Result.cs">
+    <Compile Include="GetResolvedStickers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetSchoolServerInfo_Result.cs">
       <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetTimedOutStickers_ClassASC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetTimedOutStickers_ClassDESC_Result.cs">
+    <Compile Include="GetTimedOutStickers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserClasses_Result.cs">
@@ -194,28 +173,16 @@
     <Compile Include="GetUsersOverallStarRank_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserStudentReviews_RankASC_Result.cs">
+    <Compile Include="GetUserStudentReviews_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserStudentReviews_RankDESC_Result.cs">
+    <Compile Include="GetUserSubmittedStickers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserSubmittedStickers_ClassASC_Result.cs">
+    <Compile Include="GetUserTutoredStickers_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserSubmittedStickers_ClassDESC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserTutoredStickers_ClassASC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserTutoredStickers_ClassDESC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserTutorReviews_RankASC_Result.cs">
-      <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserTutorReviews_RankDESC_Result.cs">
+    <Compile Include="GetUserTutorReviews_Result.cs">
       <DependentUpon>UnstuckMEServer_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="InitialStickerPull_Result.cs">

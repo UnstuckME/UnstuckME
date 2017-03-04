@@ -76,6 +76,7 @@ namespace UnstuckMEUserGUI
             UnstuckME.Pages = new UnstuckMEPages();
             UnstuckME.UserProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.User.UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
         }
+
         private void LoadStickerPageAsync()
         {
             this.Dispatcher.Invoke(() =>
@@ -86,12 +87,14 @@ namespace UnstuckMEUserGUI
                 {
                     UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
                 }
-                UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickersASC(UnstuckME.User.UserID, 0, 100, 0, null);
+
+				UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickers(UnstuckME.User.UserID, null, 0, null);
                 foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.MyStickersList)
                 {
                     UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
                 }
-                UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickersASC(UnstuckME.User.UserID, 0, 100, 0, null);
+
+				UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickers(UnstuckME.User.UserID, null, 0, null);
                 foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
                 {
                     UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
@@ -437,7 +440,7 @@ namespace UnstuckMEUserGUI
                 tempSticker.ProblemDescription = sticker.ProblemDescription;
                 tempSticker.StickerID = sticker.StickerID;
                 tempSticker.StudentID = sticker.StudentID;
-                tempSticker.Timeout = Convert.ToInt32((DateTime.Now - sticker.Timeout).TotalSeconds);
+				tempSticker.Timeout = sticker.Timeout;//Convert.ToInt32((DateTime.Now - sticker.Timeout).TotalSeconds);
                 tempSticker.TutorID = UnstuckME.User.UserID;
                 UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(tempSticker));
                 UnstuckME.Pages.ChatPage.AddMessage(temp);

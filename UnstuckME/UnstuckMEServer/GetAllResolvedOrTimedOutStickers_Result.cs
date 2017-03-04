@@ -13,7 +13,6 @@ namespace UnstuckMEServer
     
     public partial class GetAllResolvedOrTimedOutStickers_Result
     {
-        public Nullable<long> Row { get; set; }
         public string DisplayFName { get; set; }
         public string DisplayLName { get; set; }
         public int StickerID { get; set; }

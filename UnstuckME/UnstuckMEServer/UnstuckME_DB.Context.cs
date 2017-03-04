@@ -101,19 +101,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminPullReportsForOptionalUser_Result>("AdminPullReportsForOptionalUser", useridParameter);
         }
     
-        public virtual int CheckIfAChatBetweenTwoUsersExists(Nullable<int> studentID, Nullable<int> tutorID)
-        {
-            var studentIDParameter = studentID.HasValue ?
-                new ObjectParameter("studentID", studentID) :
-                new ObjectParameter("studentID", typeof(int));
-    
-            var tutorIDParameter = tutorID.HasValue ?
-                new ObjectParameter("tutorID", tutorID) :
-                new ObjectParameter("tutorID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckIfAChatBetweenTwoUsersExists", studentIDParameter, tutorIDParameter);
-        }
-    
         public virtual int ClearReviewDescriptionByReviewID(Nullable<int> reviewID)
         {
             var reviewIDParameter = reviewID.HasValue ?
@@ -403,65 +390,7 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUserProfileByUserID", userIDParameter);
         }
     
-        public virtual ObjectResult<GetActiveStickers_ClassASC_Result> GetActiveStickers_ClassASC(Nullable<int> loggedin_user, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
-        {
-            var loggedin_userParameter = loggedin_user.HasValue ?
-                new ObjectParameter("loggedin_user", loggedin_user) :
-                new ObjectParameter("loggedin_user", typeof(int));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_ClassASC_Result>("GetActiveStickers_ClassASC", loggedin_userParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
-        }
-    
-        public virtual ObjectResult<GetActiveStickers_ClassDESC_Result> GetActiveStickers_ClassDESC(Nullable<int> loggedin_user, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
-        {
-            var loggedin_userParameter = loggedin_user.HasValue ?
-                new ObjectParameter("loggedin_user", loggedin_user) :
-                new ObjectParameter("loggedin_user", typeof(int));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_ClassDESC_Result>("GetActiveStickers_ClassDESC", loggedin_userParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
-        }
-    
-        public virtual ObjectResult<GetActiveStickersWithOrganization_ClassDESC_Result> GetActiveStickersWithOrganization_ClassDESC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetActiveStickers_Result> GetActiveStickers(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<int> userid, Nullable<int> classid)
         {
             var loggedin_userParameter = loggedin_user.HasValue ?
                 new ObjectParameter("loggedin_user", loggedin_user) :
@@ -475,14 +404,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
                 new ObjectParameter("userid", typeof(int));
@@ -491,106 +412,7 @@ namespace UnstuckMEServer
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_ClassDESC_Result>("GetActiveStickersWithOrganization_ClassDESC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
-        }
-    
-        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgClassASC_Result> GetActiveStickersWithOrganization_OrgClassASC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
-        {
-            var loggedin_userParameter = loggedin_user.HasValue ?
-                new ObjectParameter("loggedin_user", loggedin_user) :
-                new ObjectParameter("loggedin_user", typeof(int));
-    
-            var organizationParameter = organization.HasValue ?
-                new ObjectParameter("organization", organization) :
-                new ObjectParameter("organization", typeof(int));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgClassASC_Result>("GetActiveStickersWithOrganization_OrgClassASC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
-        }
-    
-        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgClassDESC_Result> GetActiveStickersWithOrganization_OrgClassDESC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
-        {
-            var loggedin_userParameter = loggedin_user.HasValue ?
-                new ObjectParameter("loggedin_user", loggedin_user) :
-                new ObjectParameter("loggedin_user", typeof(int));
-    
-            var organizationParameter = organization.HasValue ?
-                new ObjectParameter("organization", organization) :
-                new ObjectParameter("organization", typeof(int));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgClassDESC_Result>("GetActiveStickersWithOrganization_OrgClassDESC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
-        }
-    
-        public virtual ObjectResult<GetActiveStickersWithOrganization_OrgDESC_Result> GetActiveStickersWithOrganization_OrgDESC(Nullable<int> loggedin_user, Nullable<int> organization, Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
-        {
-            var loggedin_userParameter = loggedin_user.HasValue ?
-                new ObjectParameter("loggedin_user", loggedin_user) :
-                new ObjectParameter("loggedin_user", typeof(int));
-    
-            var organizationParameter = organization.HasValue ?
-                new ObjectParameter("organization", organization) :
-                new ObjectParameter("organization", typeof(int));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersWithOrganization_OrgDESC_Result>("GetActiveStickersWithOrganization_OrgDESC", loggedin_userParameter, organizationParameter, starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_Result>("GetActiveStickers", loggedin_userParameter, organizationParameter, starrankParameter, useridParameter, classidParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> GetAllChatsAUserIsPartOF(Nullable<int> userid)
@@ -616,19 +438,15 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOrganizations_Result>("GetAllOrganizations");
         }
     
-        public virtual ObjectResult<GetAllResolvedOrTimedOutStickers_Result> GetAllResolvedOrTimedOutStickers(Nullable<int> userID, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank, Nullable<int> classID)
+        public virtual ObjectResult<GetAllResolvedOrTimedOutStickers_Result> GetAllResolvedOrTimedOutStickers(Nullable<int> userID, Nullable<int> organization, Nullable<double> starrank, Nullable<int> classID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("userID", userID) :
                 new ObjectParameter("userID", typeof(int));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
+            var organizationParameter = organization.HasValue ?
+                new ObjectParameter("organization", organization) :
+                new ObjectParameter("organization", typeof(int));
     
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
@@ -638,7 +456,7 @@ namespace UnstuckMEServer
                 new ObjectParameter("classID", classID) :
                 new ObjectParameter("classID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllResolvedOrTimedOutStickers_Result>("GetAllResolvedOrTimedOutStickers", userIDParameter, startrowParameter, endrowParameter, starrankParameter, classIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllResolvedOrTimedOutStickers_Result>("GetAllResolvedOrTimedOutStickers", userIDParameter, organizationParameter, starrankParameter, classIDParameter);
         }
     
         public virtual ObjectResult<GetAllStickers_Result> GetAllStickers()
@@ -749,19 +567,15 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetReportsSubmittedByUser_Result>("GetReportsSubmittedByUser", useridParameter);
         }
     
-        public virtual ObjectResult<GetResolvedStickers_ClassASC_Result> GetResolvedStickers_ClassASC(Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetResolvedStickers_Result> GetResolvedStickers(Nullable<double> starrank, Nullable<int> organization, Nullable<int> userid, Nullable<int> classid)
         {
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
+            var organizationParameter = organization.HasValue ?
+                new ObjectParameter("organization", organization) :
+                new ObjectParameter("organization", typeof(int));
     
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
@@ -771,22 +585,18 @@ namespace UnstuckMEServer
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResolvedStickers_ClassASC_Result>("GetResolvedStickers_ClassASC", starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResolvedStickers_Result>("GetResolvedStickers", starrankParameter, organizationParameter, useridParameter, classidParameter);
         }
     
-        public virtual ObjectResult<GetResolvedStickers_ClassDESC_Result> GetResolvedStickers_ClassDESC(Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetTimedOutStickers_Result> GetTimedOutStickers(Nullable<double> starrank, Nullable<int> organization, Nullable<int> userid, Nullable<int> classid)
         {
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
+            var organizationParameter = organization.HasValue ?
+                new ObjectParameter("organization", organization) :
+                new ObjectParameter("organization", typeof(int));
     
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
@@ -796,57 +606,7 @@ namespace UnstuckMEServer
                 new ObjectParameter("classid", classid) :
                 new ObjectParameter("classid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResolvedStickers_ClassDESC_Result>("GetResolvedStickers_ClassDESC", starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
-        }
-    
-        public virtual ObjectResult<GetTimedOutStickers_ClassASC_Result> GetTimedOutStickers_ClassASC(Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
-        {
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTimedOutStickers_ClassASC_Result>("GetTimedOutStickers_ClassASC", starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
-        }
-    
-        public virtual ObjectResult<GetTimedOutStickers_ClassDESC_Result> GetTimedOutStickers_ClassDESC(Nullable<double> starrank, Nullable<short> startrow, Nullable<short> endrow, Nullable<int> userid, Nullable<int> classid)
-        {
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTimedOutStickers_ClassDESC_Result>("GetTimedOutStickers_ClassDESC", starrankParameter, startrowParameter, endrowParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTimedOutStickers_Result>("GetTimedOutStickers", starrankParameter, organizationParameter, useridParameter, classidParameter);
         }
     
         public virtual ObjectResult<Nullable<double>> GetUserAvgStudentStarRank(Nullable<int> userid)
@@ -952,61 +712,28 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetUsersThatCanTutorASticker", inStickerIDParameter);
         }
     
-        public virtual ObjectResult<GetUserStudentReviews_RankASC_Result> GetUserStudentReviews_RankASC(Nullable<int> userid, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank)
+        public virtual ObjectResult<GetUserStudentReviews_Result> GetUserStudentReviews(Nullable<int> userid, Nullable<double> starrank)
         {
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
                 new ObjectParameter("userid", typeof(int));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserStudentReviews_RankASC_Result>("GetUserStudentReviews_RankASC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserStudentReviews_Result>("GetUserStudentReviews", useridParameter, starrankParameter);
         }
     
-        public virtual ObjectResult<GetUserStudentReviews_RankDESC_Result> GetUserStudentReviews_RankDESC(Nullable<int> userid, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank)
-        {
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserStudentReviews_RankDESC_Result>("GetUserStudentReviews_RankDESC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
-        }
-    
-        public virtual ObjectResult<GetUserSubmittedStickers_ClassASC_Result> GetUserSubmittedStickers_ClassASC(Nullable<int> userID, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank, Nullable<int> classID)
+        public virtual ObjectResult<GetUserSubmittedStickers_Result> GetUserSubmittedStickers(Nullable<int> userID, Nullable<int> organization, Nullable<double> starrank, Nullable<int> classID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("userID", userID) :
                 new ObjectParameter("userID", typeof(int));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
+            var organizationParameter = organization.HasValue ?
+                new ObjectParameter("organization", organization) :
+                new ObjectParameter("organization", typeof(int));
     
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
@@ -1016,22 +743,18 @@ namespace UnstuckMEServer
                 new ObjectParameter("classID", classID) :
                 new ObjectParameter("classID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserSubmittedStickers_ClassASC_Result>("GetUserSubmittedStickers_ClassASC", userIDParameter, startrowParameter, endrowParameter, starrankParameter, classIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserSubmittedStickers_Result>("GetUserSubmittedStickers", userIDParameter, organizationParameter, starrankParameter, classIDParameter);
         }
     
-        public virtual ObjectResult<GetUserSubmittedStickers_ClassDESC_Result> GetUserSubmittedStickers_ClassDESC(Nullable<int> userID, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank, Nullable<int> classID)
+        public virtual ObjectResult<GetUserTutoredStickers_Result> GetUserTutoredStickers(Nullable<int> userID, Nullable<int> organization, Nullable<double> starrank, Nullable<int> classID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("userID", userID) :
                 new ObjectParameter("userID", typeof(int));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
+            var organizationParameter = organization.HasValue ?
+                new ObjectParameter("organization", organization) :
+                new ObjectParameter("organization", typeof(int));
     
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
@@ -1041,99 +764,20 @@ namespace UnstuckMEServer
                 new ObjectParameter("classID", classID) :
                 new ObjectParameter("classID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserSubmittedStickers_ClassDESC_Result>("GetUserSubmittedStickers_ClassDESC", userIDParameter, startrowParameter, endrowParameter, starrankParameter, classIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutoredStickers_Result>("GetUserTutoredStickers", userIDParameter, organizationParameter, starrankParameter, classIDParameter);
         }
     
-        public virtual ObjectResult<GetUserTutoredStickers_ClassASC_Result> GetUserTutoredStickers_ClassASC(Nullable<int> userID, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank, Nullable<int> classID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var classIDParameter = classID.HasValue ?
-                new ObjectParameter("classID", classID) :
-                new ObjectParameter("classID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutoredStickers_ClassASC_Result>("GetUserTutoredStickers_ClassASC", userIDParameter, startrowParameter, endrowParameter, starrankParameter, classIDParameter);
-        }
-    
-        public virtual ObjectResult<GetUserTutoredStickers_ClassDESC_Result> GetUserTutoredStickers_ClassDESC(Nullable<int> userID, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank, Nullable<int> classID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var classIDParameter = classID.HasValue ?
-                new ObjectParameter("classID", classID) :
-                new ObjectParameter("classID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutoredStickers_ClassDESC_Result>("GetUserTutoredStickers_ClassDESC", userIDParameter, startrowParameter, endrowParameter, starrankParameter, classIDParameter);
-        }
-    
-        public virtual ObjectResult<GetUserTutorReviews_RankASC_Result> GetUserTutorReviews_RankASC(Nullable<int> userid, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank)
+        public virtual ObjectResult<GetUserTutorReviews_Result> GetUserTutorReviews(Nullable<int> userid, Nullable<double> starrank)
         {
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
                 new ObjectParameter("userid", typeof(int));
     
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
                 new ObjectParameter("starrank", typeof(double));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutorReviews_RankASC_Result>("GetUserTutorReviews_RankASC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
-        }
-    
-        public virtual ObjectResult<GetUserTutorReviews_RankDESC_Result> GetUserTutorReviews_RankDESC(Nullable<int> userid, Nullable<short> startrow, Nullable<short> endrow, Nullable<double> starrank)
-        {
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var startrowParameter = startrow.HasValue ?
-                new ObjectParameter("startrow", startrow) :
-                new ObjectParameter("startrow", typeof(short));
-    
-            var endrowParameter = endrow.HasValue ?
-                new ObjectParameter("endrow", endrow) :
-                new ObjectParameter("endrow", typeof(short));
-    
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutorReviews_RankDESC_Result>("GetUserTutorReviews_RankDESC", useridParameter, startrowParameter, endrowParameter, starrankParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutorReviews_Result>("GetUserTutorReviews", useridParameter, starrankParameter);
         }
     
         public virtual ObjectResult<InitialStickerPull_Result> InitialStickerPull(Nullable<int> inUserID)

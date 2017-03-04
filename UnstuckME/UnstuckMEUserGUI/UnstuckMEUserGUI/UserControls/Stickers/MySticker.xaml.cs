@@ -30,7 +30,7 @@ namespace UnstuckMEUserGUI
             Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
             LabelDescription.Content = Sticker.ProblemDescription;
-            LabelTimeout.Content = "Timeout: " + DateTime.Now.AddSeconds(Sticker.Timeout).ToLongDateString() + " " + DateTime.Now.AddSeconds(Sticker.Timeout).ToShortTimeString();
+			LabelTimeout.Content = "Timeout: " + Sticker.Timeout.ToLongDateString();//DateTime.Now.AddSeconds(Sticker.Timeout).ToLongDateString() + " " + DateTime.Now.AddSeconds(Sticker.Timeout).ToShortTimeString();
         }
 
         private void ButtonRemove_MouseEnter(object sender, MouseEventArgs e)

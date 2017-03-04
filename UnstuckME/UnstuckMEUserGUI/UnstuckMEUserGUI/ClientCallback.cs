@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using UnstuckMEInterfaces;
-using System.Threading;
-using System.Diagnostics;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
-    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
+	[CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ClientCallback : IClient
     {
+		/// <summary>
+		/// Adds a class to the user's GUI.
+		/// </summary>
+		/// <param name="inClass">The class to add to the user's GUI.</param>
         public void AddClasses(UserClass inClass)
         {
             try
@@ -27,25 +26,38 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        //Forces The Cient to close with a messagebox popup.
+		/// <summary>
+		/// Forces the client to close with a messagebox popup.
+		/// </summary>
         public void ForceClose()
         {
             UnstuckMEMessageBox messageBox = new UnstuckMEMessageBox(UnstuckMEBox.Shutdown, "UnstuckME Server has shutdown. Please Contact Your Server Administrator", "Server Shutdown", UnstuckMEBoxImage.Error);
             messageBox.Show();
         }
 
-        //This Will Update a users conversation if they are online and another user sends them a message.
+		/// <summary>
+		/// Updates a user's conversation if they are online and another user sends them a message.
+		/// </summary>
+		/// <param name="message">The message being sent to the user.</param>
         public void GetMessage(UnstuckMEMessage message)
         {
             Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatMessage(message);
-
         }
 
+		/// <summary>
+		/// Updates a user's conversation if they are online and another user sends them a file.
+		/// </summary>
+		/// <param name="message">The message being sent to the user.</param>
+		/// <param name="file">The file being sent to the user.</param>
 		public void GetFile(UnstuckMEMessage message, UnstuckMEFile file)
 		{
 			Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatFile(message, file);
 		}
 
+		/// <summary>
+		/// Removes a sticker from any online, qualified user's GUI.
+		/// </summary>
+		/// <param name="stickerID">The sticker to be removed.</param>
         public void RemoveGUISticker(int stickerID)
         {
             try
@@ -58,6 +70,10 @@ namespace UnstuckMEUserGUI
             }
         }
 
+		/// <summary>
+		/// Updates a user's list of stickers if they are online and meet the qualifications to see the newly submitted sticker.
+		/// </summary>
+		/// <param name="inSticker">The sticker being sent to the users.</param>
         public void RecieveNewSticker(UnstuckMEAvailableSticker inSticker)
         {
             try

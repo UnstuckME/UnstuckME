@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="be94e56a5a1d477ea17a0b9f554a36ff" Name="Diagram1">
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Chat" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Class" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Friend" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Message" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.OfficialMentor" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Picture" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Report" Width="1.5" PointX="10.5" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Review" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.ServerAdmin" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.Sticker" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.sysdiagram" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnstuckME_DBModel.UserProfile" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="3c06c0d0360f4ca289d12f94c92dc645" Name="Diagram1">
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Chat" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Class" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Friend" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Message" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.OfficialMentor" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Picture" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Report" Width="1.5" PointX="10.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Review" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.ServerAdmin" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.Sticker" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.sysdiagram" Width="1.5" PointX="8.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnstuckME_DBModel.UserProfile" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="UnstuckME_DBModel.FK__Messages__ChatID__79B62E57" ManuallyRouted="false" />
         <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__ChatID__146A2493" ManuallyRouted="false" />
         <AssociationConnector Association="UnstuckME_DBModel.FK__Sticker__ClassID__1281DC21" ManuallyRouted="false" />

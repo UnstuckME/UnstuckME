@@ -31,7 +31,7 @@ namespace UnstuckMEUserGUI
 			Server = OpenServer;
 			User = UserID;
 
-			UserClass _class = Server.GetCourseCode_Name_NumberByID(sticker.ClassID);
+			UserClass _class = Server.GetSingleClass(sticker.ClassID);
 			UserInfo user = Server.GetUserInfo(sticker.StudentID, null);
 
 			SubmittedByLabel.Content += user.FirstName + " " + user.LastName;

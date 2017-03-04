@@ -830,9 +830,9 @@ BEGIN
 		RETURN 1;
 	ELSE BEGIN
 		DECLARE @StudentReviews INT, @TutorReviews INT;
-		EXEC GetUserStudentReviews_RankASC @UserID;
+		EXEC GetUserStudentReviews @UserID;
 		SET @StudentReviews = @@ROWCOUNT
-		EXEC GetUserTutorReviews_RankASC @UserID;
+		EXEC GetUserTutorReviews @UserID;
 		SET @TutorReviews = @@ROWCOUNT;
 
 		UPDATE UserProfile

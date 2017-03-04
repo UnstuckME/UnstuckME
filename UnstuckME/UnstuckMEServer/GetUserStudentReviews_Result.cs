@@ -11,9 +11,8 @@ namespace UnstuckMEServer
 {
     using System;
     
-    public partial class GetUserTutorReviews_RankDESC_Result
+    public partial class GetUserStudentReviews_Result
     {
-        public Nullable<long> Row { get; set; }
         public int ReviewID { get; set; }
         public int StickerID { get; set; }
         public int ReviewerID { get; set; }

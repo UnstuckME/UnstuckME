@@ -130,13 +130,17 @@ namespace UnstuckME_Classes
         public int StickerID { get; set; }
         public string ProblemDescription { get; set; }
         public int ClassID { get; set; }
+		public string CourseCode { get; set; }
+		public string CourseName { get; set; }
+		public short CourseNumber { get; set; }
         public int ChatID { get; set; }
         public int StudentID { get; set; }
-        public int TutorID { get; set; }
+        public Nullable<int> TutorID { get; set; }
+		public double StudentRanking { get; set; }
         public float MinimumStarRanking { get; set; }
         public List<int> AttachedOrganizations { get; set; }
         public DateTime SubmitTime { get; set; }
-        public int Timeout { get; set; }
+        public DateTime Timeout { get; set; }
 
         public UnstuckMESticker()
         {
@@ -154,8 +158,7 @@ namespace UnstuckME_Classes
             MinimumStarRanking = Convert.ToSingle(s.MinimumStarRanking);
             AttachedOrganizations = s.AttachedOrganizations;
             SubmitTime = s.SubmitTime;
-            Timeout = s.TimeoutInt;
-
+            Timeout = s.SubmitTime.AddSeconds(s.TimeoutInt);
         }
     }
 
