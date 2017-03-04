@@ -125,7 +125,14 @@ namespace UnstuckMEUserGUI
                     converstion.Background = null;
                 }
             }
-
+            foreach (NewMessageNotification notification in UnstuckME.MainWindow.NotificationStack.Children.OfType<NewMessageNotification>())
+            {
+                if(notification.Message.ChatID == Chat.ChatID)
+                {
+                    UnstuckME.MainWindow.NotificationStack.Children.Remove(notification);
+                    return;
+                }
+            }
         }
     }
 }

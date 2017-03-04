@@ -295,7 +295,7 @@ namespace UnstuckMEUserGUI
                 NewMessageNotification temp = null; 
                 foreach (var notification in NotificationStack.Children.OfType<NewMessageNotification>())
                 {
-                    if(notification.Message.Username == message.Username)
+                    if(notification.Message.ChatID == message.ChatID)
                     {
                         temp = notification;
                     }
