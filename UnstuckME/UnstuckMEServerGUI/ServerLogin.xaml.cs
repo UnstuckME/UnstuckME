@@ -94,15 +94,15 @@ namespace UnstuckMEServerGUI
                                 {
                                     MainWindow mainWindow = new MainWindow(ref Admin);
                                     Application.Current.MainWindow = mainWindow;
-                                    Close();
-                                    mainWindow.Show();
+									mainWindow.Show();
+									Close();
                                 }
                                 else
                                 {
                                     ServerRunning window = new ServerRunning(ref Admin);
                                     Application.Current.MainWindow = window;
-                                    Close();
-                                    window.Show();
+									window.Show();
+									Close();
                                 }
                             }
                         }

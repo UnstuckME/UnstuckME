@@ -1,0 +1,51 @@
+﻿<Window x:Class="UnstuckMEServerGUI.ServerGuiSubWindow.EmailSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEServerGUI.ServerGuiSubWindow"
+        mc:Ignorable="d"
+        Title="EmailSettings" Height="270" Width="590" ContentRendered="Window_ContentRendered" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="EmailSettingsGrid" Visibility="Visible" IsEnabled="True" Height="{Binding ActualHeight, ElementName=ServerRunningGrid}" Width="{Binding ActualWidth, ElementName=ServerRunningGrid}" Background="DimGray">
+        <Label x:Name="labelDeliveryFormat" Content="Delivery Format: " Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,15,0,0" Foreground="White" />
+        <ComboBox x:Name="comboboxDeliveryFormat" SelectedIndex="-1" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="6,3,3,3" Margin="110,15,0,0">
+            <ComboBoxItem x:Name="itemSevenBit" Content="SevenBit" Width="151" VerticalContentAlignment="Center" Background="LightGray" BorderBrush="Gray" />
+            <ComboBoxItem x:Name="itemInternational" Content="International" Width="151" VerticalContentAlignment="Center" Background="LightGray" BorderBrush="Gray" />
+        </ComboBox>
+
+        <Label x:Name="labelDeliveryMethod" Content="Delivery Method: " Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="300,15,0,0" Foreground="White" />
+        <ComboBox x:Name="comboboxDeliveryMethod" SelectedIndex="-1" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="6,3,3,3" Margin="400,15,0,0">
+            <ComboBoxItem x:Name="itemNetwork" Content="Network" Height="25" Width="151" VerticalContentAlignment="Center" Background="LightGray" BorderBrush="Gray" />
+            <ComboBoxItem x:Name="itemPickupDirectoryFromIis" Content="Pickup Directory From IIS" Width="151" VerticalContentAlignment="Center" Background="LightGray" BorderBrush="Gray"
+                          Selected="checkboxSetSpecifiedPickupDirectory_Checked" Unselected="checkboxSetSpecifiedPickupDirectory_Unchecked" />
+            <ComboBoxItem x:Name="itemSpecifiedPickupDirectory" Content="Specified Pickup Directory" Width="151" VerticalContentAlignment="Center" Background="LightGray" BorderBrush="Gray"
+                          Selected="checkboxSetSpecifiedPickupDirectory_Checked" Unselected="checkboxSetSpecifiedPickupDirectory_Unchecked" />
+        </ComboBox>
+
+        <Label x:Name="labelSSL" Content="Enable SSL: " Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,50,0,0" Foreground="White" />
+        <CheckBox x:Name="checkboxSSL" Height="25" Width="16" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="110,50,0,0" />
+
+        <Label x:Name="labelUsername" Content="Username: " Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,85,0,0" Foreground="White" />
+        <TextBox x:Name="textboxUsername" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="110,85,0,0" />
+
+        <Label x:Name="labelPassword" Content="Password: " Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,120,0,0" Foreground="White" />
+        <PasswordBox x:Name="textboxPassword" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="110,120,0,0" />
+
+        <Label x:Name="labelHost" Content="Host: " Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="350,85,0,0" Foreground="White" />
+        <TextBox x:Name="textboxHost" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="400,85,0,0" />
+
+        <Label x:Name="labelPort" Content="Port: " Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="350,120,0,0" Foreground="White" />
+        <TextBox x:Name="textboxPort" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="400,120,0,0" />
+
+        <Label x:Name="labelSaveEmails" Content="Save Emails: " Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,155,0,0" Foreground="White" />
+        <CheckBox x:Name="checkboxSetSpecifiedPickupDirectory" Height="25" Width="16" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="110,155,0,0"
+                  Checked="checkboxSetSpecifiedPickupDirectory_Checked" Unchecked="checkboxSetSpecifiedPickupDirectory_Unchecked" />
+
+        <Label x:Name="labelSpecifiedPickupDirectory" Visibility="Hidden" Content="Directory To Save Emails: " Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,190,0,0" Foreground="White" />
+        <TextBox x:Name="textboxSpecifiedPickupDirectory" Visibility="Hidden" Height="25" Width="330" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="15,220,0,0" />
+        <Button x:Name="buttonPickupDirectoryBrowse" Visibility="Hidden" Content="Browse" Foreground="White" Background="#336699" Height="25" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="350,220,0,0" Click="buttonPickupDirectoryBrowse_Click" />
+
+        <Button x:Name="buttonSaveEmailSettings" Foreground="White" Background="#FF00BD2A" Content="Save" Click="buttonSaveEmailSettings_Click" Height="25" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="0,220,80,0" />
+        <Button x:Name="buttonCancel" Content="Cancel" Foreground="White" Background="#FFFF0909" Click="buttonCancel_Click" Height="25" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="0,220,15,0" />
+    </Grid>
+</Window>

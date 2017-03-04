@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Configuration;
-using System.Data.EntityClient;
 
 namespace UnstuckMEServerGUI.ServerGuiSubWindow
 {

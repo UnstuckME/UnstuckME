@@ -203,6 +203,9 @@ namespace UnstuckMEInterfaces
 
         [OperationContract]
         void SetUserPrivileges(Privileges userPrivs, int userID);
+
+		[OperationContract]
+		string SendEmail(string userEmailAddress, string username);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

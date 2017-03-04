@@ -154,19 +154,19 @@ namespace UnstuckMEServerGUI
             }
         }
 
-        public void AddUser(string emailAddress, int privileges)
+        public void AddUser(string emailAddress, Privileges privileges)
         {
 			string priv = string.Empty;
 
 			switch (privileges)
 			{
-				case '1':
+				case Privileges.User:
 					priv = "U"; //User
 					break;
-				case '2':
+				case Privileges.Moderator:
 					priv = "M"; //Moderator
 					break;
-				case '3':
+				case Privileges.Admin:
 					priv = "A"; //Administrator
 					break;
 				default:
@@ -204,7 +204,7 @@ namespace UnstuckMEServerGUI
 
             foreach (var user in userList)
             {
-                AddUser(user.EmailAddress, user.Privileges);
+                AddUser(user.EmailAddress, (Privileges)user.Privileges);
             }
         }
 
@@ -227,5 +227,5 @@ namespace UnstuckMEServerGUI
         {
 
         }
-    }
+	}
 }

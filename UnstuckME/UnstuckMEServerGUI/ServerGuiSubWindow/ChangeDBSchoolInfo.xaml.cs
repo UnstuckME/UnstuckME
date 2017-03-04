@@ -15,9 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Data.EntityClient;
 using UnstuckMEServerGUI.ServerGuiSubWindow;
 using System.ServiceModel.Configuration;
+using System.Data.Entity.Core.EntityClient;
 
 namespace UnstuckMEServerGUI
 {

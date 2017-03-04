@@ -28,6 +28,7 @@ namespace UnstuckMEInterfaces
                     Console.WriteLine("Server is Running...");
                     Console.WriteLine("<Press Enter to Shut Down Server>");
                     Console.ReadLine();
+					Console.WriteLine("Server shutting down");
                 }
             }
             catch(Exception ex)

@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 using UnstuckMEServer;
 using UnstuckME_Classes;
 using System.Security.Cryptography;
 using System.Collections.Concurrent;
-using System.Security;
-using System.Data.Objects;
-using System.Drawing;
-using System.Windows.Media;
 using System.Threading;
 using System.Net;
 using System.ServiceModel.Channels;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using System.IO;
+using System.Net.Mail;
+using System.Configuration;
+using UnstuckMeLoggers;
+using System.Net.Configuration;
 
 namespace UnstuckMEInterfaces
 {
@@ -1894,5 +1890,79 @@ namespace UnstuckMEInterfaces
         //        return null;
         //    }
         //}
-    }
+
+		public string SendEmail(string userEmailAddress, string username)
+		{
+			string verification_code = GenerateVerificationCode();
+
+			var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			var mailSettings = (SmtpSection)config.GetSection("system.net/mailSettings/smtp");
+			MailAddress address = new MailAddress(mailSettings.Network.UserName, "UnstuckME");
+			MailMessage email = new MailMessage(address, new MailAddress(userEmailAddress));
+			email.Subject = "Activating your UnstuckME account";
+			email.Body = "Thanks for joining UnstuckME " + username + "! Please activate your account by entering the verification code below into the prompt in the application.\n\n"
+				+ "By creating an account, you agree to UnstuckME Terms of Service and your University's Student Code of Conduct\n\nYour verification code:\t" + verification_code
+				+ "\n\nIf something is not working, please reply to this email with your problem and we will attempt to solve your issue";          //temporary body, will need to change later
+			email.Priority = MailPriority.Normal;
+
+			SmtpClient client = new SmtpClient();
+			client.Credentials = new NetworkCredential(mailSettings.Network.UserName, mailSettings.Network.Password);
+			client.DeliveryFormat = mailSettings.DeliveryFormat;
+			client.DeliveryMethod = mailSettings.DeliveryMethod;
+			client.EnableSsl = mailSettings.Network.EnableSsl;
+			client.Timeout = 300000;	//milliseconds = 300 seconds = 5 minutes
+
+			try
+			{
+				client.Send(email);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw ex;
+			}
+			finally
+			{
+				email.Dispose();    //clean up memory
+				client.Dispose();
+			}
+
+			return verification_code;
+		}
+
+		private string GenerateVerificationCode()
+		{
+			string value = string.Empty;
+
+			try
+			{
+				using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+				{
+					byte[] tokenData = new byte[128];
+					rng.GetBytes(tokenData);
+
+					for (int i = 0, bytes_skipped = 0; i < tokenData.Length && value.Length < 8; i++)
+					{
+						byte temp = tokenData[i + bytes_skipped];
+						while ((tokenData[i + bytes_skipped] <= 48 || tokenData[i + bytes_skipped] >= 57) &&
+								(tokenData[i + bytes_skipped] <= 65 || tokenData[i + bytes_skipped] >= 90) &&
+								(tokenData[i + bytes_skipped] <= 97 || tokenData[i + bytes_skipped] >= 122))
+						{
+							bytes_skipped++;
+						}
+
+						value += Convert.ToChar(tokenData[i + bytes_skipped]);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine(ex.Message);
+				Console.ResetColor();
+			}
+
+			return value;
+		}
+	}
 }

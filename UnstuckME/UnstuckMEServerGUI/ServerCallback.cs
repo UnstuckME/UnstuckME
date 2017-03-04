@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using UnstuckME_Classes;
 using UnstuckMEInterfaces;
 
 namespace UnstuckMEServerGUI
@@ -25,11 +26,11 @@ namespace UnstuckMEServerGUI
 
         public void GetUpdate(int value, UnstuckME_Classes.UserInfo user)
         {
-            switch(value)
+            switch (value)
             {
                 case 0:
                     {
-                        ((ServerRunning)Application.Current.MainWindow).AddUser(user.EmailAddress, user.Privileges);
+                        ((ServerRunning)Application.Current.MainWindow).AddUser(user.EmailAddress, (Privileges)user.Privileges);
                         break;
                     }
                 case 1:

@@ -9,14 +9,12 @@
 
 namespace UnstuckMEServerGUI
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    using System.Data.Objects;
-    using System.Data.Objects.DataClasses;
-    using System.Linq;
-    
-    public partial class UnstuckMEServer_DBEntities : DbContext
+	using System;
+	using System.Data.Entity;
+	using System.Data.Entity.Core.Objects;
+	using System.Data.Entity.Infrastructure;
+
+	public partial class UnstuckMEServer_DBEntities : DbContext
     {
         public UnstuckMEServer_DBEntities()
             : base("name=UnstuckMEServer_DBEntities")

@@ -19,6 +19,7 @@
                     <MenuItem x:Name="CreateAdmin" Header="Create New Administrator" Click="CreateAdmin_Click" Background="#FF9D9D9D" BorderBrush="{x:Null}"></MenuItem>
                     <MenuItem x:Name="ChangeCredintials" Header="Change Username/Password" Click="ChangeCredintials_Click" Background="#FF9D9D9D" BorderBrush="{x:Null}"></MenuItem>
                     <MenuItem x:Name="DeleteAdmin" Header="Delete Administrator" Click="DeleteAdmin_Click" Background="#FF9D9D9D" BorderBrush="{x:Null}"></MenuItem>
+                    <MenuItem x:Name="UpdateEmailSettings" Header="Update Email Settings" Click="UpdateEmailSettings_Click" Background="#FF9D9D9D" BorderBrush="{x:Null}"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>

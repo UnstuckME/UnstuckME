@@ -9,7 +9,7 @@
         MinWidth="600" MaxHeight="400" MaxWidth="600"
         Closing="Window_Closing" WindowStartupLocation="CenterScreen" 
         ContentRendered="Window_ContentRendered" Background="DimGray">
-    <Grid>
+    <Grid x:Name="ServerRunningGrid">
         <DockPanel Margin="0,0,0,335" Background="DimGray">
             <Menu DockPanel.Dock="Top" Height="34" Background="DimGray" Foreground="White">
                 <MenuItem Header="File" Background="DimGray" Foreground="White">
