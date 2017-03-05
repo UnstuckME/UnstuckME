@@ -7,7 +7,7 @@ using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
-	[CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
+	[CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true)]
     class ClientCallback : IClient
     {
 		/// <summary>
@@ -32,7 +32,17 @@ namespace UnstuckMEUserGUI
         public void ForceClose()
         {
             UnstuckMEMessageBox messageBox = new UnstuckMEMessageBox(UnstuckMEBox.Shutdown, "UnstuckME Server has shutdown. Please Contact Your Server Administrator", "Server Shutdown", UnstuckMEBoxImage.Error);
-            messageBox.Show();
+            messageBox.ShowDialog();
+        }
+
+        /// <summary>
+        /// Gets a message from the server to show to the client.
+        /// </summary>
+        /// <param name="message">The message to send to the client.</param>
+        public void GetMessageFromServer(string message)
+        {
+            UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, message, "Message from server", UnstuckMEBoxImage.Information);
+            messagebox.ShowDialog();
         }
 
 		/// <summary>

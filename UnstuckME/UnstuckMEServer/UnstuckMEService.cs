@@ -1791,6 +1791,45 @@ namespace UnstuckMEInterfaces
 			return userList;
 		}
 
+        /// <summary>
+        /// Sends a message to all users who are online.
+        /// </summary>
+        /// <param name="recipients">The recipients of the </param>
+        /// <param name="message"></param>
+        public void AdminSendMessageToUsers(List<string> recipients, string message)
+        {
+            if (recipients.Count == 0)
+            {
+                try
+                {
+                    foreach (var client in _connectedClients)
+                        client.Value.connection.GetMessageFromServer(message);
+                }
+                catch (Exception)
+                { }
+            }
+            else
+            {
+                try
+                {
+                    for (int i = 0; i < recipients.Count; i++)
+                    {
+                        var client = _connectedClients.First();
+
+                        for (int j = 0; j < _connectedClients.Count; j++)
+                        {
+                            if (client.Value.User.EmailAddress == recipients[i])
+                                client.Value.connection.GetMessageFromServer(message);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
 		/// <summary>
 		/// Sends a message to all connected clients that the server is shutting down.
 		/// </summary>

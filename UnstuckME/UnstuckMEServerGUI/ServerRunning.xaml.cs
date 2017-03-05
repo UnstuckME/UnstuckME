@@ -115,7 +115,7 @@ namespace UnstuckMEServerGUI
             try
             {
                 Server.AdminLogout();
-                _channelFactory.Abort();
+                _channelFactory.Close();
             }
             catch(Exception)
             {
@@ -156,39 +156,68 @@ namespace UnstuckMEServerGUI
 
         public void AddUser(string emailAddress, Privileges privileges)
         {
-			string priv = string.Empty;
+			string text = string.Empty;
+            TextBlock newUser = new TextBlock();
 
-			switch (privileges)
+            switch (privileges)
 			{
 				case Privileges.User:
-					priv = "U"; //User
-					break;
+                    text = "U";
+                    newUser.Foreground = Brushes.LightGreen;
+                    break;
 				case Privileges.Moderator:
-					priv = "M"; //Moderator
-					break;
+                    text = "M";
+                    newUser.Foreground = Brushes.Blue;
+                    break;
 				case Privileges.Admin:
-					priv = "A"; //Administrator
-					break;
-				default:
-					//broadcast to disabled user they can't log in
-					break;
+                    text = "A";
+                    newUser.Foreground = Brushes.Red;
+                    break;
+				default:    //broadcast to disabled user they can't log in
+                    List<string> recipients = new List<string>();
+                    recipients.Add(emailAddress);
+                    Server.AdminSendMessageToUsers(recipients, "You account has been disabled. If you wish to reactivate your account, please contact an administrator.");
+                    throw new Exception();
 			}
 
-			TextBlock newUser = new TextBlock();
-			newUser.Text = priv + ' ' + emailAddress;
+            newUser.Text = text + " " + emailAddress;
 			newUser.FontSize = 14;
             StackPanelOnlineUsers.Children.Add(newUser);
             labelOnlineUsers.Content = "Online Users: " + StackPanelOnlineUsers.Children.Count;
+
+
+            if (selectusersGrid.Visibility == Visibility.Visible)
+            {
+                ListBoxItem item = new ListBoxItem();
+                item.Background = Brushes.DimGray;
+                item.Foreground = Brushes.White;
+                item.Content = emailAddress;
+                item.Selected += selectAnyUser_Selected;
+                comboboxOnlineUsers.Items.Add(item);
+            }
         }
 
         public void RemoveUser(string emailAddress)
         {
             foreach (TextBlock block in StackPanelOnlineUsers.Children)
             {
-                if (block.Text == emailAddress)
+                if (block.Text.Contains(emailAddress))
                 {
                     StackPanelOnlineUsers.Children.Remove(block);
                     labelOnlineUsers.Content = "Online Users: " + StackPanelOnlineUsers.Children.Count;
+
+                    if (selectusersGrid.Visibility == Visibility.Visible)
+                    {
+                        foreach (ListBoxItem item in comboboxOnlineUsers.Items)
+                        {
+                            if (item.Content.ToString() == emailAddress)
+                            {
+                                comboboxOnlineUsers.Items.Remove(item);
+                                break;
+                            }
+                        }
+                    }
+
                     return; //This Return Is Needed for some reason, otherwise ServerGuiBreaks.
                 }
             }
@@ -204,7 +233,12 @@ namespace UnstuckMEServerGUI
 
             foreach (var user in userList)
             {
-                AddUser(user.EmailAddress, (Privileges)user.Privileges);
+                try
+                {
+                    AddUser(user.EmailAddress, (Privileges)user.Privileges);
+                }
+                catch (Exception)
+                { }
             }
         }
 
@@ -227,5 +261,68 @@ namespace UnstuckMEServerGUI
         {
 
         }
-	}
-}
+
+        private void MessageToAllUsers_Click(object sender, RoutedEventArgs e)
+        {
+            selectusersGrid.Visibility = Visibility.Visible;
+
+            foreach (TextBlock user in StackPanelOnlineUsers.Children)
+            {
+                ListBoxItem item = new ListBoxItem();
+                item.Background = Brushes.DimGray;
+                item.Foreground = Brushes.White;
+                item.Height = 25;
+                item.Content = user.Text.Split(' ')[1];
+                item.Selected += selectAnyUser_Selected;
+                comboboxOnlineUsers.Items.Add(item);
+            }
+        }
+
+        private void backgroundcanvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem item = selectAllUsers;
+            comboboxOnlineUsers.Items.Clear();
+            comboboxOnlineUsers.Items.Add(selectAllUsers);
+
+            textboxMessage.Text = string.Empty;
+            selectusersGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void buttonSendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> recipients = new List<string>();
+            if (comboboxOnlineUsers.SelectedItems.Contains(selectAllUsers))
+            {
+                foreach (TextBlock client in StackPanelOnlineUsers.Children)
+                    recipients.Add(client.Text.Split(' ')[1]);
+            }
+            else
+            {
+                foreach (ListBoxItem user in comboboxOnlineUsers.SelectedItems)
+                    recipients.Add(user.Content.ToString());
+            }
+
+            Server.AdminSendMessageToUsers(recipients, textboxMessage.Text);
+            backgroundcanvas_MouseDown(sender, e as MouseButtonEventArgs);
+        }
+
+        private void buttonCancelMessage_Click(object sender, RoutedEventArgs e)
+        {
+            backgroundcanvas_MouseDown(sender, e as MouseButtonEventArgs);
+        }
+
+        private void selectAllUsers_Selected(object sender, RoutedEventArgs e)
+        {
+            comboboxOnlineUsers.SelectedItems.Clear();
+            comboboxOnlineUsers.SelectedItem = selectAllUsers;
+        }
+
+        private void selectAnyUser_Selected(object sender, RoutedEventArgs e)
+        {
+            if (comboboxOnlineUsers.SelectedItems.Contains(selectAllUsers))
+            {
+                comboboxOnlineUsers.SelectedItems.Remove(selectAllUsers);
+            }
+        }
+    }
+}                                             

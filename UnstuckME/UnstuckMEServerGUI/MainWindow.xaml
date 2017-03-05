@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UnstuckMEServerGUI"
         mc:Ignorable="d" Background="DimGray"
         Title="UnstuckME Server Manager" Height="500" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen"
-        MinHeight="500" MinWidth="350" MaxHeight="500" MaxWidth="350">
+        MinHeight="500" MinWidth="350" MaxHeight="500" MaxWidth="350" ContentRendered="Window_ContentRendered">
     <Grid RenderTransformOrigin="0.507,0.727" Height="466" Margin="0,0,2,2" Width="345">
         <DockPanel Margin="0,0,0,433" Background="Gray">
             <Menu DockPanel.Dock="Top" Height="34" Background="#FF9D9D9D" BorderBrush="{x:Null}">

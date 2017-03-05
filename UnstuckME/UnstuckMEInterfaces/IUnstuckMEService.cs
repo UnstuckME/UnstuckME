@@ -188,6 +188,9 @@ namespace UnstuckMEInterfaces
         List<UserInfo> AdminGetAllOnlineUsers();
 
         [OperationContract]
+        void AdminSendMessageToUsers(List<string> recipients, string message);
+
+        [OperationContract]
         void AdminServerShuttingDown();
 
         [OperationContract]

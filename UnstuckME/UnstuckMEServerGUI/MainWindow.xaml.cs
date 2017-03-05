@@ -42,16 +42,6 @@ namespace UnstuckMEServerGUI
 
 			labelEmailAddress.Content = "Email Address: " + Admin.EmailAddress;
 			labelName.Content = "Name: " + Admin.FirstName + " " + Admin.LastName;
-
-			var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
-
-			if (config.AppSettings.Settings["EmailSettingsSet"].Value == "false")
-			{
-				ServerGuiSubWindow.EmailSettings window = new ServerGuiSubWindow.EmailSettings(ref Admin);
-				Application.Current.MainWindow = window;
-				window.Show();
-				window.Focus();
-			}
 		}
 
 		/// <summary>
@@ -152,5 +142,18 @@ namespace UnstuckMEServerGUI
 			Application.Current.MainWindow = window;
 			Application.Current.MainWindow.Show();
 		}
-	}
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
+
+            if (config.AppSettings.Settings["EmailSettingsSet"].Value == "false")
+            {
+                ServerGuiSubWindow.EmailSettings window = new ServerGuiSubWindow.EmailSettings(ref Admin);
+                Application.Current.MainWindow = window;
+                window.Show();
+                window.Focus();
+            }
+        }
+    }
 }

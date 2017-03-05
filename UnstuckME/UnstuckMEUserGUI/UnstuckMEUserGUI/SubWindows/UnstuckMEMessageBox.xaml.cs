@@ -18,6 +18,7 @@ namespace UnstuckMEUserGUI
 {
     /// <summary>
     /// Interaction logic for UnstuckMEMessageBox.xaml
+    /// DO NOT use the Window.Show() method with this as it will cause an error
     /// </summary>
     public partial class UnstuckMEMessageBox : Window
     {

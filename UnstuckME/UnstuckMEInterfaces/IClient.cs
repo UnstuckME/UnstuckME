@@ -14,6 +14,9 @@ namespace UnstuckMEInterfaces
         void ForceClose();
 
         [OperationContract]
+        void GetMessageFromServer(string message);
+
+        [OperationContract]
         void GetMessage(UnstuckMEMessage message);
 
 		[OperationContract]
