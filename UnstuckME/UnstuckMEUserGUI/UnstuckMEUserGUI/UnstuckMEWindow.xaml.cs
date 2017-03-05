@@ -31,14 +31,13 @@ namespace UnstuckMEUserGUI
         public UnstuckMEWindow()
         {
             InitializeComponent();
-            UnstuckME.Red = StickerButton.Background;
-            UnstuckME.Blue = ChatButton.Background;
             UnstuckME.MainWindow = this;
             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
         }
 
         async private void Window_ContentRendered(object sender, EventArgs e)
         {
+            UnstuckME.Red = StickerButton.Background;
             await Task.Factory.StartNew(() => InitializeStaticMembers());
             UnstuckME.Pages.StickerPage = new StickerPage();
             UnstuckME.Pages.SettingsPage = new SettingsPage();
@@ -79,58 +78,83 @@ namespace UnstuckMEUserGUI
 
         private void LoadStickerPageAsync()
         {
-            this.Dispatcher.Invoke(() =>
+            try
             {
-                UnstuckME.Pages.StickerPage.AvailableStickers = UnstuckME.Server.InitialAvailableStickerPull(UnstuckME.User.UserID);
-
-                foreach (UnstuckMEAvailableSticker sticker in UnstuckME.Pages.StickerPage.AvailableStickers)
+                this.Dispatcher.Invoke(() =>
                 {
-                    UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
-                }
+                    UnstuckME.Pages.StickerPage.AvailableStickers = UnstuckME.Server.InitialAvailableStickerPull(UnstuckME.User.UserID);
 
-				UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickers(UnstuckME.User.UserID, null, 0, null);
-                foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.MyStickersList)
-                {
-                    UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
-                }
+                    foreach (UnstuckMEAvailableSticker sticker in UnstuckME.Pages.StickerPage.AvailableStickers)
+                    {
+                        UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
+                    }
 
-				UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickers(UnstuckME.User.UserID, null, 0, null);
-                foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
-                {
-                    UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
-                }
-            });
+                    UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickers(UnstuckME.User.UserID, null, 0, null);
+                    foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.MyStickersList)
+                    {
+                        UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
+                    }
+
+                    UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickers(UnstuckME.User.UserID, null, 0, null);
+                    foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
+                    {
+                        UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
+                    }
+                });
+            }
+            catch(Exception ex)
+            {
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Error Loading Stickers, Please Contact Your Server Administrator if Problem Persists.\n" + "Error Message: " + ex.Message, "Sticker Loading Error", UnstuckMEBoxImage.Error);
+                error.ShowDialog();
+            }
         }
 
         private void LoadChatPageAsync()
         {
-            this.Dispatcher.Invoke(() =>
+            try
             {
-                UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
-                foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+                this.Dispatcher.Invoke(() =>
                 {
-                    UnstuckME.Pages.ChatPage.AddConversation(chat);
-                }
-                foreach (UnstuckMEChatUser user in UnstuckME.FriendsList)
-                {
-                    UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversatoin(user));
-                }
-            });
+                    UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
+                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+                    {
+                        UnstuckME.Pages.ChatPage.AddConversation(chat);
+                    }
+                    foreach (UnstuckMEChatUser user in UnstuckME.FriendsList)
+                    {
+                        UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversatoin(user));
+                    }
+                });
+            }
+            catch(Exception ex)
+            {
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Error Loading Chat Page, Please Contact Your Server Administrator if Problem Persists.\n" + "Error Message: " + ex.Message, "Chat Loading Error", UnstuckMEBoxImage.Error);
+                error.ShowDialog();
+            }
         }
 
         private void LoadUserProfilePageAsync()
         {
-            this.Dispatcher.Invoke(() =>
+            try
             {
-                UnstuckME.Pages.UserProfilePage.ProfilePicture.Source = UnstuckME.UserProfilePicture;  //convert image so it can be displayed
+                this.Dispatcher.Invoke(() =>
+                {
+                    UnstuckME.Pages.UserProfilePage.ProfilePicture.Source = UnstuckME.UserProfilePicture;  //convert image so it can be displayed
                 UnstuckME.Pages.UserProfilePage.ImageEditProfilePicture.Source = UnstuckME.UserProfilePicture;
-                UnstuckME.Pages.UserProfilePage.FirstName.Text = UnstuckME.User.FirstName;
-                UnstuckME.Pages.UserProfilePage.LastName.Text = UnstuckME.User.LastName;
-                UnstuckME.Pages.UserProfilePage.EmailAddress.Text = UnstuckME.User.EmailAddress;
-                UnstuckME.Pages.UserProfilePage.SetStudentRating(UnstuckME.User.AverageStudentRank);
-                UnstuckME.Pages.UserProfilePage.SetTutorRating(UnstuckME.User.AverageTutorRank);
-                UnstuckME.Pages.UserProfilePage.RepopulateClasses();
-            });
+                    UnstuckME.Pages.UserProfilePage.FirstName.Text = UnstuckME.User.FirstName;
+                    UnstuckME.Pages.UserProfilePage.LastName.Text = UnstuckME.User.LastName;
+                    UnstuckME.Pages.UserProfilePage.EmailAddress.Text = UnstuckME.User.EmailAddress;
+                    UnstuckME.Pages.UserProfilePage.SetStudentRating(UnstuckME.User.AverageStudentRank);
+                    UnstuckME.Pages.UserProfilePage.SetTutorRating(UnstuckME.User.AverageTutorRank);
+                    UnstuckME.Pages.UserProfilePage.RepopulateClasses();
+                });
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Error Loading User Profile Page, Please Contact Your Server Administrator if Problem Persists.\n" + "Error Message: " + ex.Message, "Profile Loading Error", UnstuckMEBoxImage.Error);
+                error.ShowDialog();
+            }
+
         }
 
         private void LoadSettingsPageAsync()
@@ -151,14 +175,22 @@ namespace UnstuckMEUserGUI
 
         private void LoadSideBarsAsync()
         {
-            this.Dispatcher.Invoke(() =>
+            try
             {
-                UnstuckME.FriendsList = UnstuckME.Server.GetFriends(UnstuckME.User.UserID);
-                foreach (UnstuckMEChatUser friend in UnstuckME.FriendsList)
+                this.Dispatcher.Invoke(() =>
                 {
-                    OnlineUsersStack.Children.Add(new OnlineUser(friend));
-                }
-            });
+                    UnstuckME.FriendsList = UnstuckME.Server.GetFriends(UnstuckME.User.UserID);
+                    foreach (UnstuckMEChatUser friend in UnstuckME.FriendsList)
+                    {
+                        OnlineUsersStack.Children.Add(new OnlineUser(friend));
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Error Right Side Panel, Please Contact Your Server Administrator if Problem Persists.\n" + "Error Message: " + ex.Message, "Contacts/Notifications Loading Error", UnstuckMEBoxImage.Error);
+                error.ShowDialog();
+            }
         }
         #endregion
 

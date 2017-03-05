@@ -48,8 +48,6 @@ namespace UnstuckMEUserGUI
         {
             UnstuckME.MainWindow.SwitchToChatTab();
             UnstuckME.Pages.ChatPage.NotificationCall(Message);
-            //Removes from stack panel.
-            ((StackPanel)this.Parent).Children.Remove(this);
         }
     }
 }

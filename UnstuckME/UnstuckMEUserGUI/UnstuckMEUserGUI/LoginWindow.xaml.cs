@@ -42,8 +42,8 @@ namespace UnstuckMEUserGUI
 			InitializeComponent();
             UnstuckME.Blue = buttonCreateAccount.Background;
             UnstuckME.Red = buttonCancel.Background;
-      
-			m_orginalSchoolName = m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
+
+            m_orginalSchoolName = m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
 
 			try
 			{
