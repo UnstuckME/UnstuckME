@@ -21,24 +21,33 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class NewMessageNotification : UserControl
     {
-        UnstuckMEPages _pages;
-        UnstuckMEWindow _Window;
-        UnstuckMEMessage message;
-        public NewMessageNotification(UnstuckMEMessage inMessage, ref UnstuckMEPages inPages, UnstuckMEWindow inWindow)
+        public UnstuckMEMessage Message { get; set; }
+        public int NotificationCount { get; set; }
+        public NewMessageNotification(UnstuckMEMessage inMessage)
         {
             InitializeComponent();
-            NewMessageButton.Content = "New Message From: " + inMessage.Username;
-            _pages = inPages;
-            _Window = inWindow;
-            message = inMessage;
+            NewMessageButton.Content = "Message From: " + inMessage.Username;
+            Message = inMessage;
+            NotificationCount = 0;
+        }
+
+        public NewMessageNotification(UnstuckMEMessage inMessage, int count)
+        {
+            NotificationCount = count;
+            InitializeComponent();
+            NewMessageButton.Content = "Message From: " + inMessage.Username + " (" + count + ")";
+            Message = inMessage;
+        }
+
+        public void RemoveFromNotifications()
+        {
+            ((StackPanel)this.Parent).Children.Remove(this);
         }
 
         private void NewMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            _Window.SwitchToChatTab();
-            _pages.ChatPage.NotificationCall(message);
-            //Removes from stack panel.
-            ((StackPanel)this.Parent).Children.Remove(this);
+            UnstuckME.MainWindow.SwitchToChatTab();
+            UnstuckME.Pages.ChatPage.NotificationCall(Message);
         }
     }
 }

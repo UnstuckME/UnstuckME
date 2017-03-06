@@ -72,11 +72,11 @@ namespace UnstuckMEUserGUI
 
         public void ChangeToUnstuckMEBlue()
         {
-            Border1.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-            Border2.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-            Border3.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-            Border4.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
-            Border5.BorderBrush = UnstuckMEWindow._UnstuckMEBlue;
+            Border1.BorderBrush = UnstuckME.Blue;
+            Border2.BorderBrush = UnstuckME.Blue;
+            Border3.BorderBrush = UnstuckME.Blue;
+            Border4.BorderBrush = UnstuckME.Blue;
+            Border5.BorderBrush = UnstuckME.Blue;
             Image1.Source = BlueStar;
             Image2.Source = BlueStar;
             Image3.Source = BlueStar;
@@ -86,7 +86,7 @@ namespace UnstuckMEUserGUI
 
         private void GridClassName_MouseLeave(object sender, MouseEventArgs e)
         {
-            FullBackGround.Background = UnstuckMEWindow._UnstuckMEBlue;
+            FullBackGround.Background = UnstuckME.Blue;
             ChangeToUnstuckMEBlue();
         }
 
@@ -116,8 +116,8 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckMEWindow.Server.AcceptSticker(UnstuckMEWindow.User.UserID, Sticker.StickerID);
-                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker.StudentID, UnstuckMEWindow.User.UserID);
+                UnstuckME.Server.AcceptSticker(UnstuckME.User.UserID, Sticker.StickerID);
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker, UnstuckME.User.UserID);
                 ((StackPanel)this.Parent).Children.Remove(this);
             }
             catch (Exception ex)

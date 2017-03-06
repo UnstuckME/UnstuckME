@@ -34,16 +34,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack.1.1.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.ExtendedLinguisticServices, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack.1.1.0\lib\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Sensors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack.1.1.0\lib\Microsoft.WindowsAPICodePack.Sensors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack.1.1.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack.1.1.0\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -54,6 +78,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminPullReportsForOptionalUser_Result.cs">
@@ -68,22 +93,7 @@
     <Compile Include="Friend.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_ClassDESC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_OrgClassASC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_OrgClassDESC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickersWithOrganization_OrgDESC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickers_ClassASC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetActiveStickers_ClassDESC_Result.cs">
+    <Compile Include="GetActiveStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllMembersOfAChat_Result.cs">
@@ -116,16 +126,10 @@
     <Compile Include="GetReportsSubmittedByUser_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetResolvedStickers_ClassASC_Result.cs">
+    <Compile Include="GetResolvedStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetResolvedStickers_ClassDESC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetTimedOutStickers_ClassASC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetTimedOutStickers_ClassDESC_Result.cs">
+    <Compile Include="GetTimedOutStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserClasses_Result.cs">
@@ -146,28 +150,19 @@
     <Compile Include="GetUsersOverallStarRank_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserStudentReviews_RankASC_Result.cs">
+    <Compile Include="GetUserStudentReviews_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserStudentReviews_RankDESC_Result.cs">
+    <Compile Include="GetUserSubmittedStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserSubmittedStickers_ClassASC_Result.cs">
+    <Compile Include="GetUserTutoredStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserSubmittedStickers_ClassDESC_Result.cs">
+    <Compile Include="GetUserTutorReviews_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetUserTutoredStickers_ClassASC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserTutoredStickers_ClassDESC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserTutorReviews_RankASC_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetUserTutorReviews_RankDESC_Result.cs">
+    <Compile Include="InitialStickerPull_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Message.cs">
@@ -210,8 +205,8 @@
       <DependentUpon>UnstuckME_DB.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="UnstuckME_DB.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="UnstuckME_DB.Designer.cs">
@@ -252,6 +247,10 @@
     <ProjectReference Include="..\UnstuckMEInterfaces\UnstuckMEInterfaces.csproj">
       <Project>{d42b1e14-ac26-4947-a68c-168849ba8db7}</Project>
       <Name>UnstuckMEInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnstuckMeLoggers\UnstuckMeLoggers.csproj">
+      <Project>{F98412B3-DB0D-4847-98B5-D602838923F5}</Project>
+      <Name>UnstuckMeLoggers</Name>
     </ProjectReference>
     <ProjectReference Include="..\UnstuckME_Classes\UnstuckME_Classes.csproj">
       <Project>{a0401a05-8cd6-4227-bd7c-32deadc38143}</Project>

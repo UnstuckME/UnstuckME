@@ -22,21 +22,11 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ChatPage : Page
     {
-        public UserInfo User;
-        public ImageSource UserImage;
-        public static IUnstuckMEService Server;
-        public UnstuckMEChat currentChat;
-        public List<UnstuckMEChat> allChats;
-        public ImageSourceConverter ic;
-        public ChatPage(ref UserInfo inUser, ref IUnstuckMEService inServer)
+        public ChatPage()
         {
             InitializeComponent();
-            Server = inServer;
-            User = inUser;
-            ic = new ImageSourceConverter();
-            UserImage = ic.ConvertFrom(User.UserProfilePictureBytes) as ImageSource;
-            currentChat = new UnstuckMEChat();
-            currentChat.ChatID = -1;
+            UnstuckME.CurrentChatSession = new UnstuckMEChat();
+            UnstuckME.CurrentChatSession.ChatID = -1;
             ButtonAddUserToConvo.Visibility = Visibility.Hidden;
             ButtonAddUserToConvo.IsEnabled = false;
         }
@@ -60,7 +50,7 @@ namespace UnstuckMEUserGUI
 
         public void AddConversation(UnstuckMEChat inChat)
         {
-            StackPanelConversations.Children.Add(new Conversation(inChat, this, ref Server));
+            StackPanelConversations.Children.Add(new Conversation(inChat));
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
@@ -79,13 +69,13 @@ namespace UnstuckMEUserGUI
 
             try
             {
-                foreach (UnstuckMEChat chat in allChats)
+                foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
                 {
                     if(chat.ChatID == message.ChatID)
                     {
                         chatIDExists = true;
                         chat.Messages.Add(message);
-                        if(currentChat.ChatID == chat.ChatID)
+                        if(UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
                         {
                             UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
                             StackPanelMessages.Children.Add(new ChatMessage(temp));
@@ -95,9 +85,9 @@ namespace UnstuckMEUserGUI
                 }
                 if(!chatIDExists)
                 {
-                    UnstuckMEChat temp = Server.GetSingleChat(message.ChatID);
-                    allChats.Add(temp);
-                    StackPanelConversations.Children.Add(new Conversation(temp, this, ref Server));
+                    UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
+                    UnstuckME.ChatSessions.Add(temp);
+                    StackPanelConversations.Children.Add(new Conversation(temp));
                 }
             }
             catch(Exception ex)
@@ -118,13 +108,13 @@ namespace UnstuckMEUserGUI
 
 			try
 			{
-				foreach (UnstuckMEChat chat in allChats)
+				foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
 				{
 					if (chat.ChatID == message.ChatID)
 					{
 						chatIDexists = true;
 						chat.Messages.Add(message);
-						if (currentChat.ChatID == chat.ChatID)
+						if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
 						{
 							UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
 							StackPanelMessages.Children.Add(new ChatMessage(temp));
@@ -135,14 +125,15 @@ namespace UnstuckMEUserGUI
 
 				if (!chatIDexists)
 				{
-					UnstuckMEChat temp = Server.GetSingleChat(message.ChatID);
-					allChats.Add(temp);
-					StackPanelConversations.Children.Add(new Conversation(temp, this, ref Server));
+					UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
+                    UnstuckME.ChatSessions.Add(temp);
+					StackPanelConversations.Children.Add(new Conversation(temp));
 				}
 			}
 			catch (Exception ex)
 			{
-				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.Message, "Add Message Failed");
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Add Message Failed", UnstuckMEBoxImage.Warning);
+                messagebox.ShowDialog();
 			}
 		}
 
@@ -163,27 +154,27 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                if(currentChat.ChatID < 0) { throw new Exception(); } //If no conversation is chosen
+                if(UnstuckME.CurrentChatSession.ChatID < 0) { throw new Exception(); } //If no conversation is chosen
                 UnstuckMEMessage sendingMessage = new UnstuckMEMessage();
-                sendingMessage.ChatID = currentChat.ChatID;
+                sendingMessage.ChatID = UnstuckME.CurrentChatSession.ChatID;
                 sendingMessage.FilePath = string.Empty;
                 sendingMessage.IsFile = false;
                 sendingMessage.Message = message;
                 sendingMessage.MessageID = 0;
-                sendingMessage.SenderID = User.UserID;
+                sendingMessage.SenderID = UnstuckME.User.UserID;
                 sendingMessage.Time = DateTime.Now;
-                sendingMessage.Username = User.FirstName;
+                sendingMessage.Username = UnstuckME.User.FirstName;
                 sendingMessage.UsersInConvo = new List<int>();
-                foreach (UnstuckMEChatUser user in currentChat.Users)
+                foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
                 {
-                    if(user.UserID != User.UserID)
+                    if(user.UserID != UnstuckME.User.UserID)
                     {
                         sendingMessage.UsersInConvo.Add(user.UserID);
                     }
                 }
-                Server.SendMessage(sendingMessage);
-                currentChat.Messages.Add(sendingMessage);
-                UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(sendingMessage, currentChat);
+                UnstuckME.Server.SendMessage(sendingMessage);
+                UnstuckME.CurrentChatSession.Messages.Add(sendingMessage);
+                UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(sendingMessage, UnstuckME.CurrentChatSession);
                 StackPanelMessages.Children.Add(new ChatMessage(temp));
                 ScrollViewerMessagesBox.ScrollToBottom();
             }
@@ -221,23 +212,23 @@ namespace UnstuckMEUserGUI
                 LabelInvalidUserNameSearch.Visibility = Visibility.Hidden;
                 int searchedUserID = -1;
                 int chatID;
-                if(Server.IsValidUser(TextBoxManualUserNameSearch.Text))
+                if(UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
                 {
-                    chatID = Server.CreateChat(User.UserID);
-                    searchedUserID = Server.GetUserID(TextBoxManualUserNameSearch.Text);
-                    Server.InsertUserIntoChat(searchedUserID, chatID);
+                    chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
+                    searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
+                    UnstuckME.Server.InsertUserIntoChat(searchedUserID, chatID);
                     UnstuckMEMessage temp = new UnstuckMEMessage();
                     temp.ChatID = chatID;
                     temp.FilePath = string.Empty;
                     temp.IsFile = false;
-                    temp.Message = "New Conversation with " + User.FirstName + " " + User.LastName + " started.";
+                    temp.Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.";
                     temp.MessageID = 0;
-                    temp.Username = User.FirstName;
-                    temp.SenderID = User.UserID;
+                    temp.Username = UnstuckME.User.FirstName;
+                    temp.SenderID = UnstuckME.User.UserID;
                     temp.UsersInConvo = new List<int>();
-                    temp.UsersInConvo.Add(User.UserID);
+                    temp.UsersInConvo.Add(UnstuckME.User.UserID);
                     temp.UsersInConvo.Add(searchedUserID);
-                    Server.SendMessage(temp);
+                    UnstuckME.Server.SendMessage(temp);
                     AddMessage(temp);
                     ButtonAddUserDone_Click(null, null);
                     foreach (Conversation convo  in StackPanelConversations.Children.OfType<Conversation>())
@@ -271,7 +262,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(Server, currentChat, UnstuckMEWindow.FriendsList);
+            AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(UnstuckME.CurrentChatSession);
             addUserWindow.Show();
         }
     }

@@ -24,31 +24,23 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ClassDisplay : UserControl
     {
-        public static int m_UserID;
-        public static IUnstuckMEService m_OpenServer;
-        string m_code;
-        int m_number;
-        string m_desc;
-        int m_IDnum;
+        //public static int m_UserID;
+        //public static IUnstuckMEService m_OpenServer;
+        UserClass Class;
         FrameworkElement lastClick = null;
-        StackPanel ItemContainer = null;
 
-        public ClassDisplay(StackPanel itemcontainer, int UserID, IUnstuckMEService OpenServer, string code, int number, string desc, int IDnum)
+        public ClassDisplay(UserClass inClass)
         {
-            m_UserID = UserID;
-            m_OpenServer = OpenServer;
-            m_code = code;
-            m_number = number;
-            m_desc = desc;
-            m_IDnum = IDnum;
-            ItemContainer = itemcontainer;
+            //m_UserID = UserID;
+            //m_OpenServer = OpenServer;
+            Class = inClass;
 
             InitializeComponent();
-            CourseCode.Text = m_code;
-            CourseNumber.Text = m_number.ToString();
-            Coursedesc.Text = m_desc;
+            CourseCode.Text = Class.CourseCode;
+            CourseNumber.Text = Class.CourseNumber.ToString();
+            Coursedesc.Text = Class.CourseName;
             //Deletebtn.Name = "DeleteBtn" + m_IDnum.ToString();
-            MainContainer.Name = "MainContainer" + m_IDnum.ToString();
+            MainContainer.Name = "MainContainer" + Class.ClassID.ToString();
         }
 
         private void MainContainer_Click(object sender, RoutedEventArgs e)
@@ -58,28 +50,18 @@ namespace UnstuckMEUserGUI
                 Deletebtn.Visibility = Visibility.Collapsed;
             }
             else
+            {
                 Deletebtn.Visibility = Visibility.Visible;
-            lastClick = e.Source as FrameworkElement;
-            //this.Dispatcher.Invoke(() =>
-            //{
-            //    Thread.CurrentThread.IsBackground = true;
-            //    resetBtn(Deletebtn);
-            //});
-            
+            }
+            lastClick = e.Source as FrameworkElement;    
         }
-
-        //async private void resetBtn(FrameworkElement btn)
-        //{
-        //    Thread.Sleep(5000);
-        //    btn.Visibility = Visibility.Collapsed;
-        //}
-
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {
             
-            m_OpenServer.RemoveUserFromClass(m_UserID, m_IDnum);
+            UnstuckME.Server.RemoveUserFromClass(UnstuckME.User.UserID, Class.ClassID);
             lastClick.Visibility = Visibility.Collapsed;    // this line may not even be needed
-			ItemContainer.Children.Remove(this);
+            //Removes Sticker From Stack Panel
+            ((StackPanel)this.Parent).Children.Remove(this);
         }
     }
 }

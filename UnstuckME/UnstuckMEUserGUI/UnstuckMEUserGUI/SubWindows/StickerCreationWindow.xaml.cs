@@ -32,9 +32,6 @@ namespace UnstuckMEUserGUI
                 return Text;
             }
         }
-        public static IUnstuckMEService Server;
-        public static UserInfo User;
-        public UnstuckMEWindow window;
 
         List<int> hourList = new List<int>();
         List<string> minutesList = new List<string>();
@@ -42,13 +39,9 @@ namespace UnstuckMEUserGUI
         List<string> coursenumberList = new List<string>();
         List<string> courseNameList = new List<string>();
         List<Organization> orgList;
-        public StickerCreationWindow(ref IUnstuckMEService inServer, ref UserInfo inUser, UnstuckMEWindow inWindow)
+        public StickerCreationWindow()
         {
             InitializeComponent();
-
-            Server = inServer;
-            User = inUser;
-            window = inWindow;
             LoadDataIntoComboBoxes();
         }
 
@@ -72,7 +65,8 @@ namespace UnstuckMEUserGUI
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to submit this sticker?", "Sticker Submission Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
                 if(result == MessageBoxResult.Yes)
                 {
-                    UnstuckMESticker temp = new UnstuckMESticker();
+                    //UnstuckMESticker temp = new UnstuckMESticker();
+                    UnstuckMEBigSticker newSticker = new UnstuckMEBigSticker();
                     DateTime selectedDate = DatePickerSticker.SelectedDate.Value;
                     TimeSpan timedays = selectedDate - DateTime.Now;
                     int secondsCalc = 0;
@@ -125,37 +119,44 @@ namespace UnstuckMEUserGUI
                     {
                         totalSeconds = (totalSeconds - (int)DateTime.Now.TimeOfDay.TotalSeconds);
                     }
-					
-                    temp.Timeout = totalSeconds;
-                    temp.MinimumStarRanking = (float)sliderRating.Value;
-                    temp.ProblemDescription = ProblemDescription.Text;
-                    temp.StudentID = User.UserID;
 
-                    temp.AttachedOrganizations = new List<int>();
-                    //Gets any filtered organizations.
+                    newSticker.TimeoutInt = totalSeconds;
+                    newSticker.MinimumStarRanking = sliderRating.Value;
+                    newSticker.ProblemDescription = ProblemDescription.Text;
+                    newSticker.StudentID = UnstuckME.User.UserID;
+                    newSticker.StudentRanking = UnstuckME.User.AverageStudentRank;
+                    newSticker.SubmitTime = DateTime.Now;
+                    newSticker.Timeout = DateTime.Now.AddSeconds(totalSeconds);
+                    newSticker.AttachedOrganizations = new List<int>();
+                    newSticker.ChatID = 0;
+                    newSticker.TutorID = 0;
+                    newSticker.TutorRanking = 0;
+
                     foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
                     {
-                        temp.AttachedOrganizations.Add(a.GetOrganizationID());
+                        newSticker.AttachedOrganizations.Add(a.GetOrganizationID());
                     }
-
                     try
-                    { 
-                        temp.ClassID = Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string);
+                    {
+                        newSticker.Class = UnstuckME.Server.GetSingleClass(UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string));
                     }
                     catch (Exception exp)
                     {
                         UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                         logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                        throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     try
-                    { 
-                        Server.SubmitSticker(temp);
-                        window.AddStickerToMyStickers(temp);
+                    {
+                        if (UnstuckME.Server.SubmitSticker(newSticker) < 0) //Returns -1 if failed.
+                            throw new Exception("Sticker Submission Failure");
+                        UnstuckME.MainWindow.AddStickerToMyStickers(new UnstuckMESticker(newSticker));
                     }
                     catch (Exception exp)
                     {
                         UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
                         logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                        throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     this.Close();
                 }
@@ -191,8 +192,8 @@ namespace UnstuckMEUserGUI
 
             try
             {
-                coursenumberList = Server.GetCourseCodes();
-                orgList = Server.GetAllOrganizations();
+                coursenumberList = UnstuckME.Server.GetCourseCodes();
+                orgList = UnstuckME.Server.GetAllOrganizations();
             }
             catch (Exception exp)
             {
@@ -235,7 +236,7 @@ namespace UnstuckMEUserGUI
             {
                 try
                 { 
-                    courseNameList = Server.GetCourseNumbersByCourseCode(ComboBoxCourseNumber.SelectedValue as string);
+                    courseNameList = UnstuckME.Server.GetCourseNumbersByCourseCode(ComboBoxCourseNumber.SelectedValue as string);
                     courseNameList.Insert(0, "(Select Class)");
                 }
                 catch (Exception exp)

@@ -9,7 +9,7 @@
         MinWidth="600" MaxHeight="400" MaxWidth="600"
         Closing="Window_Closing" WindowStartupLocation="CenterScreen" 
         ContentRendered="Window_ContentRendered" Background="DimGray">
-    <Grid>
+    <Grid x:Name="ServerRunningGrid">
         <DockPanel Margin="0,0,0,335" Background="DimGray">
             <Menu DockPanel.Dock="Top" Height="34" Background="DimGray" Foreground="White">
                 <MenuItem Header="File" Background="DimGray" Foreground="White">
@@ -33,11 +33,24 @@
                     <MenuItem x:Name="ViewReportedReviews" Background="DimGray" Foreground="White" Header="View Reported Reviews"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Broadcast" Background="DimGray" Foreground="White">
-                    <MenuItem Header="Message to All Users" Background="DimGray" Foreground="White"></MenuItem>
-                    <MenuItem Header="Message to Specific User" Background="DimGray" Foreground="White"></MenuItem>
+                    <MenuItem Header="Message to Users" Background="DimGray" Foreground="White" Click="MessageToAllUsers_Click"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>
+
+        <Grid x:Name="selectusersGrid" Visibility="Collapsed" Height="{Binding ActualHeight, ElementName=ServerRunningGrid}" Width="{Binding ActualWidth, ElementName=ServerRunningGrid}" Panel.ZIndex="1">
+            <Canvas x:Name="backgroundcanvas" Height="{Binding ActualHeight, ElementName=selectusersGrid}" Width="{Binding ActualWidth, ElementName=selectusersGrid}" Background="Black" Opacity="0.5" MouseDown="backgroundcanvas_MouseDown" />
+            <Label x:Name="labelSelectUsersToSendMessage" Height="30" Width="275" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top" Content="Select the users you want to send a message to" Background="DimGray" Foreground="White" Margin="10,10" BorderBrush="White" BorderThickness="2" />
+            <ListBox x:Name="comboboxOnlineUsers" Height="275" Width="275" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,45,0,0" SelectionMode="Multiple" Background="DimGray" BorderBrush="White" BorderThickness="2" ScrollViewer.CanContentScroll="False">
+                <ListBoxItem x:Name="selectAllUsers" Height="25" VerticalContentAlignment="Center" Content="All Online Users" Background="DimGray" Foreground="White" Selected="selectAllUsers_Selected" />
+            </ListBox>
+
+            <Label x:Name="labelMessage" Height="30" Width="275" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" Content="What message do you need to send?" Background="DimGray" Foreground="White" Margin="0,10,10,0" BorderBrush="White" BorderThickness="2" />
+            <TextBox x:Name="textboxMessage" Height="275" Width="275" HorizontalAlignment="Right" VerticalAlignment="Top" Background="DimGray" Foreground="White" Margin="0,45,10,0" BorderBrush="White" BorderThickness="2" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" />
+            <Button x:Name="buttonSendMessage" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Background="#FF00BD2A" Foreground="White" Content="Send" Click="buttonSendMessage_Click" Margin="0,0,125,7" FontWeight="Bold" BorderBrush="#FFE6E4E4" BorderThickness="2" IsDefault="True" />
+            <Button x:Name="buttonCancelMessage" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Background="#FF993333" Foreground="White" Content="Cancel" Click="buttonCancelMessage_Click" Margin="0,0,25,7" FontWeight="Bold" BorderBrush="#FFE6E4E4" BorderThickness="2" />
+        </Grid>
+
         <Button x:Name="buttonKill" Content="Kill Server" HorizontalAlignment="Left" Margin="10,313,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="buttonKill_Click" Background="#FF993333" Foreground="White" BorderBrush="#FFE6E4E4" BorderThickness="2"/>
         <ScrollViewer Background="Gray" Foreground="White" HorizontalAlignment="Left" Height="289" Margin="335,69,0,0" VerticalAlignment="Top" Width="250" Padding="8,0,0,0">
             <StackPanel Name="StackPanelOnlineUsers"></StackPanel>

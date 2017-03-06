@@ -25,12 +25,12 @@
         </Grid>
         <Grid x:Name="_AccountCreationGrid" Visibility="Hidden" IsEnabled="False" Height="498" Width="372" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
             <Button TabIndex="6" Cursor="Hand" x:Name="buttonCancel" Click="buttonCancel_Click" MouseEnter="buttonCancel_MouseEnter" MouseLeave="buttonCancel_MouseLeave" Background="#FF993333" Foreground="White" Content="Cancel" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="76" IsCancel="True" Margin="148,448,148,25"/>
-            <Button TabIndex="5" Cursor="Hand" x:Name="buttonCreate" Click="buttonCreate_Click" MouseEnter="buttonCreate_MouseEnter" MouseLeave="buttonCreate_MouseLeave" Background="#336699" Foreground="White" Content="Create Account" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" IsDefault="True" Margin="81,404,83,69"/>
+            <Button TabIndex="5" Cursor="Hand" x:Name="buttonCreate" Click="sendVerificationCode_Click" MouseEnter="buttonCreate_MouseEnter" MouseLeave="buttonCreate_MouseLeave" Background="#336699" Foreground="White" Content="Create Account" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" IsDefault="True" Margin="81,404,83,69"/>
             <TextBox TabIndex="0" x:Name="textBoxCreateFirstName" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="81,139,83,337"/>
             <TextBox TabIndex="1" x:Name="textBoxCreateLastName" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="81,192,83,284"/>
             <TextBox TabIndex="2" x:Name="textBoxCreateEmailAddress" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="82,245,82,231"/>
-            <PasswordBox TabIndex="3" x:Name="passwordBoxCreate" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" Margin="81,298,83,178"/>
-            <PasswordBox TabIndex="4" x:Name="passwordBoxCreateConfirm" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" Margin="81,351,83,125"/>
+            <PasswordBox TabIndex="3" x:Name="passwordBoxCreate" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" Margin="81,298,83,178" PasswordChanged="passwordBoxCreate_PasswordChanged"/>
+            <PasswordBox TabIndex="4" x:Name="passwordBoxCreateConfirm" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" Margin="81,351,83,125" PasswordChanged="passwordBoxCreateConfirm_PasswordChanged"/>
             <Label x:Name="labelCreateFirstName" Content="First Name" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" FontSize="12" Height="26" Foreground="White" Margin="84,113,80,359"/>
             <Label x:Name="labelCreateLastName" Content="Last Name" HorizontalAlignment="Center" Margin="81,166,83,306" VerticalAlignment="Center" Width="208" Foreground="White" FontSize="12"/>
             <Label x:Name="labelCreateEmailAddress" Content="Email Address" HorizontalAlignment="Center" Margin="81,219,82,253" VerticalAlignment="Center" Width="209" Foreground="White" FontSize="12"/>
@@ -39,6 +39,17 @@
             <Label x:Name="labelCreateTitle" Content="Account Creation" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  VerticalAlignment="Center" Width="208" Height="50" FontSize="22" Foreground="White" Margin="82,36,82,412"/>
             <Label x:Name="labelCreateIncorrectCreds" Visibility="Hidden" Content="Invalid Username/Password" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="209" Height="26" Foreground="#FFFF0909" FontFamily="Times New Roman" FontSize="12" Margin="81,378,82,94"/>
             <Label x:Name="labelCreatePasswordHelp" Content="?" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="294,297,58,178" VerticalAlignment="Center" Width="20" Height="23" FontSize="12" ToolTip="Password Must Be 6-32 Characters Long" Foreground="White"/>
+        </Grid>
+        
+        <Grid x:Name="AccountVerificationGrid" Visibility="Collapsed" IsEnabled="False" Height="{Binding ActualHeight, ElementName=_MainGrid}" Width="{Binding ActualWidth, ElementName=_MainGrid}">
+            <Canvas x:Name="AccountVerificationCanvas" Height="{Binding ActualHeight, ElementName=AccountVerificationGrid}" Width="{Binding AcutalWidth, ElementName=AccountVerificationGrid}" Opacity="0.7" Background="Black" MouseDown="AccountVerificationCanvas_MouseDown" />
+            <TextBlock x:Name="textblockVerification" Text="A Verification Code has been sent to the email address specified. To activate your account, please enter the verification code you received in the email in the box below." HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="300"
+                       Background="DimGray" Foreground="White" Margin="0,0,0,0" TextWrapping="Wrap" Padding="25" />
+            <TextBox x:Name="textboxVerificationCode" Text="xxxxxxxx" FontStyle="Italic" Foreground="Gray" HorizontalAlignment="Center" Height="22" MaxLength="8" VerticalAlignment="Center" Width="208" Margin="0,-50,0,0" GotFocus="textboxVerificationCode_GotFocus" LostFocus="textboxVerificationCode_LostFocus" />
+            <Button x:Name="buttonSubmitVerificationCode" Cursor="Hand" Click="buttonCreate_Click" MouseEnter="buttonCreate_MouseEnter" MouseLeave="buttonCreate_MouseLeave" Background="#336699" Foreground="White" Content="Activate Account" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" IsDefault="True" Margin="0,45,0,0" />
+            <Button x:Name="buttonResendVerificationCode" Cursor="Hand" Click="buttonResendVerificationCode_Click" MouseEnter="buttonCreate_MouseEnter" MouseLeave="buttonCreate_MouseLeave" Background="#FF760018" Foreground="WhiteSmoke" Content="Resend Activation Code" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="110" Height="15" FontSize="9" Margin="0,250,0,0" />
+            <Label x:Name="labelVerificationError" Visibility="Hidden" Content="Verification Failed" Foreground="#FFFF0909" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-2,0,0" />
         </Grid>
     </Grid>
 </Window>

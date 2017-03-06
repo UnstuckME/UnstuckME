@@ -53,6 +53,8 @@ IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
 
 GO
 
+
+
 CREATE PROC [dbo].[AddTutorStarRankToUser]
 (
 	@UserID INT,
@@ -238,14 +240,16 @@ CREATE PROC [dbo].[CreateSticker]
     )
 AS
     BEGIN
+		DECLARE @Return INT
         IF (EXISTS(Select StudentID, ClassID from Sticker where StudentID = @StudentID AND ClassID = @ClassID))
-			RETURN 1;
+			SELECT 0;
 		ELSE IF (select count(*) from (select StudentID from Sticker where StudentID = @StudentID and DATEDIFF(second, GETDATE(), Timeout) > 0) as ActiveStickers) > 3
-			RETURN 1;
+			SELECT 0;
         ELSE BEGIN
             INSERT INTO Sticker
 			VALUES(@ProblemDescription, @ClassID, DEFAULT, @StudentID, DEFAULT, @MinimumStarRanking, GETDATE(), DATEADD(second, @Timeout, GETDATE()))
-			RETURN @@IDENTITY
+			SET @Return = @@IDENTITY
+			SELECT @Return
         END
     END
 GO

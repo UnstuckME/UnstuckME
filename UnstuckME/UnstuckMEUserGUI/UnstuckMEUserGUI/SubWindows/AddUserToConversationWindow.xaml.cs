@@ -21,18 +21,17 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class AddUserToConversationWindow : Window
     {
-        public IUnstuckMEService Server;
         public UnstuckMEChat CurrentChat;
-        public List<UnstuckMEChatUser> FriendsList;
-        public AddUserToConversationWindow(IUnstuckMEService inServer, UnstuckMEChat inCurrentChat, List<UnstuckMEChatUser> inFriendsList)
+        public List<UnstuckMEChatUser> ConversationContactList;
+        public AddUserToConversationWindow(UnstuckMEChat inCurrentChat)
         {
             InitializeComponent();
-            Server = inServer;
+
             CurrentChat = inCurrentChat;
-            FriendsList = inFriendsList.ToList();
+            ConversationContactList = UnstuckME.FriendsList.ToList();
 
             List<UnstuckMEChatUser> AlreadyInChatList = new List<UnstuckMEChatUser>();
-            foreach (UnstuckMEChatUser friend in FriendsList)
+            foreach (UnstuckMEChatUser friend in ConversationContactList)
             {
                 foreach (UnstuckMEChatUser user in CurrentChat.Users)
                 {
@@ -45,10 +44,10 @@ namespace UnstuckMEUserGUI
 
             foreach (UnstuckMEChatUser alreadyInChatUser in AlreadyInChatList)
             {
-                FriendsList.Remove(alreadyInChatUser);
+                ConversationContactList.Remove(alreadyInChatUser);
             }
 
-            foreach (UnstuckMEChatUser friend in FriendsList)
+            foreach (UnstuckMEChatUser friend in ConversationContactList)
             {
                 StackPanelFriendsList.Children.Add(new ContactAddToConversation(friend));
             }
@@ -91,25 +90,25 @@ namespace UnstuckMEUserGUI
         private void ButtonAddUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelInvalidUsername.Visibility = Visibility.Hidden;
-            if(Server.IsValidUser(TextBoxManualSearch.Text) && TextBoxManualSearch.Text.Length > 6)
+            if(UnstuckME.Server.IsValidUser(TextBoxManualSearch.Text) && TextBoxManualSearch.Text.Length > 6)
             {
-                int userID = Server.GetUserID(TextBoxManualSearch.Text);
-                Server.InsertUserIntoChat(userID, CurrentChat.ChatID);
+                int userID = UnstuckME.Server.GetUserID(TextBoxManualSearch.Text);
+                UnstuckME.Server.InsertUserIntoChat(userID, CurrentChat.ChatID);
                 UnstuckMEMessage temp = new UnstuckMEMessage();
                 temp.ChatID = CurrentChat.ChatID;
                 temp.FilePath = string.Empty;
                 temp.IsFile = false;
                 temp.Message = "A new member has joined the conversation!";
                 temp.MessageID = 0;
-                temp.SenderID = UnstuckMEWindow.User.UserID;
-                temp.Username = UnstuckMEWindow.User.FirstName;
+                temp.SenderID = UnstuckME.User.UserID;
+                temp.Username = UnstuckME.User.FirstName;
                 temp.UsersInConvo = new List<int>();
                 foreach (UnstuckMEChatUser user in CurrentChat.Users)
                 {
                     temp.UsersInConvo.Add(user.UserID);
                 }
-                Server.SendMessage(temp);
-                UnstuckMEWindow._pages.ChatPage.AddMessage(temp);
+                UnstuckME.Server.SendMessage(temp);
+                UnstuckME.Pages.ChatPage.AddMessage(temp);
 
             }
             else

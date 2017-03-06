@@ -5,30 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UnstuckMEMessageBox" MaxHeight="205" MaxWidth="405" MinHeight="205" MinWidth="405" Height="205" Width="405" Background="DimGray" WindowStyle="None" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <!--IF YOU NEED A NEW LAYOUT MAKE A NEW GRID (CHECK BELOW FOR EXAMPLES)-->
-        <!--LAYOUT 0 ShutdownServer-->
-        <Grid Name="_GridServerShutdown" Visibility="Hidden" IsEnabled="false">
-            <Rectangle Fill="#FF323232" HorizontalAlignment="Left" Height="34"  VerticalAlignment="Top" Width="397" Margin="0,-3,0,0"/>
-            <Button x:Name="buttonOKServerShutdown" Background="#336699" Foreground="White" Content="OK" HorizontalAlignment="Left" Margin="295,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonOKServerShutdown_Click"/>
-            <TextBox x:Name="textBoxServerShutdownMessage" BorderThickness="0" IsReadOnly="True" Margin="0,31,0,38" Background="{x:Null}" Foreground="White" TextWrapping="Wrap" Text="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" FontSize="14"></TextBox>
-            <Button x:Name="buttonCloseServerShutdown"  HorizontalAlignment="Left" Margin="360,1,0,0" VerticalAlignment="Top" Width="27" Height="26" Background="#FF323232" BorderBrush="{x:Null}" Click="buttonCloseServerShutdown_Click">
-                <Image Source="Resources/CloseButton.png" Stretch="Fill"/>
-            </Button>
-            <Label x:Name="labelTitleServerShutdown" Foreground="White" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="355" FontFamily="Lucida Sans Unicode"/>
+        Title="UnstuckMEMessageBox" MaxWidth="550" MinWidth="550" Topmost="True" SizeToContent="Height"
+        Width="550" Background="DimGray" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Border BorderBrush="LightGray" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="1*" MinHeight="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="GridTitleBar" Grid.Column="0" Grid.Row="0" Background="#FF323232">
+                <Label x:Name="LabelTitle" FontSize="18" Margin="10,0,0,0" FontWeight="Medium" Content="UnstuckME Message Box" Foreground="WhiteSmoke" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Left"></Label>
+                <Border x:Name="ButtonClose" Cursor="Hand" MouseEnter="ButtonClose_MouseEnter" MouseLeave="ButtonClose_MouseLeave" MouseLeftButtonDown="ButtonClose_MouseLeftButtonDown" Width="35" Height="35" CornerRadius="6" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Background="LightGray">
+                    <Image Source="/Resources/Close/CloseRed.png" VerticalAlignment="Center" Stretch="UniformToFill" HorizontalAlignment="Center"  Height="33" Width="33" ></Image>
+                </Border>
+                <Border x:Name="ButtonMinimize" Cursor="Hand" MouseEnter="ButtonMinimize_MouseEnter" MouseLeave="ButtonMinimize_MouseLeave" MouseLeftButtonDown="ButtonMinimize_MouseLeftButtonDown" Width="35" Height="35" CornerRadius="6" HorizontalAlignment="Right" Margin="0,0,45,0" VerticalAlignment="Center" Background="LightGray">
+                    <Image Source="/Resources/Minimize/MinimizeBlue.png" VerticalAlignment="Center" Stretch="UniformToFill" HorizontalAlignment="Center"  Height="33" Width="33" ></Image>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="GridTextField">
+                <TextBox x:Name="TextBoxMessage" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontWeight="Medium" FontSize="18" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" Margin="100,10,20,10" Text="KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKdddddddddddddddddddddddddddddddddddddddddddddKKK" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBox>
+                <Rectangle x:Name="ImageWhiteFill" Width="30" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0" Fill="White"></Rectangle>
+                <Border Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
+                    <Image x:Name="ImageMessageBox" Source="/Resources/Box/Info.png" />
+                </Border>
+                
+            </Grid>
+            <Grid x:Name="ButtonGrid" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="258"/>
+                    <ColumnDefinition Width="94"/>
+                    <ColumnDefinition Width="94"/>
+                    <ColumnDefinition Width="94"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <!--Shutdown, OKCancel, OK, YesNo, YesNoCancel -->
+                <Grid Grid.Column="0"></Grid>
+                <Grid Grid.Column="1">
+                    <Border x:Name="ButtonYNCancel" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="85" BorderThickness="2" BorderBrush="Gray" Height="35" VerticalAlignment="Center" Background="SteelBlue" MouseEnter="ButtonCancel_MouseEnter" MouseLeave="ButtonCancel_MouseLeave" MouseLeftButtonDown="ButtonCancel_MouseLeftButtonDown">
+                        <Label Content="Cancel" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Border x:Name="ButtonCancel" MouseEnter="ButtonCancel_MouseEnter" MouseLeave="ButtonCancel_MouseLeave" MouseLeftButtonDown="ButtonCancel_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Width="85" Cursor="Hand" BorderThickness="2" BorderBrush="Gray" Height="35" VerticalAlignment="Center" Background="SteelBlue">
+                        <Label Content="Cancel" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                    <Border x:Name="ButtonNo" MouseEnter="ButtonNo_MouseEnter" MouseLeave="ButtonNo_MouseLeave" MouseLeftButtonDown="ButtonNo_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Width="85" Cursor="Hand" BorderThickness="2" BorderBrush="Gray" Height="35"  VerticalAlignment="Center" Background="#993333">
+                        <Label Content="NO" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <Border x:Name="ButtonOK" MouseEnter="ButtonOK_MouseEnter" MouseLeave="ButtonOK_MouseLeave" MouseLeftButtonDown="ButtonOK_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="85" BorderThickness="2" BorderBrush="Gray" Height="35"  VerticalAlignment="Center" Background="#336699">
+                        <Label Content="OK" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                    <Border x:Name="ButtonYes" MouseEnter="ButtonYes_MouseEnter" MouseLeave="ButtonYes_MouseLeave" MouseLeftButtonDown="ButtonYes_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="85" BorderThickness="2" BorderBrush="Gray" Height="35" VerticalAlignment="Center" Background="#336699">
+                        <Label Content="Yes" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                </Grid>
+            </Grid>
         </Grid>
-        <!--LAYOUT 1 OK/CANCEL-->
-        <Grid x:Name="_GridOKCancel" Visibility="Hidden" IsEnabled="False">
-            <Rectangle Fill="#FF323232" HorizontalAlignment="Left" Height="34"  VerticalAlignment="Top" Width="397" Margin="0,-3,0,0"/>
-            <Button x:Name="buttonOK" Background="#336699" Foreground="White" Content="OK" HorizontalAlignment="Left" Margin="295,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonOK_Click"/>
-            <Button x:Name="buttonCancel" Background="#336699" Foreground="White" Content="Cancel" HorizontalAlignment="Left" Margin="203,159,0,0" VerticalAlignment="Top" Width="87" Height="28" BorderBrush="Black" BorderThickness="2" FontFamily="Lucida Sans Unicode" Click="buttonCancel_Click"/>
-            <TextBox x:Name="textBoxOKCancel" BorderThickness="0"  IsReadOnly="True" Margin="0,31,0,38" Background="{x:Null}" Foreground="White" TextWrapping="Wrap" Text="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" FontSize="14"></TextBox>
-            <Button x:Name="buttonCloseOKCancel"  HorizontalAlignment="Left" Margin="360,1,0,0" VerticalAlignment="Top" Width="27" Height="26" Background="#FF323232" BorderBrush="{x:Null}" Click="buttonCloseOKCancel_Click">
-                <Image Source="Resources/CloseButton.png" Stretch="Fill"/>
-            </Button>
-            <Label x:Name="labelTitleOKCancel" Foreground="White" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="355" FontFamily="Lucida Sans Unicode"/>
-        </Grid>
-        <!--INSERT GRID 2 BELOW-->
-    </Grid>
+    </Border>
 </Window>

@@ -30,18 +30,13 @@ namespace UnstuckMEUserGUI.SubWindows
         List<string> courseNumberandNameList = new List<string>();
         List<string> courseCodeList = new List<string>();
 
-        public static IUnstuckMEService Server;
-        public static UserInfo User;
-
-        public AddClassWindow(ref IUnstuckMEService inServer, ref UserInfo inUser)
+        public AddClassWindow()
         {
             InitializeComponent();
             
-            Server = inServer;
-            User = inUser;
             try
             {
-                courseCodeList = Server.GetCourseCodes();
+                courseCodeList = UnstuckME.Server.GetCourseCodes();
                 
             }
             catch (Exception exp)
@@ -64,7 +59,7 @@ namespace UnstuckMEUserGUI.SubWindows
             {
                 try
                 {
-                    courseNameList = Server.GetCourseNumbersByCourseCode(ComboBoxCourseCode.SelectedValue as string);
+                    courseNameList = UnstuckME.Server.GetCourseNumbersByCourseCode(ComboBoxCourseCode.SelectedValue as string);
                     courseNameList.Insert(0, "(Select Class)");
                 }
                 catch (Exception exp)
@@ -89,7 +84,7 @@ namespace UnstuckMEUserGUI.SubWindows
             int ClassID = 0;
             try
             {
-                ClassID = Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseCode.SelectedValue as string, ComboBoxCourseNumberAndName.SelectedValue as string);
+                ClassID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseCode.SelectedValue as string, ComboBoxCourseNumberAndName.SelectedValue as string);
             }
             catch (Exception exp)
             {
@@ -98,8 +93,8 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             try
             {
-                Server.InsertStudentIntoClass(User.UserID, ClassID);
-                Server.AddClassesToClient(ClassID, User.UserID);
+                UnstuckME.Server.InsertStudentIntoClass(UnstuckME.User.UserID, ClassID);
+                UnstuckME.Server.AddClassesToClient(ClassID, UnstuckME.User.UserID);
             }
             catch (Exception ex)
             {

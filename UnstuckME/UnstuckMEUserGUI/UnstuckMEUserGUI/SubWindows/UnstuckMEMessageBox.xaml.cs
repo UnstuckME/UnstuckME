@@ -12,26 +12,69 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
     /// <summary>
     /// Interaction logic for UnstuckMEMessageBox.xaml
+    /// DO NOT use the Window.Show() method with this as it will cause an error
     /// </summary>
     public partial class UnstuckMEMessageBox : Window
     {
-        public UnstuckMEMessageBox(int boxStyle, string message, string title)
+        private UnstuckMEBox _BoxStyle;
+        private UnstuckMEBoxImage _BoxImage;
+        //WhiteFill Warning: Height = 40 Width = 20 Margin="45,10,0,0"
+        //WhiteFill Error & Info: Margin="40,0,0,0" Width="30" Height="40"
+        public UnstuckMEMessageBox(UnstuckMEBox BoxStyle, string DisplayMessage, string BoxTitle, UnstuckMEBoxImage BoxImage)
         {
+            Uri uri = new Uri("pack://application:,,,/Resources/Box/Error.png");
+            _BoxStyle = BoxStyle;
+            _BoxImage = BoxImage;
             InitializeComponent();
-            ShowBox(boxStyle, message, title);
+            ShowBox(BoxStyle, DisplayMessage, BoxTitle, BoxImage);   
         }
 
         //Legend: 0 - ShutdownAndRestart Application, 1 - OK and Cancel Box, 
-        void ShowBox(int boxStyle, string message, string title)
+        void ShowBox(UnstuckMEBox boxStyle, string message, string title, UnstuckMEBoxImage boxImage)
         {
+            switch(boxImage)
+            {
+                case UnstuckMEBoxImage.Error:
+                    {
+                        ImageWhiteFill.Height = 40;
+                        ImageWhiteFill.Width = 30;
+                        ImageWhiteFill.Margin = new Thickness(40, 0, 0, 0);
+                        Uri uri = new Uri("pack://application:,,,/Resources/Box/Error.png");
+                        BitmapImage bitmap = new BitmapImage(uri);
+                        ImageMessageBox.Source = bitmap;
+                        break;
+                    }
+                case UnstuckMEBoxImage.Information:
+                    {
+                        ImageWhiteFill.Height = 40;
+                        ImageWhiteFill.Width = 30;
+                        ImageWhiteFill.Margin = new Thickness(40, 0, 0, 0);
+                        Uri uri = new Uri("pack://application:,,,/Resources/Box/Info.png");
+                        BitmapImage bitmap = new BitmapImage(uri);
+                        ImageMessageBox.Source = bitmap;
+                        break;
+                    }
+                case UnstuckMEBoxImage.Warning:
+                    {
+                        ImageWhiteFill.Height = 40;
+                        ImageWhiteFill.Width = 20;
+                        ImageWhiteFill.Margin = new Thickness(45, 10, 0, 0);
+                        Uri uri = new Uri("pack://application:,,,/Resources/Box/Warning.png");
+                        BitmapImage bitmap = new BitmapImage(uri);
+                        ImageMessageBox.Source = bitmap;
+                        break;
+                    }
+            }
+
             switch(boxStyle)
             {
-                case 0: //ShutdownCurrent/RestartNew Application 
+                case UnstuckMEBox.Shutdown:
                     {
                         WindowCollection windows = App.Current.Windows;
                         foreach (Window item in windows)
@@ -41,50 +84,244 @@ namespace UnstuckMEUserGUI
                                 item.Close();
                             }
                         }
-                        _GridServerShutdown.IsEnabled = true;
-                        textBoxServerShutdownMessage.Text = message;
-                        labelTitleServerShutdown.Content = title;
-                        _GridServerShutdown.Visibility = Visibility.Visible;
+                        ButtonOK.Visibility = Visibility.Visible;
+                        ButtonOK.IsEnabled = true;
+                        LabelTitle.Content = title;
+                        TextBoxMessage.Text = message;
                         break;
                     }
-                case 1: //OK/Cancel Box
+                case UnstuckMEBox.OKCancel:
                     {
-                        _GridOKCancel.IsEnabled = true;
-                        labelTitleOKCancel.Content = title;
-                        textBoxOKCancel.Text = message;
-                        _GridOKCancel.Visibility = Visibility.Visible;
+                        ButtonOK.Visibility = Visibility.Visible;
+                        ButtonOK.IsEnabled = true;
+                        ButtonCancel.Visibility = Visibility.Visible;
+                        ButtonCancel.IsEnabled = true;
+                        LabelTitle.Content = title;
+                        TextBoxMessage.Text = message;
+                        break;
+                    }
+                case UnstuckMEBox.OK:
+                    {
+                        ButtonOK.Visibility = Visibility.Visible;
+                        ButtonOK.IsEnabled = true;
+                        LabelTitle.Content = title;
+                        TextBoxMessage.Text = message;
+                        break;
+                    }
+                case UnstuckMEBox.YesNo:
+                    {
+                        ButtonYes.Visibility = Visibility.Visible;
+                        ButtonYes.IsEnabled = true;
+                        ButtonNo.Visibility = Visibility.Visible;
+                        ButtonNo.IsEnabled = true;
+                        LabelTitle.Content = title;
+                        TextBoxMessage.Text = message;
+                        break;
+                    }
+                case UnstuckMEBox.YesNoCancel:
+                    {
+                        ButtonYes.Visibility = Visibility.Visible;
+                        ButtonYes.IsEnabled = true;
+                        ButtonNo.Visibility = Visibility.Visible;
+                        ButtonNo.IsEnabled = true;
+                        ButtonYNCancel.Visibility = Visibility.Visible;
+                        ButtonYNCancel.IsEnabled = true;
+                        LabelTitle.Content = title;
+                        TextBoxMessage.Text = message;
                         break;
                     }
             }
         }
 
-        private void buttonCloseServerShutdown_Click(object sender, RoutedEventArgs e)
-        {
-            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
-            Process.Start(unstuckME);
-            Application.Current.Shutdown();
+        private void ButtonCancel_MouseEnter(object sender, MouseEventArgs e)
+        { 
+            ButtonYNCancel.Background = Brushes.LightSteelBlue;
         }
 
-        private void buttonOKServerShutdown_Click(object sender, RoutedEventArgs e)
+        private void ButtonCancel_MouseLeave(object sender, MouseEventArgs e)
         {
-            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
-            Process.Start(unstuckME);
-            Application.Current.Shutdown();
+            ButtonYNCancel.Background = Brushes.SteelBlue;
         }
 
-        private void buttonOK_Click(object sender, RoutedEventArgs e)
+        private void ButtonCancel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            switch (_BoxStyle)
+            {
+                case UnstuckMEBox.OKCancel:
+                    {
+                        DialogResult = null;
+                        break;
+                    }
+                case UnstuckMEBox.YesNoCancel:
+                    {
+                        DialogResult = null;
+                        break;
+                    }
+            }
+            try
+            {
+                this.Close();
+            }
+            catch (Exception)
+            {/*In Case Error is thrown*/ }
         }
 
-        private void buttonCancel_Click(object sender, RoutedEventArgs e)
+        private void ButtonMinimize_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Close();
+            ButtonMinimize.Background = Brushes.White;
         }
 
-        private void buttonCloseOKCancel_Click(object sender, RoutedEventArgs e)
+        private void ButtonMinimize_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.Close();
+            ButtonMinimize.Background = Brushes.LightGray;
+        }
+
+        private void ButtonMinimize_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void ButtonClose_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonClose.Background = Brushes.White;
+        }
+
+        private void ButtonClose_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonClose.Background = Brushes.LightGray;
+        }
+
+        private void ButtonClose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (_BoxStyle)
+            {
+                case UnstuckMEBox.Shutdown:
+                    {
+                        string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                        Process.Start(unstuckME);
+                        Application.Current.Shutdown();
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+            DialogResult = null;
+            try
+            {
+                this.Close();
+            }
+            catch (Exception)
+            {/*In Case Error is thrown*/ }
+        }
+
+        private void ButtonOK_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonOK.Background = Brushes.SteelBlue;
+        }
+
+        private void ButtonOK_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonOK.Background = UnstuckME.Blue;
+        }
+
+        private void ButtonOK_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (_BoxStyle)
+            {
+                case UnstuckMEBox.OKCancel:
+                    {
+                        DialogResult = true;
+                        break;
+                    }
+                case UnstuckMEBox.OK:
+                    {
+                        DialogResult = true;
+                        break;
+                    }
+                case UnstuckMEBox.Shutdown:
+                    {
+                        DialogResult = true;
+                        string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                        Process.Start(unstuckME);
+                        Application.Current.Shutdown();
+                        break;
+                    }
+            }
+            try
+            {
+                this.Close();
+            }
+            catch (Exception)
+            {/*In Case of App Shutdown and Error is thrown*/ }
+
+        }
+
+        private void ButtonNo_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonNo.Background = Brushes.IndianRed;
+        }
+
+        private void ButtonNo_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonNo.Background = UnstuckME.Red;
+        }
+
+        private void ButtonNo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (_BoxStyle)
+            {
+                case UnstuckMEBox.YesNo:
+                    {
+                        DialogResult = false;
+                        break;
+                    }
+                case UnstuckMEBox.YesNoCancel:
+                    {
+                        DialogResult = false;
+                        break;
+                    }
+            }
+            try
+            {
+                this.Close();
+            }
+            catch (Exception)
+            {/*In Case Error is thrown*/ }
+        }
+
+        private void ButtonYes_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonYes.Background = Brushes.SteelBlue;
+        }
+
+        private void ButtonYes_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonYes.Background = UnstuckME.Blue;
+        }
+
+        private void ButtonYes_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (_BoxStyle)
+            {
+                case UnstuckMEBox.YesNo:
+                    {
+                        DialogResult = true;
+                        break;
+                    }
+                case UnstuckMEBox.YesNoCancel:
+                    {
+                        DialogResult = true;
+                        break;
+                    }
+            }
+            try
+            {
+                this.Close();
+            }
+            catch (Exception)
+            {/*In Case Error is thrown*/ }
         }
     }
 }

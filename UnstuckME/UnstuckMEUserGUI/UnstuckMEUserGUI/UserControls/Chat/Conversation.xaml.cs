@@ -23,16 +23,12 @@ namespace UnstuckMEUserGUI
     public partial class Conversation : UserControl
     {
         public UnstuckMEChat Chat;
-        public ChatPage _ChatPage;
-        public static IUnstuckMEService Server;
-        public Conversation(UnstuckMEChat inChat, ChatPage inChatPage, ref IUnstuckMEService inServer)
+        public Conversation(UnstuckMEChat inChat)
         {
             InitializeComponent();
             Chat = inChat;
-            _ChatPage = inChatPage;
-            Server = inServer;
             var test = from a in inChat.Users
-                       where a.UserID != _ChatPage.User.UserID
+                       where a.UserID != UnstuckME.User.UserID
                        select new { ConversationName = a.UserName };
             if (test.Count() == 0)
             {
@@ -52,9 +48,9 @@ namespace UnstuckMEUserGUI
             {
                 foreach (UnstuckMEChatUser user in Chat.Users)
                 {
-                    if(user.UserID != _ChatPage.User.UserID)
+                    if(user.UserID != UnstuckME.User.UserID)
                     {
-                       ConversationImage.Source =  _ChatPage.ic.ConvertFrom(Server.GetProfilePicture(user.UserID)) as ImageSource;
+                       ConversationImage.Source =  UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(user.UserID)) as ImageSource;
                     }
                 }
                 ConversationLabel.Content = test.First().ConversationName;
@@ -63,12 +59,26 @@ namespace UnstuckMEUserGUI
 
         private void ConversationUserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            Background = Brushes.LightGray;
+            if(Background == null)
+            {
+                Background = Brushes.Gainsboro;
+            }
+            else
+            {
+                Background = Brushes.LightGray;
+            }
         }
 
         private void ConversationUserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            Background = null;
+            if(Background == Brushes.Gainsboro)
+            {
+                Background = null;
+            }
+            else
+            {
+                Background = Brushes.LightGray;
+            }
         }
 
         public void ShowConversation()
@@ -78,31 +88,55 @@ namespace UnstuckMEUserGUI
 
         public void ConversationUserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _ChatPage.ButtonAddUserToConvo.Visibility = Visibility.Visible;
-            _ChatPage.ButtonAddUserToConvo.IsEnabled = true;
-            _ChatPage.LabelConversationName.Content = ConversationLabel.Content;
+            UnstuckME.Pages.ChatPage.ButtonAddUserToConvo.Visibility = Visibility.Visible;
+            UnstuckME.Pages.ChatPage.ButtonAddUserToConvo.IsEnabled = true;
+            UnstuckME.Pages.ChatPage.LabelConversationName.Content = ConversationLabel.Content;
             foreach (UnstuckMEChatUser user in Chat.Users)
             {
                 if(user.ProfilePicture == null)
                 {
-                    if(user.UserID == _ChatPage.User.UserID)
+                    if(user.UserID == UnstuckME.User.UserID)
                     {
-                        user.ProfilePicture = _ChatPage.UserImage;
+                        user.ProfilePicture = UnstuckME.UserProfilePicture;
                     }
                     else
                     {
-                        user.ProfilePicture = _ChatPage.ic.ConvertFrom(Server.GetProfilePicture(user.UserID)) as ImageSource;
+                        user.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(user.UserID)) as ImageSource;
                     }
                 }
             }
-            _ChatPage.currentChat = Chat;
-            _ChatPage.StackPanelMessages.Children.Clear();
+            UnstuckME.CurrentChatSession = Chat;
+            UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Clear();
             foreach (UnstuckMEMessage message in Chat.Messages)
             {
                 UnstuckMEGUIChatMessage guiMessage = new UnstuckMEGUIChatMessage(message, Chat);
-                _ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
+                UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
             }
-            _ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
+            UnstuckME.Pages.ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
+
+            foreach (var converstion in ((StackPanel)this.Parent).Children.OfType<Conversation>())
+            {
+                if(converstion.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
+                {
+                    converstion.Background = Brushes.LightGray;
+                }
+                else
+                {
+                    converstion.Background = null;
+                }
+            }
+            NewMessageNotification temp = null;
+            foreach (NewMessageNotification notification in UnstuckME.MainWindow.NotificationStack.Children.OfType<NewMessageNotification>())
+            {
+                if(notification.Message.ChatID == Chat.ChatID)
+                {
+                    temp = notification;
+                }
+            }
+            if(temp != null)
+            {
+                UnstuckME.MainWindow.NotificationStack.Children.Remove(temp);
+            }
         }
     }
 }

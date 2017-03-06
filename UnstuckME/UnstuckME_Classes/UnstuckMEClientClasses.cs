@@ -10,7 +10,16 @@ namespace UnstuckME_Classes
 	public enum Privileges
 	{ InvalidUser, Admin, Moderator, User }
 
-	public class UserInfo
+    public enum UnstuckMEBox
+    {
+        Shutdown, OKCancel, OK, YesNo, YesNoCancel
+    }
+
+    public enum UnstuckMEBoxImage
+    {
+        Error, Warning, Information
+    }
+    public class UserInfo
     {
         public int UserID { get; set; }
         public string FirstName { get; set; }
@@ -121,13 +130,36 @@ namespace UnstuckME_Classes
         public int StickerID { get; set; }
         public string ProblemDescription { get; set; }
         public int ClassID { get; set; }
+		public string CourseCode { get; set; }
+		public string CourseName { get; set; }
+		public short CourseNumber { get; set; }
         public int ChatID { get; set; }
         public int StudentID { get; set; }
-        public int TutorID { get; set; }
+        public Nullable<int> TutorID { get; set; }
+		public double StudentRanking { get; set; }
         public float MinimumStarRanking { get; set; }
         public List<int> AttachedOrganizations { get; set; }
         public DateTime SubmitTime { get; set; }
-        public int Timeout { get; set; }
+        public DateTime Timeout { get; set; }
+
+        public UnstuckMESticker()
+        {
+
+        }
+
+        public UnstuckMESticker(UnstuckMEBigSticker s)
+        {
+            StickerID = s.StickerID;
+            ProblemDescription = s.ProblemDescription;
+            ClassID = s.Class.ClassID;
+            ChatID = s.ChatID;
+            StudentID = s.StudentID;
+            TutorID = s.TutorID;
+            MinimumStarRanking = Convert.ToSingle(s.MinimumStarRanking);
+            AttachedOrganizations = s.AttachedOrganizations;
+            SubmitTime = s.SubmitTime;
+            Timeout = s.SubmitTime.AddSeconds(s.TimeoutInt);
+        }
     }
 
     public class UnstuckMEAvailableSticker
@@ -140,6 +172,23 @@ namespace UnstuckME_Classes
         public short CourseNumber { set; get; }
         public int StudentID { get; set; }
         public double StudentRanking { get; set; }
+        public DateTime Timeout { get; set; }
+    }
+
+    public class UnstuckMEBigSticker
+    {
+        public int StickerID { get; set; }
+        public string ProblemDescription { get; set; }
+        public int StudentID { get; set; }
+        public double StudentRanking { get; set; }
+        public int ChatID { get; set; }
+        public int TutorID { get; set; }
+        public double TutorRanking { get; set; }
+        public double MinimumStarRanking { get; set; }
+        public UserClass Class { get; set; }
+        public List<int> AttachedOrganizations { get; set; }
+        public DateTime SubmitTime { get; set; }
+        public int TimeoutInt { get; set; }
         public DateTime Timeout { get; set; }
     }
 
