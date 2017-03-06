@@ -28,7 +28,6 @@ namespace UnstuckMEUserGUI.SubWindows
 
         private void AddOrgBtn_Click(object sender, RoutedEventArgs e)
         {
-            throw new Exception();
             string OrgName = orgName.Text;
             if (OrgName != "")
             {
