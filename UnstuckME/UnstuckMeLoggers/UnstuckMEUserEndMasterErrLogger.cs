@@ -49,6 +49,12 @@ namespace UnstuckMeLoggers
                 outputErrors();
             }         
         }
+
+        public void ForceWrite()
+        {
+            outputErrors();
+        }
+
         private void outputErrors()
         {
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath, true))

@@ -25,6 +25,7 @@ namespace UnstuckMEUserGUI.SubWindows
         bool isUser = false;
         bool isModerator = false;
         bool isAdmin = false;
+        bool isDisabled = false;
         UserInfo targetUser;
         int userId = -1;
         public AddUserRoleWindow()
@@ -45,6 +46,10 @@ namespace UnstuckMEUserGUI.SubWindows
             else if (isAdmin)
             {
                 UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userId);
+            }
+            else if (isDisabled)
+            {
+                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userId);
             }
         }
 
@@ -76,6 +81,11 @@ namespace UnstuckMEUserGUI.SubWindows
                     isAdmin = true;
                     AdminBtn.IsChecked = true;
                 }
+                else if (targetUser.Privileges == (int)Privileges.InvalidUser)
+                {
+                    isDisabled = true;
+                    DisabledBtn.IsChecked = true;
+                }
                 FirstNameTxt.Text = targetUser.FirstName;
                 LastNameTxt.Text = targetUser.LastName;
             }
@@ -91,6 +101,9 @@ namespace UnstuckMEUserGUI.SubWindows
 
             isAdmin = false;
             AdminBtn.IsChecked = false;
+
+            isDisabled = false;
+            DisabledBtn.IsChecked = false;
         }
 
         private void ModeratorBtn_Checked(object sender, RoutedEventArgs e)
@@ -103,6 +116,9 @@ namespace UnstuckMEUserGUI.SubWindows
 
             isAdmin = false;
             AdminBtn.IsChecked = false;
+
+            isDisabled = false;
+            DisabledBtn.IsChecked = false;
         }
 
         private void AdminBtn_Checked(object sender, RoutedEventArgs e)
@@ -115,6 +131,24 @@ namespace UnstuckMEUserGUI.SubWindows
 
             isAdmin = true;
             AdminBtn.IsChecked = true;
+
+            isDisabled = false;
+            DisabledBtn.IsChecked = false;
+        }
+
+        private void DisabledBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            UserBtn.IsChecked = false;
+            isUser = false;
+
+            isModerator = false;
+            ModeratorBtn.IsChecked = false;
+
+            isAdmin = false;
+            AdminBtn.IsChecked = false;
+
+            isDisabled = true;
+            DisabledBtn.IsChecked = true;
         }
     }
 }

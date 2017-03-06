@@ -44,5 +44,12 @@ namespace UnstuckMEUserGUI
         {
 
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            // add mentor orgs
+            Window win = new SubWindows.AddMentorOrgsWindow();
+            win.Show();
+        }
     }
 }

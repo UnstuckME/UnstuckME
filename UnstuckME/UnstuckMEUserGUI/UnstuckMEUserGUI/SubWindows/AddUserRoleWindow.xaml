@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI.SubWindows"
         mc:Ignorable="d"
-        Title="AddUserRoleWindow" Height="300" Width="300">
+        Title="AddUserRoleWindow" Height="220.244" Width="314.635">
     <Grid Margin="0,0,-0.4,0.4">
-        <TextBox x:Name="UserEmailTxtBx" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" ToolTip="User Email" VerticalAlignment="Top" Width="185"/>
-        <Button x:Name="FindUserBtn" Content="Find User" HorizontalAlignment="Left" Margin="209,10,0,0" VerticalAlignment="Top" Width="75" Click="FindUserBtn_Click"/>
+        <TextBox x:Name="UserEmailTxtBx" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" ToolTip="User Email" VerticalAlignment="Top" Width="198"/>
+        <Button x:Name="FindUserBtn" Content="Find User" HorizontalAlignment="Left" Margin="223,10,0,0" VerticalAlignment="Top" Width="75" Click="FindUserBtn_Click"/>
         <TextBlock x:Name="FirstNameTxt" HorizontalAlignment="Left" Margin="10,66,0,0" TextWrapping="Wrap" Text="First Name" VerticalAlignment="Top" RenderTransformOrigin="-0.037,-0.363" Width="120"/>
         <TextBlock x:Name="LastNameTxt" HorizontalAlignment="Left" Margin="153,67,0,0" TextWrapping="Wrap" Text="Last Name" VerticalAlignment="Top" Width="131"/>
         <Label x:Name="UserRoleLbl" Content="User's Role" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top"/>
         <StackPanel x:Name="btnPan" Height="26" Margin="10,113,10,0" VerticalAlignment="Top" Orientation="Horizontal">
-            <RadioButton x:Name="UserBtn" GroupName="Roles" Content="User" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="58" Checked="radioButton_Checked"/>
-            <RadioButton x:Name="ModeratorBtn" GroupName="Roles" Content="Moderator" HorizontalAlignment="Center" Margin="0,0,0,-0.2" Width="98" Checked="ModeratorBtn_Checked"/>
+            <RadioButton x:Name="DisabledBtn" GroupName="Roles" Content="Disable" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="62" Checked="DisabledBtn_Checked"/>
+            <RadioButton x:Name="UserBtn" GroupName="Roles" Content="User" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="50" Checked="radioButton_Checked"/>
+            <RadioButton x:Name="ModeratorBtn" GroupName="Roles" Content="Moderator" HorizontalAlignment="Center" Margin="0,0,0,-0.2" Width="80" Checked="ModeratorBtn_Checked"/>
             <RadioButton x:Name="AdminBtn" GroupName="Roles" Content="Administrator" HorizontalAlignment="Right" Checked="AdminBtn_Checked"/>
         </StackPanel>
         <Button x:Name="UpdateRoleBtn" Content="Update Role" HorizontalAlignment="Left" Margin="102,144,0,0" VerticalAlignment="Top" Width="75" Click="UpdateRoleBtn_Click"/>

@@ -95,6 +95,9 @@
     <Compile Include="SubWindows\AddClassToServerWindow.xaml.cs">
       <DependentUpon>AddClassToServerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\AddMentorOrgsWindow.xaml.cs">
+      <DependentUpon>AddMentorOrgsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\AddUserRoleWindow.xaml.cs">
       <DependentUpon>AddUserRoleWindow.xaml</DependentUpon>
     </Compile>
@@ -242,6 +245,10 @@
       <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
     <Page Include="SubWindows\AddClassToServerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\AddMentorOrgsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

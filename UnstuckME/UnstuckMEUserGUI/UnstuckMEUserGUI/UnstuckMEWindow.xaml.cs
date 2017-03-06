@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Permissions;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -26,13 +27,15 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEWindow : Window
     {
+        
         private static Privileges userPrivileges;
-
+        
         public UnstuckMEWindow()
         {
             InitializeComponent();
             UnstuckME.MainWindow = this;
             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
+            
         }
 
         async private void Window_ContentRendered(object sender, EventArgs e)

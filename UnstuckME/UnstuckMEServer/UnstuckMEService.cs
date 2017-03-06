@@ -1692,14 +1692,22 @@ namespace UnstuckMEInterfaces
 
 			return value;
 		}
-#endregion
 
-		#region ServerGUI Functions
-		/// <summary>
-		/// Deprecated.
-		/// </summary>
-		/// <returns>True.</returns>
-		public bool TestNewConfig()
+        public void CreateMentorOrg(string name)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.CreateMentorOrganization(name);
+            }
+        }
+        #endregion
+
+        #region ServerGUI Functions
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
+        /// <returns>True.</returns>
+        public bool TestNewConfig()
 		{
 			return true;
 		}
@@ -1975,6 +1983,8 @@ namespace UnstuckMEInterfaces
 
 			return file;
 		}
-		#endregion
-	}
+
+
+        #endregion
+    }
 }

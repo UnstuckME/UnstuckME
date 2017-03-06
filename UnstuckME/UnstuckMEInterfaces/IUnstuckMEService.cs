@@ -167,6 +167,9 @@ namespace UnstuckMEInterfaces
 
 		[OperationContract]
 		string SendEmail(string userEmailAddress, string username);
+
+        [OperationContract]
+        void CreateMentorOrg(string name);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]
