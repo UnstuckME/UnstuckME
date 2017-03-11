@@ -76,11 +76,6 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 					dialog.ShowHiddenItems = false;
 					dialog.Multiselect = false;
 
-					//System.Windows.Forms.FolderBrowserDialog browser = new System.Windows.Forms.FolderBrowserDialog();
-					//browser.ShowNewFolderButton = true;
-					//browser.RootFolder = Environment.SpecialFolder.MyComputer;
-					//browser.Description = "Select Pickup Directory";
-
 					if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
 						textboxSpecifiedPickupDirectory.Text = dialog.FileName;
 				}

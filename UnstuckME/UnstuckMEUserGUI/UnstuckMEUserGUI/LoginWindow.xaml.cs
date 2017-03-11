@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,8 +30,6 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class LoginWindow : Window
 	{
-		//public static IUnstuckMEService Server;
-		//private static DuplexChannelFactory<IUnstuckMEService> _channelFactory;
 		private static List<UnstuckMESchool> schools;
 		private string m_SchoolName = null;
 		private string m_orginalSchoolName = null;
@@ -43,7 +42,11 @@ namespace UnstuckMEUserGUI
             UnstuckME.Blue = buttonCreateAccount.Background;
             UnstuckME.Red = buttonCancel.Background;
 
-            m_orginalSchoolName = m_SchoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            m_orginalSchoolName = m_SchoolName = config.AppSettings.Settings["SchoolName"].Value;
+            string m_username = config.AppSettings.Settings["Username"].Value;
+            string m_password = config.AppSettings.Settings["Password"].Value;
 
 			try
 			{
@@ -67,8 +70,20 @@ namespace UnstuckMEUserGUI
 						file.WriteLine("Photo ID = NULL");
 						file.WriteLine("Photo Info = NULL");
 					}
-
 				}
+
+                if (m_username != string.Empty)
+                {
+                    System.Windows.Media.Brush brush = (System.Windows.Media.Brush)(new BrushConverter().ConvertFromString("#FFCFCF56"));
+
+                    textBoxUserName_GotFocus(null, null);
+                    textBoxPasswordPreview_GotFocus(null, null);
+                    textBoxUserName.Text = m_username;
+                    textBoxUserName.Background = brush;
+                    passwordBox.Password = m_password;
+                    passwordBox.Background = brush;
+                    checkboxRememberMe.IsChecked = true;
+                }
 			}
 			catch (Exception ex)
 			{
@@ -87,10 +102,10 @@ namespace UnstuckMEUserGUI
 				comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
 			}
 
-			if (!string.IsNullOrEmpty(m_SchoolName))
-			{
-				comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf(m_SchoolName);
-			}
+            if (!string.IsNullOrEmpty(m_SchoolName))
+                comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf(m_SchoolName);
+            else
+                comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf("Local Ip");
 
 		}
 
@@ -107,23 +122,30 @@ namespace UnstuckMEUserGUI
 			List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
 			using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
 			{
-				var dbSchools = from s in db.Schools
-								join l in db.SchoolLogoes on s.SchoolID equals l.LogoID //join j in db.Servers on s.SchoolID equals j.SchoolID /*No Schools have a server currently*/
-								select new
-								{
-									SchoolName = s.SchoolName,                                      //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/   
-									EmailCredentials = s.EmailCredentials,
-									SchoolID = s.SchoolID,
-									LastModified = l.LastModified
+                var dbSchools = from s in db.Schools
+                                join l in db.SchoolLogoes on s.SchoolID equals l.LogoID
+                                //join j in db.Servers on s.SchoolID equals j.SchoolID      /*No Schools have a server currently*/
+                                select new
+                                {
+                                    SchoolName = s.SchoolName,                                      //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/   
+                                    EmailCredentials = s.EmailCredentials,
+                                    SchoolID = s.SchoolID,
+                                    LastModified = l.LastModified//,
+                                    //Domain = j.ServerDomain,
+                                    //ServerName = j.ServerName,
+                                    //IPAddress = j.ServerIPAddress
 								};
 
 				foreach (var dbschool in dbSchools)
 				{
 					UnstuckMESchool newSchool = new UnstuckMESchool();
-					newSchool.SchoolName = dbschool.SchoolName;
-					newSchool.SchoolID = dbschool.SchoolID;
-					newSchool.SchoolEmailCredentials = dbschool.EmailCredentials;
-					newSchool.LogoLastModified = dbschool.LastModified.ToString();
+                    newSchool.SchoolID = dbschool.SchoolID;
+                    newSchool.SchoolName = dbschool.SchoolName;
+                    newSchool.SchoolEmailCredentials = dbschool.EmailCredentials;
+                    newSchool.LogoLastModified = dbschool.LastModified.ToString();
+                    //newSchool.SchoolDomain = dbschool.Domain;
+                    //newSchool.ServerName = dbschool.ServerName;
+                    //newSchool.ServerIPAdress = dbschool.IPAddress;
 					tempSchools.Add(newSchool);
 				}
 			}
@@ -145,7 +167,7 @@ namespace UnstuckMEUserGUI
 					throw new Exception("Enter a Valid Password");
 				if (comboBoxSchools.SelectedValue.ToString() != "Oregon Institute of Technology") // This is a serious hack around for the presentation
 					throw new Exception("Unable to connect to server");
-				;
+				
 				isValid = true;
 			}
 			catch (Exception ex)
@@ -171,6 +193,24 @@ namespace UnstuckMEUserGUI
 					}
 					else
 					{
+                        var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                        if (checkboxRememberMe.IsChecked.Value)
+                        {
+                            config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
+                            config.AppSettings.Settings["Password"].Value = passwordBox.Password;
+                        }
+                        else
+                        {
+                            config.AppSettings.Settings["Username"].Value = string.Empty;
+                            config.AppSettings.Settings["Password"].Value = string.Empty;
+                        }
+
+                        config.AppSettings.Settings["SchoolName"].Value = comboBoxSchools.SelectedValue.ToString();
+                        ChannelEndpointElement endpoint = ((ClientSection)config.GetSection("system.serviceModel/client")).Endpoints[0];
+                        //endpoint.Address = new Uri("net.tcp://" + (comboBoxSchools.SelectedItem as UnstuckMESchool).ServerIPAdress + @"/UnstuckMEService");
+                        config.Save();
+
 						UnstuckMEWindow mainWindow = new UnstuckMEWindow();
 						mainWindow.Show();
 						this.Close();
@@ -178,14 +218,12 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-					//
-					//MessageBox.Show("Please check that you entered the correct credentials.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 					isValid = false;
 					_labelInvalidLogin.Visibility = Visibility.Visible;
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
 					try
 					{
-						UnstuckME.ChannelFactory.Abort();
+						UnstuckME.ChannelFactory.Close();
 						UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
 						UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
 					}
@@ -692,5 +730,21 @@ namespace UnstuckMEUserGUI
 			else
 				passwordBoxCreateConfirm.Background = System.Windows.Media.Brushes.Red;
 		}
-	}
+
+        private void textBoxUserName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
+
+            if (textBoxUserName.Background != null && (textBoxUserName.Background as SolidColorBrush).Color == brush)
+                textBoxUserName.Background = System.Windows.Media.Brushes.White;
+        }
+
+        private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
+
+            if (passwordBox.Background != null && (passwordBox.Background as SolidColorBrush).Color == brush)
+                passwordBox.Background = System.Windows.Media.Brushes.White;
+        }
+    }
 }
