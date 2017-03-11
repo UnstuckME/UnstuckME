@@ -34,8 +34,11 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             UnstuckME.MainWindow = this;
+
+            userPrivileges = (Privileges)UnstuckME.User.Privileges;
+            CheckAdminPrivledges(userPrivileges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
+
             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
-            
         }
 
         async private void Window_ContentRendered(object sender, EventArgs e)
@@ -49,10 +52,6 @@ namespace UnstuckMEUserGUI
             UnstuckME.Pages.ModeratorPage = new ModeratorPage();
             UnstuckME.Pages.AdminPage = new AdminPage();
 
-            userPrivileges = (Privileges)UnstuckME.User.Privileges; //This Works But for Design Purposes is commented out.
-            //userPrivileges = Privileges.Admin; //This will be replaced with above line
-
-            CheckAdminPrivledges(userPrivileges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
             SwitchToStickerTab();
             try
             {
@@ -62,7 +61,6 @@ namespace UnstuckMEUserGUI
                 await Task.Factory.StartNew(() => LoadUserProfilePageAsync());
                 await Task.Factory.StartNew(() => LoadSettingsPageAsync());
                 await Task.Factory.StartNew(() => LoadAdminPageAsync());
-
             }
             catch (InvalidOperationException ex)
             {

@@ -35,6 +35,7 @@ namespace UnstuckMEUserGUI
 		private string m_orginalSchoolName = null;
 		private string m_SchoolInfoFilePath = null;
 		private string verification_code = null;
+        private bool content_rendered = true;
 
 		public LoginWindow()
 		{
@@ -50,21 +51,20 @@ namespace UnstuckMEUserGUI
 
 			try
 			{
-				string tempDirectory = System.IO.Path.Combine(FindDrive(), "UnstuckMETemp");
+                string tempDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME";
+				Directory.CreateDirectory(tempDirectory);
 
-				//This will not recreate the driectory if it already exist 
-				//(MSDN: "Creates all directories and subdirectories in the specified path unless they already exist.")
-				System.IO.Directory.CreateDirectory(tempDirectory);
-				string schoolLogoDir = System.IO.Path.Combine(tempDirectory, "SchoolLogo");
-				System.IO.Directory.CreateDirectory(schoolLogoDir);
-				m_SchoolInfoFilePath = System.IO.Path.Combine(schoolLogoDir, "schoolLogo.dat");
+                string schoolLogoDir = System.IO.Path.Combine(tempDirectory, "Schools");
+				Directory.CreateDirectory(schoolLogoDir);
+
+                m_SchoolInfoFilePath = System.IO.Path.Combine(schoolLogoDir, "schoolLogo.dat");
 
 				if (File.Exists(m_SchoolInfoFilePath) != true)
 				{
 					FileStream fs = new FileStream(m_SchoolInfoFilePath, FileMode.CreateNew);
 					fs.Close();
 
-					using (System.IO.StreamWriter file = new System.IO.StreamWriter(m_SchoolInfoFilePath, false))
+					using (StreamWriter file = new StreamWriter(m_SchoolInfoFilePath, false))
 					{
 						file.WriteLine("Last Modified = NULL");
 						file.WriteLine("Photo ID = NULL");
@@ -107,6 +107,7 @@ namespace UnstuckMEUserGUI
             else
                 comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf("Local Ip");
 
+            content_rendered = false;
 		}
 
 		private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
@@ -116,9 +117,7 @@ namespace UnstuckMEUserGUI
 
 		List<UnstuckMESchool> LoadSchools()
 		{
-
 			//PRETTY sure you could pass a list of schools to the LINQ to fill
-			//
 			List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
 			using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
 			{
@@ -136,16 +135,19 @@ namespace UnstuckMEUserGUI
                                     //IPAddress = j.ServerIPAddress
 								};
 
-				foreach (var dbschool in dbSchools)
-				{
-					UnstuckMESchool newSchool = new UnstuckMESchool();
-                    newSchool.SchoolID = dbschool.SchoolID;
-                    newSchool.SchoolName = dbschool.SchoolName;
-                    newSchool.SchoolEmailCredentials = dbschool.EmailCredentials;
-                    newSchool.LogoLastModified = dbschool.LastModified.ToString();
-                    //newSchool.SchoolDomain = dbschool.Domain;
-                    //newSchool.ServerName = dbschool.ServerName;
-                    //newSchool.ServerIPAdress = dbschool.IPAddress;
+                foreach (var dbschool in dbSchools)
+                {
+                    UnstuckMESchool newSchool = new UnstuckMESchool()
+                    {
+                        SchoolID = dbschool.SchoolID,
+                        SchoolName = dbschool.SchoolName,
+                        SchoolEmailCredentials = dbschool.EmailCredentials,
+                        LogoLastModified = dbschool.LastModified.ToString()//,
+                        //SchoolDomain = dbschool.Domain,
+                        //ServerName = dbschool.ServerName,
+                        //ServerIPAdress = dbschool.IPAddress
+                    };
+
 					tempSchools.Add(newSchool);
 				}
 			}
@@ -178,7 +180,8 @@ namespace UnstuckMEUserGUI
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, "NET TCP client issued a request, but received no or failed response along specified channel");
 				_labelInvalidLogin.Content = ex.Message;
 				passwordBox.Password = string.Empty;
-				_labelInvalidLogin.Visibility = Visibility.Visible;
+                textBoxUserName_TextChanged(sender, e as TextChangedEventArgs);
+                _labelInvalidLogin.Visibility = Visibility.Visible;
 				isValid = false;
 			}
 			if (isValid)
@@ -733,18 +736,32 @@ namespace UnstuckMEUserGUI
 
         private void textBoxUserName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
+            try
+            {
+                System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
 
-            if (textBoxUserName.Background != null && (textBoxUserName.Background as SolidColorBrush).Color == brush)
-                textBoxUserName.Background = System.Windows.Media.Brushes.White;
+                if ((textBoxUserName.Background as SolidColorBrush).Color == brush)
+                    textBoxUserName.Background = System.Windows.Media.Brushes.White;
+                if (!content_rendered && (passwordBox.Background as SolidColorBrush).Color == brush)
+                    passwordBox.Background = System.Windows.Media.Brushes.White;
+            }
+            catch (Exception)
+            { }
         }
 
         private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
+            try
+            {
+                System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
 
-            if (passwordBox.Background != null && (passwordBox.Background as SolidColorBrush).Color == brush)
-                passwordBox.Background = System.Windows.Media.Brushes.White;
+                if ((passwordBox.Background as SolidColorBrush).Color == brush)
+                    passwordBox.Background = System.Windows.Media.Brushes.White;
+                if (!content_rendered && (textBoxUserName.Background as SolidColorBrush).Color == brush)
+                    textBoxUserName.Background = System.Windows.Media.Brushes.White;
+            }
+            catch (Exception)
+            { }
         }
     }
 }

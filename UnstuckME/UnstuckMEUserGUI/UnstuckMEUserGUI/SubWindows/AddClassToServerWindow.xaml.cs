@@ -44,7 +44,7 @@ namespace UnstuckMEUserGUI.SubWindows
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -207,5 +209,23 @@ namespace UnstuckME_Classes
     {
         public int MentorID { get; set; }
         public string OrganizationName { get; set; }
+    }
+
+    public static class Thumbnail
+    {
+        public static void Convert(ref Image image)
+        {
+            int newWidth = (int)(0.1 * image.Width), newHeight = (int)(0.1 * image.Height);
+
+            Bitmap bitmap = new Bitmap(image, newWidth, newHeight);
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+        }
     }
 }

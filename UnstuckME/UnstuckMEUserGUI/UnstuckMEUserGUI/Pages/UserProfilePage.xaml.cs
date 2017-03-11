@@ -129,33 +129,33 @@ namespace UnstuckMEUserGUI
 						throw new Exception("The image you have selected exceeds the 25 MB limit. Please select a different file that is within the size limit.");
 
 					System.Drawing.Image image = System.Drawing.Image.FromStream(file);
-					System.Drawing.Image thumbnail = image.GetThumbnailImage(Convert.ToInt32(0.6 * image.Width), Convert.ToInt32(0.6 * image.Height), null, IntPtr.Zero);
+                    System.Drawing.Image thumbnail = image;
+                    Thumbnail.Convert(ref thumbnail);
 
-					using (MemoryStream ms = new MemoryStream())
+                    using (MemoryStream ms = new MemoryStream())
 					{
-						thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-						byte_array = ms.ToArray();
+                        thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        byte_array = ms.ToArray();
+                        ms.Seek(0, SeekOrigin.Begin);
 
-						BitmapImage ix = new BitmapImage();
+                        BitmapImage ix = new BitmapImage();
 						ix.BeginInit();
 						ix.CacheOption = BitmapCacheOption.OnLoad;
-						ix.StreamSource = ms;
-						ix.EndInit();
+                        ix.StreamSource = ms;
+                        ix.EndInit();
 
-						ImageEditProfilePicture.Source = ix;
+                        ImageEditProfilePicture.Source = ix;
 					}
 
 					ProfilePicture.Source = ImageEditProfilePicture.Source;
 					UnstuckME.Server.SetProfilePicture(UnstuckME.User.UserID, byte_array);
-                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
 
+                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
                     {
                         foreach (UnstuckMEChatUser user in chat.Users)
                         {
                             if(user.UserID == UnstuckME.User.UserID)
-                            {
                                 user.ProfilePicture = ProfilePicture.Source;
-                            }
                         }
                     }
 
@@ -191,25 +191,6 @@ namespace UnstuckMEUserGUI
 			}
 			else
 			{
-                // this doesnt seem to work, im not sure who wrote it but i was assigned to make it work so im just going to do it
-                // if you dont like it, then fix it. -K
-
-                //string newfirstname = TextBoxNewFirstName.Text != string.Empty ? UnstuckMEWindow.User.FirstName : TextBoxNewFirstName.Text;
-                //string newlastname = TextBoxNewLastName.Text != string.Empty ? UnstuckMEWindow.User.LastName : TextBoxNewLastName.Text;
-                //string newpassword = PasswordBoxConfirm.Password != string.Empty ? UnstuckMEWindow.User.UserPassword : PasswordBoxConfirm.Password;
-    //            try
-				//{
-				//	Server.ChangeUserName(UnstuckMEWindow.User.EmailAddress, newfirstname, newlastname);
-				//	Server.ChangePassword(UnstuckMEWindow.User, newpassword);
-				//	FirstName.Text = newfirstname;
-				//	LastName.Text = newlastname;
-				//}
-				//catch (Exception ex)
-				//{
-				//	UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(1, ex.Message, "Username/Password Change Failed");
-				//	messagebox.ShowDialog();
-				//}
-
                 if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
                 {
                     try
@@ -251,7 +232,6 @@ namespace UnstuckMEUserGUI
                         messagebox.ShowDialog();
                     }
                 }
-
 
                 ButtonBack_MouseLeftButtonDown(sender, e);
 			}

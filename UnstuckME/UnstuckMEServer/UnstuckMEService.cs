@@ -14,6 +14,7 @@ using System.Net.Mail;
 using System.Configuration;
 using UnstuckMeLoggers;
 using System.Net.Configuration;
+using System.IO;
 
 namespace UnstuckMEInterfaces
 {
@@ -23,10 +24,8 @@ namespace UnstuckMEInterfaces
     /// </summary>
     public class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
     {
-        public ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
-        public ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
-        //private static List<UnstuckMEMessage> _MessageList;
-        //private static List<UnstuckMEBigSticker> _StickerList;
+        private ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
+        private ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
         private static ConcurrentQueue<UnstuckMEBigSticker> _StickerList;
         private static ConcurrentQueue<UnstuckMEMessage> _MessageList;
 		
@@ -717,34 +716,37 @@ namespace UnstuckMEInterfaces
             }
         }
 
-		/// <summary>
-		/// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
-		/// open the file, and convert it to a byte array.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
-		/// <returns>A byte array containing the data of the image file. If streaming can be implmented, this will return a Stream instead.</returns>
+        /// <summary>
+        /// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
+        /// open the file, and convert it to a byte array.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A byte array containing the data of the image file. If streaming can be implmented, this will return a Stream instead.</returns>
         public byte[] GetProfilePicture(int userID)
         {
+            string directory = string.Empty;
+            directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\UnstuckME\" + userID.ToString() + @"\ProfilePicture.jpeg";
+
+            //replace above with below once filepath is implemented
+            //using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            //{
+            //    directory = db.GetProfilePicture(userID).First();
+            //}
+
+            //FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read);
+            //byte[] imgByte = new byte[file.Length];
+            //file.Read(imgByte, 0, Convert.ToInt32(file.Length));
+
+            
+            
+            /*******************************************************************
+             * When using remote server comment this out and use code above ^^^
+            *******************************************************************/
             byte[] imgByte = null;
-			//string filepath = string.Empty;
-			
-			//using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			//{
-			//	filepath = db.GetProfilePicture(userID).First();
-			//}
-
-			//FileStream profilepic = File.OpenRead(filepath);
-			//using (MemoryStream ms = new MemoryStream())
-			//{
-			//	profilepic.CopyToAsync(ms);
-			//	imgByte = ms.ToArray();
-			//}
-			//profilepic.Dispose();	   //need this to release memory
-
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				imgByte = db.GetProfilePicture(userID).First();
-			}
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                imgByte = db.GetProfilePicture(userID).First();
+            }
 
             return imgByte;
         }
@@ -754,52 +756,29 @@ namespace UnstuckMEInterfaces
 		/// </summary>
 		/// <param name="userID">The unique identifier of the user.</param>
 		/// <param name="image">A byte array that contains the data of the new image.</param>
-		public void SetProfilePicture(int userID, byte[] image)
-		{
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				db.UpdateProfilePicture(userID, image);
-			}
-		}
+        public void SetProfilePicture(int userID, byte[] image)
+        {
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME\";
+            Directory.CreateDirectory(directory += userID.ToString());
+            directory += @"\ProfilePicture.jpeg";
 
-		//public void SetProfilePicture(int userID, System.IO.FileStream image)
-		//{
-		/* Don't use this, but don't erase it as I may want it later - Matthew
-		* 
-		* string[] directories = Environment.CurrentDirectory.Split('\\');
-		* string filepath = string.Empty;
-		* 
-		* for (int i = 0; i < directories.Length - 2; i++)
-		* filepath += directories[i];
-		* 
-		* filepath += "\\Files\\Users\\" + userID.ToString();
-		* filepath = Directory.GetFiles(filepath, @"ProfilePicture.*").FirstOrDefault();
-		*/
+            using (FileStream newfile = new FileStream(directory, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite, image.Length, FileOptions.Encrypted))
+            {
+                newfile.Write(image, 0, image.Length);
+            }
 
-		//	string filepath = Environment.CurrentDirectory + "..\\Files\\" + userID.ToString() + "_" + image.Name.Split('\\').LastOrDefault();
-		//	byte[] bytes = null, buffer = null;
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.UpdateProfilePicture(userID, image); //replace image with directory
+            }
+        }
 
-		//	using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
-		//	{
-		//		int read = 0;
-		//		while ((read = image.Read(buffer, 0, (int)image.Length)) > 0)
-		//			ms.Write(buffer, 0, read);
-
-		//		bytes = ms.ToArray();
-		//	}
-
-		//	using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-		//	{
-		//		db.UpdateProfilePicture(userID, bytes);
-		//	}
-		//}
-
-		/// <summary>
-		/// Removes the specified class from a user's list of classes he/she can tutor.
-		/// </summary>
-		/// <param name="UserID">The unique identifier of the user.</param>
-		/// <param name="ClassID">The unique identifier of the class.</param>
-		public void RemoveUserFromClass(int UserID, int ClassID)
+        /// <summary>
+        /// Removes the specified class from a user's list of classes he/she can tutor.
+        /// </summary>
+        /// <param name="UserID">The unique identifier of the user.</param>
+        /// <param name="ClassID">The unique identifier of the class.</param>
+        public void RemoveUserFromClass(int UserID, int ClassID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -864,7 +843,6 @@ namespace UnstuckMEInterfaces
                 int num = Convert.ToInt32(number);
                 var name = db.GetCourseNameByCodeAndNumber(code, (short)num).First();
 				
-				//name.Dispose();		//need this to release memory   
 				return name;
             }
         }
@@ -1047,7 +1025,7 @@ namespace UnstuckMEInterfaces
 		/// </summary>
 		/// <param name="userID">The unique identifier of the user who submitted the report.</param>
 		/// <param name="reportID">The unique identifier of the report to be removed.</param>
-		/// <returns>Returns -1.</returns>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful</returns>
         public int DeleteReportByUser(int userID, int reportID)
         {
             try
@@ -1074,7 +1052,7 @@ namespace UnstuckMEInterfaces
                     for (int i = 0; report.ElementAt(i).ReportID == reportID; i++)
                     {
                         if (report.ElementAt(i).ReportID == reportID)
-                            db.DeleteReportByReportID(reportID);
+                            retVal = db.DeleteReportByReportID(reportID);
                     }
                 }
 
@@ -1260,7 +1238,6 @@ namespace UnstuckMEInterfaces
                         temp.Message = message.MessageData;
                         temp.MessageID = message.MessageID;
                         temp.Time = message.SentTime;
-                        //temp.IsFile = message.IsFile;
                         temp.FilePath = message.FilePath;
                         temp.ChatID = chatID;
                         temp.SenderID = message.SentBy;
@@ -1289,7 +1266,9 @@ namespace UnstuckMEInterfaces
             try
             {
                 List<UnstuckMEChat> chatList = GetChatIDs(userID);
-                if (chatList == null) { throw new Exception("ChatID List Retrieval Failure"); }
+                if (chatList == null)
+                    throw new Exception("ChatID List Retrieval Failure");
+
                 foreach (UnstuckMEChat chat in chatList)
                 {
                     chat.Users = GetChatMembers(chat.ChatID);

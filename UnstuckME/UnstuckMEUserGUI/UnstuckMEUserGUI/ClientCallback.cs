@@ -7,7 +7,7 @@ using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
-	[CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true)]
+	[CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     class ClientCallback : IClient
     {
 		/// <summary>
