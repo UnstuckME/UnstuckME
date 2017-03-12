@@ -36,8 +36,9 @@ namespace UnstuckMEUserGUI
 		private string m_SchoolInfoFilePath = null;
 		private string verification_code = null;
         private bool content_rendered = true;
+        private short failed_attempts = 0;
 
-		public LoginWindow()
+        public LoginWindow()
 		{
 			InitializeComponent();
             UnstuckME.Blue = buttonCreateAccount.Background;
@@ -174,6 +175,13 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception ex)
 			{
+                failed_attempts++;
+                if (failed_attempts > 5)
+                {
+                    buttonResetPassword.IsEnabled = true;
+                    buttonResetPassword.Visibility = Visibility.Visible;
+                }
+
 				if (ex.Message != "Unable to connect to server")
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
 				else
@@ -221,19 +229,26 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-					isValid = false;
+                    failed_attempts++;
+                    if (failed_attempts > 5)
+                    {
+                        buttonResetPassword.IsEnabled = true;
+                        buttonResetPassword.Visibility = Visibility.Visible;
+                    }
+
+                    isValid = false;
 					_labelInvalidLogin.Visibility = Visibility.Visible;
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
 					try
 					{
-						UnstuckME.ChannelFactory.Close();
+						UnstuckME.ChannelFactory.Abort();
 						UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
 						UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
 					}
 					catch (Exception exp2)
 					{
 						MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-						UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp2.Message);
+						UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message);
 						this.Close();
 					}
 				}
@@ -429,9 +444,11 @@ namespace UnstuckMEUserGUI
 			_LoginGrid.Visibility = Visibility.Hidden;
 			_AccountCreationGrid.IsEnabled = true;
 			_AccountCreationGrid.Visibility = Visibility.Visible;
-		}
+            buttonResetPassword.IsEnabled = false;
+            buttonResetPassword.Visibility = Visibility.Collapsed;
+        }
 
-		private void buttonCancel_MouseEnter(object sender, MouseEventArgs e)
+        private void buttonCancel_MouseEnter(object sender, MouseEventArgs e)
 		{
 			buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
 		}
@@ -672,7 +689,7 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				verification_code = UnstuckME.Server.SendEmail(textBoxCreateEmailAddress.Text, textBoxCreateFirstName.Text);
+				verification_code = UnstuckME.Server.SendEmail(EmailType.CreateAccount, textBoxCreateEmailAddress.Text, textBoxCreateFirstName.Text);
 				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Please check your email for the verification code to verify your account", "Verification Code Sent", UnstuckMEBoxImage.Information);
 				messagebox.ShowDialog();
 			}
@@ -762,6 +779,72 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception)
             { }
+        }
+
+        private void buttonResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (textBoxUserName.Text != "Example@oit.edu")
+                {
+                    UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, string.Format("Is {0} the email address of the account you wish to reset your password for?", textBoxUserName.Text), "Please Verify the Account to Reset the Password", UnstuckMEBoxImage.Warning);
+                    messagebox.ShowDialog();
+
+                    if (messagebox.DialogResult.Value)  //user pressed yes
+                    {
+                        try
+                        {
+                            UserInfo user = UnstuckME.Server.GetUserInfo(null, textBoxUserName.Text);
+
+                            string new_password = UnstuckME.Server.SendEmail(EmailType.ResetPassword, textBoxUserName.Text, user.FirstName);
+                            messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Please check your email for your new password", "New Password Sent", UnstuckMEBoxImage.Information);
+                            messagebox.ShowDialog();
+
+                            UnstuckME.Server.ChangePassword(user, new_password);
+                        }
+                        catch (Exception ex)
+                        {
+                            messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, string.Format("The email address {0} is not associated with an account. Please enter a valid email address.", textBoxUserName.Text), "Email Address Is Not Associated With An Account", UnstuckMEBoxImage.Error);
+                            messagebox.ShowDialog();
+                            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
+
+                            try
+                            {
+                                UnstuckME.ChannelFactory.Abort();
+                                UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                                UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
+                            }
+                            catch (Exception exp2)
+                            {
+                                MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message);
+                                this.Close();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, string.Format("The email address {0} is not associated with an account. Please enter a valid email address.", textBoxUserName.Text), "Email Address Is Not Associated With An Account", UnstuckMEBoxImage.Error);
+                    messagebox.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+                UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "An error occured trying to connect to the server. If this problem persists, please contact an UnstuckME server administrator to resolve this issue. Thank you.", "New Password Email Failed to Send", UnstuckMEBoxImage.Warning);
+                messagebox.ShowDialog();
+            }
+        }
+
+        private void buttonResetPassword_MouseEnter(object sender, MouseEventArgs e)
+        {
+            buttonResetPassword.Foreground = System.Windows.Media.Brushes.Black;
+        }
+
+        private void buttonResetPassword_MouseLeave(object sender, MouseEventArgs e)
+        {
+            buttonResetPassword.Foreground = System.Windows.Media.Brushes.White;
         }
     }
 }

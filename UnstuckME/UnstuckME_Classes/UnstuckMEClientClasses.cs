@@ -21,6 +21,12 @@ namespace UnstuckME_Classes
     {
         Error, Warning, Information
     }
+
+    public enum EmailType
+    {
+        CreateAccount, ResetPassword
+    }
+
     public class UserInfo
     {
         public int UserID { get; set; }

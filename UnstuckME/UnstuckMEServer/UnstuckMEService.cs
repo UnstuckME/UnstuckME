@@ -491,8 +491,13 @@ namespace UnstuckMEInterfaces
             }
         }
 
-
 		#region GetReviews Functions
+        /// <summary>
+        /// Returns the reviews submitted by a specific user as a student.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the account holder.</param>
+        /// <param name="minstarrank">The minimum star ranking to see reviews. This parameter is optional, with a default value of 0.</param>
+        /// <returns>A list containing all the reviews submitted by the user specified as a student.</returns>
 		public List<UnstuckMEReview> GetUserStudentReviews(int userID, float minstarrank = 0)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -502,19 +507,28 @@ namespace UnstuckMEInterfaces
 				List<UnstuckMEReview> studentReviewList = new List<UnstuckMEReview>();
 				foreach (var review in studentReviews)
 				{
-					UnstuckMEReview usReview = new UnstuckMEReview();
-					usReview.ReviewID = review.ReviewID;
-					usReview.StickerID = review.StickerID;
-					usReview.ReviewerID = review.ReviewerID;
-					usReview.StarRanking = (float)review.StarRanking;
-					usReview.Description = review.Description;
-					studentReviewList.Add(usReview);
+                    UnstuckMEReview usReview = new UnstuckMEReview()
+                    {
+                        ReviewID = review.ReviewID,
+                        StickerID = review.StickerID,
+                        ReviewerID = review.ReviewerID,
+                        StarRanking = (float)review.StarRanking,
+                        Description = review.Description
+                    };
+
+                    studentReviewList.Add(usReview);
 				}
 
 				return studentReviewList;
 			}
 		}
 
+        /// <summary>
+        /// Returns the reviews submitted by a specific user as a tutor.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the account holder.</param>
+        /// <param name="minstarrank">The minimum star ranking to see reviews. This parameter is optional, with a default value of 0.</param>
+        /// <returns>A list containing all the reviews submitted by the user specified as a tutor.</returns>
 		public List<UnstuckMEReview> GetUserTutorReviews(int userID, float minstarrank = 0)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -524,21 +538,33 @@ namespace UnstuckMEInterfaces
 				List<UnstuckMEReview> tutorReviewList = new List<UnstuckMEReview>();
 				foreach (var review in tutorReviews)
 				{
-					UnstuckMEReview usReview = new UnstuckMEReview();
-					usReview.ReviewID = review.ReviewID;
-					usReview.StickerID = review.StickerID;
-					usReview.ReviewerID = review.ReviewerID;
-					usReview.StarRanking = (review.StarRanking.HasValue) ? (float)review.StarRanking.Value : 0;
-					usReview.Description = review.Description;
-					tutorReviewList.Add(usReview);
+                    UnstuckMEReview usReview = new UnstuckMEReview()
+                    {
+                        ReviewID = review.ReviewID,
+                        StickerID = review.StickerID,
+                        ReviewerID = review.ReviewerID,
+                        StarRanking = (review.StarRanking.HasValue) ? (float)review.StarRanking.Value : 0,
+                        Description = review.Description
+                    };
+
+                    tutorReviewList.Add(usReview);
 				}
+
 				return tutorReviewList;
 			}
 		}
-		#endregion
+        #endregion
 
-		#region GetSticker Functions
-		public List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null)
+        #region GetSticker Functions
+        /// <summary>
+        /// Gets the stickers that have been accepted by a tutor and marked as resolved.
+        /// </summary>
+        /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
+        /// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
+        /// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
+        /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
+        /// <returns>A list of stickers that have tutors and marked as resolved.</returns>
+        public List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
@@ -561,7 +587,15 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-		public List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null)
+        /// <summary>
+        /// Gets the stickers that have not been accepted by a tutor and surpassed the timeout date.
+        /// </summary>
+        /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
+        /// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
+        /// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
+        /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
+        /// <returns>A list of stickers that have not been accepted by a tutor and surpassed the timeout date.</returns>
+        public List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
@@ -584,6 +618,14 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
+        /// <summary>
+        /// Gets the stickers submitted by a user, regardless if they are resolved or active.
+        /// </summary>
+        /// <param name="userID">The unique identifer of the account.</param>
+        /// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
+        /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
+        /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
+        /// <returns>A list of stickers that have been submitted by a specific user that matches the filtering criteria.</returns>
 		public List<UnstuckMESticker> GetUserSubmittedStickers(int userID, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> classID = null)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -609,6 +651,14 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
+        /// <summary>
+        /// Gets the stickers a user has tutored, regardless if they are resolved or active.
+        /// </summary>
+        /// <param name="userID">The unique identifer of the account.</param>
+        /// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
+        /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
+        /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
+        /// <returns>A list of stickers that a specific user has tutored that matches the filtering criteria.</returns>
 		public List<UnstuckMESticker> GetUserTutoredStickers(int userID, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> classID = null)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -634,6 +684,15 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
+        /// <summary>
+        /// Gets the stickers available to tutor. This is currently untested, though it should work.
+        /// </summary>
+        /// <param name="caller">The unqiue identifier of the caller of the function.</param>
+        /// <param name="organizationID">The unique identifier of the of the organization to filter. This parameter is optional, with a default value of null.</param>
+        /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This should be the callee's student star ranking. This paramter is optional, with a default value of 0.</param>
+        /// <param name="userID">The unique identifier of the account to filter. This paramter is optional, with a default value of null.</param>
+        /// <param name="classID">the unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
+        /// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
 		public List<UnstuckMESticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -1474,11 +1533,11 @@ namespace UnstuckMEInterfaces
             }
         }
 
-		/// <summary>
-		/// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
-		/// </summary>
-		/// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
-		/// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
+        /// <summary>
+        /// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who has accepted the sticker.</param>
+        /// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
         public void AcceptSticker(int tutorID, int stickerID)
         {
             try
@@ -1582,40 +1641,64 @@ namespace UnstuckMEInterfaces
         //    }
         //    catch (Exception ex)
         //    {
-                
+
         //        return null;
         //    }
         //}
 
-		/// <summary>
-		/// Sends an account verification email containing a code in order to activiate the account. Uses email settings configured
-		/// by the server administrator to send the email.
-		/// </summary>
-		/// <param name="userEmailAddress">The email address of the new user.</param>
-		/// <param name="username">The first name of the new user.</param>
-		/// <returns>An 8-character code that must be entered in on the client in order to activate the account.</returns>
-		public string SendEmail(string userEmailAddress, string username)
-		{
-			string verification_code = GenerateVerificationCode();	//generate a random 8-character verification code
+        /// <summary>
+        /// Sends an account verification email containing a code in order to activiate the account. Uses email settings configured
+        /// by the server administrator to send the email.
+        /// </summary>
+        /// <param name="emailtype">An enum specifying the purpose of the email being sent.</param>
+        /// <param name="userEmailAddress">The email address of the new user.</param>
+        /// <param name="username">The first name of the new user.</param>
+        /// <returns>An 8-character code that must be entered in on the client in order to activate the account.</returns>
+        public string SendEmail(EmailType emailtype, string userEmailAddress, string username)
+        {
+            string verification_code = GenerateVerificationCode();  //generate a random 8-character verification code
 
-			var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-			var mailSettings = (SmtpSection)config.GetSection("system.net/mailSettings/smtp");
-			MailAddress address = new MailAddress(mailSettings.Network.UserName, "UnstuckME");
-			MailMessage email = new MailMessage(address, new MailAddress(userEmailAddress));
-			email.Subject = "Activating your UnstuckME account";
-			email.Body = "Thanks for joining UnstuckME " + username + "! Please activate your account by entering the verification code below into the prompt in the application.\n\n"
-				+ "By creating an account, you agree to UnstuckME Terms of Service and your University's Student Code of Conduct\n\nYour verification code:\t" + verification_code
-				+ "\n\nIf something is not working, please reply to this email with your problem and we will attempt to solve your issue";          //temporary body, will need to change later
-			email.Priority = MailPriority.Normal;
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var mailSettings = (SmtpSection)config.GetSection("system.net/mailSettings/smtp");
+            MailAddress address = new MailAddress(mailSettings.Network.UserName, "UnstuckME");
+            MailMessage email = new MailMessage(address, new MailAddress(userEmailAddress));
 
-			SmtpClient client = new SmtpClient();
-			client.Credentials = new NetworkCredential(mailSettings.Network.UserName, mailSettings.Network.Password);
-			client.DeliveryFormat = mailSettings.DeliveryFormat;
-			client.DeliveryMethod = mailSettings.DeliveryMethod;
-			client.EnableSsl = mailSettings.Network.EnableSsl;
-			client.Timeout = 300000;	//milliseconds = 300 seconds = 5 minutes
+            switch (emailtype)
+            {
+                case EmailType.CreateAccount:
+                    {
+                        email.Subject = "Activating your UnstuckME account";
+                        //this body is temporary as recipient shouldn't reply to the email
+                        email.Body = "Thanks for joining UnstuckME " + username + "! Please activate your account by entering the verification code below into the prompt in the application.\n\n"
+                            + "By creating an account, you agree to UnstuckME Terms of Service and your University's Student Code of Conduct\n\nYour verification code:\t" + verification_code
+                            + "\n\nIf something is not working, please reply to this email with your problem and we will attempt to solve your issue.";
+                        email.Priority = MailPriority.Normal;
+                        break;
+                    }
+                case EmailType.ResetPassword:
+                    {
+                        email.Subject = "UnstuckME account password reset";
+                        //this body is temporary as recipient shouldn't reply to the email
+                        email.Body = "Hello, " + username + "!\n\nThis is to notify you of an attempt to change your UnstuckME account password. You may use this password to log in to your account"
+                            + ", but please remember to change it again from within the application once you have successfully logged in. To do this, go to your User Profile and click on 'Edit Profile'"
+                            + " button directly underneath your profile picture. To change your password from within the application, enter your new password in the box and click 'Save'.\n\nYour "
+                            + "temporary password is:\t" + verification_code + "\n\nIf you did not request to reset your UnstuckME account password or you are experiencing other problems, please "
+                            + "reply to this email and we will attempt to solve your issue.";
+                        email.Priority = MailPriority.Normal;
+                        break;
+                    }
+            }
 
-			try
+            SmtpClient client = new SmtpClient()
+            {
+                Credentials = new NetworkCredential(mailSettings.Network.UserName, mailSettings.Network.Password),
+                DeliveryFormat = mailSettings.DeliveryFormat,
+                DeliveryMethod = mailSettings.DeliveryMethod,
+                EnableSsl = mailSettings.Network.EnableSsl,
+                Timeout = 300000    //milliseconds = 300 seconds = 5 minutes
+            };
+
+            try
 			{
 				client.Send(email);		//send the email
 			}
@@ -1672,6 +1755,10 @@ namespace UnstuckMEInterfaces
 			return value;
 		}
 
+        /// <summary>
+        /// Creates a new mentor organzation on the database.
+        /// </summary>
+        /// <param name="name">The name of the new organization.</param>
         public void CreateMentorOrg(string name)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
