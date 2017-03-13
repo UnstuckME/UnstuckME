@@ -100,7 +100,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
                             while (!csvParser.EndOfData)
                             {
-                                await Task.Factory.StartNew(() => UpdateTextBoxAsync(csvParser));
+                                await Task.Factory.StartNew(() => UpdateTextBoxAsync(csvParser.LineNumber));
                                 // Read current line fields, pointer moves to the next line.
                                 string[] fields = csvParser.ReadFields();
                                 string courseName = fields[0];
@@ -120,7 +120,10 @@ namespace UnstuckMEUserGUI.SubWindows
                                 }
 
                                 if (emptyRow.Contains(true))
+                                {
                                     skipLine = true;
+                                    StackPanelWarningsErrors.Children.Add(GenerateError(fields, csvParser.LineNumber));
+                                }
 
                                 if (skipLine == false)
                                 {
@@ -143,19 +146,7 @@ namespace UnstuckMEUserGUI.SubWindows
                                         StackPanelWarningsErrors.Children.Add(GenerateWarning("The Course Number {" + courseNumber + "} is less than or equal to zero", csvParser.LineNumber));
                                     }
 
-                                    bool errorGenerated = false;
-                                    for (int i= 0; i < (int)Course.CourseDescItems; i++)
-                                    {
-                                        if(string.IsNullOrEmpty(fields[i])== true)
-                                        {
-                                            errorGenerated = true;
-                                            i = (int)Course.CourseDescItems;
-                                        }
-                                    }
-
-                                    if (errorGenerated == true)
-                                        StackPanelWarningsErrors.Children.Add(GenerateError(fields, csvParser.LineNumber));
-                                    else if(warningGenerated != true)
+                                    if(warningGenerated != true)
                                     {
                                         //This is were it need to get sent to the server
                                         bool addedSuccessfully = UnstuckME.Server.AddClass(new DBClass(courseName, courseCode, courseNumber)); 
@@ -181,11 +172,11 @@ namespace UnstuckMEUserGUI.SubWindows
 
         }
 
-        void UpdateTextBoxAsync(TextFieldParser csvParser)
+        void UpdateTextBoxAsync(long lineNumber)
         {
             this.Dispatcher.Invoke(() =>
             {
-                textBlockCurrentLine.Text = "Reading line " + csvParser.LineNumber.ToString();
+                textBlockCurrentLine.Text = "Reading line " + lineNumber.ToString();
             });
         }
 
@@ -207,7 +198,7 @@ namespace UnstuckMEUserGUI.SubWindows
         TextBlock GenerateWarning(string errMsg, long lineNumber)
         {
             TextBlock warnTextBox = new TextBlock();
-            warnTextBox.Foreground = new SolidColorBrush(Colors.Red);
+            warnTextBox.Foreground = new SolidColorBrush(Colors.Yellow);
             warnTextBox.Text = "WARNING: on line[" + lineNumber.ToString() + "] " + errMsg;
             //warnTextBox.FontSize = Stretch.Uniform;
             warnTextBox.TextWrapping = TextWrapping.Wrap;
@@ -226,7 +217,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
             TextBlock errorTextBlock = new TextBlock();
             errorTextBlock.Text = errorTxt;
-            errorTextBlock.Foreground = new SolidColorBrush(Colors.Yellow);
+            errorTextBlock.Foreground = new SolidColorBrush(Colors.Red);
             //errorTextBlock.FontSize = 9;
             errorTextBlock.TextWrapping = TextWrapping.Wrap;
             return errorTextBlock;
@@ -251,7 +242,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
             TextBlock errorTextBlock = new TextBlock();
             errorTextBlock.Text = errorStmt;
-            errorTextBlock.Foreground = new SolidColorBrush(Colors.Yellow);
+            errorTextBlock.Foreground = new SolidColorBrush(Colors.Red);
             //errorTextBlock.FontSize = 9;
             errorTextBlock.TextWrapping = TextWrapping.Wrap;
             return errorTextBlock;
