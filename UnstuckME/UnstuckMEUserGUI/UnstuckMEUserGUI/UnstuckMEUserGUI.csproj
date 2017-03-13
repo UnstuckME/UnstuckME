@@ -43,6 +43,7 @@
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WindowsAPICodePack.1.1.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
       <Private>True</Private>
@@ -100,6 +101,9 @@
     </Compile>
     <Compile Include="SubWindows\AddUserRoleWindow.xaml.cs">
       <DependentUpon>AddUserRoleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\ImportClassesViaFile.xaml.cs">
+      <DependentUpon>ImportClassesViaFile.xaml</DependentUpon>
     </Compile>
     <Compile Include="UnstuckME.cs" />
     <Compile Include="UserControls\Stickers\OpenSticker.xaml.cs">
@@ -253,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubWindows\AddUserRoleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\ImportClassesViaFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

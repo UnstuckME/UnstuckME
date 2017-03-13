@@ -22,6 +22,7 @@ using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
+using UnstuckMEUserGUI.SubWindows;
 
 namespace UnstuckMEUserGUI
 {
@@ -41,6 +42,9 @@ namespace UnstuckMEUserGUI
         public LoginWindow()
 		{
 			InitializeComponent();
+            ImportClassesViaFile cheese = new ImportClassesViaFile();
+            cheese.Show();
+
             UnstuckME.Blue = buttonCreateAccount.Background;
             UnstuckME.Red = buttonCancel.Background;
 

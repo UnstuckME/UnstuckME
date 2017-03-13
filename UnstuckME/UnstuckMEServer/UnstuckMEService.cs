@@ -1766,6 +1766,22 @@ namespace UnstuckMEInterfaces
                 db.CreateMentorOrganization(name);
             }
         }
+
+        public bool AddClass(DBClass newClass)
+        {
+            bool addedClassSucessfully = true;
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                int callReturned = db.CreateNewClass(newClass.CourseName, newClass.CourseCode, newClass.CourseNumber);
+                if(callReturned == 0)
+                {
+                    addedClassSucessfully = false;
+                }
+            }
+
+            return addedClassSucessfully;
+        }
+
         #endregion
 
         #region ServerGUI Functions
@@ -2049,8 +2065,6 @@ namespace UnstuckMEInterfaces
 
 			return file;
 		}
-
-
         #endregion
     }
 }
