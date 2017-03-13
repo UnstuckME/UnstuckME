@@ -98,6 +98,9 @@
     <Compile Include="SubWindows\AddMentorOrgsWindow.xaml.cs">
       <DependentUpon>AddMentorOrgsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\AddTutorReviewWindow.xaml.cs">
+      <DependentUpon>AddTutorReviewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\AddUserRoleWindow.xaml.cs">
       <DependentUpon>AddUserRoleWindow.xaml</DependentUpon>
     </Compile>
@@ -249,6 +252,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubWindows\AddMentorOrgsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\AddTutorReviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
