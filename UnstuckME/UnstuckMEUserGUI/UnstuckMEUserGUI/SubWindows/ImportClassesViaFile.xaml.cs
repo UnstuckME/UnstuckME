@@ -68,7 +68,7 @@ namespace UnstuckMEUserGUI.SubWindows
             this.Close();
         }
 
-        private void buttonUploadCSV_Click(object sender, RoutedEventArgs e)
+        private async void buttonUploadCSV_Click(object sender, RoutedEventArgs e)
         {
 
 
@@ -100,9 +100,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
                             while (!csvParser.EndOfData)
                             {
-                                
-                                textBlockCurrentLine.Text = "Reading line " + csvParser.LineNumber.ToString();
-
+                                await Task.Factory.StartNew(() => UpdateTextBoxAsync(csvParser));
                                 // Read current line fields, pointer moves to the next line.
                                 string[] fields = csvParser.ReadFields();
                                 string courseName = fields[0];
@@ -181,6 +179,14 @@ namespace UnstuckMEUserGUI.SubWindows
             }
 
 
+        }
+
+        void UpdateTextBoxAsync(TextFieldParser csvParser)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                textBlockCurrentLine.Text = "Reading line " + csvParser.LineNumber.ToString();
+            });
         }
 
         void CheckForWarnings()
