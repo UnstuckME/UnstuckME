@@ -237,6 +237,29 @@ namespace UnstuckMEUserGUI
         {
             UnstuckME.Server.ChangePassword(targetUser, "Password");
         }
+
+        private void CreateUserBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Add checks
+            UnstuckME.Server.CreateNewUser(textBoxFirstName.Text, textBoxLastName.Text, textBoxEmailAddress.Text, "Password");
+
+            if (isUser)
+            {
+                UnstuckME.Server.SetUserPrivileges(Privileges.User, userId);
+            }
+            else if (isModerator)
+            {
+                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userId);
+            }
+            else if (isAdmin)
+            {
+                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userId);
+            }
+            else if (isDisabled)
+            {
+                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userId);
+            }
+        }
     }
 
 
