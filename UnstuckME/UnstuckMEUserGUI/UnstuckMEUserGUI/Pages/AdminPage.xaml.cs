@@ -88,6 +88,7 @@ namespace UnstuckMEUserGUI
 
         private void UpdateRoleBtn_Click(object sender, RoutedEventArgs e)
         {
+            bool userInfoUpdated = false;
             if (isUser)
             {
                 UnstuckME.Server.SetUserPrivileges(Privileges.User, userId);
@@ -103,6 +104,24 @@ namespace UnstuckMEUserGUI
             else if (isDisabled)
             {
                 UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userId);
+            }
+            if (textBoxFirstName.Text != targetUser.FirstName && textBoxFirstName.Text != "")
+            {
+                userInfoUpdated = true;
+            }
+            if (textBoxLastName.Text != targetUser.LastName && textBoxLastName.Text != "")
+            {
+                userInfoUpdated = true;
+            }
+            if (textBoxEmailAddress.Text != targetUser.EmailAddress && textBoxEmailAddress.Text != "")
+            {
+                userInfoUpdated = true;
+            }
+            if (userInfoUpdated == true)
+            {
+                UnstuckME.Server.ChangeUserName(targetUser.EmailAddress, textBoxFirstName.Text, textBoxLastName.Text);
+                // Add code to update email
+                //UnstuckME.Server.
             }
         }
 
@@ -139,8 +158,13 @@ namespace UnstuckMEUserGUI
                     isDisabled = true;
                     DisabledBtn.IsChecked = true;
                 }
-                FirstNameTxt.Text = targetUser.FirstName;
-                LastNameTxt.Text = targetUser.LastName;
+                textBoxFirstName.Text = targetUser.FirstName;
+                textBoxLastName.Text = targetUser.LastName;
+                textBoxEmailAddress.Text = targetUser.EmailAddress;
+                AverageStudentRankTxt.Content = targetUser.AverageStudentRank;
+                NumberOfStudentReviews.Content = targetUser.TotalStudentReviews;
+                AverageTutorRankTxt.Content = targetUser.AverageTutorRank;
+                NumberOfTutorReviews.Content = targetUser.TotalTutorReviews;
             }
         }
 
@@ -207,6 +231,11 @@ namespace UnstuckMEUserGUI
         private void AddSingleClassBtn_Click(object sender, RoutedEventArgs e)
         {
             //UnstuckME.Server.AddClassToServer();
+        }
+
+        private void ResetPasswordBtn_Click(object sender, RoutedEventArgs e)
+        {
+            UnstuckME.Server.ChangePassword(targetUser, "Password");
         }
     }
 
