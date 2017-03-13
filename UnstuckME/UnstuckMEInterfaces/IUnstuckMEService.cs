@@ -459,6 +459,10 @@ namespace UnstuckMEInterfaces
         /// <param name="name">The name of the new organization.</param>
         [OperationContract]
         void CreateMentorOrg(string name);
+
+        [OperationContract]
+        bool AddClass(DBClass newClass);
+
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

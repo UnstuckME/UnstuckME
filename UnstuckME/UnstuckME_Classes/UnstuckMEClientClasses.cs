@@ -234,4 +234,26 @@ namespace UnstuckME_Classes
             }
         }
     }
+
+    public class DBClass
+    {
+        public DBClass()
+        {
+            CourseName = "Unnamed";
+            CourseCode = "NA";
+            CourseNumber = 0;
+
+        }
+
+        public DBClass(string name, string code, string number)
+        {
+            CourseName = name.Substring(0, Math.Min(name.Length, 100));
+            CourseCode = code.Substring(0, Math.Min(code.Length, 5));
+            CourseNumber = Convert.ToInt16(number);
+        }
+
+        public string CourseName { get; set; }
+        public string CourseCode { get; set; }
+        public short CourseNumber { get; set; }
+    }
 }
