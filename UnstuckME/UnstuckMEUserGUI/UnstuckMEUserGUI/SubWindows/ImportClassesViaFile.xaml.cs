@@ -23,8 +23,8 @@ namespace UnstuckMEUserGUI.SubWindows
 
 
     /// <summary>
-    /// Interaction logic for ImportClassesViaFile.xaml
-    /// </summary<
+    /// Importing and Creating CSV/TSV code implementation
+    /// </summary>
 
     public partial class ImportClassesViaFile : Window
     {
@@ -89,7 +89,7 @@ namespace UnstuckMEUserGUI.SubWindows
                         using (TextFieldParser csvParser = new TextFieldParser(path))
                         {
                             csvParser.CommentTokens = new string[] { "$$$"};
-                            csvParser.SetDelimiters(new string[] { "," });
+                            csvParser.SetDelimiters(new string[] { "," , "\t" });
                             csvParser.HasFieldsEnclosedInQuotes = true;
                             csvParser.TrimWhiteSpace = true;
 
@@ -152,7 +152,7 @@ namespace UnstuckMEUserGUI.SubWindows
                                         bool addedSuccessfully = UnstuckME.Server.AddClass(new DBClass(courseName, courseCode, courseNumber)); 
                                         if(addedSuccessfully == false)
                                         {
-                                            GenerateError(fields, csvParser.LineNumber, "Database rejected insertion of class (perhaps it already exits?)");
+                                            StackPanelWarningsErrors.Children.Add(GenerateError(fields,"Database rejected insertion of class (perhaps it already exits?)", csvParser.LineNumber));
                                         }
                                     }
                                 }
@@ -184,14 +184,20 @@ namespace UnstuckMEUserGUI.SubWindows
         {
             if (m_parsedWithWarnings.Count != 0)
             {
-                UnstuckMEMessageBox msgBox =  new UnstuckMEMessageBox(UnstuckMEBox.YesNo,"Error", "potrato", UnstuckMEBoxImage.Warning);
+                UnstuckMEMessageBox msgBox =  new UnstuckMEMessageBox(UnstuckMEBox.YesNo,"Your CSV/TSV file generated some errors. Would you like our UnstuckME Servers to attempt to add the classes anyways? \n(NOTE: This may generate some unexpected values for your classes)", "Warning: Some of your classes may not be correct", UnstuckMEBoxImage.Warning);
                 bool ? msgResponse = msgBox.ShowDialog();
                 if (msgResponse == true)
-                    MessageBox.Show("true");
-                else if (msgResponse == false)
-                    MessageBox.Show("false");
-                else
-                    MessageBox.Show("NULL");
+                {
+                    foreach (DBClass newClass in m_parsedWithWarnings)
+                    {
+                        bool addedSuccessfully = UnstuckME.Server.AddClass(newClass);
+                        if (addedSuccessfully == false)
+                        {
+                            string[] fields = { newClass.CourseName, newClass.CourseCode, newClass.CourseNumber.ToString() };
+                            StackPanelWarningsErrors.Children.Add(GenerateError(fields, "Database rejected insertion of class (perhaps it already exits?)"));
+                        }
+                    }
+                }
             }
         }
 
@@ -200,16 +206,20 @@ namespace UnstuckMEUserGUI.SubWindows
             TextBlock warnTextBox = new TextBlock();
             warnTextBox.Foreground = new SolidColorBrush(Colors.Yellow);
             warnTextBox.Text = "WARNING: on line[" + lineNumber.ToString() + "] " + errMsg;
-            //warnTextBox.FontSize = Stretch.Uniform;
             warnTextBox.TextWrapping = TextWrapping.Wrap;
             return warnTextBox;
         }
 
 
-        TextBlock GenerateError(string[] fields, long linenumber, string errorMsg)
+        TextBlock GenerateError(string[] fields, string errorMsg, long linenumber = -1)
         {
-            string errorTxt = "ERROR: on line [" + linenumber.ToString() + "] Unable to add";
-            for(int i=0; i < (int)Course.CourseDescItems; i++)
+            string errorTxt = "ERROR: ";
+            if (linenumber != -1)
+                errorTxt += "on line [" + linenumber.ToString() + "] Unable to add";
+            else
+                errorTxt += "Unable to add the course containing:";
+
+            for (int i=0; i < (int)Course.CourseDescItems; i++)
             {
                 errorTxt += " {" + fields[i] + "}";
             }
@@ -218,7 +228,6 @@ namespace UnstuckMEUserGUI.SubWindows
             TextBlock errorTextBlock = new TextBlock();
             errorTextBlock.Text = errorTxt;
             errorTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-            //errorTextBlock.FontSize = 9;
             errorTextBlock.TextWrapping = TextWrapping.Wrap;
             return errorTextBlock;
         }
@@ -243,7 +252,6 @@ namespace UnstuckMEUserGUI.SubWindows
             TextBlock errorTextBlock = new TextBlock();
             errorTextBlock.Text = errorStmt;
             errorTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-            //errorTextBlock.FontSize = 9;
             errorTextBlock.TextWrapping = TextWrapping.Wrap;
             return errorTextBlock;
         }
