@@ -5,60 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UnstuckMEMessageBox" MaxWidth="550" MinWidth="550" Topmost="True" SizeToContent="Height"
+        Title="UnstuckMEMessageBox" MaxWidth="550" MinWidth="300" Topmost="True" SizeToContent="WidthAndHeight"
         Width="550" Background="DimGray" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Border BorderBrush="LightGray" BorderThickness="1">
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="453*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="1*" MinHeight="100"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="GridTitleBar" Grid.Column="0" Grid.Row="0" Background="#FF323232">
+            <Grid x:Name="GridTitleBar" Grid.Column="0" Grid.Row="0" Background="#FF323232" Grid.ColumnSpan="2">
                 <Label x:Name="LabelTitle" FontSize="18" Margin="10,0,0,0" FontWeight="Medium" Content="UnstuckME Message Box" Foreground="WhiteSmoke" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Left"></Label>
-                <Border x:Name="ButtonClose" Cursor="Hand" MouseEnter="ButtonClose_MouseEnter" MouseLeave="ButtonClose_MouseLeave" MouseLeftButtonDown="ButtonClose_MouseLeftButtonDown" Width="35" Height="35" CornerRadius="6" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Background="LightGray">
-                    <Image Source="/Resources/Close/CloseRed.png" VerticalAlignment="Center" Stretch="UniformToFill" HorizontalAlignment="Center"  Height="33" Width="33" ></Image>
+                <Border x:Name="ButtonClose" Cursor="Hand" MouseEnter="ButtonClose_MouseEnter" MouseLeave="ButtonClose_MouseLeave" MouseLeftButtonDown="ButtonClose_MouseLeftButtonDown" Width="25" Height="25" CornerRadius="6" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" Background="LightGray">
+                    <Image x:Name="ImageButtonClose" Source="/Resources/Close/CloseRed.png" VerticalAlignment="Center" Stretch="UniformToFill" HorizontalAlignment="Center"  Height="23" Width="23" ></Image>
                 </Border>
-                <Border x:Name="ButtonMinimize" Cursor="Hand" MouseEnter="ButtonMinimize_MouseEnter" MouseLeave="ButtonMinimize_MouseLeave" MouseLeftButtonDown="ButtonMinimize_MouseLeftButtonDown" Width="35" Height="35" CornerRadius="6" HorizontalAlignment="Right" Margin="0,0,45,0" VerticalAlignment="Center" Background="LightGray">
-                    <Image Source="/Resources/Minimize/MinimizeBlue.png" VerticalAlignment="Center" Stretch="UniformToFill" HorizontalAlignment="Center"  Height="33" Width="33" ></Image>
+                <Border x:Name="ButtonMinimize" Cursor="Hand" MouseEnter="ButtonMinimize_MouseEnter" MouseLeave="ButtonMinimize_MouseLeave" MouseLeftButtonDown="ButtonMinimize_MouseLeftButtonDown" Width="25" Height="25" CornerRadius="6" HorizontalAlignment="Right" Margin="0,0,35,0" VerticalAlignment="Center" Background="LightGray">
+                    <Image x:Name="ImageButtonMinimize" Source="/Resources/Minimize/MinimizeBlue.png" VerticalAlignment="Center" Stretch="UniformToFill" HorizontalAlignment="Center"  Height="23" Width="23" ></Image>
                 </Border>
             </Grid>
-            <Grid Grid.Row="1" x:Name="GridTextField">
-                <TextBox x:Name="TextBoxMessage" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontWeight="Medium" FontSize="18" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" Margin="100,10,20,10" Text="KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKdddddddddddddddddddddddddddddddddddddddddddddKKK" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBox>
-                <Rectangle x:Name="ImageWhiteFill" Width="30" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0" Fill="White"></Rectangle>
-                <Border Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
-                    <Image x:Name="ImageMessageBox" Source="/Resources/Box/Info.png" />
-                </Border>
-                
+            <Grid Grid.Row="1" x:Name="GridTextField" Grid.ColumnSpan="2">
+                <TextBox x:Name="TextBoxMessage" Cursor="Arrow" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontWeight="Medium" FontSize="18" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" Margin="100,10,20,10" Text="KKKKKKKKKKKKKffffKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKddddddddddddddddddddddddddddddddddddKKK" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBox>
             </Grid>
-            <Grid x:Name="ButtonGrid" Grid.Row="2">
+            <Grid Grid.Row="1" Grid.RowSpan="2">
+                <Rectangle x:Name="ImageWhiteFill" Width="20" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,10" Fill="White"></Rectangle>
+                <Border Height="50" Width="50" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,10">
+                    <Image x:Name="ImageMessageBox" Source="/Resources/Box/Warning.png" />
+                </Border>
+            </Grid>
+            <Grid x:Name="ButtonGrid" Grid.Row="2" Grid.ColumnSpan="5" Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="258"/>
-                    <ColumnDefinition Width="94"/>
-                    <ColumnDefinition Width="94"/>
-                    <ColumnDefinition Width="94"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition MinWidth="150" Width="258*"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="4"/>
                 </Grid.ColumnDefinitions>
                 <!--Shutdown, OKCancel, OK, YesNo, YesNoCancel -->
                 <Grid Grid.Column="0"></Grid>
                 <Grid Grid.Column="1">
-                    <Border x:Name="ButtonYNCancel" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="85" BorderThickness="2" BorderBrush="Gray" Height="35" VerticalAlignment="Center" Background="SteelBlue" MouseEnter="ButtonCancel_MouseEnter" MouseLeave="ButtonCancel_MouseLeave" MouseLeftButtonDown="ButtonCancel_MouseLeftButtonDown">
+                    <Border x:Name="ButtonYNCancel" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="75" BorderThickness="2" BorderBrush="Gray" Height="30" VerticalAlignment="Center" Background="SteelBlue" MouseEnter="ButtonCancel_MouseEnter" MouseLeave="ButtonCancel_MouseLeave" MouseLeftButtonDown="ButtonCancel_MouseLeftButtonDown">
                         <Label Content="Cancel" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="2">
-                    <Border x:Name="ButtonCancel" MouseEnter="ButtonCancel_MouseEnter" MouseLeave="ButtonCancel_MouseLeave" MouseLeftButtonDown="ButtonCancel_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Width="85" Cursor="Hand" BorderThickness="2" BorderBrush="Gray" Height="35" VerticalAlignment="Center" Background="SteelBlue">
+                    <Border x:Name="ButtonCancel" MouseEnter="ButtonCancel_MouseEnter" MouseLeave="ButtonCancel_MouseLeave" MouseLeftButtonDown="ButtonCancel_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Width="75" Cursor="Hand" BorderThickness="2" BorderBrush="Gray" Height="30" VerticalAlignment="Center" Background="SteelBlue">
                         <Label Content="Cancel" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
-                    <Border x:Name="ButtonNo" MouseEnter="ButtonNo_MouseEnter" MouseLeave="ButtonNo_MouseLeave" MouseLeftButtonDown="ButtonNo_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Width="85" Cursor="Hand" BorderThickness="2" BorderBrush="Gray" Height="35"  VerticalAlignment="Center" Background="#993333">
-                        <Label Content="NO" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    <Border x:Name="ButtonNo" MouseEnter="ButtonNo_MouseEnter" MouseLeave="ButtonNo_MouseLeave" MouseLeftButtonDown="ButtonNo_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Width="75" Cursor="Hand" BorderThickness="2" BorderBrush="Gray" Height="30"  VerticalAlignment="Center" Background="#993333">
+                        <Label Content="No" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="3">
-                    <Border x:Name="ButtonOK" MouseEnter="ButtonOK_MouseEnter" MouseLeave="ButtonOK_MouseLeave" MouseLeftButtonDown="ButtonOK_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="85" BorderThickness="2" BorderBrush="Gray" Height="35"  VerticalAlignment="Center" Background="#336699">
+                    <Border x:Name="ButtonOK" MouseEnter="ButtonOK_MouseEnter" MouseLeave="ButtonOK_MouseLeave" MouseLeftButtonDown="ButtonOK_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="75" BorderThickness="2" BorderBrush="Gray" Height="30"  VerticalAlignment="Center" Background="#336699">
                         <Label Content="OK" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
-                    <Border x:Name="ButtonYes" MouseEnter="ButtonYes_MouseEnter" MouseLeave="ButtonYes_MouseLeave" MouseLeftButtonDown="ButtonYes_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="85" BorderThickness="2" BorderBrush="Gray" Height="35" VerticalAlignment="Center" Background="#336699">
+                    <Border x:Name="ButtonYes" MouseEnter="ButtonYes_MouseEnter" MouseLeave="ButtonYes_MouseLeave" MouseLeftButtonDown="ButtonYes_MouseLeftButtonDown" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Width="75" BorderThickness="2" BorderBrush="Gray" Height="30" VerticalAlignment="Center" Background="#336699">
                         <Label Content="Yes" Padding="0,0,0,2" FontWeight="Medium" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
                 </Grid>

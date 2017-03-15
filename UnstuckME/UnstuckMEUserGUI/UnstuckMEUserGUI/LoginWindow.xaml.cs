@@ -42,11 +42,12 @@ namespace UnstuckMEUserGUI
         public LoginWindow()
 		{
 			InitializeComponent();
-            ImportClassesViaFile cheese = new ImportClassesViaFile();
-            cheese.Show();
-
             UnstuckME.Blue = buttonCreateAccount.Background;
             UnstuckME.Red = buttonCancel.Background;
+            ImportClassesViaFile cheese = new ImportClassesViaFile();
+            cheese.Show();
+            UnstuckMEMessageBox temp = new UnstuckMEMessageBox(UnstuckMEBox.YesNoCancel, "HELLLLLLO RYAN!!!!!!!!!!!!!!!!!!!!", "RYAN", UnstuckMEBoxImage.Information);
+            temp.ShowDialog();
 
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 

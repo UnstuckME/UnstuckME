@@ -44,7 +44,7 @@ namespace UnstuckMEUserGUI
                     {
                         ImageWhiteFill.Height = 40;
                         ImageWhiteFill.Width = 30;
-                        ImageWhiteFill.Margin = new Thickness(40, 0, 0, 0);
+                        ImageWhiteFill.Margin = new Thickness(35, 0, 0, 10);
                         Uri uri = new Uri("pack://application:,,,/Resources/Box/Error.png");
                         BitmapImage bitmap = new BitmapImage(uri);
                         ImageMessageBox.Source = bitmap;
@@ -53,8 +53,8 @@ namespace UnstuckMEUserGUI
                 case UnstuckMEBoxImage.Information:
                     {
                         ImageWhiteFill.Height = 40;
-                        ImageWhiteFill.Width = 30;
-                        ImageWhiteFill.Margin = new Thickness(40, 0, 0, 0);
+                        ImageWhiteFill.Width =30;
+                        ImageWhiteFill.Margin = new Thickness(35, 0, 0, 10);
                         Uri uri = new Uri("pack://application:,,,/Resources/Box/Info.png");
                         BitmapImage bitmap = new BitmapImage(uri);
                         ImageMessageBox.Source = bitmap;
@@ -62,9 +62,9 @@ namespace UnstuckMEUserGUI
                     }
                 case UnstuckMEBoxImage.Warning:
                     {
-                        ImageWhiteFill.Height = 40;
-                        ImageWhiteFill.Width = 20;
-                        ImageWhiteFill.Margin = new Thickness(45, 10, 0, 0);
+                        ImageWhiteFill.Height = 30;
+                        ImageWhiteFill.Width = 15;
+                        ImageWhiteFill.Margin = new Thickness(42, 10, 0, 12);
                         Uri uri = new Uri("pack://application:,,,/Resources/Box/Warning.png");
                         BitmapImage bitmap = new BitmapImage(uri);
                         ImageMessageBox.Source = bitmap;
@@ -168,12 +168,14 @@ namespace UnstuckMEUserGUI
 
         private void ButtonMinimize_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonMinimize.Background = Brushes.White;
+            ButtonMinimize.Background = Brushes.WhiteSmoke;
+            ImageButtonMinimize.Opacity = .85;
         }
 
         private void ButtonMinimize_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonMinimize.Background = Brushes.LightGray;
+            ImageButtonMinimize.Opacity = 1;
         }
 
         private void ButtonMinimize_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -183,12 +185,14 @@ namespace UnstuckMEUserGUI
 
         private void ButtonClose_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonClose.Background = Brushes.White;
+            ButtonClose.Background = Brushes.WhiteSmoke;
+            ImageButtonClose.Opacity = .85;
         }
 
         private void ButtonClose_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonClose.Background = Brushes.LightGray;
+            ImageButtonClose.Opacity = 1;
         }
 
         private void ButtonClose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
