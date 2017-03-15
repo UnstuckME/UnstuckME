@@ -467,7 +467,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="DBClass">Passes a DBClass object that contains the (CourseName, CourseCode, CourseNUmber)</param>
         /// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB</returns>
 		[OperationContract]
-		bool AddClass(DBClass newClass);
+		bool AddClass(UserClass newClass);
 
 	}
 

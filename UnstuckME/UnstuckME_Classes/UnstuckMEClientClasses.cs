@@ -43,13 +43,27 @@ namespace UnstuckME_Classes
 		public string Salt { get; set; }
 	}
 
-	public class UserClass
-	{
-		public string CourseCode { set; get; }
-		public string CourseName { set; get; }
-		public short CourseNumber { set; get; }
-		public int ClassID { set; get; }
-	}
+    public class UserClass
+    {
+        public string CourseCode { set; get; }
+        public string CourseName { set; get; }
+        public short CourseNumber { set; get; }
+        public int ClassID { set; get; }
+
+        public UserClass()
+        {
+            CourseName = "Unnamed";
+            CourseCode = "NA";
+            CourseNumber = 0;
+        }
+
+        public UserClass(string name, string code, string number)
+        {
+            CourseName = name.Substring(0, Math.Min(name.Length, 100));
+            CourseCode = code.Substring(0, Math.Min(code.Length, 5));
+            CourseNumber = Convert.ToInt16(number);
+        }
+    }
 
 	//This Will hold all of the information for a chat on the UserGUI
 	public class UnstuckMEChat
@@ -223,45 +237,15 @@ namespace UnstuckME_Classes
 		{
 			int newWidth = (int)(0.1 * image.Width), newHeight = (int)(0.1 * image.Height);
 
-			Bitmap bitmap = new Bitmap(image, newWidth, newHeight);
-			using (Graphics graphics = Graphics.FromImage(bitmap))
-			{
-				graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-				graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-				graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-				graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-				graphics.DrawImage(image, 0, 0, newWidth, newHeight);
-			}
-		}
-	}
-
-	public class DBClass
-	{
-		public DBClass()
-		{
-			CourseName = "Unnamed";
-			CourseCode = "NA";
-			CourseNumber = 0;
-
-		}
-
-        public DBClass(string courseName, string courseCode, short courseNumber)
-        {
-            CourseName = courseName;
-            CourseCode = courseCode;
-            CourseNumber = courseNumber;
+            Bitmap bitmap = new Bitmap(image, newWidth, newHeight);
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
         }
-
-
-        public DBClass(string name, string code, string number)
-		{
-			CourseName = name.Substring(0, Math.Min(name.Length, 100));
-			CourseCode = code.Substring(0, Math.Min(code.Length, 5));
-			CourseNumber = Convert.ToInt16(number);
-		}
-
-		public string CourseName { get; set; }
-		public string CourseCode { get; set; }
-		public short CourseNumber { get; set; }
-	}
+    }
 }

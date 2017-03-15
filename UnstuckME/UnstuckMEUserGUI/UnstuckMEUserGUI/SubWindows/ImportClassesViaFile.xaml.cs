@@ -29,7 +29,7 @@ namespace UnstuckMEUserGUI.SubWindows
     public partial class ImportClassesViaFile : Window
     {
         public static string[] CourseNames = { "Course Name", "Course Code", "Course Number" };
-        List<DBClass> m_parsedWithWarnings = new List<DBClass>();
+        List<UserClass> m_parsedWithWarnings = new List<UserClass>();
 
         public ImportClassesViaFile()
         {
@@ -130,7 +130,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
                                     if(courseName.Length > 100 || courseCode.Length >= 5 || Convert.ToInt16(courseNumber) <= 0)
                                     {
-                                        m_parsedWithWarnings.Add(new DBClass(courseName, courseCode, courseNumber));
+                                        m_parsedWithWarnings.Add(new UserClass(courseName, courseCode, courseNumber));
                                         warningGenerated = true;
                                     }
                                     if (courseName.Length > 100)
@@ -149,7 +149,7 @@ namespace UnstuckMEUserGUI.SubWindows
                                     if(warningGenerated != true)
                                     {
                                         //This is were it need to get sent to the server
-                                        bool addedSuccessfully = UnstuckME.Server.AddClass(new DBClass(courseName, courseCode, courseNumber)); 
+                                        bool addedSuccessfully = UnstuckME.Server.AddClass(new UserClass(courseName, courseCode, courseNumber)); 
                                         if(addedSuccessfully == false)
                                         {
                                             StackPanelWarningsErrors.Children.Add(GenerateError(fields,"Database rejected insertion of class (perhaps it already exits?)", csvParser.LineNumber));
@@ -188,7 +188,7 @@ namespace UnstuckMEUserGUI.SubWindows
                 bool ? msgResponse = msgBox.ShowDialog();
                 if (msgResponse == true)
                 {
-                    foreach (DBClass newClass in m_parsedWithWarnings)
+                    foreach (UserClass newClass in m_parsedWithWarnings)
                     {
                         bool addedSuccessfully = UnstuckME.Server.AddClass(newClass);
                         if (addedSuccessfully == false)

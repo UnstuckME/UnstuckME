@@ -20,17 +20,18 @@ namespace UnstuckMEUserGUI.SubWindows
     public partial class AddTutorReviewWindow : Window
     {
         double starVal = 3.5;
-        int stickerID = 0;
+        int _stickerID = 0;
         
-        public AddTutorReviewWindow(int sticker)
+        public AddTutorReviewWindow(int stickerID)
         {
             InitializeComponent();
+            _stickerID = stickerID;
             sliderRating.Value = starVal;
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            UnstuckME.Server.CreateReview(stickerID, UnstuckME.User.UserID, starVal, ReviewDescriptionTxtBox.Text);
+            UnstuckME.Server.CreateReview(_stickerID, UnstuckME.User.UserID, starVal, ReviewDescriptionTxtBox.Text);
             this.Close();
         }
 

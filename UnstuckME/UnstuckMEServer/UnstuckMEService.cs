@@ -1767,17 +1767,22 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-		public bool AddClass(DBClass newClass)
-		{
-			bool addedClassSucessfully = true;
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				int callReturned = db.CreateNewClass(newClass.CourseName, newClass.CourseCode, newClass.CourseNumber);
-				if(callReturned != 1)
-				{
-					addedClassSucessfully = false;
-				}
-			}
+        /// <summary>
+        /// Adds a class to the database if it does not already exist.
+        /// </summary>
+        /// <param name="newClass">The class to add to the database. Should contain the CourseCode, CourseName, and CourseNumber.</param>
+        /// <returns>Returns true if successful, false if not.</returns>
+        public bool AddClass(UserClass newClass)
+        {
+            bool addedClassSucessfully = true;
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                int callReturned = db.CreateNewClass(newClass.CourseName, newClass.CourseCode, newClass.CourseNumber);
+                if(callReturned == 0)
+                {
+                    addedClassSucessfully = false;
+                }
+            }
 
 			return addedClassSucessfully;
 		}
