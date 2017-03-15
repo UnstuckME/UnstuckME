@@ -51,6 +51,7 @@
                     <Label x:Name="NumberOfStudentReviews" Content="0" HorizontalAlignment="Left" Margin="202,301,0,0" VerticalAlignment="Top" Width="65"/>
                     <Label x:Name="TutorRatingsNumberlabel" Content="Number of Tutor Reviews" HorizontalAlignment="Left" Margin="11,363,0,0" VerticalAlignment="Top" Width="169"/>
                     <Label x:Name="NumberOfTutorReviews" Content="0" HorizontalAlignment="Left" Margin="202,363,0,0" VerticalAlignment="Top" Width="65"/>
+                    <Button x:Name="CreateUserBtn" Content="Create New User" HorizontalAlignment="Left" Margin="163,428,0,0" VerticalAlignment="Top" Width="135" Height="50" Click="CreateUserBtn_Click"/>
 
                 </Grid>
             </TabItem>
