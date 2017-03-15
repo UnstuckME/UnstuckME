@@ -31,6 +31,10 @@ namespace UnstuckMEUserGUI
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
             LabelDescription.Content = Sticker.ProblemDescription;
 			LabelTimeout.Content = "Timeout: " + Sticker.Timeout.ToLongDateString();//DateTime.Now.AddSeconds(Sticker.Timeout).ToLongDateString() + " " + DateTime.Now.AddSeconds(Sticker.Timeout).ToShortTimeString();
+            if (Sticker.Timeout < DateTime.Now)
+            {
+                this.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void ButtonRemove_MouseEnter(object sender, MouseEventArgs e)
@@ -63,6 +67,7 @@ namespace UnstuckMEUserGUI
         {
             Window win = new SubWindows.AddTutorReviewWindow(Sticker.StickerID);
             win.Show();
+            ((StackPanel)this.Parent).Children.Remove(this);
         }
     }
 }
