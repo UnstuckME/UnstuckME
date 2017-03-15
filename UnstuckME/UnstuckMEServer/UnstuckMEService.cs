@@ -1014,7 +1014,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="starRanking">The rating given to the user being reviewed.</param>
 		/// <param name="description">The description of the review.</param>
 		/// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
-		public int CreateReview(int stickerID, int reviewerID, double starRanking, string description)
+		public int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent)
 		{
 			try
 			{
@@ -1022,6 +1022,35 @@ namespace UnstuckMEInterfaces
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
 					retVal = db.CreateReview(stickerID, reviewerID, starRanking, description);
+                    if (isAStudent)// the person being reviewed is a student
+                    {
+                        var IDofReveiwed =
+                            (from I in db.Stickers
+                            where I.TutorID == reviewerID
+                            select I.StudentID).First();
+                        db.AddStudentStarRankToUser(Convert.ToInt32(IDofReveiwed), starRanking);
+                    }
+                    else // the person being reviewed is a tutor
+                    {
+                        var IDofReveiwed =
+                            (from I in db.Stickers
+                            where I.StudentID == reviewerID
+                            select I.TutorID).First();
+                        db.AddTutorStarRankToUser(Convert.ToInt32(IDofReveiwed), starRanking);
+                    }
+                    var Reviews =
+                        from r in db.Reviews
+                        where r.StickerID == stickerID
+                        select r.StickerID;
+                    int i = 0;
+                    foreach (var item in Reviews)
+                    {
+                        i++;
+                    }
+                    if (i > 1)
+                    {
+                        db.MarkStickerAsResolved(stickerID);
+                    }
 				}
 
 				return retVal;

@@ -310,9 +310,10 @@ namespace UnstuckMEInterfaces
 		/// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
 		/// <param name="starRanking">The rating given to the user being reviewed.</param>
 		/// <param name="description">The description of the review.</param>
+        /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise</param>
 		/// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
-		int CreateReview(int stickerID, int reviewerID, double starRanking, string description);
+		int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
 
 		/// <summary>
 		/// Removes a user from their contacts.

@@ -63,7 +63,8 @@ namespace UnstuckMEUserGUI
 
         private void ButtonCompleted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            Window win = new SubWindows.AddStudentReviewWindow(Sticker.StickerID);
+            win.Show();
         }
     }
 }
