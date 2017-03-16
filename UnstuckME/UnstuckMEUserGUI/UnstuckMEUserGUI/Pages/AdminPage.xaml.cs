@@ -39,8 +39,8 @@ namespace UnstuckMEUserGUI
 
         private void AddRemoveClassesBtn_Click(object sender, RoutedEventArgs e)
         {
-            Window win = new SubWindows.AddClassToServerWindow();
-            win.Show();
+            ImportClassesViaFile cheese = new ImportClassesViaFile();
+            cheese.ShowDialog();
         }
 
         private void AddRemoveUserRoleBtn_Click(object sender, RoutedEventArgs e)

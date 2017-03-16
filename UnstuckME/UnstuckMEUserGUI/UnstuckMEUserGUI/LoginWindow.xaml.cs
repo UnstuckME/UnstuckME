@@ -44,10 +44,6 @@ namespace UnstuckMEUserGUI
 			InitializeComponent();
             UnstuckME.Blue = buttonCreateAccount.Background;
             UnstuckME.Red = buttonCancel.Background;
-            ImportClassesViaFile cheese = new ImportClassesViaFile();
-            cheese.Show();
-            UnstuckMEMessageBox temp = new UnstuckMEMessageBox(UnstuckMEBox.YesNoCancel, "This is an UnstuckME Message Box Message.", "UnstuckME Message", UnstuckMEBoxImage.Information);
-            temp.ShowDialog();
 
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 

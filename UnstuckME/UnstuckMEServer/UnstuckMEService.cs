@@ -1769,7 +1769,7 @@ namespace UnstuckMEInterfaces
 						{
 							bytes_skipped++;
 						}
-
+                        
 						value += Convert.ToChar(tokenData[i + bytes_skipped]);
 					}
 				}
@@ -1785,7 +1785,7 @@ namespace UnstuckMEInterfaces
 		}
 
 		/// <summary>
-		/// Creates a new mentor organzation on the database.
+		/// Creates a new mentor organzation on the database.4
 		/// </summary>
 		/// <param name="name">The name of the new organization.</param>
 		public void CreateMentorOrg(string name)
