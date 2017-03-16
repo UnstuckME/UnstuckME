@@ -46,7 +46,7 @@ namespace UnstuckMEUserGUI
             UnstuckME.Red = buttonCancel.Background;
             ImportClassesViaFile cheese = new ImportClassesViaFile();
             cheese.Show();
-            UnstuckMEMessageBox temp = new UnstuckMEMessageBox(UnstuckMEBox.YesNoCancel, "HELLLLLLO RYAN!!!!!!!!!!!!!!!!!!!!", "RYAN", UnstuckMEBoxImage.Information);
+            UnstuckMEMessageBox temp = new UnstuckMEMessageBox(UnstuckMEBox.YesNoCancel, "This is an UnstuckME Message Box Message.", "UnstuckME Message", UnstuckMEBoxImage.Information);
             temp.ShowDialog();
 
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
