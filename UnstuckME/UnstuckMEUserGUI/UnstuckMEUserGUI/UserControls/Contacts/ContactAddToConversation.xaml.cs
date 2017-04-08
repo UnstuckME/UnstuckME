@@ -28,10 +28,15 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             Contact = inContact;
             LabelUsername.Content = Contact.UserName;
-            if(Contact.ProfilePicture == null)
+            if (Contact.ProfilePicture == null)
             {
-                Contact.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(Contact.UserID)) as ImageSource;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    UnstuckME.FileStream.GetProfilePicture(Contact.UserID).CopyTo(ms);
+                    Contact.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                }
             }
+
             ImageUserProfilePic.Source = Contact.ProfilePicture;
         }
 

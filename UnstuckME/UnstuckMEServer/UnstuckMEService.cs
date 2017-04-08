@@ -259,40 +259,39 @@ namespace UnstuckMEInterfaces
 		public UserInfo UserLoginAttempt(string emailAddress, string passWord)
 		{
 			ConnectedClient newClient = new ConnectedClient();
+
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
 				try
 				{
-					UserInfo users = GetUserInfo(null, emailAddress);
+					UserInfo user = GetUserInfo(null, emailAddress);
 
-					string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passWord, users.Salt);
+					string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passWord, user.Salt);
 
-					if (stringOfPassword == users.UserPassword)
+					if (stringOfPassword == user.UserPassword)
 					{
 						//If Client is already logged on return false (This may be removed later).
 						foreach (var client in _connectedClients)
 						{
-							if (client.Key == users.UserID)
-							{
+							if (client.Key == user.UserID)
 								return null;
-							}
 						}
 
 						//Stores Client into Logged in Users List
 						var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
 						newClient.ChannelInfo = OperationContext.Current;
 						newClient.connection = establishedUserConnection;
-						newClient.User = users;
+						newClient.User = user;
 						newClient.returnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
 						_connectedClients.TryAdd(newClient.User.UserID, newClient);
+
 						//Login Success, Print to console window.
 						Console.ForegroundColor = ConsoleColor.Green;
 						Console.WriteLine("Client Login: {0} at {1}", newClient.User.EmailAddress, System.DateTime.Now);
 						Console.ResetColor();
+
 						foreach (var admin in _connectedServerAdmins)
-						{
 							admin.Value.connection.GetUpdate(0, newClient.User);
-						}
 					}
 				}
 				catch (Exception)
@@ -378,7 +377,7 @@ namespace UnstuckMEInterfaces
 				newClient.TotalTutorReviews = users.TotalTutorReviews;
 				newClient.UserPassword = users.UserPassword;
 				newClient.Salt = users.Salt;
-				newClient.UserProfilePictureBytes = GetProfilePicture(newClient.UserID);
+
 				return newClient;
 			}
 		}
@@ -394,7 +393,7 @@ namespace UnstuckMEInterfaces
 			{
 				try
 				{
-					var users = GetUserInfo(null, emailAddress);
+					var user = GetUserInfo(null, emailAddress);
 					return true;
 				}
 				catch
@@ -776,60 +775,68 @@ namespace UnstuckMEInterfaces
 		}
 
 		/// <summary>
-		/// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
-		/// open the file, and convert it to a byte array.
+		/// Currently retrieves the data of the profile picture from the database. Set up to retrieve the filepath of the picture from the database,
+		/// opens the file, and converts it into a stream and returns it.
 		/// </summary>
 		/// <param name="userID">The unique identifier of the user.</param>
-		/// <returns>A byte array containing the data of the image file. If streaming can be implmented, this will return a Stream instead.</returns>
-		public byte[] GetProfilePicture(int userID)
+		/// <returns>A Stream object containing the data of the image file.</returns>
+		public Stream GetProfilePicture(int userID)
 		{
-			string directory = string.Empty;
-			directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\UnstuckME\" + userID.ToString() + @"\ProfilePicture.jpeg";
+            //string directory = string.Empty;
+            //using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            //{
+            //    directory = db.GetProfilePicture(userID).First();
+            //}
 
-			//replace above with below once filepath is implemented
-			//using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			//{
-			//    directory = db.GetProfilePicture(userID).First();
-			//}
+            //using (FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read))
+            {
+                //MemoryStream ms = new MemoryStream();
+                //file.CopyTo(ms);
+                //ms.Position = 0L;
 
-			//FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read);
-			//byte[] imgByte = new byte[file.Length];
-			//file.Read(imgByte, 0, Convert.ToInt32(file.Length));
+                //return ms;
+                /*****************************************************************************************************
+                 * Remove the bottom lines and uncomment the above lines once filepath is implemented on the database.
+                *****************************************************************************************************/
+                byte[] imgByte;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    imgByte = db.GetProfilePicture(userID).First();
+                }
 
-			
-			
-			/*******************************************************************
-			 * When using remote server comment this out and use code above ^^^
-			*******************************************************************/
-			byte[] imgByte = null;
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				imgByte = db.GetProfilePicture(userID).First();
-			}
-
-			return imgByte;
+                return new MemoryStream(imgByte);
+            }
 		}
 
-		/// <summary>
-		/// Overwrites the profile picture data of a specific user on the database.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
-		/// <param name="image">A byte array that contains the data of the new image.</param>
-		public void SetProfilePicture(int userID, byte[] image)
+        /// <summary>
+        /// Overwrites the profile picture data of a specific user on the database.
+        /// </summary>
+        /// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
+        public void SetProfilePicture(UnstuckMEStream image)
 		{
 			string directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME\";
-			Directory.CreateDirectory(directory += userID.ToString());
+            Directory.CreateDirectory(directory += image.User.UserID.ToString());
+            Directory.CreateDirectory(directory);
 			directory += @"\ProfilePicture.jpeg";
 
-			using (FileStream newfile = new FileStream(directory, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite, image.Length, FileOptions.Encrypted))
-			{
-				newfile.Write(image, 0, image.Length);
-			}
+            using (FileStream newfile = new FileStream(directory, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite, 26214400, FileOptions.Encrypted))
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    image.CopyTo(ms);   //write to a MemoryStream to easily convert to a byte array
+                    ms.Position = 0L;   //reset the position of the memorystream to write it to a different stream
+                    ms.CopyTo(newfile); //write to local filesystem
 
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				db.UpdateProfilePicture(userID, image); //replace image with directory
-			}
+                    /****************************************************************************************************************
+                    * When using remote server comment MemoryStream section out and swap out the UpdateProfilePicture function calls
+                    ****************************************************************************************************************/
+                    using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                    {
+                        //db.UpdateProfilePicture(image.User.UserID, directory);
+                        db.UpdateProfilePicture(image.User.UserID, ms.ToArray()); //replace with line above once filepath is implemented on database
+                    }
+                }
+            }
 		}
 
 		/// <summary>
@@ -1223,17 +1230,6 @@ namespace UnstuckMEInterfaces
 				//organizations.Dispose();		//need this to release memory   
 				return orgs;
 			}
-		}
-
-		/// <summary>
-		/// Test function for streaming. Do not use.
-		/// </summary>
-		/// <param name="stream">A stream of data.</param>
-		/// <returns>A stream of data.</returns>
-		public System.IO.Stream Test(System.IO.Stream stream)
-		{
-			Console.WriteLine("Hello World");
-			return stream;
 		}
 
 		/// <summary>
@@ -1820,7 +1816,7 @@ namespace UnstuckMEInterfaces
 
 		#region ServerGUI Functions
 		/// <summary>
-		/// Deprecated.
+		/// Returns a boolean value identifying that the server is running.
 		/// </summary>
 		/// <returns>True.</returns>
 		public bool TestNewConfig()

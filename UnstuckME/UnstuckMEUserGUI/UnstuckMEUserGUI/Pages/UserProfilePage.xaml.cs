@@ -128,27 +128,31 @@ namespace UnstuckMEUserGUI
 					if (file.Length > 26214400)
 						throw new Exception("The image you have selected exceeds the 25 MB limit. Please select a different file that is within the size limit.");
 
-					System.Drawing.Image image = System.Drawing.Image.FromStream(file);
-                    System.Drawing.Image thumbnail = image;
+					System.Drawing.Image thumbnail = System.Drawing.Image.FromStream(file);
                     Thumbnail.Convert(ref thumbnail);
 
                     using (MemoryStream ms = new MemoryStream())
-					{
+                    {
                         thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                         byte_array = ms.ToArray();
                         ms.Seek(0, SeekOrigin.Begin);
 
                         BitmapImage ix = new BitmapImage();
-						ix.BeginInit();
-						ix.CacheOption = BitmapCacheOption.OnLoad;
+                        ix.BeginInit();
+                        ix.CacheOption = BitmapCacheOption.OnLoad;
                         ix.StreamSource = ms;
                         ix.EndInit();
 
-                        ImageEditProfilePicture.Source = ix;
-					}
+                        //ms.Position = 0L;
+                        using (UnstuckMEStream stream = new UnstuckMEStream(byte_array, true))
+                        {
+                            stream.User = UnstuckME.User;
+                            UnstuckME.FileStream.SetProfilePicture(stream); //change picture on database/server
+                        }
 
-					ProfilePicture.Source = ImageEditProfilePicture.Source;
-					UnstuckME.Server.SetProfilePicture(UnstuckME.User.UserID, byte_array);
+                        ImageEditProfilePicture.Source = ix;
+                        ProfilePicture.Source = ImageEditProfilePicture.Source; //change picture on application
+                    }
 
                     foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
                     {
@@ -159,7 +163,6 @@ namespace UnstuckMEUserGUI
                         }
                     }
 
-					image.Dispose();		//avoids memory leaks
 					thumbnail.Dispose();	//avoids memory leaks
 					file.Dispose();			//avoids memory leaks
                 }

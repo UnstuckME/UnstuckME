@@ -98,6 +98,9 @@ namespace UnstuckMEUserGUI
 		{
 			UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
 			UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
+            UnstuckME.Stream_ChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
+            UnstuckME.FileStream = UnstuckME.Stream_ChannelFactory.CreateChannel();
+
 			schools = await LoadSchoolsAsync();
 			foreach (UnstuckMESchool school in schools)
 			{
@@ -187,7 +190,8 @@ namespace UnstuckMEUserGUI
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
 				else
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, "NET TCP client issued a request, but received no or failed response along specified channel");
-				_labelInvalidLogin.Content = ex.Message;
+
+                _labelInvalidLogin.Content = ex.Message;
 				passwordBox.Password = string.Empty;
                 textBoxUserName_TextChanged(sender, e as TextChangedEventArgs);
                 _labelInvalidLogin.Visibility = Visibility.Visible;
@@ -240,6 +244,7 @@ namespace UnstuckMEUserGUI
                     isValid = false;
 					_labelInvalidLogin.Visibility = Visibility.Visible;
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
+
 					try
 					{
 						UnstuckME.ChannelFactory.Abort();
@@ -413,14 +418,15 @@ namespace UnstuckMEUserGUI
 		{
 			this.Dispatcher.Invoke(() =>
 			{
-				//System.IO.FileStream file = new System.IO.FileStream(System.IO.Path.Combine(Environment.CurrentDirectory, "..\\Resources\\User\\UserBlue.png"), System.IO.FileMode.Open);
-
 				ImageConverter converter = new ImageConverter();
 				byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
-				try
-				{
-					//Server.SetProfilePicture(userID, file);
-					UnstuckME.Server.SetProfilePicture(userID, avatar);
+                try
+                {
+                    using (UnstuckMEStream stream = new UnstuckMEStream(avatar, true))
+                    {
+                        stream.User = UnstuckME.User;
+                        UnstuckME.FileStream.SetProfilePicture(stream);
+                    }
 				}
 				catch (Exception exp)
 				{

@@ -56,8 +56,14 @@ namespace UnstuckMEUserGUI
             {
                 UnstuckMEChatUser temp = new UnstuckMEChatUser();
                 temp.UserID = UnstuckME.Server.GetUserID(TextBoxUsername.Text);
-                temp.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(temp.UserID)) as ImageSource;
                 temp.UserName = UnstuckME.Server.GetUserDisplayName(temp.UserID);
+
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    UnstuckME.FileStream.GetProfilePicture(temp.UserID).CopyTo(ms);
+                    temp.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                }
+
                 UnstuckME.Server.AddFriend(UnstuckME.User.UserID, temp.UserID);
                 UnstuckME.FriendsList.Add(temp);
                 Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().AddUserToContactsStack(temp);

@@ -48,9 +48,13 @@ namespace UnstuckMEUserGUI
             {
                 foreach (UnstuckMEChatUser user in Chat.Users)
                 {
-                    if(user.UserID != UnstuckME.User.UserID)
+                    if (user.UserID != UnstuckME.User.UserID)
                     {
-                       ConversationImage.Source =  UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(user.UserID)) as ImageSource;
+                        using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                        {
+                            UnstuckME.FileStream.GetProfilePicture(user.UserID).CopyTo(ms);
+                            ConversationImage.Source = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                        }
                     }
                 }
                 ConversationLabel.Content = test.First().ConversationName;
@@ -93,15 +97,19 @@ namespace UnstuckMEUserGUI
             UnstuckME.Pages.ChatPage.LabelConversationName.Content = ConversationLabel.Content;
             foreach (UnstuckMEChatUser user in Chat.Users)
             {
-                if(user.ProfilePicture == null)
+                if (user.ProfilePicture == null)
                 {
-                    if(user.UserID == UnstuckME.User.UserID)
+                    if (user.UserID == UnstuckME.User.UserID)
                     {
                         user.ProfilePicture = UnstuckME.UserProfilePicture;
                     }
                     else
                     {
-                        user.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(user.UserID)) as ImageSource;
+                        using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                        {
+                            UnstuckME.FileStream.GetProfilePicture(user.UserID).CopyTo(ms);
+                            user.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                        }
                     }
                 }
             }

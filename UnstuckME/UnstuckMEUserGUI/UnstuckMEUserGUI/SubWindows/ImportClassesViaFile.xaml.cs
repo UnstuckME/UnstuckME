@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 using Microsoft.VisualBasic.FileIO;
 using UnstuckME_Classes;
 
-public enum Course { CourseName, CourseCode, CourseNumber, CourseDescItems};
-
 namespace UnstuckMEUserGUI.SubWindows
 {
-
+    public enum Course { CourseName, CourseCode, CourseNumber, CourseDescItems };
 
     /// <summary>
     /// Importing and Creating CSV/TSV code implementation
     /// </summary>
-
     public partial class ImportClassesViaFile : Window
     {
         public static string[] CourseNames = { "Course Name", "Course Code", "Course Number" };
@@ -34,9 +31,7 @@ namespace UnstuckMEUserGUI.SubWindows
         public ImportClassesViaFile()
         {
             InitializeComponent();
-        }
-
-        
+        }        
 
         private void buttonCreateCSV_Click(object sender, RoutedEventArgs e)
         {
@@ -44,7 +39,6 @@ namespace UnstuckMEUserGUI.SubWindows
             saveDialog.Filter = "Comma Separated Values|*.csv";
             saveDialog.Title = "Save CSV File Template";
             saveDialog.ShowDialog();
-
             
             if (saveDialog.FileName != "") // Make sure they dont try and save to empty directory
             { 
@@ -59,6 +53,7 @@ namespace UnstuckMEUserGUI.SubWindows
                     sw.Write("[Course Name], [Course Code], [Course Number]\n\n");
                     fs.Flush();
                 }
+
                 fs.Close();
             }
         }
@@ -70,19 +65,15 @@ namespace UnstuckMEUserGUI.SubWindows
 
         private async void buttonUploadCSV_Click(object sender, RoutedEventArgs e)
         {
-
-
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = ".csv|*.csv|.tsv|*tsv";
             fileDialog.Multiselect = true;
 
             try
             {
-           
                 if (fileDialog.ShowDialog() == true)
                 {
                     string[] arrAllFiles = fileDialog.FileNames;
-
 
                     foreach(string path in arrAllFiles)
                     {
@@ -95,7 +86,6 @@ namespace UnstuckMEUserGUI.SubWindows
 
                             // Skip the row with the column names
                             csvParser.ReadLine();
-
                             textBlockCurrentLine.Visibility = Visibility.Visible;
 
                             while (!csvParser.EndOfData)
@@ -124,10 +114,8 @@ namespace UnstuckMEUserGUI.SubWindows
                                     skipLine = true;
                                     StackPanelWarningsErrors.Children.Add(GenerateError(fields, csvParser.LineNumber));
                                 }
-
                                 if (skipLine == false)
                                 {
-
                                     if(courseName.Length > 100 || courseCode.Length >= 5 || Convert.ToInt16(courseNumber) <= 0)
                                     {
                                         m_parsedWithWarnings.Add(new UserClass(courseName, courseCode, courseNumber));
@@ -145,7 +133,6 @@ namespace UnstuckMEUserGUI.SubWindows
                                     {
                                         StackPanelWarningsErrors.Children.Add(GenerateWarning("The Course Number {" + courseNumber + "} is less than or equal to zero", csvParser.LineNumber));
                                     }
-
                                     if(warningGenerated != true)
                                     {
                                         //This is were it need to get sent to the server
@@ -161,15 +148,12 @@ namespace UnstuckMEUserGUI.SubWindows
                             CheckForWarnings();
                         }
                     }   
-                
                 }
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-
         }
 
         void UpdateTextBoxAsync(long lineNumber)
@@ -210,7 +194,6 @@ namespace UnstuckMEUserGUI.SubWindows
             return warnTextBox;
         }
 
-
         TextBlock GenerateError(string[] fields, string errorMsg, long linenumber = -1)
         {
             string errorTxt = "ERROR: ";
@@ -246,7 +229,6 @@ namespace UnstuckMEUserGUI.SubWindows
                     errorStmt += CourseNames[i] + " Does not have a value ";
                     foundError = true;
                 }
-
             }
 
             TextBlock errorTextBlock = new TextBlock();

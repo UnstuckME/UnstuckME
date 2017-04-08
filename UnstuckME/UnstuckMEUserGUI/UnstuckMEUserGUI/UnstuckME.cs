@@ -13,9 +13,11 @@ namespace UnstuckMEUserGUI
     public static class UnstuckME
     {
         public static IUnstuckMEService Server;
+        public static IUnstuckMEFileStream FileStream;
         public static UserInfo User;
         public static ImageSource UserProfilePicture;
         public static DuplexChannelFactory<IUnstuckMEService> ChannelFactory;
+        public static ChannelFactory<IUnstuckMEFileStream> Stream_ChannelFactory;
         public static UnstuckMEWindow MainWindow;
         public static List<UnstuckMEChatUser> FriendsList;
         public static Brush Blue;

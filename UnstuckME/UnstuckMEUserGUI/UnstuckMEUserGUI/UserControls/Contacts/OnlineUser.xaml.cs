@@ -27,11 +27,16 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             Friend = inFriend;
             LabelUserName.Content = Friend.UserName;
-            if(Friend.ProfilePicture == null)
+
+            if (Friend.ProfilePicture == null)
             {
-                UnstuckME.Server.GetProfilePicture(Friend.UserID);
-                Friend.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.Server.GetProfilePicture(Friend.UserID)) as ImageSource;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    UnstuckME.FileStream.GetProfilePicture(Friend.UserID).CopyTo(ms);
+                    Friend.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                }
             }
+
             ImageUser.Source = Friend.ProfilePicture;
         }
 

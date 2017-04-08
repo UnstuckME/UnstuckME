@@ -74,7 +74,13 @@ namespace UnstuckMEUserGUI
         {
             UnstuckME.ImageConverter = new ImageSourceConverter();
             UnstuckME.Pages = new UnstuckMEPages();
-            UnstuckME.UserProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.User.UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
+
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            {
+                UnstuckME.FileStream.GetProfilePicture(UnstuckME.User.UserID).CopyTo(ms);
+                UnstuckME.User.UserProfilePictureBytes = ms.ToArray();
+                UnstuckME.UserProfilePicture = UnstuckME.ImageConverter.ConvertFrom(UnstuckME.User.UserProfilePictureBytes) as ImageSource;  //convert image so it can be displayed
+            }
         }
 
         private void LoadStickerPageAsync()
@@ -141,7 +147,7 @@ namespace UnstuckMEUserGUI
                 this.Dispatcher.Invoke(() =>
                 {
                     UnstuckME.Pages.UserProfilePage.ProfilePicture.Source = UnstuckME.UserProfilePicture;  //convert image so it can be displayed
-                UnstuckME.Pages.UserProfilePage.ImageEditProfilePicture.Source = UnstuckME.UserProfilePicture;
+                    UnstuckME.Pages.UserProfilePage.ImageEditProfilePicture.Source = UnstuckME.UserProfilePicture;
                     UnstuckME.Pages.UserProfilePage.FirstName.Text = UnstuckME.User.FirstName;
                     UnstuckME.Pages.UserProfilePage.LastName.Text = UnstuckME.User.LastName;
                     UnstuckME.Pages.UserProfilePage.EmailAddress.Text = UnstuckME.User.EmailAddress;

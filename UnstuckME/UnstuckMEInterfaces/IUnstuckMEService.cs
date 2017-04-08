@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Security;
@@ -8,6 +9,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Windows.Media;
 using UnstuckME_Classes;
+
 namespace UnstuckMEInterfaces
 {
 
@@ -236,22 +238,22 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int SubmitSticker(UnstuckMEBigSticker newSticker);
 
-		/// <summary>
-		/// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
-		/// open the file, and convert it to a byte array.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
-		/// <returns>A byte array containing the data of the image file. If streaming can be implmented, this will return a Stream instead.</returns>
-		[OperationContract]
-		byte[] GetProfilePicture(int userID);
+		///// <summary>
+		///// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
+		///// open the file, and convert it to a byte array.
+		///// </summary>
+		///// <param name="userID">The unique identifier of the user.</param>
+		///// <returns>A byte array containing the data of the image file. If streaming can be implmented, this will return a Stream instead.</returns>
+		//[OperationContract]
+		//byte[] GetProfilePicture(int userID);
 
-		/// <summary>
-		/// Overwrites the profile picture data of a specific user on the database.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
-		/// <param name="image">A byte array that contains the data of the new image.</param>
-		[OperationContract]
-		void SetProfilePicture(int userID, byte[] image);
+		///// <summary>
+		///// Overwrites the profile picture data of a specific user on the database.
+		///// </summary>
+		///// <param name="userID">The unique identifier of the user.</param>
+		///// <param name="image">A byte array that contains the data of the new image.</param>
+		//[OperationContract]
+		//void SetProfilePicture(int userID, byte[] image);
 
 		/// <summary>
 		/// Gets all the course codes in the database.
@@ -475,11 +477,11 @@ namespace UnstuckMEInterfaces
 	[ServiceContract(CallbackContract = typeof(IServer))]
 	public interface IUnstuckMEServer
 	{
-		/// <summary>
-		/// Deprecated.
-		/// </summary>
-		/// <returns>True.</returns>
-		[OperationContract]
+        /// <summary>
+        /// Returns a boolean value identifying that the server is running.
+        /// </summary>
+        /// <returns>True.</returns>
+        [OperationContract]
 		bool TestNewConfig();
 
 		/// <summary>
@@ -573,15 +575,23 @@ namespace UnstuckMEInterfaces
 		UnstuckMEFile UploadDocument();
 	}
 
-	[ServiceContract(CallbackContract = typeof(IFileStream))]
-	public interface IUnstuckMEFileStream
-	{
-		/// <summary>
-		/// Test function for streaming. Do not use.
-		/// </summary>
-		/// <param name="stream">A stream of data.</param>
-		/// <returns>A stream of data.</returns>
-		[OperationContract]
-		System.IO.Stream Test(System.IO.Stream stream);
-	}
+    [ServiceContract]
+    public interface IUnstuckMEFileStream
+    {
+        /// <summary>
+        /// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
+        /// open the file, and convert it to a byte array.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+		/// <returns>A Stream object containing the data of the image file.</returns>
+        [OperationContract]
+        Stream GetProfilePicture(int userID);
+
+        /// <summary>
+        /// Overwrites the profile picture data of a specific user on the database.
+        /// </summary>
+        /// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
+        [OperationContract(IsOneWay = true)]
+        void SetProfilePicture(UnstuckMEStream image);
+    }
 }
