@@ -31,17 +31,17 @@ namespace UnstuckMEUserGUI
 
         private void ButtonConversationStart_MouseEnter(object sender, MouseEventArgs e)
         {
-
+            ButtonConversationStart.Background = Brushes.LightSteelBlue;
         }
 
         private void ButtonConversationStart_MouseLeave(object sender, MouseEventArgs e)
         {
-
+            ButtonConversationStart.Background = null;
         }
 
         private void ButtonConversationStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            UnstuckME.Pages.ChatPage.StartNewConversation(Contact.UserID);
         }
     }
 }
