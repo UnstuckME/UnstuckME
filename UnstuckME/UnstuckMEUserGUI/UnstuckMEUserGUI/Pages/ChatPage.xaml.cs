@@ -265,5 +265,72 @@ namespace UnstuckMEUserGUI
             AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(UnstuckME.CurrentChatSession);
             addUserWindow.Show();
         }
+
+        public void StartNewConversation(int TargetUser)
+        {
+            try
+            {
+                if (SoloConversationAlreadyExists(TargetUser))
+                {
+                    throw new Exception();
+                }
+                int searchedUserID = -1;
+                int chatID;
+                chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
+                UnstuckME.Server.InsertUserIntoChat(TargetUser, chatID);
+                UnstuckMEMessage temp = new UnstuckMEMessage();
+                temp.ChatID = chatID;
+                temp.FilePath = string.Empty;
+                temp.IsFile = false;
+                temp.Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.";
+                temp.MessageID = 0;
+                temp.Username = UnstuckME.User.FirstName;
+                temp.SenderID = UnstuckME.User.UserID;
+                temp.UsersInConvo = new List<int>();
+                temp.UsersInConvo.Add(UnstuckME.User.UserID);
+                temp.UsersInConvo.Add(searchedUserID);
+                UnstuckME.Server.SendMessage(temp);
+                AddMessage(temp);
+                ButtonAddUserDone_Click(null, null);
+                foreach (Conversation convo in StackPanelConversations.Children.OfType<Conversation>())
+                {
+                    if (convo.Chat.ChatID == chatID)
+                    {
+                        convo.ConversationUserControl_MouseLeftButtonDown(null, null);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                ButtonAddUserDone_Click(null, null);
+            }
+        }
+
+        bool SoloConversationAlreadyExists(int TargetUser)
+        {
+            bool convoExists = false;
+
+            foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+            {
+                if (chat.Users.Count == 2)
+                {
+                    foreach (UnstuckMEChatUser user in chat.Users)
+                    {
+                        if (user.UserID == TargetUser)
+                        {
+                            convoExists = true;
+                            foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+                            {
+                                if (convo.Chat.ChatID == chat.ChatID)
+                                {
+                                    convo.ShowConversation();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return convoExists;
+        }
     }
 }
