@@ -90,28 +90,47 @@ namespace UnstuckMEUserGUI
         private void ButtonAddUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelInvalidUsername.Visibility = Visibility.Hidden;
-            if(UnstuckME.Server.IsValidUser(TextBoxManualSearch.Text) && TextBoxManualSearch.Text.Length > 6)
+            try
             {
-                int userID = UnstuckME.Server.GetUserID(TextBoxManualSearch.Text);
-                UnstuckME.Server.InsertUserIntoChat(userID, CurrentChat.ChatID);
-                UnstuckMEMessage temp = new UnstuckMEMessage();
-                temp.ChatID = CurrentChat.ChatID;
-                temp.FilePath = string.Empty;
-                temp.IsFile = false;
-                temp.Message = "A new member has joined the conversation!";
-                temp.MessageID = 0;
-                temp.SenderID = UnstuckME.User.UserID;
-                temp.Username = UnstuckME.User.FirstName;
-                temp.UsersInConvo = new List<int>();
-                foreach (UnstuckMEChatUser user in CurrentChat.Users)
+                if(TextBoxManualSearch.Text == UnstuckME.User.EmailAddress)
                 {
-                    temp.UsersInConvo.Add(user.UserID);
+                    throw new Exception("Cannot Add Yourself");
                 }
-                UnstuckME.Server.SendMessage(temp);
-                UnstuckME.Pages.ChatPage.AddMessage(temp);
 
+                if (UnstuckME.Server.IsValidUser(TextBoxManualSearch.Text) && TextBoxManualSearch.Text.Length > 6)
+                {
+                    int userID = UnstuckME.Server.GetUserID(TextBoxManualSearch.Text);
+
+                    foreach (var user in UnstuckME.CurrentChatSession.Users)
+                    {
+                        if (user.UserID == userID)
+                            throw new Exception("User Already In Conversation");
+                    }
+
+                    UnstuckME.Server.InsertUserIntoChat(userID, CurrentChat.ChatID);
+                    UnstuckMEMessage temp = new UnstuckMEMessage();
+                    temp.ChatID = CurrentChat.ChatID;
+                    temp.FilePath = string.Empty;
+                    temp.IsFile = false;
+                    temp.Message = "A new member has joined the conversation!";
+                    temp.MessageID = 0;
+                    temp.SenderID = UnstuckME.User.UserID;
+                    temp.Username = UnstuckME.User.FirstName;
+                    temp.UsersInConvo = new List<int>();
+                    foreach (UnstuckMEChatUser user in CurrentChat.Users)
+                    {
+                        temp.UsersInConvo.Add(user.UserID);
+                    }
+                    UnstuckME.Server.SendMessage(temp);
+                    UnstuckME.Pages.ChatPage.AddMessage(temp);
+
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            else
+            catch(Exception)
             {
                 LabelInvalidUsername.Visibility = Visibility.Visible;
             }

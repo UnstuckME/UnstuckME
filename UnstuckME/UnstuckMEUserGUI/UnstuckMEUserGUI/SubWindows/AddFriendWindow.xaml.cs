@@ -52,25 +52,43 @@ namespace UnstuckMEUserGUI
         private void ButtonAddContact_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelInvalidUser.Visibility = Visibility.Hidden;
-            if(UnstuckME.Server.IsValidUser(TextBoxUsername.Text))
+            try
             {
-                UnstuckMEChatUser temp = new UnstuckMEChatUser();
-                temp.UserID = UnstuckME.Server.GetUserID(TextBoxUsername.Text);
-                temp.UserName = UnstuckME.Server.GetUserDisplayName(temp.UserID);
-
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                if(TextBoxUsername.Text == UnstuckME.User.EmailAddress)
                 {
-                    UnstuckME.FileStream.GetProfilePicture(temp.UserID).CopyTo(ms);
-                    temp.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                    throw new Exception();
                 }
+                if (UnstuckME.Server.IsValidUser(TextBoxUsername.Text))
+                {
+                    UnstuckMEChatUser temp = new UnstuckMEChatUser();
+                    temp.UserID = UnstuckME.Server.GetUserID(TextBoxUsername.Text);
+                    foreach (var friend in UnstuckME.FriendsList)
+                    {
+                        if(friend.UserID == temp.UserID)
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    temp.UserName = UnstuckME.Server.GetUserDisplayName(temp.UserID);
 
-                UnstuckME.Server.AddFriend(UnstuckME.User.UserID, temp.UserID);
-                UnstuckME.FriendsList.Add(temp);
-                Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().AddUserToContactsStack(temp);
-                TextBoxUsername.Text = string.Empty;
-                Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().Focus();
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        UnstuckME.FileStream.GetProfilePicture(temp.UserID).CopyTo(ms);
+                        temp.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                    }
+
+                    UnstuckME.Server.AddFriend(UnstuckME.User.UserID, temp.UserID);
+                    UnstuckME.FriendsList.Add(temp);
+                    Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().AddUserToContactsStack(temp);
+                    TextBoxUsername.Text = string.Empty;
+                    Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().Focus();
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            else
+            catch(Exception)
             {
                 LabelInvalidUser.Visibility = Visibility.Visible;
             }
