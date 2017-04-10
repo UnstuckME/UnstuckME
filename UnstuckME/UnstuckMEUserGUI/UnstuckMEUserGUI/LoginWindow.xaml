@@ -20,11 +20,11 @@
             <Label x:Name="labelPassword" Foreground="White" Content="Password:" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="162" Height="32" FontSize="14" Margin="66,210,104,210"/>
             <Button x:Name="buttonCreateAccount" TabIndex="5" Cursor="Hand" Click="buttonCreateAccount_Click" Foreground="White" Background="#336699" Content="Create New Account" HorizontalAlignment="Center" VerticalAlignment="Center" Width="158" BorderBrush="#FF585656" Height="24" FontSize="14" MouseEnter="buttonCreateAccount_MouseEnter" MouseLeave="buttonCreateAccount_MouseLeave" Margin="87,426,87,12"/>
             <Label x:Name="_labelInvalidLogin" Visibility="Hidden" Content="Invalid Login" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="322" Height="28" FontSize="14" Foreground="#FFD50505" Margin="5,300,5,42"/>
-            <Image x:Name="imageForSchoolLogo" HorizontalAlignment="Left" Height="146" Margin="119,21,0,0" VerticalAlignment="Top" Width="146" Source="Resources/Sticker/BlueSticker.png"/>
+            <Image x:Name="imageForSchoolLogo" HorizontalAlignment="Center" Height="132" Margin="43,19,39,347" VerticalAlignment="Center" Width="290" Source="Resources/UnstuckMEGraphic.png"/>
             <CheckBox x:Name="checkboxRememberMe" TabIndex="3" Foreground="White" Content="Remember me" HorizontalAlignment="Center" VerticalAlignment="Center" Width="161" Height="20" FontSize="14" Margin="66,325,104,114" />
             <Button x:Name="buttonResetPassword" TabIndex="6" Visibility="Collapsed" IsEnabled="False" Cursor="Hand" Click="buttonResetPassword_Click" Foreground="White" Background="#336699" Content="Reset Password" HorizontalAlignment="Center" VerticalAlignment="Center" Width="158" BorderBrush="#FF585656" Height="24" FontSize="14" MouseEnter="buttonResetPassword_MouseEnter" MouseLeave="buttonResetPassword_MouseLeave" Margin="87,426,87,-52" />
         </Grid>
-        
+
         <Grid x:Name="_AccountCreationGrid" Visibility="Collapsed" IsEnabled="False" Height="498" Width="372" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
             <Button TabIndex="6" Cursor="Hand" x:Name="buttonCancel" Click="buttonCancel_Click" MouseEnter="buttonCancel_MouseEnter" MouseLeave="buttonCancel_MouseLeave" Background="#FF993333" Foreground="White" Content="Cancel" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="76" IsCancel="True" Margin="148,448,148,25"/>
             <Button TabIndex="5" Cursor="Hand" x:Name="buttonCreate" Click="sendVerificationCode_Click" MouseEnter="buttonCreate_MouseEnter" MouseLeave="buttonCreate_MouseLeave" Background="#336699" Foreground="White" Content="Create Account" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" IsDefault="True" Margin="81,404,83,69"/>
@@ -42,7 +42,7 @@
             <Label x:Name="labelCreateIncorrectCreds" Visibility="Hidden" Content="Invalid Username/Password" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="209" Height="26" Foreground="#FFFF0909" FontFamily="Times New Roman" FontSize="12" Margin="81,378,82,94"/>
             <Label x:Name="labelCreatePasswordHelp" Content="?" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="294,297,58,178" VerticalAlignment="Center" Width="20" Height="23" FontSize="12" ToolTip="Password Must Be 6-32 Characters Long" Foreground="White"/>
         </Grid>
-        
+
         <Grid x:Name="AccountVerificationGrid" Visibility="Collapsed" IsEnabled="False" Height="{Binding ActualHeight, ElementName=_MainGrid}" Width="{Binding ActualWidth, ElementName=_MainGrid}">
             <Canvas x:Name="AccountVerificationCanvas" Height="{Binding ActualHeight, ElementName=AccountVerificationGrid}" Width="{Binding AcutalWidth, ElementName=AccountVerificationGrid}" Opacity="0.7" Background="Black" MouseDown="AccountVerificationCanvas_MouseDown" />
             <TextBlock x:Name="textblockVerification"  Text="A Verification Code has been sent to the email address specified. To activate your account, please enter the verification code you received in the email in the box below." HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="300"
