@@ -586,6 +586,7 @@
     <Resource Include="Resources\Box\Info.png" />
     <Resource Include="Resources\Box\Warning.png" />
     <Resource Include="Resources\UnstuckMEGraphic.png" />
+    <Resource Include="Resources\UnstuckME Application Icon.ico" />
     <Content Include="UnstuckMESchools_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
