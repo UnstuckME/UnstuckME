@@ -92,7 +92,7 @@ namespace UnstuckMEUserGUI
             LabelInvalidUsername.Visibility = Visibility.Hidden;
             try
             {
-                if(TextBoxManualSearch.Text == UnstuckME.User.EmailAddress)
+                if (TextBoxManualSearch.Text == UnstuckME.User.EmailAddress)
                 {
                     throw new Exception("Cannot Add Yourself");
                 }
@@ -111,26 +111,24 @@ namespace UnstuckMEUserGUI
                     UnstuckMEMessage temp = new UnstuckMEMessage();
                     temp.ChatID = CurrentChat.ChatID;
                     temp.FilePath = string.Empty;
-                    temp.IsFile = false;
                     temp.Message = "A new member has joined the conversation!";
                     temp.MessageID = 0;
                     temp.SenderID = UnstuckME.User.UserID;
                     temp.Username = UnstuckME.User.FirstName;
                     temp.UsersInConvo = new List<int>();
+
                     foreach (UnstuckMEChatUser user in CurrentChat.Users)
                     {
                         temp.UsersInConvo.Add(user.UserID);
                     }
-                    UnstuckME.Server.SendMessage(temp);
-                    UnstuckME.Pages.ChatPage.AddMessage(temp);
 
+                    temp.MessageID = UnstuckME.Server.SendMessage(temp);
+                    UnstuckME.Pages.ChatPage.AddMessage(temp);
                 }
                 else
-                {
                     throw new Exception();
-                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 LabelInvalidUsername.Visibility = Visibility.Visible;
             }

@@ -110,17 +110,18 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                Microsoft.Win32.OpenFileDialog file_browser = new Microsoft.Win32.OpenFileDialog();
-                file_browser.AddExtension = true;
-                file_browser.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                file_browser.Multiselect = false;
-                file_browser.ValidateNames = true;
-				file_browser.CheckPathExists = true;
-				file_browser.CheckFileExists = true;
-                file_browser.Filter = "Image Files (*.jpeg;*.png;*.jpg)|*.jpeg;*.png;*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg";
-				file_browser.Title = "Open Image";
-
-				if (file_browser.ShowDialog().Value)
+                Microsoft.Win32.OpenFileDialog file_browser = new Microsoft.Win32.OpenFileDialog()
+                {
+                    AddExtension = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                    Multiselect = false,
+                    ValidateNames = true,
+                    CheckPathExists = true,
+                    CheckFileExists = true,
+                    Filter = "Image Files (*.jpeg;*.png;*.jpg)|*.jpeg;*.png;*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg",
+                    Title = "Open Image"
+                };
+                if (file_browser.ShowDialog().Value)
 				{
 					Stream file = file_browser.OpenFile();
 					byte[] byte_array = null;

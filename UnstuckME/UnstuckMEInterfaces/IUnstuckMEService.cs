@@ -238,23 +238,6 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int SubmitSticker(UnstuckMEBigSticker newSticker);
 
-		///// <summary>
-		///// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
-		///// open the file, and convert it to a byte array.
-		///// </summary>
-		///// <param name="userID">The unique identifier of the user.</param>
-		///// <returns>A byte array containing the data of the image file. If streaming can be implmented, this will return a Stream instead.</returns>
-		//[OperationContract]
-		//byte[] GetProfilePicture(int userID);
-
-		///// <summary>
-		///// Overwrites the profile picture data of a specific user on the database.
-		///// </summary>
-		///// <param name="userID">The unique identifier of the user.</param>
-		///// <param name="image">A byte array that contains the data of the new image.</param>
-		//[OperationContract]
-		//void SetProfilePicture(int userID, byte[] image);
-
 		/// <summary>
 		/// Gets all the course codes in the database.
 		/// </summary>
@@ -376,21 +359,13 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void AddChatToSticker(int chatID, int stickerID);
 
-		/// <summary>
-		/// Sends a message to all users who are online.
-		/// </summary>
-		/// <param name="recipients">The recipients of the </param>
-		/// <param name="message"></param>
-		[OperationContract]
-		void SendMessage(UnstuckMEMessage message);
-
-		/// <summary>
-		/// Not implemented.
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="file"></param>
-		[OperationContract]
-		void UploadFile(UnstuckMEMessage message, UnstuckMEFile file);
+        /// <summary>
+        /// Queues a message to be sent to the users in the chat.
+        /// </summary>
+        /// <param name="message">The message to be sent.</param>
+        /// <returns>The message ID of the message that was just inserted into the database.</returns>
+        [OperationContract]
+		int SendMessage(UnstuckMEMessage message);
 
 		/// <summary>
 		/// Gets the stickers when first logging in.
@@ -472,6 +447,9 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		bool AddClass(UserClass newClass);
 
+
+        [OperationContract]
+        void EditMessage(UnstuckMEMessage message);
 	}
 
 	[ServiceContract(CallbackContract = typeof(IServer))]

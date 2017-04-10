@@ -789,7 +789,7 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InitialStickerPull_Result>("InitialStickerPull", inUserIDParameter);
         }
     
-        public virtual int InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<bool> isFile, Nullable<int> userID)
+        public virtual ObjectResult<Nullable<int>> InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<int> userID)
         {
             var chatIDParameter = chatID.HasValue ?
                 new ObjectParameter("ChatID", chatID) :
@@ -803,15 +803,11 @@ namespace UnstuckMEServer
                 new ObjectParameter("FilePath", filePath) :
                 new ObjectParameter("FilePath", typeof(string));
     
-            var isFileParameter = isFile.HasValue ?
-                new ObjectParameter("IsFile", isFile) :
-                new ObjectParameter("IsFile", typeof(bool));
-    
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertMessage", chatIDParameter, messageParameter, filePathParameter, isFileParameter, userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertMessage", chatIDParameter, messageParameter, filePathParameter, userIDParameter);
         }
     
         public virtual int InsertStudentIntoClass(Nullable<int> userID, Nullable<int> classID)

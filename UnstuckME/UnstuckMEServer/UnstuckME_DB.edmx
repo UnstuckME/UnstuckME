@@ -629,7 +629,6 @@
           <Parameter Name="ChatID" Type="int" Mode="In" />
           <Parameter Name="Message" Type="nvarchar" Mode="In" />
           <Parameter Name="FilePath" Type="varchar(max)" Mode="In" />
-          <Parameter Name="IsFile" Type="bit" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
         <Function Name="InsertStudentIntoClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1481,11 +1480,10 @@
           <FunctionImport Name="InitialStickerPull" ReturnType="Collection(UnstuckME_DBModel.InitialStickerPull_Result)">
             <Parameter Name="InUserID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="InsertMessage">
+          <FunctionImport Name="InsertMessage" ReturnType="Collection(Int32)">
             <Parameter Name="ChatID" Mode="In" Type="Int32" />
             <Parameter Name="Message" Mode="In" Type="String" />
             <Parameter Name="FilePath" Mode="In" Type="String" />
-            <Parameter Name="IsFile" Mode="In" Type="Boolean" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertStudentIntoClass">

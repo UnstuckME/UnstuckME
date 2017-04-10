@@ -42,14 +42,15 @@ namespace UnstuckMEUserGUI
 		public LoginWindow()
 		{
 			InitializeComponent();
-			UnstuckME.Blue = buttonCreateAccount.Background;
-			UnstuckME.Red = buttonCancel.Background;
+            UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+            UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
+            UnstuckME.Stream_ChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
+            UnstuckME.FileStream = UnstuckME.Stream_ChannelFactory.CreateChannel();
+            UnstuckME.Blue = buttonCreateAccount.Background;
+            UnstuckME.Red = buttonCancel.Background;
 
-			var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-			m_orginalSchoolName = m_SchoolName = config.AppSettings.Settings["SchoolName"].Value;
-			string m_username = config.AppSettings.Settings["Username"].Value;
-			string m_password = config.AppSettings.Settings["Password"].Value;
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            m_orginalSchoolName = m_SchoolName = config.AppSettings.Settings["SchoolName"].Value;
 
 			try
 			{
@@ -61,41 +62,43 @@ namespace UnstuckMEUserGUI
 					FileStream fs = new FileStream(m_SchoolInfoFilePath, FileMode.CreateNew);
 					fs.Close();
 
-					using (StreamWriter file = new StreamWriter(m_SchoolInfoFilePath, false))
-					{
-						file.WriteLine("Last Modified = NULL");
-						file.WriteLine("Photo ID = NULL");
-						file.WriteLine("Photo Info = NULL");
-					}
-				}
+                    using (StreamWriter file = new StreamWriter(m_SchoolInfoFilePath, false))
+                    {
+                        file.WriteLine("Last Modified = NULL");
+                        file.WriteLine("Photo ID = NULL");
+                        file.WriteLine("Photo Info = NULL");
+                    }
+                }
 
-				if (m_username != string.Empty)
-				{
-					System.Windows.Media.Brush brush = (System.Windows.Media.Brush)(new BrushConverter().ConvertFromString("#FFCFCF56"));
+                string remember_me = config.AppSettings.Settings["RememberMe"].Value;
+                string m_username = config.AppSettings.Settings["Username"].Value;
+                string m_password = config.AppSettings.Settings["Password"].Value;
 
-					textBoxUserName_GotFocus(null, null);
-					textBoxPasswordPreview_GotFocus(null, null);
-					textBoxUserName.Text = m_username;
-					textBoxUserName.Background = brush;
-					passwordBox.Password = m_password;
-					passwordBox.Background = brush;
-					checkboxRememberMe.IsChecked = true;
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message);
-			}
+                if (m_username != string.Empty)
+                {
+                    //System.Windows.Media.Brush brush = (System.Windows.Media.Brush)(new BrushConverter().ConvertFromString("#FFCFCF56"));
+
+                    textBoxUserName_GotFocus(null, null);
+                    textBoxPasswordPreview_GotFocus(null, null);
+                    textBoxUserName.Text = m_username;
+                    //textBoxUserName.Background = brush;
+                    passwordBox.Password = m_password;
+                    //passwordBox.Background = brush;
+                    checkboxRememberMe.IsChecked = true;
+
+                    if (remember_me == "true")
+                        buttonLogin_Click(null, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message);
+            }
 		}
 
 		private async void Window_ContentRendered(object sender, EventArgs e)
 		{
-			UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-			UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
-			UnstuckME.Stream_ChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
-			UnstuckME.FileStream = UnstuckME.Stream_ChannelFactory.CreateChannel();
-
 			schools = await LoadSchoolsAsync();
 			foreach (UnstuckMESchool school in schools)
 			{
@@ -107,10 +110,10 @@ namespace UnstuckMEUserGUI
 			else
 				comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf("Local Ip");
 
-			content_rendered = false;
-		}
+            content_rendered = false;
+        }
 
-		private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
+        private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
 		{
 			return Task.Factory.StartNew(() => LoadSchools());
 		}
@@ -167,8 +170,8 @@ namespace UnstuckMEUserGUI
 					throw new Exception("Enter an Email Address");
 				if (passwordBox.Password.Length <= 6 || passwordBox.Password.Length >= 32)
 					throw new Exception("Enter a Valid Password");
-				if (comboBoxSchools.SelectedValue.ToString() != "Oregon Institute of Technology") // This is a serious hack around for the presentation
-					throw new Exception("Unable to connect to server");
+				//if (comboBoxSchools.SelectedValue.ToString() != "Oregon Institute of Technology") // This is a serious hack around for the presentation
+					//throw new Exception("Unable to connect to server");
 				
 				isValid = true;
 			}
@@ -197,6 +200,7 @@ namespace UnstuckMEUserGUI
 				try
 				{
 					UnstuckME.User = await Task.Factory.StartNew(() => ServerLoginAttemptAsynch(emailAttempt, passwordAttempt));
+
 					if (UnstuckME.User.EmailAddress.ToLower() != emailAttempt.ToLower())
 					{
 						_labelInvalidLogin.Content = "Invalid Username/Password";
@@ -206,16 +210,18 @@ namespace UnstuckMEUserGUI
 					{
 						var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-						if (checkboxRememberMe.IsChecked.Value)
-						{
-							config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
-							config.AppSettings.Settings["Password"].Value = passwordBox.Password;
-						}
-						else
-						{
-							config.AppSettings.Settings["Username"].Value = string.Empty;
-							config.AppSettings.Settings["Password"].Value = string.Empty;
-						}
+                        if (checkboxRememberMe.IsChecked.Value)
+                        {
+                            config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
+                            config.AppSettings.Settings["Password"].Value = passwordBox.Password;
+                            config.AppSettings.Settings["RememberMe"].Value = "true";
+                        }
+                        else
+                        {
+                            config.AppSettings.Settings["Username"].Value = string.Empty;
+                            config.AppSettings.Settings["Password"].Value = string.Empty;
+                            config.AppSettings.Settings["RememberMe"].Value = "false";
+                        }
 
 						config.AppSettings.Settings["SchoolName"].Value = comboBoxSchools.SelectedValue.ToString();
 						ChannelEndpointElement endpoint = ((ClientSection)config.GetSection("system.serviceModel/client")).Endpoints[0];
@@ -415,13 +421,16 @@ namespace UnstuckMEUserGUI
 			{
 				ImageConverter converter = new ImageConverter();
 				byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
-				try
-				{
-					using (UnstuckMEStream stream = new UnstuckMEStream(avatar, true))
-					{
-						stream.User = UnstuckME.User;
-						UnstuckME.FileStream.SetProfilePicture(stream);
-					}
+                try
+                {
+                    using (UnstuckMEStream stream = new UnstuckMEStream(avatar, true))
+                    {
+                        stream.User = new UserInfo()
+                        {
+                            UserID = userID
+                        };
+                        UnstuckME.FileStream.SetProfilePicture(stream);
+                    }
 				}
 				catch (Exception exp)
 				{
@@ -633,9 +642,8 @@ namespace UnstuckMEUserGUI
 					{
 						var schoolLogoObj = (from l in db.SchoolLogoes where l.LogoID == logoID select new { logo = l.Logo }).First();
 						byte[] imgByteArray = schoolLogoObj.logo;
-						ImageSource imageSource = ConvertByteArrayToBitmapImage(imgByteArray);
-						imageForSchoolLogo.Source = imageSource;
-					}
+						imageForSchoolLogo.Source = ConvertByteArrayToBitmapImage(imgByteArray);
+                    }
 
 					file.Close();
 				}

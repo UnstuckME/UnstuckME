@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\colem_000\Documents\OIT\CST 316-26-36 - Junior Project\UnstuckME\UnstuckMECore\UnstuckME\UnstuckMEServer\UnstuckME_DB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\colem_000\Documents\OIT\CST 316-26-36 - Junior Project\UnstuckME\UnstuckME_Clone\UnstuckME\UnstuckMEServer\UnstuckME_DB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

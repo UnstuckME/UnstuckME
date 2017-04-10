@@ -89,10 +89,8 @@ namespace UnstuckME_Classes
 		public int ChatID { get; set; }
 		public string Message { get; set; }
 		public string FilePath { get; set; }
-		public bool IsFile { get; set; }
 		public int SenderID { get; set; }
 		public DateTime Time { get; set; }
-		//public int UserID { get; set; }
 		public string Username { get; set; }
 		public List<int> UsersInConvo { get; set; }
 	}
@@ -119,7 +117,6 @@ namespace UnstuckME_Classes
 			FilePath = inMessage.FilePath;
 			MessageID = inMessage.MessageID;
 			Time = inMessage.Time;
-			IsFile = inMessage.IsFile;
 			Message = inMessage.Message;
 			SenderID = inMessage.SenderID;
 			Username = inMessage.Username;

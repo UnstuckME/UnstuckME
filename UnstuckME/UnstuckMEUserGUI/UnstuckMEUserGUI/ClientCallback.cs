@@ -59,10 +59,10 @@ namespace UnstuckMEUserGUI
 		/// </summary>
 		/// <param name="message">The message being sent to the user.</param>
 		/// <param name="file">The file being sent to the user.</param>
-		public void GetFile(UnstuckMEMessage message, UnstuckMEFile file)
-		{
-			Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatFile(message, file);
-		}
+		//public void GetFile(UnstuckMEMessage message, UnstuckMEFile file)
+		//{
+		//	Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatFile(message, file);
+		//}
 
 		/// <summary>
 		/// Removes a sticker from any online, qualified user's GUI.
@@ -95,5 +95,21 @@ namespace UnstuckMEUserGUI
 				MessageBox.Show(ex.Message);
 			}
 		}
+
+        /// <summary>
+        /// Updates a chat message if a user in the conversation has edited it.
+        /// </summary>
+        /// <param name="message">The message that has been edited.</param>
+        public void UpdateChatMessage(UnstuckMEMessage message)
+        {
+            try
+            {
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().UpdateChatMessage(message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 	}
 }

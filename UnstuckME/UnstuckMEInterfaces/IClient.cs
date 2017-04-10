@@ -35,8 +35,8 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="message">The message being sent to the user.</param>
         /// <param name="file">The file being sent to the user.</param>
-        [OperationContract]
-		void GetFile(UnstuckMEMessage message, UnstuckMEFile file);
+  //      [OperationContract]
+		//void GetFile(UnstuckMEMessage message, UnstuckMEFile file);
 
         /// <summary>
         /// Adds a class to the user's GUI.
@@ -58,5 +58,12 @@ namespace UnstuckMEInterfaces
         /// <param name="inSticker">The sticker being sent to the users.</param>
         [OperationContract(IsOneWay = true)]
         void RecieveNewSticker(UnstuckMEAvailableSticker inSticker);
+
+        /// <summary>
+        /// Updates a chat message if a user in the conversation has edited it.
+        /// </summary>
+        /// <param name="message">The message that has been edited.</param>
+        [OperationContract(IsOneWay = true)]
+        void UpdateChatMessage(UnstuckMEMessage message);
     }
 }

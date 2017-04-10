@@ -205,8 +205,8 @@
       <DependentUpon>UnstuckME_DB.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="UnstuckME_DB.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="UnstuckME_DB.Designer.cs">
