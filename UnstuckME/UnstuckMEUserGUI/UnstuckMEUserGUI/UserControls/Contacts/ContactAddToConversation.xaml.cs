@@ -41,26 +41,44 @@ namespace UnstuckMEUserGUI
         }
 
         private void ButtonAddUser_Click(object sender, RoutedEventArgs e)
-        {
-            UnstuckME.Server.InsertUserIntoChat(Contact.UserID, UnstuckME.CurrentChatSession.ChatID);
-            UnstuckMEMessage temp = new UnstuckMEMessage();
-            temp.ChatID = UnstuckME.CurrentChatSession.ChatID;
-            temp.FilePath = string.Empty;
-            temp.IsFile = false;
-            temp.Message = Contact.UserName + " has joined the conversation!";
-            temp.MessageID = 0;
-            temp.SenderID = UnstuckME.User.UserID;
-            temp.Username = UnstuckME.User.FirstName;
-            temp.UsersInConvo = new List<int>();
-            UnstuckME.CurrentChatSession.Users.Add(Contact);
-            foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
+        {   try
             {
-                temp.UsersInConvo.Add(user.UserID);
+                if (Contact.UserID == UnstuckME.User.UserID)
+                {
+                    throw new Exception("Cannot Add Yourself!");
+                }
+
+                foreach (var user in UnstuckME.CurrentChatSession.Users)
+                {
+                    if (user.UserID == Contact.UserID)
+                        throw new Exception("User Already In Conversation!");
+                }
+
+                UnstuckME.Server.InsertUserIntoChat(Contact.UserID, UnstuckME.CurrentChatSession.ChatID);
+                UnstuckMEMessage temp = new UnstuckMEMessage();
+                temp.ChatID = UnstuckME.CurrentChatSession.ChatID;
+                temp.FilePath = string.Empty;
+                temp.IsFile = false;
+                temp.Message = Contact.UserName + " has joined the conversation!";
+                temp.MessageID = 0;
+                temp.SenderID = UnstuckME.User.UserID;
+                temp.Username = UnstuckME.User.FirstName;
+                temp.UsersInConvo = new List<int>();
+                UnstuckME.CurrentChatSession.Users.Add(Contact);
+                foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
+                {
+                    temp.UsersInConvo.Add(user.UserID);
+                }
+                UnstuckME.Server.SendMessage(temp);
+                UnstuckME.Pages.ChatPage.AddMessage(temp);
+                //Removes Sticker From Stack Panel
+                ((StackPanel)this.Parent).Children.Remove(this);
             }
-            UnstuckME.Server.SendMessage(temp);
-            UnstuckME.Pages.ChatPage.AddMessage(temp);
-            //Removes Sticker From Stack Panel
-            ((StackPanel)this.Parent).Children.Remove(this);
+            catch (Exception)
+            {
+
+            }
+
         }
     }
 }
