@@ -160,6 +160,30 @@ AS
 			DELETE FROM UserToChat
 			WHERE UserID = @UserID;
 
+			DECLARE @ChatID INT
+			DECLARE my_cursor CURSOR LOCAL STATIC READ_ONLY FORWARD_ONLY FOR
+			SELECT * FROM Chat
+
+			OPEN my_cursor
+			FETCH NEXT FROM my_cursor INTO @ChatID
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+				IF (SELECT COUNT(UserID) from UserToChat WHERE ChatID = @ChatID) = 1
+				BEGIN
+					DELETE FROM UserToChat
+					WHERE ChatID = @ChatID
+				END
+				FETCH NEXT FROM my_cursor INTO @ChatID
+			END
+			CLOSE my_cursor
+			DEALLOCATE my_cursor
+
+			DELETE FROM [Messages]
+			WHERE SentBy = @UserID;
+
+			DELETE FROM Friends
+			WHERE UserID = @UserID OR FriendUserID = @UserID;
+
             DELETE FROM UserProfile
 			WHERE UserID = @UserID;
 

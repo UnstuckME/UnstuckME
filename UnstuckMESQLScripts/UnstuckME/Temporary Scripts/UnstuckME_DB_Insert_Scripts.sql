@@ -392,18 +392,20 @@ CREATE PROC [dbo].[InsertMessage]
 	@ChatID		INT,
 	@Message	NVARCHAR(500),
 	@FilePath	VARCHAR(MAX) = null,
-	@IsFile		BIT = 0,
 	@UserID		INT
     )
 AS
     BEGIN
+		DECLARE @NewMessageID INT;
+
         IF (NOT Exists(Select ChatID from UserToChat WHERE ChatID = @ChatID and UserID = @UserID))
-			RETURN 1;
+			SELECT 1;
         ELSE BEGIN
 			INSERT INTO [Messages]
-			VALUES (@ChatID, @Message, @FilePath, @IsFile, @UserID, GETDATE())
-			RETURN 0;
-        END
+			VALUES (@ChatID, @Message, @FilePath, 0, @UserID, GETDATE())
+			SET @NewMessageID = @@IDENTITY
+			SELECT @NewMessageID
+		END
     END
 GO
 

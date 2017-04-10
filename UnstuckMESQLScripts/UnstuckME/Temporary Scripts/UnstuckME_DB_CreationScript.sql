@@ -101,7 +101,6 @@ CREATE TABLE [Messages]
 	ChatID					INT				NOT NULL REFERENCES Chat(ChatID),
 	MessageData				NVARCHAR(500)	DEFAULT NULL, 
 	FilePath				VARCHAR(MAX)	DEFAULT NULL,  
-	IsFile                  BIT				NOT NULL DEFAULT(0),                
 	SentBy					INT				NOT NULL REFERENCES UserProfile(UserID),
 	SentTime				DATETIME2		NOT NULL)
 GO
@@ -121,8 +120,6 @@ CREATE TABLE OfficialMentor
 	OrganizationName	NVARCHAR(100)			NOT NULL)
 GO
 
-
-
 --Create Official Mentor Table
 CREATE TABLE OmToUser
 	(UserID				INT				NOT NULL	REFERENCES UserProfile(UserID),
@@ -140,7 +137,8 @@ GO
 --Create Classes Table
 CREATE TABLE Picture
 	(UserID				INT						NOT NULL	REFERENCES UserProfile(UserID),
-	Photo				VARBINARY(MAX)			NULL	--change to VARCHAR(MAX)
+	FilePath			VARCHAR(MAX)			DEFAULT NULL,
+	Photo				VARBINARY(MAX)			NULL
 	PRIMARY KEY (UserID))	
 GO	
 
