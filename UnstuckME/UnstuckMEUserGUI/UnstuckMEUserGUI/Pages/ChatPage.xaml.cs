@@ -214,8 +214,13 @@ namespace UnstuckMEUserGUI
                 int chatID;
                 if (UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
                 {
-                    chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
                     searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
+                    if (SoloConversationAlreadyExists(searchedUserID))
+                    {
+                        ButtonAddUserDone_Click(null, null);
+                        throw new Exception();
+                    }
+                    chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
                     UnstuckME.Server.InsertUserIntoChat(searchedUserID, chatID);
                     UnstuckMEMessage temp = new UnstuckMEMessage();
                     temp.ChatID = chatID;
@@ -241,7 +246,7 @@ namespace UnstuckMEUserGUI
                 }
                 else
                 {
-                    LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
+                    throw new Exception();
                 }
             }
             catch (Exception)
