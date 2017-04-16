@@ -44,7 +44,7 @@
         </Grid>
 
         <Grid x:Name="AccountVerificationGrid" Visibility="Collapsed" IsEnabled="False" Height="{Binding ActualHeight, ElementName=_MainGrid}" Width="{Binding ActualWidth, ElementName=_MainGrid}">
-            <Canvas x:Name="AccountVerificationCanvas" Height="{Binding ActualHeight, ElementName=AccountVerificationGrid}" Width="{Binding AcutalWidth, ElementName=AccountVerificationGrid}" Opacity="0.7" Background="Black" MouseDown="AccountVerificationCanvas_MouseDown" />
+            <Canvas x:Name="AccountVerificationCanvas" Height="{Binding ActualHeight, ElementName=AccountVerificationGrid}" Width="{Binding ActualWidth, ElementName=AccountVerificationGrid}" Opacity="0.7" Background="Black" MouseDown="AccountVerificationCanvas_MouseDown" />
             <TextBlock x:Name="textblockVerification"  Text="A Verification Code has been sent to the email address specified. To activate your account, please enter the verification code you received in the email in the box below." HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="300"
                        Background="DimGray" Foreground="White" Margin="0,0,0,0" TextWrapping="Wrap" Padding="25" />
             <TextBox x:Name="textboxVerificationCode" VerticalContentAlignment="Center" Text="xxxxxxxx" FontStyle="Italic" Foreground="Gray" HorizontalAlignment="Center" Height="22" MaxLength="8" VerticalAlignment="Center" Width="208" Margin="0,-50,0,0" GotFocus="textboxVerificationCode_GotFocus" LostFocus="textboxVerificationCode_LostFocus" />

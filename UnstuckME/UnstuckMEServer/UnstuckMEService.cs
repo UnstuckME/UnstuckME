@@ -1029,15 +1029,16 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-		/// <summary>
-		/// Submits a review to the database.
-		/// </summary>
-		/// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
-		/// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
-		/// <param name="starRanking">The rating given to the user being reviewed.</param>
-		/// <param name="description">The description of the review.</param>
-		/// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
-		public int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent)
+        /// <summary>
+        /// Submits a review to the database.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
+        /// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
+        /// <param name="starRanking">The rating given to the user being reviewed.</param>
+        /// <param name="description">The description of the review.</param>
+        /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
+        /// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
+        public int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent)
 		{
 			try
 			{
@@ -1105,29 +1106,6 @@ namespace UnstuckMEInterfaces
 			catch (Exception)
 			{
 				return -1; //If Failure to remove friend
-			}
-		}
-
-		/// <summary>
-		/// Deletes a message. Should be broadcasted to the other people in the chat once it is deleted.
-		/// </summary>
-		/// <param name="messageID">The unique identifier of the message to be deleted.</param>
-		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-		public int DeleteMessage(int messageID)
-		{
-			try
-			{
-				int retVal = -1;
-				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-				{
-					retVal = db.DeleteMessageByMessageID(messageID);
-				}
-
-				return retVal;
-			}
-			catch (Exception)
-			{
-				return -1; //If Failure to create chat.
 			}
 		}
 
@@ -1354,9 +1332,9 @@ namespace UnstuckMEInterfaces
 
 				foreach (UnstuckMEChat chat in chatList)
 				{
-					chat.Users = GetChatMembers(chat.ChatID);
-					chat.Messages = GetChatMessages(chat.ChatID);
-				}
+                    chat.Users = GetChatMembers(chat.ChatID);
+                    chat.Messages = GetChatMessages(chat.ChatID);
+                }
 				return chatList;
 			}
 			catch (Exception ex)
@@ -1806,30 +1784,68 @@ namespace UnstuckMEInterfaces
 			return addedClassSucessfully;
 		}
 
-        public void EditMessage(UnstuckMEMessage message)
+        /// <summary>
+        /// Updates a chat message if a user in the conversation has edited it.
+        /// </summary>
+        /// <param name="message">The message that has been edited.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        public int EditMessage(UnstuckMEMessage message)
         {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            try
             {
-                db.UpdateMessageByMessageID(message.MessageID, message.Message);
-
-                foreach (var client in _connectedClients)
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
+                    foreach (var client in _connectedClients)
                     {
-                        client.Value.connection.UpdateChatMessage(message);
+                        if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
+                            client.Value.connection.UpdateChatMessage(message);
                     }
+
+                    db.UpdateMessageByMessageID(message.MessageID, message.Message);
+                    return 0;
                 }
+            }
+            catch (Exception)
+            {
+                return -1;
             }
         }
 
-		#endregion
+        /// <summary>
+        /// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
+        /// </summary>
+        /// <param name="message">The message to be deleted.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        public int DeleteMessage(UnstuckMEMessage message)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    foreach (var client in _connectedClients)
+                    {
+                        if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
+                            client.Value.connection.DeleteChatMessage(message);
+                    }
 
-		#region ServerGUI Functions
-		/// <summary>
-		/// Returns a boolean value identifying that the server is running.
-		/// </summary>
-		/// <returns>True.</returns>
-		public bool TestNewConfig()
+                    db.DeleteMessageByMessageID(message.MessageID);
+                    return 0;
+                }
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        #endregion
+
+        #region ServerGUI Functions
+        /// <summary>
+        /// Returns a boolean value identifying that the server is running.
+        /// </summary>
+        /// <returns>True.</returns>
+        public bool TestNewConfig()
 		{
 			return true;
 		}

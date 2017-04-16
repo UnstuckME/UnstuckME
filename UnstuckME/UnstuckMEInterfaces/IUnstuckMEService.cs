@@ -295,7 +295,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
 		/// <param name="starRanking">The rating given to the user being reviewed.</param>
 		/// <param name="description">The description of the review.</param>
-        /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise</param>
+        /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
 		/// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
 		int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
@@ -308,14 +308,6 @@ namespace UnstuckMEInterfaces
 		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
 		int DeleteFriend(int userID, int friendID);
-
-		/// <summary>
-		/// Deletes a message. Should be broadcasted to the other people in the chat once it is deleted.
-		/// </summary>
-		/// <param name="messageID">The unique identifier of the message to be deleted.</param>
-		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
-		int DeleteMessage(int messageID);
 
 		/// <summary>
 		/// Delete a report submitted by a specific user. More than likely does not work, do not use.
@@ -409,9 +401,6 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		string GetUserDisplayName(int userID);
 
-		//[OperationContract(IsOneWay = true)]
-		//void SendStickerToClients(UnstuckMEAvailableSticker inSticker);
-
 		/// <summary>
 		/// Changes the privileges of a specific user.
 		/// </summary>
@@ -447,12 +436,24 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		bool AddClass(UserClass newClass);
 
-
+        /// <summary>
+        /// Updates a chat message if a user in the conversation has edited it.
+        /// </summary>
+        /// <param name="message">The message that has been edited.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
         [OperationContract]
-        void EditMessage(UnstuckMEMessage message);
-	}
+        int EditMessage(UnstuckMEMessage message);
 
-	[ServiceContract(CallbackContract = typeof(IServer))]
+        /// <summary>
+        /// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
+        /// </summary>
+        /// <param name="message">The message to be deleted.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        [OperationContract]
+        int DeleteMessage(UnstuckMEMessage message);
+    }
+
+    [ServiceContract(CallbackContract = typeof(IServer))]
 	public interface IUnstuckMEServer
 	{
         /// <summary>

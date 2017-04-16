@@ -27,7 +27,6 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class UnstuckMEWindow : Window
 	{
-		
 		private static Privileges userPrivileges;
 		
 		public UnstuckMEWindow()
@@ -66,6 +65,8 @@ namespace UnstuckMEUserGUI
 			{
 				MessageBox.Show("Source: " + ex.Source + "\nMessage: " + ex.Message);
 			}
+
+            LoadingScreen.Visibility = Visibility.Collapsed;
 		}
 
 		#region Asynchronous Loading Section
@@ -129,7 +130,7 @@ namespace UnstuckMEUserGUI
 					}
 					foreach (UnstuckMEChatUser user in UnstuckME.FriendsList)
 					{
-						UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversatoin(user));
+						UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversation(user));
 					}
 				});
 			}
@@ -512,19 +513,14 @@ namespace UnstuckMEUserGUI
             this.Dispatcher.Invoke(() => 
             {
                 UnstuckME.Pages.ChatPage.EditMessage(message);
-                //for (int i = 0; i < UnstuckME.ChatSessions.Count && UnstuckME.ChatSessions[i].ChatID != message.ChatID; i++)
-                //{
-                //    if (UnstuckME.ChatSessions[i].ChatID == message.ChatID)
-                //    {
-                //        for (int j = 0; j < UnstuckME.ChatSessions[i].Messages.Count && UnstuckME.ChatSessions[i].Messages[j].MessageID != message.MessageID; j++)
-                //        {
-                //            if (UnstuckME.ChatSessions[i].Messages[j].MessageID == message.MessageID)
-                //            {
-                //                UnstuckME.ChatSessions[i].Messages[j].Message = message.Message;
-                //            }
-                //        }
-                //    }
-                //}
+            });
+        }
+
+        public void DeleteChatMessage(UnstuckMEMessage message)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                UnstuckME.Pages.ChatPage.RemoveMessage(message);
             });
         }
 

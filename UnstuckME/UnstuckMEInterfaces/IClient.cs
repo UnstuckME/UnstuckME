@@ -65,5 +65,12 @@ namespace UnstuckMEInterfaces
         /// <param name="message">The message that has been edited.</param>
         [OperationContract(IsOneWay = true)]
         void UpdateChatMessage(UnstuckMEMessage message);
+
+        /// <summary>
+        /// Removes a chat message if a user in the conversation has deleted it.
+        /// </summary>
+        /// <param name="message">The message that has been removed.</param>
+        [OperationContract]
+        void DeleteChatMessage(UnstuckMEMessage message);
     }
 }

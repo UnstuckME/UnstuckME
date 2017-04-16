@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
@@ -32,6 +33,11 @@ namespace UnstuckMEUserGUI
 
             ImageProfilePicture.Source = inMessage.ProfilePic;
             Message = inMessage;
+
+            if (inMessage.SenderID == UnstuckME.User.UserID)
+                EditMessageButton.Visibility = Visibility.Visible;
+            else
+                EditMessageButton.Visibility = Visibility.Collapsed;
         }
 
         private void EditMessageButton_Click(object sender, RoutedEventArgs e)
@@ -43,6 +49,7 @@ namespace UnstuckMEUserGUI
             TextBoxChatMessage.Focus();
             TextBoxChatMessage.CaretIndex = TextBoxChatMessage.Text.Length;
             buttonSaveChanges.Visibility = Visibility.Visible;
+            buttonCancelChanges.Visibility = Visibility.Visible;
         }
 
         private void buttonSaveChanges_Click(object sender, RoutedEventArgs e)
@@ -61,16 +68,57 @@ namespace UnstuckMEUserGUI
                     UsersInConvo = Message.UsersInConvo
                 };
 
-                UnstuckME.Server.EditMessage(edited_message);
+                if (UnstuckME.Server.EditMessage(edited_message) == -1)
+                    throw new Exception(string.Format("Failed to edit message {0}", edited_message.Message));
 
                 TextBoxChatMessage.Foreground = Brushes.White;
                 TextBoxChatMessage.Background = null;
                 TextBoxChatMessage.IsReadOnly = true;
                 Message.Message = TextBoxChatMessage.Text;
                 buttonSaveChanges.Visibility = Visibility.Collapsed;
+                buttonCancelChanges.Visibility = Visibility.Collapsed;
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+            }
+        }
+
+        private void buttonCancelChanges_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxChatMessage.Foreground = Brushes.White;
+            TextBoxChatMessage.Background = null;
+            TextBoxChatMessage.IsReadOnly = true;
+            TextBoxChatMessage.Text = Message.Message;
+            buttonSaveChanges.Visibility = Visibility.Collapsed;
+            buttonCancelChanges.Visibility = Visibility.Collapsed;
+        }
+
+        private void DeleteMessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                UnstuckMEMessage deleted = new UnstuckMEMessage()
+                {
+                    ChatID = Message.ChatID,
+                    FilePath = Message.FilePath,
+                    Message = Message.Message,
+                    MessageID = Message.MessageID,
+                    SenderID = Message.SenderID,
+                    Time = Message.Time,
+                    Username = Message.Username,
+                    UsersInConvo = Message.UsersInConvo
+                };
+
+                if (UnstuckME.Server.DeleteMessage(deleted) == -1)
+                    throw new Exception(string.Format("Failed to delete message {0}", deleted.MessageID));
+
+                UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Remove(this);
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+            }
         }
     }
 }

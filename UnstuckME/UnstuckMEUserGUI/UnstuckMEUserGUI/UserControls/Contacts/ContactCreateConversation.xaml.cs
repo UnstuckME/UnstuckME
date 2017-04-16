@@ -19,10 +19,10 @@ namespace UnstuckMEUserGUI
     /// <summary>
     /// Interaction logic for ContactCreateConversatoin.xaml
     /// </summary>
-    public partial class ContactCreateConversatoin : UserControl
+    public partial class ContactCreateConversation : UserControl
     {
         public UnstuckMEChatUser Contact;
-        public ContactCreateConversatoin(UnstuckMEChatUser inContact)
+        public ContactCreateConversation(UnstuckMEChatUser inContact)
         {
             InitializeComponent();
             Contact = inContact;

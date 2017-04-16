@@ -124,8 +124,8 @@
     <Compile Include="SubWindows\AddUserToConversationWindow.xaml.cs">
       <DependentUpon>AddUserToConversationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Contacts\ContactCreateConversatoin.xaml.cs">
-      <DependentUpon>ContactCreateConversatoin.xaml</DependentUpon>
+    <Compile Include="UserControls\Contacts\ContactCreateConversation.xaml.cs">
+      <DependentUpon>ContactCreateConversation.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\StickerInfoWindow.xaml.cs">
       <DependentUpon>StickerInfoWindow.xaml</DependentUpon>
@@ -294,7 +294,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Contacts\ContactCreateConversatoin.xaml">
+    <Page Include="UserControls\Contacts\ContactCreateConversation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

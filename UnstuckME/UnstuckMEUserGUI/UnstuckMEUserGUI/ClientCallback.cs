@@ -111,5 +111,21 @@ namespace UnstuckMEUserGUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Removes a chat message if a user in the conversation has deleted it.
+        /// </summary>
+        /// <param name="message">The message that has been removed.</param>
+        public void DeleteChatMessage(UnstuckMEMessage message)
+        {
+            try
+            {
+                Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().DeleteChatMessage(message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 	}
 }

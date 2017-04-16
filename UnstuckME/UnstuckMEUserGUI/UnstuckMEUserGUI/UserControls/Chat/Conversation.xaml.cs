@@ -122,7 +122,7 @@ namespace UnstuckMEUserGUI
             }
             UnstuckME.Pages.ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
 
-            foreach (var converstion in ((StackPanel)this.Parent).Children.OfType<Conversation>())
+            foreach (var converstion in ((StackPanel)Parent).Children.OfType<Conversation>())
             {
                 if(converstion.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
                 {

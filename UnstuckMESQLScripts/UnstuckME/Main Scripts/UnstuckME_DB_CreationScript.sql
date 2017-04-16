@@ -166,7 +166,7 @@ CREATE TABLE Sticker
 	StudentID			INT				NOT NULL		REFERENCES UserProfile(UserID),
 	TutorID				INT				DEFAULT NULL	REFERENCES UserProfile(UserID),
 	MinimumStarRanking	FLOAT			DEFAULT 0.0,
-	SubmitTime			DATETIME		NOT NULL,
+	SubmitTime			DATETIME2		NOT NULL,
 	[Timeout]			DATETIME2		NOT NULL)
 GO
 
