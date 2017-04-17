@@ -288,7 +288,6 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int CreateReport(string reportDescription, int flaggerID, int reviewID);
 
-<<<<<<< Updated upstream
         /// <summary>
         /// Submits a review to the database. Finds the other user associated with the sticker and makes them submit
         /// a review if they are online, otherwise adds it to the _ReviewList queue so they can submit it when they
@@ -300,17 +299,6 @@ namespace UnstuckMEInterfaces
         /// <param name="description">The description of the review.</param>
         /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
         /// <returns>Returns 0 if the review was created successfully, 1 if unsuccessful.</returns>
-=======
-		/// <summary>
-		/// Submits a review to the database.
-		/// </summary>
-		/// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
-		/// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
-		/// <param name="starRanking">The rating given to the user being reviewed.</param>
-		/// <param name="description">The description of the review.</param>
-		/// <param name="isAStudent">True if the user being reviewed is a student, false otherwise</param>
-		/// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
->>>>>>> Stashed changes
 		[OperationContract]
 		int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
 
@@ -356,14 +344,6 @@ namespace UnstuckMEInterfaces
 		/// <returns>An UnstuckMEChat that contains the messages and members of the specified chat.</returns>
 		[OperationContract]
 		UnstuckMEChat GetSingleChat(int chatID);
-
-		/// <summary>
-		/// Gets unique identifiers of all the chats a user is associated with.
-		/// </summary>
-		/// <param name="userID">The unique identifier of a specific user.</param>
-		/// <returns>A list of chats, each containing the unique identifier of that chat.</returns>
-		[OperationContract]
-		List<UnstuckMEChat> GetChatIDs(int userID);
 
 		/// <summary>
 		/// Associates a sticker with a chat once the sticker has been acccepted.
@@ -449,16 +429,11 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void CreateMentorOrg(string name);
 
-<<<<<<< Updated upstream
         /// <summary>
-=======
-
-		/// <summary>
->>>>>>> Stashed changes
 		/// Adds a new class to the UnstuckME Database 
 		/// </summary>
 		/// <param name="DBClass">Passes a DBClass object that contains the (CourseName, CourseCode, CourseNUmber)</param>
-		/// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB</returns>
+        /// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB</returns>
 		[OperationContract]
 		bool AddClass(UserClass newClass);
 
@@ -491,11 +466,11 @@ namespace UnstuckMEInterfaces
     [ServiceContract(CallbackContract = typeof(IServer))]
 	public interface IUnstuckMEServer
 	{
-		/// <summary>
-		/// Returns a boolean value identifying that the server is running.
-		/// </summary>
-		/// <returns>True.</returns>
-		[OperationContract]
+        /// <summary>
+        /// Returns a boolean value identifying that the server is running.
+        /// </summary>
+        /// <returns>True.</returns>
+        [OperationContract]
 		bool TestNewConfig();
 
 		/// <summary>
@@ -589,23 +564,23 @@ namespace UnstuckMEInterfaces
 		UnstuckMEFile UploadDocument();
 	}
 
-	[ServiceContract]
-	public interface IUnstuckMEFileStream
-	{
-		/// <summary>
-		/// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
-		/// open the file, and convert it to a byte array.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
+    [ServiceContract]
+    public interface IUnstuckMEFileStream
+    {
+        /// <summary>
+        /// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
+        /// open the file, and convert it to a byte array.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
 		/// <returns>A Stream object containing the data of the image file.</returns>
-		[OperationContract]
-		Stream GetProfilePicture(int userID);
+        [OperationContract]
+        Stream GetProfilePicture(int userID);
 
-		/// <summary>
-		/// Overwrites the profile picture data of a specific user on the database.
-		/// </summary>
-		/// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
-		[OperationContract(IsOneWay = true)]
-		void SetProfilePicture(UnstuckMEStream image);
-	}
+        /// <summary>
+        /// Overwrites the profile picture data of a specific user on the database.
+        /// </summary>
+        /// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
+        [OperationContract(IsOneWay = true)]
+        void SetProfilePicture(UnstuckMEStream image);
+    }
 }
