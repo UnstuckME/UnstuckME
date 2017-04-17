@@ -73,6 +73,10 @@ namespace UnstuckMEUserGUI
             GridHistory.Visibility = Visibility.Hidden;
             GridOpenStickers.Visibility = Visibility.Hidden;
             GridSubmitted.Visibility = Visibility.Hidden;
+            RectangleAvailable.Visibility = Visibility.Visible;
+            RectangleHistory.Visibility = Visibility.Hidden;
+            RectangleSubmitted.Visibility = Visibility.Hidden;
+            RectangleTutoring.Visibility = Visibility.Hidden;
         }
 
         private void ButtonSubmitted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -91,6 +95,10 @@ namespace UnstuckMEUserGUI
             GridHistory.Visibility = Visibility.Hidden;
             GridOpenStickers.Visibility = Visibility.Hidden;
             GridSubmitted.Visibility = Visibility.Visible;
+            RectangleAvailable.Visibility = Visibility.Hidden;
+            RectangleHistory.Visibility = Visibility.Hidden;
+            RectangleSubmitted.Visibility = Visibility.Visible;
+            RectangleTutoring.Visibility = Visibility.Hidden;
         }
 
         private void ButtonTutoring_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -109,6 +117,10 @@ namespace UnstuckMEUserGUI
             GridHistory.Visibility = Visibility.Hidden;
             GridOpenStickers.Visibility = Visibility.Visible;
             GridSubmitted.Visibility = Visibility.Hidden;
+            RectangleAvailable.Visibility = Visibility.Hidden;
+            RectangleHistory.Visibility = Visibility.Hidden;
+            RectangleSubmitted.Visibility = Visibility.Hidden;
+            RectangleTutoring.Visibility = Visibility.Visible;
         }
 
         private void ButtonHistory_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -127,6 +139,11 @@ namespace UnstuckMEUserGUI
             GridHistory.Visibility = Visibility.Visible;
             GridOpenStickers.Visibility = Visibility.Hidden;
             GridSubmitted.Visibility = Visibility.Hidden;
+            RectangleAvailable.Visibility = Visibility.Hidden;
+            RectangleHistory.Visibility = Visibility.Visible;
+            RectangleSubmitted.Visibility = Visibility.Hidden;
+            RectangleTutoring.Visibility = Visibility.Hidden;
         }
+
     }
 }

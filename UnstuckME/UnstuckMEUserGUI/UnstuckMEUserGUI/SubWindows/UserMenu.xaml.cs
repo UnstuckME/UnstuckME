@@ -63,7 +63,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonRemoveFriend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            this.WindowState = WindowState.Minimized;
             OnlineUser temp = null;
             ContactCreateConversation temp2 = null;
             UnstuckME.Server.DeleteFriend(UnstuckME.User.UserID, Friend.UserID);
@@ -114,7 +114,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonSendMessage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            this.WindowState = WindowState.Minimized;
             UnstuckME.MainWindow.SwitchToChatTab();
             UnstuckME.Pages.ChatPage.StartNewConversation(Friend.UserID);
         }

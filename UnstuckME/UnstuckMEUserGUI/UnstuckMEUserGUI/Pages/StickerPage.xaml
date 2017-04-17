@@ -13,27 +13,30 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Border>
-                <Grid Grid.Row="0" Background="#993333">
+            <Border Panel.ZIndex="1">
+                <Grid Grid.Row="0" Background="#993333" >
                     <Label x:Name="LabelTitle" VerticalAlignment="Top" Foreground="White" FontSize="24" FontFamily="Arial" FontWeight="Bold" HorizontalAlignment="Left" Width="400" Height="50" Margin="25,10,0,0" Content="Available Stickers" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></Label>
-                    <Label x:Name="LabelDescription" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Arial" FontWeight="Medium" HorizontalAlignment="Left" Width="400" Height="50" Margin="25,50,0,0" Content="This will be a short description." VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></Label>
+                    <Label x:Name="LabelDescription" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Arial" FontWeight="Medium" HorizontalAlignment="Left" Width="400" Height="50" Margin="25,50,0,0" Content="Stickers you qualify to tutor for." VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></Label>
                     
-                    <Border x:Name="ButtonHistory" Cursor="Hand" MouseLeftButtonDown="ButtonHistory_MouseLeftButtonDown" Height="40" Width="125" CornerRadius="10,10,0,0" Margin="0,0,20,0" Background="#336699" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1,1,1,0">
+                    <Border x:Name="ButtonHistory" Cursor="Hand" MouseLeftButtonDown="ButtonHistory_MouseLeftButtonDown" Height="30" Width="100" CornerRadius="5,5,0,0" Margin="0,0,20,0" Background="#336699" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1,1,1,0">
                         <Label Content="History" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
-                    <Border x:Name="ButtonTutoring" Cursor="Hand" MouseLeftButtonDown="ButtonTutoring_MouseLeftButtonDown" Height="40" Width="125" CornerRadius="10,10,0,0" Margin="0,0,146,0" Background="#336699" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1,1,1,0">
+                    <Border x:Name="ButtonTutoring" Cursor="Hand" MouseLeftButtonDown="ButtonTutoring_MouseLeftButtonDown" Height="30" Width="100" CornerRadius="5,5,0,0" Margin="0,0,122,0" Background="#336699" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1,1,1,0">
                         <Label Content="Tutoring" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
-                    <Border x:Name="ButtonSubmitted" Cursor="Hand" MouseLeftButtonDown="ButtonSubmitted_MouseLeftButtonDown" Height="40" Width="125" CornerRadius="10,10,0,0" Margin="0,0,272,0" Background="#336699" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1,1,1,0">
+                    <Border x:Name="ButtonSubmitted" Cursor="Hand" MouseLeftButtonDown="ButtonSubmitted_MouseLeftButtonDown" Height="30" Width="100" CornerRadius="5,5,0,0" Margin="0,0,224,0" Background="#336699" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1,1,1,0">
                         <Label Content="Submitted" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                     </Border>
-                    <Border x:Name="ButtonAvailable" Cursor="Hand" MouseLeftButtonDown="ButtonAvailable_MouseLeftButtonDown" Height="40" Width="125" CornerRadius="10,10,0,0" Margin="0,0,398,0" Background="SteelBlue" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="White" BorderThickness="1,1,1,0">
+                    <Border x:Name="ButtonAvailable" Cursor="Hand" MouseLeftButtonDown="ButtonAvailable_MouseLeftButtonDown" Height="30" Width="100" CornerRadius="5,5,0,0" Margin="20,0,326,0" Background="SteelBlue" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="White" BorderThickness="1,1,1,0">
                         <Label Content="Available" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+
                     </Border>
+
                 </Grid>
             </Border>
-            <Grid Grid.Row="1" Background="#993333"></Grid>
-            <Border Grid.Row="1" Background="SteelBlue" CornerRadius="10,10,0,0" BorderBrush="White" BorderThickness="1,2,1,2">
+            <Grid Grid.Row="1" Background="#993333"/>
+
+            <Border Panel.ZIndex="0" Grid.Row="1" Background="SteelBlue" CornerRadius="10,10,0,0" BorderBrush="White" BorderThickness="1,1,1,2">
                 <Grid>
                     <ScrollViewer x:Name="GridOpenStickers" Visibility="Hidden" Margin="0,10,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
                         <StackPanel x:Name="StackPanelOpenStickers" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></StackPanel>
@@ -49,6 +52,11 @@
                     </ScrollViewer>
                 </Grid>
             </Border>
+            <Rectangle x:Name="RectangleHistory" Visibility="Hidden" Grid.Row="1" Margin="0,0,21,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="1" Width="98" Fill="SteelBlue"></Rectangle>
+            <Rectangle x:Name="RectangleTutoring" Visibility="Hidden" Grid.Row="1" Margin="0,0,123,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="1" Width="98" Fill="SteelBlue"></Rectangle>
+            <Rectangle x:Name="RectangleSubmitted" Visibility="Hidden" Grid.Row="1" Margin="0,0,225,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="1" Width="98" Fill="SteelBlue"></Rectangle>
+            <Rectangle x:Name="RectangleAvailable" Grid.Row="1" Margin="0,0,327,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="1" Width="98" Fill="SteelBlue"></Rectangle>
+            
         </Grid>
     </Border>
 
