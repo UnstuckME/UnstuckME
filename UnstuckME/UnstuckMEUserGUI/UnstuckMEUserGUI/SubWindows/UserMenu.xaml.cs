@@ -64,6 +64,32 @@ namespace UnstuckMEUserGUI
         private void ButtonRemoveFriend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+            OnlineUser temp = null;
+            ContactCreateConversation temp2 = null;
+            UnstuckME.Server.DeleteFriend(UnstuckME.User.UserID, Friend.UserID);
+            foreach (OnlineUser user in UnstuckME.MainWindow.OnlineUsersStack.Children.OfType<OnlineUser>())
+            {
+                if(user.Friend.UserID == Friend.UserID)
+                {
+                    temp = user;
+                }
+            }
+            foreach (ContactCreateConversation contact in UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.OfType< ContactCreateConversation>())
+            {
+                if(contact.Contact.UserID == Friend.UserID)
+                {
+                    temp2 = contact;
+                }
+            }
+            if(temp != null)
+            {
+                UnstuckME.MainWindow.OnlineUsersStack.Children.Remove(temp);
+                UnstuckME.FriendsList.Remove(temp.Friend);
+                if(temp2 != null)
+                {
+                    UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Remove(temp2);
+                }
+            }
         }
 
         private void ButtonRemoveFriend_MouseEnter(object sender, MouseEventArgs e)
