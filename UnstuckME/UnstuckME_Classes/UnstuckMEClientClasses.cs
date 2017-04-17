@@ -253,9 +253,10 @@ namespace UnstuckME_Classes
 		private static string programDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME";
 		private static string schoolDir = System.IO.Path.Combine(programDir, "Schools");
 		private static string chatDir = System.IO.Path.Combine(programDir, "Chats");
+        private static string friendsDir = System.IO.Path.Combine(programDir, "Friends");
 
-		//Intentionally one way getters because a user should not modify a program directory
-		public string ProgramDir
+        //Intentionally one way getters because a user should not modify a program directory
+        public string ProgramDir
 		{
 			get { return programDir; }
 		}
@@ -270,6 +271,22 @@ namespace UnstuckME_Classes
 			get { return chatDir; }
 		}
 
+        public string FriendsDir
+        {
+            get { return friendsDir; }
+        }
+
+		public void MakeDir(string newDirName)
+		{
+			string newDirectory = System.IO.Path.Combine(programDir, newDirName);
+			Directory.CreateDirectory(newDirectory);
+		}
+
+		public void MakeChatDir(string newDirName)
+		{
+			string newDirectory = System.IO.Path.Combine(chatDir, newDirName);
+			Directory.CreateDirectory(newDirectory);
+		}
 
 		public UnstuckMEDirectory ()
 		{
@@ -277,6 +294,7 @@ namespace UnstuckME_Classes
 			Directory.CreateDirectory(programDir);
 			Directory.CreateDirectory(schoolDir);
 			Directory.CreateDirectory(chatDir);
+            Directory.CreateDirectory(friendsDir);
 		}
 	}
 }

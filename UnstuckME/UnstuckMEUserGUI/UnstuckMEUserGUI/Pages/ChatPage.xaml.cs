@@ -150,6 +150,8 @@ namespace UnstuckMEUserGUI
             }
         }
 
+        #region commented out method 
+
         //should make a new GUIChatMessagethat can contain a file
         /// <summary>
         /// Currently doesn't implement the file, use first overload instead
@@ -190,6 +192,7 @@ namespace UnstuckMEUserGUI
         //              messagebox.ShowDialog();
         //	}
         //}
+        #endregion
 
         private void ScrollViewerConversationBox_SizeChanged(object sender, SizeChangedEventArgs e)
         {

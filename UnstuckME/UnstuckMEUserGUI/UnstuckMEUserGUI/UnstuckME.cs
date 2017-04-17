@@ -26,6 +26,7 @@ namespace UnstuckMEUserGUI
         public static ImageSourceConverter ImageConverter;
         public static List<UnstuckMEChat> ChatSessions;
         public static UnstuckMEChat CurrentChatSession;
+        public static UnstuckMEDirectory ProgramDir;
 
     }
 }
