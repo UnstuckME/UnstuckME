@@ -42,59 +42,59 @@ namespace UnstuckMEUserGUI
 		public LoginWindow()
 		{
 			InitializeComponent();
-            UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-            UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
-            UnstuckME.Stream_ChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
-            UnstuckME.FileStream = UnstuckME.Stream_ChannelFactory.CreateChannel();
-            UnstuckME.Blue = buttonCreateAccount.Background;
-            UnstuckME.Red = buttonCancel.Background;
+			UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+			UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
+			UnstuckME.Stream_ChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
+			UnstuckME.FileStream = UnstuckME.Stream_ChannelFactory.CreateChannel();
+			UnstuckME.Blue = buttonCreateAccount.Background;
+			UnstuckME.Red = buttonCancel.Background;
 
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            m_orginalSchoolName = m_SchoolName = config.AppSettings.Settings["SchoolName"].Value;
+			var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			m_orginalSchoolName = m_SchoolName = config.AppSettings.Settings["SchoolName"].Value;
 
 			try
 			{
-				UnstuckMEDirectory UnStuckMEDir = new UnstuckMEDirectory();
-				m_SchoolInfoFilePath = System.IO.Path.Combine(UnStuckMEDir.SchoolDir, "schoolLogo.dat");
+				UnstuckME.ProgramDir = new UnstuckMEDirectory();
+				m_SchoolInfoFilePath = System.IO.Path.Combine(UnstuckME.ProgramDir.SchoolDir, "schoolLogo.dat");
 
 				if (File.Exists(m_SchoolInfoFilePath) != true)
 				{
 					FileStream fs = new FileStream(m_SchoolInfoFilePath, FileMode.CreateNew);
 					fs.Close();
 
-                    using (StreamWriter file = new StreamWriter(m_SchoolInfoFilePath, false))
-                    {
-                        file.WriteLine("Last Modified = NULL");
-                        file.WriteLine("Photo ID = NULL");
-                        file.WriteLine("Photo Info = NULL");
-                    }
-                }
+					using (StreamWriter file = new StreamWriter(m_SchoolInfoFilePath, false))
+					{
+						file.WriteLine("Last Modified = NULL");
+						file.WriteLine("Photo ID = NULL");
+						file.WriteLine("Photo Info = NULL");
+					}
+				}
 
-                string remember_me = config.AppSettings.Settings["RememberMe"].Value;
-                string m_username = config.AppSettings.Settings["Username"].Value;
-                string m_password = config.AppSettings.Settings["Password"].Value;
+				string remember_me = config.AppSettings.Settings["RememberMe"].Value;
+				string m_username = config.AppSettings.Settings["Username"].Value;
+				string m_password = config.AppSettings.Settings["Password"].Value;
 
-                if (m_username != string.Empty)
-                {
-                    //System.Windows.Media.Brush brush = (System.Windows.Media.Brush)(new BrushConverter().ConvertFromString("#FFCFCF56"));
+				if (m_username != string.Empty)
+				{
+					//System.Windows.Media.Brush brush = (System.Windows.Media.Brush)(new BrushConverter().ConvertFromString("#FFCFCF56"));
 
-                    textBoxUserName_GotFocus(null, null);
-                    textBoxPasswordPreview_GotFocus(null, null);
-                    textBoxUserName.Text = m_username;
-                    //textBoxUserName.Background = brush;
-                    passwordBox.Password = m_password;
-                    //passwordBox.Background = brush;
-                    checkboxRememberMe.IsChecked = true;
+					textBoxUserName_GotFocus(null, null);
+					textBoxPasswordPreview_GotFocus(null, null);
+					textBoxUserName.Text = m_username;
+					//textBoxUserName.Background = brush;
+					passwordBox.Password = m_password;
+					//passwordBox.Background = brush;
+					checkboxRememberMe.IsChecked = true;
 
-                    if (remember_me == "true")
-                        buttonLogin_Click(null, null);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message);
-            }
+					if (remember_me == "true")
+						buttonLogin_Click(null, null);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
+				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message);
+			}
 		}
 
 		private async void Window_ContentRendered(object sender, EventArgs e)
@@ -110,10 +110,10 @@ namespace UnstuckMEUserGUI
 			else
 				comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf("Local Ip");
 
-            content_rendered = false;
-        }
+			content_rendered = false;
+		}
 
-        private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
+		private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
 		{
 			return Task.Factory.StartNew(() => LoadSchools());
 		}
@@ -210,18 +210,18 @@ namespace UnstuckMEUserGUI
 					{
 						var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-                        if (checkboxRememberMe.IsChecked.Value)
-                        {
-                            config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
-                            config.AppSettings.Settings["Password"].Value = passwordBox.Password;
-                            config.AppSettings.Settings["RememberMe"].Value = "true";
-                        }
-                        else
-                        {
-                            config.AppSettings.Settings["Username"].Value = string.Empty;
-                            config.AppSettings.Settings["Password"].Value = string.Empty;
-                            config.AppSettings.Settings["RememberMe"].Value = "false";
-                        }
+						if (checkboxRememberMe.IsChecked.Value)
+						{
+							config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
+							config.AppSettings.Settings["Password"].Value = passwordBox.Password;
+							config.AppSettings.Settings["RememberMe"].Value = "true";
+						}
+						else
+						{
+							config.AppSettings.Settings["Username"].Value = string.Empty;
+							config.AppSettings.Settings["Password"].Value = string.Empty;
+							config.AppSettings.Settings["RememberMe"].Value = "false";
+						}
 
 						config.AppSettings.Settings["SchoolName"].Value = comboBoxSchools.SelectedValue.ToString();
 						ChannelEndpointElement endpoint = ((ClientSection)config.GetSection("system.serviceModel/client")).Endpoints[0];
@@ -421,16 +421,16 @@ namespace UnstuckMEUserGUI
 			{
 				ImageConverter converter = new ImageConverter();
 				byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
-                try
-                {
-                    using (UnstuckMEStream stream = new UnstuckMEStream(avatar, true))
-                    {
-                        stream.User = new UserInfo()
-                        {
-                            UserID = userID
-                        };
-                        UnstuckME.FileStream.SetProfilePicture(stream);
-                    }
+				try
+				{
+					using (UnstuckMEStream stream = new UnstuckMEStream(avatar, true))
+					{
+						stream.User = new UserInfo()
+						{
+							UserID = userID
+						};
+						UnstuckME.FileStream.SetProfilePicture(stream);
+					}
 				}
 				catch (Exception exp)
 				{
@@ -643,7 +643,7 @@ namespace UnstuckMEUserGUI
 						var schoolLogoObj = (from l in db.SchoolLogoes where l.LogoID == logoID select new { logo = l.Logo }).First();
 						byte[] imgByteArray = schoolLogoObj.logo;
 						imageForSchoolLogo.Source = ConvertByteArrayToBitmapImage(imgByteArray);
-                    }
+					}
 
 					file.Close();
 				}

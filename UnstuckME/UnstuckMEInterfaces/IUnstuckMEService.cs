@@ -288,17 +288,17 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int CreateReport(string reportDescription, int flaggerID, int reviewID);
 
-        /// <summary>
-        /// Submits a review to the database. Finds the other user associated with the sticker and makes them submit
-        /// a review if they are online, otherwise adds it to the _ReviewList queue so they can submit it when they
-        /// next log on.
-        /// </summary>
-        /// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
-        /// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
-        /// <param name="starRanking">The rating given to the user being reviewed.</param>
-        /// <param name="description">The description of the review.</param>
-        /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
-        /// <returns>Returns 0 if the review was created successfully, 1 if unsuccessful.</returns>
+		/// <summary>
+		/// Submits a review to the database. Finds the other user associated with the sticker and makes them submit
+		/// a review if they are online, otherwise adds it to the _ReviewList queue so they can submit it when they
+		/// next log on.
+		/// </summary>
+		/// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
+		/// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
+		/// <param name="starRanking">The rating given to the user being reviewed.</param>
+		/// <param name="description">The description of the review.</param>
+		/// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
+		/// <returns>Returns 0 if the review was created successfully, 1 if unsuccessful.</returns>
 		[OperationContract]
 		int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
 
@@ -345,6 +345,15 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		UnstuckMEChat GetSingleChat(int chatID);
 
+
+		/// <summary> 
+		/// Gets unique identifiers of all the chats a user is associated with. 
+		/// </summary> 
+		/// <param name="userID">The unique identifier of a specific user.</param> 
+		/// <returns>A list of chats, each containing the unique identifier of that chat.</returns> 
+		[OperationContract]
+		List<UnstuckMEChat> GetChatIDs(int userID);
+
 		/// <summary>
 		/// Associates a sticker with a chat once the sticker has been acccepted.
 		/// </summary>
@@ -353,19 +362,19 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void AddChatToSticker(int chatID, int stickerID);
 
-        /// <summary>
-        /// Queues a message to be sent to the users in the chat.
-        /// </summary>
-        /// <param name="message">The message to be sent.</param>
-        /// <returns>The message ID of the message that was just inserted into the database.</returns>
-        [OperationContract]
+		/// <summary>
+		/// Queues a message to be sent to the users in the chat.
+		/// </summary>
+		/// <param name="message">The message to be sent.</param>
+		/// <returns>The message ID of the message that was just inserted into the database.</returns>
+		[OperationContract]
 		int SendMessage(UnstuckMEMessage message);
 
 		/// <summary>
 		/// Gets the stickers when first logging in.
 		/// </summary>
 		/// <param name="userID">The unique identifier of a specific user.</param>
-		/// <returns>A list of available stickers, containing the unqiue identifier of the class the sticker is associated with
+		/// <returns>A list of available stickers, containing the unique identifier of the class the sticker is associated with
 		/// and all the information for that class, the description, the unique identifier of the sticker, the unique identifier
 		/// of the user who submitted the sticker, the student ranking of that user, and the timeout date.</returns>
 		[OperationContract]	
@@ -429,48 +438,48 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void CreateMentorOrg(string name);
 
-        /// <summary>
+		/// <summary>
 		/// Adds a new class to the UnstuckME Database 
 		/// </summary>
 		/// <param name="DBClass">Passes a DBClass object that contains the (CourseName, CourseCode, CourseNUmber)</param>
-        /// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB</returns>
+		/// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB</returns>
 		[OperationContract]
 		bool AddClass(UserClass newClass);
 
-        /// <summary>
-        /// Updates a chat message if a user in the conversation has edited it.
-        /// </summary>
-        /// <param name="message">The message that has been edited.</param>
-        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        [OperationContract]
-        int EditMessage(UnstuckMEMessage message);
+		/// <summary>
+		/// Updates a chat message if a user in the conversation has edited it.
+		/// </summary>
+		/// <param name="message">The message that has been edited.</param>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+		[OperationContract]
+		int EditMessage(UnstuckMEMessage message);
 
-        /// <summary>
-        /// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
-        /// </summary>
-        /// <param name="message">The message to be deleted.</param>
-        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        [OperationContract]
-        int DeleteMessage(UnstuckMEMessage message);
+		/// <summary>
+		/// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
+		/// </summary>
+		/// <param name="message">The message to be deleted.</param>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+		[OperationContract]
+		int DeleteMessage(UnstuckMEMessage message);
 
-        /// <summary>
-        /// When logging on, checks for any stickers that need reviews. This will only occur if the other member of the
-        /// sticker has submitted a review and this user was not online when this occured.
-        /// </summary>
-        /// <param name="userID">The unique identifier of the user who is checking for reviews.</param>
-        /// <returns>Contains the StickerID and true if they are the student, false if they are the tutor. If there is no sticker, returns 0 for the sticker ID.</returns>
-        [OperationContract]
-        KeyValuePair<int, bool> CheckForReviews(int userID);
-    }
+		/// <summary>
+		/// When logging on, checks for any stickers that need reviews. This will only occur if the other member of the
+		/// sticker has submitted a review and this user was not online when this occurred.
+		/// </summary>
+		/// <param name="userID">The unique identifier of the user who is checking for reviews.</param>
+		/// <returns>Contains the StickerID and true if they are the student, false if they are the tutor. If there is no sticker, returns 0 for the sticker ID.</returns>
+		[OperationContract]
+		KeyValuePair<int, bool> CheckForReviews(int userID);
+	}
 
-    [ServiceContract(CallbackContract = typeof(IServer))]
+	[ServiceContract(CallbackContract = typeof(IServer))]
 	public interface IUnstuckMEServer
 	{
-        /// <summary>
-        /// Returns a boolean value identifying that the server is running.
-        /// </summary>
-        /// <returns>True.</returns>
-        [OperationContract]
+		/// <summary>
+		/// Returns a boolean value identifying that the server is running.
+		/// </summary>
+		/// <returns>True.</returns>
+		[OperationContract]
 		bool TestNewConfig();
 
 		/// <summary>
@@ -518,7 +527,7 @@ namespace UnstuckMEInterfaces
 		/// Registers a new tutoring organization. Can only be invoked by an administrator.
 		/// </summary>
 		/// <param name="organizationName">The name of the new tutoring organization.</param>
-		/// <returns>The unique identifer of the newly created organzation if successful, -1 if unsuccessful.</returns>
+		/// <returns>The unique identifier of the newly created organization if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
 		int AdminCreateMentoringOrganization(string organizationName);
 
@@ -552,7 +561,7 @@ namespace UnstuckMEInterfaces
 		/// Removes a report from the database. Can only be invoked by an administrator.
 		/// </summary>
 		/// <param name="reportID">The unique identifier of the report to be removed.</param>
-		/// <returns>Returns 0 if sucessful, -1 if unsuccessful.</returns>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
 		int AdminDeleteReport(int reportID);
 
@@ -564,23 +573,23 @@ namespace UnstuckMEInterfaces
 		UnstuckMEFile UploadDocument();
 	}
 
-    [ServiceContract]
-    public interface IUnstuckMEFileStream
-    {
-        /// <summary>
-        /// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
-        /// open the file, and convert it to a byte array.
-        /// </summary>
-        /// <param name="userID">The unique identifier of the user.</param>
+	[ServiceContract]
+	public interface IUnstuckMEFileStream
+	{
+		/// <summary>
+		/// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
+		/// open the file, and convert it to a byte array.
+		/// </summary>
+		/// <param name="userID">The unique identifier of the user.</param>
 		/// <returns>A Stream object containing the data of the image file.</returns>
-        [OperationContract]
-        Stream GetProfilePicture(int userID);
+		[OperationContract]
+		Stream GetProfilePicture(int userID);
 
-        /// <summary>
-        /// Overwrites the profile picture data of a specific user on the database.
-        /// </summary>
-        /// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
-        [OperationContract(IsOneWay = true)]
-        void SetProfilePicture(UnstuckMEStream image);
-    }
+		/// <summary>
+		/// Overwrites the profile picture data of a specific user on the database.
+		/// </summary>
+		/// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
+		[OperationContract(IsOneWay = true)]
+		void SetProfilePicture(UnstuckMEStream image);
+	}
 }
