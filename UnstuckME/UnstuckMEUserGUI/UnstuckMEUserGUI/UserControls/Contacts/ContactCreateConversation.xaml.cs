@@ -41,7 +41,6 @@ namespace UnstuckMEUserGUI
 
         private void ButtonConversationStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            UnstuckME.Pages.ChatPage.StartNewConversation(Contact.UserID);
         }
     }
 }

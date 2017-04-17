@@ -1267,12 +1267,42 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-		/// <summary>
-		/// Gets unique identifiers of all the chats a user is associated with.
-		/// </summary>
-		/// <param name="userID">The unique identifier of a specific user.</param>
-		/// <returns>A list of chats, each containing the unique identifier of that chat.</returns>
-		private List<UnstuckMEChat> GetChatIDs(int userID)
+        /// <summary>
+        /// Gets the number of messages a single chat holds
+        /// </summary>
+        /// <param name="chatID">The unique identifier of a specific chat.</param>
+        /// <returns>A integer continuing the number of messages for the provided chat.</returns>
+        public int GetChatMsgCount(int chatID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Gets the number of messages each respective chat has
+        /// </summary>
+        /// <param name="chatIDs">A list of UnstuckME.ChatSessions which have their chatID's set.</param>
+        /// <returns>A list of integers, each containing the number of messages for their chat.</returns>
+        public List<int> GetChatMsgCount(List<int> chatIDs)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets unique identifiers of all the chats a user is associated with.
+        /// </summary>
+        /// <param name="userID">The unique identifier of a specific user.</param>
+        /// <returns>A list of chats, each containing the unique identifier of that chat.</returns>
+        public List<UnstuckMEChat> GetChatIDs(int userID) //Ryan Had to change this to public so he could make directories based off of these  :)
 		{
 			try
 			{
@@ -1354,7 +1384,7 @@ namespace UnstuckMEInterfaces
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
 					var messages = db.GetChatMessages(chatID, firstrow, lastrow);
-
+                    
 					foreach (var message in messages)
 					{
                         UnstuckMEMessage temp = new UnstuckMEMessage()

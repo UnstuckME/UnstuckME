@@ -270,8 +270,19 @@ namespace UnstuckME_Classes
 			get { return chatDir; }
 		}
 
+        public void MakeDir(string newDirName)
+        {
+            string newDirectory = System.IO.Path.Combine(programDir, newDirName);
+            Directory.CreateDirectory(newDirectory);
+        }
 
-		public UnstuckMEDirectory ()
+        public void MakeChatDir(string newDirName)
+        {
+            string newDirectory = System.IO.Path.Combine(chatDir, newDirName);
+            Directory.CreateDirectory(newDirectory);
+        }
+
+        public UnstuckMEDirectory ()
 		{
 			//This will not recreate the directory if it already exists
 			Directory.CreateDirectory(programDir);

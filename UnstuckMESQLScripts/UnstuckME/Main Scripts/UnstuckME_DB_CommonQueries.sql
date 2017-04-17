@@ -91,6 +91,8 @@ if object_id('GetUserSubmittedStickers') is not null
 	drop procedure GetUserSubmittedStickers;
 if object_id('GetUserTutoredStickers') is not null
 	drop procedure GetUserTutoredStickers;
+if object_id('GetNumMsgsInAChat') is not null
+	drop procedure GetNumMsgsInAChat;
 
 /**************************************************************************
 * Gets all Stickers for Admin
@@ -901,4 +903,16 @@ union
 		and datediff(minute, getdate(), [Timeout]) < 0
 		and (select count(*) from Review where Review.StickerID = Sticker.StickerID) < 2
 order by [Timeout] asc, SubmitTime asc;
+end;
+
+/*************************************************************************
+* Gets the number of messages a chat has
+*************************************************************************/
+go
+create proc GetNumMsgsInAChat
+(	@chatID int
+) as
+begin
+	SELECT COUNT(*) AS NumberOfMsgInChat FROM [Messages]
+	WHERE ChatID = @chatID;
 end;

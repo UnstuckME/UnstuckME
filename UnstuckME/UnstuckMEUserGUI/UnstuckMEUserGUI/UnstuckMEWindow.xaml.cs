@@ -112,7 +112,13 @@ namespace UnstuckMEUserGUI
 			{
 				this.Dispatcher.Invoke(() =>
 				{
-					UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
+                    UnstuckME.ChatSessions = UnstuckME.Server.GetChatIDs(UnstuckME.User.UserID);
+                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+                    {
+                        UnstuckME.ProgramDir.MakeChatDir(chat.ChatID.ToString());
+                    }
+
+                    UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
 					foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
 					{
 						UnstuckME.Pages.ChatPage.AddConversation(chat);
@@ -455,6 +461,7 @@ namespace UnstuckMEUserGUI
 			});
 		}
 
+<<<<<<< Updated upstream
         public void StickerAcceptedStartConversation(UnstuckMEAvailableSticker sticker, int tutorID)
         {
             this.Dispatcher.Invoke(() =>
@@ -551,6 +558,80 @@ namespace UnstuckMEUserGUI
         {
             ButtonLogout.Background = Brushes.IndianRed;
         }
+=======
+		public void StickerAcceptedStartConversation(UnstuckMEAvailableSticker sticker, int tutorID)
+		{
+			this.Dispatcher.Invoke(() =>
+			{
+				int PreExistingChatID = -1;
+				//Search For Pre-Existing Conversation
+				foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+				{
+					bool studentFound = false;
+					bool tutorFound = false;
+					if (chat.Users.Count == 2)
+					{
+						foreach (UnstuckMEChatUser user in chat.Users)
+						{
+							if (user.UserID == sticker.StudentID)
+							{ studentFound = true; }
+							if (user.UserID == tutorID)
+							{ tutorFound = true; }
+						}
+						if (studentFound && tutorFound)
+						{
+							PreExistingChatID = chat.ChatID;
+						}
+					}
+				}
+				if (PreExistingChatID == -1)
+				{
+					//Chat Not Found. Creating a new one.
+					PreExistingChatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
+					UnstuckME.Server.InsertUserIntoChat(sticker.StudentID, PreExistingChatID);
+				}
+				UnstuckMEMessage temp = new UnstuckMEMessage();
+				temp.ChatID = PreExistingChatID;
+				temp.FilePath = string.Empty;
+				temp.IsFile = false;
+				temp.Message = UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " has accepted a sticker you submitted!";
+				temp.MessageID = 0;
+				temp.SenderID = UnstuckME.User.UserID;
+				temp.Username = UnstuckME.User.FirstName;
+				temp.UsersInConvo = new List<int>();
+				temp.UsersInConvo.Add(UnstuckME.User.UserID);
+				temp.UsersInConvo.Add(sticker.StudentID);
+				UnstuckME.Server.SendMessage(temp);
+				temp.Message = "Your have accepted a Sticker!";
+				UnstuckMESticker tempSticker = new UnstuckMESticker();
+				tempSticker.ChatID = PreExistingChatID;
+				tempSticker.ClassID = sticker.ClassID;
+				//tempSticker.MinimumStarRanking = sticker.s
+				tempSticker.ProblemDescription = sticker.ProblemDescription;
+				tempSticker.StickerID = sticker.StickerID;
+				tempSticker.StudentID = sticker.StudentID;
+				tempSticker.Timeout = sticker.Timeout;//Convert.ToInt32((DateTime.Now - sticker.Timeout).TotalSeconds);
+				tempSticker.TutorID = UnstuckME.User.UserID;
+				UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(tempSticker));
+				UnstuckME.Pages.ChatPage.AddMessage(temp);
+				SwitchToChatTab();
+				UnstuckME.Pages.ChatPage.ButtonAddUserDone_Click(null, null);
+				foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+				{
+					if (convo.Chat.ChatID == PreExistingChatID)
+					{
+						convo.ConversationUserControl_MouseLeftButtonDown(null, null);
+					}
+				}
+			});
+		}
+		
+        #region ButtonLogic
+		private void ButtonLogout_MouseEnter(object sender, MouseEventArgs e)
+		{
+			ButtonLogout.Background = Brushes.IndianRed;
+		}
+>>>>>>> Stashed changes
 
 		private void ButtonLogout_MouseLeave(object sender, MouseEventArgs e)
 		{

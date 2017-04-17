@@ -68,6 +68,7 @@ namespace UnstuckMEUserGUI
 		{
 			bool chatIDExists = false;
 
+<<<<<<< Updated upstream
             try
             {
                 foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
@@ -159,6 +160,77 @@ namespace UnstuckMEUserGUI
         //public void AddMessage(UnstuckMEMessage message, UnstuckMEFile file)
         //{
         //	bool chatIDexists = false;
+=======
+			try
+			{
+				foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+				{
+					if(chat.ChatID == message.ChatID)
+					{
+						chatIDExists = true;
+						chat.Messages.Add(message);
+						if(UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
+						{
+							UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
+							StackPanelMessages.Children.Add(new ChatMessage(temp));
+							ScrollViewerMessagesBox.ScrollToBottom();
+						}
+					}
+				}
+				if(!chatIDExists)
+				{
+					UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
+					UnstuckME.ChatSessions.Add(temp);
+					StackPanelConversations.Children.Add(new Conversation(temp));
+				}
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show("Add Message Failed" + ": " + ex.Message);
+			}
+		}
+
+		//should make a new GUIChatMessagethat can contain a file
+		/// <summary>
+		/// Currently doesn't implement the file, use first overload instead
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="file"></param>
+		public void AddMessage(UnstuckMEMessage message, UnstuckMEFile file)
+		{
+			bool chatIDexists = false;
+
+			try
+			{
+				foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+				{
+					if (chat.ChatID == message.ChatID)
+					{
+						chatIDexists = true;
+						chat.Messages.Add(message);
+						if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
+						{
+							UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
+							StackPanelMessages.Children.Add(new ChatMessage(temp));
+							ScrollViewerMessagesBox.ScrollToBottom();
+						}
+					}
+				}
+
+				if (!chatIDexists)
+				{
+					UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
+					UnstuckME.ChatSessions.Add(temp);
+					StackPanelConversations.Children.Add(new Conversation(temp));
+				}
+			}
+			catch (Exception ex)
+			{
+				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Add Message Failed", UnstuckMEBoxImage.Warning);
+				messagebox.ShowDialog();
+			}
+		}
+>>>>>>> Stashed changes
 
         //	try
         //	{
@@ -204,6 +276,7 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
+<<<<<<< Updated upstream
         private void SendMessage(string message)
         {
             try
@@ -242,6 +315,41 @@ namespace UnstuckMEUserGUI
                 MessageBox.Show("Chat Send Failed. Error: " + ex.Message, "Failed Message Send", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
+=======
+		private void SendMessage(string message)
+		{
+			try
+			{
+				if(UnstuckME.CurrentChatSession.ChatID < 0) { throw new Exception(); } //If no conversation is chosen
+				UnstuckMEMessage sendingMessage = new UnstuckMEMessage();
+				sendingMessage.ChatID = UnstuckME.CurrentChatSession.ChatID;
+				sendingMessage.FilePath = string.Empty;
+				sendingMessage.IsFile = false;
+				sendingMessage.Message = message;
+				sendingMessage.MessageID = 0;
+				sendingMessage.SenderID = UnstuckME.User.UserID;
+				sendingMessage.Time = DateTime.Now;
+				sendingMessage.Username = UnstuckME.User.FirstName;
+				sendingMessage.UsersInConvo = new List<int>();
+				foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
+				{
+					if(user.UserID != UnstuckME.User.UserID)
+					{
+						sendingMessage.UsersInConvo.Add(user.UserID);
+					}
+				}
+				UnstuckME.Server.SendMessage(sendingMessage);
+				UnstuckME.CurrentChatSession.Messages.Add(sendingMessage);
+				UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(sendingMessage, UnstuckME.CurrentChatSession);
+				StackPanelMessages.Children.Add(new ChatMessage(temp));
+				ScrollViewerMessagesBox.ScrollToBottom();
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show("Chat Send Failed. Error: " + ex.Message, "Failed Message Send", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+			}
+		}
+>>>>>>> Stashed changes
 
 		private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
 		{
@@ -264,6 +372,7 @@ namespace UnstuckMEUserGUI
 			TextBoxManualUserNameSearch.Text = string.Empty;
 		}
 
+<<<<<<< Updated upstream
         private void ButtonStartConversation_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -311,6 +420,52 @@ namespace UnstuckMEUserGUI
                 LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
             }
         }
+=======
+		private void ButtonStartConversation_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				LabelInvalidUserNameSearch.Visibility = Visibility.Hidden;
+				int searchedUserID = -1;
+				int chatID;
+				if(UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
+				{
+					chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
+					searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
+					UnstuckME.Server.InsertUserIntoChat(searchedUserID, chatID);
+					UnstuckMEMessage temp = new UnstuckMEMessage();
+					temp.ChatID = chatID;
+					temp.FilePath = string.Empty;
+					temp.IsFile = false;
+					temp.Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.";
+					temp.MessageID = 0;
+					temp.Username = UnstuckME.User.FirstName;
+					temp.SenderID = UnstuckME.User.UserID;
+					temp.UsersInConvo = new List<int>();
+					temp.UsersInConvo.Add(UnstuckME.User.UserID);
+					temp.UsersInConvo.Add(searchedUserID);
+					UnstuckME.Server.SendMessage(temp);
+					AddMessage(temp);
+					ButtonAddUserDone_Click(null, null);
+					foreach (Conversation convo  in StackPanelConversations.Children.OfType<Conversation>())
+					{
+						if(convo.Chat.ChatID == chatID)
+						{
+							convo.ConversationUserControl_MouseLeftButtonDown(null, null);
+						}
+					}
+				}
+				else
+				{
+					LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
+				}
+			}
+			catch(Exception)
+			{
+				LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
+			}
+		}
+>>>>>>> Stashed changes
 
 		private void ButtonAddUserToConvo_MouseEnter(object sender, MouseEventArgs e)
 		{
@@ -322,6 +477,7 @@ namespace UnstuckMEUserGUI
 			ButtonAddUserToConvo.Background = Brushes.SteelBlue;
 		}
 
+<<<<<<< Updated upstream
         private void ButtonAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(UnstuckME.CurrentChatSession);
@@ -394,4 +550,12 @@ namespace UnstuckMEUserGUI
             return convoExists;
         }
     }
+=======
+		private void ButtonAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(UnstuckME.CurrentChatSession);
+			addUserWindow.Show();
+		}
+	}
+>>>>>>> Stashed changes
 }

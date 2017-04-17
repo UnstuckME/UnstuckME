@@ -54,8 +54,8 @@ namespace UnstuckMEUserGUI
 
 			try
 			{
-				UnstuckMEDirectory UnStuckMEDir = new UnstuckMEDirectory();
-				m_SchoolInfoFilePath = System.IO.Path.Combine(UnStuckMEDir.SchoolDir, "schoolLogo.dat");
+                UnstuckME.ProgramDir = new UnstuckMEDirectory();
+				m_SchoolInfoFilePath = System.IO.Path.Combine(UnstuckME.ProgramDir.SchoolDir, "schoolLogo.dat");
 
 				if (File.Exists(m_SchoolInfoFilePath) != true)
 				{
