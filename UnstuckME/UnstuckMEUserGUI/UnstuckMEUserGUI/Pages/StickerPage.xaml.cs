@@ -56,5 +56,77 @@ namespace UnstuckMEUserGUI
                     mysticker.Resolve();
             }
         }
+
+        private void ButtonAvailable_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LabelTitle.Content = "Available Stickers";
+            LabelDescription.Content = "Stickers you qualify to tutor for.";
+            ButtonAvailable.Background = Brushes.SteelBlue;
+            ButtonHistory.Background = UnstuckME.Blue;
+            ButtonSubmitted.Background = UnstuckME.Blue;
+            ButtonTutoring.Background = UnstuckME.Blue;
+            ButtonAvailable.BorderBrush = Brushes.White;
+            ButtonHistory.BorderBrush = Brushes.Black;
+            ButtonSubmitted.BorderBrush = Brushes.Black;
+            ButtonTutoring.BorderBrush = Brushes.Black;
+            GridAvailable.Visibility = Visibility.Visible;
+            GridHistory.Visibility = Visibility.Hidden;
+            GridOpenStickers.Visibility = Visibility.Hidden;
+            GridSubmitted.Visibility = Visibility.Hidden;
+        }
+
+        private void ButtonSubmitted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LabelTitle.Content = "Submitted Stickers";
+            LabelDescription.Content = "Stickers you have submitted that need to be tutored.";
+            ButtonAvailable.Background = UnstuckME.Blue;
+            ButtonHistory.Background = UnstuckME.Blue;
+            ButtonSubmitted.Background = Brushes.SteelBlue;
+            ButtonTutoring.Background = UnstuckME.Blue;
+            ButtonAvailable.BorderBrush = Brushes.Black;
+            ButtonHistory.BorderBrush = Brushes.Black;
+            ButtonSubmitted.BorderBrush = Brushes.White;
+            ButtonTutoring.BorderBrush = Brushes.Black;
+            GridAvailable.Visibility = Visibility.Hidden;
+            GridHistory.Visibility = Visibility.Hidden;
+            GridOpenStickers.Visibility = Visibility.Hidden;
+            GridSubmitted.Visibility = Visibility.Visible;
+        }
+
+        private void ButtonTutoring_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LabelTitle.Content = "Tutor Stickers";
+            LabelDescription.Content = "Stickers you are currently tutoring.";
+            ButtonAvailable.Background = UnstuckME.Blue;
+            ButtonHistory.Background = UnstuckME.Blue;
+            ButtonSubmitted.Background = UnstuckME.Blue;
+            ButtonTutoring.Background = Brushes.SteelBlue;
+            ButtonAvailable.BorderBrush = Brushes.Black;
+            ButtonHistory.BorderBrush = Brushes.Black;
+            ButtonSubmitted.BorderBrush = Brushes.Black;
+            ButtonTutoring.BorderBrush = Brushes.White;
+            GridAvailable.Visibility = Visibility.Hidden;
+            GridHistory.Visibility = Visibility.Hidden;
+            GridOpenStickers.Visibility = Visibility.Visible;
+            GridSubmitted.Visibility = Visibility.Hidden;
+        }
+
+        private void ButtonHistory_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LabelTitle.Content = "Sticker History";
+            LabelDescription.Content = "Closed Stickers you have submitted or tutored for.";
+            ButtonAvailable.Background = UnstuckME.Blue;
+            ButtonHistory.Background = Brushes.SteelBlue;
+            ButtonSubmitted.Background = UnstuckME.Blue;
+            ButtonTutoring.Background = UnstuckME.Blue;
+            ButtonAvailable.BorderBrush = Brushes.Black;
+            ButtonHistory.BorderBrush = Brushes.White;
+            ButtonSubmitted.BorderBrush = Brushes.Black;
+            ButtonTutoring.BorderBrush = Brushes.Black;
+            GridAvailable.Visibility = Visibility.Hidden;
+            GridHistory.Visibility = Visibility.Visible;
+            GridOpenStickers.Visibility = Visibility.Hidden;
+            GridSubmitted.Visibility = Visibility.Hidden;
+        }
     }
 }

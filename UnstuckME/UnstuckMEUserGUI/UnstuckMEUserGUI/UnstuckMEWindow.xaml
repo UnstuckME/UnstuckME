@@ -37,12 +37,12 @@
                         <Label x:Name="AvailableStickerLabel" Background="#336699" Content="Notifications:" Padding="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="18" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Height="35"/>
                     </Border>
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Focusable="False">
                     <ScrollViewer x:Name="ScrollViewerNotifications" VerticalScrollBarVisibility="Auto" Height="Auto" VerticalAlignment="Top">
                         <StackPanel x:Name="NotificationStack" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
                     </ScrollViewer>
                 </Grid>
-                <Grid Grid.Row="2" Background="#336699">
+                <Grid Grid.Row="2" Background="#336699" Focusable="False">
                     <Border BorderBrush="Black" BorderThickness="0,1,0,1">
                         <Label x:Name="OnlineUsersLabel" Foreground="White" Content="Contacts: " VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Height="35"/>
                     </Border>
@@ -51,7 +51,7 @@
                     </Border>
                 </Grid>
                 <Grid Grid.Row="3">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
                         <StackPanel x:Name="OnlineUsersStack" Height="Auto" VerticalAlignment="Top"/>
                     </ScrollViewer>
                 </Grid>

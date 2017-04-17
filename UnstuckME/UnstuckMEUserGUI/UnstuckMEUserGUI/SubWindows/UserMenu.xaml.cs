@@ -46,10 +46,10 @@ namespace UnstuckMEUserGUI
             return new System.Windows.Point(point.X, point.Y);
         }
 
-        //private void MenuWindow_Deactivated(object sender, EventArgs e)
-        //{
-        //    this.Close();
-        //}
+        private void MenuWindow_Deactivated(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -58,7 +58,7 @@ namespace UnstuckMEUserGUI
 
         private void CloseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            this.WindowState = WindowState.Minimized;
         }
 
         private void ButtonRemoveFriend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

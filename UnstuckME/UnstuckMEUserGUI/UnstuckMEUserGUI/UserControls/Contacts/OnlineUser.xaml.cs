@@ -54,9 +54,7 @@ namespace UnstuckMEUserGUI
         {
             
             UserMenu menu = new UserMenu(Friend);
-            menu.Activate();
-            menu.Focus();
-            menu.ShowDialog();
+            menu.Show();
         }
     }
 }

@@ -12,8 +12,8 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Border x:Name="UserButton" Cursor="Hand" Margin="30,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" MouseEnter="UserButton_MouseEnter" MouseLeave="UserButton_MouseLeave" MouseLeftButtonDown="UserButton_MouseLeftButtonDown">
+        <Grid Grid.Row="0" Focusable="False">
+            <Border x:Name="UserButton" Focusable="False" Cursor="Hand" Margin="30,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" MouseEnter="UserButton_MouseEnter" MouseLeave="UserButton_MouseLeave" MouseLeftButtonDown="UserButton_MouseLeftButtonDown">
                 <Label x:Name="LabelUserName" Content="Hello" Foreground="White" Padding="5,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"> </Label>
             </Border>
             <Image x:Name="ImageUser" Source="/Resources/online.png" HorizontalAlignment="Left" Height="20" Width="20" Margin="4,0,0,0" VerticalAlignment="Center" Grid.Row="0"></Image>
