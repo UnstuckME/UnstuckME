@@ -241,6 +241,15 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
+        public void UpdateRatings()
+        {
+            UserInfo temp = UnstuckME.Server.GetUserInfo(UnstuckME.User.UserID, UnstuckME.User.EmailAddress);
+            UnstuckME.User.AverageStudentRank = temp.AverageStudentRank;
+            UnstuckME.User.AverageTutorRank = temp.AverageTutorRank;
+            studentRanking.SetRatingValue(temp.AverageStudentRank);
+            tutorRanking.SetRatingValue(temp.AverageTutorRank);
+        }
+
         private void TextBoxNewFirstName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
 

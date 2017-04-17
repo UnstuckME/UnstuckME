@@ -21,6 +21,7 @@ namespace UnstuckMEUserGUI.SubWindows
     {
         double starVal = 3.5;
         int _stickerID = 0;
+
         public AddStudentReviewWindow(int stickerID)
         {
             InitializeComponent();
@@ -37,6 +38,7 @@ namespace UnstuckMEUserGUI.SubWindows
         {
             UnstuckME.Server.CreateReview(_stickerID, UnstuckME.User.UserID, starVal, ReviewDescriptionTxtBox.Text, true);
             this.Close();
+            UnstuckME.Pages.StickerPage.RemoveSticker(_stickerID);
         }
     }
 }

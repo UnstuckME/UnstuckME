@@ -288,15 +288,17 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int CreateReport(string reportDescription, int flaggerID, int reviewID);
 
-		/// <summary>
-		/// Submits a review to the database.
-		/// </summary>
-		/// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
-		/// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
-		/// <param name="starRanking">The rating given to the user being reviewed.</param>
-		/// <param name="description">The description of the review.</param>
+        /// <summary>
+        /// Submits a review to the database. Finds the other user associated with the sticker and makes them submit
+        /// a review if they are online, otherwise adds it to the _ReviewList queue so they can submit it when they
+        /// next log on.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
+        /// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
+        /// <param name="starRanking">The rating given to the user being reviewed.</param>
+        /// <param name="description">The description of the review.</param>
         /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
-		/// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
+        /// <returns>Returns 0 if the review was created successfully, 1 if unsuccessful.</returns>
 		[OperationContract]
 		int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
 
@@ -427,7 +429,6 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void CreateMentorOrg(string name);
 
-
         /// <summary>
 		/// Adds a new class to the UnstuckME Database 
 		/// </summary>
@@ -451,6 +452,15 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
         [OperationContract]
         int DeleteMessage(UnstuckMEMessage message);
+
+        /// <summary>
+        /// When logging on, checks for any stickers that need reviews. This will only occur if the other member of the
+        /// sticker has submitted a review and this user was not online when this occured.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who is checking for reviews.</param>
+        /// <returns>Contains the StickerID and true if they are the student, false if they are the tutor. If there is no sticker, returns 0 for the sticker ID.</returns>
+        [OperationContract]
+        KeyValuePair<int, bool> CheckForReviews(int userID);
     }
 
     [ServiceContract(CallbackContract = typeof(IServer))]

@@ -21,7 +21,7 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class MySticker : UserControl
     {
-        UnstuckMESticker Sticker;
+        public UnstuckMESticker Sticker;
         UserClass Class;
         public MySticker(UnstuckMESticker inSticker)
         {
@@ -50,7 +50,8 @@ namespace UnstuckMEUserGUI
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Removes Sticker From Stack Panel
-            ((StackPanel)this.Parent).Children.Remove(this);
+            //((StackPanel)Parent).Children.Remove(this);
+            Resolve();
         }
 
         private void ButtonCompleted_MouseEnter(object sender, MouseEventArgs e)
@@ -67,7 +68,12 @@ namespace UnstuckMEUserGUI
         {
             Window win = new SubWindows.AddTutorReviewWindow(Sticker.StickerID);
             win.Show();
-            ((StackPanel)this.Parent).Children.Remove(this);
+            //ButtonRemove_MouseLeftButtonDown(sender, e);
+        }
+
+        public void Resolve()
+        {
+            ButtonCompleted.Visibility = Visibility.Collapsed;
         }
     }
 }

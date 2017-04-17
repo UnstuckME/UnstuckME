@@ -127,5 +127,45 @@ namespace UnstuckMEUserGUI
                 MessageBox.Show(ex.Message);
             }
         }
-	}
+
+        /// <summary>
+        /// Opens a CreateTutorReview window for the submission of a review on
+        /// the sticker identified by <paramref name="stickerID"/>.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to submit a review on.</param>
+        public void CreateReviewAsTutor(int stickerID)
+        {
+            try
+            {
+                UnstuckME.Pages.UserProfilePage.UpdateRatings();
+                Window window = new SubWindows.AddTutorReviewWindow(stickerID);
+                window.Show();
+                window.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Opens a CreateStudentReview window for the submission of a review on
+        /// the sticker identified by <paramref name="stickerID"/>.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to submit a review on.</param>
+        public void CreateReviewAsStudent(int stickerID)
+        {
+            try
+            {
+                UnstuckME.Pages.UserProfilePage.UpdateRatings();
+                Window window = new SubWindows.AddStudentReviewWindow(stickerID);
+                window.Show();
+                window.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    }
 }

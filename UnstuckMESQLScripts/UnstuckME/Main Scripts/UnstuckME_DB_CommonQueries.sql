@@ -624,14 +624,15 @@ create proc GetChatMessages
 ) as
 begin
 	select * from (
-		select ROW_NUMBER() over (order by SentTime asc) as [Row],
+		select ROW_NUMBER() over (order by SentTime desc, MessageID desc) as [Row],
 			MessageID, DisplayFName, DisplayLName, MessageData, FilePath, SentBy, SentTime
 		from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
 			join Chat						on UserToChat.ChatID = Chat.ChatID
 			join [Messages]					on Chat.ChatID = [Messages].ChatID
 		where UserToChat.ChatID = @chatid and UserProfile.UserID = [Messages].SentBy
 	) as [ChatMessages]
-	where [Row] between @startrow and @endrow;
+	where [Row] between @startrow and @endrow
+	order by [Row] desc
 end;
 
 /**************************************************************************

@@ -29,15 +29,16 @@ namespace UnstuckMEUserGUI.SubWindows
             sliderRating.Value = starVal;
         }
 
+        private void sliderRating_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            starVal = sliderRating.Value;
+        }
+
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             UnstuckME.Server.CreateReview(_stickerID, UnstuckME.User.UserID, starVal, ReviewDescriptionTxtBox.Text, false);
             this.Close();
-        }
-
-        private void sliderRating_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            starVal = sliderRating.Value;
+            UnstuckME.Pages.StickerPage.RemoveSticker(_stickerID);
         }
     }
 }

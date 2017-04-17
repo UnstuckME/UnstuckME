@@ -1,35 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Permissions;
-using System.ServiceModel;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
-	/// <summary>
-	/// Interaction logic for UnstuckMEWindow.xaml
-	/// </summary>
-	public partial class UnstuckMEWindow : Window
+    /// <summary>
+    /// Interaction logic for UnstuckMEWindow.xaml
+    /// </summary>
+    public partial class UnstuckMEWindow : Window
 	{
 		private static Privileges userPrivileges;
-		
-		public UnstuckMEWindow()
+
+        public UnstuckMEWindow()
 		{
 			InitializeComponent();
 			UnstuckME.MainWindow = this;
@@ -40,7 +28,7 @@ namespace UnstuckMEUserGUI
 			UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
 		}
 
-		async private void Window_ContentRendered(object sender, EventArgs e)
+        async private void Window_ContentRendered(object sender, EventArgs e)
 		{
 			UnstuckME.Red = StickerButton.Background;
 			await Task.Factory.StartNew(() => InitializeStaticMembers());
@@ -67,7 +55,8 @@ namespace UnstuckMEUserGUI
 			}
 
             LoadingScreen.Visibility = Visibility.Collapsed;
-		}
+            await Task.Factory.StartNew(() => CheckForReviews());
+        }
 
 		#region Asynchronous Loading Section
 
@@ -200,6 +189,39 @@ namespace UnstuckMEUserGUI
 				error.ShowDialog();
 			}
 		}
+
+        private void CheckForReviews()
+        {
+            System.Threading.Thread.Sleep(2000);    //wait 2 seconds so everything can be placed
+
+            try
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    KeyValuePair<int, bool> needsreview = UnstuckME.Server.CheckForReviews(UnstuckME.User.UserID);
+
+                    if (needsreview.Key != 0)
+                    {
+                        Window win;
+
+                        if (needsreview.Value)
+                            win = new SubWindows.AddTutorReviewWindow(needsreview.Key);
+                        else
+                            win = new SubWindows.AddStudentReviewWindow(needsreview.Key);
+
+                        win.Show();
+                        win.Focus();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to submit a review for the stickers you have open.", "Review Needed", UnstuckMEBoxImage.Information);
+                error.ShowDialog();
+            }
+        }
+
 		#endregion
 
 		public void AddUserToContactsStack(UnstuckMEChatUser inChatUser)
@@ -724,10 +746,10 @@ namespace UnstuckMEUserGUI
 		{
 			SwitchToStickerTab();
 		}
-		#endregion
-	}
+        #endregion
+    }
 
-	public class UnstuckMEPages
+    public class UnstuckMEPages
 	{
 		public StickerPage StickerPage { get; set; }
 		public SettingsPage SettingsPage { get; set; }

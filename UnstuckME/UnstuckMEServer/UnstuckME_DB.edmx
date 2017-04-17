@@ -1304,7 +1304,7 @@
             <Parameter Name="FlaggerID" Mode="In" Type="Int32" />
             <Parameter Name="ReviewID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="CreateReview">
+          <FunctionImport Name="CreateReview" ReturnType="Collection(Int32)">
             <Parameter Name="StickerID" Mode="In" Type="Int32" />
             <Parameter Name="ReviewerID" Mode="In" Type="Int32" />
             <Parameter Name="StarRanking" Mode="In" Type="Double" />

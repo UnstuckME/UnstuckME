@@ -28,6 +28,7 @@ namespace UnstuckMEInterfaces
 		private ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
 		private static ConcurrentQueue<UnstuckMEBigSticker> _StickerList;
 		private static ConcurrentQueue<UnstuckMEMessage> _MessageList;
+        private static ConcurrentQueue<int> _ReviewList = new ConcurrentQueue<int>();
 		
 		/// <summary>
 		/// This function is for testing stored procedures. In program.cs replace:
@@ -151,12 +152,53 @@ namespace UnstuckMEInterfaces
 			{
 				Console.WriteLine("SendStickerToClients Function Error: " + ex.Message);
 			}
-		}
+        }
 
-		/// <summary>
-		/// Checks that clients are still connected to the server. This is called on a separate thread every five seconds by the server.
-		/// </summary>
-		public void CheckUserStatus()
+        /// <summary>
+        /// When logging on, checks for any stickers that need reviews. This will only occur if the other member of the
+        /// sticker has submitted a review and this user was not online when this occured.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who is checking for reviews.</param>
+        /// <returns>Contains the StickerID and true if they are the student, false if they are the tutor. If there is no sticker, returns 0 for the sticker ID.</returns>
+        public KeyValuePair<int, bool> CheckForReviews(int userID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                if (_ReviewList.Count != 0)
+                {
+                    foreach (int Review_StickerID in _ReviewList)
+                    {
+                        var reviews = (from s in db.Stickers
+                                       join r in db.Reviews on s.StickerID equals r.StickerID
+                                       where s.StickerID == Review_StickerID
+                                       select new { s.StickerID, s.TutorID, s.StudentID, r.ReviewerID });
+
+                        foreach (var rev in reviews)
+                        {
+                            if (userID == rev.TutorID && userID != rev.ReviewerID)
+                            {
+                                int temp = rev.StickerID;
+                                _ReviewList.TryDequeue(out temp);
+                                return new KeyValuePair<int, bool>(rev.StickerID, false);
+                            }
+                            else if (userID == rev.StudentID && userID != rev.ReviewerID)
+                            {
+                                int temp = rev.StickerID;
+                                _ReviewList.TryDequeue(out temp);
+                                return new KeyValuePair<int, bool>(rev.StickerID, true);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new KeyValuePair<int, bool>(0, false);
+        }
+
+        /// <summary>
+        /// Checks that clients are still connected to the server. This is called on a separate thread every five seconds by the server.
+        /// </summary>
+        public void CheckUserStatus()
 		{
 			List<int> offlineUsers = new List<int>();
 			try
@@ -1030,54 +1072,76 @@ namespace UnstuckMEInterfaces
 		}
 
         /// <summary>
-        /// Submits a review to the database.
+        /// Submits a review to the database. Finds the other user associated with the sticker and makes them submit
+        /// a review if they are online, otherwise adds it to the _ReviewList queue so they can submit it when they
+        /// next log on.
         /// </summary>
         /// <param name="stickerID">The unique identifier of the sticker associated with the review.</param>
         /// <param name="reviewerID">The unique identifier of the user submitting the review.</param>
         /// <param name="starRanking">The rating given to the user being reviewed.</param>
         /// <param name="description">The description of the review.</param>
         /// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
-        /// <returns>The unique identifier of the newly submitted review if successful, -1 if unsuccessful.</returns>
+        /// <returns>Returns 0 if the review was created successfully, 1 if unsuccessful.</returns>
         public int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent)
 		{
 			try
 			{
-				int retVal = -1;
+                Nullable<int> retVal = 0;
+                Nullable<int> reviewedID = 0;
+
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
-					retVal = db.CreateReview(stickerID, reviewerID, starRanking, description);
-                    if (isAStudent)// the person being reviewed is a student
-                    {
-                        var IDofReveiwed =
-                            (from I in db.Stickers
-                            where I.TutorID == reviewerID
-                            select I.StudentID).First();
-                        db.AddStudentStarRankToUser(Convert.ToInt32(IDofReveiwed), starRanking);
-                    }
-                    else // the person being reviewed is a tutor
-                    {
-                        var IDofReveiwed =
-                            (from I in db.Stickers
-                            where I.StudentID == reviewerID
-                            select I.TutorID).First();
-                        db.AddTutorStarRankToUser(Convert.ToInt32(IDofReveiwed), starRanking);
-                    }
-                    var Reviews =
-                        from r in db.Reviews
-                        where r.StickerID == stickerID
-                        select r.StickerID;
-                    int i = 0;
-                    foreach (var item in Reviews)
-                    {
-                        i++;
-                    }
-                    if (i > 1)
-                    {
-                        db.MarkStickerAsResolved(stickerID);
-                    }
-				}
+					retVal = db.CreateReview(stickerID, reviewerID, starRanking, description).First();
 
-				return retVal;
+                    if (retVal.HasValue && retVal.Value != -1)
+                    {
+                        if (isAStudent)// the person being reviewed is a student
+                        {
+                            reviewedID = (from I in db.Stickers
+                                          where I.TutorID == reviewerID
+                                          select I.StudentID).First();
+
+                            db.AddStudentStarRankToUser(reviewedID.Value, starRanking);
+                        }
+                        else // the person being reviewed is a tutor
+                        {
+                            reviewedID = (from I in db.Stickers
+                                          where I.StudentID == reviewerID
+                                          select I.TutorID).First();
+
+                            db.AddTutorStarRankToUser(reviewedID.Value, starRanking);
+                        }
+
+                        var Reviews = from r in db.Reviews
+                                      where r.StickerID == stickerID
+                                      select r.StickerID;
+
+                        if (Reviews.Count() <= 1)
+                        {
+                            bool found = false;
+                            foreach (var client in _connectedClients)
+                            {
+                                if (client.Key == reviewedID.Value)
+                                {
+                                    if (isAStudent)
+                                        client.Value.connection.CreateReviewAsTutor(stickerID);
+                                    else
+                                        client.Value.connection.CreateReviewAsStudent(stickerID);
+
+                                    found = true;   //other sticker member is online
+                                    break;
+                                }
+                            }
+
+                            if (!found)     //other sticker member is not online
+                                _ReviewList.Enqueue(stickerID);     //add sticker to queue so they can submit a review when they log on next
+                        }
+                        else
+                            db.MarkStickerAsResolved(stickerID);    //all reviews have been submitted, mark as resolved
+                    }
+                }
+
+                return retVal.Value;
 			}
 			catch (Exception)
 			{

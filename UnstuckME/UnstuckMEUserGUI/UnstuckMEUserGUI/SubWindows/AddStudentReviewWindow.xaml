@@ -21,7 +21,7 @@
                 <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Click="Submit_Click" Height="36" Margin="0.4,0.4,0.6,-0.4"></Button>
             </Border>
             <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="sliderRating_ValueChanged"  VerticalContentAlignment="Top" HorizontalAlignment="Center" Maximum="5" Minimum="0" Margin="252,80,248,295"/>
-
+            <Label x:Name="sliderValue" Width="75" Height="35" Content="{Binding Value, ElementName=sliderRating}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,72,248,295" FontSize="25" Foreground="White" FontFamily="Global User Interface" />
         </Grid>
     </Grid>
 </Window>

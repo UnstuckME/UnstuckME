@@ -212,7 +212,7 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReport", reportDescriptionParameter, flaggerIDParameter, reviewIDParameter);
         }
     
-        public virtual int CreateReview(Nullable<int> stickerID, Nullable<int> reviewerID, Nullable<double> starRanking, string description)
+        public virtual ObjectResult<Nullable<int>> CreateReview(Nullable<int> stickerID, Nullable<int> reviewerID, Nullable<double> starRanking, string description)
         {
             var stickerIDParameter = stickerID.HasValue ?
                 new ObjectParameter("StickerID", stickerID) :
@@ -230,7 +230,7 @@ namespace UnstuckMEServer
                 new ObjectParameter("Description", description) :
                 new ObjectParameter("Description", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReview", stickerIDParameter, reviewerIDParameter, starRankingParameter, descriptionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CreateReview", stickerIDParameter, reviewerIDParameter, starRankingParameter, descriptionParameter);
         }
     
         public virtual int CreateServerAdmin(string firstName, string lastName, string emailAddress, string password, string salt)

@@ -72,5 +72,21 @@ namespace UnstuckMEInterfaces
         /// <param name="message">The message that has been removed.</param>
         [OperationContract]
         void DeleteChatMessage(UnstuckMEMessage message);
+
+        /// <summary>
+        /// Opens a CreateTutorReview window for the submission of a review on
+        /// the sticker identified by <paramref name="stickerID"/>.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to submit a review on.</param>
+        [OperationContract]
+        void CreateReviewAsTutor(int stickerID);
+
+        /// <summary>
+        /// Opens a CreateStudentReview window for the submission of a review on
+        /// the sticker identified by <paramref name="stickerID"/>.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to submit a review on.</param>
+        [OperationContract]
+        void CreateReviewAsStudent(int stickerID);
     }
 }

@@ -25,11 +25,36 @@ namespace UnstuckMEUserGUI
         public List<UnstuckMESticker> OpenStickers;
         public List<UnstuckMEAvailableSticker> RecentStickers;
         public List<UnstuckMESticker> MyStickersList;
+
         public StickerPage()
         {
             InitializeComponent();
         }
 
-    }
+        public void RemoveSticker(int stickerID)
+        {
+            foreach (OpenSticker opensticker in StackPanelOpenStickers.Children)
+            {
+                if (opensticker.Sticker.StickerID == stickerID)
+                {
+                    StackPanelStickerHistory.Children.Add(opensticker.Remove());
 
+                    for (int i = 0; i < OpenStickers.Count; i++)
+                    {
+                        if (OpenStickers[i].StickerID == stickerID)
+                        {
+                            OpenStickers.Remove(OpenStickers[i]);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            foreach (MySticker mysticker in StackPanelMyStickers.Children)
+            {
+                if (mysticker.Sticker.StickerID == stickerID)
+                    mysticker.Resolve();
+            }
+        }
+    }
 }
