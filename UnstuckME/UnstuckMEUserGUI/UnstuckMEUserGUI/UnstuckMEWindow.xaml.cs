@@ -18,13 +18,6 @@ namespace UnstuckMEUserGUI
 	{
 		private static Privileges userPrivileges;
 
-        private struct DirecortyList
-        {
-            public string dirName;
-            public bool found;
-        }
-
-
 		public UnstuckMEWindow()
 		{
 			InitializeComponent();
