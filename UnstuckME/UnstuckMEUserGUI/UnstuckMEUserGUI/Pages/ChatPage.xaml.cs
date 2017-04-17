@@ -379,36 +379,10 @@ namespace UnstuckMEUserGUI
             {
                 LabelInvalidUserNameSearch.Visibility = Visibility.Hidden;
                 int searchedUserID = -1;
-                int chatID;
                 if(UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
                 {
-                    chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
                     searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
-                    UnstuckME.Server.InsertUserIntoChat(searchedUserID, chatID);
-
-                    UnstuckMEMessage temp = new UnstuckMEMessage()
-                    {
-                        ChatID = chatID,
-                        FilePath = string.Empty,
-                        Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.",
-                        MessageID = 0,
-                        Username = UnstuckME.User.FirstName,
-                        SenderID = UnstuckME.User.UserID,
-                        UsersInConvo = new List<int>()
-                    };
-
-                    temp.UsersInConvo.Add(UnstuckME.User.UserID);
-                    temp.UsersInConvo.Add(searchedUserID);
-                    temp.MessageID = UnstuckME.Server.SendMessage(temp);
-                    AddMessage(temp);
-                    ButtonAddUserDone_Click(null, null);
-                    foreach (Conversation convo  in StackPanelConversations.Children.OfType<Conversation>())
-                    {
-                        if(convo.Chat.ChatID == chatID)
-                        {
-                            convo.ConversationUserControl_MouseLeftButtonDown(null, null);
-                        }
-                    }
+                    StartNewConversation(searchedUserID);
                 }
                 else
                 {
