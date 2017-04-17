@@ -27,7 +27,7 @@
                 <Label Name="LabelUsername" Foreground="White" FontSize="20" FontFamily="Arial" FontWeight="Bold" Content="UserName" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
             </Grid>
             <Grid Grid.Row="2">
-                <Border Name="ButtonRemoveFriend" Cursor="Hand" MouseLeftButtonDown="ButtonRemoveFriend_MouseLeftButtonDown" MouseEnter="ButtonRemoveFriend_MouseEnter" MouseLeave="ButtonRemoveFriend_MouseLeave" Background="#996666" BorderBrush="White" Margin="0,0,20,0"  BorderThickness="2,2,2,2" Width="150" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Border Name="ButtonRemoveFriend" Cursor="Hand" MouseLeftButtonDown="ButtonRemoveFriend_MouseLeftButtonDown" MouseEnter="ButtonRemoveFriend_MouseEnter" MouseLeave="ButtonRemoveFriend_MouseLeave" Background="#993333" BorderBrush="White" Margin="0,0,20,0"  BorderThickness="2,2,2,2" Width="150" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Label Foreground="White" Content="Remove" FontFamily="Arial" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
                 </Border>
                 <Border Name="ButtonSendMessage" Cursor="Hand" Background="ForestGreen" MouseEnter="ButtonSendMessage_MouseEnter" MouseLeftButtonDown="ButtonSendMessage_MouseLeftButtonDown" MouseLeave="ButtonSendMessage_MouseLeave" BorderBrush="White" Margin="20,0,0,0" BorderThickness="2,2,2,2" Width="150" Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
