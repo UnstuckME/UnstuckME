@@ -52,7 +52,11 @@ namespace UnstuckMEUserGUI
 
         private void UserButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Clicked");
+            
+            UserMenu menu = new UserMenu(Friend);
+            menu.Activate();
+            menu.Focus();
+            menu.ShowDialog();
         }
     }
 }

@@ -1,0 +1,39 @@
+﻿<Window x:Class="UnstuckMEUserGUI.UserMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEUserGUI"
+        mc:Ignorable="d"
+        Title="UserMenu" AllowsTransparency="True" SizeToContent="Height"  Width="400" Height="500" Background="{x:Null}" MaxWidth="400"  WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Border Background="DimGray" BorderBrush="Gray" BorderThickness="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="30*" MinHeight="30"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Border Margin="0,30,0,0">
+                    <Image Name="ProfilePicture" Height="150" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="UniformToFill" Source="/Resources/User/UserWhite.png"></Image>
+                </Border>
+                <Rectangle Height="20" Width="20" Fill="White" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0"></Rectangle>
+                <Border Name="CloseButton" Cursor="Hand" Focusable="False" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" Height="30" Margin="0,5,5,0" MouseLeftButtonDown="CloseButton_MouseLeftButtonDown">
+                    <Image Source="/Resources/Close/CloseRed.png" Stretch="UniformToFill"></Image>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Label Name="LabelUsername" Foreground="White" FontSize="20" FontFamily="Arial" FontWeight="Bold" Content="UserName" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Border Name="ButtonRemoveFriend" Cursor="Hand" MouseLeftButtonDown="ButtonRemoveFriend_MouseLeftButtonDown" MouseEnter="ButtonRemoveFriend_MouseEnter" MouseLeave="ButtonRemoveFriend_MouseLeave" Background="#996666" BorderBrush="White" Margin="0,0,20,0"  BorderThickness="2,2,2,2" Width="150" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Label Foreground="White" Content="Remove" FontFamily="Arial" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
+                </Border>
+                <Border Name="ButtonSendMessage" Cursor="Hand" Background="ForestGreen" MouseEnter="ButtonSendMessage_MouseEnter" MouseLeftButtonDown="ButtonSendMessage_MouseLeftButtonDown" MouseLeave="ButtonSendMessage_MouseLeave" BorderBrush="White" Margin="20,0,0,0" BorderThickness="2,2,2,2" Width="150" Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Label Foreground="White" Content="Message" FontFamily="Arial" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
