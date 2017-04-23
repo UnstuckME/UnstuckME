@@ -487,5 +487,8 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
         [OperationContract]
         int RemoveTutorFromSticker(int stickerID);
-	}
+
+        [OperationContract]
+        List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int num_messages = 20);
+    }
 }

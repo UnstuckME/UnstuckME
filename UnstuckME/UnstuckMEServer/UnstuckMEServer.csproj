@@ -87,16 +87,16 @@
     <Compile Include="Chat.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ChatFunctions.cs" />
+    <Compile Include="Implementations\ChatFunctions.cs" />
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ClassFunctions.cs" />
-    <Compile Include="FileStreamFunctions.cs" />
+    <Compile Include="Implementations\ClassFunctions.cs" />
+    <Compile Include="Implementations\FileStreamFunctions.cs" />
     <Compile Include="Friend.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="FriendFunctions.cs" />
+    <Compile Include="Implementations\FriendFunctions.cs" />
     <Compile Include="GetActiveStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -175,10 +175,11 @@
     <Compile Include="Message.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="MessageFunctions.cs" />
+    <Compile Include="Implementations\MessageFunctions.cs" />
     <Compile Include="OfficialMentor.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\OrganizationFunctions.cs" />
     <Compile Include="Picture.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -187,16 +188,19 @@
     <Compile Include="Report.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ReportFunctions.cs" />
+    <Compile Include="Implementations\ReportFunctions.cs" />
     <Compile Include="Review.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ReviewFunctions.cs" />
+    <Compile Include="Implementations\ReviewFunctions.cs" />
+    <Compile Include="Ryans_GetChatMessage_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="ServerAdmin.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ServerClasses.cs" />
-    <Compile Include="ServerFunctions.cs" />
+    <Compile Include="Implementations\ServerFunctions.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -206,11 +210,11 @@
     <Compile Include="Sticker.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="StickerFunctions.cs" />
+    <Compile Include="Implementations\StickerFunctions.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="UnstuckMEService.cs" />
+    <Compile Include="Implementations\ServiceFunctions.cs" />
     <Compile Include="UnstuckME_DB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,7 +233,7 @@
     <Compile Include="UpdateUserTotalReviews_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserFunctions.cs" />
+    <Compile Include="Implementations\UserFunctions.cs" />
     <Compile Include="UserProfile.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>

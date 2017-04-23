@@ -151,5 +151,28 @@ namespace UnstuckMEInterfaces
                 return null;
             }
         }
+
+        public List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int num_messages = 20)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var messages = db.Ryans_GetChatMessage(chatID, messageID, num_messages);
+
+                List<UnstuckMEMessage> messagelist = new List<UnstuckMEMessage>();
+
+                foreach (var message in messages)
+                {
+                    messagelist.Add(new UnstuckMEMessage()
+                    {
+                        MessageID = message.MessageID,
+                        Message = message.MessageData,
+                        SenderID = message.SentBy,
+                        Time = message.SentTime
+                    });
+                }
+
+                return messagelist;
+            }
+        }
     }
 }

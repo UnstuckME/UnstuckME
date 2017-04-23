@@ -1256,5 +1256,22 @@ namespace UnstuckMEServer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ViewClasses_Result>("ViewClasses", classIDParameter);
         }
+    
+        public virtual ObjectResult<Ryans_GetChatMessage_Result> Ryans_GetChatMessage(Nullable<int> chatid, Nullable<int> startingID, Nullable<int> nummessages)
+        {
+            var chatidParameter = chatid.HasValue ?
+                new ObjectParameter("chatid", chatid) :
+                new ObjectParameter("chatid", typeof(int));
+    
+            var startingIDParameter = startingID.HasValue ?
+                new ObjectParameter("startingID", startingID) :
+                new ObjectParameter("startingID", typeof(int));
+    
+            var nummessagesParameter = nummessages.HasValue ?
+                new ObjectParameter("nummessages", nummessages) :
+                new ObjectParameter("nummessages", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ryans_GetChatMessage_Result>("Ryans_GetChatMessage", chatidParameter, startingIDParameter, nummessagesParameter);
+        }
     }
 }
