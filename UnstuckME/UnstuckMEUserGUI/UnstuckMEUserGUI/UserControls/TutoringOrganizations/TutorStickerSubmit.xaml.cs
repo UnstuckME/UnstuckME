@@ -33,11 +33,7 @@ namespace UnstuckMEUserGUI
 
         private void buttonRemoveOrg_Click(object sender, RoutedEventArgs e)
         {
-            ((StackPanel)this.Parent).Children.Remove(this);
-        }
-        public int GetOrganizationID()
-        {
-            return OrganizationID;
+            ((StackPanel)Parent).Children.Remove(this);
         }
     }
 }

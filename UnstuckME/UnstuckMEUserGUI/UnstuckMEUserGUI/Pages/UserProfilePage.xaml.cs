@@ -115,6 +115,7 @@ namespace UnstuckMEUserGUI
                     Filter = "Image Files (*.jpeg;*.png;*.jpg)|*.jpeg;*.png;*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg",
                     Title = "Open Image"
                 };
+
                 if (file_browser.ShowDialog().Value)
 				{
 					Stream file = file_browser.OpenFile();
@@ -138,24 +139,7 @@ namespace UnstuckMEUserGUI
                         ix.StreamSource = ms;
                         ix.EndInit();
 
-                        //ms.Position = 0L;
-                        using (UnstuckMEStream stream = new UnstuckMEStream(byte_array, true))
-                        {
-                            stream.User = UnstuckME.User;
-                            UnstuckME.FileStream.SetProfilePicture(stream); //change picture on database/server
-                        }
-
                         ImageEditProfilePicture.Source = ix;
-                        ProfilePicture.Source = ImageEditProfilePicture.Source; //change picture on application
-                    }
-
-                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-                    {
-                        foreach (UnstuckMEChatUser user in chat.Users)
-                        {
-                            if(user.UserID == UnstuckME.User.UserID)
-                                user.ProfilePicture = ProfilePicture.Source;
-                        }
                     }
 
 					thumbnail.Dispose();	//avoids memory leaks
@@ -166,7 +150,7 @@ namespace UnstuckMEUserGUI
             {
 				UnstuckMEMessageBox message = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Image Size Error", UnstuckMEBoxImage.Warning);
 				message.ShowDialog();
-                string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                string unstuckME = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
                 Process.Start(unstuckME);
                 System.Windows.Application.Current.Shutdown();
             }
@@ -174,6 +158,9 @@ namespace UnstuckMEUserGUI
 
         private void ButtonBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (ProfilePicture.Source != ImageEditProfilePicture.Source)
+                ImageEditProfilePicture.Source = ProfilePicture.Source;
+
             GridDefault.IsEnabled = true;
             GridDefault.Visibility = Visibility.Visible;
             GridEditProfile.Visibility = Visibility.Hidden;
@@ -182,58 +169,98 @@ namespace UnstuckMEUserGUI
 
         private void ButtonSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-			if (PasswordBoxNewPassword.Password != PasswordBoxConfirm.Password)
-			{
-				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Your passwords do not match, please reenter your password.", "Incorrect Password", UnstuckMEBoxImage.Warning);
-				messagebox.ShowDialog();
-			}
-			else
-			{
-                if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
+            if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
+            {
+                try
+                {
+                    UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, TextBoxNewFirstName.Text, UnstuckME.User.LastName);
+                    UnstuckME.User.FirstName = TextBoxNewFirstName.Text;
+                    FirstName.Text = TextBoxNewFirstName.Text;
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
+                }
+            }
+            if (TextBoxNewLastName.Text != UnstuckME.User.LastName && TextBoxNewLastName.Text != "" && TextBoxNewLastName.Text != null)
+            {
+                try
+                {
+                    UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, UnstuckME.User.FirstName, TextBoxNewLastName.Text);
+                    UnstuckME.User.LastName = TextBoxNewFirstName.Text;
+                    LastName.Text = TextBoxNewFirstName.Text;
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName");
+                }
+            }
+            if (PasswordBoxNewPassword.Password != null && PasswordBoxNewPassword.Password != "" && PasswordBoxConfirm.Password != null && PasswordBoxConfirm.Password != "")
+            {
+                if (PasswordBoxNewPassword.Password == PasswordBoxConfirm.Password)
                 {
                     try
                     {
-                       UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, TextBoxNewFirstName.Text, UnstuckME.User.LastName);
+                        UnstuckME.Server.ChangePassword(UnstuckME.User, PasswordBoxNewPassword.Password);
+                        UnstuckME.User.UserPassword = PasswordBoxNewPassword.Password;
                     }
                     catch (Exception ex)
                     {
-                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password");
                     }
                 }
-                if (TextBoxNewLastName.Text != UnstuckME.User.LastName && TextBoxNewLastName.Text != "" && TextBoxNewLastName.Text != null)
+                else
                 {
-                    try
-                    {
-                        UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, UnstuckME.User.FirstName, TextBoxNewLastName.Text);
-                    }
-                    catch (Exception ex)
-                    {
-                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName");
-                    }
+                    UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "The passwords that you entered do not match.", "Username/Password Change Failed", UnstuckMEBoxImage.Warning);
+                    messagebox.ShowDialog();
                 }
-                if (PasswordBoxNewPassword.Password != null && PasswordBoxNewPassword.Password != "" && PasswordBoxConfirm.Password != null && PasswordBoxConfirm.Password != "")
+            }
+            if (ImageEditProfilePicture.Source != ProfilePicture.Source)
+            {
+                try
                 {
-                    if (PasswordBoxNewPassword.Password == PasswordBoxConfirm.Password)
-                    {
-                        try
-                        {
-                            UnstuckME.Server.ChangePassword(UnstuckME.User, PasswordBoxNewPassword.Password);
-                        }
-                        catch (Exception ex)
-                        {
-                            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password");
-                        }
-                    }
-                    else
-                    {
-                        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "The passwords that you entered do not match.", "Username/Password Change Failed", UnstuckMEBoxImage.Warning);
-                        messagebox.ShowDialog();
-                    }
-                }
+                    byte[] byte_array = null;
+                    var bitmapsource = ImageEditProfilePicture.Source as BitmapImage;
+                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
 
-                ButtonBack_MouseLeftButtonDown(sender, e);
-			}
-		}
+                    if (bitmapsource != null)
+                    {
+                        encoder.Frames.Add(BitmapFrame.Create(bitmapsource));
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            encoder.Save(ms);
+                            byte_array = ms.ToArray();
+                        }
+
+                        using (UnstuckMEStream stream = new UnstuckMEStream(byte_array, true))
+                        {
+                            stream.User = UnstuckME.User;
+                            UnstuckME.FileStream.SetProfilePicture(stream); //change picture on database/server
+                        }
+
+                        ProfilePicture.Source = ImageEditProfilePicture.Source; //change picture on application
+
+                        foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+                        {
+                            foreach (UnstuckMEChatUser user in chat.Users)
+                            {
+                                if (user.UserID == UnstuckME.User.UserID)
+                                    user.ProfilePicture = ProfilePicture.Source;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while attempting to change your profile picture");
+                }
+            }
+
+            GridDefault.IsEnabled = true;
+            GridDefault.Visibility = Visibility.Visible;
+            GridEditProfile.Visibility = Visibility.Hidden;
+            GridEditProfile.IsEnabled = false;
+        }
 
         public void UpdateRatings()
         {
