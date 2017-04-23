@@ -549,6 +549,15 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDisplayNameAndEmail_Result>("GetDisplayNameAndEmail", useridParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> GetNumMsgsInAChat(Nullable<int> chatID)
+        {
+            var chatIDParameter = chatID.HasValue ?
+                new ObjectParameter("chatID", chatID) :
+                new ObjectParameter("chatID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetNumMsgsInAChat", chatIDParameter);
+        }
+    
         public virtual ObjectResult<byte[]> GetProfilePicture(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?
@@ -586,6 +595,15 @@ namespace UnstuckMEServer
                 new ObjectParameter("classid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResolvedStickers_Result>("GetResolvedStickers", starrankParameter, organizationParameter, useridParameter, classidParameter);
+        }
+    
+        public virtual ObjectResult<GetStickerInfo_Result> GetStickerInfo(Nullable<int> stickerID)
+        {
+            var stickerIDParameter = stickerID.HasValue ?
+                new ObjectParameter("stickerID", stickerID) :
+                new ObjectParameter("stickerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStickerInfo_Result>("GetStickerInfo", stickerIDParameter);
         }
     
         public virtual ObjectResult<GetTimedOutStickers_Result> GetTimedOutStickers(Nullable<double> starrank, Nullable<int> organization, Nullable<int> userid, Nullable<int> classid)
@@ -1237,15 +1255,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("ClassID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ViewClasses_Result>("ViewClasses", classIDParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> GetNumMsgsInAChat(Nullable<int> chatID)
-        {
-            var chatIDParameter = chatID.HasValue ?
-                new ObjectParameter("chatID", chatID) :
-                new ObjectParameter("chatID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetNumMsgsInAChat", chatIDParameter);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace UnstuckMEUserGUI
     {
         public UnstuckMESticker Sticker;
         UserClass Class;
+
         public MySticker(UnstuckMESticker inSticker)
         {
             InitializeComponent();
@@ -30,11 +31,7 @@ namespace UnstuckMEUserGUI
             Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
             LabelDescription.Content = Sticker.ProblemDescription;
-			LabelTimeout.Content = "Timeout: " + Sticker.Timeout.ToLongDateString();//DateTime.Now.AddSeconds(Sticker.Timeout).ToLongDateString() + " " + DateTime.Now.AddSeconds(Sticker.Timeout).ToShortTimeString();
-            if (Sticker.Timeout < DateTime.Now)
-            {
-                this.Visibility = Visibility.Collapsed;
-            }
+			LabelTimeout.Content = "Timeout: " + Sticker.Timeout.ToLongDateString();
         }
 
         private void ButtonRemove_MouseEnter(object sender, MouseEventArgs e)
@@ -49,8 +46,8 @@ namespace UnstuckMEUserGUI
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //UnstuckME.Server.DeleteSticker(Sticker.StickerID);    //should delete the sticker
-            Resolve();
+            if (UnstuckME.Server.DeleteSticker(Sticker.StickerID) == 0)
+                ((StackPanel)Parent).Children.Remove(this);
         }
 
         private void ButtonCompleted_MouseEnter(object sender, MouseEventArgs e)
@@ -67,11 +64,6 @@ namespace UnstuckMEUserGUI
         {
             Window win = new SubWindows.AddTutorReviewWindow(Sticker.StickerID);
             win.Show();
-        }
-
-        public void Resolve()
-        {
-            ButtonCompleted.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -16,14 +16,4 @@ namespace UnstuckME_Classes
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 	}
-
-	[DataContract]
-	public class UnstuckMEFile
-	{
-		[DataMember]
-		public string Name { get; set; }
-
-		[DataMember]
-		public byte[] Content { get; set; }
-	}
 }

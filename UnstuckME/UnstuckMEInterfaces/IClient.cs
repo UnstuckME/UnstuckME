@@ -20,14 +20,14 @@ namespace UnstuckMEInterfaces
         /// Gets a message from the server to show to the client.
         /// </summary>
         /// <param name="message">The message to send to the client.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void GetMessageFromServer(string message);
 
         /// <summary>
         /// Updates a user's conversation if they are online and another user sends them a message.
         /// </summary>
         /// <param name="message">The message being sent to the user.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void GetMessage(UnstuckMEMessage message);
 
         /// <summary>
@@ -35,21 +35,21 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="message">The message being sent to the user.</param>
         /// <param name="file">The file being sent to the user.</param>
-  //      [OperationContract]
-		//void GetFile(UnstuckMEMessage message, UnstuckMEFile file);
+        //      [OperationContract]
+        //void GetFile(UnstuckMEMessage message, UnstuckMEFile file);
 
         /// <summary>
         /// Adds a class to the user's GUI.
         /// </summary>
         /// <param name="inClass">The class to add to the user's GUI.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void AddClasses(UserClass inClass);
 
         /// <summary>
         /// Removes a sticker from any online, qualified user's GUI.
         /// </summary>
         /// <param name="stickerID">The sticker to be removed.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void RemoveGUISticker(int stickerID);
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace UnstuckMEInterfaces
         /// Removes a chat message if a user in the conversation has deleted it.
         /// </summary>
         /// <param name="message">The message that has been removed.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void DeleteChatMessage(UnstuckMEMessage message);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace UnstuckMEInterfaces
         /// the sticker identified by <paramref name="stickerID"/>.
         /// </summary>
         /// <param name="stickerID">The unique identifier of the sticker to submit a review on.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void CreateReviewAsTutor(int stickerID);
 
         /// <summary>
@@ -86,7 +86,10 @@ namespace UnstuckMEInterfaces
         /// the sticker identified by <paramref name="stickerID"/>.
         /// </summary>
         /// <param name="stickerID">The unique identifier of the sticker to submit a review on.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void CreateReviewAsStudent(int stickerID);
+
+        [OperationContract(IsOneWay = true)]
+        void UpdateStickerStatus(int stickerID);
     }
 }

@@ -167,5 +167,18 @@ namespace UnstuckMEUserGUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+
+        public void UpdateStickerStatus(int stickerID)
+        {
+            try
+            {
+                UnstuckME.Pages.StickerPage.UpdateStickerStatus(stickerID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

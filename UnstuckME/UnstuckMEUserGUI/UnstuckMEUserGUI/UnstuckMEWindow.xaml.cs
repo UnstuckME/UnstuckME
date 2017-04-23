@@ -457,22 +457,18 @@ namespace UnstuckMEUserGUI
 
 		public void RemoveStickerFromAvailableStickers(int stickerID)
 		{
-			this.Dispatcher.Invoke(() =>
+			Dispatcher.Invoke(() =>
 			{
 				try
 				{
 					AvailableSticker temp = null;
-					foreach (var control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.OfType<AvailableSticker>())
+					foreach (AvailableSticker control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children)
 					{
 						if (control.Sticker.StickerID == stickerID)
-						{
 							temp = control;
-						}
 					}
 					if (temp != null)
-					{
 						UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
-					}
 				}
 				catch (Exception)
 				{
@@ -483,7 +479,7 @@ namespace UnstuckMEUserGUI
 
 		public void StickerAcceptedStartConversation(UnstuckMEAvailableSticker sticker, int tutorID)
 		{
-			this.Dispatcher.Invoke(() =>
+			Dispatcher.Invoke(() =>
 			{
 				int PreExistingChatID = -1;
 				//Search For Pre-Existing Conversation
@@ -496,14 +492,12 @@ namespace UnstuckMEUserGUI
 						foreach (UnstuckMEChatUser user in chat.Users)
 						{
 							if (user.UserID == sticker.StudentID)
-							{ studentFound = true; }
+							    studentFound = true;
 							if (user.UserID == tutorID)
-							{ tutorFound = true; }
+							    tutorFound = true;
 						}
 						if (studentFound && tutorFound)
-						{
 							PreExistingChatID = chat.ChatID;
-						}
 					}
 				}
 

@@ -35,7 +35,7 @@ namespace UnstuckMEUserGUI
         public void RemoveFromStackPanel()
         {
             //Removes Sticker From Stack Panel
-            ((StackPanel)this.Parent).Children.Remove(this);
+            ((StackPanel)Parent).Children.Remove(this);
         }
 
         private void GridClassName_MouseEnter(object sender, MouseEventArgs e)
@@ -86,8 +86,7 @@ namespace UnstuckMEUserGUI
 
         private void BorderX_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //Removes Sticker From Stack Panel
-            ((StackPanel)this.Parent).Children.Remove(this);
+            RemoveFromStackPanel();
         }
 
         private void ButtonAccept_MouseEnter(object sender, MouseEventArgs e)
@@ -106,7 +105,7 @@ namespace UnstuckMEUserGUI
             {
                 UnstuckME.Server.AcceptSticker(UnstuckME.User.UserID, Sticker.StickerID);
                 Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker, UnstuckME.User.UserID);
-                ((StackPanel)this.Parent).Children.Remove(this);
+                RemoveFromStackPanel();
             }
             catch (Exception ex)
             {
