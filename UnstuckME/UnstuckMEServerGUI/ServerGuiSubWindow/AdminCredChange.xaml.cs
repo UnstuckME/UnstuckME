@@ -45,7 +45,7 @@ namespace UnstuckMEServerGUI
                     throw new Exception("Password Too Short, 6-32 characters.");
                 if (passwordBoxNewPassword.Password.Length > 32)
                     throw new Exception("Password Too Long, 6-32 characters.");
-                using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                     {
                         MessageBoxResult result = MessageBox.Show("Save Changes?", "Save Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                         if (result == MessageBoxResult.Yes)

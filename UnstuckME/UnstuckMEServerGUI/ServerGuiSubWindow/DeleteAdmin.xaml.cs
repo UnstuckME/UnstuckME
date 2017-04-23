@@ -32,7 +32,7 @@ namespace UnstuckMEServerGUI
         {
             try
             {
-                using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     if (textBoxTargetDelete.Text == Admin.EmailAddress)
                         throw new Exception("You Cannot Delete The Admin You are Logged in as");

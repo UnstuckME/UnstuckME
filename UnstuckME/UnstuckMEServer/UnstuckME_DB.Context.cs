@@ -1247,5 +1247,14 @@ namespace UnstuckMEServer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ViewClasses_Result>("ViewClasses", classIDParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> GetNumMsgsInAChat(Nullable<int> chatID)
+        {
+            var chatIDParameter = chatID.HasValue ?
+                new ObjectParameter("chatID", chatID) :
+                new ObjectParameter("chatID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetNumMsgsInAChat", chatIDParameter);
+        }
     }
 }

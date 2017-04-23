@@ -1963,6 +1963,14 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
+        public int GetNumberOFMesseges(int chatID)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    return db.GetNumMsgsInAChat(chatID).First().Value;
+                }
         /// <summary>
         /// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
         /// see that sticker. This should only be done if the sticker does not already have a tutor.
@@ -2048,12 +2056,21 @@ namespace UnstuckMEInterfaces
 
 		#endregion
 
-		#region ServerGUI Functions
-		/// <summary>
-		/// Returns a boolean value identifying that the server is running.
-		/// </summary>
-		/// <returns>True.</returns>
-		public bool TestNewConfig()
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        #endregion
+
+        #region ServerGUI Functions
+        /// <summary>
+        /// Returns a boolean value identifying that the server is running.
+        /// </summary>
+        /// <returns>True.</returns>
+        public bool TestNewConfig()
 		{
 			return true;
 		}
@@ -2332,6 +2349,8 @@ namespace UnstuckMEInterfaces
 			};
 			return file;
 		}
-		#endregion
-	}
+
+        
+        #endregion
+    }
 }

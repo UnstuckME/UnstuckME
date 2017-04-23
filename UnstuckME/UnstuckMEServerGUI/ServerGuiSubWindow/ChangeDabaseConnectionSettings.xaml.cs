@@ -121,10 +121,10 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             try
             {
 
-                UnstuckMEServer_DBEntities SelectedDB = new UnstuckMEServer_DBEntities();
+                UnstuckME_DBEntities SelectedDB = new UnstuckME_DBEntities();
                 //MessageBox.Show(SelectedDB.Database.Connection.ConnectionString.ToString());
 
-                SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckMEServer_DBEntities",initialCatalog: textBoxDatabaseName.Text, userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
+                SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckME_DBEntities",initialCatalog: textBoxDatabaseName.Text, userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
                            
                 using (var connection = new SqlConnection(SelectedDB.Database.Connection.ConnectionString))
                 {
@@ -148,7 +148,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
                         Configuration exeConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-                        exeConfig.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString = ConnectionTools.entityCnxStringBuilder.ToString();
+                        exeConfig.ConnectionStrings.ConnectionStrings["UnstuckME_DBEntities"].ConnectionString = ConnectionTools.entityCnxStringBuilder.ToString();
                         exeConfig.Save(ConfigurationSaveMode.Modified);
 
                         // Try and update the UnstuckME_Schools DB with the new information

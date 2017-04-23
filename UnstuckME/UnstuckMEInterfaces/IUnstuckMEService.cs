@@ -346,6 +346,14 @@ namespace UnstuckMEInterfaces
 		UnstuckMEChat GetSingleChat(int chatID);
 
 
+        /// <summary>
+		/// Gets the number of messages in a particular chat.
+		/// </summary>
+		/// <param name="chatID">The unique identifier of a specific chat.</param>
+		/// <returns>A number indicating how many messages a chat has</returns>
+        [OperationContract]
+        int GetNumberOFMesseges(int chatID);
+
 		/// <summary> 
 		/// Gets unique identifiers of all the chats a user is associated with. 
 		/// </summary> 

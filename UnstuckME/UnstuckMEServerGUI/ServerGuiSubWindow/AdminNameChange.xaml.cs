@@ -38,7 +38,7 @@ namespace UnstuckMEServerGUI
                     throw new Exception("Please Enter a New Last Name");
                 if (textBoxUsername.Text.Length == 0)
                     throw new Exception("Please Enter your Current Username.");
-                using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     ServerAdmin queryAdmin = (from u in db.ServerAdmins
                                               where u.EmailAddress == textBoxUsername.Text

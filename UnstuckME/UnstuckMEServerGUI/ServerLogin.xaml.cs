@@ -50,7 +50,7 @@ namespace UnstuckMEServerGUI
                         throw new Exception();
                     }
 
-                    using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
+                    using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                     {
                         var admin = (from u in db.ServerAdmins
                             where u.EmailAddress.ToLower() == textBoxEmailAddress.Text.ToLower()
@@ -73,7 +73,7 @@ namespace UnstuckMEServerGUI
                                 Application.Current.MainWindow = changeloginCreds;
                                 changeloginCreds.ShowDialog();
 
-                                using (UnstuckMEServer_DBEntities db2 = new UnstuckMEServer_DBEntities())
+                                using (UnstuckME_DBEntities db2 = new UnstuckME_DBEntities())
                                 {
                                     admin = (from u in db2.ServerAdmins
                                         where u.ServerAdminID == Admin.ServerAdminID
