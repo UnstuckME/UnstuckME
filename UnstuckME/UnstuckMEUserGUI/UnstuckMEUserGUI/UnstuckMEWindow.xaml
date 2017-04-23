@@ -11,13 +11,8 @@
         Closing="Window_Closing">
     <Grid x:Name="Overlay">
         <Grid x:Name="LoadingScreen" Background="DimGray" Height="{Binding ActualHeight, ElementName=Overlay}" Width="{Binding ActualWidth, ElementName=Overlay}" Panel.ZIndex="1">
-            <Label x:Name="LoadingScreenLabel1" Height="{Binding ActualHeight, ElementName=LoadingScreen}" Width="{Binding ActualWidth, ElementName=LoadingScreen}"
-                   Content="Ready to get Unf... (*cough*)" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,-30,0,0" FontFamily="Showcard Gothic"
-                   FontSize="20" Foreground="White" />
-            <Label x:Name="LoadingScreenLabel2" Height="{Binding ActualHeight, ElementName=LoadingScreen}" Width="{Binding ActualWidth, ElementName=LoadingScreen}"
-                   Content="UNSTUCK!?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,30,0,0" FontFamily="Broadway" FontSize="50" Foreground="Red" />
-            <Image x:Name="LoadingUnstuckMELogo1" Source="Resources/UnstuckMEGraphic.png" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <Image x:Name="LoadingUnstuckMELogo2" Source="Resources/UnstuckMEGraphic.png" Width="250" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+            <Label x:Name="LoadingScreenLabel" Height="{Binding ActualHeight, ElementName=LoadingScreen}" Width="{Binding ActualWidth, ElementName=LoadingScreen}"
+                   Content="Loading ..." HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,-30,0,0" FontSize="36" Foreground="White" FontWeight="Bold" />
         </Grid>
         <Grid Visibility="Visible">
             <Grid.ColumnDefinitions>

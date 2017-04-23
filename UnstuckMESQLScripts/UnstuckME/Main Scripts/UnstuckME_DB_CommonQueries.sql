@@ -92,7 +92,9 @@ if object_id('GetUserSubmittedStickers') is not null
 if object_id('GetUserTutoredStickers') is not null
 	drop procedure GetUserTutoredStickers;
 if object_id('GetNumMsgsInAChat') is not null 
-  drop procedure GetNumMsgsInAChat; 
+  drop procedure GetNumMsgsInAChat;
+if object_id('GetStickerInfo') is not null
+	drop procedure GetStickerInfo;
 
 /**************************************************************************
 * Gets all Stickers for Admin
@@ -159,6 +161,7 @@ CREATE PROC GetUsersThatCanTutorASticker
 AS
 	BEGIN /*IF TUTORING FILTER IS APPLIED*/
 		IF EXISTS (SELECT * FROM StickerToMentor JOIN Sticker ON Sticker.StickerID = StickerToMentor.StickerID WHERE Sticker.StickerID = @inStickerID)
+		BEGIN
 			SELECT DISTINCT UserProfile.UserID FROM Sticker
 			JOIN StickerToMentor AS B ON B.StickerID = Sticker.StickerID
 			JOIN Classes ON Sticker.ClassID = Classes.ClassID
@@ -167,12 +170,15 @@ AS
 			JOIN OmToUser ON UserProfile.UserID = OmToUser.UserID
 			JOIN StickerToMentor AS a ON B.MentorID = OmToUser.MentorID
 			WHERE Sticker.StickerID = @inStickerID AND UserProfile.AverageTutorRank >= Sticker.MinimumStarRanking	AND UserProfile.UserID != Sticker.StudentID
+		END
 		ELSE /*NO TUTORING FILTER*/
+		BEGIN
 			SELECT DISTINCT UserProfile.UserID FROM Sticker
 			JOIN Classes ON Classes.ClassID = Sticker.ClassID
 			JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
 			JOIN UserProfile ON UserToClass.UserID = UserProfile.UserID
 			WHERE Sticker.StickerID = @inStickerID AND UserProfile.AverageTutorRank >= Sticker.MinimumStarRanking AND UserProfile.UserID != Sticker.StudentID
+		END
 	END
 GO
 
@@ -881,7 +887,7 @@ begin
 		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
-		join Review			on Review.StickerID = Sticker.StickerID
+		join Review					on Review.StickerID = Sticker.StickerID
 	where Sticker.StudentID = @userID
 		and MinimumStarRanking <= case when @starrank <> 0
 											then @starrank
@@ -898,7 +904,7 @@ union
 		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
 	from UserProfile join Sticker	on UserProfile.UserID = Sticker.StudentID
 		join Classes				on Sticker.ClassID = Classes.ClassID
-		join Review			on Review.StickerID = Sticker.StickerID
+		join Review					on Review.StickerID = Sticker.StickerID
 		join StickerToMentor		on Sticker.StickerID = StickerToMentor.StickerID
 	where Sticker.StudentID = @userID
 		and MinimumStarRanking <= case when @starrank <> 0
@@ -916,4 +922,19 @@ union
 		and datediff(minute, getdate(), [Timeout]) < 0
 		and (select count(*) from Review where Review.StickerID = Sticker.StickerID) < 2
 order by [Timeout] asc, SubmitTime asc;
+end;
+
+/*************************************************************************
+* Gets the Stickers associated with a user that are either resolved or timed out
+*************************************************************************/
+go
+create proc GetStickerInfo
+(	@stickerID int	) as
+begin
+	select DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, StudentID, TutorID,
+		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
+	from UserProfile join Sticker	on UserProfile.UserId = Sticker.StudentID
+		join Classes				on Classes.ClassID = Sticker.ClassID
+		join StickerToMentor		on StickerToMentor.StickerID = Sticker.StickerID
+	where Sticker.StickerID = @stickerID
 end;

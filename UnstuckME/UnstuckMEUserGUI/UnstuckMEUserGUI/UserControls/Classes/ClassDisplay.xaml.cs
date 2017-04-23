@@ -24,15 +24,11 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ClassDisplay : UserControl
     {
-        //public static int m_UserID;
-        //public static IUnstuckMEService m_OpenServer;
         UserClass Class;
         FrameworkElement lastClick = null;
 
         public ClassDisplay(UserClass inClass)
         {
-            //m_UserID = UserID;
-            //m_OpenServer = OpenServer;
             Class = inClass;
 
             InitializeComponent();
@@ -57,11 +53,28 @@ namespace UnstuckMEUserGUI
         }
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {
-            
-            UnstuckME.Server.RemoveUserFromClass(UnstuckME.User.UserID, Class.ClassID);
-            lastClick.Visibility = Visibility.Collapsed;    // this line may not even be needed
-            //Removes Sticker From Stack Panel
-            ((StackPanel)this.Parent).Children.Remove(this);
+            try
+            {
+                UnstuckME.Server.RemoveUserFromClass(UnstuckME.User.UserID, Class.ClassID);
+
+                UIElementCollection availablestickers = UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children;
+                for (int index = availablestickers.Count - 1; index >= 0; index--)
+                {
+                    AvailableSticker avail_sticker = availablestickers[index] as AvailableSticker;
+                    if (avail_sticker.Sticker.ClassID == Class.ClassID)
+                    {
+                        UnstuckME.Pages.StickerPage.AvailableStickers.Remove(avail_sticker.Sticker);
+                        avail_sticker.RemoveFromStackPanel();
+                    }
+                }
+
+                //Removes Sticker From Stack Panel
+                ((StackPanel)Parent).Children.Remove(this);
+            }
+            catch (Exception ex)
+            {
+                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
+            }
         }
     }
 }

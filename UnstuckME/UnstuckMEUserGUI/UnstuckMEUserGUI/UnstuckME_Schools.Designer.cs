@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Ryanmgeek\Documents\School\Junior Year\JP (Todd)\Unstuck_ME_GitDir\UnstuckME\UnstuckME\UnstuckMEUserGUI\UnstuckMEUserGUI\UnstuckMESchools_DB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Ryanmgeek\Documents\School\Junior Year\JP (Todd)\Unstuck_ME_GitDir\UnstuckME\UnstuckME\UnstuckMEUserGUI\UnstuckMEUserGUI\UnstuckME_Schools.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

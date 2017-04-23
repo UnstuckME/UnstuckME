@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Security;
 using System.ServiceModel;
-using System.Text;
-using System.Windows.Media;
 using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
-
-	[ServiceContract(CallbackContract = typeof(IClient))]
+    [ServiceContract(CallbackContract = typeof(IClient))]
 	public interface IUnstuckMEService
 	{
 		/// <summary>
@@ -22,7 +14,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="userID">The unique identifier of the user who has accepted the sticker.</param>
 		/// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
 		[OperationContract(IsOneWay = true)]
-		void AcceptSticker(int userID, int stickerID);
+		void AcceptSticker(int tutorID, int stickerID);
 
 		/// <summary>
 		/// Registers another user as a contact.
@@ -220,7 +212,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="classID">the unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		/// <summary>
 		/// Associates a user with an official tutoring organization.
@@ -345,6 +337,13 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		UnstuckMEChat GetSingleChat(int chatID);
 
+        /// <summary>
+		/// Gets the number of messages in a particular chat.
+		/// </summary>
+		/// <param name="chatID">The unique identifier of a specific chat.</param>
+		/// <returns>A number indicating how many messages a chat has.</returns>
+        [OperationContract]
+        int GetNumberOFMessages(int chatID);
 
 		/// <summary> 
 		/// Gets unique identifiers of all the chats a user is associated with. 
@@ -470,126 +469,23 @@ namespace UnstuckMEInterfaces
 		/// <returns>Contains the StickerID and true if they are the student, false if they are the tutor. If there is no sticker, returns 0 for the sticker ID.</returns>
 		[OperationContract]
 		KeyValuePair<int, bool> CheckForReviews(int userID);
-	}
 
-	[ServiceContract(CallbackContract = typeof(IServer))]
-	public interface IUnstuckMEServer
-	{
-		/// <summary>
-		/// Returns a boolean value identifying that the server is running.
-		/// </summary>
-		/// <returns>True.</returns>
-		[OperationContract]
-		bool TestNewConfig();
+        /// <summary>
+        /// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
+        /// see that sticker. This should only be done if the sticker does not already have a tutor.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to delete.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        [OperationContract]
+        int DeleteSticker(int stickerID);
 
-		/// <summary>
-		/// Attempts to log in a server administrator.
-		/// </summary>
-		/// <param name="LoggingInAdmin">The information of the server administrator.</param>
-		[OperationContract]
-		void RegisterServerAdmin(AdminInfo admin);
-
-		/// <summary>
-		/// Disconnects a server administrator.
-		/// </summary>
-		[OperationContract]
-		void AdminLogout();
-
-		/// <summary>
-		/// Logs information for actions invoked by a server administrator. Currently only writes a message to the console.
-		/// </summary>
-		/// <param name="message">The message to be logged.</param>
-		[OperationContract]
-		void AdminLogMessage(string message);
-
-		/// <summary>
-		/// Gets all the clients that are currently logged in.
-		/// </summary>
-		/// <returns>A list of UserInfo structures containing all the information of each online user.</returns>
-		[OperationContract]
-		List<UserInfo> AdminGetAllOnlineUsers();
-
-		/// <summary>
-		/// Sends a message to all users who are online.
-		/// </summary>
-		/// <param name="recipients">The recipients of the </param>
-		/// <param name="message"></param>
-		[OperationContract]
-		void AdminSendMessageToUsers(List<string> recipients, string message);
-
-		/// <summary>
-		/// Sends a message to all connected clients that the server is shutting down.
-		/// </summary>
-		[OperationContract]
-		void AdminServerShuttingDown();
-
-		/// <summary>
-		/// Registers a new tutoring organization. Can only be invoked by an administrator.
-		/// </summary>
-		/// <param name="organizationName">The name of the new tutoring organization.</param>
-		/// <returns>The unique identifier of the newly created organization if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
-		int AdminCreateMentoringOrganization(string organizationName);
-
-		/// <summary>
-		/// Registers a new class. Can only be invoked by an administrator.
-		/// </summary>
-		/// <param name="courseName">The name of the new class.</param>
-		/// <param name="courseCode">The subject of the new class.</param>
-		/// <param name="courseNumber">The course number of the new class.</param>
-		/// <returns>The unique identifier of the newly created class if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
-		int AdminCreateClass(string courseName, string courseCode, int courseNumber);
-
-		/// <summary>
-		/// Remove a class from the database. Can only be invoked by an administrator.
-		/// </summary>
-		/// <param name="classID">The unique identifier of the class to be removed.</param>
-		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
-		int AdminDeleteClass(int classID);
-
-		/// <summary>
-		/// Removes a tutoring organization from the database. Can only be invoked by an administrator.
-		/// </summary>
-		/// <param name="organizationID">The unique identifier of the organization to be removed.</param>
-		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
-		int AdminDeleteMentoringOrganization(int organizationID);
-
-		/// <summary>
-		/// Removes a report from the database. Can only be invoked by an administrator.
-		/// </summary>
-		/// <param name="reportID">The unique identifier of the report to be removed.</param>
-		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
-		int AdminDeleteReport(int reportID);
-
-		/// <summary>
-		/// Not implemented. Do not use.
-		/// </summary>
-		/// <returns>Returns a file.</returns>
-		[OperationContract]
-		UnstuckMEFile UploadDocument();
-	}
-
-	[ServiceContract]
-	public interface IUnstuckMEFileStream
-	{
-		/// <summary>
-		/// Currently retrieves the data of the profile picture fro the database. Set up to retrieve the filepath of the picture from the database,
-		/// open the file, and convert it to a byte array.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
-		/// <returns>A Stream object containing the data of the image file.</returns>
-		[OperationContract]
-		Stream GetProfilePicture(int userID);
-
-		/// <summary>
-		/// Overwrites the profile picture data of a specific user on the database.
-		/// </summary>
-		/// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
-		[OperationContract(IsOneWay = true)]
-		void SetProfilePicture(UnstuckMEStream image);
+        /// <summary>
+        /// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out
+        /// to online tutors who are eligible to see it.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        [OperationContract]
+        int RemoveTutorFromSticker(int stickerID);
 	}
 }

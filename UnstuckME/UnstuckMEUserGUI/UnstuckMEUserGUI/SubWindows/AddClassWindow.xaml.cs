@@ -81,18 +81,9 @@ namespace UnstuckMEUserGUI.SubWindows
 
         private void AddClassesButton_Click(object sender, RoutedEventArgs e)
         {
-            int ClassID = 0;
             try
             {
-                ClassID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseCode.SelectedValue as string, ComboBoxCourseNumberAndName.SelectedValue as string);
-            }
-            catch (Exception exp)
-            {
-                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
-            }
-            try
-            {
+                int ClassID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseCode.SelectedValue as string, ComboBoxCourseNumberAndName.SelectedValue as string);
                 UnstuckME.Server.InsertStudentIntoClass(UnstuckME.User.UserID, ClassID);
                 UnstuckME.Server.AddClassesToClient(ClassID, UnstuckME.User.UserID);
             }

@@ -121,77 +121,78 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             try
             {
 
-                UnstuckMEServer_DBEntities SelectedDB = new UnstuckMEServer_DBEntities();
-                //MessageBox.Show(SelectedDB.Database.Connection.ConnectionString.ToString());
-
-                SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckMEServer_DBEntities",initialCatalog: textBoxDatabaseName.Text, userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
-                           
-                using (var connection = new SqlConnection(SelectedDB.Database.Connection.ConnectionString))
+                using (UnstuckME_DBEntities SelectedDB = new UnstuckME_DBEntities())
                 {
-                    var query = "select 1";
-                    if (displayOutput == true)
-                        MessageBox.Show("Executing: test query");
+                    //MessageBox.Show(SelectedDB.Database.Connection.ConnectionString.ToString());
+                    SelectedDB.ChangeDatabase(configConnectionStringName: "UnstuckME_DBEntities", initialCatalog: textBoxDatabaseName.Text, userId: textBoxUsername.Text, password: passwordBoxPassword.Password, dataSource: textBoxDataSource.Text, integratedSecuity: useWindowsAuthenfication);
 
-                    var command = new SqlCommand(query, connection);
-
-                    connection.Open();
-                    command.ExecuteScalar();
-                    if (displayOutput == true)
-                        MessageBox.Show("SQL Query execution successful\nSQL Connection successful.");
-
-                    if (displayOutput == false) // Actually modify the app.config here
+                    using (var connection = new SqlConnection(SelectedDB.Database.Connection.ConnectionString))
                     {
-                        System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                        var query = "select 1";
+                        if (displayOutput == true)
+                            MessageBox.Show("Executing: test query");
 
-                        config.AppSettings.Settings["DatabaseName"].Value = textBoxDatabaseName.Text;
-                        config.Save(ConfigurationSaveMode.Modified);
+                        var command = new SqlCommand(query, connection);
 
-                        Configuration exeConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                        connection.Open();
+                        command.ExecuteScalar();
+                        if (displayOutput == true)
+                            MessageBox.Show("SQL Query execution successful\nSQL Connection successful.");
 
-                        exeConfig.ConnectionStrings.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString = ConnectionTools.entityCnxStringBuilder.ToString();
-                        exeConfig.Save(ConfigurationSaveMode.Modified);
-
-                        // Try and update the UnstuckME_Schools DB with the new information
-                        try
+                        if (displayOutput == false) // Actually modify the app.config here
                         {
-                            using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
+                            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                            config.AppSettings.Settings["DatabaseName"].Value = textBoxDatabaseName.Text;
+                            config.Save(ConfigurationSaveMode.Modified);
+
+                            Configuration exeConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+                            exeConfig.ConnectionStrings.ConnectionStrings["UnstuckME_DBEntities"].ConnectionString = ConnectionTools.entityCnxStringBuilder.ToString();
+                            exeConfig.Save(ConfigurationSaveMode.Modified);
+
+                            // Try and update the UnstuckME_Schools DB with the new information
+                            try
                             {
-
-                                if (m_databaseID != null)
+                                using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
                                 {
 
-                                    var firstDatabse = (from Databases in schoolDB.Databases
-                                                        where Databases.DatabaseID == m_databaseID.Value
-                                                        select Databases).First();
-
-                                    firstDatabse.DatabaseName = textBoxDatabaseName.Text;
-                                    firstDatabse.DatabaseAdminUsername = textBoxUsername.Text;
-                                    firstDatabse.DatabaseUsingWindowsAuthen = checkBox.IsChecked;
-                                    firstDatabse.DatabaseIP = textBoxDataSource.Text;
-                                }
-
-                                else
-                                {
-                                    int schoolID = (from Schools in schoolDB.Schools where Schools.SchoolName == schoolName select Schools.SchoolID).First();
-
-                                    UnstuckMEServerGUI.Database tempServer = new UnstuckMEServerGUI.Database()
+                                    if (m_databaseID != null)
                                     {
-                                        SchoolID = schoolID,
-                                        DatabaseName = textBoxDatabaseName.Text,
-                                        DatabaseIP = textBoxDataSource.Text,
-                                        DatabaseAdminUsername = textBoxUsername.Text,
-                                        DatabaseUsingWindowsAuthen = useWindowsAuthenfication
-                                    };
 
-                                    schoolDB.Databases.Add(tempServer);
+                                        var firstDatabse = (from Databases in schoolDB.Databases
+                                                            where Databases.DatabaseID == m_databaseID.Value
+                                                            select Databases).First();
+
+                                        firstDatabse.DatabaseName = textBoxDatabaseName.Text;
+                                        firstDatabse.DatabaseAdminUsername = textBoxUsername.Text;
+                                        firstDatabse.DatabaseUsingWindowsAuthen = checkBox.IsChecked;
+                                        firstDatabse.DatabaseIP = textBoxDataSource.Text;
+                                    }
+
+                                    else
+                                    {
+                                        int schoolID = (from Schools in schoolDB.Schools where Schools.SchoolName == schoolName select Schools.SchoolID).First();
+
+                                        Database tempServer = new Database()
+                                        {
+                                            SchoolID = schoolID,
+                                            DatabaseName = textBoxDatabaseName.Text,
+                                            DatabaseIP = textBoxDataSource.Text,
+                                            DatabaseAdminUsername = textBoxUsername.Text,
+                                            DatabaseUsingWindowsAuthen = useWindowsAuthenfication
+                                        };
+
+                                        schoolDB.Databases.Add(tempServer);
+                                    }
+
+                                    schoolDB.SaveChanges();
                                 }
-
-                                schoolDB.SaveChanges();
                             }
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("ERROR: It looks like we were unable to update our UnstuckME servers with your new information. Next time you connect you may need to re-enter some of your information", "UnstuckME Servers Unable To Update", MessageBoxButton.OK, MessageBoxImage.Error);
+                            catch (Exception)
+                            {
+                                MessageBox.Show("ERROR: It looks like we were unable to update our UnstuckME servers with your new information. Next time you connect you may need to re-enter some of your information", "UnstuckME Servers Unable To Update", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
                     }
                 }

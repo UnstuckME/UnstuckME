@@ -52,7 +52,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-				MessageBox.Show("Source: " + ex.Source + "\nMessage: " + ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
 			}
 
 			LoadingScreen.Visibility = Visibility.Collapsed;
@@ -66,7 +66,7 @@ namespace UnstuckMEUserGUI
 			UnstuckME.ImageConverter = new ImageSourceConverter();
 			UnstuckME.Pages = new UnstuckMEPages();
 
-			using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+			using (MemoryStream ms = new MemoryStream())
 			{
 				UnstuckME.FileStream.GetProfilePicture(UnstuckME.User.UserID).CopyTo(ms);
 				UnstuckME.User.UserProfilePictureBytes = ms.ToArray();
@@ -81,23 +81,29 @@ namespace UnstuckMEUserGUI
 				this.Dispatcher.Invoke(() =>
 				{
 					UnstuckME.Pages.StickerPage.AvailableStickers = UnstuckME.Server.InitialAvailableStickerPull(UnstuckME.User.UserID);
-
 					foreach (UnstuckMEAvailableSticker sticker in UnstuckME.Pages.StickerPage.AvailableStickers)
 					{
 						UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
 					}
 
-					UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickers(UnstuckME.User.UserID, null, 0, null);
+					UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickers(UnstuckME.User.UserID);
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.MyStickersList)
 					{
 						UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
 					}
 
-					UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickers(UnstuckME.User.UserID, null, 0, null);
+					UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickers(UnstuckME.User.UserID);
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
 					{
 						UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
 					}
+
+                    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
+                    UnstuckME.Pages.StickerPage.RecentStickers.AddRange(UnstuckME.Server.GetTimedOutStickers(userID: UnstuckME.User.UserID));
+                    foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.RecentStickers)
+                    {
+                        UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
+                    }
 				});
 			}
 			catch(Exception ex)
@@ -451,22 +457,18 @@ namespace UnstuckMEUserGUI
 
 		public void RemoveStickerFromAvailableStickers(int stickerID)
 		{
-			this.Dispatcher.Invoke(() =>
+			Dispatcher.Invoke(() =>
 			{
 				try
 				{
 					AvailableSticker temp = null;
-					foreach (var control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.OfType<AvailableSticker>())
+					foreach (AvailableSticker control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children)
 					{
 						if (control.Sticker.StickerID == stickerID)
-						{
 							temp = control;
-						}
 					}
 					if (temp != null)
-					{
 						UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
-					}
 				}
 				catch (Exception)
 				{
@@ -477,7 +479,7 @@ namespace UnstuckMEUserGUI
 
 		public void StickerAcceptedStartConversation(UnstuckMEAvailableSticker sticker, int tutorID)
 		{
-			this.Dispatcher.Invoke(() =>
+			Dispatcher.Invoke(() =>
 			{
 				int PreExistingChatID = -1;
 				//Search For Pre-Existing Conversation
@@ -490,14 +492,12 @@ namespace UnstuckMEUserGUI
 						foreach (UnstuckMEChatUser user in chat.Users)
 						{
 							if (user.UserID == sticker.StudentID)
-							{ studentFound = true; }
+							    studentFound = true;
 							if (user.UserID == tutorID)
-							{ tutorFound = true; }
+							    tutorFound = true;
 						}
 						if (studentFound && tutorFound)
-						{
 							PreExistingChatID = chat.ChatID;
-						}
 					}
 				}
 

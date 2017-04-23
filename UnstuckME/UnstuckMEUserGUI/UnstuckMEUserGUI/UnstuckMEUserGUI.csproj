@@ -96,6 +96,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllSchoolLogos_Result.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllSchools_Result.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSchoolServerInfo_Result.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="School.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolLogo.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Server.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\AddClassToServerWindow.xaml.cs">
       <DependentUpon>AddClassToServerWindow.xaml</DependentUpon>
     </Compile>
@@ -114,7 +141,25 @@
     <Compile Include="SubWindows\ImportClassesViaFile.xaml.cs">
       <DependentUpon>ImportClassesViaFile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
     <Compile Include="UnstuckME.cs" />
+    <Compile Include="UnstuckME_Schools.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckME_Schools.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckME_Schools.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnstuckME_Schools.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnstuckME_Schools.edmx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Stickers\OpenSticker.xaml.cs">
       <DependentUpon>OpenSticker.xaml</DependentUpon>
     </Compile>
@@ -182,38 +227,11 @@
       <DependentUpon>ClassDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientCallback.cs" />
-    <Compile Include="Database.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllSchoolLogos_Result.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllSchools_Result.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetSchoolServerInfo_Result.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Contacts\OnlineUser.xaml.cs">
       <DependentUpon>OnlineUser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="School.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SchoolLogo.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Server.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Reviews\ReviewDisplay.xaml.cs">
       <DependentUpon>ReviewDisplay.xaml</DependentUpon>
@@ -227,26 +245,8 @@
     <Compile Include="Pages\StickerPage.xaml.cs">
       <DependentUpon>StickerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="SubWindows\UnstuckMEMessageBox.xaml.cs">
       <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UnstuckMESchools_DB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckMESchools_DB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UnstuckMESchools_DB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckMESchools_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UnstuckMESchools_DB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Stickers\StickerDisplay.xaml.cs">
       <DependentUpon>StickerDisplay.xaml</DependentUpon>
@@ -445,12 +445,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EntityDeploy Include="UnstuckMESchools_DB.edmx">
+    <EntityDeploy Include="UnstuckME_Schools.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UnstuckMESchools_DB.Designer.cs</LastGenOutput>
+      <LastGenOutput>UnstuckME_Schools.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="UnstuckMESchools_DB.edmx.diagram">
-      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
+    <None Include="UnstuckME_Schools.edmx.diagram">
+      <DependentUpon>UnstuckME_Schools.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -597,18 +597,19 @@
     <Resource Include="Resources\Box\Warning.png" />
     <Resource Include="Resources\UnstuckMEGraphic.png" />
     <Resource Include="Resources\UnstuckME Application Icon.ico" />
-    <Content Include="UnstuckMESchools_DB.Context.tt">
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UnstuckME_Schools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
-      <LastGenOutput>UnstuckMESchools_DB.Context.cs</LastGenOutput>
+      <DependentUpon>UnstuckME_Schools.edmx</DependentUpon>
+      <LastGenOutput>UnstuckME_Schools.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="UnstuckMESchools_DB.tt">
+    <Content Include="UnstuckME_Schools.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UnstuckMESchools_DB.edmx</DependentUpon>
-      <LastGenOutput>UnstuckMESchools_DB.cs</LastGenOutput>
+      <DependentUpon>UnstuckME_Schools.edmx</DependentUpon>
+      <LastGenOutput>UnstuckME_Schools.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -18,22 +18,10 @@ namespace UnstuckMEUserGUI
 {
     /// <summary>
     /// Interaction logic for AvailableSticker.xaml
-    ///
-    //public int StickerID { get; set; }
-    //public string ProblemDescription { get; set; }
-    //public int ClassID { get; set; }
-    //public int ChatID { get; set; }
-    //public int StudentID { get; set; }
-    //public int TutorID { get; set; }
-    //public float MinimumStarRanking { get; set; }
-    //public List<int> AttachedOrganizations { get; set; }
-    //public DateTime SubmitTime { get; set; }
-    //public int Timeout { get; set; }
     /// </summary>
     public partial class AvailableSticker : UserControl
     {
         public UnstuckMEAvailableSticker Sticker;
-        public UserClass Class;
         BitmapImage BlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlue.png", UriKind.Relative));
         BitmapImage SteelBlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingSteelBlue.png", UriKind.Relative));
         public AvailableSticker(UnstuckMEAvailableSticker inSticker)
@@ -48,7 +36,7 @@ namespace UnstuckMEUserGUI
         public void RemoveFromStackPanel()
         {
             //Removes Sticker From Stack Panel
-            ((StackPanel)this.Parent).Children.Remove(this);
+            ((StackPanel)Parent).Children.Remove(this);
         }
 
         private void GridClassName_MouseEnter(object sender, MouseEventArgs e)
@@ -99,8 +87,7 @@ namespace UnstuckMEUserGUI
 
         private void BorderX_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //Removes Sticker From Stack Panel
-            ((StackPanel)this.Parent).Children.Remove(this);
+            RemoveFromStackPanel();
         }
 
         private void ButtonAccept_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -109,7 +96,7 @@ namespace UnstuckMEUserGUI
             {
                 UnstuckME.Server.AcceptSticker(UnstuckME.User.UserID, Sticker.StickerID);
                 Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker, UnstuckME.User.UserID);
-                ((StackPanel)this.Parent).Children.Remove(this);
+                RemoveFromStackPanel();
             }
             catch (Exception ex)
             {

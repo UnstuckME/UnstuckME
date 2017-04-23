@@ -43,7 +43,7 @@ namespace UnstuckMEServerGUI
                 if (passwordBox.Password.Length < 6)
                     throw new Exception("Please Enter a Password of 6-32 Characters");
 
-                using (UnstuckMEServer_DBEntities db = new UnstuckMEServer_DBEntities())
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     UnstuckMEPassword hashedPassword = UnstuckMEHashing.GetHashedPassword(passwordBox.Password);
                     db.CreateServerAdmin(textBoxFirstName.Text, textBoxLastName.Text, textBoxEmailAddress.Text, hashedPassword.Password, hashedPassword.Salt);

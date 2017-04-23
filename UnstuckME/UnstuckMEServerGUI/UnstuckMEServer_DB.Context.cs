@@ -15,10 +15,10 @@ namespace UnstuckMEServerGUI
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class UnstuckMEServer_DBEntities : DbContext
+    public partial class UnstuckME_DBEntities : DbContext
     {
-        public UnstuckMEServer_DBEntities()
-            : base("name=UnstuckMEServer_DBEntities")
+        public UnstuckME_DBEntities()
+            : base("name=UnstuckME_DBEntities")
         {
         }
     
@@ -212,7 +212,7 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReport", reportDescriptionParameter, flaggerIDParameter, reviewIDParameter);
         }
     
-        public virtual int CreateReview(Nullable<int> stickerID, Nullable<int> reviewerID, Nullable<double> starRanking, string description)
+        public virtual ObjectResult<Nullable<int>> CreateReview(Nullable<int> stickerID, Nullable<int> reviewerID, Nullable<double> starRanking, string description)
         {
             var stickerIDParameter = stickerID.HasValue ?
                 new ObjectParameter("StickerID", stickerID) :
@@ -230,7 +230,7 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("Description", description) :
                 new ObjectParameter("Description", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateReview", stickerIDParameter, reviewerIDParameter, starRankingParameter, descriptionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CreateReview", stickerIDParameter, reviewerIDParameter, starRankingParameter, descriptionParameter);
         }
     
         public virtual int CreateServerAdmin(string firstName, string lastName, string emailAddress, string password, string salt)
@@ -549,6 +549,15 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDisplayNameAndEmail_Result>("GetDisplayNameAndEmail", useridParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> GetNumMsgsInAChat(Nullable<int> chatID)
+        {
+            var chatIDParameter = chatID.HasValue ?
+                new ObjectParameter("chatID", chatID) :
+                new ObjectParameter("chatID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetNumMsgsInAChat", chatIDParameter);
+        }
+    
         public virtual ObjectResult<byte[]> GetProfilePicture(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?
@@ -789,7 +798,7 @@ namespace UnstuckMEServerGUI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InitialStickerPull_Result>("InitialStickerPull", inUserIDParameter);
         }
     
-        public virtual int InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<bool> isFile, Nullable<int> userID)
+        public virtual ObjectResult<Nullable<int>> InsertMessage(Nullable<int> chatID, string message, string filePath, Nullable<int> userID)
         {
             var chatIDParameter = chatID.HasValue ?
                 new ObjectParameter("ChatID", chatID) :
@@ -803,15 +812,11 @@ namespace UnstuckMEServerGUI
                 new ObjectParameter("FilePath", filePath) :
                 new ObjectParameter("FilePath", typeof(string));
     
-            var isFileParameter = isFile.HasValue ?
-                new ObjectParameter("IsFile", isFile) :
-                new ObjectParameter("IsFile", typeof(bool));
-    
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertMessage", chatIDParameter, messageParameter, filePathParameter, isFileParameter, userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertMessage", chatIDParameter, messageParameter, filePathParameter, userIDParameter);
         }
     
         public virtual int InsertStudentIntoClass(Nullable<int> userID, Nullable<int> classID)

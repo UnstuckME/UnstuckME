@@ -23,7 +23,7 @@ namespace UnstuckMEUserGUI
     {
         public List<UnstuckMEAvailableSticker> AvailableStickers;
         public List<UnstuckMESticker> OpenStickers;
-        public List<UnstuckMEAvailableSticker> RecentStickers;
+        public List<UnstuckMESticker> RecentStickers;
         public List<UnstuckMESticker> MyStickersList;
 
         public StickerPage()
@@ -31,10 +31,13 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
         }
 
-        public void RemoveSticker(int stickerID)
+        public void RemoveOpenSticker(int stickerID)
         {
-            foreach (OpenSticker opensticker in StackPanelOpenStickers.Children)
+            UIElementCollection stickers = StackPanelOpenStickers.Children;
+            for (int index = stickers.Count - 1; index >= 0; index--)
             {
+                OpenSticker opensticker = stickers[index] as OpenSticker;
+
                 if (opensticker.Sticker.StickerID == stickerID)
                 {
                     StackPanelStickerHistory.Children.Add(opensticker.Remove());
@@ -50,10 +53,28 @@ namespace UnstuckMEUserGUI
                 }
             }
 
-            foreach (MySticker mysticker in StackPanelMyStickers.Children)
+            stickers = StackPanelMyStickers.Children;
+            for (int index = stickers.Count - 1; index >= 0; index--)
             {
+                MySticker mysticker = stickers[index] as MySticker;
+
                 if (mysticker.Sticker.StickerID == stickerID)
-                    mysticker.Resolve();
+                    mysticker.ButtonCompleted.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        public void MakeStickerActive(int stickerID)
+        {
+            UIElementCollection mystickers = StackPanelMyStickers.Children;
+            for (int index = mystickers.Count - 1; index >= 0; index--)
+            {
+                MySticker sticker = mystickers[index] as MySticker;
+
+                if (sticker.Sticker.StickerID == stickerID)
+                {
+                    sticker.ButtonCompleted.Visibility = Visibility.Visible;
+                    sticker.ButtonRemove.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -144,6 +165,5 @@ namespace UnstuckMEUserGUI
             RectangleSubmitted.Visibility = Visibility.Hidden;
             RectangleTutoring.Visibility = Visibility.Hidden;
         }
-
     }
 }

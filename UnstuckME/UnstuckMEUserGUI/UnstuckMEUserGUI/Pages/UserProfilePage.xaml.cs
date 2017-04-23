@@ -31,7 +31,6 @@ namespace UnstuckMEUserGUI
         private static StarRanking studentRanking;
         private static StarRanking tutorRanking;
 
-        //public static IUnstuckMEService Server;
         public UserProfilePage()
         {
             InitializeComponent();
@@ -40,7 +39,6 @@ namespace UnstuckMEUserGUI
             tutorRanking = new StarRanking(StarRanking.BoxColor.Gray);
             RatingsStack.Children.Add(studentRanking);
             RatingsStack.Children.Add(tutorRanking);
-            //RepopulateClasses(); Added this to asynchronous load in UnstuckMEWindow.
 
             TextBoxNewFirstName.Text = UnstuckME.User.FirstName;
             TextBoxNewLastName.Text = UnstuckME.User.LastName;
@@ -52,13 +50,9 @@ namespace UnstuckMEUserGUI
             List<UserClass> classes = UnstuckME.Server.GetUserClasses(UnstuckME.User.UserID);
             foreach (UserClass C in classes)
             {
-                //change GetUserClasses in future to return ClassID as well
-                int ID = UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(C.CourseCode, C.CourseNumber.ToString());
                 ClassDisplay usersClass = new ClassDisplay(C);
                 BottomLeftStack.Children.Add(usersClass);
             }
-            //CourseCodeComboBox.SelectedIndex = 0;
-            
         }
 
         public void SetStudentRating(float inRating)

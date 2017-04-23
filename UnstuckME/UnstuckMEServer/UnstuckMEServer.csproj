@@ -87,12 +87,16 @@
     <Compile Include="Chat.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ChatFunctions.cs" />
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClassFunctions.cs" />
+    <Compile Include="FileStreamFunctions.cs" />
     <Compile Include="Friend.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="FriendFunctions.cs" />
     <Compile Include="GetActiveStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -127,6 +131,9 @@
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetResolvedStickers_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStickerInfo_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetTimedOutStickers_Result.cs">
@@ -168,6 +175,7 @@
     <Compile Include="Message.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="MessageFunctions.cs" />
     <Compile Include="OfficialMentor.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -179,13 +187,16 @@
     <Compile Include="Report.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReportFunctions.cs" />
     <Compile Include="Review.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReviewFunctions.cs" />
     <Compile Include="ServerAdmin.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ServerClasses.cs" />
+    <Compile Include="ServerFunctions.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -195,6 +206,7 @@
     <Compile Include="Sticker.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="StickerFunctions.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -217,6 +229,7 @@
     <Compile Include="UpdateUserTotalReviews_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserFunctions.cs" />
     <Compile Include="UserProfile.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
