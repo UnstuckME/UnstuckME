@@ -168,12 +168,16 @@ namespace UnstuckMEUserGUI
             }
         }
 
-
+        /// <summary>
+        /// When a tutor drops a sticker rather than submitting a review, this will find the sticker of the
+        /// student who submitted it and reactivates the completed and delete buttons.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to make active.</param>
         public void UpdateStickerStatus(int stickerID)
         {
             try
             {
-                UnstuckME.Pages.StickerPage.UpdateStickerStatus(stickerID);
+                UnstuckME.Pages.StickerPage.MakeStickerActive(stickerID);
             }
             catch (Exception ex)
             {

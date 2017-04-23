@@ -63,7 +63,7 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        public void UpdateStickerStatus(int stickerID)
+        public void MakeStickerActive(int stickerID)
         {
             UIElementCollection mystickers = StackPanelMyStickers.Children;
             for (int index = mystickers.Count - 1; index >= 0; index--)

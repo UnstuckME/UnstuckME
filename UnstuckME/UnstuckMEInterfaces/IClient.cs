@@ -89,6 +89,11 @@ namespace UnstuckMEInterfaces
         [OperationContract(IsOneWay = true)]
         void CreateReviewAsStudent(int stickerID);
 
+        /// <summary>
+        /// When a tutor drops a sticker rather than submitting a review, this will find the sticker of the
+        /// student who submitted it and reactivates the completed and delete buttons.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to make active.</param>
         [OperationContract(IsOneWay = true)]
         void UpdateStickerStatus(int stickerID);
     }
