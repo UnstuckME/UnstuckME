@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media;
+using UnstuckMeLoggers;
 
 namespace UnstuckME_Classes
 {
@@ -287,8 +289,37 @@ namespace UnstuckME_Classes
 		{
 			string newDirectory = System.IO.Path.Combine(chatDir, newDirName);
 			Directory.CreateDirectory(newDirectory);
+			
 			return newDirectory;
 		}
+
+		public void AddChatDatFile(string chatNum)
+		{
+			string chatDatPath = System.IO.Path.Combine(chatDir, chatNum, ".dat");
+			if(!File.Exists(chatDatPath))
+			{
+				try
+				{
+					File.WriteAllText(chatDatPath, "<MemeberGroup>" + Environment.NewLine + "</MemeberGroup>");
+				}
+				catch (Exception ex)
+				{
+					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+				}
+			}
+		}
+
+        public void AddNewMsgFile(string chatNum, bool ifNeeded = false)
+        {
+            string chatPath = System.IO.Path.Combine(chatDir, chatNum);
+            int maxChatFile = (Directory.GetFiles(chatPath).Where(name => !name.EndsWith(".dat")).Select(f => Convert.ToInt32(f.Replace(chatPath + "\\msg_", "")))).DefaultIfEmpty(999).Max();
+
+            if (ifNeeded == false || maxChatFile == 999)
+            {
+                File.WriteAllText(chatPath + @"\msg_" + (maxChatFile + 1).ToString(), "<MessageGroup>" + Environment.NewLine + "</MessageGroup>");
+            }
+            
+        }
 
 		public UnstuckMEDirectory ()
 		{

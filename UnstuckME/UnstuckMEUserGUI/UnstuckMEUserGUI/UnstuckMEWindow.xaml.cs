@@ -52,7 +52,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
 			}
 
 			LoadingScreen.Visibility = Visibility.Collapsed;
@@ -98,12 +98,12 @@ namespace UnstuckMEUserGUI
 						UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
 					}
 
-                    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
-                    UnstuckME.Pages.StickerPage.RecentStickers.AddRange(UnstuckME.Server.GetTimedOutStickers(userID: UnstuckME.User.UserID));
-                    foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.RecentStickers)
-                    {
-                        UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
-                    }
+					UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
+					UnstuckME.Pages.StickerPage.RecentStickers.AddRange(UnstuckME.Server.GetTimedOutStickers(userID: UnstuckME.User.UserID));
+					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.RecentStickers)
+					{
+						UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
+					}
 				});
 			}
 			catch(Exception ex)
@@ -121,21 +121,27 @@ namespace UnstuckMEUserGUI
 				{
 					// ===========================Ryan's optimized code=========================================
 					UnstuckME.ChatSessions = UnstuckME.Server.GetChatIDs(UnstuckME.User.UserID);
-                    List<string> folders =  Directory.GetDirectories(UnstuckME.ProgramDir.ChatDir).ToList();
+					List<string> folders =  Directory.GetDirectories(UnstuckME.ProgramDir.ChatDir).ToList();
 
-                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-                    {
-                        string path = UnstuckME.ProgramDir.ChatDir + @"\" +chat.ChatID.ToString();
-                        if (folders.Contains<string>(path) == true)
-                            folders.Remove(path);
-                        else
-                            UnstuckME.ProgramDir.MakeChatDir(chat.ChatID.ToString());
-                    }
+					foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+					{
+						string path = UnstuckME.ProgramDir.ChatDir + @"\" + chat.ChatID.ToString();
+						if (folders.Contains<string>(path) == true)
+						{
+							folders.Remove(path);
+						}
+						else
+						{
+							UnstuckME.ProgramDir.MakeChatDir(chat.ChatID.ToString());
+						}
+						UnstuckME.ProgramDir.AddChatDatFile(chat.ChatID.ToString());
+						UnstuckME.ProgramDir.AddNewMsgFile(chat.ChatID.ToString(), true);
+					}
 
-                    foreach (string fold in folders)
-                    {
-                        Directory.Delete(fold, true); // Recursively delete contents of a directory
-                    }
+					foreach (string fold in folders)
+					{
+						Directory.Delete(fold, true); // Recursively delete contents of a directory
+					}
 
 					// ~~~~~~~~~~~~~~~~~~~~AJ's Code that is currently getting re-factored~~~~~~~~~~~~~~~~~~~~~~~~~
 					UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
@@ -457,18 +463,22 @@ namespace UnstuckMEUserGUI
 
 		public void RemoveStickerFromAvailableStickers(int stickerID)
 		{
-			Dispatcher.Invoke(() =>
+			this.Dispatcher.Invoke(() =>
 			{
 				try
 				{
 					AvailableSticker temp = null;
-					foreach (AvailableSticker control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children)
+					foreach (var control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.OfType<AvailableSticker>())
 					{
 						if (control.Sticker.StickerID == stickerID)
+						{
 							temp = control;
+						}
 					}
 					if (temp != null)
+					{
 						UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
+					}
 				}
 				catch (Exception)
 				{
@@ -479,7 +489,7 @@ namespace UnstuckMEUserGUI
 
 		public void StickerAcceptedStartConversation(UnstuckMEAvailableSticker sticker, int tutorID)
 		{
-			Dispatcher.Invoke(() =>
+			this.Dispatcher.Invoke(() =>
 			{
 				int PreExistingChatID = -1;
 				//Search For Pre-Existing Conversation
@@ -492,12 +502,14 @@ namespace UnstuckMEUserGUI
 						foreach (UnstuckMEChatUser user in chat.Users)
 						{
 							if (user.UserID == sticker.StudentID)
-							    studentFound = true;
+							{ studentFound = true; }
 							if (user.UserID == tutorID)
-							    tutorFound = true;
+							{ tutorFound = true; }
 						}
 						if (studentFound && tutorFound)
+						{
 							PreExistingChatID = chat.ChatID;
+						}
 					}
 				}
 
