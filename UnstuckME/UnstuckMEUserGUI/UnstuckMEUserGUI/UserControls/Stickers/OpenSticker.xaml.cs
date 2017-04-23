@@ -24,6 +24,7 @@ namespace UnstuckMEUserGUI
         public UnstuckMESticker Sticker;
         UserInfo Student;
         UserClass Class;
+
         public OpenSticker(UnstuckMESticker inSticker)
         {
             InitializeComponent();
@@ -69,7 +70,6 @@ namespace UnstuckMEUserGUI
         {
             Window win = new SubWindows.AddStudentReviewWindow(Sticker.StickerID);
             win.Show();
-            //((StackPanel)this.Parent).Children.Remove(this);
         }
 
         public OpenSticker Remove()

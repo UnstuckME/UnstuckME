@@ -18,22 +18,10 @@ namespace UnstuckMEUserGUI
 {
     /// <summary>
     /// Interaction logic for AvailableSticker.xaml
-    ///
-    //public int StickerID { get; set; }
-    //public string ProblemDescription { get; set; }
-    //public int ClassID { get; set; }
-    //public int ChatID { get; set; }
-    //public int StudentID { get; set; }
-    //public int TutorID { get; set; }
-    //public float MinimumStarRanking { get; set; }
-    //public List<int> AttachedOrganizations { get; set; }
-    //public DateTime SubmitTime { get; set; }
-    //public int Timeout { get; set; }
     /// </summary>
     public partial class AvailableSticker : UserControl
     {
         public UnstuckMEAvailableSticker Sticker;
-        public UserClass Class;
         BitmapImage BlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlue.png", UriKind.Relative));
         BitmapImage SteelBlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingSteelBlue.png", UriKind.Relative));
         public AvailableSticker(UnstuckMEAvailableSticker inSticker)

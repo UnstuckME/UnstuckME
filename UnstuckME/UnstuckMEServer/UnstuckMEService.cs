@@ -26,6 +26,7 @@ namespace UnstuckMEInterfaces
 	{
 		private ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 		private ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
+        private static ConcurrentDictionary<int, DateTime> _ActiveStickers;
 		private static ConcurrentQueue<UnstuckMEBigSticker> _StickerList;
 		private static ConcurrentQueue<UnstuckMEMessage> _MessageList;
 		private static ConcurrentQueue<int> _ReviewList = new ConcurrentQueue<int>();
@@ -49,7 +50,49 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-		#region Client-Server Functions
+        #region Client-Server Functions
+        /// <summary>
+        /// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
+        /// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
+        /// checks for all online users who are eligible to view that sticker and removes it from their
+        /// client interface.
+        /// </summary>
+        public void CheckForTimedOutStickers()
+        {
+            _ActiveStickers = new ConcurrentDictionary<int, DateTime>();
+
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var activestickers = from s in db.Stickers
+                                     where s.Timeout > DateTime.Now && s.TutorID == null
+                                     select new { s.StickerID, s.Timeout };
+
+                foreach (var sticker in activestickers)
+                    _ActiveStickers.TryAdd(sticker.StickerID, sticker.Timeout);
+
+                while (true)
+                {
+                    foreach (KeyValuePair<int, DateTime> sticker in _ActiveStickers)
+                    {
+                        if (sticker.Value <= DateTime.Now)
+                        {
+                            var tutors = db.GetUsersThatCanTutorASticker(sticker.Key);
+
+                            foreach (var tutor in tutors)
+                            {
+                                if (_connectedClients.ContainsKey(tutor.Value))
+                                {
+                                    DateTime time = sticker.Value;
+                                    _ActiveStickers.TryRemove(sticker.Key, out time);
+                                    _connectedClients[tutor.Value].connection.RemoveGUISticker(sticker.Key);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 		/// <summary>
 		/// Checks to see if there are any new messages for the client. If there are, sends the message to that client as long as they are logged into the server.
 		/// </summary>
@@ -109,6 +152,8 @@ namespace UnstuckMEInterfaces
 					UnstuckMEBigSticker temp;
 					_StickerList.TryDequeue(out temp);
 					await Task.Factory.StartNew(() => SendStickerToClients(temp));
+                    DateTime timeout = temp.Timeout;
+                    _ActiveStickers.TryRemove(temp.StickerID, out timeout);
 				}
 			}
 
@@ -141,7 +186,7 @@ namespace UnstuckMEInterfaces
 
 					foreach (var tutor in tutors)
 					{
-						if(_connectedClients.ContainsKey(tutor.Value))
+						if (_connectedClients.ContainsKey(tutor.Value))
 						{
 							_connectedClients[tutor.Value].connection.RecieveNewSticker(s);
 						}
@@ -465,7 +510,7 @@ namespace UnstuckMEInterfaces
 					admin.Value.connection.GetUpdate(1, removedClient.User);
 				}
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine("Client Loggoff: {0} at {1}", removedClient.User.EmailAddress, System.DateTime.Now);
+				Console.WriteLine("Client Loggoff: {0} at {1}", removedClient.User.EmailAddress, DateTime.Now);
 				Console.ResetColor();
 			}
 		}
@@ -747,17 +792,17 @@ namespace UnstuckMEInterfaces
 		/// <param name="userID">The unique identifier of the account to filter. This paramter is optional, with a default value of null.</param>
 		/// <param name="classID">the unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
-		public List<UnstuckMESticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null)
+		public List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null)
 		{
 			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 			{
-				//var userStickers = db.GetActiveStickers_ClassASC(caller, minstarrank, firstrow, lastrow, userID.HasValue ? userID : null, classID.HasValue ? classID : null);
 				var userStickers = db.GetActiveStickers(caller, organizationID, minstarrank, userID, classID);
 
-				List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
+				List<UnstuckMEAvailableSticker> stickerList = new List<UnstuckMEAvailableSticker>();
+
 				foreach (var sticker in userStickers)
 				{
-					UnstuckMESticker usSticker = new UnstuckMESticker()
+					UnstuckMEAvailableSticker usSticker = new UnstuckMEAvailableSticker()
 					{
 						StickerID = (int)sticker.StickerID,
 						ProblemDescription = sticker.ProblemDescription,
@@ -766,9 +811,9 @@ namespace UnstuckMEInterfaces
 						CourseName = sticker.CourseName,
 						CourseNumber = (short)sticker.CourseNumber,
 						StudentID = (int)sticker.StudentID,
-						TutorID = sticker.TutorID ?? new int?(),
+						//TutorID = sticker.TutorID ?? new int?(),
 						StudentRanking = (sticker.MinimumStarRanking.HasValue) ? (double)sticker.MinimumStarRanking : 0,
-						SubmitTime = (DateTime)sticker.SubmitTime,
+						//SubmitTime = (DateTime)sticker.SubmitTime,
 						Timeout = (DateTime)sticker.Timeout
 					};
 					stickerList.Add(usSticker);
@@ -821,6 +866,7 @@ namespace UnstuckMEInterfaces
 					}
 					newSticker.StickerID = retstickerID;
 					_StickerList.Enqueue(newSticker);
+                    _ActiveStickers.TryAdd(newSticker.StickerID, newSticker.Timeout);
 				}
 				return retstickerID;
 			}
@@ -839,30 +885,26 @@ namespace UnstuckMEInterfaces
 		/// <returns>A Stream object containing the data of the image file.</returns>
 		public Stream GetProfilePicture(int userID)
 		{
-			//string directory = string.Empty;
-			//using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			//{
-			//    directory = db.GetProfilePicture(userID).First();
-			//}
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                //string directory = db.GetProfilePicture(userID).First();
 
-			//using (FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read))
-			{
-				//MemoryStream ms = new MemoryStream();
-				//file.CopyTo(ms);
-				//ms.Position = 0L;
+                //using (FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read))
+                {
+                    //MemoryStream ms = new MemoryStream();
+                    //file.CopyTo(ms);
+                    //ms.Position = 0L;
 
-				//return ms;
-				/*****************************************************************************************************
-				 * Remove the bottom lines and uncomment the above lines once filepath is implemented on the database.
-				*****************************************************************************************************/
-				byte[] imgByte;
-				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-				{
-					imgByte = db.GetProfilePicture(userID).First();
-				}
+                    //return ms;
+                    /*****************************************************************************************************
+                     * Remove the bottom lines and uncomment the above lines once filepath is implemented on the database.
+                    *****************************************************************************************************/
+                    byte[] imgByte;
+                    imgByte = db.GetProfilePicture(userID).First();
 
-				return new MemoryStream(imgByte);
-			}
+                    return new MemoryStream(imgByte);
+                }
+            }
 		}
 
 		/// <summary>
@@ -1302,11 +1344,13 @@ namespace UnstuckMEInterfaces
 						{
 							ChatID = chatItem.Value
 						};
+
 						chatIDList.Add(temp);
 					}
 
 					//dbChats.Dispose();		//need this to release memory   
 				}
+
 				return chatIDList;
 			}
 			catch (Exception ex)
@@ -1595,6 +1639,7 @@ namespace UnstuckMEInterfaces
 			try
 			{
 				UserClass temp = new UserClass();
+                List<UnstuckMEAvailableSticker> newstickers = GetActiveStickers(userID, classID: inClass);
 
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
@@ -1611,6 +1656,8 @@ namespace UnstuckMEInterfaces
 					if (client.Key == userID)
 					{
 						client.Value.connection.AddClasses(temp);
+                        foreach (UnstuckMEAvailableSticker sticker in newstickers)
+                            client.Value.connection.RecieveNewSticker(sticker);
 					}
 				}
 			}
@@ -1633,6 +1680,8 @@ namespace UnstuckMEInterfaces
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
 					db.UpdateTutorIDByTutorIDAndStickerID(tutorID, stickerID);
+                    DateTime time;
+                    _ActiveStickers.TryRemove(stickerID, out time);
 					var tutors = db.GetUsersThatCanTutorASticker(stickerID);
 
 					foreach (var client in _connectedClients)

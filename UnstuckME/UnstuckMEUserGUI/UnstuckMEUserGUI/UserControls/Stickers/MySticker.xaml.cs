@@ -49,8 +49,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //Removes Sticker From Stack Panel
-            //((StackPanel)Parent).Children.Remove(this);
+            //UnstuckME.Server.DeleteSticker(Sticker.StickerID);    //should delete the sticker
             Resolve();
         }
 
@@ -68,7 +67,6 @@ namespace UnstuckMEUserGUI
         {
             Window win = new SubWindows.AddTutorReviewWindow(Sticker.StickerID);
             win.Show();
-            //ButtonRemove_MouseLeftButtonDown(sender, e);
         }
 
         public void Resolve()

@@ -38,7 +38,7 @@ namespace UnstuckMEUserGUI.SubWindows
         {
             UnstuckME.Server.CreateReview(_stickerID, UnstuckME.User.UserID, starVal, ReviewDescriptionTxtBox.Text, true);
             this.Close();
-            UnstuckME.Pages.StickerPage.RemoveSticker(_stickerID);
+            UnstuckME.Pages.StickerPage.RemoveOpenSticker(_stickerID);
         }
     }
 }

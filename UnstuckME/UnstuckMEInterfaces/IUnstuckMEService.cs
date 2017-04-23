@@ -220,7 +220,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="classID">the unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null);
 
 		/// <summary>
 		/// Associates a user with an official tutoring organization.

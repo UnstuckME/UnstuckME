@@ -159,6 +159,7 @@ CREATE PROC GetUsersThatCanTutorASticker
 AS
 	BEGIN /*IF TUTORING FILTER IS APPLIED*/
 		IF EXISTS (SELECT * FROM StickerToMentor JOIN Sticker ON Sticker.StickerID = StickerToMentor.StickerID WHERE Sticker.StickerID = @inStickerID)
+		BEGIN
 			SELECT DISTINCT UserProfile.UserID FROM Sticker
 			JOIN StickerToMentor AS B ON B.StickerID = Sticker.StickerID
 			JOIN Classes ON Sticker.ClassID = Classes.ClassID
@@ -167,12 +168,15 @@ AS
 			JOIN OmToUser ON UserProfile.UserID = OmToUser.UserID
 			JOIN StickerToMentor AS a ON B.MentorID = OmToUser.MentorID
 			WHERE Sticker.StickerID = @inStickerID AND UserProfile.AverageTutorRank >= Sticker.MinimumStarRanking	AND UserProfile.UserID != Sticker.StudentID
+		END
 		ELSE /*NO TUTORING FILTER*/
+		BEGIN
 			SELECT DISTINCT UserProfile.UserID FROM Sticker
 			JOIN Classes ON Classes.ClassID = Sticker.ClassID
 			JOIN UserToClass ON Classes.ClassID = UserToClass.ClassID
 			JOIN UserProfile ON UserToClass.UserID = UserProfile.UserID
 			WHERE Sticker.StickerID = @inStickerID AND UserProfile.AverageTutorRank >= Sticker.MinimumStarRanking AND UserProfile.UserID != Sticker.StudentID
+		END
 	END
 GO
 

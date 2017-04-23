@@ -550,6 +550,9 @@
         <Function Name="GetDisplayNameAndEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetNumMsgsInAChat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chatID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetProfilePicture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
@@ -1405,6 +1408,9 @@
           <FunctionImport Name="GetDisplayNameAndEmail" ReturnType="Collection(UnstuckME_DBModel.GetDisplayNameAndEmail_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetNumMsgsInAChat" ReturnType="Collection(Int32)">
+            <Parameter Name="chatID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetProfilePicture" ReturnType="Collection(Binary)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -2246,6 +2252,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetNumMsgsInAChat" FunctionName="UnstuckME_DBModel.Store.GetNumMsgsInAChat" />
           <FunctionImportMapping FunctionImportName="GetProfilePicture" FunctionName="UnstuckME_DBModel.Store.GetProfilePicture" />
           <FunctionImportMapping FunctionImportName="GetReportsSubmittedByUser" FunctionName="UnstuckME_DBModel.Store.GetReportsSubmittedByUser">
             <ResultMapping>
