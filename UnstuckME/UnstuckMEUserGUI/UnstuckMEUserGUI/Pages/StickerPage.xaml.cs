@@ -60,7 +60,7 @@ namespace UnstuckMEUserGUI
         private void ButtonAvailable_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelTitle.Content = "Available Stickers";
-            LabelDescription.Content = "Stickers you qualify to tutor for.";
+            LabelDescription.Content = "Stickers you qualify to tutor for:";
             ButtonAvailable.Background = Brushes.SteelBlue;
             ButtonHistory.Background = UnstuckME.Blue;
             ButtonSubmitted.Background = UnstuckME.Blue;
@@ -82,7 +82,7 @@ namespace UnstuckMEUserGUI
         private void ButtonSubmitted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelTitle.Content = "Submitted Stickers";
-            LabelDescription.Content = "Stickers you have submitted that need to be tutored.";
+            LabelDescription.Content = "Stickers you have submitted that need to be tutored:";
             ButtonAvailable.Background = UnstuckME.Blue;
             ButtonHistory.Background = UnstuckME.Blue;
             ButtonSubmitted.Background = Brushes.SteelBlue;
@@ -104,7 +104,7 @@ namespace UnstuckMEUserGUI
         private void ButtonTutoring_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelTitle.Content = "Tutor Stickers";
-            LabelDescription.Content = "Stickers you are currently tutoring.";
+            LabelDescription.Content = "Stickers you are currently tutoring:";
             ButtonAvailable.Background = UnstuckME.Blue;
             ButtonHistory.Background = UnstuckME.Blue;
             ButtonSubmitted.Background = UnstuckME.Blue;
@@ -126,7 +126,7 @@ namespace UnstuckMEUserGUI
         private void ButtonHistory_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LabelTitle.Content = "Sticker History";
-            LabelDescription.Content = "Closed Stickers you have submitted or tutored for.";
+            LabelDescription.Content = "Closed Stickers you have submitted or tutored for:";
             ButtonAvailable.Background = UnstuckME.Blue;
             ButtonHistory.Background = Brushes.SteelBlue;
             ButtonSubmitted.Background = UnstuckME.Blue;

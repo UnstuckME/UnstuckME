@@ -1,79 +1,27 @@
-﻿<UserControl x:Class="UnstuckMEUserGUI.AvailableSticker"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
+             xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" x:Class="UnstuckMEUserGUI.AvailableSticker"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="250">
-    <Grid x:Name="FullBackGround" Background="#336699" Cursor="Hand" MouseEnter="GridClassName_MouseEnter" MouseLeave="GridClassName_MouseLeave" MouseDown="GridClassName_MouseDown">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="5"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,10,0" HorizontalAlignment="Right">
-            <Border x:Name="ButtonAccept" Background="ForestGreen" Width="75" Height="30" BorderBrush="DimGray" BorderThickness="1,1,1,1" HorizontalAlignment="Right" VerticalAlignment="Stretch" MouseEnter="ButtonAccept_MouseEnter" MouseLeave="ButtonAccept_MouseLeave" MouseLeftButtonDown="ButtonAccept_MouseLeftButtonDown">
-                <Label  Content="Accept" HorizontalContentAlignment="Center" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White" FontWeight="Medium"></Label>
-            </Border>
-        </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="25"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid x:Name="GridClassName" Grid.Row="0" Margin="0,0,100,0">
-                    <Label x:Name="LabelClassName" Padding="10,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Content="Class Name" Foreground="White"></Label>
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25"/>
-                    <ColumnDefinition Width="25"/>
-                    <ColumnDefinition Width="25"/>
-                    <ColumnDefinition Width="25"/>
-                    <ColumnDefinition Width="25"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Row="1" Grid.ColumnSpan="5">
-                    <ProgressBar x:Name="StarRankingValue" Foreground="Yellow" HorizontalAlignment="Stretch" Maximum="5" Margin="3,2,3,2" Background="White" BorderBrush="{x:Null}" Grid.ColumnSpan="5" Grid.Row="1" />
-                </Grid>
-                <Grid Grid.Column="0" Grid.Row="1"  Background="{x:Null}">
-                    <Border x:Name="Border1"  BorderBrush="#336699"  BorderThickness="1,4,4,4" Margin="2,0,0,0">
-                    </Border>
-                    <Image x:Name="Image1" Source="/Resources/Ranking/RankingBlue.png" HorizontalAlignment="Center" Stretch="Uniform" />
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="1" Background="{x:Null}" Grid.RowSpan="2">
-                    <Border x:Name="Border2" BorderBrush="#336699" BorderThickness="3,4,4,4"/>
-                    <Image x:Name="Image2" Source="/Resources/Ranking/RankingBlue.png" Stretch="Uniform" />
-                </Grid>
-                <Grid Grid.Column="2" Grid.Row="1" Background="{x:Null}" Grid.RowSpan="2">
-                    <Border x:Name="Border3" BorderBrush="#336699" BorderThickness="1,4,1,4">
-                    </Border>
-                    <Image x:Name="Image3" Source="/Resources/Ranking/RankingBlue.png" Stretch="Uniform" ></Image>
-                </Grid>
-                <Grid Grid.Column="3" Grid.Row="1" Background="{x:Null}" Grid.RowSpan="2">
-                    <Border x:Name="Border4" BorderBrush="#336699" BorderThickness="3,4,4,4" Margin="-2,0,0,0">
-                    </Border>
-                    <Image x:Name="Image4" Source="/Resources/Ranking/RankingBlue.png"  Stretch="Uniform" ></Image>
-                </Grid>
-                <Grid Grid.Column="4" Grid.Row="1" Background="{x:Null}" Grid.RowSpan="2">
-                    <Border x:Name="Border5" BorderBrush="#336699" BorderThickness="4,4,4,4" Margin="-1,0,0,0">
-                    </Border>
-                    <Image x:Name="Image5" Source="/Resources/Ranking/RankingBlue.png" Stretch="Uniform"></Image>
-                </Grid>
-            </Grid>
-        </Grid>
-        <Grid Grid.Row="1">
-            
-            
-        </Grid>
-        <Grid Grid.Row="2" Background="DimGray">
-            
-        </Grid>
-        <Border BorderBrush="DimGray" BorderThickness="1,1,1,1" Grid.RowSpan="2"></Border>
-    </Grid>
+             d:DesignHeight="150" d:DesignWidth="500">
+    <Border CornerRadius="5" Background="White" Margin="5,0,5,0" BorderBrush="DimGray" BorderThickness="1">
+        <Border Background="#336699" CornerRadius="5,5,50,5" Height="150">
+            <Grid x:Name="FullBackGround" >
+                <Border x:Name="PeelTab" MouseEnter="PeelTab_MouseEnter" Cursor="Hand" MouseLeave="PeelTab_MouseLeave" MouseLeftButtonDown="PeelTab_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="LightGray" Height="50" Width="50" BorderThickness="1,1,0,0" BorderBrush="White" CornerRadius="5,0,50,0"/>
+                <Label x:Name="LabelClassName" Content="Class Description" Foreground="White" FontSize="18" FontWeight="Heavy" FontFamily="Arial" Padding="10,0,0,0" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,100,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="ProblemDescription" FontSize="14" Padding="10,2,5,2" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" BorderThickness="0" Background="{x:Null}" Height="75" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                <Label Content="Student Rating:" Foreground="White" FontSize="16" FontWeight="Heavy" FontFamily="Arial" Padding="10,0,0,0" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,335,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
 
+                <Controls:Rating x:Name="StarRatingValue" ItemCount="5"  Value="1"  Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Height="25" Background="{x:Null}" VerticalAlignment="Bottom" Width="100" Margin="160,0,0,3" IsReadOnly="True" IsManipulationEnabled="True">
+                    <Controls:Rating.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.3"></ScaleTransform>
+                    </Controls:Rating.LayoutTransform>
+                </Controls:Rating>
+
+            </Grid>
+        </Border>
+    </Border>
 </UserControl>

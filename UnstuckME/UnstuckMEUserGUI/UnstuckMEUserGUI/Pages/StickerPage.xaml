@@ -15,8 +15,8 @@
             </Grid.RowDefinitions>
             <Border Panel.ZIndex="1">
                 <Grid Grid.Row="0" Background="#993333" >
-                    <Label x:Name="LabelTitle" VerticalAlignment="Top" Foreground="White" FontSize="24" FontFamily="Arial" FontWeight="Bold" HorizontalAlignment="Left" Width="400" Height="50" Margin="25,10,0,0" Content="Available Stickers" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></Label>
-                    <Label x:Name="LabelDescription" VerticalAlignment="Top" Foreground="White" FontSize="16" FontFamily="Arial" FontWeight="Medium" HorizontalAlignment="Left" Width="400" Height="50" Margin="25,50,0,0" Content="Stickers you qualify to tutor for." VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></Label>
+                    <Label x:Name="LabelTitle" VerticalAlignment="Top" Foreground="White" FontSize="28" FontFamily="Arial" FontWeight="Bold" HorizontalAlignment="Left" Width="450" Height="50" Margin="15,10,0,0" Content="Available Stickers" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"></Label>
+
                     
                     <Border x:Name="ButtonHistory" Cursor="Hand" MouseLeftButtonDown="ButtonHistory_MouseLeftButtonDown" Height="30" Width="100" CornerRadius="5,5,0,0" Margin="0,0,20,0" Background="#336699" VerticalAlignment="Bottom" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="1,1,1,0">
                         <Label Content="History" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
@@ -36,18 +36,19 @@
             </Border>
             <Grid Grid.Row="1" Background="#993333"/>
 
-            <Border Panel.ZIndex="0" Grid.Row="1" Background="SteelBlue" CornerRadius="10,10,0,0" BorderBrush="White" BorderThickness="1,1,1,2">
+            <Border Panel.ZIndex="0" Grid.Row="1" Background="SteelBlue" CornerRadius="10,10,0,0" BorderBrush="White" BorderThickness="1,1,1,0">
                 <Grid>
-                    <ScrollViewer x:Name="GridOpenStickers" Visibility="Hidden" Margin="0,10,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
+                    <Label x:Name="LabelDescription" Height="40" Padding="30,0,0,0" FontWeight="Medium" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="White" FontSize="18" Content="Stickers You Qualify to Tutor for:" VerticalAlignment="Top" HorizontalAlignment="Stretch"></Label>
+                    <ScrollViewer x:Name="GridOpenStickers" Visibility="Hidden" Margin="0,40,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
                         <StackPanel x:Name="StackPanelOpenStickers" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></StackPanel>
                     </ScrollViewer>
-                    <ScrollViewer x:Name="GridHistory" Visibility="Hidden" Margin="0,10,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer x:Name="GridHistory" Visibility="Hidden" Margin="0,40,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
                         <StackPanel x:Name="StackPanelStickerHistory" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></StackPanel>
                     </ScrollViewer>
-                    <ScrollViewer x:Name="GridSubmitted" Visibility="Hidden" Margin="0,10,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer x:Name="GridSubmitted" Visibility="Hidden" Margin="0,40,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
                         <StackPanel x:Name="StackPanelMyStickers" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></StackPanel>
                     </ScrollViewer>
-                    <ScrollViewer x:Name="GridAvailable" Visibility="Visible" Margin="0,10,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer x:Name="GridAvailable" Visibility="Visible" Margin="0,40,0,0" Focusable="False" VerticalScrollBarVisibility="Auto">
                         <StackPanel x:Name="StackPanelAvailableStickers" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></StackPanel>
                     </ScrollViewer>
                 </Grid>

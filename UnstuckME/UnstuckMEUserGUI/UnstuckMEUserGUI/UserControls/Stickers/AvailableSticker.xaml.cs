@@ -41,7 +41,8 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             Sticker = inSticker;
             LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + " " + Sticker.CourseName;
-            StarRankingValue.Value = inSticker.StudentRanking;
+            StarRatingValue.Value = (inSticker.StudentRanking / 5);
+            ProblemDescription.Text = Sticker.ProblemDescription;
         }
 
         public void RemoveFromStackPanel()
@@ -58,30 +59,30 @@ namespace UnstuckMEUserGUI
 
         public void ChangeToSteelBlue()
         {
-            Border1.BorderBrush = Brushes.SteelBlue;
-            Border2.BorderBrush = Brushes.SteelBlue;
-            Border3.BorderBrush = Brushes.SteelBlue;
-            Border4.BorderBrush = Brushes.SteelBlue;
-            Border5.BorderBrush = Brushes.SteelBlue;
-            Image1.Source = SteelBlueStar;
-            Image2.Source = SteelBlueStar;
-            Image3.Source = SteelBlueStar;
-            Image4.Source = SteelBlueStar;
-            Image5.Source = SteelBlueStar;
+            //Border1.BorderBrush = Brushes.SteelBlue;
+            //Border2.BorderBrush = Brushes.SteelBlue;
+            //Border3.BorderBrush = Brushes.SteelBlue;
+            //Border4.BorderBrush = Brushes.SteelBlue;
+            //Border5.BorderBrush = Brushes.SteelBlue;
+            //Image1.Source = SteelBlueStar;
+            //Image2.Source = SteelBlueStar;
+            //Image3.Source = SteelBlueStar;
+            //Image4.Source = SteelBlueStar;
+            //Image5.Source = SteelBlueStar;
         }
 
         public void ChangeToUnstuckMEBlue()
         {
-            Border1.BorderBrush = UnstuckME.Blue;
-            Border2.BorderBrush = UnstuckME.Blue;
-            Border3.BorderBrush = UnstuckME.Blue;
-            Border4.BorderBrush = UnstuckME.Blue;
-            Border5.BorderBrush = UnstuckME.Blue;
-            Image1.Source = BlueStar;
-            Image2.Source = BlueStar;
-            Image3.Source = BlueStar;
-            Image4.Source = BlueStar;
-            Image5.Source = BlueStar;
+            //Border1.BorderBrush = UnstuckME.Blue;
+            //Border2.BorderBrush = UnstuckME.Blue;
+            //Border3.BorderBrush = UnstuckME.Blue;
+            //Border4.BorderBrush = UnstuckME.Blue;
+            //Border5.BorderBrush = UnstuckME.Blue;
+            //Image1.Source = BlueStar;
+            //Image2.Source = BlueStar;
+            //Image3.Source = BlueStar;
+            //Image4.Source = BlueStar;
+            //Image5.Source = BlueStar;
         }
 
         private void GridClassName_MouseLeave(object sender, MouseEventArgs e)
@@ -102,16 +103,6 @@ namespace UnstuckMEUserGUI
             ((StackPanel)this.Parent).Children.Remove(this);
         }
 
-        private void ButtonAccept_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ButtonAccept.Background = Brushes.LimeGreen;
-        }
-
-        private void ButtonAccept_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ButtonAccept.Background = Brushes.ForestGreen;
-        }
-
         private void ButtonAccept_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -124,6 +115,23 @@ namespace UnstuckMEUserGUI
             {
                 MessageBox.Show("Accept Failed In Available Sticker User Control. " + ex.Message);
             }
+        }
+
+        private void PeelTab_MouseEnter(object sender, MouseEventArgs e)
+        {
+            PeelTab.Height = 100;
+            PeelTab.Width = 100;
+        }
+
+        private void PeelTab_MouseLeave(object sender, MouseEventArgs e)
+        {
+            PeelTab.Height = 50;
+            PeelTab.Width = 50;
+        }
+
+        private void PeelTab_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Clicked");
         }
     }
 }
