@@ -470,6 +470,24 @@ namespace UnstuckMEInterfaces
 		/// <returns>Contains the StickerID and true if they are the student, false if they are the tutor. If there is no sticker, returns 0 for the sticker ID.</returns>
 		[OperationContract]
 		KeyValuePair<int, bool> CheckForReviews(int userID);
+
+        /// <summary>
+        /// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
+        /// see that sticker. This should only be done if the sticker does not already have a tutor.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to delete.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        [OperationContract]
+        int DeleteSticker(int stickerID);
+
+        /// <summary>
+        /// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out
+        /// to online tutors who are eligible to see it.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        [OperationContract]
+        int RemoveTutorFromSticker(int stickerID);
 	}
 
 	[ServiceContract(CallbackContract = typeof(IServer))]

@@ -852,13 +852,10 @@ namespace UnstuckMEInterfaces
 					var stickerID = db.CreateSticker(newSticker.ProblemDescription, newSticker.Class.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.TimeoutInt).First();
 
 					if (stickerID.Value == 0)
-					{
 						throw new Exception("Create Sticker Failed, Returned sticker ID = 0");
-					}
-					else
-					{
-						retstickerID = stickerID.Value;
-					}
+
+                    retstickerID = stickerID.Value;
+					
 					if (newSticker.AttachedOrganizations.Count != 0)
 					{
 						foreach (int orgID in newSticker.AttachedOrganizations)
@@ -1965,6 +1962,89 @@ namespace UnstuckMEInterfaces
 				return -1;
 			}
 		}
+
+        /// <summary>
+        /// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
+        /// see that sticker. This should only be done if the sticker does not already have a tutor.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to delete.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        public int DeleteSticker(int stickerID)
+        {
+            int retVal = -1;
+
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    db.DeleteStickerByStickerID(stickerID);
+                    var tutors = db.GetUsersThatCanTutorASticker(stickerID);
+
+                    foreach (var tutor in tutors)
+                    {
+                        if (_connectedClients.ContainsKey(tutor.Value))
+                            _connectedClients[tutor.Value].connection.RemoveGUISticker(stickerID);
+                    }
+
+                    retVal = 0;
+                }
+            }
+            catch (Exception)
+            { }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out
+        /// to online tutors who are eligible to see it.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        public int RemoveTutorFromSticker(int stickerID)
+        {
+            int retVal = -1;
+
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    db.UpdateTutorIDByTutorIDAndStickerID(null, stickerID); //removes the tutor from the sticker
+                    var sticker = (from s in db.Stickers
+                                   where s.StickerID == stickerID
+                                   select new { s.Class, s.StudentID, s.ProblemDescription, s.MinimumStarRanking, s.ChatID, s.TutorID, s.SubmitTime, s.Timeout }).First();
+
+                    //not sure if this will work
+                    UnstuckMEBigSticker bigsticker = new UnstuckMEBigSticker()
+                    {
+                        StickerID = stickerID,
+                        ProblemDescription = sticker.ProblemDescription,
+                        StudentID = sticker.StudentID,
+                        ChatID = sticker.ChatID.Value,
+                        TutorID = sticker.TutorID.Value,
+                        MinimumStarRanking = sticker.MinimumStarRanking.Value,
+                        Class = new UserClass()
+                        {
+                            ClassID = sticker.Class.ClassID,
+                            CourseCode = sticker.Class.CourseCode,
+                            CourseName = sticker.Class.CourseName,
+                            CourseNumber = sticker.Class.CourseNumber
+                        },
+                        SubmitTime = sticker.SubmitTime,
+                        Timeout = sticker.Timeout
+                    };
+
+                    _StickerList.Enqueue(bigsticker);
+                    _ActiveStickers.TryAdd(bigsticker.StickerID, bigsticker.Timeout);
+
+                    retVal = 0;
+                }
+            }
+            catch (Exception)
+            { }
+
+            return retVal;
+        }
 
 		#endregion
 
