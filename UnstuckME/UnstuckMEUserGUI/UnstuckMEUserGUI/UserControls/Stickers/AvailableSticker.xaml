@@ -12,9 +12,9 @@
             <Grid x:Name="FullBackGround" >
                 <Border x:Name="PeelTab" MouseEnter="PeelTab_MouseEnter" Cursor="Hand" MouseLeave="PeelTab_MouseLeave" MouseLeftButtonDown="PeelTab_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="LightGray" Height="50" Width="50" BorderThickness="1,1,0,0" BorderBrush="White" CornerRadius="5,0,50,0"/>
                 <Label x:Name="LabelClassName" Content="Class Description" Foreground="White" FontSize="18" FontWeight="Heavy" FontFamily="Arial" Padding="10,0,0,0" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,100,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
-                <TextBox x:Name="ProblemDescription" FontSize="14" Padding="10,2,5,2" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" BorderThickness="0" Background="{x:Null}" Height="75" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                <TextBox x:Name="ProblemDescription" FontSize="16" Padding="10,2,5,2" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" BorderThickness="0" Background="{x:Null}" Height="75" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                 <Label Content="Student Rating:" Foreground="White" FontSize="16" FontWeight="Heavy" FontFamily="Arial" Padding="10,0,0,0" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,335,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
-
+                
                 <Controls:Rating x:Name="StarRatingValue" ItemCount="5"  Value="1"  Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  HorizontalAlignment="Left" Height="25" Background="{x:Null}" VerticalAlignment="Bottom" Width="100" Margin="160,0,0,3" IsReadOnly="True" IsManipulationEnabled="True">
                     <Controls:Rating.LayoutTransform>
                         <ScaleTransform ScaleX="1.5" ScaleY="1.3"></ScaleTransform>

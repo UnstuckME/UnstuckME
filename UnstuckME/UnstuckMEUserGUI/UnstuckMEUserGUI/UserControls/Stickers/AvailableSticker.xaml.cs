@@ -30,7 +30,7 @@ namespace UnstuckMEUserGUI
             Sticker = inSticker;
             LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + " " + Sticker.CourseName;
             StarRatingValue.Value = (inSticker.StudentRanking / 5);
-            ProblemDescription.Text = Sticker.ProblemDescription;
+            ProblemDescription.Text = "Problem Description:\n" + Sticker.ProblemDescription;
         }
 
         public void RemoveFromStackPanel()
