@@ -26,7 +26,7 @@ namespace UnstuckMEInterfaces
 	{
 		private ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 		private ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
-        private static ConcurrentDictionary<int, DateTime> _ActiveStickers;
+		private static ConcurrentDictionary<int, DateTime> _ActiveStickers;
 		private static ConcurrentQueue<UnstuckMEBigSticker> _StickerList;
 		private static ConcurrentQueue<UnstuckMEMessage> _MessageList;
 		private static ConcurrentQueue<int> _ReviewList = new ConcurrentQueue<int>();
@@ -50,48 +50,48 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-        #region Client-Server Functions
-        /// <summary>
-        /// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
-        /// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
-        /// checks for all online users who are eligible to view that sticker and removes it from their
-        /// client interface.
-        /// </summary>
-        public void CheckForTimedOutStickers()
-        {
-            _ActiveStickers = new ConcurrentDictionary<int, DateTime>();
+		#region Client-Server Functions
+		/// <summary>
+		/// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
+		/// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
+		/// checks for all online users who are eligible to view that sticker and removes it from their
+		/// client interface.
+		/// </summary>
+		public void CheckForTimedOutStickers()
+		{
+			_ActiveStickers = new ConcurrentDictionary<int, DateTime>();
 
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-                var activestickers = from s in db.Stickers
-                                     where s.Timeout > DateTime.Now && s.TutorID == null
-                                     select new { s.StickerID, s.Timeout };
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				var activestickers = from s in db.Stickers
+									 where s.Timeout > DateTime.Now && s.TutorID == null
+									 select new { s.StickerID, s.Timeout };
 
-                foreach (var sticker in activestickers)
-                    _ActiveStickers.TryAdd(sticker.StickerID, sticker.Timeout);
+				foreach (var sticker in activestickers)
+					_ActiveStickers.TryAdd(sticker.StickerID, sticker.Timeout);
 
-                while (true)
-                {
-                    foreach (KeyValuePair<int, DateTime> sticker in _ActiveStickers)
-                    {
-                        if (sticker.Value <= DateTime.Now)
-                        {
-                            var tutors = db.GetUsersThatCanTutorASticker(sticker.Key);
+				while (true)
+				{
+					foreach (KeyValuePair<int, DateTime> sticker in _ActiveStickers)
+					{
+						if (sticker.Value <= DateTime.Now)
+						{
+							var tutors = db.GetUsersThatCanTutorASticker(sticker.Key);
 
-                            foreach (var tutor in tutors)
-                            {
-                                if (_connectedClients.ContainsKey(tutor.Value))
-                                {
-                                    DateTime time = sticker.Value;
-                                    _ActiveStickers.TryRemove(sticker.Key, out time);
-                                    _connectedClients[tutor.Value].connection.RemoveGUISticker(sticker.Key);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+							foreach (var tutor in tutors)
+							{
+								if (_connectedClients.ContainsKey(tutor.Value))
+								{
+									DateTime time = sticker.Value;
+									_ActiveStickers.TryRemove(sticker.Key, out time);
+									_connectedClients[tutor.Value].connection.RemoveGUISticker(sticker.Key);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// Checks to see if there are any new messages for the client. If there are, sends the message to that client as long as they are logged into the server.
@@ -152,8 +152,8 @@ namespace UnstuckMEInterfaces
 					UnstuckMEBigSticker temp;
 					_StickerList.TryDequeue(out temp);
 					await Task.Factory.StartNew(() => SendStickerToClients(temp));
-                    DateTime timeout = temp.Timeout;
-                    _ActiveStickers.TryRemove(temp.StickerID, out timeout);
+					DateTime timeout = temp.Timeout;
+					_ActiveStickers.TryRemove(temp.StickerID, out timeout);
 				}
 			}
 
@@ -854,7 +854,7 @@ namespace UnstuckMEInterfaces
 					if (stickerID.Value == 0)
 						throw new Exception("Create Sticker Failed, Returned sticker ID = 0");
 
-                    retstickerID = stickerID.Value;
+					retstickerID = stickerID.Value;
 					
 					if (newSticker.AttachedOrganizations.Count != 0)
 					{
@@ -863,7 +863,7 @@ namespace UnstuckMEInterfaces
 					}
 					newSticker.StickerID = retstickerID;
 					_StickerList.Enqueue(newSticker);
-                    _ActiveStickers.TryAdd(newSticker.StickerID, newSticker.Timeout);
+					_ActiveStickers.TryAdd(newSticker.StickerID, newSticker.Timeout);
 				}
 				return retstickerID;
 			}
@@ -882,26 +882,26 @@ namespace UnstuckMEInterfaces
 		/// <returns>A Stream object containing the data of the image file.</returns>
 		public Stream GetProfilePicture(int userID)
 		{
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-                //string directory = db.GetProfilePicture(userID).First();
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
+				//string directory = db.GetProfilePicture(userID).First();
 
-                //using (FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read))
-                {
-                    //MemoryStream ms = new MemoryStream();
-                    //file.CopyTo(ms);
-                    //ms.Position = 0L;
+				//using (FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read))
+				{
+					//MemoryStream ms = new MemoryStream();
+					//file.CopyTo(ms);
+					//ms.Position = 0L;
 
-                    //return ms;
-                    /*****************************************************************************************************
-                     * Remove the bottom lines and uncomment the above lines once filepath is implemented on the database.
-                    *****************************************************************************************************/
-                    byte[] imgByte;
-                    imgByte = db.GetProfilePicture(userID).First();
+					//return ms;
+					/*****************************************************************************************************
+					 * Remove the bottom lines and uncomment the above lines once filepath is implemented on the database.
+					*****************************************************************************************************/
+					byte[] imgByte;
+					imgByte = db.GetProfilePicture(userID).First();
 
-                    return new MemoryStream(imgByte);
-                }
-            }
+					return new MemoryStream(imgByte);
+				}
+			}
 		}
 
 		/// <summary>
@@ -1306,27 +1306,27 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-        /// <summary> 
-        /// Gets the number of messages a single chat holds 
-        /// </summary> 
-        /// <param name="chatID">The unique identifier of a specific chat.</param> 
-        /// <returns>A integer continuing the number of messages for the provided chat.</returns> 
-        public int GetChatMsgCount(int chatID)
-        {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
+		/// <summary> 
+		/// Gets the number of messages a single chat holds 
+		/// </summary> 
+		/// <param name="chatID">The unique identifier of a specific chat.</param> 
+		/// <returns>A integer continuing the number of messages for the provided chat.</returns> 
+		public int GetChatMsgCount(int chatID)
+		{
+			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+			{
 
-            }
+			}
 
-            return -1;
-        }
+			return -1;
+		}
 
-        /// <summary>
-        /// Gets unique identifiers of all the chats a user is associated with.
-        /// </summary>
-        /// <param name="userID">The unique identifier of a specific user.</param>
-        /// <returns>A list of chats, each containing the unique identifier of that chat.</returns>
-        public List<UnstuckMEChat> GetChatIDs(int userID)
+		/// <summary>
+		/// Gets unique identifiers of all the chats a user is associated with.
+		/// </summary>
+		/// <param name="userID">The unique identifier of a specific user.</param>
+		/// <returns>A list of chats, each containing the unique identifier of that chat.</returns>
+		public List<UnstuckMEChat> GetChatIDs(int userID)
 		{
 			try
 			{
@@ -1636,7 +1636,7 @@ namespace UnstuckMEInterfaces
 			try
 			{
 				UserClass temp = new UserClass();
-                List<UnstuckMEAvailableSticker> newstickers = GetActiveStickers(userID, classID: inClass);
+				List<UnstuckMEAvailableSticker> newstickers = GetActiveStickers(userID, classID: inClass);
 
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
@@ -1653,8 +1653,8 @@ namespace UnstuckMEInterfaces
 					if (client.Key == userID)
 					{
 						client.Value.connection.AddClasses(temp);
-                        foreach (UnstuckMEAvailableSticker sticker in newstickers)
-                            client.Value.connection.RecieveNewSticker(sticker);
+						foreach (UnstuckMEAvailableSticker sticker in newstickers)
+							client.Value.connection.RecieveNewSticker(sticker);
 					}
 				}
 			}
@@ -1677,8 +1677,8 @@ namespace UnstuckMEInterfaces
 				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 				{
 					db.UpdateTutorIDByTutorIDAndStickerID(tutorID, stickerID);
-                    DateTime time;
-                    _ActiveStickers.TryRemove(stickerID, out time);
+					DateTime time;
+					_ActiveStickers.TryRemove(stickerID, out time);
 					var tutors = db.GetUsersThatCanTutorASticker(stickerID);
 
 					foreach (var client in _connectedClients)
@@ -1963,114 +1963,114 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-        public int GetNumberOFMesseges(int chatID)
-        {
-            try
-            {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    return db.GetNumMsgsInAChat(chatID).First().Value;
-                }
-        /// <summary>
-        /// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
-        /// see that sticker. This should only be done if the sticker does not already have a tutor.
-        /// </summary>
-        /// <param name="stickerID">The unique identifier of the sticker to delete.</param>
-        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public int DeleteSticker(int stickerID)
-        {
-            int retVal = -1;
+		public int GetNumberOFMesseges(int chatID)
+		{
+			try
+			{
+				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+				{
+					return (db.GetNumMsgsInAChat(chatID)).First().Value;
+				}
+			}
+			catch (Exception)
+			{
+				return -1;
+			}
+		}
 
-            try
-            {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    db.DeleteStickerByStickerID(stickerID);
-                    var tutors = db.GetUsersThatCanTutorASticker(stickerID);
+		/// <summary>
+		/// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
+		/// see that sticker. This should only be done if the sticker does not already have a tutor.
+		/// </summary>
+		/// <param name="stickerID">The unique identifier of the sticker to delete.</param>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+		public int DeleteSticker(int stickerID)
+		{
+			int retVal = -1;
 
-                    foreach (var tutor in tutors)
-                    {
-                        if (_connectedClients.ContainsKey(tutor.Value))
-                            _connectedClients[tutor.Value].connection.RemoveGUISticker(stickerID);
-                    }
+			try
+			{
+				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+				{
+					db.DeleteStickerByStickerID(stickerID);
+					var tutors = db.GetUsersThatCanTutorASticker(stickerID);
 
-                    retVal = 0;
-                }
-            }
-            catch (Exception)
-            { }
+					foreach (var tutor in tutors)
+					{
+						if (_connectedClients.ContainsKey(tutor.Value))
+							_connectedClients[tutor.Value].connection.RemoveGUISticker(stickerID);
+					}
 
-            return retVal;
-        }
+					retVal = 0;
+				}
+			}
+			catch (Exception)
+			{ }
 
-        /// <summary>
-        /// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out
-        /// to online tutors who are eligible to see it.
-        /// </summary>
-        /// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
-        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public int RemoveTutorFromSticker(int stickerID)
-        {
-            int retVal = -1;
+			return retVal;
+		}
 
-            try
-            {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    db.UpdateTutorIDByTutorIDAndStickerID(null, stickerID); //removes the tutor from the sticker
-                    var sticker = (from s in db.Stickers
-                                   where s.StickerID == stickerID
-                                   select new { s.Class, s.StudentID, s.ProblemDescription, s.MinimumStarRanking, s.ChatID, s.TutorID, s.SubmitTime, s.Timeout }).First();
+		/// <summary>
+		/// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out
+		/// to online tutors who are eligible to see it.
+		/// </summary>
+		/// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+		public int RemoveTutorFromSticker(int stickerID)
+		{
+			int retVal = -1;
 
-                    //not sure if this will work
-                    UnstuckMEBigSticker bigsticker = new UnstuckMEBigSticker()
-                    {
-                        StickerID = stickerID,
-                        ProblemDescription = sticker.ProblemDescription,
-                        StudentID = sticker.StudentID,
-                        ChatID = sticker.ChatID.Value,
-                        TutorID = sticker.TutorID.Value,
-                        MinimumStarRanking = sticker.MinimumStarRanking.Value,
-                        Class = new UserClass()
-                        {
-                            ClassID = sticker.Class.ClassID,
-                            CourseCode = sticker.Class.CourseCode,
-                            CourseName = sticker.Class.CourseName,
-                            CourseNumber = sticker.Class.CourseNumber
-                        },
-                        SubmitTime = sticker.SubmitTime,
-                        Timeout = sticker.Timeout
-                    };
+			try
+			{
+				using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+				{
+					db.UpdateTutorIDByTutorIDAndStickerID(null, stickerID); //removes the tutor from the sticker
+					var sticker = (from s in db.Stickers
+								   where s.StickerID == stickerID
+								   select new { s.Class, s.StudentID, s.ProblemDescription, s.MinimumStarRanking, s.ChatID, s.TutorID, s.SubmitTime, s.Timeout }).First();
 
-                    _StickerList.Enqueue(bigsticker);
-                    _ActiveStickers.TryAdd(bigsticker.StickerID, bigsticker.Timeout);
+					//not sure if this will work
+					UnstuckMEBigSticker bigsticker = new UnstuckMEBigSticker()
+					{
+						StickerID = stickerID,
+						ProblemDescription = sticker.ProblemDescription,
+						StudentID = sticker.StudentID,
+						ChatID = sticker.ChatID.Value,
+						TutorID = sticker.TutorID.Value,
+						MinimumStarRanking = sticker.MinimumStarRanking.Value,
+						Class = new UserClass()
+						{
+							ClassID = sticker.Class.ClassID,
+							CourseCode = sticker.Class.CourseCode,
+							CourseName = sticker.Class.CourseName,
+							CourseNumber = sticker.Class.CourseNumber
+						},
+						SubmitTime = sticker.SubmitTime,
+						Timeout = sticker.Timeout
+					};
 
-                    retVal = 0;
-                }
-            }
-            catch (Exception)
-            { }
+					_StickerList.Enqueue(bigsticker);
+					_ActiveStickers.TryAdd(bigsticker.StickerID, bigsticker.Timeout);
 
-            return retVal;
-        }
+					retVal = 0;
+				}
+			}
+			catch (Exception)
+			{ }
+
+			return retVal;
+		}
+
+			
 
 		#endregion
 
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
-        }
-
-        #endregion
-
-        #region ServerGUI Functions
-        /// <summary>
-        /// Returns a boolean value identifying that the server is running.
-        /// </summary>
-        /// <returns>True.</returns>
-        public bool TestNewConfig()
+		#region ServerGUI Functions
+		/// <summary>
+		/// Returns a boolean value identifying that the server is running.
+		/// </summary>
+		/// <returns>True.</returns>
+		public bool TestNewConfig()
 		{
 			return true;
 		}
@@ -2350,7 +2350,7 @@ namespace UnstuckMEInterfaces
 			return file;
 		}
 
-        
-        #endregion
-    }
+		
+		#endregion
+	}
 }
