@@ -45,9 +45,7 @@
             <!--GRID GO TOP LEFT TO RIGHT-->
             <Grid Grid.Row="0" Grid.Column="0">
                 <Border BorderBrush="Black" BorderThickness="0,0,1,1">
-                    <Image x:Name="ProfilePicture" Stretch="UniformToFill" Source="/Resources/User/UserBlue.png" HorizontalAlignment="Stretch" Width="Auto" Height="150" VerticalAlignment="Top">
-
-                    </Image>
+                    <Image x:Name="ProfilePicture" Stretch="UniformToFill" Source="/Resources/User/UserBlue.png" HorizontalAlignment="Stretch" Width="Auto" Height="150" VerticalAlignment="Top"/>
                 </Border>
             </Grid>
             <Grid x:Name="UserInfoGrid" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">

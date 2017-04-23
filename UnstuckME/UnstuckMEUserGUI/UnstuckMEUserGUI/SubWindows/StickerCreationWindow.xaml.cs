@@ -134,7 +134,7 @@ namespace UnstuckMEUserGUI
 
                     foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
                     {
-                        newSticker.AttachedOrganizations.Add(a.GetOrganizationID());
+                        newSticker.AttachedOrganizations.Add(a.OrganizationID);
                     }
                     try
                     {
@@ -263,7 +263,7 @@ namespace UnstuckMEUserGUI
             if (ComboBoxOrgName.SelectedIndex == 0) return;
             foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
             {
-                if(temp.Value == a.GetOrganizationID())
+                if(temp.Value == a.OrganizationID)
                 {
                     exists = true;
                 }

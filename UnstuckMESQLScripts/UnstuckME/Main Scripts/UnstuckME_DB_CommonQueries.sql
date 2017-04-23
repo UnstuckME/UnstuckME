@@ -95,6 +95,8 @@ if object_id('GetNumMsgsInAChat') is not null
   drop procedure GetNumMsgsInAChat;
 if object_id('GetStickerInfo') is not null
 	drop procedure GetStickerInfo;
+if object_id('Ryans_GetChatMessage') is not null
+	drop procedure Ryans_GetChatMessage;
 
 /**************************************************************************
 * Gets all Stickers for Admin
@@ -641,6 +643,22 @@ begin
 	) as [ChatMessages]
 	where [Row] between @startrow and @endrow
 	order by [Row] desc
+end;
+
+/**************************************************************************
+* Pull chat messages and files between users
+**************************************************************************/
+go
+create proc Ryans_GetChatMessage
+(	@chatid int,
+	@startingID int = 0,
+	@nummessages int = 20
+) as
+begin
+	select Top (@nummessages) MessageID, MessageData, SentBy, SentTime
+	from Messages
+	where ChatID = @chatID and MessageID <= @startingID
+	order by MessageID desc
 end;
 
 /**************************************************************************
