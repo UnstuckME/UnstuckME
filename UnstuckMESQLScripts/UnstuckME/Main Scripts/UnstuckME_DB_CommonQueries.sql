@@ -97,6 +97,10 @@ if object_id('GetStickerInfo') is not null
 	drop procedure GetStickerInfo;
 if object_id('Ryans_GetChatMessage') is not null
 	drop procedure Ryans_GetChatMessage;
+if object_id('GetChatMemeberIds') is not null
+	drop procedure GetChatMemeberIds;
+if object_id('GetInfoForFriend') is not null
+	drop procedure GetInfoForFriend;
 
 /**************************************************************************
 * Gets all Stickers for Admin
@@ -659,6 +663,34 @@ begin
 	from Messages
 	where ChatID = @chatID and MessageID <= @startingID
 	order by MessageID desc
+end;
+
+/**************************************************************************
+* Get all the user Id's associated with a single chatID
+**************************************************************************/
+go
+Create proc GetChatMemeberIds
+(
+	@chatid int
+)as
+begin
+	Select Distinct SentBy from Messages
+	where ChatID = @chatid
+end;
+
+/**************************************************************************
+* Get the infomration a friend needs based on user id
+**************************************************************************/
+go
+Create proc GetInfoForFriend
+(
+	@userID int
+)as
+begin
+	select DisplayFName, EmailAddress, Photo
+	from UserProfile join Picture 
+	on UserProfile.userID = Picture.userID
+	where UserProfile.UserID = @userID;
 end;
 
 /**************************************************************************

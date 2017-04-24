@@ -1273,5 +1273,23 @@ namespace UnstuckMEServer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ryans_GetChatMessage_Result>("Ryans_GetChatMessage", chatidParameter, startingIDParameter, nummessagesParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> GetChatMemeberIds(Nullable<int> chatid)
+        {
+            var chatidParameter = chatid.HasValue ?
+                new ObjectParameter("chatid", chatid) :
+                new ObjectParameter("chatid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetChatMemeberIds", chatidParameter);
+        }
+    
+        public virtual ObjectResult<GetInfoForFriend_Result> GetInfoForFriend(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInfoForFriend_Result>("GetInfoForFriend", userIDParameter);
+        }
     }
 }

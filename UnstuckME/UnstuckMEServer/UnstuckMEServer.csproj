@@ -99,6 +99,9 @@
     <Compile Include="Chat.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetInfoForFriend_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Implementations\ChatFunctions.cs" />
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>

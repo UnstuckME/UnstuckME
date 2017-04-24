@@ -530,6 +530,9 @@
         <Function Name="GetAllUsersInAnOrganization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="orgid" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetChatMemeberIds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chatid" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetChatMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="chatid" Type="int" Mode="In" />
           <Parameter Name="startrow" Type="smallint" Mode="In" />
@@ -549,6 +552,9 @@
         </Function>
         <Function Name="GetDisplayNameAndEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetInfoForFriend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetNumMsgsInAChat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="chatID" Type="int" Mode="In" />
@@ -1637,6 +1643,12 @@
             <Parameter Name="startingID" Mode="In" Type="Int32" />
             <Parameter Name="nummessages" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetChatMemeberIds" ReturnType="Collection(Int32)">
+          <Parameter Name="chatid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetInfoForFriend" ReturnType="Collection(UnstuckME_DBModel.GetInfoForFriend_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AdminPullReportsForOptionalUser_Result">
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
@@ -1940,6 +1952,11 @@
           <Property Type="String" Name="MessageData" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="SentBy" Nullable="false" />
           <Property Type="DateTime" Name="SentTime" Nullable="false" Precision="16" />
+        </ComplexType>
+        <ComplexType Name="GetInfoForFriend_Result">
+          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
+          <Property Type="Binary" Name="Photo" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2604,6 +2621,16 @@
                 <ScalarProperty Name="MessageData" ColumnName="MessageData" />
                 <ScalarProperty Name="SentBy" ColumnName="SentBy" />
                 <ScalarProperty Name="SentTime" ColumnName="SentTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetChatMemeberIds" FunctionName="UnstuckME_DBModel.Store.GetChatMemeberIds" />
+          <FunctionImportMapping FunctionImportName="GetInfoForFriend" FunctionName="UnstuckME_DBModel.Store.GetInfoForFriend">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetInfoForFriend_Result">
+                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
