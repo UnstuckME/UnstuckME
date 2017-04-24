@@ -953,6 +953,6 @@ begin
 		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
 	from UserProfile join Sticker	on UserProfile.UserId = Sticker.StudentID
 		join Classes				on Classes.ClassID = Sticker.ClassID
-		join StickerToMentor		on StickerToMentor.StickerID = Sticker.StickerID
-	where Sticker.StickerID = @stickerID
+		full join StickerToMentor	on StickerToMentor.StickerID = Sticker.StickerID
+	where Sticker.StickerID = 129
 end;
