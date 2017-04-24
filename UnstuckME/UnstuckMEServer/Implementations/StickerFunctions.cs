@@ -385,5 +385,29 @@ namespace UnstuckMEInterfaces
 
             return retVal;
         }
+        /// <summary>
+        /// returns a single sticker by ID, sticker currently only contains coursename and problem description
+        /// </summary>
+        /// <param name="stickerID"></param>
+        /// <returns></returns>
+        public UnstuckMESticker GetSticker(int stickerID)
+        {
+            UnstuckMESticker Rsticker = new UnstuckMESticker();
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var sticker = db.GetStickerInfo(stickerID).First();
+
+
+                    Rsticker.CourseName = sticker.CourseName;
+                    Rsticker.ProblemDescription = sticker.ProblemDescription;
+
+                }
+            }
+            catch (Exception)
+            {}
+            return Rsticker;
+        }
     }
 }

@@ -15,14 +15,16 @@ namespace UnstuckMEInterfaces
 		/// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
 		[OperationContract(IsOneWay = true)]
 		void AcceptSticker(int tutorID, int stickerID);
+        [OperationContract]
+        UnstuckMESticker GetSticker(int sticker);
 
-		/// <summary>
-		/// Registers another user as a contact.
-		/// </summary>
-		/// <param name="userId">The unique identifier of the callee.</param>
-		/// <param name="friendUserID">The unique identifier of the user to add as a contact.</param>
-		/// <returns>The unique identifier of the user to add as a contact if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
+        /// <summary>
+        /// Registers another user as a contact.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the callee.</param>
+        /// <param name="friendUserID">The unique identifier of the user to add as a contact.</param>
+        /// <returns>The unique identifier of the user to add as a contact if successful, -1 if unsuccessful.</returns>
+        [OperationContract]
 		int AddFriend(int userId, int friendUserID);
 
 		/// <summary>
