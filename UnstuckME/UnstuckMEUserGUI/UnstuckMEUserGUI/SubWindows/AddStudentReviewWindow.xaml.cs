@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI.SubWindows
 {
@@ -20,6 +21,7 @@ namespace UnstuckMEUserGUI.SubWindows
     public partial class AddStudentReviewWindow : Window
     {
         double starVal = 3.5;
+        private UnstuckMESticker _sticker;
         int _stickerID = 0;
 
         public AddStudentReviewWindow(int stickerID)
@@ -27,6 +29,10 @@ namespace UnstuckMEUserGUI.SubWindows
             InitializeComponent();
             _stickerID = stickerID;
             sliderRating.Value = starVal;
+            _sticker = UnstuckME.Server.GetSticker(stickerID);
+            sliderRating.Value = starVal;
+            StickerCourseName.Content = _sticker.CourseName;
+            StickerDescription.Text = _sticker.ProblemDescription;
         }
 
         private void sliderRating_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
