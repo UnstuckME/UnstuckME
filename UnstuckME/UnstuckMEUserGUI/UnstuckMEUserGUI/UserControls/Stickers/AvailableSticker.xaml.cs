@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -22,8 +23,8 @@ namespace UnstuckMEUserGUI
     public partial class AvailableSticker : UserControl
     {
         public UnstuckMEAvailableSticker Sticker;
-        BitmapImage BlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlue.png", UriKind.Relative));
-        BitmapImage SteelBlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingSteelBlue.png", UriKind.Relative));
+        private DispatcherTimer _timer;
+        private TimeSpan _time;
         public AvailableSticker(UnstuckMEAvailableSticker inSticker)
         {
             InitializeComponent();
@@ -31,6 +32,16 @@ namespace UnstuckMEUserGUI
             LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + " " + Sticker.CourseName;
             StarRatingValue.Value = (inSticker.StudentRanking / 5);
             ProblemDescription.Text = "Problem Description:\n" + Sticker.ProblemDescription;
+
+            _time = Sticker.Timeout - DateTime.Now;
+            _timer = new DispatcherTimer(new TimeSpan(0,0,0,1), DispatcherPriority.Normal, delegate
+            {
+                CountdownTimer.Content = String.Format("D: {0} H: {1} M: {2} S: {3}", _time.Days, _time.Hours, _time.Minutes, _time.Seconds);
+                if (_time == TimeSpan.Zero) _timer.Stop();
+                _time = _time.Add(TimeSpan.FromSeconds(-1));
+            }, Application.Current.Dispatcher);
+
+            _timer.Start();
         }
 
         public void RemoveFromStackPanel()
@@ -39,58 +50,23 @@ namespace UnstuckMEUserGUI
             ((StackPanel)Parent).Children.Remove(this);
         }
 
-        private void GridClassName_MouseEnter(object sender, MouseEventArgs e)
+        private void PeelTab_MouseEnter(object sender, MouseEventArgs e)
         {
-            FullBackGround.Background = Brushes.SteelBlue;
-            ChangeToSteelBlue();
+            PeelTab.Height = 100;
+            PeelTab.Width = 100;
+            PeelTab.Background = Brushes.ForestGreen;
+            AcceptLabel.Visibility = Visibility.Visible;
         }
 
-        public void ChangeToSteelBlue()
+        private void PeelTab_MouseLeave(object sender, MouseEventArgs e)
         {
-            //Border1.BorderBrush = Brushes.SteelBlue;
-            //Border2.BorderBrush = Brushes.SteelBlue;
-            //Border3.BorderBrush = Brushes.SteelBlue;
-            //Border4.BorderBrush = Brushes.SteelBlue;
-            //Border5.BorderBrush = Brushes.SteelBlue;
-            //Image1.Source = SteelBlueStar;
-            //Image2.Source = SteelBlueStar;
-            //Image3.Source = SteelBlueStar;
-            //Image4.Source = SteelBlueStar;
-            //Image5.Source = SteelBlueStar;
+            AcceptLabel.Visibility = Visibility.Hidden;
+            PeelTab.Background = Brushes.LightGray;
+            PeelTab.Height = 50;
+            PeelTab.Width = 50;
         }
 
-        public void ChangeToUnstuckMEBlue()
-        {
-            //Border1.BorderBrush = UnstuckME.Blue;
-            //Border2.BorderBrush = UnstuckME.Blue;
-            //Border3.BorderBrush = UnstuckME.Blue;
-            //Border4.BorderBrush = UnstuckME.Blue;
-            //Border5.BorderBrush = UnstuckME.Blue;
-            //Image1.Source = BlueStar;
-            //Image2.Source = BlueStar;
-            //Image3.Source = BlueStar;
-            //Image4.Source = BlueStar;
-            //Image5.Source = BlueStar;
-        }
-
-        private void GridClassName_MouseLeave(object sender, MouseEventArgs e)
-        {
-            FullBackGround.Background = UnstuckME.Blue;
-            ChangeToUnstuckMEBlue();
-        }
-
-        private void GridClassName_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StickerInfoWindow showInfo = new StickerInfoWindow(ref Sticker);
-            showInfo.Show();
-        }
-
-        private void BorderX_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            RemoveFromStackPanel();
-        }
-
-        private void ButtonAccept_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void PeelTab_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -102,23 +78,6 @@ namespace UnstuckMEUserGUI
             {
                 MessageBox.Show("Accept Failed In Available Sticker User Control. " + ex.Message);
             }
-        }
-
-        private void PeelTab_MouseEnter(object sender, MouseEventArgs e)
-        {
-            PeelTab.Height = 100;
-            PeelTab.Width = 100;
-        }
-
-        private void PeelTab_MouseLeave(object sender, MouseEventArgs e)
-        {
-            PeelTab.Height = 50;
-            PeelTab.Width = 50;
-        }
-
-        private void PeelTab_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Clicked");
         }
     }
 }
