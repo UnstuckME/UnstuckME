@@ -5,7 +5,7 @@ using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
-    [ServiceContract(CallbackContract = typeof(IClient))]
+	[ServiceContract(CallbackContract = typeof(IClient))]
 	public interface IUnstuckMEService
 	{
 		/// <summary>
@@ -15,16 +15,16 @@ namespace UnstuckMEInterfaces
 		/// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
 		[OperationContract(IsOneWay = true)]
 		void AcceptSticker(int tutorID, int stickerID);
-        [OperationContract]
-        UnstuckMESticker GetSticker(int sticker);
+		[OperationContract]
+		UnstuckMESticker GetSticker(int sticker);
 
-        /// <summary>
-        /// Registers another user as a contact.
-        /// </summary>
-        /// <param name="userId">The unique identifier of the callee.</param>
-        /// <param name="friendUserID">The unique identifier of the user to add as a contact.</param>
-        /// <returns>The unique identifier of the user to add as a contact if successful, -1 if unsuccessful.</returns>
-        [OperationContract]
+		/// <summary>
+		/// Registers another user as a contact.
+		/// </summary>
+		/// <param name="userId">The unique identifier of the callee.</param>
+		/// <param name="friendUserID">The unique identifier of the user to add as a contact.</param>
+		/// <returns>The unique identifier of the user to add as a contact if successful, -1 if unsuccessful.</returns>
+		[OperationContract]
 		int AddFriend(int userId, int friendUserID);
 
 		/// <summary>
@@ -339,13 +339,13 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		UnstuckMEChat GetSingleChat(int chatID);
 
-        /// <summary>
+		/// <summary>
 		/// Gets the number of messages in a particular chat.
 		/// </summary>
 		/// <param name="chatID">The unique identifier of a specific chat.</param>
 		/// <returns>A number indicating how many messages a chat has.</returns>
-        [OperationContract]
-        int GetNumberOFMessages(int chatID);
+		[OperationContract]
+		int GetNumberOFMessages(int chatID);
 
 		/// <summary> 
 		/// Gets unique identifiers of all the chats a user is associated with. 
@@ -472,25 +472,37 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		KeyValuePair<int, bool> CheckForReviews(int userID);
 
-        /// <summary>
-        /// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
-        /// see that sticker. This should only be done if the sticker does not already have a tutor.
-        /// </summary>
-        /// <param name="stickerID">The unique identifier of the sticker to delete.</param>
-        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        [OperationContract]
-        int DeleteSticker(int stickerID);
+		/// <summary>
+		/// Deletes a sticker from the database and updates the client interfaces of tutors who are eligible to
+		/// see that sticker. This should only be done if the sticker does not already have a tutor.
+		/// </summary>
+		/// <param name="stickerID">The unique identifier of the sticker to delete.</param>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+		[OperationContract]
+		int DeleteSticker(int stickerID);
 
-        /// <summary>
-        /// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out
-        /// to online tutors who are eligible to see it.
-        /// </summary>
-        /// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
-        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        [OperationContract]
-        int RemoveTutorFromSticker(int stickerID);
+		/// <summary>
+		/// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out
+		/// to online tutors who are eligible to see it.
+		/// </summary>
+		/// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
+		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+		[OperationContract]
+		int RemoveTutorFromSticker(int stickerID);
+
+		[OperationContract]
+		List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int num_messages = 20);
+
+		/// <summary>
+		/// Gets all the SentBy ID's of a particualr chat
+		/// </summary>
+		/// <param name="chatID">The Id of a particular chat
+		/// <returns>A list of nullable integers indicating each members ID</returns>
+		[OperationContract]
+		List<int?> GetMemeberIdsFromChat(int chatID);
+
 
         [OperationContract]
-        List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int num_messages = 20);
-    }
+        UnstuckMEChatUser GetFriendInfo(int userId);
+	}
 }

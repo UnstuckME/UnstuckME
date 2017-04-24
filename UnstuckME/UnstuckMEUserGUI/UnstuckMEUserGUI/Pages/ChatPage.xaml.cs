@@ -17,21 +17,21 @@ using UnstuckMEInterfaces;
 
 namespace UnstuckMEUserGUI
 {
-    /// <summary>
-    /// Interaction logic for ChatPage.xaml
-    /// </summary>
-    public partial class ChatPage : Page
-    {
-        public ChatPage()
-        {
-            InitializeComponent();
-            UnstuckME.CurrentChatSession = new UnstuckMEChat()
-            {
-                ChatID = -1
-            };
-            ButtonAddUserToConvo.Visibility = Visibility.Hidden;
-            ButtonAddUserToConvo.IsEnabled = false;
-        }
+	/// <summary>
+	/// Interaction logic for ChatPage.xaml
+	/// </summary>
+	public partial class ChatPage : Page
+	{
+		public ChatPage()
+		{
+			InitializeComponent();
+			UnstuckME.CurrentChatSession = new UnstuckMEChat()
+			{
+				ChatID = -1
+			};
+			ButtonAddUserToConvo.Visibility = Visibility.Hidden;
+			ButtonAddUserToConvo.IsEnabled = false;
+		}
 
 		//This Box Determines what happens when a user clicks a new message notification.
 		public void NotificationCall(UnstuckMEMessage message)
@@ -55,149 +55,149 @@ namespace UnstuckMEUserGUI
 			StackPanelConversations.Children.Add(new Conversation(inChat));
 		}
 
-        private void SendButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageTextBox.Text != string.Empty)
-            {
-                SendMessage(MessageTextBox.Text);
-                MessageTextBox.Text = string.Empty;
-            }
-        }
+		private void SendButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (MessageTextBox.Text != string.Empty)
+			{
+				SendMessage(MessageTextBox.Text);
+				MessageTextBox.Text = string.Empty;
+			}
+		}
 
 		public void AddMessage(UnstuckMEMessage message)
 		{
 			bool chatIDExists = false;
 
-            try
-            {
-                foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-                {
-                    if (chat.ChatID == message.ChatID)
-                    {
-                        chatIDExists = true;
-                        chat.Messages.Add(message);
+			try
+			{
+				foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+				{
+					if (chat.ChatID == message.ChatID)
+					{
+						chatIDExists = true;
+						chat.Messages.Add(message);
 
-                        if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
-                        {
-                            UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
-                            StackPanelMessages.Children.Add(new ChatMessage(temp));
-                            ScrollViewerMessagesBox.ScrollToBottom();
-                        }
-                    }
-                }
+						if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
+						{
+							UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
+							StackPanelMessages.Children.Add(new ChatMessage(temp));
+							ScrollViewerMessagesBox.ScrollToBottom();
+						}
+					}
+				}
 
-                if (!chatIDExists)
-                {
-                    UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
-                    UnstuckME.ChatSessions.Add(temp);
-                    StackPanelConversations.Children.Add(new Conversation(temp));
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Add Message Failed" + ": " + ex.Message);
-            }
-        }
+				if (!chatIDExists)
+				{
+					UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
+					UnstuckME.ChatSessions.Add(temp);
+					StackPanelConversations.Children.Add(new Conversation(temp));
+				}
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show("Add Message Failed" + ": " + ex.Message);
+			}
+		}
 
-        public void RemoveMessage(UnstuckMEMessage message)
-        {
-            try
-            {
-                foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-                {
-                    if (chat.ChatID == message.ChatID)
-                    {
-                        for (int i = 0; i < StackPanelMessages.Children.Count; i++)
-                        {
-                            if (((ChatMessage)StackPanelMessages.Children[i]).Message.MessageID == message.MessageID)
-                            {
-                                StackPanelMessages.Children.Remove(StackPanelMessages.Children[i]);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                //Remove message failed
-            }
-        }
+		public void RemoveMessage(UnstuckMEMessage message)
+		{
+			try
+			{
+				foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+				{
+					if (chat.ChatID == message.ChatID)
+					{
+						for (int i = 0; i < StackPanelMessages.Children.Count; i++)
+						{
+							if (((ChatMessage)StackPanelMessages.Children[i]).Message.MessageID == message.MessageID)
+							{
+								StackPanelMessages.Children.Remove(StackPanelMessages.Children[i]);
+								break;
+							}
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				//Remove message failed
+			}
+		}
 
-        public void EditMessage(UnstuckMEMessage message)
-        {
-            try
-            {
-                foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-                {
-                    if (chat.ChatID == message.ChatID)
-                    {
-                        for (int i = 0; i < StackPanelMessages.Children.Count; i++)
-                        {
-                            if (((ChatMessage)StackPanelMessages.Children[i]).Message.MessageID == message.MessageID)
-                            {
-                                ((ChatMessage)StackPanelMessages.Children[i]).Message.Message = message.Message;
-                                ((ChatMessage)StackPanelMessages.Children[i]).TextBoxChatMessage.Text = message.Message;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                //edit message failed
-            }
-        }
+		public void EditMessage(UnstuckMEMessage message)
+		{
+			try
+			{
+				foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+				{
+					if (chat.ChatID == message.ChatID)
+					{
+						for (int i = 0; i < StackPanelMessages.Children.Count; i++)
+						{
+							if (((ChatMessage)StackPanelMessages.Children[i]).Message.MessageID == message.MessageID)
+							{
+								((ChatMessage)StackPanelMessages.Children[i]).Message.Message = message.Message;
+								((ChatMessage)StackPanelMessages.Children[i]).TextBoxChatMessage.Text = message.Message;
+								break;
+							}
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				//edit message failed
+			}
+		}
 
-        #region commented out method 
+		#region commented out method 
 
-        //should make a new GUIChatMessagethat can contain a file
-        /// <summary>
-        /// Currently doesn't implement the file, use first overload instead
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="file"></param>
-        //public void AddMessage(UnstuckMEMessage message, UnstuckMEFile file)
-        //{
-        //	bool chatIDexists = false;
+		//should make a new GUIChatMessagethat can contain a file
+		/// <summary>
+		/// Currently doesn't implement the file, use first overload instead
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="file"></param>
+		//public void AddMessage(UnstuckMEMessage message, UnstuckMEFile file)
+		//{
+		//	bool chatIDexists = false;
 
-        //	try
-        //	{
-        //		foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-        //		{
-        //			if (chat.ChatID == message.ChatID)
-        //			{
-        //				chatIDexists = true;
-        //				chat.Messages.Add(message);
-        //				if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
-        //				{
-        //					UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
-        //					StackPanelMessages.Children.Add(new ChatMessage(temp));
-        //					ScrollViewerMessagesBox.ScrollToBottom();
-        //				}
-        //			}
-        //		}
+		//	try
+		//	{
+		//		foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+		//		{
+		//			if (chat.ChatID == message.ChatID)
+		//			{
+		//				chatIDexists = true;
+		//				chat.Messages.Add(message);
+		//				if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
+		//				{
+		//					UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
+		//					StackPanelMessages.Children.Add(new ChatMessage(temp));
+		//					ScrollViewerMessagesBox.ScrollToBottom();
+		//				}
+		//			}
+		//		}
 
-        //		if (!chatIDexists)
-        //		{
-        //			UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
-        //                  UnstuckME.ChatSessions.Add(temp);
-        //			StackPanelConversations.Children.Add(new Conversation(temp));
-        //		}
-        //	}
-        //	catch (Exception ex)
-        //	{
-        //		UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Add Message Failed", UnstuckMEBoxImage.Warning);
-        //              messagebox.ShowDialog();
-        //	}
-        //}
-        #endregion
+		//		if (!chatIDexists)
+		//		{
+		//			UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
+		//                  UnstuckME.ChatSessions.Add(temp);
+		//			StackPanelConversations.Children.Add(new Conversation(temp));
+		//		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Add Message Failed", UnstuckMEBoxImage.Warning);
+		//              messagebox.ShowDialog();
+		//	}
+		//}
+		#endregion
 
-        private void ScrollViewerConversationBox_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ScrollViewerMessagesBox.ScrollToBottom();
-        }
+		private void ScrollViewerConversationBox_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			ScrollViewerMessagesBox.ScrollToBottom();
+		}
 
 		private void MessageTextBox_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -207,44 +207,44 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
-        private void SendMessage(string message)
-        {
-            try
-            {
-                if (UnstuckME.CurrentChatSession.ChatID < 0)
-                    throw new Exception();   //If no conversation is chosen
+		private void SendMessage(string message)
+		{
+			try
+			{
+				if (UnstuckME.CurrentChatSession.ChatID < 0)
+					throw new Exception();   //If no conversation is chosen
 
-                UnstuckMEMessage sendingMessage = new UnstuckMEMessage()
-                {
-                    ChatID = UnstuckME.CurrentChatSession.ChatID,
-                    FilePath = string.Empty,
-                    Message = message,
-                    MessageID = 0,
-                    SenderID = UnstuckME.User.UserID,
-                    Time = DateTime.Now,
-                    Username = UnstuckME.User.FirstName,
-                    UsersInConvo = new List<int>()
-                };
+				UnstuckMEMessage sendingMessage = new UnstuckMEMessage()
+				{
+					ChatID = UnstuckME.CurrentChatSession.ChatID,
+					FilePath = string.Empty,
+					Message = message,
+					MessageID = 0,
+					SenderID = UnstuckME.User.UserID,
+					Time = DateTime.Now,
+					Username = UnstuckME.User.FirstName,
+					UsersInConvo = new List<int>()
+				};
 
-                foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
-                {
-                    if (user.UserID != UnstuckME.User.UserID)
-                    {
-                        sendingMessage.UsersInConvo.Add(user.UserID);
-                    }
-                }
+				foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
+				{
+					if (user.UserID != UnstuckME.User.UserID)
+					{
+						sendingMessage.UsersInConvo.Add(user.UserID);
+					}
+				}
 
-                sendingMessage.MessageID = UnstuckME.Server.SendMessage(sendingMessage);
-                UnstuckME.CurrentChatSession.Messages.Add(sendingMessage);
-                UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(sendingMessage, UnstuckME.CurrentChatSession);
-                StackPanelMessages.Children.Add(new ChatMessage(temp));
-                ScrollViewerMessagesBox.ScrollToBottom();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Chat Send Failed. Error: " + ex.Message, "Failed Message Send", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-        }
+				sendingMessage.MessageID = UnstuckME.Server.SendMessage(sendingMessage);
+				UnstuckME.CurrentChatSession.Messages.Add(sendingMessage);
+				UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(sendingMessage, UnstuckME.CurrentChatSession);
+				StackPanelMessages.Children.Add(new ChatMessage(temp));
+				ScrollViewerMessagesBox.ScrollToBottom();
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show("Chat Send Failed. Error: " + ex.Message, "Failed Message Send", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+			}
+		}
 
 		private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
 		{
@@ -267,27 +267,27 @@ namespace UnstuckMEUserGUI
 			TextBoxManualUserNameSearch.Text = string.Empty;
 		}
 
-        private void ButtonStartConversation_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                LabelInvalidUserNameSearch.Visibility = Visibility.Hidden;
-                int searchedUserID = -1;
-                if(UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
-                {
-                    searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
-                    StartNewConversation(searchedUserID);
-                }
-                else
-                {
-                    LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
-                }
-            }
-            catch(Exception)
-            {
-                LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
-            }
-        }
+		private void ButtonStartConversation_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				LabelInvalidUserNameSearch.Visibility = Visibility.Hidden;
+				int searchedUserID = -1;
+				if(UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
+				{
+					searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
+					StartNewConversation(searchedUserID);
+				}
+				else
+				{
+					LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
+				}
+			}
+			catch(Exception)
+			{
+				LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
+			}
+		}
 
 		private void ButtonAddUserToConvo_MouseEnter(object sender, MouseEventArgs e)
 		{
@@ -299,76 +299,76 @@ namespace UnstuckMEUserGUI
 			ButtonAddUserToConvo.Background = Brushes.SteelBlue;
 		}
 
-        private void ButtonAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(UnstuckME.CurrentChatSession);
-            addUserWindow.Show();
-        }
+		private void ButtonAddUserToConvo_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			AddUserToConversationWindow addUserWindow = new AddUserToConversationWindow(UnstuckME.CurrentChatSession);
+			addUserWindow.Show();
+		}
 
-        public void StartNewConversation(int TargetUser)
-        {
-            try
-            {
-                if (SoloConversationAlreadyExists(TargetUser))
-                {
-                    throw new Exception();
-                }
-                int searchedUserID = -1;
-                int chatID;
-                chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
-                UnstuckME.Server.InsertUserIntoChat(TargetUser, chatID);
-                UnstuckMEMessage temp = new UnstuckMEMessage();
-                temp.ChatID = chatID;
-                temp.FilePath = string.Empty;
-                temp.Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.";
-                temp.MessageID = 0;
-                temp.Username = UnstuckME.User.FirstName;
-                temp.SenderID = UnstuckME.User.UserID;
-                temp.UsersInConvo = new List<int>();
-                temp.UsersInConvo.Add(UnstuckME.User.UserID);
-                temp.UsersInConvo.Add(searchedUserID);
-                UnstuckME.Server.SendMessage(temp);
-                AddMessage(temp);
-                ButtonAddUserDone_Click(null, null);
-                foreach (Conversation convo in StackPanelConversations.Children.OfType<Conversation>())
-                {
-                    if (convo.Chat.ChatID == chatID)
-                    {
-                        convo.ConversationUserControl_MouseLeftButtonDown(null, null);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                ButtonAddUserDone_Click(null, null);
-            }
-        }
+		public void StartNewConversation(int TargetUser)
+		{
+			try
+			{
+				if (SoloConversationAlreadyExists(TargetUser))
+				{
+					throw new Exception();
+				}
+				int searchedUserID = -1;
+				int chatID;
+				chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
+				UnstuckME.Server.InsertUserIntoChat(TargetUser, chatID);
+				UnstuckMEMessage temp = new UnstuckMEMessage();
+				temp.ChatID = chatID;
+				temp.FilePath = string.Empty;
+				temp.Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.";
+				temp.MessageID = 0;
+				temp.Username = UnstuckME.User.FirstName;
+				temp.SenderID = UnstuckME.User.UserID;
+				temp.UsersInConvo = new List<int>();
+				temp.UsersInConvo.Add(UnstuckME.User.UserID);
+				temp.UsersInConvo.Add(searchedUserID);
+				UnstuckME.Server.SendMessage(temp);
+				AddMessage(temp);
+				ButtonAddUserDone_Click(null, null);
+				foreach (Conversation convo in StackPanelConversations.Children.OfType<Conversation>())
+				{
+					if (convo.Chat.ChatID == chatID)
+					{
+						convo.ConversationUserControl_MouseLeftButtonDown(null, null);
+					}
+				}
+			}
+			catch (Exception)
+			{
+				ButtonAddUserDone_Click(null, null);
+			}
+		}
 
-        bool SoloConversationAlreadyExists(int TargetUser)
-        {
-            bool convoExists = false;
+		bool SoloConversationAlreadyExists(int TargetUser)
+		{
+			bool convoExists = false;
 
-            foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-            {
-                if (chat.Users.Count == 2)
-                {
-                    foreach (UnstuckMEChatUser user in chat.Users)
-                    {
-                        if (user.UserID == TargetUser)
-                        {
-                            convoExists = true;
-                            foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
-                            {
-                                if (convo.Chat.ChatID == chat.ChatID)
-                                {
-                                    convo.ShowConversation();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return convoExists;
-        }
-    }
+			foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+			{
+				if (chat.Users.Count == 2)
+				{
+					foreach (UnstuckMEChatUser user in chat.Users)
+					{
+						if (user.UserID == TargetUser)
+						{
+							convoExists = true;
+							foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+							{
+								if (convo.Chat.ChatID == chat.ChatID)
+								{
+									convo.ShowConversation();
+								}
+							}
+						}
+					}
+				}
+			}
+			return convoExists;
+		}
+	}
 }

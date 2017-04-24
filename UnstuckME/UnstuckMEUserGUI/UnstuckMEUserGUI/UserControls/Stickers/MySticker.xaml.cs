@@ -30,19 +30,25 @@ namespace UnstuckMEUserGUI
             Sticker = inSticker;
             Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
-            LabelDescription.Content = Sticker.ProblemDescription;
-			LabelTimeout.Content = "Timeout: " + Sticker.Timeout.ToLongDateString();
+            ProblemDescription.Text = "Problem Description:\n" + Sticker.ProblemDescription;
+            if(Sticker.TutorID <= 1)
+            {
+                LabelTutorName.Content = "Currently Not Tutored";
+            }
+            else
+            {
+                try
+                {
+                    LabelTutorName.Content = "Tutor: " + UnstuckME.Server.GetUserDisplayName(Sticker.TutorID.Value);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
-        private void ButtonRemove_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ButtonRemove.Background = Brushes.MistyRose;
-        }
 
-        private void ButtonRemove_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ButtonRemove.Background = UnstuckME.Red;
-        }
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -50,20 +56,20 @@ namespace UnstuckMEUserGUI
                 ((StackPanel)Parent).Children.Remove(this);
         }
 
-        private void ButtonCompleted_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ButtonCompleted.Background = Brushes.LimeGreen;
-        }
-
-        private void ButtonCompleted_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ButtonCompleted.Background = Brushes.ForestGreen;
-        }
-
         private void ButtonCompleted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Window win = new SubWindows.AddTutorReviewWindow(Sticker.StickerID);
             win.Show();
+        }
+
+        private void ButtonCompleted_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonCompleted.Background = Brushes.ForestGreen;
+        }
+
+        private void ButtonCompleted_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonCompleted.Background = Brushes.DarkGreen;
         }
     }
 }

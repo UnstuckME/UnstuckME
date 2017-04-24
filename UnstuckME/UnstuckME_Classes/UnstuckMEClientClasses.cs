@@ -82,6 +82,10 @@ namespace UnstuckME_Classes
 		public int UserID { get; set; }
 		public string UserName { get; set; }
 		public ImageSource ProfilePicture { get; set; }
+		public string EmailAddress { get; set; }
+        
+        public byte[] UnProccessPhot { get; set; }
+        
 	}
 
 	//This Represents a Message in an UnstuckMEChat.
@@ -309,17 +313,68 @@ namespace UnstuckME_Classes
 			}
 		}
 
-        public void AddNewMsgFile(string chatNum, bool ifNeeded = false)
+        public async void AddNewFriend(UnstuckMEChatUser newFriend)
         {
-            string chatPath = System.IO.Path.Combine(chatDir, chatNum);
-            int maxChatFile = (Directory.GetFiles(chatPath).Where(name => !name.EndsWith(".dat")).Select(f => Convert.ToInt32(f.Replace(chatPath + "\\msg_", "")))).DefaultIfEmpty(999).Max();
+            string byteString = System.Text.Encoding.UTF8.GetString(newFriend.UnProccessPhot, 0, newFriend.UnProccessPhot.Length);
+            string friendInfo = String.Format("<Friend>" + Environment.NewLine +
+                                                    "\t<UserID>{0}</UserID>" + Environment.NewLine +
+                                                    "\t<Username>{1}</Username>" + Environment.NewLine +
+                                                    "\t<UserEmail>{2}</UserEmail>" + Environment.NewLine +
+                                                    "\t<UserProfilePic>" + Environment.NewLine + 
+                                                        "\t\t{3}" + Environment.NewLine + 
+                                                    "</UserProfilePic>" + Environment.NewLine +
+                                             "</Friend>",
+                                             newFriend.UserID, newFriend.UserName, newFriend.EmailAddress, byteString);
 
-            if (ifNeeded == false || maxChatFile == 999)
-            {
-                File.WriteAllText(chatPath + @"\msg_" + (maxChatFile + 1).ToString(), "<MessageGroup>" + Environment.NewLine + "</MessageGroup>");
-            }
-            
+            await WriteToFileAsync(System.IO.Path.Combine(friendsDir, newFriend.UserID.ToString() + ".dat"), friendInfo);
+
         }
+
+        public void AddNewMsgFile(string chatNum, bool ifNeeded = false)
+		{
+			string chatPath = System.IO.Path.Combine(chatDir, chatNum);
+			int maxChatFile = (Directory.GetFiles(chatPath).Where(name => !name.EndsWith(".dat")).Select(f => Convert.ToInt32(f.Replace(chatPath + "\\msg_", "")))).DefaultIfEmpty(999).Max();
+
+			if (ifNeeded == false || maxChatFile == 999)
+			{
+				File.WriteAllText(chatPath + @"\msg_" + (maxChatFile + 1).ToString(), "<MessageGroup>" + Environment.NewLine + "</MessageGroup>");
+			}
+			
+		}
+
+		public bool DeleteFriend(int? friendId)
+		{
+			try
+			{
+				string deleteFriend = System.IO.Path.Combine(FriendsDir, friendId.ToString() + ".dat");
+				if (File.Exists(deleteFriend))
+				{
+					File.Delete(deleteFriend);
+					return true;
+				}
+			}
+			catch (Exception ex)
+			{
+				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+			}
+
+			return false;
+		}
+
+		public List<int?> GetAllFriends()
+		{
+			try
+			{
+				return Directory.GetFiles(friendsDir).Select(f => Convert.ToInt32(f.Replace(friendsDir + "\\", "").Replace(".dat", ""))).DefaultIfEmpty(-1).Select(i => (int?)i).ToList();
+			}
+			catch (Exception ex)
+			{
+				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+				return null;
+			}
+
+		}
+
 
 		public UnstuckMEDirectory ()
 		{
@@ -329,5 +384,48 @@ namespace UnstuckME_Classes
 			Directory.CreateDirectory(chatDir);
 			Directory.CreateDirectory(friendsDir);
 		}
-	}
+
+
+        static async Task WriteToFileAsync(string filePath, string text)
+
+        {
+
+            if (string.IsNullOrEmpty(filePath))
+                throw new ArgumentNullException("filePath");
+
+            if (string.IsNullOrEmpty(text))
+                throw new ArgumentNullException("text");
+
+            byte[] buffer = Encoding.Unicode.GetBytes(text);
+
+            Int32 offset = 0;
+            Int32 sizeOfBuffer = 4096;
+            FileStream fileStream = null;
+
+            try
+            {
+
+                fileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write,
+
+                FileShare.None, bufferSize: sizeOfBuffer, useAsync: true);
+
+                await fileStream.WriteAsync(buffer, offset, buffer.Length);
+
+            }
+
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+            }
+
+            finally
+
+            {
+                if (fileStream != null)
+                    fileStream.Dispose();
+            }
+
+        }
+
+    }
 }

@@ -58,8 +58,8 @@ namespace UnstuckMEUserGUI
             {
                 MySticker mysticker = stickers[index] as MySticker;
 
-                if (mysticker.Sticker.StickerID == stickerID)
-                    mysticker.ButtonCompleted.Visibility = Visibility.Collapsed;
+                //if (mysticker.Sticker.StickerID == stickerID)
+                    //mysticker.ButtonCompleted.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -72,8 +72,8 @@ namespace UnstuckMEUserGUI
 
                 if (sticker.Sticker.StickerID == stickerID)
                 {
-                    sticker.ButtonCompleted.Visibility = Visibility.Visible;
-                    sticker.ButtonRemove.Visibility = Visibility.Visible;
+                    //sticker.ButtonCompleted.Visibility = Visibility.Visible;
+                    //sticker.ButtonRemove.Visibility = Visibility.Visible;
                 }
             }
         }

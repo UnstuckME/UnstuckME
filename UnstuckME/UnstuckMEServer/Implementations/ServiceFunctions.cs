@@ -15,7 +15,7 @@ using System.Net.Configuration;
 
 namespace UnstuckMEInterfaces
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
+	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
 	/// <summary>
 	/// Implement any Operation Contracts from IUnstuckMEService.cs in this file.
 	/// </summary>
@@ -47,14 +47,14 @@ namespace UnstuckMEInterfaces
 			}
 		}
 
-        #region Thread Functions
-        /// <summary>
-        /// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
-        /// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
-        /// checks for all online users who are eligible to view that sticker and removes it from their
-        /// client interface.
-        /// </summary>
-        public void CheckForTimedOutStickers()
+		#region Thread Functions
+		/// <summary>
+		/// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
+		/// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
+		/// checks for all online users who are eligible to view that sticker and removes it from their
+		/// client interface.
+		/// </summary>
+		public void CheckForTimedOutStickers()
 		{
 			_ActiveStickers = new ConcurrentDictionary<int, DateTime>();
 
@@ -195,12 +195,12 @@ namespace UnstuckMEInterfaces
 				Console.WriteLine("SendStickerToClients Function Error: " + ex.Message);
 			}
 		}
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Checks that clients are still connected to the server. This is called on a separate thread every five seconds by the server.
-        /// </summary>
-        public void CheckUserStatus()
+		/// <summary>
+		/// Checks that clients are still connected to the server. This is called on a separate thread every five seconds by the server.
+		/// </summary>
+		public void CheckUserStatus()
 		{
 			List<int> offlineUsers = new List<int>();
 			try

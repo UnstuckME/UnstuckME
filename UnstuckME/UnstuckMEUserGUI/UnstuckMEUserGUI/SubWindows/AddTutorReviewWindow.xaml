@@ -25,11 +25,11 @@
             <Border Cursor="Hand" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" Margin="267,0,273,43" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.ColumnSpan="2">
                 <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Click="Submit_Click" Margin="3.4,-1.6,-2.4,1.6"></Button>
             </Border>
-            <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="sliderRating_ValueChanged" VerticalContentAlignment="Top" HorizontalAlignment="Center" Maximum="5" Minimum="0" Margin="246,278,254,343" Grid.ColumnSpan="2"/>
-            <Label x:Name="sliderValue" Width="75" Height="35" Content="{Binding Value, ElementName=sliderRating}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="188,141,133.8,364" FontSize="25" Foreground="White" FontFamily="Global User Interface" />
+            <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="sliderRating_ValueChanged" VerticalContentAlignment="Top" HorizontalAlignment="Center" Maximum="5" Minimum="0" Margin="246,278,254,348" Grid.ColumnSpan="2"/>
+            <Label x:Name="sliderValue" Width="75" Height="35" Content="{Binding Value, ElementName=sliderRating}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="166,278,157.4,349" FontSize="25" Foreground="White" FontFamily="Global User Interface" />
 
             <Label x:Name="StickerCourseName" Content="Course" Foreground="White" FontSize="28" Margin="0,108,10,0" VerticalAlignment="Top" Height="41" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Global User Interface" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="StickerDescription" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" Margin="10,154,10,410" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="StickerDescription" IsEnabled="False" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" Margin="10,154,10,410" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
 </Window>
