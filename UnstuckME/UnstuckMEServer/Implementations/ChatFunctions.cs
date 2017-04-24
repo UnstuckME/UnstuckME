@@ -145,12 +145,8 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        /// <summary>
-        /// Gets all the members of a specific chat.
-        /// </summary>
-        /// <param name="chatID">The unique identifier of a specific chat.</param>
-        /// <returns>A list of users, each containing the unique identifier of each user and their first name.</returns>
-        protected List<UnstuckMEChatUser> GetChatMembers(int chatID)
+        
+        private List<UnstuckMEChatUser> GetChatMembers(int chatID)
         {
             try
             {
@@ -194,5 +190,46 @@ namespace UnstuckMEInterfaces
 
             return -1;
         }
+
+
+        /// <summary>
+        /// Gets all the members of a specific chat.
+        /// </summary>
+        /// <param name="chatID">The unique identifier of a specific chat.</param>
+        /// <returns>A list of users, each containing the unique identifier of each user and their first name.</returns>
+        public List<int?> GetMemeberIdsFromChat(int chatID)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    return db.GetChatMemeberIds(chatID).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+
+        public UnstuckMEChatUser GetFriendInfo(int userId)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    return (db.GetInfoForFriend(userId).Select(u => new UnstuckMEChatUser { UserName = u.DisplayFName, UnProccessPhot = u.Photo, EmailAddress = u.EmailAddress })).First();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+
     }
 }
