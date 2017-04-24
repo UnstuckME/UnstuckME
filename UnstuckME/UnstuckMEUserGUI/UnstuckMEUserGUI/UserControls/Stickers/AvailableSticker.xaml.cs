@@ -52,7 +52,7 @@ namespace UnstuckMEUserGUI
 
         private void PeelTab_MouseEnter(object sender, MouseEventArgs e)
         {
-            PeelTab.Height = 100;
+            PeelTab.Height = 75;
             PeelTab.Width = 100;
             PeelTab.Background = Brushes.ForestGreen;
             AcceptLabel.Visibility = Visibility.Visible;
