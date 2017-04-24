@@ -33,6 +33,6 @@
                 </Label.RenderTransform>
             </Label>
         </Grid>
-        <TextBox x:Name="StickerDescription" IsEnabled="False" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" Margin="135,224,85,577"/>
+        <TextBox x:Name="StickerDescription" IsEnabled="False" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" Margin="146,224,129,577"/>
     </Grid>
 </Window>
