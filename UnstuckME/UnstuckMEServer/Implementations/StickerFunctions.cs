@@ -397,7 +397,7 @@ namespace UnstuckMEInterfaces
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var sticker = db.GetStickerInfo(stickerID).First();
+                    var sticker = db.GetStickerInfo(stickerID).First(); // this currently returns nothing, it worked last night and now it doesnt.
 
 
                     Rsticker.CourseName = sticker.CourseName;

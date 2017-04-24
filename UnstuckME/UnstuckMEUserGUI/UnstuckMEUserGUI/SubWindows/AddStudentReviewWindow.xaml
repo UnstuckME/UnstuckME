@@ -10,29 +10,26 @@
     <Grid>
         <Rectangle Fill="Black" Opacity=".7">
         </Rectangle>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="900" MaxWidth="900" MinHeight="400" MinWidth="700" Height="650" Width="700" Margin="115,77,85,173">
-            <Border BorderBrush="#336699" BorderThickness="4,4,4,4" CornerRadius="5" Margin="0,0,10,0">
-                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5" Margin="4,6,5.6,5.6">
-                    <Label x:Name="StickerCourseName" Content="Course" Foreground="White" FontSize="28" Margin="-2,70,-4,0" VerticalAlignment="Top" Height="41" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Global User Interface"/>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="700" MaxWidth="600" MinHeight="400" MinWidth="700" Height="662" Width="700" Margin="100,154,100,84">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="199*"/>
+                <ColumnDefinition Width="151*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="#336699" BorderThickness="4,4,4,4" CornerRadius="5" Grid.ColumnSpan="2">
+                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5" Margin="0,-4,0,-3.6">
+
                 </Border>
             </Border>
-            <Label x:Name="labelTitle" Content="Review Your Student" Foreground="White" FontSize="35" Margin="10,10,-26,0" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Global User Interface"/>
-            <TextBox x:Name="ReviewDescriptionTxtBox" HorizontalAlignment="Left" Height="187" Margin="58,335,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="591"/>
-            <Border Cursor="Hand" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" Margin="252,0,288,48" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Click="Submit_Click" Height="36" Margin="0.4,0.4,0.6,-0.4"></Button>
+            <Label x:Name="labelTitle" Content="Review Your Student" Foreground="White" FontSize="35" Margin="0,10,-16,0" VerticalAlignment="Top" Height="75" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Global User Interface" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="ReviewDescriptionTxtBox" HorizontalAlignment="Left" Height="187" Margin="57,343,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="591" Grid.ColumnSpan="2"/>
+            <Border Cursor="Hand" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" Margin="267,0,273,43" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+                <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Click="Submit_Click" Margin="3.4,-1.6,-2.4,1.6"></Button>
             </Border>
-            <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="sliderRating_ValueChanged"  VerticalContentAlignment="Top" HorizontalAlignment="Center" Maximum="5" Minimum="0" Margin="252,288,248,88"/>
-            <Label x:Name="sliderValue" Width="75" Content="{Binding Value, ElementName=sliderRating}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="157,277,468,338" FontSize="25" Foreground="White" FontFamily="Global User Interface" RenderTransformOrigin="0.5,0.5" >
-                <Label.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleY="-1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Label.RenderTransform>
-            </Label>
+            <Slider x:Name="sliderRating" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="sliderRating_ValueChanged" VerticalContentAlignment="Top" HorizontalAlignment="Center" Maximum="5" Minimum="0" Margin="246,278,254,348" Grid.ColumnSpan="2"/>
+            <Label x:Name="sliderValue" Width="75" Height="35" Content="{Binding Value, ElementName=sliderRating}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="166,278,157.4,349" FontSize="25" Foreground="White" FontFamily="Global User Interface" />
+
+            <Label x:Name="StickerCourseName" Content="Course" Foreground="White" FontSize="28" Margin="0,108,10,0" VerticalAlignment="Top" Height="41" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Global User Interface" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="StickerDescription" IsEnabled="False" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" Margin="10,154,10,410" Grid.ColumnSpan="2"/>
         </Grid>
-        <TextBox x:Name="StickerDescription" IsEnabled="False" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" Margin="146,224,129,577"/>
     </Grid>
 </Window>
