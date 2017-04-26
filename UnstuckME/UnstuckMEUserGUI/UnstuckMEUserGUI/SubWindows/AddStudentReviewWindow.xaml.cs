@@ -29,7 +29,7 @@ namespace UnstuckMEUserGUI.SubWindows
             InitializeComponent();
             _stickerID = stickerID;
             sliderRating.Value = starVal;
-            _sticker = UnstuckME.Server.GetSticker(stickerID);
+            _sticker = UnstuckME.Server.GetSticker(_stickerID);
             sliderRating.Value = starVal;
             StickerCourseName.Content = _sticker.CourseName;
             StickerDescription.Text = _sticker.ProblemDescription;
