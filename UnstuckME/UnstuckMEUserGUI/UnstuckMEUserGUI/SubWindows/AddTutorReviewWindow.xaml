@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI.SubWindows"
+        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         mc:Ignorable="d"
         AllowsTransparency="True"
         Title="AddTutorReviewWindow" Height="Auto" Width="Auto" WindowStyle="None" WindowState="Maximized" Background="{x:Null}">
@@ -19,15 +20,19 @@
                 <RowDefinition Height="208*"/>
                 <RowDefinition Height="106*"/>
             </Grid.RowDefinitions>
-            <Label x:Name="labelTitle" Grid.Row="0" Content="Review Your Student" Foreground="White" FontSize="35"  FontFamily="Global User Interface" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="Auto" Height="51"/>
+            <Label x:Name="labelTitle" Grid.Row="0" Content="Review Your Mentor" Foreground="White" FontSize="35"  FontFamily="Global User Interface" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="Auto" Height="51"/>
             <Label x:Name="StickerCourseName" HorizontalAlignment="Center" Content="Course" Foreground="White" FontSize="28" FontFamily="Global User Interface"  Width="Auto" Grid.Row="1"/>
             <TextBox x:Name="StickerDescription" Grid.Row="2" IsEnabled="False" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="98" Width="591" />
-            <Slider x:Name="sliderRating" Grid.Row="3" Width="200" IsSnapToTickEnabled="True" TickFrequency=".5" ValueChanged="sliderRating_ValueChanged" HorizontalAlignment="Center" VerticalAlignment="Center" Maximum="5" Minimum="0" Margin="265,7.2,235,23" Height="13"/>
-            <Label x:Name="sliderValue" Grid.Row="3" Content="{Binding Value, ElementName=sliderRating}" FontSize="25" Foreground="White" FontFamily="Global User Interface" Margin="0,0.2,0,1"/>
+            <Label Content="Student Rating:" Grid.Row="3" Foreground="White" FontSize="16" FontWeight="Heavy" FontFamily="Arial" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="100,0,0,0" Margin="0,10,335,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
 
+            <Controls:Rating x:Name="StarRatingValue" Grid.Row="3"  ItemCount="5"  Value="1"  Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Height="25" Background="{x:Null}" VerticalAlignment="Bottom" Width="100" Margin="160,0,0,3" IsReadOnly="False" IsManipulationEnabled="True">
+                <Controls:Rating.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.3"></ScaleTransform>
+                </Controls:Rating.LayoutTransform>
+            </Controls:Rating>
 
             <TextBox x:Name="ReviewDescriptionTxtBox" Grid.Row="4"  HorizontalAlignment="Center" Height="187" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="591"/>
-            <Border Cursor="Hand" Grid.Row="5" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" VerticalAlignment="Top" HorizontalAlignment="Center" >
+            <Border Cursor="Hand" Grid.Row="5" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Click="Submit_Click"></Button>
             </Border>
 

@@ -20,28 +20,26 @@ namespace UnstuckMEUserGUI.SubWindows
     /// </summary>
     public partial class AddTutorReviewWindow : Window
     {
-        double starVal = 3.5;
+        
         int _stickerID = 0;
         UnstuckMESticker _sticker;
 
         public AddTutorReviewWindow(int sticker)
         {
             InitializeComponent();
+            StarRatingValue.Value = .8;
             _stickerID = sticker;
             _sticker = UnstuckME.Server.GetSticker(sticker);
-            sliderRating.Value = starVal;
+            
             StickerCourseName.Content = _sticker.CourseName;
             StickerDescription.Text = _sticker.ProblemDescription;
         }
 
-        private void sliderRating_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            starVal = sliderRating.Value;
-        }
+        
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            UnstuckME.Server.CreateReview(_stickerID, UnstuckME.User.UserID, starVal, ReviewDescriptionTxtBox.Text, false);
+            UnstuckME.Server.CreateReview(_stickerID, UnstuckME.User.UserID, StarRatingValue.Value.Value * 5, ReviewDescriptionTxtBox.Text, false);
             this.Close();
             UnstuckME.Pages.StickerPage.RemoveOpenSticker(_stickerID);
         }
