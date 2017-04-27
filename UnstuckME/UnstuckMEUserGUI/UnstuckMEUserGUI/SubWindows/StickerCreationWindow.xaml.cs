@@ -62,8 +62,9 @@ namespace UnstuckMEUserGUI
                 {
                     throw new Exception("Please Pick A Course Name.");
                 }
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to submit this sticker?", "Sticker Submission Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
-                if(result == MessageBoxResult.Yes)
+                UnstuckMEMessageBox result = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, "Are you sure you want to submit this sticker?", "Sticker Confirmation", UnstuckMEBoxImage.Information);
+                //MessageBoxResult result = MessageBox.Show("Are you sure you want to submit this sticker?", "Sticker Submission Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                if(result.ShowDialog().Value)
                 {
                     //UnstuckMESticker temp = new UnstuckMESticker();
                     UnstuckMEBigSticker newSticker = new UnstuckMEBigSticker();
