@@ -117,46 +117,46 @@ namespace UnstuckMEUserGUI
 					//List<int?> oldFriends = UnstuckME.ProgramDir.GetAllFriends();
      //               List<int?> newFriends = new List<int?>();
 
-                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-					{
-						string path = UnstuckME.ProgramDir.ChatDir + @"\" + chat.ChatID;
-						if (folders.Contains<string>(path))
-						    folders.Remove(path);
-						else
-						    UnstuckME.ProgramDir.MakeChatDir(chat.ChatID.ToString());
+     //               foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+					//{
+					//	string path = UnstuckME.ProgramDir.ChatDir + @"\" + chat.ChatID;
+					//	if (folders.Contains<string>(path))
+					//	    folders.Remove(path);
+					//	else
+					//	    UnstuckME.ProgramDir.MakeChatDir(chat.ChatID.ToString());
 
-					    UnstuckME.ProgramDir.AddChatDatFile(chat.ChatID.ToString());
-						UnstuckME.ProgramDir.AddNewMsgFile(chat.ChatID.ToString(), true);
-                        List<int?>  tempfriends = UnstuckME.Server.GetMemberIDsFromChat(chat.ChatID); //Users from server
-                        foreach (var user in tempfriends)
-                        {
-                            if (!oldFriends.Contains(user) && !newFriends.Contains(user))
-                                newFriends.Add(user);
-                        }
-						//newFriends.AddRange(tempfriends.Where(id => !oldFriends.Contains(id) && !newFriends.Contains(id)));
-					}
-                    oldFriends.RemoveAll(i => newFriends.Contains(i));
+					//    UnstuckME.ProgramDir.AddChatDatFile(chat.ChatID.ToString());
+					//	UnstuckME.ProgramDir.AddNewMsgFile(chat.ChatID.ToString(), true);
+     //                   List<int?>  tempfriends = UnstuckME.Server.GetMemberIDsFromChat(chat.ChatID); //Users from server
+     //                   foreach (var user in tempfriends)
+     //                   {
+     //                       if (!oldFriends.Contains(user) && !newFriends.Contains(user))
+     //                           newFriends.Add(user);
+     //                   }
+					//	//newFriends.AddRange(tempfriends.Where(id => !oldFriends.Contains(id) && !newFriends.Contains(id)));
+					//}
+     //               oldFriends.RemoveAll(i => newFriends.Contains(i));
 
-                    UnstuckMEChatUser newUser = new UnstuckMEChatUser();
-                    foreach (int? nf in newFriends)
-                    {
-                        if (nf.HasValue)
-                        {
-                            newUser = UnstuckME.Server.GetFriendInfo(nf.Value);
-                            newUser.UserID = nf.Value;
+     //               UnstuckMEChatUser newUser = new UnstuckMEChatUser();
+     //               foreach (int? nf in newFriends)
+     //               {
+     //                   if (nf.HasValue)
+     //                   {
+     //                       newUser = UnstuckME.Server.GetFriendInfo(nf.Value);
+     //                       newUser.UserID = nf.Value;
 
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                UnstuckME.FileStream.GetProfilePicture(newUser.UserID).CopyTo(ms);
-                                newUser.UnProccessPhot = ms.ToArray();
-                            }
+     //                       using (MemoryStream ms = new MemoryStream())
+     //                       {
+     //                           UnstuckME.FileStream.GetProfilePicture(newUser.UserID).CopyTo(ms);
+     //                           newUser.UnProccessPhot = ms.ToArray();
+     //                       }
 
-                            UnstuckME.ProgramDir.AddNewFriend(newUser);
-                        }
-                    }
+     //                       UnstuckME.ProgramDir.AddNewFriend(newUser);
+     //                   }
+     //               }
 
-                    oldFriends.ForEach(i => UnstuckME.ProgramDir.DeleteFriend(i));
-                    folders.ForEach(i => Directory.Delete(i, true)); // Recursively delete contents of a directory
+     //               oldFriends.ForEach(i => UnstuckME.ProgramDir.DeleteFriend(i));
+     //               folders.ForEach(i => Directory.Delete(i, true)); // Recursively delete contents of a directory
 
 					// ~~~~~~~~~~~~~~~~~~~~AJ's Code that is currently getting re-factored~~~~~~~~~~~~~~~~~~~~~~~~~
 					UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
