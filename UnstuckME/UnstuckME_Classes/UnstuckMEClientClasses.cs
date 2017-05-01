@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Windows.Media;
 using UnstuckMeLoggers;
 
 namespace UnstuckME_Classes
 {
-	public enum Privileges
+    public enum Privileges
 	{ InvalidUser, Admin, Moderator, User }
 
 	public enum UnstuckMEBox
@@ -129,10 +127,9 @@ namespace UnstuckME_Classes
 			foreach (UnstuckMEChatUser User in inChat.Users)
 			{
 				if(User.UserID == SenderID)
-				{
-					ProfilePic = User.ProfilePicture;
-				}
-				UsersInConvo.Add(User.UserID);
+				    ProfilePic = User.ProfilePicture;
+
+			    UsersInConvo.Add(User.UserID);
 			}
 		}
 
@@ -161,7 +158,7 @@ namespace UnstuckME_Classes
 		public short CourseNumber { get; set; }
 		public int ChatID { get; set; }
 		public int StudentID { get; set; }
-		public Nullable<int> TutorID { get; set; }
+		public int? TutorID { get; set; }
 		public double StudentRanking { get; set; }
 		public float MinimumStarRanking { get; set; }
 		public List<int> AttachedOrganizations { get; set; }
@@ -169,9 +166,7 @@ namespace UnstuckME_Classes
 		public DateTime Timeout { get; set; }
 
 		public UnstuckMESticker()
-		{
-
-		}
+		{ }
 
 		public UnstuckMESticker(UnstuckMEBigSticker s)
 		{
@@ -255,11 +250,10 @@ namespace UnstuckME_Classes
 
 	public class UnstuckMEDirectory
 	{
-
-		private static string programDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME";
-		private static string schoolDir = System.IO.Path.Combine(programDir, "Schools");
-		private static string chatDir = System.IO.Path.Combine(programDir, "Chats");
-		private static string friendsDir = System.IO.Path.Combine(programDir, "Friends");
+		private static readonly string programDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME";
+		private static readonly string schoolDir = Path.Combine(programDir, "Schools");
+		private static readonly string chatDir = Path.Combine(programDir, "Chats");
+		private static readonly string friendsDir = Path.Combine(programDir, "Friends");
 
 		//Intentionally one way getters because a user should not modify a program directory
 		public string ProgramDir
@@ -284,14 +278,14 @@ namespace UnstuckME_Classes
 
 		public string MakeDir(string newDirName)
 		{
-			string newDirectory = System.IO.Path.Combine(programDir, newDirName);
+			string newDirectory = Path.Combine(programDir, newDirName);
 			Directory.CreateDirectory(newDirectory);
 			return newDirectory;
 		}
 
 		public string MakeChatDir(string newDirName)
 		{
-			string newDirectory = System.IO.Path.Combine(chatDir, newDirName);
+			string newDirectory = Path.Combine(chatDir, newDirName);
 			Directory.CreateDirectory(newDirectory);
 			
 			return newDirectory;
@@ -299,8 +293,8 @@ namespace UnstuckME_Classes
 
 		public void AddChatDatFile(string chatNum)
 		{
-			string chatDatPath = System.IO.Path.Combine(chatDir, chatNum, ".dat");
-			if(!File.Exists(chatDatPath))
+			string chatDatPath = Path.Combine(chatDir, chatNum, ".dat");
+			if (!File.Exists(chatDatPath))
 			{
 				try
 				{
@@ -315,38 +309,34 @@ namespace UnstuckME_Classes
 
         public async void AddNewFriend(UnstuckMEChatUser newFriend)
         {
-            string byteString = System.Text.Encoding.UTF8.GetString(newFriend.UnProccessPhot, 0, newFriend.UnProccessPhot.Length);
-            string friendInfo = String.Format("<Friend>" + Environment.NewLine +
-                                                    "\t<UserID>{0}</UserID>" + Environment.NewLine +
-                                                    "\t<Username>{1}</Username>" + Environment.NewLine +
-                                                    "\t<UserEmail>{2}</UserEmail>" + Environment.NewLine +
-                                                    "\t<UserProfilePic>" + Environment.NewLine + 
-                                                        "\t\t{3}" + Environment.NewLine + 
-                                                    "</UserProfilePic>" + Environment.NewLine +
-                                             "</Friend>",
-                                             newFriend.UserID, newFriend.UserName, newFriend.EmailAddress, byteString);
+            string byteString = Encoding.UTF8.GetString(newFriend.UnProccessPhot, 0, newFriend.UnProccessPhot.Length);
+            string friendInfo = string.Format("<Friend>" + Environment.NewLine +
+                                              "\t<UserID>{0}</UserID>" + Environment.NewLine +
+                                              "\t<Username>{1}</Username>" + Environment.NewLine +
+                                              "\t<UserEmail>{2}</UserEmail>" + Environment.NewLine +
+                                              "\t<UserProfilePic>" + Environment.NewLine + 
+                                              "\t\t{3}" + Environment.NewLine + 
+                                              "</UserProfilePic>" + Environment.NewLine +
+                                              "</Friend>",
+                                              newFriend.UserID, newFriend.UserName, newFriend.EmailAddress, byteString);
 
-            await WriteToFileAsync(System.IO.Path.Combine(friendsDir, newFriend.UserID.ToString() + ".dat"), friendInfo);
-
+            await WriteToFileAsync(Path.Combine(friendsDir, newFriend.UserID + ".dat"), friendInfo);
         }
 
         public void AddNewMsgFile(string chatNum, bool ifNeeded = false)
 		{
-			string chatPath = System.IO.Path.Combine(chatDir, chatNum);
-			int maxChatFile = (Directory.GetFiles(chatPath).Where(name => !name.EndsWith(".dat")).Select(f => Convert.ToInt32(f.Replace(chatPath + "\\msg_", "")))).DefaultIfEmpty(999).Max();
+			string chatPath = Path.Combine(chatDir, chatNum);
+			int maxChatFile = Directory.GetFiles(chatPath).Where(name => !name.EndsWith(".dat")).Select(f => Convert.ToInt32(f.Replace(chatPath + "\\msg_", ""))).DefaultIfEmpty(999).Max();
 
 			if (ifNeeded == false || maxChatFile == 999)
-			{
-				File.WriteAllText(chatPath + @"\msg_" + (maxChatFile + 1).ToString(), "<MessageGroup>" + Environment.NewLine + "</MessageGroup>");
-			}
-			
+				File.WriteAllText(chatPath + @"\msg_" + (maxChatFile + 1), "<MessageGroup>" + Environment.NewLine + "</MessageGroup>");
 		}
 
 		public bool DeleteFriend(int? friendId)
 		{
 			try
 			{
-				string deleteFriend = System.IO.Path.Combine(FriendsDir, friendId.ToString() + ".dat");
+				string deleteFriend = Path.Combine(FriendsDir, friendId + ".dat");
 				if (File.Exists(deleteFriend))
 				{
 					File.Delete(deleteFriend);
@@ -372,11 +362,9 @@ namespace UnstuckME_Classes
 				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
 				return null;
 			}
-
 		}
 
-
-		public UnstuckMEDirectory ()
+		public UnstuckMEDirectory()
 		{
 			//This will not recreate the directory if it already exists
 			Directory.CreateDirectory(programDir);
@@ -385,47 +373,30 @@ namespace UnstuckME_Classes
 			Directory.CreateDirectory(friendsDir);
 		}
 
-
         static async Task WriteToFileAsync(string filePath, string text)
-
         {
-
             if (string.IsNullOrEmpty(filePath))
-                throw new ArgumentNullException("filePath");
+                throw new ArgumentNullException(nameof(filePath));
 
             if (string.IsNullOrEmpty(text))
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             byte[] buffer = Encoding.Unicode.GetBytes(text);
 
-            Int32 offset = 0;
-            Int32 sizeOfBuffer = 4096;
-            FileStream fileStream = null;
+            const int offset = 0;
+            const int sizeOfBuffer = 4096;
 
             try
             {
-
-                fileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write,
-
-                FileShare.None, bufferSize: sizeOfBuffer, useAsync: true);
-
-                await fileStream.WriteAsync(buffer, offset, buffer.Length);
-
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.None, sizeOfBuffer, true))
+                {
+                    await fileStream.WriteAsync(buffer, offset, buffer.Length);
+                }
             }
-
             catch (Exception ex)
             {
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
             }
-
-            finally
-
-            {
-                if (fileStream != null)
-                    fileStream.Dispose();
-            }
-
         }
-
     }
 }

@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckMeLoggers;
 
 
@@ -29,7 +18,7 @@ namespace UnstuckMEUserGUI.SubWindows
         private void AddOrgBtn_Click(object sender, RoutedEventArgs e)
         {
             string OrgName = orgName.Text;
-            if (OrgName != "")
+            if (OrgName != string.Empty)
             {
                 // call server function to add an org
                 try
@@ -41,9 +30,7 @@ namespace UnstuckMEUserGUI.SubWindows
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org");
                     
                 }
-                
             }
         }
-        
     }
 }

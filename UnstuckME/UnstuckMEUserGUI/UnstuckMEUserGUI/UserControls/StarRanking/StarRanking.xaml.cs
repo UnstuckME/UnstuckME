@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace UnstuckMEUserGUI
 {
@@ -22,12 +12,13 @@ namespace UnstuckMEUserGUI
     {
         public enum BoxColor { Blue, Red, White, Black, Gray, DimGray }
 
-        BitmapImage BlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlue.png", UriKind.Relative));
-        BitmapImage RedStar = new BitmapImage(new Uri("/Resources/Ranking/RankingRed.png", UriKind.Relative));
-        BitmapImage BlackStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlack.png", UriKind.Relative));
-        BitmapImage WhiteStar = new BitmapImage(new Uri("/Resources/Ranking/RankingWhite.png", UriKind.Relative));
-        BitmapImage GrayStar = new BitmapImage(new Uri("/Resources/Ranking/RankingGray.png", UriKind.Relative));
-        BitmapImage DimGrayStar = new BitmapImage(new Uri("/Resources/Ranking/RankingDimGray.png", UriKind.Relative));
+        private readonly BitmapImage BlueStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlue.png", UriKind.Relative));
+        private readonly BitmapImage RedStar = new BitmapImage(new Uri("/Resources/Ranking/RankingRed.png", UriKind.Relative));
+        private readonly BitmapImage BlackStar = new BitmapImage(new Uri("/Resources/Ranking/RankingBlack.png", UriKind.Relative));
+        private readonly BitmapImage WhiteStar = new BitmapImage(new Uri("/Resources/Ranking/RankingWhite.png", UriKind.Relative));
+        private readonly BitmapImage GrayStar = new BitmapImage(new Uri("/Resources/Ranking/RankingGray.png", UriKind.Relative));
+        private readonly BitmapImage DimGrayStar = new BitmapImage(new Uri("/Resources/Ranking/RankingDimGray.png", UriKind.Relative));
+
         public StarRanking(BoxColor inColor)
         {
             InitializeComponent();
@@ -128,6 +119,8 @@ namespace UnstuckMEUserGUI
                         BackGroundColor.Background = Brushes.DimGray;
                         break;
                     }
+                default:
+                    break;
             }
         }
         public void SetRatingValue(float inValue)

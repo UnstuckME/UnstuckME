@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
 using UnstuckMEServer;
 using UnstuckME_Classes;
 using System.Diagnostics;
@@ -29,12 +18,11 @@ namespace UnstuckMEServerGUI
         {
             InitializeComponent();
             Admin = passedInAdmin;
-
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -45,6 +33,7 @@ namespace UnstuckMEServerGUI
                     throw new Exception("Password Too Short, 6-32 characters.");
                 if (passwordBoxNewPassword.Password.Length > 32)
                     throw new Exception("Password Too Long, 6-32 characters.");
+
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                     {
                         MessageBoxResult result = MessageBox.Show("Save Changes?", "Save Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
@@ -54,6 +43,7 @@ namespace UnstuckMEServerGUI
                             {
                                 if (textBoxCurrentUsername.Text != Admin.EmailAddress)
                                     throw new Exception("You cannot change the credentials of another Admin.");
+
                                 var admin = (from u in db.ServerAdmins
                                              where u.EmailAddress.ToLower() == textBoxCurrentUsername.Text.ToLower()
                                              select u).First();
@@ -83,14 +73,12 @@ namespace UnstuckMEServerGUI
                                         db.SaveChanges();
                                         MessageBox.Show("New Password Saved", "Password Change Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
                                     }
-                                    string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                                    string unstuckME = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
                                     Process.Start(unstuckME);
                                     Application.Current.Shutdown();
                                 }
                                 else
-                                {
                                     throw new Exception("Invalid Username/Password");
-                                }
                             }
                             catch (Exception ex)
                             {

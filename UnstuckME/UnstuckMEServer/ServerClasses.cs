@@ -9,15 +9,15 @@ namespace UnstuckMEServer
 {
     public class ConnectedClient
     {
-        public IClient connection;
+        public IClient Connection;
         public UserInfo User;
-        public RemoteEndpointMessageProperty returnAddress;
+        public RemoteEndpointMessageProperty ReturnAddress;
         public OperationContext ChannelInfo;
     }
 
     public class ConnectedServerAdmin
     {
-        public IServer connection;
+        public IServer Connection;
         public AdminInfo Admin;
     }
 
@@ -29,43 +29,39 @@ namespace UnstuckMEServer
 
     public class UnstuckMEHashing
     {
-        static byte[] GetBytes(string str)
+        private static byte[] GetBytes(string str)
         {
             byte[] bytes = new byte[str.Length * sizeof(char)];
             Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }
 
-        static string GetString(byte[] bytes)
+        private static string GetString(byte[] bytes)
         {
             char[] chars = new char[bytes.Length / sizeof(char)];
             Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
             return new string(chars);
         }
 
-        static byte[] GenerateSaltedHash(string stringPassword, string stringSalt)
+        private static byte[] GenerateSaltedHash(string stringPassword, string stringSalt)
         {
             byte[] plainText = GetBytes(stringPassword);
             byte[] salt = GetBytes(stringSalt);
-			byte[] return_bytestring = new byte[plainText.Length + salt.Length];
+			byte[] returnBytestring = new byte[plainText.Length + salt.Length];
 
 			using (HashAlgorithm algorithm = new SHA256Managed())
 			{
 				byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
 
 				for (int i = 0; i < plainText.Length; i++)
-				{
-					plainTextWithSaltBytes[i] = plainText[i];
-				}
-				for (int i = 0; i < salt.Length; i++)
-				{
-					plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-				}
+				    plainTextWithSaltBytes[i] = plainText[i];
+			    for (int i = 0; i < salt.Length; i++)
+			        plainTextWithSaltBytes[plainText.Length + i] = salt[i];
 
-				return_bytestring = algorithm.ComputeHash(plainTextWithSaltBytes);
+			    returnBytestring = algorithm.ComputeHash(plainTextWithSaltBytes);
 			}
 
-            return return_bytestring;
+            return returnBytestring;
         }
         public static UnstuckMEPassword GetHashedPassword(string password)
         {
@@ -82,9 +78,7 @@ namespace UnstuckMEServer
             string inputPassword = string.Empty;
 
             foreach (byte element in bytePassword)
-            {
                 inputPassword += element;
-            }
 
             returnPassword.Password = inputPassword;
             return returnPassword;
@@ -93,12 +87,10 @@ namespace UnstuckMEServer
         public static string RecreateHashedPassword(string password, string salt)
         {
             byte[] bytePassword = GenerateSaltedHash(password, salt);
-            string inputPassword = "";
+            string inputPassword = string.Empty;
 
             foreach (byte element in bytePassword)
-            {
                 inputPassword += element;
-            }
 
             return inputPassword;
         }

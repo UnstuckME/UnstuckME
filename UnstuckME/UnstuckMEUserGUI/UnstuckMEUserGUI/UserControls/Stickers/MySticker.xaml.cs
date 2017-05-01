@@ -31,24 +31,22 @@ namespace UnstuckMEUserGUI
             Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
             ProblemDescription.Text = "Problem Description:\n" + Sticker.ProblemDescription;
+
             if(Sticker.TutorID <= 1)
-            {
                 LabelTutorName.Content = "Currently Not Tutored";
-            }
             else
             {
                 try
                 {
-                    LabelTutorName.Content = "Tutor: " + UnstuckME.Server.GetUserDisplayName(Sticker.TutorID.Value);
+                    if (Sticker.TutorID.HasValue)
+                        LabelTutorName.Content = "Tutor: " + UnstuckME.Server.GetUserDisplayName(Sticker.TutorID.Value);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
         }
-
-
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

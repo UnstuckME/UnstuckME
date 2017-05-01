@@ -12,9 +12,7 @@
         </Rectangle>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="300" MaxWidth="600" MinHeight="200" MinWidth="700" Height="600" Width="700">
             <Border BorderBrush="#336699" BorderThickness="4,4,4,4" CornerRadius="5">
-                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5">
-                    
-                </Border>
+                <Border BorderBrush="Black" BorderThickness="4,4,4,4" Background="DimGray" CornerRadius="5"></Border>
             </Border>
             <ComboBox x:Name="ComboBoxCourseNumberAndName" MaxDropDownHeight="200" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" Height="35" Width="350" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,84,0" IsEnabled="False">
             </ComboBox>

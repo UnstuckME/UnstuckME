@@ -15,18 +15,18 @@ using System.Net.Configuration;
 
 namespace UnstuckMEInterfaces
 {
-	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
-	/// <summary>
-	/// Implement any Operation Contracts from IUnstuckMEService.cs in this file.
-	/// </summary>
+    /// <summary>
+    /// Implement any Operation Contracts from IUnstuckMEService.cs in this file.
+    /// </summary>
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
 	public partial class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
 	{
 		private ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 		private ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
-		private static ConcurrentDictionary<int, DateTime> _ActiveStickers;
-		private static ConcurrentQueue<UnstuckMEBigSticker> _StickerList;
-		private static ConcurrentQueue<UnstuckMEMessage> _MessageList;
-		private static ConcurrentQueue<int> _ReviewList = new ConcurrentQueue<int>();
+		private static ConcurrentDictionary<int, DateTime> _activeStickers;
+		private static ConcurrentQueue<UnstuckMEBigSticker> _stickerList;
+		private static ConcurrentQueue<UnstuckMEMessage> _messageList;
+		private static ConcurrentQueue<int> _reviewList = new ConcurrentQueue<int>();
 		
 		/// <summary>
 		/// This function is for testing stored procedures. In program.cs replace:
@@ -48,112 +48,125 @@ namespace UnstuckMEInterfaces
 		}
 
 		#region Thread Functions
-		/// <summary>
-		/// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
-		/// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
-		/// checks for all online users who are eligible to view that sticker and removes it from their
-		/// client interface.
-		/// </summary>
-		public void CheckForTimedOutStickers()
-		{
-			_ActiveStickers = new ConcurrentDictionary<int, DateTime>();
 
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				var activestickers = from s in db.Stickers
-									 where s.Timeout > DateTime.Now && s.TutorID == null
-									 select new { s.StickerID, s.Timeout };
+	    /// <summary>
+	    /// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
+	    /// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
+	    /// checks for all online users who are eligible to view that sticker and removes it from their
+	    /// client interface.
+	    /// </summary>
+	    public async void CheckForTimedOutStickers()
+	    {
+	        _activeStickers = new ConcurrentDictionary<int, DateTime>();
 
-				foreach (var sticker in activestickers)
-					_ActiveStickers.TryAdd(sticker.StickerID, sticker.Timeout);
+	        using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+	        {
+	            var activestickers = from s in db.Stickers
+	                                 where s.Timeout > DateTime.Now && s.TutorID == null
+	                                 select new {s.StickerID, s.Timeout};
 
-				while (true)
-				{
-					foreach (KeyValuePair<int, DateTime> sticker in _ActiveStickers)
-					{
-						if (sticker.Value <= DateTime.Now)
-						{
-							var tutors = db.GetUsersThatCanTutorASticker(sticker.Key);
+	            foreach (var sticker in activestickers)
+	                _activeStickers.TryAdd(sticker.StickerID, sticker.Timeout);
+	        }
 
-							foreach (var tutor in tutors)
-							{
-								if (_connectedClients.ContainsKey(tutor.Value))
-								{
-									DateTime time = sticker.Value;
-									_ActiveStickers.TryRemove(sticker.Key, out time);
-									_connectedClients[tutor.Value].connection.RemoveGUISticker(sticker.Key);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+	        while (true)
+	        {
+	            foreach (KeyValuePair<int, DateTime> sticker in _activeStickers)
+	            {
+	                if (sticker.Value <= DateTime.Now)
+	                    await Task.Factory.StartNew(() => AsyncCheckForTimedOutStickers(sticker));
+	            }
+	        }
+	    }
 
-		/// <summary>
-		/// Checks to see if there are any new messages for the client. If there are, sends the message to that client as long as they are logged into the server.
-		/// </summary>
-		public async void CheckForNewMessages()
-		{
-			_MessageList = new ConcurrentQueue<UnstuckMEMessage>();
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				while (true)
-				{
-					if (_MessageList.Count != 0)
-					{
-						UnstuckMEMessage temp;
-						_MessageList.TryDequeue(out temp);
-						try
-						{
-							await Task.Factory.StartNew(() => AsyncMessageSendToUsers(temp));
-						}
-						catch (Exception)
-						{ /*If Failure Message Will Be Lost, but server will not fail.*/ }
-					}
-				}
-			}
-		}
+        /// <summary>
+        /// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
+        /// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
+        /// checks for all online users who are eligible to view that sticker and removes it from their
+        /// client interface.
+	    /// </summary>
+        /// <param name="sticker">A KeyValuePair with the unique identifier of the sticker that has timed out
+        /// and the time that it did so.</param>
+        private void AsyncCheckForTimedOutStickers(KeyValuePair<int, DateTime> sticker)
+	    {
+	        using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+	        {
+	            var tutors = db.GetUsersThatCanTutorASticker(sticker.Key);
 
-		/// <summary>
-		/// Asyncronously sends a message to a user and logs it in the database.
-		/// </summary>
-		/// <param name="inMessage">The message to be sent and stored in the database.</param>
-		private void AsyncMessageSendToUsers(UnstuckMEMessage inMessage)
-		{
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				foreach (int client in inMessage.UsersInConvo)
-				{
-					if (client != inMessage.SenderID)
-					{
-						if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
-						{
-							_connectedClients[client].connection.GetMessage(inMessage);
-						}
-					}
-				}
-			}
-		}
+	            foreach (var tutor in tutors)
+	            {
+	                if (tutor.HasValue && _connectedClients.ContainsKey(tutor.Value))
+	                {
+	                    DateTime time;
+	                    _activeStickers.TryRemove(sticker.Key, out time);
+	                    _connectedClients[tutor.Value].Connection.RemoveGUISticker(sticker.Key);
+	                }
+	            }
+	        }
+	    }
 
-		/// <summary>
+        /// <summary>
+        /// Checks to see if there are any new messages for the client. If there are, sends the message to that client
+        /// as long as they are logged into the server.
+        /// </summary>
+        public async void CheckForNewMessages()
+	    {
+	        _messageList = new ConcurrentQueue<UnstuckMEMessage>();
+
+	        while (true)
+	        {
+	            if (_messageList.Count != 0)
+	            {
+	                UnstuckMEMessage temp;
+	                _messageList.TryDequeue(out temp);
+
+	                try
+	                {
+	                    await Task.Factory.StartNew(() => AsyncMessageSendToUsers(temp));
+	                }
+	                catch (Exception)
+	                {
+	                    /*If Failure Message Will Be Lost, but server will not fail.*/
+	                }
+	            }
+	        }
+	    }
+
+	    /// <summary>
+	    /// Asyncronously sends a message to a user and logs it in the database.
+	    /// </summary>
+	    /// <param name="inMessage">The message to be sent and stored in the database.</param>
+	    private void AsyncMessageSendToUsers(UnstuckMEMessage inMessage)
+	    {
+	        foreach (int client in inMessage.UsersInConvo)
+	        {
+	            if (client != inMessage.SenderID)
+	            {
+	                if (_connectedClients.ContainsKey(client)) //Checks to see if client is online.
+	                    _connectedClients[client].Connection.GetMessage(inMessage);
+	            }
+	        }
+	    }
+
+	    /// <summary>
 		/// Starts a new task that sends stickers to the clients who meet the criteria specified with the sticker.
 		/// </summary>
 		public async void CheckForNewStickers()
 		{
-			_StickerList = new ConcurrentQueue<UnstuckMEBigSticker>();
+			_stickerList = new ConcurrentQueue<UnstuckMEBigSticker>();
 			while (true)
 			{
-				if (_StickerList.Count != 0)
+				if (_stickerList.Count != 0)
 				{
 					UnstuckMEBigSticker temp;
-					_StickerList.TryDequeue(out temp);
+					_stickerList.TryDequeue(out temp);
+
 					await Task.Factory.StartNew(() => SendStickerToClients(temp));
-					DateTime timeout = temp.Timeout;
-					_ActiveStickers.TryRemove(temp.StickerID, out timeout);
+
+					DateTime timeout;
+					_activeStickers.TryRemove(temp.StickerID, out timeout);
 				}
 			}
-
 		}
 
 		/// <summary>
@@ -183,10 +196,8 @@ namespace UnstuckMEInterfaces
 
 					foreach (var tutor in tutors)
 					{
-						if (_connectedClients.ContainsKey(tutor.Value))
-						{
-							_connectedClients[tutor.Value].connection.RecieveNewSticker(s);
-						}
+						if (tutor.HasValue && _connectedClients.ContainsKey(tutor.Value))
+						    _connectedClients[tutor.Value].Connection.RecieveNewSticker(s);
 					}
 				}
 			}
@@ -195,7 +206,6 @@ namespace UnstuckMEInterfaces
 				Console.WriteLine("SendStickerToClients Function Error: " + ex.Message);
 			}
 		}
-		#endregion
 
 		/// <summary>
 		/// Checks that clients are still connected to the server. This is called on a separate thread every five seconds by the server.
@@ -210,13 +220,11 @@ namespace UnstuckMEInterfaces
 					foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
 					{
 						if (client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
-						{
 							offlineUsers.Add(client.Key);
-						}
 					}
 					foreach (int user in offlineUsers)
 					{
-						ConnectedClient removedClient = new ConnectedClient();
+						ConnectedClient removedClient;
 						_connectedClients.TryRemove(user, out removedClient);
 						Console.ForegroundColor = ConsoleColor.Red;
 						Console.WriteLine(removedClient.User.EmailAddress + "'s socket is in a faulted state. They are now considered offline");
@@ -231,29 +239,29 @@ namespace UnstuckMEInterfaces
 				Console.WriteLine(ex.Message);
 			}
 		}
+        #endregion
 
-		/// <summary>
-		/// Checks to see if the email address exists on the database.
-		/// </summary>
-		/// <param name="emailAddress">The email address of the user.</param>
-		/// <returns>True if the email address is specified with an account, false if not.</returns>
-		public bool IsValidUser(string emailAddress)
-		{
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				try
-				{
-					var user = GetUserInfo(null, emailAddress);
-					return true;
-				}
-				catch
-				{
-					return false;
-				}
-			}
-		}
+	    /// <summary>
+	    /// Checks to see if the email address exists on the database.
+	    /// </summary>
+	    /// <param name="emailAddress">The email address of the user.</param>
+	    /// <returns>True if the email address is specified with an account, false if not.</returns>
+	    public bool IsValidUser(string emailAddress)
+	    {
+	        bool retVal = false;
 
-		/// <summary>
+	        try
+	        {
+	            var user = GetUserInfo(null, emailAddress);
+	            retVal = true;
+	        }
+	        catch
+	        { }
+
+            return retVal;
+        }
+
+	    /// <summary>
 		/// Disconnects a user from the server.
 		/// </summary>
 		public void Logout()
@@ -263,11 +271,11 @@ namespace UnstuckMEInterfaces
 			{
 				ConnectedClient removedClient;
 				_connectedClients.TryRemove(client.User.UserID, out removedClient);
+
 				foreach (var admin in _connectedServerAdmins)
-				{
-					admin.Value.connection.GetUpdate(1, removedClient.User);
-				}
-				Console.ForegroundColor = ConsoleColor.Red;
+				    admin.Value.Connection.GetUpdate(1, removedClient.User);
+
+                Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine("Client Loggoff: {0} at {1}", removedClient.User.EmailAddress, DateTime.Now);
 				Console.ResetColor();
 			}
@@ -282,10 +290,8 @@ namespace UnstuckMEInterfaces
 			IClient establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
 			foreach (var client in _connectedClients)
 			{
-				if (client.Value.connection == establishedUserConnection)
-				{
-					return client.Value;
-				}
+				if (client.Value.Connection == establishedUserConnection)
+				    return client.Value;
 			}
 
 			return null;
@@ -300,10 +306,8 @@ namespace UnstuckMEInterfaces
 			IServer establishedAdminConnection = OperationContext.Current.GetCallbackChannel<IServer>();
 			foreach (var admin in _connectedServerAdmins)
 			{
-				if (admin.Value.connection == establishedAdminConnection)
-				{
-					return admin.Value;
-				}
+				if (admin.Value.Connection == establishedAdminConnection)
+				    return admin.Value;
 			}
 			return null;
 		}
@@ -338,7 +342,7 @@ namespace UnstuckMEInterfaces
 		/// <returns>An 8-character code that must be entered in on the client in order to activate the account.</returns>
 		public string SendEmail(EmailType emailtype, string userEmailAddress, string username)
 		{
-			string verification_code = GenerateVerificationCode();  //generate a random 8-character verification code
+			string verificationCode = GenerateVerificationCode();  //generate a random 8-character verification code
 
 			var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 			var mailSettings = (SmtpSection)config.GetSection("system.net/mailSettings/smtp");
@@ -352,7 +356,7 @@ namespace UnstuckMEInterfaces
 						email.Subject = "Activating your UnstuckME account";
 						//this body is temporary as recipient shouldn't reply to the email
 						email.Body = "Thanks for joining UnstuckME " + username + "! Please activate your account by entering the verification code below into the prompt in the application.\n\n"
-							+ "By creating an account, you agree to UnstuckME Terms of Service and your University's Student Code of Conduct\n\nYour verification code:\t" + verification_code
+							+ "By creating an account, you agree to UnstuckME Terms of Service and your University's Student Code of Conduct\n\nYour verification code:\t" + verificationCode
 							+ "\n\nIf something is not working, please reply to this email with your problem and we will attempt to solve your issue.";
 						email.Priority = MailPriority.Normal;
 						break;
@@ -364,7 +368,7 @@ namespace UnstuckMEInterfaces
 						email.Body = "Hello, " + username + "!\n\nThis is to notify you of an attempt to change your UnstuckME account password. You may use this password to log in to your account"
 							+ ", but please remember to change it again from within the application once you have successfully logged in. To do this, go to your User Profile and click on 'Edit Profile'"
 							+ " button directly underneath your profile picture. To change your password from within the application, enter your new password in the box and click 'Save'.\n\nYour "
-							+ "temporary password is:\t" + verification_code + "\n\nIf you did not request to reset your UnstuckME account password or you are experiencing other problems, please "
+							+ "temporary password is:\t" + verificationCode + "\n\nIf you did not request to reset your UnstuckME account password or you are experiencing other problems, please "
 							+ "reply to this email and we will attempt to solve your issue.";
 						email.Priority = MailPriority.Normal;
 						break;
@@ -387,7 +391,7 @@ namespace UnstuckMEInterfaces
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
-				throw ex;					  //throw the error back to the client
+				throw;					  //throw the error back to the client
 			}
 			finally
 			{
@@ -395,7 +399,7 @@ namespace UnstuckMEInterfaces
 				client.Dispose();
 			}
 
-			return verification_code;
+			return verificationCode;
 		}
 
 		/// <summary>
@@ -413,17 +417,14 @@ namespace UnstuckMEInterfaces
 					byte[] tokenData = new byte[128];
 					rng.GetBytes(tokenData);
 
-					for (int i = 0, bytes_skipped = 0; i < tokenData.Length && value.Length < 8; i++)
+					for (int i = 0, bytesSkipped = 0; i < tokenData.Length && value.Length < 8; i++)
 					{
-						byte temp = tokenData[i + bytes_skipped];
-						while ((tokenData[i + bytes_skipped] <= 48 || tokenData[i + bytes_skipped] >= 57) &&
-								(tokenData[i + bytes_skipped] <= 65 || tokenData[i + bytes_skipped] >= 90) &&
-								(tokenData[i + bytes_skipped] <= 97 || tokenData[i + bytes_skipped] >= 122))
-						{
-							bytes_skipped++;
-						}
-						
-						value += Convert.ToChar(tokenData[i + bytes_skipped]);
+					    while ((tokenData[i + bytesSkipped] <= 48 || tokenData[i + bytesSkipped] >= 57) &&
+								(tokenData[i + bytesSkipped] <= 65 || tokenData[i + bytesSkipped] >= 90) &&
+								(tokenData[i + bytesSkipped] <= 97 || tokenData[i + bytesSkipped] >= 122))
+					        bytesSkipped++;
+
+					    value += Convert.ToChar(tokenData[i + bytesSkipped]);
 					}
 				}
 			}

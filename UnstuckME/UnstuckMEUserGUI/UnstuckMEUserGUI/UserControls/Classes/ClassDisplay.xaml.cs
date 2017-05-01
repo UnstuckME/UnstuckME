@@ -1,21 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
-using System.Threading;
-
 
 namespace UnstuckMEUserGUI
 {
@@ -24,8 +10,8 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ClassDisplay : UserControl
     {
-        UserClass Class;
-        FrameworkElement lastClick = null;
+        private UserClass Class;
+        private FrameworkElement lastClick = null;
 
         public ClassDisplay(UserClass inClass)
         {
@@ -36,20 +22,13 @@ namespace UnstuckMEUserGUI
             CourseNumber.Text = Class.CourseNumber.ToString();
             Coursedesc.Text = Class.CourseName;
             //Deletebtn.Name = "DeleteBtn" + m_IDnum.ToString();
-            MainContainer.Name = "MainContainer" + Class.ClassID.ToString();
+            MainContainer.Name = "MainContainer" + Class.ClassID;
         }
 
         private void MainContainer_Click(object sender, RoutedEventArgs e)
         {
-            if (Deletebtn.Visibility == Visibility.Visible)
-            {
-                Deletebtn.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                Deletebtn.Visibility = Visibility.Visible;
-            }
-            lastClick = e.Source as FrameworkElement;    
+            Deletebtn.Visibility = Deletebtn.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            lastClick = e.Source as FrameworkElement;
         }
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {
@@ -60,11 +39,11 @@ namespace UnstuckMEUserGUI
                 UIElementCollection availablestickers = UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children;
                 for (int index = availablestickers.Count - 1; index >= 0; index--)
                 {
-                    AvailableSticker avail_sticker = availablestickers[index] as AvailableSticker;
-                    if (avail_sticker.Sticker.ClassID == Class.ClassID)
+                    AvailableSticker availSticker = availablestickers[index] as AvailableSticker;
+                    if (availSticker != null && availSticker.Sticker.ClassID == Class.ClassID)
                     {
-                        UnstuckME.Pages.StickerPage.AvailableStickers.Remove(avail_sticker.Sticker);
-                        avail_sticker.RemoveFromStackPanel();
+                        UnstuckME.Pages.StickerPage.AvailableStickers.Remove(availSticker.Sticker);
+                        availSticker.RemoveFromStackPanel();
                     }
                 }
 

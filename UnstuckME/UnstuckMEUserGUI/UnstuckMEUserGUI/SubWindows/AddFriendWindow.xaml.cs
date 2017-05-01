@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -37,16 +29,20 @@ namespace UnstuckMEUserGUI
 
         private void MoveBottomRightEdgeOfWindowToMousePosition()
         {
-            var transform = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
-            var mouse = transform.Transform(GetMousePosition());
-            Left = mouse.X - this.ActualWidth;
-            Top = mouse.Y - ActualHeight;
+            PresentationSource presentationSource = PresentationSource.FromVisual(this);
+            if (presentationSource?.CompositionTarget != null)
+            {
+                var transform = presentationSource.CompositionTarget.TransformFromDevice;
+                var mouse = transform.Transform(GetMousePosition());
+                Left = mouse.X - ActualWidth;
+                Top = mouse.Y - ActualHeight;
+            }
         }
 
-        public System.Windows.Point GetMousePosition()
+        public Point GetMousePosition()
         {
             System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
-            return new System.Windows.Point(point.X, point.Y);
+            return new Point(point.X, point.Y);
         }
 
         private void ButtonAddContact_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -55,19 +51,18 @@ namespace UnstuckMEUserGUI
             try
             {
                 if(TextBoxUsername.Text == UnstuckME.User.EmailAddress)
-                {
                     throw new Exception();
-                }
                 if (UnstuckME.Server.IsValidUser(TextBoxUsername.Text))
                 {
-                    UnstuckMEChatUser temp = new UnstuckMEChatUser();
-                    temp.UserID = UnstuckME.Server.GetUserID(TextBoxUsername.Text);
+                    UnstuckMEChatUser temp = new UnstuckMEChatUser
+                    {
+                        UserID = UnstuckME.Server.GetUserID(TextBoxUsername.Text)
+                    };
+
                     foreach (var friend in UnstuckME.FriendsList)
                     {
-                        if(friend.UserID == temp.UserID)
-                        {
+                        if (friend.UserID == temp.UserID)
                             throw new Exception();
-                        }
                     }
                     temp.UserName = UnstuckME.Server.GetUserDisplayName(temp.UserID);
 
@@ -84,9 +79,7 @@ namespace UnstuckMEUserGUI
                     Application.Current.Windows.OfType<UnstuckMEWindow>().FirstOrDefault().Focus();
                 }
                 else
-                {
                     throw new Exception();
-                }
             }
             catch(Exception)
             {
@@ -96,7 +89,7 @@ namespace UnstuckMEUserGUI
 
         private void AddContactWindow_Deactivated(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void AddContactWindow_Loaded(object sender, RoutedEventArgs e)
@@ -107,9 +100,7 @@ namespace UnstuckMEUserGUI
         private void TextBoxUsername_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
-            {
                 ButtonAddContact_MouseLeftButtonDown(null, null);
-            }
         }
     }
 }

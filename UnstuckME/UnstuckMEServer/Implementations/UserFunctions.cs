@@ -17,7 +17,7 @@ namespace UnstuckMEInterfaces
         /// <returns>A UserInfo structure that contains the UserID, first and last name, email address, privileges, average student and
         /// tutor ranks, the total number of reviews submitted as a student and tutor, password, salt value used for hashing, and the bytes
         /// representing the data of their profile picture.</returns>
-        public UserInfo GetUserInfo(Nullable<int> userID, string emailAddress)
+        public UserInfo GetUserInfo(int? userID, string emailAddress)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -49,14 +49,11 @@ namespace UnstuckMEInterfaces
         /// <returns>An integer representing the unique identifier associated with the given email address</returns>
         public int GetUserID(string emailAddress)
         {
-            int userID = 0;
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var temp = db.GetUserID(emailAddress);
-                userID = temp.First().Value;
+                var temp = db.GetUserID(emailAddress).First();
+                return temp ?? -1;
             }
-
-            return userID;
         }
 
         /// <summary>
@@ -93,44 +90,41 @@ namespace UnstuckMEInterfaces
         {
             ConnectedClient newClient = new ConnectedClient();
 
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            try
             {
-                try
+                UserInfo user = GetUserInfo(null, emailAddress);
+
+                string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passWord, user.Salt);
+
+                if (stringOfPassword == user.UserPassword)
                 {
-                    UserInfo user = GetUserInfo(null, emailAddress);
-
-                    string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passWord, user.Salt);
-
-                    if (stringOfPassword == user.UserPassword)
+                    //If Client is already logged on return false (This may be removed later).
+                    foreach (var client in _connectedClients)
                     {
-                        //If Client is already logged on return false (This may be removed later).
-                        foreach (var client in _connectedClients)
-                        {
-                            if (client.Key == user.UserID)
-                                return null;
-                        }
-
-                        //Stores Client into Logged in Users List
-                        var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
-                        newClient.ChannelInfo = OperationContext.Current;
-                        newClient.connection = establishedUserConnection;
-                        newClient.User = user;
-                        newClient.returnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
-                        _connectedClients.TryAdd(newClient.User.UserID, newClient);
-
-                        //Login Success, Print to console window.
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Client Login: {0} at {1}", newClient.User.EmailAddress, System.DateTime.Now);
-                        Console.ResetColor();
-
-                        foreach (var admin in _connectedServerAdmins)
-                            admin.Value.connection.GetUpdate(0, newClient.User);
+                        if (client.Key == user.UserID)
+                            return null;
                     }
+
+                    //Stores Client into Logged in Users List
+                    var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
+                    newClient.ChannelInfo = OperationContext.Current;
+                    newClient.Connection = establishedUserConnection;
+                    newClient.User = user;
+                    newClient.ReturnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
+                    _connectedClients.TryAdd(newClient.User.UserID, newClient);
+
+                    //Login Success, Print to console window.
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Client Login: {0} at {1}", newClient.User.EmailAddress, DateTime.Now);
+                    Console.ResetColor();
+
+                    foreach (var admin in _connectedServerAdmins)
+                        admin.Value.Connection.GetUpdate(0, newClient.User);
                 }
-                catch (Exception)
-                {
-                    return null;
-                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
 
             return newClient.User;
@@ -141,18 +135,20 @@ namespace UnstuckMEInterfaces
         /// that they can't be logged in more than once. If successful, logs the callback channel, the incoming message properties, and
         /// the all the user's info from the database in the server's list of connected clients.
         /// </summary>
+        /// <param name="displayFName">The first name of the new user.</param>
+        /// <param name="displayLName">The last name of the new user.</param>
         /// <param name="emailAddress">The email address of the user attempting to log in.</param>
-        /// <param name="passWord">The password of the user attempting to log in.</param>
+        /// <param name="userPassword">The password of the user attempting to log in.</param>
         /// <returns>A UserInfo structure that contains the UserID, first and last name, email address, privileges, average student and
         /// tutor ranks, the total number of reviews submitted as a student and tutor, password, salt value used for hashing, and the bytes
         /// representing the data of their profile picture.</returns>
         public bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword)
         {
             bool success = false;
+
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                UnstuckMEPassword hashedUserPassword = new UnstuckMEPassword();
-                hashedUserPassword = UnstuckMEHashing.GetHashedPassword(userPassword);
+                UnstuckMEPassword hashedUserPassword = UnstuckMEHashing.GetHashedPassword(userPassword);
                 int retVal = db.CreateNewUser(displayFName, displayLName, emailAddress, hashedUserPassword.Password, hashedUserPassword.Salt);
 
                 if (retVal == 1)
@@ -181,14 +177,13 @@ namespace UnstuckMEInterfaces
         /// <returns>The first name of the specified user.</returns>
         public string GetUserDisplayName(int userID)
         {
+            string username = string.Empty;
+
             try
             {
-                string username = string.Empty;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var dbusername = db.GetDisplayNameAndEmail(userID);
-
-                    username = dbusername.First().DisplayFName;
+                    username = db.GetDisplayNameAndEmail(userID).First().DisplayFName;
                 }
 
                 return username;
@@ -196,7 +191,7 @@ namespace UnstuckMEInterfaces
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return string.Empty;
+                return username;
             }
         }
 

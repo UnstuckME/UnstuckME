@@ -6,8 +6,9 @@ namespace UnstuckMEInterfaces
 {
     class Program
     {
-        public static UnstuckMEService _server;
-        static void Main(string[] args)
+        private static UnstuckMEService _server;
+
+        private static void Main()
         {
             try
             {

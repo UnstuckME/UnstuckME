@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
 
@@ -45,15 +37,13 @@ namespace UnstuckMEServerGUI
                     Server.AdminLogout();
                     bool retVal = KillServer();
                     if (!retVal)
-                    {
                         throw new Exception("Failure to Kill Server!");
-                    }
                     else
                     {
                         _channelFactory.Abort();
                         MainWindow window = new MainWindow(ref Admin);
                         window.Show();
-                        this.Close();
+                        Close();
                     }
                 }
                 catch (Exception ex)
@@ -84,7 +74,7 @@ namespace UnstuckMEServerGUI
         {
             DeleteAdmin deleteAdmin = new DeleteAdmin(Admin);
             deleteAdmin.Show();
-            App.Current.MainWindow = deleteAdmin;
+            Application.Current.MainWindow = deleteAdmin;
         }
 
         private void ChangeCredintials_Click(object sender, RoutedEventArgs e)
@@ -92,20 +82,20 @@ namespace UnstuckMEServerGUI
             AdminCredChange adminChange = new AdminCredChange(ref Admin);
             adminChange.ShowDialog();
             //labelEmailAddress.Content = Admin.EmailAddress;
-            App.Current.MainWindow = adminChange;
+            Application.Current.MainWindow = adminChange;
         }
 
         private void CreateAdmin_Click(object sender, RoutedEventArgs e)
         {
             AdminCreation adminCreate = new AdminCreation(ref Admin);
             adminCreate.Show();
-            App.Current.MainWindow = adminCreate;
+            Application.Current.MainWindow = adminCreate;
         }
 
         private void ChangeFirstLastName_Click(object sender, RoutedEventArgs e)
         {
             AdminNameChange nameChange = new AdminNameChange(ref Admin);
-            App.Current.MainWindow = nameChange;
+            Application.Current.MainWindow = nameChange;
             nameChange.ShowDialog();
             //labelName.Content = Admin.FirstName + " " + Admin.LastName;
         }
@@ -129,15 +119,15 @@ namespace UnstuckMEServerGUI
             Server.AdminLogout();
             _channelFactory.Abort();
             ServerLogin loginWindow = new ServerLogin();
-            this.Hide();
+            Hide();
             loginWindow.Show();
-            this.Close();
+            Close();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             _channelFactory.Abort();
-            this.Close();
+            Close();
         }
 
         private void ShutdownAndExit_Click(object sender, RoutedEventArgs e)
@@ -145,12 +135,12 @@ namespace UnstuckMEServerGUI
             MessageBoxResult result = MessageBox.Show("Are you sure you want to shutdown the server?", "Sever Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
             if(result == MessageBoxResult.Yes)
             {
-                this.Hide();
+                Hide();
                 Server.AdminLogMessage("Exit and Shutdown Initiated.");
                 Server.AdminLogout();
                 KillServer();
                 _channelFactory.Abort();
-                this.Close();
+                Close();
             }
         }
 
@@ -188,10 +178,13 @@ namespace UnstuckMEServerGUI
 
             if (selectusersGrid.Visibility == Visibility.Visible)
             {
-                ListBoxItem item = new ListBoxItem();
-                item.Background = Brushes.DimGray;
-                item.Foreground = Brushes.White;
-                item.Content = emailAddress;
+                ListBoxItem item = new ListBoxItem
+                {
+                    Background = Brushes.DimGray,
+                    Foreground = Brushes.White,
+                    Content = emailAddress
+                };
+
                 item.Selected += selectAnyUser_Selected;
                 comboboxOnlineUsers.Items.Add(item);
             }
@@ -268,11 +261,14 @@ namespace UnstuckMEServerGUI
 
             foreach (TextBlock user in StackPanelOnlineUsers.Children)
             {
-                ListBoxItem item = new ListBoxItem();
-                item.Background = Brushes.DimGray;
-                item.Foreground = Brushes.White;
-                item.Height = 25;
-                item.Content = user.Text.Split(' ')[1];
+                ListBoxItem item = new ListBoxItem
+                {
+                    Background = Brushes.DimGray,
+                    Foreground = Brushes.White,
+                    Height = 25,
+                    Content = user.Text.Split(' ')[1]
+                };
+
                 item.Selected += selectAnyUser_Selected;
                 comboboxOnlineUsers.Items.Add(item);
             }
@@ -280,7 +276,7 @@ namespace UnstuckMEServerGUI
 
         private void backgroundcanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ListBoxItem item = selectAllUsers;
+            //ListBoxItem item = selectAllUsers;
             comboboxOnlineUsers.Items.Clear();
             comboboxOnlineUsers.Items.Add(selectAllUsers);
 
@@ -320,9 +316,7 @@ namespace UnstuckMEServerGUI
         private void selectAnyUser_Selected(object sender, RoutedEventArgs e)
         {
             if (comboboxOnlineUsers.SelectedItems.Contains(selectAllUsers))
-            {
                 comboboxOnlineUsers.SelectedItems.Remove(selectAllUsers);
-            }
         }
     }
 }                                             

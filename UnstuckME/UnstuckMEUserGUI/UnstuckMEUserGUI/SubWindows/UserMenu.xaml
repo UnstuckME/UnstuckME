@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="UserMenu" AllowsTransparency="True" SizeToContent="Height" Deactivated="MenuWindow_Deactivated"  Width="400" Height="500" Background="{x:Null}" MaxWidth="400"  WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="UserMenu" AllowsTransparency="True" SizeToContent="Height" Deactivated="MenuWindow_Deactivated" Width="400" Height="500" Background="{x:Null}" MaxWidth="400"  WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Border Background="DimGray" BorderBrush="Gray" BorderThickness="5">
         <Grid>
             <Grid.RowDefinitions>

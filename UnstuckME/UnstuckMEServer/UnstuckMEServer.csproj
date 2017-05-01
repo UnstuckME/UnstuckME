@@ -102,6 +102,7 @@
     <Compile Include="GetInfoForFriend_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Implementations\ChatFunctions.cs" />
     <Compile Include="Class.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>

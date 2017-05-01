@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 
 namespace UnstuckMEUserGUI
 {
@@ -23,6 +16,7 @@ namespace UnstuckMEUserGUI
     public partial class Conversation : UserControl
     {
         public UnstuckMEChat Chat;
+
         public Conversation(UnstuckMEChat inChat)
         {
             InitializeComponent();
@@ -30,7 +24,8 @@ namespace UnstuckMEUserGUI
             var test = from a in inChat.Users
                        where a.UserID != UnstuckME.User.UserID
                        select new { ConversationName = a.UserName };
-            if (test.Count() == 0)
+
+            if (!test.Any())
             {
                 ConversationLabel.Content = "Solo";
                 var uri = new Uri("pack://application:,,,/Resources/AddUser/AddUserRed.png");
@@ -50,7 +45,7 @@ namespace UnstuckMEUserGUI
                 {
                     if (user.UserID != UnstuckME.User.UserID)
                     {
-                        using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                        using (MemoryStream ms = new MemoryStream())
                         {
                             UnstuckME.FileStream.GetProfilePicture(user.UserID).CopyTo(ms);
                             ConversationImage.Source = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
@@ -63,26 +58,12 @@ namespace UnstuckMEUserGUI
 
         private void ConversationUserControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            if(Background == null)
-            {
-                Background = Brushes.Gainsboro;
-            }
-            else
-            {
-                Background = Brushes.LightGray;
-            }
+            Background = Background == null ? Brushes.Gainsboro : Brushes.LightGray;
         }
 
         private void ConversationUserControl_MouseLeave(object sender, MouseEventArgs e)
         {
-            if(Background == Brushes.Gainsboro)
-            {
-                Background = null;
-            }
-            else
-            {
-                Background = Brushes.LightGray;
-            }
+            Background = Background == Brushes.Gainsboro ? null : Brushes.LightGray;
         }
 
         public void ShowConversation()
@@ -100,12 +81,10 @@ namespace UnstuckMEUserGUI
                 if (user.ProfilePicture == null)
                 {
                     if (user.UserID == UnstuckME.User.UserID)
-                    {
                         user.ProfilePicture = UnstuckME.UserProfilePicture;
-                    }
                     else
                     {
-                        using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                        using (MemoryStream ms = new MemoryStream())
                         {
                             UnstuckME.FileStream.GetProfilePicture(user.UserID).CopyTo(ms);
                             user.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
@@ -123,28 +102,16 @@ namespace UnstuckMEUserGUI
             UnstuckME.Pages.ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
 
             foreach (var converstion in ((StackPanel)Parent).Children.OfType<Conversation>())
-            {
-                if(converstion.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
-                {
-                    converstion.Background = Brushes.LightGray;
-                }
-                else
-                {
-                    converstion.Background = null;
-                }
-            }
+                converstion.Background = converstion.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID ? Brushes.LightGray : null;
+
             NewMessageNotification temp = null;
             foreach (NewMessageNotification notification in UnstuckME.MainWindow.NotificationStack.Children.OfType<NewMessageNotification>())
             {
-                if(notification.Message.ChatID == Chat.ChatID)
-                {
+                if (notification.Message.ChatID == Chat.ChatID)
                     temp = notification;
-                }
             }
-            if(temp != null)
-            {
+            if (temp != null)
                 UnstuckME.MainWindow.NotificationStack.Children.Remove(temp);
-            }
         }
     }
 }

@@ -54,7 +54,7 @@ namespace UnstuckMEServerGUI
                                  select u).First();
                     db.DeleteServerAdmin(target.ServerAdminID);
                     MessageBox.Show("Successful!", "Deleted", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    this.Close();
+                    Close();
                 }
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace UnstuckMEServerGUI
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 

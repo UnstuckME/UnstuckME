@@ -68,8 +68,8 @@ namespace UnstuckMEServerGUI
 					startServer.Start();
 
 					ServerRunning window = new ServerRunning(ref Admin);
-					App.Current.MainWindow = window;
-					this.Close();
+                    Application.Current.MainWindow = window;
+                    Close();
 					window.Show();
 				}
 			}
@@ -103,7 +103,7 @@ namespace UnstuckMEServerGUI
 			AdminCredChange adminChange = new AdminCredChange(ref Admin);
 			adminChange.ShowDialog();
 			labelEmailAddress.Content = Admin.EmailAddress;
-			App.Current.MainWindow = adminChange;
+            Application.Current.MainWindow = adminChange;
 
 		}
 
@@ -111,20 +111,20 @@ namespace UnstuckMEServerGUI
 		{
 			AdminCreation adminCreate = new AdminCreation(ref Admin);
 			adminCreate.Show();
-			App.Current.MainWindow = adminCreate;
+            Application.Current.MainWindow = adminCreate;
 		}
 
 		private void DeleteAdmin_Click(object sender, RoutedEventArgs e)
 		{
 			DeleteAdmin deleteAdmin = new DeleteAdmin(Admin);
 			deleteAdmin.Show();
-			App.Current.MainWindow = deleteAdmin;
+            Application.Current.MainWindow = deleteAdmin;
 		}
 
         private void ChangeFirstLastName_Click(object sender, RoutedEventArgs e)
         {
             AdminNameChange nameChange = new AdminNameChange(ref Admin);
-            App.Current.MainWindow = nameChange;
+            Application.Current.MainWindow = nameChange;
             nameChange.ShowDialog();
             labelName.Content = "Name: " + Admin.FirstName + " " + Admin.LastName;
         }

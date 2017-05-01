@@ -10,7 +10,7 @@ namespace UnstuckME_Classes
     public class UnstuckMEStream : Stream
     {
         private byte[] _buffer;     //Either allocated internally or externally
-        private int _origin;        //For user-provided arrays, start at this origin
+        private readonly int _origin;        //For user-provided arrays, start at this origin
         private int _position;      //read/write head
         [ContractPublicPropertyName("Length")]
         private int _length;        //Number of bytes within the stream
@@ -18,16 +18,36 @@ namespace UnstuckME_Classes
         private bool _expandable;   //User-provided buffers aren't expandable
         private bool _writable;     //Can user write to this stream?
         private bool _isOpen;       //Is this stream open or closed?
-        private const int MemStreamMaxLength = Int32.MaxValue;
-        private UserInfo _user;     //The UnstuckME user information used for processing the stream on the server
+        private const int MemStreamMaxLength = int.MaxValue;
+        private int _userID;     //The UnstuckME user information used for processing the stream on the server
+        private string _filename = null;    //The name of the file
+        private string _path = null;        //The full path where the file is located
 
         /// <summary>
-        /// Gets the information of an UnstuckME User
+        /// Gets/sets the User ID of the user who the file belongs to
         /// </summary>
-        public UserInfo User
+        public int UserID
         {
-            get { return _user; }
-            set { _user = value; }
+            get { return _userID; }
+            set { _userID = value; }
+        }
+
+        /// <summary>
+        /// Gets/sets the name of the file
+        /// </summary>
+        public string Filename
+        {
+            get { return _filename; }
+            set { _filename = value; }
+        }
+
+        /// <summary>
+        /// Gets/sets the full path where the file is located locally
+        /// </summary>
+        public string Path
+        {
+            get { return _path; }
+            set { _path = value; }
         }
 
         /// <summary>
@@ -38,7 +58,7 @@ namespace UnstuckME_Classes
         public UnstuckMEStream(int capacity)
         {
             if (capacity < 0)
-                throw new ArgumentOutOfRangeException("capacity", "Argument Out of Range, Negative Capacity");
+                throw new ArgumentOutOfRangeException(nameof(capacity), "Argument Out of Range, Negative Capacity");
 
             Contract.EndContractBlock();
 
@@ -60,8 +80,7 @@ namespace UnstuckME_Classes
         public UnstuckMEStream(byte[] buffer, bool writable)
         {
             if (buffer == null)
-                throw new ArgumentNullException("buffer", "Null Buffer");
-
+                throw new ArgumentNullException(nameof(buffer), "Null Buffer");
             Contract.EndContractBlock();
 
             _buffer = buffer;
@@ -153,7 +172,7 @@ namespace UnstuckME_Classes
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", "Argument Out of Range, Need Nonnegative Number");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Argument Out of Range, Need Nonnegative Number");
 
                 Contract.Ensures(Position == value);
                 Contract.EndContractBlock();
@@ -161,7 +180,7 @@ namespace UnstuckME_Classes
                 if (!_isOpen)
                     throw new ObjectDisposedException("File Closed/Disposed");
                 if (value > MemStreamMaxLength)
-                    throw new ArgumentOutOfRangeException("value", "Argument Out of Range, Need Nonnegative Number");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Argument Out of Range, Need Nonnegative Number");
 
                 _position = _origin + (int)value;
             }
@@ -212,7 +231,7 @@ namespace UnstuckME_Classes
                 //Only update the capacity if the stream is expandable and the value is different than the current capacity.
                 //Special behavior if the stream isn't expandable: we don't throw if value is the same as the current capacity.
                 if (value < Length)
-                    throw new ArgumentOutOfRangeException("value", "Argument Out of Range, Capacity Too Small");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Argument Out of Range, Capacity Too Small");
 
                 Contract.Ensures(_capactiy - _origin == value);
                 Contract.EndContractBlock();
@@ -254,11 +273,11 @@ namespace UnstuckME_Classes
         public override int Read([In, Out]byte[] buffer, int offset, int count)
         {
             if (buffer == null)
-                throw new ArgumentNullException("buffer", "Null Buffer");
+                throw new ArgumentNullException(nameof(buffer), "Null Buffer");
             if (offset < 0)
-                throw new ArgumentOutOfRangeException("offset", "Argument Out of Range, Need Nonnegative Number");
+                throw new ArgumentOutOfRangeException(nameof(offset), "Argument Out of Range, Need Nonnegative Number");
             if (count < 0)
-                throw new ArgumentOutOfRangeException("count", "Arguemnt Out of Range, Need Nonnegative Number");
+                throw new ArgumentOutOfRangeException(nameof(count), "Argument Out of Range, Need Nonnegative Number");
             if (buffer.Length - offset < count)
                 throw new ArgumentException("Offset Length Argument Invalid");
 
@@ -300,7 +319,7 @@ namespace UnstuckME_Classes
             if (!_isOpen)
                 throw new ObjectDisposedException("File Closed/Disposed");
             if (offset > MemStreamMaxLength)
-                throw new ArgumentOutOfRangeException("offset", "Stream Length Out of Range");
+                throw new ArgumentOutOfRangeException(nameof(offset), "Stream Length Out of Range");
 
             switch (origin)
             {
@@ -349,7 +368,7 @@ namespace UnstuckME_Classes
         public override void SetLength(long value)
         {
             if (value < 0 || value > int.MaxValue)
-                throw new ArgumentOutOfRangeException("value", "Argument Out of Range, Stream Length");
+                throw new ArgumentOutOfRangeException(nameof(value), "Argument Out of Range, Stream Length");
 
             Contract.Ensures(_length - _origin == value);
             Contract.EndContractBlock();
@@ -360,7 +379,7 @@ namespace UnstuckME_Classes
             Contract.Assert(MemStreamMaxLength == int.MaxValue);    //Origin wasn't publicly exposed above. Check parameter validation logic in this method of this fails
 
             if (value > int.MaxValue - _origin)
-                throw new ArgumentOutOfRangeException("value", "Argument Out of Range, Stream Length");
+                throw new ArgumentOutOfRangeException(nameof(value), "Argument Out of Range, Stream Length");
 
             int newLength = _origin + (int)value;
             bool allocatedNewArray = EnsureCapacity(newLength);
@@ -380,11 +399,11 @@ namespace UnstuckME_Classes
         public override void Write(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
-                throw new ArgumentNullException("buffer", "Null Buffer");
+                throw new ArgumentNullException(nameof(buffer), "Null Buffer");
             if (offset < 0)
-                throw new ArgumentOutOfRangeException("offset", "Argument Out of Range, Need Nonnegative Number");
+                throw new ArgumentOutOfRangeException(nameof(offset), "Argument Out of Range, Need Nonnegative Number");
             if (count < 0)
-                throw new ArgumentOutOfRangeException("offset", "Argument Out of Range, Need Nonnegative Number");
+                throw new ArgumentOutOfRangeException(nameof(offset), "Argument Out of Range, Need Nonnegative Number");
             if (buffer.Length - offset < count)
                 throw new ArgumentException("Invalid Offset Length");
 
@@ -412,7 +431,7 @@ namespace UnstuckME_Classes
 
                 _length = i;
             }
-            if ((count <= 8) && (buffer != _buffer))
+            if (count <= 8 && buffer != _buffer)
             {
                 int byteCount = count;
                 while (--byteCount >= 0)

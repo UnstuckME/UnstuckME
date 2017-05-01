@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 
 namespace UnstuckMEUserGUI
 {
@@ -23,6 +15,7 @@ namespace UnstuckMEUserGUI
     {
         public UnstuckMEChat CurrentChat;
         public List<UnstuckMEChatUser> ConversationContactList;
+
         public AddUserToConversationWindow(UnstuckMEChat inCurrentChat)
         {
             InitializeComponent();
@@ -30,41 +23,39 @@ namespace UnstuckMEUserGUI
             CurrentChat = inCurrentChat;
             ConversationContactList = UnstuckME.FriendsList.ToList();
 
-            List<UnstuckMEChatUser> AlreadyInChatList = new List<UnstuckMEChatUser>();
+            List<UnstuckMEChatUser> alreadyInChatList = new List<UnstuckMEChatUser>();
             foreach (UnstuckMEChatUser friend in ConversationContactList)
             {
                 foreach (UnstuckMEChatUser user in CurrentChat.Users)
                 {
                     if(friend.UserID == user.UserID)
-                    {
-                        AlreadyInChatList.Add(friend);
-                    }
+                        alreadyInChatList.Add(friend);
                 }
             }
 
-            foreach (UnstuckMEChatUser alreadyInChatUser in AlreadyInChatList)
-            {
+            foreach (UnstuckMEChatUser alreadyInChatUser in alreadyInChatList)
                 ConversationContactList.Remove(alreadyInChatUser);
-            }
 
             foreach (UnstuckMEChatUser friend in ConversationContactList)
-            {
                 StackPanelFriendsList.Children.Add(new ContactAddToConversation(friend));
-            }
         }
 
         private void MoveBottomRightEdgeOfWindowToMousePosition()
         {
-            var transform = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
-            var mouse = transform.Transform(GetMousePosition());
-            Left = mouse.X - this.ActualWidth;
-            Top = mouse.Y;
+            PresentationSource presentationSource = PresentationSource.FromVisual(this);
+            if (presentationSource?.CompositionTarget != null)
+            {
+                var transform = presentationSource.CompositionTarget.TransformFromDevice;
+                var mouse = transform.Transform(GetMousePosition());
+                Left = mouse.X - ActualWidth;
+                Top = mouse.Y;
+            }
         }
 
-        public System.Windows.Point GetMousePosition()
+        public Point GetMousePosition()
         {
             System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
-            return new System.Windows.Point(point.X, point.Y);
+            return new Point(point.X, point.Y);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -74,7 +65,7 @@ namespace UnstuckMEUserGUI
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void ButtonAddUser_MouseEnter(object sender, MouseEventArgs e)
@@ -93,9 +84,7 @@ namespace UnstuckMEUserGUI
             try
             {
                 if (TextBoxManualSearch.Text == UnstuckME.User.EmailAddress)
-                {
                     throw new Exception("Cannot Add Yourself");
-                }
 
                 if (UnstuckME.Server.IsValidUser(TextBoxManualSearch.Text) && TextBoxManualSearch.Text.Length > 6)
                 {
@@ -108,19 +97,19 @@ namespace UnstuckMEUserGUI
                     }
 
                     UnstuckME.Server.InsertUserIntoChat(userID, CurrentChat.ChatID);
-                    UnstuckMEMessage temp = new UnstuckMEMessage();
-                    temp.ChatID = CurrentChat.ChatID;
-                    temp.FilePath = string.Empty;
-                    temp.Message = "A new member has joined the conversation!";
-                    temp.MessageID = 0;
-                    temp.SenderID = UnstuckME.User.UserID;
-                    temp.Username = UnstuckME.User.FirstName;
-                    temp.UsersInConvo = new List<int>();
+                    UnstuckMEMessage temp = new UnstuckMEMessage
+                    {
+                        ChatID = CurrentChat.ChatID,
+                        FilePath = string.Empty,
+                        Message = "A new member has joined the conversation!",
+                        MessageID = 0,
+                        SenderID = UnstuckME.User.UserID,
+                        Username = UnstuckME.User.FirstName,
+                        UsersInConvo = new List<int>()
+                    };
 
                     foreach (UnstuckMEChatUser user in CurrentChat.Users)
-                    {
                         temp.UsersInConvo.Add(user.UserID);
-                    }
 
                     temp.MessageID = UnstuckME.Server.SendMessage(temp);
                     UnstuckME.Pages.ChatPage.AddMessage(temp);

@@ -55,16 +55,6 @@ namespace UnstuckMEUserGUI
 		}
 
 		/// <summary>
-		/// Updates a user's conversation if they are online and another user sends them a file.
-		/// </summary>
-		/// <param name="message">The message being sent to the user.</param>
-		/// <param name="file">The file being sent to the user.</param>
-		//public void GetFile(UnstuckMEMessage message, UnstuckMEFile file)
-		//{
-		//	Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatFile(message, file);
-		//}
-
-		/// <summary>
 		/// Removes a sticker from any online, qualified user's GUI.
 		/// </summary>
 		/// <param name="stickerID">The sticker to be removed.</param>

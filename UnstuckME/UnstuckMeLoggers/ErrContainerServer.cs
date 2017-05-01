@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnstuckMeLoggers
 {
@@ -38,9 +34,8 @@ namespace UnstuckMeLoggers
         {
             string temp = i_ErrTypeStartMark + Environment.NewLine + "\t" + "<ErrMsg=" + i_ErrorMsg + "/>";
             if (i_AdditionalInfo != null)
-            {
                 temp = temp + Environment.NewLine + "<AdditionalInfo=" + i_AdditionalInfo + "/>";
-            }
+
             temp = temp + Environment.NewLine + "\t" + "<ErrTime=" + i_ErrorTime + "/>" + Environment.NewLine + i_ErrTypeEndMark;
             return temp;
         }

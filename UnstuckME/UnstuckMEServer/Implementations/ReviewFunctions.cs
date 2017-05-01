@@ -28,7 +28,7 @@ namespace UnstuckMEInterfaces
                         ReviewID = review.ReviewID,
                         StickerID = review.StickerID,
                         ReviewerID = review.ReviewerID,
-                        StarRanking = (float)review.StarRanking,
+                        StarRanking = review.StarRanking.HasValue ? (float)review.StarRanking : 0F,
                         Description = review.Description
                     };
 
@@ -59,7 +59,7 @@ namespace UnstuckMEInterfaces
                         ReviewID = review.ReviewID,
                         StickerID = review.StickerID,
                         ReviewerID = review.ReviewerID,
-                        StarRanking = (review.StarRanking.HasValue) ? (float)review.StarRanking.Value : 0,
+                        StarRanking = review.StarRanking.HasValue ? (float)review.StarRanking.Value : 0,
                         Description = review.Description
                     };
 
@@ -83,24 +83,26 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if the review was created successfully, 1 if unsuccessful.</returns>
         public int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent)
         {
+            int? retVal = -1;
+
             try
             {
-                Nullable<int> retVal = 0;
-                Nullable<int> reviewedID = 0;
-
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.CreateReview(stickerID, reviewerID, starRanking, description).First();
 
                     if (retVal.HasValue && retVal.Value != -1)
                     {
-                        if (isAStudent)// the person being reviewed is a student
+                        int? reviewedID = 0;
+
+                        if (isAStudent) // the person being reviewed is a student
                         {
                             reviewedID = (from I in db.Stickers
                                           where I.TutorID == reviewerID
                                           select I.StudentID).First();
 
-                            db.AddStudentStarRankToUser(reviewedID.Value, starRanking);
+                            if (reviewedID.HasValue)
+                                db.AddStudentStarRankToUser(reviewedID.Value, starRanking);
                         }
                         else // the person being reviewed is a tutor
                         {
@@ -108,43 +110,49 @@ namespace UnstuckMEInterfaces
                                           where I.StudentID == reviewerID
                                           select I.TutorID).First();
 
-                            db.AddTutorStarRankToUser(reviewedID.Value, starRanking);
+                            if (reviewedID.HasValue)
+                                db.AddTutorStarRankToUser(reviewedID.Value, starRanking);
                         }
 
-                        var Reviews = from r in db.Reviews
+                        var reviews = from r in db.Reviews
                                       where r.StickerID == stickerID
                                       select r.StickerID;
 
-                        if (Reviews.Count() <= 1)
+                        if (reviews.Count() <= 1)
                         {
                             bool found = false;
                             foreach (var client in _connectedClients)
                             {
-                                if (client.Key == reviewedID.Value)
+                                if (reviewedID.HasValue && client.Key == reviewedID.Value)
                                 {
                                     if (isAStudent)
-                                        client.Value.connection.CreateReviewAsTutor(stickerID);
+                                        client.Value.Connection.CreateReviewAsTutor(stickerID);
                                     else
-                                        client.Value.connection.CreateReviewAsStudent(stickerID);
+                                        client.Value.Connection.CreateReviewAsStudent(stickerID);
 
-                                    found = true;   //other sticker member is online
+                                    found = true; //other sticker member is online
                                     break;
                                 }
                             }
 
-                            if (!found)     //other sticker member is not online
-                                _ReviewList.Enqueue(stickerID);     //add sticker to queue so they can submit a review when they log on next
+                            if (!found) //other sticker member is not online
+                            {
+                                _reviewList.Enqueue(
+                                    stickerID); //add sticker to queue so they can submit a review when they log on next
+                            }
                         }
                         else
-                            db.MarkStickerAsResolved(stickerID);    //all reviews have been submitted, mark as resolved
+                            db.MarkStickerAsResolved(stickerID); //all reviews have been submitted, mark as resolved
                     }
+                    else
+                        retVal = -1;
                 }
 
                 return retVal.Value;
             }
             catch (Exception)
             {
-                return -1; //If Failure to create review
+                return retVal.Value; //If Failure to create review
             }
         }
 
@@ -158,27 +166,27 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                if (_ReviewList.Count != 0)
+                if (_reviewList.Count != 0)
                 {
-                    foreach (int Review_StickerID in _ReviewList)
+                    foreach (int reviewSticker in _reviewList)
                     {
-                        var reviews = (from s in db.Stickers
-                                       join r in db.Reviews on s.StickerID equals r.StickerID
-                                       where s.StickerID == Review_StickerID
-                                       select new { s.StickerID, s.TutorID, s.StudentID, r.ReviewerID });
+                        var reviews = from s in db.Stickers
+                                      join r in db.Reviews on s.StickerID equals r.StickerID
+                                      where s.StickerID == reviewSticker
+                                      select new { s.StickerID, s.TutorID, s.StudentID, r.ReviewerID };
 
                         foreach (var rev in reviews)
                         {
                             if (userID == rev.TutorID && userID != rev.ReviewerID)
                             {
-                                int temp = rev.StickerID;
-                                _ReviewList.TryDequeue(out temp);
+                                int temp;
+                                _reviewList.TryDequeue(out temp);
                                 return new KeyValuePair<int, bool>(rev.StickerID, false);
                             }
-                            else if (userID == rev.StudentID && userID != rev.ReviewerID)
+                            if (userID == rev.StudentID && userID != rev.ReviewerID)
                             {
-                                int temp = rev.StickerID;
-                                _ReviewList.TryDequeue(out temp);
+                                int temp;
+                                _reviewList.TryDequeue(out temp);
                                 return new KeyValuePair<int, bool>(rev.StickerID, true);
                             }
                         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnstuckMEServer;
 using UnstuckME_Classes;
 
@@ -31,16 +32,45 @@ namespace UnstuckMEInterfaces
         }
 
         /// <summary>
-        /// Removes a user from their contacts.
+        /// Gets the info of a user who is friends with the specified user.
         /// </summary>
-        /// <param name="userID">The unique identifier of the callee.</param>
-        /// <param name="fileID">The unique identifier of the user to removed from contacts.</param>
-        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public int DeleteFriend(int userID, int friendID)
+        /// <param name="userID">The unique identifier of the user to get the info for.</param>
+        /// <returns>An UnstuckMEChatUser with information on a specific user.</returns>
+        public UnstuckMEChatUser GetFriendInfo(int userID)
         {
             try
             {
-                int retVal = -1;
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    var friend = db.GetInfoForFriend(userID).Select(u => new UnstuckMEChatUser
+                    {
+                        UserID = userID,
+                        UserName = u.DisplayFName,
+                        EmailAddress = u.EmailAddress
+                    }).First();
+
+                    return friend;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Removes a user from their contacts.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the callee.</param>
+        /// <param name="friendID">The unique identifier of the user to removed from contacts.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        public int DeleteFriend(int userID, int friendID)
+        {
+            int retVal = -1;
+
+            try
+            {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.DeleteFriend(userID, friendID);
@@ -50,7 +80,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to remove friend
+                return retVal; //If Failure to remove friend
             }
         }
 
@@ -63,7 +93,7 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                List<UnstuckMEChatUser> FriendsList = new List<UnstuckMEChatUser>();
+                List<UnstuckMEChatUser> friendsList = new List<UnstuckMEChatUser>();
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var dbFriends = db.GetUserFriends(userID);
@@ -76,10 +106,11 @@ namespace UnstuckMEInterfaces
                             UserName = friend.DisplayFName,
                             UserID = friend.FriendUserID
                         };
-                        FriendsList.Add(temp);
+
+                        friendsList.Add(temp);
                     }
                 }
-                return FriendsList;
+                return friendsList;
             }
             catch (Exception ex)
             {

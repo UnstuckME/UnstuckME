@@ -1,23 +1,12 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
 using UnstuckMEUserGUI.SubWindows;
 
@@ -28,42 +17,41 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UserProfilePage : Page
     {
-        private static StarRanking studentRanking;
-        private static StarRanking tutorRanking;
+        private static StarRanking _studentRanking;
+        private static StarRanking _tutorRanking;
 
         public UserProfilePage()
         {
             InitializeComponent();
 
-            studentRanking = new StarRanking(StarRanking.BoxColor.Gray);
-            tutorRanking = new StarRanking(StarRanking.BoxColor.Gray);
-            RatingsStack.Children.Add(studentRanking);
-            RatingsStack.Children.Add(tutorRanking);
+            _studentRanking = new StarRanking(StarRanking.BoxColor.Gray);
+            _tutorRanking = new StarRanking(StarRanking.BoxColor.Gray);
+            RatingsStack.Children.Add(_studentRanking);
+            RatingsStack.Children.Add(_tutorRanking);
 
             TextBoxNewFirstName.Text = UnstuckME.User.FirstName;
             TextBoxNewLastName.Text = UnstuckME.User.LastName;
-
         }
         public void RepopulateClasses()
         {
             BottomLeftStack.Children.Clear();
             List<UserClass> classes = UnstuckME.Server.GetUserClasses(UnstuckME.User.UserID);
-            foreach (UserClass C in classes)
+            foreach (UserClass c in classes)
             {
-                ClassDisplay usersClass = new ClassDisplay(C);
+                ClassDisplay usersClass = new ClassDisplay(c);
                 BottomLeftStack.Children.Add(usersClass);
             }
         }
 
         public void SetStudentRating(float inRating)
         {
-            studentRanking.SetRatingText("Avg Student Rating: (" + Math.Round(inRating, 2) + ")");
-            studentRanking.SetRatingValue(inRating);
+            _studentRanking.SetRatingText("Avg Student Rating: (" + Math.Round(inRating, 2) + ")");
+            _studentRanking.SetRatingValue(inRating);
         }
         public void SetTutorRating(float inRating)
         {
-            tutorRanking.SetRatingText("Avg Tutor Rating: (" + Math.Round(inRating, 2) + ")");
-            tutorRanking.SetRatingValue(inRating);
+            _tutorRanking.SetRatingText("Avg Tutor Rating: (" + Math.Round(inRating, 2) + ")");
+            _tutorRanking.SetRatingValue(inRating);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -72,12 +60,12 @@ namespace UnstuckMEUserGUI
             w.Show();
         }
 
-        private void ButtonEditProfile_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ButtonEditProfile_MouseEnter(object sender, MouseEventArgs e)
         {
             ButtonEditProfile.Background = Brushes.SteelBlue;
         }
 
-        private void ButtonEditProfile_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ButtonEditProfile_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonEditProfile.Background = UnstuckME.Blue;
         }
@@ -90,12 +78,12 @@ namespace UnstuckMEUserGUI
             GridEditProfile.IsEnabled = true;
         }
 
-        private void ButtonBrowseProfilePicture_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ButtonBrowseProfilePicture_MouseEnter(object sender, MouseEventArgs e)
         {
             ButtonBrowseProfilePicture.Background = UnstuckME.Blue;
         }
 
-        private void ButtonBrowseProfilePicture_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ButtonBrowseProfilePicture_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonBrowseProfilePicture.Background = Brushes.SteelBlue;
         }
@@ -104,7 +92,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                Microsoft.Win32.OpenFileDialog file_browser = new Microsoft.Win32.OpenFileDialog()
+                Microsoft.Win32.OpenFileDialog fileBrowser = new Microsoft.Win32.OpenFileDialog()
                 {
                     AddExtension = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
@@ -116,10 +104,11 @@ namespace UnstuckMEUserGUI
                     Title = "Open Image"
                 };
 
-                if (file_browser.ShowDialog().Value)
+                bool? open = fileBrowser.ShowDialog();
+
+                if (open.HasValue && open.Value)
 				{
-					Stream file = file_browser.OpenFile();
-					byte[] byte_array = null;
+					Stream file = fileBrowser.OpenFile();
 
 					if (file.Length > 26214400)
 						throw new Exception("The image you have selected exceeds the 25 MB limit. Please select a different file that is within the size limit.");
@@ -130,7 +119,6 @@ namespace UnstuckMEUserGUI
                     using (MemoryStream ms = new MemoryStream())
                     {
                         thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        byte_array = ms.ToArray();
                         ms.Seek(0, SeekOrigin.Begin);
 
                         BitmapImage ix = new BitmapImage();
@@ -150,9 +138,9 @@ namespace UnstuckMEUserGUI
             {
 				UnstuckMEMessageBox message = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Image Size Error", UnstuckMEBoxImage.Warning);
 				message.ShowDialog();
-                string unstuckME = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
-                Process.Start(unstuckME);
-                System.Windows.Application.Current.Shutdown();
+                //string unstuckME = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
+                //Process.Start(unstuckME);
+                //Application.Current.Shutdown();
             }
 		}
 
@@ -169,7 +157,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && TextBoxNewFirstName.Text != "" && TextBoxNewFirstName.Text != null)
+            if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && !string.IsNullOrEmpty(TextBoxNewFirstName.Text))
             {
                 try
                 {
@@ -182,7 +170,7 @@ namespace UnstuckMEUserGUI
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
                 }
             }
-            if (TextBoxNewLastName.Text != UnstuckME.User.LastName && TextBoxNewLastName.Text != "" && TextBoxNewLastName.Text != null)
+            if (TextBoxNewLastName.Text != UnstuckME.User.LastName && !string.IsNullOrEmpty(TextBoxNewLastName.Text))
             {
                 try
                 {
@@ -195,7 +183,7 @@ namespace UnstuckMEUserGUI
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName");
                 }
             }
-            if (PasswordBoxNewPassword.Password != null && PasswordBoxNewPassword.Password != "" && PasswordBoxConfirm.Password != null && PasswordBoxConfirm.Password != "")
+            if (!string.IsNullOrEmpty(PasswordBoxNewPassword.Password) && !string.IsNullOrEmpty(PasswordBoxConfirm.Password))
             {
                 if (PasswordBoxNewPassword.Password == PasswordBoxConfirm.Password)
                 {
@@ -219,22 +207,23 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    byte[] byte_array = null;
                     var bitmapsource = ImageEditProfilePicture.Source as BitmapImage;
                     JpegBitmapEncoder encoder = new JpegBitmapEncoder();
 
                     if (bitmapsource != null)
                     {
                         encoder.Frames.Add(BitmapFrame.Create(bitmapsource));
+                        byte[] byteArray = null;
+
                         using (MemoryStream ms = new MemoryStream())
                         {
                             encoder.Save(ms);
-                            byte_array = ms.ToArray();
+                            byteArray = ms.ToArray();
                         }
 
-                        using (UnstuckMEStream stream = new UnstuckMEStream(byte_array, true))
+                        using (UnstuckMEStream stream = new UnstuckMEStream(byteArray, true))
                         {
-                            stream.User = UnstuckME.User;
+                            stream.UserID = UnstuckME.User.UserID;
                             UnstuckME.FileStream.SetProfilePicture(stream); //change picture on database/server
                         }
 
@@ -267,26 +256,26 @@ namespace UnstuckMEUserGUI
             UserInfo temp = UnstuckME.Server.GetUserInfo(UnstuckME.User.UserID, UnstuckME.User.EmailAddress);
             UnstuckME.User.AverageStudentRank = temp.AverageStudentRank;
             UnstuckME.User.AverageTutorRank = temp.AverageTutorRank;
-            studentRanking.SetRatingValue(temp.AverageStudentRank);
-            tutorRanking.SetRatingValue(temp.AverageTutorRank);
+            _studentRanking.SetRatingValue(temp.AverageStudentRank);
+            _tutorRanking.SetRatingValue(temp.AverageTutorRank);
         }
 
-        private void TextBoxNewFirstName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void TextBoxNewFirstName_MouseLeave(object sender, MouseEventArgs e)
         {
 
         }
 
-        private void TextBoxNewLastName_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void TextBoxNewLastName_MouseLeave(object sender, MouseEventArgs e)
         {
 
         }
 
-        private void PasswordBoxNewPassword_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void PasswordBoxNewPassword_MouseLeave(object sender, MouseEventArgs e)
         {
 
         }
 
-        private void PasswordBoxConfirm_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void PasswordBoxConfirm_MouseLeave(object sender, MouseEventArgs e)
         {
 
         }

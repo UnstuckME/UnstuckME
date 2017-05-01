@@ -11,7 +11,7 @@ namespace UnstuckMEInterfaces
         /// <summary>
         /// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
         /// </summary>
-        /// <param name="userID">The unique identifier of the user who has accepted the sticker.</param>
+        /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
         /// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
         public void AcceptSticker(int tutorID, int stickerID)
         {
@@ -21,13 +21,13 @@ namespace UnstuckMEInterfaces
                 {
                     db.UpdateTutorIDByTutorIDAndStickerID(tutorID, stickerID);
                     DateTime time;
-                    _ActiveStickers.TryRemove(stickerID, out time);
+                    _activeStickers.TryRemove(stickerID, out time);
                     var tutors = db.GetUsersThatCanTutorASticker(stickerID);
 
                     foreach (var client in _connectedClients)
                     {
                         if (client.Key != tutorID && tutors.Contains(client.Key))
-                            client.Value.connection.RemoveGUISticker(stickerID);
+                            client.Value.Connection.RemoveGUISticker(stickerID);
                     }
                 }
             }
@@ -45,25 +45,29 @@ namespace UnstuckMEInterfaces
         /// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
         /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
         /// <returns>A list of stickers that have tutors and marked as resolved.</returns>
-        public List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null)
+        public List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var stickers = db.GetResolvedStickers(minstarrank, organizationID, userID, classID);
-
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                foreach (var sticker in stickers)
+
+                using (var stickers = db.GetResolvedStickers(minstarrank, organizationID, userID, classID))
                 {
-                    UnstuckMESticker usSticker = new UnstuckMESticker()
+                    foreach (var sticker in stickers)
                     {
-                        StickerID = sticker.StickerID,
-                        ClassID = sticker.ClassID,
-                        StudentID = sticker.StudentID,
-                        ProblemDescription = sticker.ProblemDescription,
-                        MinimumStarRanking = (float)sticker.MinimumStarRanking,
-                        SubmitTime = sticker.SubmitTime,
-                        Timeout = sticker.Timeout// - DateTime.Now).TotalSeconds;
-                    };
+                        UnstuckMESticker usSticker = new UnstuckMESticker()
+                        {
+                            StickerID = sticker.StickerID,
+                            ClassID = sticker.ClassID,
+                            StudentID = sticker.StudentID,
+                            ProblemDescription = sticker.ProblemDescription,
+                            MinimumStarRanking = sticker.MinimumStarRanking.HasValue ? (float)sticker.MinimumStarRanking : 0,
+                            SubmitTime = sticker.SubmitTime,
+                            Timeout = sticker.Timeout
+                        };
+
+                        stickerList.Add(usSticker);
+                    }
                 }
 
                 return stickerList;
@@ -78,25 +82,29 @@ namespace UnstuckMEInterfaces
         /// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
         /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
         /// <returns>A list of stickers that have not been accepted by a tutor and surpassed the timeout date.</returns>
-        public List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null)
+        public List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var stickers = db.GetTimedOutStickers(minstarrank, organizationID, userID, classID);
-
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                foreach (var sticker in stickers)
+
+                using (var stickers = db.GetTimedOutStickers(minstarrank, organizationID, userID, classID))
                 {
-                    UnstuckMESticker usSticker = new UnstuckMESticker()
+                    foreach (var sticker in stickers)
                     {
-                        StickerID = sticker.StickerID,
-                        ClassID = sticker.ClassID,
-                        StudentID = sticker.StudentID,
-                        ProblemDescription = sticker.ProblemDescription,
-                        MinimumStarRanking = (float)sticker.MinimumStarRanking,
-                        SubmitTime = sticker.SubmitTime,
-                        Timeout = sticker.Timeout// - DateTime.Now).TotalSeconds;
-                    };
+                        UnstuckMESticker usSticker = new UnstuckMESticker()
+                        {
+                            StickerID = sticker.StickerID,
+                            ClassID = sticker.ClassID,
+                            StudentID = sticker.StudentID,
+                            ProblemDescription = sticker.ProblemDescription,
+                            MinimumStarRanking = sticker.MinimumStarRanking.HasValue ? (float)sticker.MinimumStarRanking : 0,
+                            SubmitTime = sticker.SubmitTime,
+                            Timeout = sticker.Timeout
+                        };
+
+                        stickerList.Add(usSticker);
+                    }
                 }
 
                 return stickerList;
@@ -111,27 +119,30 @@ namespace UnstuckMEInterfaces
         /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
         /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
         /// <returns>A list of stickers that have been submitted by a specific user that matches the filtering criteria.</returns>
-        public List<UnstuckMESticker> GetUserSubmittedStickers(int userID, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> classID = null)
+        public List<UnstuckMESticker> GetUserSubmittedStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var userStickers = db.GetUserSubmittedStickers(userID, organizationID, minstarrank, classID);
-
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                foreach (var sticker in userStickers)
+
+                using (var userStickers = db.GetUserSubmittedStickers(userID, organizationID, minstarrank, classID))
                 {
-                    UnstuckMESticker usSticker = new UnstuckMESticker()
+                    foreach (var sticker in userStickers)
                     {
-                        StickerID = sticker.StickerID,
-                        ProblemDescription = sticker.ProblemDescription,
-                        ClassID = sticker.ClassID,
-                        StudentID = sticker.StudentID,
-                        TutorID = sticker.TutorID ?? 1,
-                        MinimumStarRanking = (sticker.MinimumStarRanking.HasValue) ? (float)sticker.MinimumStarRanking : 0,
-                        SubmitTime = sticker.SubmitTime,
-                        Timeout = sticker.Timeout// - DateTime.Now).TotalSeconds;
-                    };
-                    stickerList.Add(usSticker);
+                        UnstuckMESticker usSticker = new UnstuckMESticker()
+                        {
+                            StickerID = sticker.StickerID,
+                            ProblemDescription = sticker.ProblemDescription,
+                            ClassID = sticker.ClassID,
+                            StudentID = sticker.StudentID,
+                            TutorID = sticker.TutorID ?? 1,
+                            MinimumStarRanking = sticker.MinimumStarRanking.HasValue ? (float)sticker.MinimumStarRanking : 0,
+                            SubmitTime = sticker.SubmitTime,
+                            Timeout = sticker.Timeout
+                        };
+
+                        stickerList.Add(usSticker);
+                    }
                 }
 
                 return stickerList;
@@ -146,27 +157,30 @@ namespace UnstuckMEInterfaces
         /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
         /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
         /// <returns>A list of stickers that a specific user has tutored that matches the filtering criteria.</returns>
-        public List<UnstuckMESticker> GetUserTutoredStickers(int userID, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> classID = null)
+        public List<UnstuckMESticker> GetUserTutoredStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var userStickers = db.GetUserTutoredStickers(userID, organizationID, minstarrank, classID);
-
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
-                foreach (var sticker in userStickers)
+
+                using (var userStickers = db.GetUserTutoredStickers(userID, organizationID, minstarrank, classID))
                 {
-                    UnstuckMESticker usSticker = new UnstuckMESticker()
+                    foreach (var sticker in userStickers)
                     {
-                        StickerID = sticker.StickerID,
-                        ProblemDescription = sticker.ProblemDescription,
-                        ClassID = sticker.ClassID,
-                        StudentID = sticker.StudentID,
-                        TutorID = sticker.TutorID ?? 1,
-                        MinimumStarRanking = (sticker.MinimumStarRanking.HasValue) ? (float)sticker.MinimumStarRanking : 0,
-                        SubmitTime = sticker.SubmitTime,
-                        Timeout = sticker.Timeout// - DateTime.Now).TotalSeconds;
-                    };
-                    stickerList.Add(usSticker);
+                        UnstuckMESticker usSticker = new UnstuckMESticker()
+                        {
+                            StickerID = sticker.StickerID,
+                            ProblemDescription = sticker.ProblemDescription,
+                            ClassID = sticker.ClassID,
+                            StudentID = sticker.StudentID,
+                            TutorID = sticker.TutorID ?? 1,
+                            MinimumStarRanking = sticker.MinimumStarRanking.HasValue ? (float)sticker.MinimumStarRanking : 0,
+                            SubmitTime = sticker.SubmitTime,
+                            Timeout = sticker.Timeout
+                        };
+
+                        stickerList.Add(usSticker);
+                    }
                 }
 
                 return stickerList;
@@ -182,31 +196,31 @@ namespace UnstuckMEInterfaces
         /// <param name="userID">The unique identifier of the account to filter. This paramter is optional, with a default value of null.</param>
         /// <param name="classID">the unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
         /// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
-        public List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null)
+        public List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, int? organizationID = null, float minstarrank = 0, int? userID = null, int? classID = null)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var userStickers = db.GetActiveStickers(caller, organizationID, minstarrank, userID, classID);
-
                 List<UnstuckMEAvailableSticker> stickerList = new List<UnstuckMEAvailableSticker>();
 
-                foreach (var sticker in userStickers)
+                using (var userStickers = db.GetActiveStickers(caller, organizationID, minstarrank, userID, classID))
                 {
-                    UnstuckMEAvailableSticker usSticker = new UnstuckMEAvailableSticker()
+                    foreach (var sticker in userStickers)
                     {
-                        StickerID = (int)sticker.StickerID,
-                        ProblemDescription = sticker.ProblemDescription,
-                        ClassID = (int)sticker.ClassID,
-                        CourseCode = sticker.CourseCode,
-                        CourseName = sticker.CourseName,
-                        CourseNumber = (short)sticker.CourseNumber,
-                        StudentID = (int)sticker.StudentID,
-                        //TutorID = sticker.TutorID ?? new int?(),
-                        StudentRanking = (sticker.MinimumStarRanking.HasValue) ? (double)sticker.MinimumStarRanking : 0,
-                        //SubmitTime = (DateTime)sticker.SubmitTime,
-                        Timeout = (DateTime)sticker.Timeout
-                    };
-                    stickerList.Add(usSticker);
+                        UnstuckMEAvailableSticker usSticker = new UnstuckMEAvailableSticker()
+                        {
+                            StickerID = sticker.StickerID ?? 0,
+                            ProblemDescription = sticker.ProblemDescription,
+                            ClassID = sticker.ClassID ?? 0,
+                            CourseCode = sticker.CourseCode,
+                            CourseName = sticker.CourseName,
+                            CourseNumber = sticker.CourseNumber ?? 0,
+                            StudentID = sticker.StudentID ?? 0,
+                            StudentRanking = sticker.MinimumStarRanking ?? 0,
+                            Timeout = sticker.Timeout ?? DateTime.MinValue
+                        };
+
+                        stickerList.Add(usSticker);
+                    }
                 }
 
                 return stickerList;
@@ -220,33 +234,39 @@ namespace UnstuckMEInterfaces
         /// <returns>The new sticker's unique identifier if it was submitted successfully, -1 if not.</returns>
         public int SubmitSticker(UnstuckMEBigSticker newSticker)
         {
+            int retstickerID = -1;
+
             try
             {
-                int retstickerID = 0;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     var stickerID = db.CreateSticker(newSticker.ProblemDescription, newSticker.Class.ClassID, newSticker.StudentID, newSticker.MinimumStarRanking, newSticker.TimeoutInt).First();
 
-                    if (stickerID.Value == 0)
-                        throw new Exception("Create Sticker Failed, Returned sticker ID = 0");
+                    if (stickerID.HasValue)
+                    {
+                        if (stickerID.Value == 0)
+                            throw new Exception("Create Sticker Failed, Returned sticker ID = 0");
 
-                    retstickerID = stickerID.Value;
+                        retstickerID = stickerID.Value;
+                    }
 
                     if (newSticker.AttachedOrganizations.Count != 0)
                     {
                         foreach (int orgID in newSticker.AttachedOrganizations)
                             db.AddOrgToSticker(retstickerID, orgID);
                     }
+
                     newSticker.StickerID = retstickerID;
-                    _StickerList.Enqueue(newSticker);
-                    _ActiveStickers.TryAdd(newSticker.StickerID, newSticker.Timeout);
+                    _stickerList.Enqueue(newSticker);
+                    _activeStickers.TryAdd(newSticker.StickerID, newSticker.Timeout);
                 }
+
                 return retstickerID;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Sticker Submit Error: " + ex.Message);
-                return -1;
+                return retstickerID;
             }
         }
 
@@ -275,27 +295,29 @@ namespace UnstuckMEInterfaces
             try
             {
                 List<UnstuckMEAvailableSticker> stickerList = new List<UnstuckMEAvailableSticker>();
+
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var dbStickers = db.InitialStickerPull(userID);
-
-                    foreach (var sticker in dbStickers)
+                    using (var dbStickers = db.InitialStickerPull(userID))
                     {
-                        UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker()
+                        foreach (var sticker in dbStickers)
                         {
-                            ClassID = sticker.ClassID.Value,
-                            CourseCode = sticker.CourseCode,
-                            CourseName = sticker.CourseName,
-                            CourseNumber = sticker.CourseNumber.Value,
-                            ProblemDescription = sticker.ProblemDescription,
-                            StickerID = sticker.StickerID.Value,
-                            StudentID = sticker.StudentID.Value,
-                            StudentRanking = sticker.StudentRanking.Value,
-                            Timeout = sticker.Timeout.Value
-                        };
-                        stickerList.Add(temp);
-                    }
+                            UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker()
+                            {
+                                ClassID = sticker.ClassID ?? 0,
+                                CourseCode = sticker.CourseCode,
+                                CourseName = sticker.CourseName,
+                                CourseNumber = sticker.CourseNumber ?? 0,
+                                ProblemDescription = sticker.ProblemDescription,
+                                StickerID = sticker.StickerID ?? 0,
+                                StudentID = sticker.StudentID ?? 0,
+                                StudentRanking = sticker.StudentRanking ?? 0,
+                                Timeout = sticker.Timeout ?? DateTime.MinValue
+                            };
 
+                            stickerList.Add(temp);
+                        }
+                    }
                 }
                 return stickerList;
             }
@@ -325,8 +347,8 @@ namespace UnstuckMEInterfaces
 
                     foreach (var tutor in tutors)
                     {
-                        if (_connectedClients.ContainsKey(tutor.Value))
-                            _connectedClients[tutor.Value].connection.RemoveGUISticker(stickerID);
+                        if (tutor.HasValue && _connectedClients.ContainsKey(tutor.Value))
+                            _connectedClients[tutor.Value].Connection.RemoveGUISticker(stickerID);
                     }
 
                     retVal = 0;
@@ -361,8 +383,8 @@ namespace UnstuckMEInterfaces
                         StickerID = stickerID,
                         ProblemDescription = sticker.ProblemDescription,
                         StudentID = sticker.StudentID,
-                        TutorID = sticker.TutorID.Value,
-                        MinimumStarRanking = sticker.MinimumStarRanking.Value,
+                        TutorID = sticker.TutorID ?? 0,
+                        MinimumStarRanking = sticker.MinimumStarRanking ?? 0,
                         Class = new UserClass()
                         {
                             ClassID = sticker.ClassID,
@@ -374,8 +396,8 @@ namespace UnstuckMEInterfaces
                         Timeout = sticker.Timeout
                     };
 
-                    _StickerList.Enqueue(bigsticker);
-                    _ActiveStickers.TryAdd(bigsticker.StickerID, bigsticker.Timeout);
+                    _stickerList.Enqueue(bigsticker);
+                    _activeStickers.TryAdd(bigsticker.StickerID, bigsticker.Timeout);
 
                     retVal = 0;
                 }
@@ -392,22 +414,22 @@ namespace UnstuckMEInterfaces
         /// <returns></returns>
         public UnstuckMESticker GetSticker(int stickerID)
         {
-            UnstuckMESticker Rsticker = new UnstuckMESticker();
+            UnstuckMESticker rsticker = new UnstuckMESticker();
+
             try
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var sticker = db.GetStickerInfo(stickerID).First(); // this currently returns nothing, it worked last night and now it doesnt.
+                    var sticker = db.GetStickerInfo(stickerID).First();
 
-
-                    Rsticker.CourseName = sticker.CourseName;
-                    Rsticker.ProblemDescription = sticker.ProblemDescription;
-
+                    rsticker.CourseName = sticker.CourseName;
+                    rsticker.ProblemDescription = sticker.ProblemDescription;
                 }
             }
             catch (Exception)
-            {}
-            return Rsticker;
+            { }
+
+            return rsticker;
         }
     }
 }

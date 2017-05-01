@@ -21,20 +21,21 @@ namespace UnstuckMEInterfaces
 				//string directory = db.GetProfilePicture(userID).First();
 
 				//using (FileStream file = new FileStream(directory, FileMode.Open, FileAccess.Read))
-				{
-					//MemoryStream ms = new MemoryStream();
-					//file.CopyTo(ms);
-					//ms.Position = 0L;
+			    {
+			        //using (MemoryStream ms = new MemoryStream())
+			        //{
+			        //    file.CopyTo(ms);
+			        //    ms.Position = 0L;
 
-					//return ms;
-					/*****************************************************************************************************
+			        //    return ms;
+			        //}
+			        /*****************************************************************************************************
 					 * Remove the bottom lines and uncomment the above lines once filepath is implemented on the database.
 					*****************************************************************************************************/
-					byte[] imgByte;
-					imgByte = db.GetProfilePicture(userID).First();
+                    byte[] imgByte = db.GetProfilePicture(userID).First();
 
-					return new MemoryStream(imgByte);
-				}
+			        return new MemoryStream(imgByte);
+			    }
 			}
 		}
 
@@ -45,7 +46,7 @@ namespace UnstuckMEInterfaces
 		public void SetProfilePicture(UnstuckMEStream image)
 		{
 			string directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME\";
-			Directory.CreateDirectory(directory += image.User.UserID.ToString());
+			Directory.CreateDirectory(directory += image.UserID.ToString());
 			Directory.CreateDirectory(directory);
 			directory += @"\ProfilePicture.jpeg";
 
@@ -64,7 +65,7 @@ namespace UnstuckMEInterfaces
 					using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
 					{
 						//db.UpdateProfilePicture(image.User.UserID, directory);
-						db.UpdateProfilePicture(image.User.UserID, ms.ToArray()); //replace with line above once filepath is implemented on database
+						db.UpdateProfilePicture(image.UserID, ms.ToArray()); //replace with line above once filepath is implemented on database
 					}
 				}
 			}

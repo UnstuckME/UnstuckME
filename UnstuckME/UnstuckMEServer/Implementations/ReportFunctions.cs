@@ -15,9 +15,10 @@ namespace UnstuckMEInterfaces
         /// <returns>The unique identifier of the newly submitted report if successul, -1 if unsuccessful.</returns>
         public int CreateReport(string reportDescription, int flaggerID, int reviewID)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.CreateReport(reportDescription, flaggerID, reviewID);
@@ -27,7 +28,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to create report
+                return retVal; //If Failure to create report
             }
         }
 
@@ -39,9 +40,10 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if successful, -1 if unsuccessful</returns>
         public int DeleteReportByUser(int userID, int reportID)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     //var report = from u in db.Reports
@@ -71,7 +73,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //failure to find or delete report
+                return retVal; //failure to find or delete report
             }
         }
     }

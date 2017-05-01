@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -38,7 +29,7 @@ namespace UnstuckMEUserGUI
             {
                 OpenSticker opensticker = stickers[index] as OpenSticker;
 
-                if (opensticker.Sticker.StickerID == stickerID)
+                if (opensticker != null && opensticker.Sticker.StickerID == stickerID)
                 {
                     StackPanelStickerHistory.Children.Add(opensticker.Remove());
 
@@ -53,29 +44,29 @@ namespace UnstuckMEUserGUI
                 }
             }
 
-            stickers = StackPanelMyStickers.Children;
-            for (int index = stickers.Count - 1; index >= 0; index--)
-            {
-                MySticker mysticker = stickers[index] as MySticker;
+            //stickers = StackPanelMyStickers.Children;
+            //for (int index = stickers.Count - 1; index >= 0; index--)
+            //{
+            //    MySticker mysticker = stickers[index] as MySticker;
 
-                //if (mysticker.Sticker.StickerID == stickerID)
-                    //mysticker.ButtonCompleted.Visibility = Visibility.Collapsed;
-            }
+            //    if (mysticker.Sticker.StickerID == stickerID)
+            //        mysticker.ButtonCompleted.Visibility = Visibility.Collapsed;
+            //}
         }
 
         public void MakeStickerActive(int stickerID)
         {
-            UIElementCollection mystickers = StackPanelMyStickers.Children;
-            for (int index = mystickers.Count - 1; index >= 0; index--)
-            {
-                MySticker sticker = mystickers[index] as MySticker;
+            //UIElementCollection mystickers = StackPanelMyStickers.Children;
+            //for (int index = mystickers.Count - 1; index >= 0; index--)
+            //{
+            //    MySticker sticker = mystickers[index] as MySticker;
 
-                if (sticker.Sticker.StickerID == stickerID)
-                {
-                    //sticker.ButtonCompleted.Visibility = Visibility.Visible;
-                    //sticker.ButtonRemove.Visibility = Visibility.Visible;
-                }
-            }
+            //    if (sticker != null && sticker.Sticker.StickerID == stickerID)
+            //    {
+            //        sticker.ButtonCompleted.Visibility = Visibility.Visible;
+            //        sticker.ButtonRemove.Visibility = Visibility.Visible;
+            //    }
+            //}
         }
 
         private void ButtonAvailable_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

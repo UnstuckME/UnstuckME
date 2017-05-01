@@ -49,7 +49,7 @@
                     <Button x:Name="ButtonAddUserDone" Cursor="Hand" BorderBrush="White" Click="ButtonAddUserDone_Click" Foreground="White" Background="#993333" HorizontalAlignment="Right" VerticalAlignment="Center" Height="30" Content="Back" FontWeight="DemiBold" Width="75" Margin="0,0,5,0"></Button>
                 </Grid>
             </Grid>
-            <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.RowSpan="2"></Border>
+            <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.Row="0" Grid.RowSpan="2"></Border>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
