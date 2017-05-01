@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
@@ -17,7 +13,7 @@ namespace UnstuckMEUserGUI
         public static UserInfo User;
         public static ImageSource UserProfilePicture;
         public static DuplexChannelFactory<IUnstuckMEService> ChannelFactory;
-        public static ChannelFactory<IUnstuckMEFileStream> Stream_ChannelFactory;
+        public static ChannelFactory<IUnstuckMEFileStream> StreamChannelFactory;
         public static UnstuckMEWindow MainWindow;
         public static List<UnstuckMEChatUser> FriendsList;
         public static Brush Blue;
@@ -27,6 +23,5 @@ namespace UnstuckMEUserGUI
         public static List<UnstuckMEChat> ChatSessions;
         public static UnstuckMEChat CurrentChatSession;
         public static UnstuckMEDirectory ProgramDir;
-
     }
 }

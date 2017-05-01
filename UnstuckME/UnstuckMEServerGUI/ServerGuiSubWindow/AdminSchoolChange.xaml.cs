@@ -2,20 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using UnstuckMEInterfaces;
 using UnstuckME_Classes;
-using System.ServiceModel.Channels;
 using UnstuckMEServer;
 
 namespace UnstuckMEServerGUI.ServerGuiSubWindow
@@ -51,13 +41,16 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                 using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
                 {
 
-                    var dbSchools = from s in db.Schools select new {SchoolName = s.SchoolName, SchoolID = s.SchoolID};
+                    var dbSchools = from s in db.Schools select new {s.SchoolName, s.SchoolID};
 
                     foreach (var dbschool in dbSchools)
                     {
-                        UnstuckMESchool newSchool = new UnstuckMESchool();
-                        newSchool.SchoolName = dbschool.SchoolName;
-                        newSchool.SchoolID = dbschool.SchoolID;
+                        UnstuckMESchool newSchool = new UnstuckMESchool
+                        {
+                            SchoolName = dbschool.SchoolName,
+                            SchoolID = dbschool.SchoolID
+                        };
+
                         tempSchools.Add(newSchool);
                     }
                 }
@@ -74,7 +67,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
         {
             if (comboBoxSchools.SelectedIndex != -1)
             {
-                int selectedSchoolID = schools[(comboBoxSchools.SelectedIndex) - 1].SchoolID;
+                int selectedSchoolID = schools[comboBoxSchools.SelectedIndex - 1].SchoolID;
 
                 using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
                 {
@@ -86,57 +79,46 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                         string stringOfPassword = UnstuckMEHashing.RecreateHashedPassword(passwordBoxUnstuckMEPassword.Password, admin.Salt);
                         if (stringOfPassword == admin.SchoolAdminPassword)
                         {
-                            System.Configuration.Configuration config =
-                                ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                            config.AppSettings.Settings["SchoolName"].Value =
-                                comboBoxSchools.SelectionBoxItem.ToString();
+                            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                            config.AppSettings.Settings["SchoolName"].Value = comboBoxSchools.SelectionBoxItem.ToString();
                             config.Save(ConfigurationSaveMode.Modified);
 
-                            if ((admin.SchoolAdminUsername == "admin" &&
-                                 UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) ==
-                                 admin.SchoolAdminPassword) || (admin.Salt == "salt"))
+                            if (admin.SchoolAdminUsername == "admin" &&
+                                UnstuckMEHashing.RecreateHashedPassword("password", admin.Salt) ==
+                                admin.SchoolAdminPassword || admin.Salt == "salt")
                             {
                                 MessageBox.Show(
                                     "It looks like you are new to the UnstuckME program, please update your UnstuckME Credentials",
                                     "New To UnstuckME", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                                this.Close();
+                                Close();
                                 UnstuckMeCredChange unstuckMECredChangeWindow = new UnstuckMeCredChange(selectedSchoolID);
                                 Application.Current.MainWindow = unstuckMECredChangeWindow;
                                 unstuckMECredChangeWindow.ShowDialog();
                             }
 
-                            this.Close();
+                            Close();
                         }
                         else
-                        {
                             MessageBox.Show("Invalid Login");
-                        }
                     }
                     else
-                    {
                         MessageBox.Show("Invalid Login");
-                    }
                 }
             }
             else
-            {
                 MessageBox.Show("You need to select a school first");
-            }
-            
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private async void AdminSchoolChange_OnContentRendered(object sender, EventArgs e)
         {
             schools = await LoadSchoolsAsync();
             foreach (UnstuckMESchool school in schools)
-            {
                 comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
-            }
         }
     }
 }

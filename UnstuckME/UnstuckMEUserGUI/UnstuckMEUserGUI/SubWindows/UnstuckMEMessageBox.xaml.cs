@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -22,17 +14,17 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UnstuckMEMessageBox : Window
     {
-        private UnstuckMEBox _BoxStyle;
-        private UnstuckMEBoxImage _BoxImage;
+        private readonly UnstuckMEBox _BoxStyle;
+        private UnstuckMEBoxImage _boxImage;
         //WhiteFill Warning: Height = 40 Width = 20 Margin="45,10,0,0"
         //WhiteFill Error & Info: Margin="40,0,0,0" Width="30" Height="40"
         public UnstuckMEMessageBox(UnstuckMEBox BoxStyle, string DisplayMessage, string BoxTitle, UnstuckMEBoxImage BoxImage)
         {
-            Uri uri = new Uri("pack://application:,,,/Resources/Box/Error.png");
+            //Uri uri = new Uri("pack://application:,,,/Resources/Box/Error.png");
             _BoxStyle = BoxStyle;
-            _BoxImage = BoxImage;
+            _boxImage = BoxImage;
             InitializeComponent();
-            ShowBox(BoxStyle, DisplayMessage, BoxTitle, BoxImage);   
+            ShowBox(BoxStyle, DisplayMessage, BoxTitle, BoxImage);
         }
 
         //Legend: 0 - ShutdownAndRestart Application, 1 - OK and Cancel Box, 
@@ -76,14 +68,13 @@ namespace UnstuckMEUserGUI
             {
                 case UnstuckMEBox.Shutdown:
                     {
-                        WindowCollection windows = App.Current.Windows;
+                        WindowCollection windows = Application.Current.Windows;
                         foreach (Window item in windows)
                         {
-                            if(item != this)
-                            {
+                            if (item != this)
                                 item.Close();
-                            }
                         }
+
                         ButtonOK.Visibility = Visibility.Visible;
                         ButtonOK.IsEnabled = true;
                         LabelTitle.Content = title;
@@ -160,7 +151,7 @@ namespace UnstuckMEUserGUI
             }
             try
             {
-                this.Close();
+                Close();
             }
             catch (Exception)
             {/*In Case Error is thrown*/ }
@@ -180,7 +171,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonMinimize_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void ButtonClose_MouseEnter(object sender, MouseEventArgs e)
@@ -201,7 +192,7 @@ namespace UnstuckMEUserGUI
             {
                 case UnstuckMEBox.Shutdown:
                     {
-                        string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                        string unstuckME = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
                         Process.Start(unstuckME);
                         Application.Current.Shutdown();
                         break;
@@ -214,7 +205,7 @@ namespace UnstuckMEUserGUI
             DialogResult = null;
             try
             {
-                this.Close();
+                Close();
             }
             catch (Exception)
             {/*In Case Error is thrown*/ }
@@ -247,7 +238,7 @@ namespace UnstuckMEUserGUI
                 case UnstuckMEBox.Shutdown:
                     {
                         DialogResult = true;
-                        string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+                        string unstuckME = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
                         Process.Start(unstuckME);
                         Application.Current.Shutdown();
                         break;
@@ -255,7 +246,7 @@ namespace UnstuckMEUserGUI
             }
             try
             {
-                this.Close();
+                Close();
             }
             catch (Exception)
             {/*In Case of App Shutdown and Error is thrown*/ }
@@ -289,7 +280,7 @@ namespace UnstuckMEUserGUI
             }
             try
             {
-                this.Close();
+                Close();
             }
             catch (Exception)
             {/*In Case Error is thrown*/ }
@@ -322,7 +313,7 @@ namespace UnstuckMEUserGUI
             }
             try
             {
-                this.Close();
+                Close();
             }
             catch (Exception)
             {/*In Case Error is thrown*/ }

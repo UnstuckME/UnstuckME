@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
 using UnstuckMEUserGUI.SubWindows;
 
@@ -24,17 +13,20 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class AdminPage : Page
     {
-        
+        private bool isUser = false;
+        private bool isModerator = false;
+        private bool isAdmin = false;
+        private bool isDisabled = false;
+        private UserInfo targetUser;
+        private int userID = -1;
 
         public AdminPage()
         {
             InitializeComponent();
-            List<UnstuckME_Classes.Organization> orgList = UnstuckME.Server.GetAllOrganizations();
+            List<Organization> orgList = UnstuckME.Server.GetAllOrganizations();
             foreach (Organization item in orgList)
-            {
-                // this is going to end up needing to be a different control with the same look so we can remove these on click from the db
+            // this is going to end up needing to be a different control with the same look so we can remove these on click from the db
                 StackPanelOrganization.Children.Add(new TutorStickerSubmit(item.MentorID, item.OrganizationName));
-            }
         }
 
         private void AddRemoveClassesBtn_Click(object sender, RoutedEventArgs e)
@@ -57,13 +49,14 @@ namespace UnstuckMEUserGUI
         private void button_Click(object sender, RoutedEventArgs e)
         {
             // add mentor orgs
-            Window win = new SubWindows.AddMentorOrgsWindow();
+            Window win = new AddMentorOrgsWindow();
             win.Show();
         }
         private void AddOrgBtn_Click(object sender, RoutedEventArgs e)
         {
-            string OrgName = orgName.Text;
-            if (OrgName != "")
+            string OrgName = this.orgName.Text;
+
+            if (OrgName != string.Empty)
             {
                 // call server function to add an org
                 try
@@ -73,51 +66,28 @@ namespace UnstuckMEUserGUI
                 catch (Exception ex)
                 {
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org");
-
                 }
-
             }
         }
-
-        bool isUser = false;
-        bool isModerator = false;
-        bool isAdmin = false;
-        bool isDisabled = false;
-        UserInfo targetUser;
-        int userId = -1;
 
         private void UpdateRoleBtn_Click(object sender, RoutedEventArgs e)
         {
             bool userInfoUpdated = false;
             if (isUser)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.User, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.User, userID);
             else if (isModerator)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userID);
             else if (isAdmin)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userID);
             else if (isDisabled)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userId);
-            }
-            if (textBoxFirstName.Text != targetUser.FirstName && textBoxFirstName.Text != "")
-            {
+                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userID);
+            if (textBoxFirstName.Text != targetUser.FirstName && textBoxFirstName.Text != string.Empty)
                 userInfoUpdated = true;
-            }
-            if (textBoxLastName.Text != targetUser.LastName && textBoxLastName.Text != "")
-            {
+            if (textBoxLastName.Text != targetUser.LastName && textBoxLastName.Text != string.Empty)
                 userInfoUpdated = true;
-            }
-            if (textBoxEmailAddress.Text != targetUser.EmailAddress && textBoxEmailAddress.Text != "")
-            {
+            if (textBoxEmailAddress.Text != targetUser.EmailAddress && textBoxEmailAddress.Text != string.Empty)
                 userInfoUpdated = true;
-            }
-            if (userInfoUpdated == true)
+            if (userInfoUpdated)
             {
                 UnstuckME.Server.ChangeUserName(targetUser.EmailAddress, textBoxFirstName.Text, textBoxLastName.Text);
                 // Add code to update email
@@ -129,15 +99,15 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                userId = UnstuckME.Server.GetUserID(UserEmailTxtBx.Text);
+                userID = UnstuckME.Server.GetUserID(UserEmailTxtBx.Text);
             }
             catch (Exception ex)
             {
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "While attempting a change to the user role an bad email was entered");
             }
-            if (userId != -1)
+            if (userID != -1)
             {
-                targetUser = UnstuckME.Server.GetUserInfo(userId, UserEmailTxtBx.Text);
+                targetUser = UnstuckME.Server.GetUserInfo(userID, UserEmailTxtBx.Text);
                 if (targetUser.Privileges == (int)Privileges.User)
                 {
                     isUser = true;
@@ -244,21 +214,13 @@ namespace UnstuckMEUserGUI
             UnstuckME.Server.CreateNewUser(textBoxFirstName.Text, textBoxLastName.Text, textBoxEmailAddress.Text, "Password");
 
             if (isUser)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.User, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.User, userID);
             else if (isModerator)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userID);
             else if (isAdmin)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userID);
             else if (isDisabled)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userID);
         }
     }
 

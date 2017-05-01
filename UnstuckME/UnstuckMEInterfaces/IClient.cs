@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ServiceModel;
 using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
+    [ServiceContract]
     public interface IClient
     {
         /// <summary>
@@ -29,14 +25,6 @@ namespace UnstuckMEInterfaces
         /// <param name="message">The message being sent to the user.</param>
         [OperationContract(IsOneWay = true)]
         void GetMessage(UnstuckMEMessage message);
-
-        /// <summary>
-        /// Updates a user's conversation if they are online and another user sends them a file.
-        /// </summary>
-        /// <param name="message">The message being sent to the user.</param>
-        /// <param name="file">The file being sent to the user.</param>
-        //      [OperationContract]
-        //void GetFile(UnstuckMEMessage message, UnstuckMEFile file);
 
         /// <summary>
         /// Adds a class to the user's GUI.

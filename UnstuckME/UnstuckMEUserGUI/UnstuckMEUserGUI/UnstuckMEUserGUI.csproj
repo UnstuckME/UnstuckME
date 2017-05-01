@@ -246,20 +246,11 @@
     <Compile Include="UserControls\Reviews\ReviewDisplay.xaml.cs">
       <DependentUpon>ReviewDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\StarRanking\StarRankTemplate_UC.xaml.cs">
-      <DependentUpon>StarRankTemplate_UC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Stickers\CreateStickerTemplate.xaml.cs">
-      <DependentUpon>CreateStickerTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\StickerPage.xaml.cs">
       <DependentUpon>StickerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\UnstuckMEMessageBox.xaml.cs">
       <DependentUpon>UnstuckMEMessageBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Stickers\StickerDisplay.xaml.cs">
-      <DependentUpon>StickerDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="UnstuckMEWindow.xaml.cs">
       <DependentUpon>UnstuckMEWindow.xaml</DependentUpon>
@@ -394,27 +385,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\StarRanking\StarRankTemplate_UC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserControls\Stickers\CreateStickerTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\StickerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubWindows\UnstuckMEMessageBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Stickers\StickerDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

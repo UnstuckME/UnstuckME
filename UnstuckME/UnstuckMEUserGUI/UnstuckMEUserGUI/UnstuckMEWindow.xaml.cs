@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -29,7 +30,7 @@ namespace UnstuckMEUserGUI
 			UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
 		}
 
-		async private void Window_ContentRendered(object sender, EventArgs e)
+		private async void Window_ContentRendered(object sender, EventArgs e)
 		{
 			UnstuckME.Red = StickerButton.Background;
 			await Task.Factory.StartNew(() => InitializeStaticMembers());
@@ -60,7 +61,6 @@ namespace UnstuckMEUserGUI
 		}
 
 		#region Asynchronous Loading Section
-
 		private void InitializeStaticMembers()
 		{
 			UnstuckME.ImageConverter = new ImageSourceConverter();
@@ -78,32 +78,24 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				this.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
 				{
 					UnstuckME.Pages.StickerPage.AvailableStickers = UnstuckME.Server.InitialAvailableStickerPull(UnstuckME.User.UserID);
 					foreach (UnstuckMEAvailableSticker sticker in UnstuckME.Pages.StickerPage.AvailableStickers)
-					{
-						UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
-					}
+					    UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Add(new AvailableSticker(sticker));
 
-					UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickers(UnstuckME.User.UserID);
+				    UnstuckME.Pages.StickerPage.MyStickersList = UnstuckME.Server.GetUserSubmittedStickers(UnstuckME.User.UserID);
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.MyStickersList)
-					{
-						UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
-					}
+					    UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(sticker));
 
-					UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickers(UnstuckME.User.UserID);
+				    UnstuckME.Pages.StickerPage.OpenStickers = UnstuckME.Server.GetUserTutoredStickers(UnstuckME.User.UserID);
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
-					{
-						UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
-					}
+					    UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
 
-					UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
+				    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
 					UnstuckME.Pages.StickerPage.RecentStickers.AddRange(UnstuckME.Server.GetTimedOutStickers(userID: UnstuckME.User.UserID));
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.RecentStickers)
-					{
-						UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
-					}
+					    UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
 				});
 			}
 			catch(Exception ex)
@@ -117,7 +109,7 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				this.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
 				{
 					// ===========================Ryan's optimized code=========================================
 					UnstuckME.ChatSessions = UnstuckME.Server.GetChatIDs(UnstuckME.User.UserID);
@@ -127,18 +119,15 @@ namespace UnstuckMEUserGUI
 
                     foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
 					{
-						string path = UnstuckME.ProgramDir.ChatDir + @"\" + chat.ChatID.ToString();
-						if (folders.Contains<string>(path) == true)
-						{
-							folders.Remove(path);
-						}
+						string path = UnstuckME.ProgramDir.ChatDir + @"\" + chat.ChatID;
+						if (folders.Contains<string>(path))
+						    folders.Remove(path);
 						else
-						{
-							UnstuckME.ProgramDir.MakeChatDir(chat.ChatID.ToString());
-						}
-						UnstuckME.ProgramDir.AddChatDatFile(chat.ChatID.ToString());
+						    UnstuckME.ProgramDir.MakeChatDir(chat.ChatID.ToString());
+
+					    UnstuckME.ProgramDir.AddChatDatFile(chat.ChatID.ToString());
 						UnstuckME.ProgramDir.AddNewMsgFile(chat.ChatID.ToString(), true);
-                        List<int?>  tempfriends = UnstuckME.Server.GetMemeberIdsFromChat(chat.ChatID); //Users from server
+                        List<int?>  tempfriends = UnstuckME.Server.GetMemberIDsFromChat(chat.ChatID); //Users from server
                         foreach (var user in tempfriends)
                         {
                             if (!oldFriends.Contains(user) && !newFriends.Contains(user))
@@ -149,27 +138,32 @@ namespace UnstuckMEUserGUI
                     oldFriends.RemoveAll(i => newFriends.Contains(i));
 
                     UnstuckMEChatUser newUser = new UnstuckMEChatUser();
-                    foreach (int nf in newFriends)
+                    foreach (int? nf in newFriends)
                     {
-                        newUser = UnstuckME.Server.GetFriendInfo(nf);
-                        newUser.UserID = nf;
-                        UnstuckME.ProgramDir.AddNewFriend(newUser);
+                        if (nf.HasValue)
+                        {
+                            newUser = UnstuckME.Server.GetFriendInfo(nf.Value);
+                            newUser.UserID = nf.Value;
+
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                UnstuckME.FileStream.GetProfilePicture(newUser.UserID).CopyTo(ms);
+                                newUser.UnProccessPhot = ms.ToArray();
+                            }
+
+                            UnstuckME.ProgramDir.AddNewFriend(newUser);
+                        }
                     }
 
                     oldFriends.ForEach(i => UnstuckME.ProgramDir.DeleteFriend(i));
                     folders.ForEach(i => Directory.Delete(i, true)); // Recursively delete contents of a directory
-                    
 
 					// ~~~~~~~~~~~~~~~~~~~~AJ's Code that is currently getting re-factored~~~~~~~~~~~~~~~~~~~~~~~~~
 					UnstuckME.ChatSessions = UnstuckME.Server.GetUserChats(UnstuckME.User.UserID);
 					foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-					{
-						UnstuckME.Pages.ChatPage.AddConversation(chat);
-					}
-					foreach (UnstuckMEChatUser user in UnstuckME.FriendsList)
-					{
-						UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversation(user));
-					}
+					    UnstuckME.Pages.ChatPage.AddConversation(chat);
+				    foreach (UnstuckMEChatUser user in UnstuckME.FriendsList)
+				        UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Add(new ContactCreateConversation(user));
 				});
 			}
 			catch(Exception ex)
@@ -183,7 +177,7 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				this.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
 				{
 					UnstuckME.Pages.UserProfilePage.ProfilePicture.Source = UnstuckME.UserProfilePicture;  //convert image so it can be displayed
 					UnstuckME.Pages.UserProfilePage.ImageEditProfilePicture.Source = UnstuckME.UserProfilePicture;
@@ -200,12 +194,11 @@ namespace UnstuckMEUserGUI
 				UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Error Loading User Profile Page, Please Contact Your Server Administrator if Problem Persists.\n" + "Error Message: " + ex.Message, "Profile Loading Error", UnstuckMEBoxImage.Error);
 				error.ShowDialog();
 			}
-
 		}
 
 		private void LoadSettingsPageAsync()
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				// your asynchronous code here.
 			});
@@ -213,7 +206,7 @@ namespace UnstuckMEUserGUI
 
 		private void LoadAdminPageAsync()
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				// your asynchronous code here.
 			});
@@ -223,13 +216,11 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				this.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
 				{
 					UnstuckME.FriendsList = UnstuckME.Server.GetFriends(UnstuckME.User.UserID);
 					foreach (UnstuckMEChatUser friend in UnstuckME.FriendsList)
-					{
-						OnlineUsersStack.Children.Add(new OnlineUser(friend));
-					}
+					    OnlineUsersStack.Children.Add(new OnlineUser(friend));
 				});
 			}
 			catch (Exception ex)
@@ -241,11 +232,11 @@ namespace UnstuckMEUserGUI
 
 		private void CheckForReviews()
 		{
-			System.Threading.Thread.Sleep(2000);    //wait 2 seconds so everything can be placed
+			Thread.Sleep(2000);    //wait 2 seconds so everything can be placed
 
 			try
 			{
-				this.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
 				{
 					KeyValuePair<int, bool> needsreview = UnstuckME.Server.CheckForReviews(UnstuckME.User.UserID);
 
@@ -408,20 +399,16 @@ namespace UnstuckMEUserGUI
 		public void RecieveChatMessage(UnstuckMEMessage message)
 		{
 			UnstuckME.Pages.ChatPage.AddMessage(message);
-			if ((UnstuckME.CurrentChatSession.ChatID != message.ChatID) || (MainFrame.Content != UnstuckME.Pages.ChatPage))
+			if (UnstuckME.CurrentChatSession.ChatID != message.ChatID || MainFrame.Content != UnstuckME.Pages.ChatPage)
 			{
 				NewMessageNotification temp = null; 
 				foreach (var notification in NotificationStack.Children.OfType<NewMessageNotification>())
 				{
 					if(notification.Message.ChatID == message.ChatID)
-					{
-						temp = notification;
-					}
+					    temp = notification;
 				}
 				if (temp == null)
-				{
-					NotificationStack.Children.Insert(0, new NewMessageNotification(message));
-				}
+				    NotificationStack.Children.Insert(0, new NewMessageNotification(message));
 				else
 				{
 					NotificationStack.Children.Insert(0, new NewMessageNotification(message, temp.NotificationCount + 1));
@@ -430,11 +417,6 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
-		/// <summary>
-		/// Currently does nothing with the file
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="file"></param>
 		//public void RecieveChatFile(UnstuckMEMessage message, UnstuckMEFile file)
 		//{
 		//    if ((UnstuckME.CurrentChatSession.ChatID != message.ChatID) || (MainFrame.Content != UnstuckME.Pages.ChatPage))
@@ -446,24 +428,21 @@ namespace UnstuckMEUserGUI
 
 		public void RecieveAddedClass(UserClass inClass)
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				try
 				{
 					ClassDisplay temp = new ClassDisplay(inClass);
 					UnstuckME.Pages.UserProfilePage.BottomLeftStack.Children.Add(temp);
-
 				}
 				catch (Exception)
-				{
-
-				}
+				{ }
 			});
 		}
 
 		public void RecieveNewAvailableSticker(UnstuckMEAvailableSticker sticker)
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				try
 				{
@@ -480,7 +459,7 @@ namespace UnstuckMEUserGUI
 
 		public void RemoveStickerFromAvailableStickers(int stickerID)
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				try
 				{
@@ -488,14 +467,10 @@ namespace UnstuckMEUserGUI
 					foreach (var control in UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.OfType<AvailableSticker>())
 					{
 						if (control.Sticker.StickerID == stickerID)
-						{
-							temp = control;
-						}
+						    temp = control;
 					}
 					if (temp != null)
-					{
-						UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
-					}
+					    UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
 				}
 				catch (Exception)
 				{
@@ -506,7 +481,7 @@ namespace UnstuckMEUserGUI
 
 		public void StickerAcceptedStartConversation(UnstuckMEAvailableSticker sticker, int tutorID)
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				int PreExistingChatID = -1;
 				//Search For Pre-Existing Conversation
@@ -519,14 +494,12 @@ namespace UnstuckMEUserGUI
 						foreach (UnstuckMEChatUser user in chat.Users)
 						{
 							if (user.UserID == sticker.StudentID)
-							{ studentFound = true; }
-							if (user.UserID == tutorID)
-							{ tutorFound = true; }
+							    studentFound = true;
+						    if (user.UserID == tutorID)
+						        tutorFound = true;
 						}
 						if (studentFound && tutorFound)
-						{
-							PreExistingChatID = chat.ChatID;
-						}
+						    PreExistingChatID = chat.ChatID;
 					}
 				}
 
@@ -572,16 +545,14 @@ namespace UnstuckMEUserGUI
 				foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
 				{
 					if (convo.Chat.ChatID == PreExistingChatID)
-					{
-						convo.ConversationUserControl_MouseLeftButtonDown(null, null);
-					}
+					    convo.ConversationUserControl_MouseLeftButtonDown(null, null);
 				}
 			});
 		}
 
 		public void UpdateChatMessage(UnstuckMEMessage message)
 		{
-			this.Dispatcher.Invoke(() => 
+            Dispatcher.Invoke(() => 
 			{
 				UnstuckME.Pages.ChatPage.EditMessage(message);
 			});
@@ -589,7 +560,7 @@ namespace UnstuckMEUserGUI
 
 		public void DeleteChatMessage(UnstuckMEMessage message)
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				UnstuckME.Pages.ChatPage.RemoveMessage(message);
 			});
@@ -616,7 +587,7 @@ namespace UnstuckMEUserGUI
 
 			Application.Current.MainWindow = new LoginWindow();
 			Application.Current.MainWindow.Show();
-			this.Close();
+            Close();
 		}
 
 		private void ButtonAddContact_MouseEnter(object sender, MouseEventArgs e)
@@ -653,26 +624,12 @@ namespace UnstuckMEUserGUI
 
 		private void AdminButton_MouseEnter(object sender, MouseEventArgs e)
 		{
-			if(AdminButton.Background == UnstuckME.Blue)
-			{
-				AdminButton.Background = Brushes.SteelBlue;
-			}
-			else
-			{
-				AdminButton.Background = Brushes.IndianRed;
-			}
+		    AdminButton.Background = AdminButton.Background == UnstuckME.Blue ? Brushes.SteelBlue : Brushes.IndianRed;
 		}
 
 		private void AdminButton_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if (AdminButton.Background == Brushes.SteelBlue)
-			{
-				AdminButton.Background = UnstuckME.Blue;
-			}
-			else
-			{
-				AdminButton.Background = UnstuckME.Red;
-			}
+		    AdminButton.Background = AdminButton.Background == Brushes.SteelBlue ? UnstuckME.Blue : UnstuckME.Red;
 		}
 
 		private void AdminButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -682,26 +639,12 @@ namespace UnstuckMEUserGUI
 
 		private void SettingButton_MouseEnter(object sender, MouseEventArgs e)
 		{
-			if (SettingButton.Background == UnstuckME.Blue)
-			{
-				SettingButton.Background = Brushes.SteelBlue;
-			}
-			else
-			{
-				SettingButton.Background = Brushes.IndianRed;
-			}
+		    SettingButton.Background = SettingButton.Background == UnstuckME.Blue ? Brushes.SteelBlue : Brushes.IndianRed;
 		}
 
 		private void SettingButton_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if (SettingButton.Background == Brushes.SteelBlue)
-			{
-				SettingButton.Background = UnstuckME.Blue;
-			}
-			else
-			{
-				SettingButton.Background = UnstuckME.Red;
-			}
+		    SettingButton.Background = SettingButton.Background == Brushes.SteelBlue ? UnstuckME.Blue : UnstuckME.Red;
 		}
 
 		private void SettingButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -711,26 +654,12 @@ namespace UnstuckMEUserGUI
 
 		private void UserProfileButton_MouseEnter(object sender, MouseEventArgs e)
 		{
-			if (UserProfileButton.Background == UnstuckME.Blue)
-			{
-				UserProfileButton.Background = Brushes.SteelBlue;
-			}
-			else
-			{
-				UserProfileButton.Background = Brushes.IndianRed;
-			}
+		    UserProfileButton.Background = UserProfileButton.Background == UnstuckME.Blue ? Brushes.SteelBlue : Brushes.IndianRed;
 		}
 
 		private void UserProfileButton_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if (UserProfileButton.Background == Brushes.SteelBlue)
-			{
-				UserProfileButton.Background = UnstuckME.Blue;
-			}
-			else
-			{
-				UserProfileButton.Background = UnstuckME.Red;
-			}
+		    UserProfileButton.Background = UserProfileButton.Background == Brushes.SteelBlue ? UnstuckME.Blue : UnstuckME.Red;
 		}
 
 		private void UserProfileButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -740,26 +669,12 @@ namespace UnstuckMEUserGUI
 
 		private void ChatButtonBorder_MouseEnter(object sender, MouseEventArgs e)
 		{
-			if (ChatButton.Background == UnstuckME.Blue)
-			{
-				ChatButton.Background = Brushes.SteelBlue;
-			}
-			else
-			{
-				ChatButton.Background = Brushes.IndianRed;
-			}
+		    ChatButton.Background = ChatButton.Background == UnstuckME.Blue ? Brushes.SteelBlue : Brushes.IndianRed;
 		}
 
 		private void ChatButtonBorder_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if (ChatButton.Background == Brushes.SteelBlue)
-			{
-				ChatButton.Background = UnstuckME.Blue;
-			}
-			else
-			{
-				ChatButton.Background = UnstuckME.Red;
-			}
+		    ChatButton.Background = ChatButton.Background == Brushes.SteelBlue ? UnstuckME.Blue : UnstuckME.Red;
 		}
 
 		private void ChatButtonBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -769,26 +684,12 @@ namespace UnstuckMEUserGUI
 
 		private void StickerButton_MouseEnter(object sender, MouseEventArgs e)
 		{
-			if (StickerButton.Background == UnstuckME.Blue)
-			{
-				StickerButton.Background = Brushes.SteelBlue;
-			}
-			else
-			{
-				StickerButton.Background = Brushes.IndianRed;
-			}
+		    StickerButton.Background = StickerButton.Background == UnstuckME.Blue ? Brushes.SteelBlue : Brushes.IndianRed;
 		}
 
 		private void StickerButton_MouseLeave(object sender, MouseEventArgs e)
 		{
-			if (StickerButton.Background == Brushes.SteelBlue)
-			{
-				StickerButton.Background = UnstuckME.Blue;
-			}
-			else
-			{
-				StickerButton.Background = UnstuckME.Red;
-			}
+		    StickerButton.Background = StickerButton.Background == Brushes.SteelBlue ? UnstuckME.Blue : UnstuckME.Red;
 		}
 
 		private void StickerButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

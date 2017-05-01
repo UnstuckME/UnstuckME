@@ -86,8 +86,8 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
 		private void buttonCancel_Click(object sender, RoutedEventArgs e)
 		{
-			App.Current.MainWindow = Application.Current.Windows.OfType<MainWindow>().SingleOrDefault();
-			this.Close();
+            Application.Current.MainWindow = Application.Current.Windows.OfType<MainWindow>().SingleOrDefault();
+            Close();
 		}
 
 		private void checkboxSetSpecifiedPickupDirectory_Checked(object sender, RoutedEventArgs e)

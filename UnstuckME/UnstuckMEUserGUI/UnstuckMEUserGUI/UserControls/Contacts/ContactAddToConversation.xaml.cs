@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -30,7 +22,7 @@ namespace UnstuckMEUserGUI
             LabelUsername.Content = Contact.UserName;
             if (Contact.ProfilePicture == null)
             {
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                using (MemoryStream ms = new MemoryStream())
                 {
                     UnstuckME.FileStream.GetProfilePicture(Contact.UserID).CopyTo(ms);
                     Contact.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
@@ -54,30 +46,28 @@ namespace UnstuckMEUserGUI
                 }
 
                 UnstuckME.Server.InsertUserIntoChat(Contact.UserID, UnstuckME.CurrentChatSession.ChatID);
-                UnstuckMEMessage temp = new UnstuckMEMessage();
-                temp.ChatID = UnstuckME.CurrentChatSession.ChatID;
-                temp.FilePath = string.Empty;
-                temp.Message = Contact.UserName + " has joined the conversation!";
-                temp.MessageID = 0;
-                temp.SenderID = UnstuckME.User.UserID;
-                temp.Username = UnstuckME.User.FirstName;
-                temp.UsersInConvo = new List<int>();
+                UnstuckMEMessage temp = new UnstuckMEMessage
+                {
+                    ChatID = UnstuckME.CurrentChatSession.ChatID,
+                    FilePath = string.Empty,
+                    Message = Contact.UserName + " has joined the conversation!",
+                    MessageID = 0,
+                    SenderID = UnstuckME.User.UserID,
+                    Username = UnstuckME.User.FirstName,
+                    UsersInConvo = new List<int>()
+                };
                 UnstuckME.CurrentChatSession.Users.Add(Contact);
 
                 foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
-                {
                     temp.UsersInConvo.Add(user.UserID);
-                }
 
                 temp.MessageID = UnstuckME.Server.SendMessage(temp);
                 UnstuckME.Pages.ChatPage.AddMessage(temp);
                 //Removes Sticker From Stack Panel
-                ((StackPanel)this.Parent).Children.Remove(this);
+                ((StackPanel)Parent).Children.Remove(this);
             }
             catch (Exception)
-            {
-
-            }
+            { }
         }
     }
 }

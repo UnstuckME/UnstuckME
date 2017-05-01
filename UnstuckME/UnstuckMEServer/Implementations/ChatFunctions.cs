@@ -15,20 +15,26 @@ namespace UnstuckMEInterfaces
         /// <returns>The unique identifier of the newly created chat if successful, -1 if unsuccessful.</returns>
         public int CreateChat(int userID)
         {
+            int chatID = -1;
+
             try
             {
-                int chatID = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    int result = db.CreateChat(userID).FirstOrDefault().Value;
+                    int? firstOrDefault = db.CreateChat(userID).FirstOrDefault();
+
+                    if (!firstOrDefault.HasValue)
+                        return chatID;  //If Failure to create chat
+
+                    int result = firstOrDefault.Value;
                     chatID = result;
                 }
 
-                return chatID; //On success return chatID failure -1
+                return chatID; //On success return chatID
             }
             catch (Exception)
             {
-                return -1; //If Failure to create chat
+                return chatID; //If Failure to create chat
             }
         }
 
@@ -40,9 +46,10 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
         public int InsertUserIntoChat(int userID, int chatID)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.InsertUserIntoChat(userID, chatID);
@@ -52,7 +59,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to cinsert user into chat
+                return retVal; //If Failure to cinsert user into chat
             }
         }
 
@@ -92,13 +99,12 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                UnstuckMEChat returnedChat = new UnstuckMEChat();
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                UnstuckMEChat returnedChat = new UnstuckMEChat
                 {
-                    returnedChat.ChatID = chatID;
-                    returnedChat.Messages = GetChatMessages(chatID);
-                    returnedChat.Users = GetChatMembers(chatID);
-                }
+                    ChatID = chatID,
+                    Messages = GetChatMessages(chatID),
+                    Users = GetChatMembers(chatID)
+                };
 
                 return returnedChat;
             }
@@ -119,21 +125,24 @@ namespace UnstuckMEInterfaces
             try
             {
                 List<UnstuckMEChat> chatIDList = new List<UnstuckMEChat>();
+
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var dbChats = db.GetAllChatsAUserIsPartOF(userID);
-
-                    foreach (var chatItem in dbChats)
+                    using (var dbChats = db.GetAllChatsAUserIsPartOF(userID))
                     {
-                        UnstuckMEChat temp = new UnstuckMEChat()
+                        foreach (var chatItem in dbChats)
                         {
-                            ChatID = chatItem.Value
-                        };
+                            if (chatItem.HasValue)
+                            {
+                                UnstuckMEChat temp = new UnstuckMEChat()
+                                {
+                                    ChatID = chatItem.Value
+                                };
 
-                        chatIDList.Add(temp);
+                                chatIDList.Add(temp);
+                            }
+                        }
                     }
-
-                    //dbChats.Dispose();		//need this to release memory   
                 }
 
                 return chatIDList;
@@ -145,29 +154,33 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        
+        /// <summary>
+        /// Gets the members of a chat.
+        /// </summary>
+        /// <param name="chatID">The unique identifier of the chat to get the members of.</param>
+        /// <returns>A list of UnstuckMEChatUsers with all the information needed for chat to work.</returns>
         private List<UnstuckMEChatUser> GetChatMembers(int chatID)
         {
             try
             {
-                List<UnstuckMEChatUser> UserList = new List<UnstuckMEChatUser>();
+                List<UnstuckMEChatUser> userList = new List<UnstuckMEChatUser>();
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var chatMembers = db.GetAllMembersOfAChat(chatID);
-                    foreach (var member in chatMembers)
+                    using (var chatMembers = db.GetAllMembersOfAChat(chatID))
                     {
-                        UnstuckMEChatUser temp = new UnstuckMEChatUser()
+                        foreach (var member in chatMembers)
                         {
-                            UserID = member.UserID,
-                            UserName = member.DisplayFName,
-                            ProfilePicture = null
-                        };
-                        UserList.Add(temp);
+                            UnstuckMEChatUser temp = new UnstuckMEChatUser()
+                            {
+                                UserID = member.UserID,
+                                UserName = member.DisplayFName,
+                                ProfilePicture = null
+                            };
+                            userList.Add(temp);
+                        }
                     }
-
-                    //chatMembers.Dispose();		//need this to release memory   
                 }
-                return UserList;
+                return userList;
             }
             catch (Exception ex)
             {
@@ -177,27 +190,21 @@ namespace UnstuckMEInterfaces
         }
 
         /// <summary> 
-        /// Gets the number of messages a single chat holds 
+        /// Gets the number of messages a single chat holds. Deprecated.
         /// </summary> 
         /// <param name="chatID">The unique identifier of a specific chat.</param> 
         /// <returns>A integer continuing the number of messages for the provided chat.</returns> 
         public int GetChatMsgCount(int chatID)
         {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-
-            }
-
             return -1;
         }
-
 
         /// <summary>
         /// Gets all the members of a specific chat.
         /// </summary>
         /// <param name="chatID">The unique identifier of a specific chat.</param>
         /// <returns>A list of users, each containing the unique identifier of each user and their first name.</returns>
-        public List<int?> GetMemeberIdsFromChat(int chatID)
+        public List<int?> GetMemberIDsFromChat(int chatID)
         {
             try
             {
@@ -212,24 +219,5 @@ namespace UnstuckMEInterfaces
                 return null;
             }
         }
-
-
-        public UnstuckMEChatUser GetFriendInfo(int userId)
-        {
-            try
-            {
-                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-                {
-                    return (db.GetInfoForFriend(userId).Select(u => new UnstuckMEChatUser { UserName = u.DisplayFName, UnProccessPhot = u.Photo, EmailAddress = u.EmailAddress })).First();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-
-
     }
 }

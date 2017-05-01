@@ -3,16 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Microsoft.VisualBasic.FileIO;
 using UnstuckME_Classes;
 
@@ -35,14 +29,16 @@ namespace UnstuckMEUserGUI.SubWindows
 
         private void buttonCreateCSV_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Comma Separated Values|*.csv";
-            saveDialog.Title = "Save CSV File Template";
+            SaveFileDialog saveDialog = new SaveFileDialog()
+            {
+                Filter = "Comma Separated Values|*.csv",
+                Title = "Save CSV File Template"
+            };
             saveDialog.ShowDialog();
             
-            if (saveDialog.FileName != "") // Make sure they dont try and save to empty directory
+            if (saveDialog.FileName != string.Empty) // Make sure they dont try and save to empty directory
             { 
-                System.IO.FileStream fs = (System.IO.FileStream)saveDialog.OpenFile();
+                FileStream fs = (FileStream)saveDialog.OpenFile();
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
                     sw.WriteLine("$$$, $$$ All cells containing triple ($)  will be ignored, $$$");
@@ -60,14 +56,16 @@ namespace UnstuckMEUserGUI.SubWindows
 
         private void buttonClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private async void buttonUploadCSV_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = ".csv|*.csv|.tsv|*tsv";
-            fileDialog.Multiselect = true;
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Filter = ".csv|*.csv|.tsv|*tsv",
+                Multiselect = true
+            };
 
             try
             {
@@ -80,7 +78,7 @@ namespace UnstuckMEUserGUI.SubWindows
                         using (TextFieldParser csvParser = new TextFieldParser(path))
                         {
                             csvParser.CommentTokens = new string[] { "$$$"};
-                            csvParser.SetDelimiters(new string[] { "," , "\t" });
+                            csvParser.SetDelimiters(",", "\t");
                             csvParser.HasFieldsEnclosedInQuotes = true;
                             csvParser.TrimWhiteSpace = true;
 
@@ -93,53 +91,48 @@ namespace UnstuckMEUserGUI.SubWindows
                                 await Task.Factory.StartNew(() => UpdateTextBoxAsync(csvParser.LineNumber));
                                 // Read current line fields, pointer moves to the next line.
                                 string[] fields = csvParser.ReadFields();
-                                string courseName = fields[0];
-                                string courseCode = fields[1];
-                                string courseNumber = fields[2];
-
-                                bool skipLine = false;
-                                bool warningGenerated = false;
-                                bool[] emptyRow = { false, false, false };
-
-                                for (int i = 0; i < (int)Course.CourseDescItems && skipLine == false; i++)
+                                if (fields != null)
                                 {
-                                    if (fields.Contains("[" + CourseNames[i] + "]"))
+                                    string courseName = fields[0];
+                                    string courseCode = fields[1];
+                                    string courseNumber = fields[2];
+
+                                    bool skipLine = false;
+                                    bool warningGenerated = false;
+                                    bool[] emptyRow = { false, false, false };
+
+                                    for (int i = 0; i < (int)Course.CourseDescItems && skipLine == false; i++)
+                                    {
+                                        if (fields.Contains("[" + CourseNames[i] + "]"))
+                                            skipLine = true;
+                                        if (string.IsNullOrEmpty(fields[i]))
+                                            emptyRow[i] = true;
+                                    }
+
+                                    if (emptyRow.Contains(true))
+                                    {
                                         skipLine = true;
-                                    if (string.IsNullOrEmpty(fields[i]) == true)
-                                        emptyRow[i] = true;
-                                }
-
-                                if (emptyRow.Contains(true))
-                                {
-                                    skipLine = true;
-                                    StackPanelWarningsErrors.Children.Add(GenerateError(fields, csvParser.LineNumber));
-                                }
-                                if (skipLine == false)
-                                {
-                                    if(courseName.Length > 100 || courseCode.Length >= 5 || Convert.ToInt16(courseNumber) <= 0)
-                                    {
-                                        m_parsedWithWarnings.Add(new UserClass(courseName, courseCode, courseNumber));
-                                        warningGenerated = true;
+                                        StackPanelWarningsErrors.Children.Add(GenerateError(fields, csvParser.LineNumber));
                                     }
-                                    if (courseName.Length > 100)
+                                    if (skipLine == false)
                                     {
-                                        StackPanelWarningsErrors.Children.Add(GenerateWarning("Course Name \"" + courseName + "\" is too long", csvParser.LineNumber));
-                                    }
-                                    if(courseCode.Length >= 5)
-                                    {
-                                        StackPanelWarningsErrors.Children.Add(GenerateWarning("Course Code \"" + courseCode + "\" is too long", csvParser.LineNumber));
-                                    }
-                                    if (Convert.ToInt16(courseNumber) <= 0) 
-                                    {
-                                        StackPanelWarningsErrors.Children.Add(GenerateWarning("The Course Number {" + courseNumber + "} is less than or equal to zero", csvParser.LineNumber));
-                                    }
-                                    if(warningGenerated != true)
-                                    {
-                                        //This is were it need to get sent to the server
-                                        bool addedSuccessfully = UnstuckME.Server.AddClass(new UserClass(courseName, courseCode, courseNumber)); 
-                                        if(addedSuccessfully == false)
+                                        if(courseName.Length > 100 || courseCode.Length >= 5 || Convert.ToInt16(courseNumber) <= 0)
                                         {
-                                            StackPanelWarningsErrors.Children.Add(GenerateError(fields,"Database rejected insertion of class (perhaps it already exits?)", csvParser.LineNumber));
+                                            m_parsedWithWarnings.Add(new UserClass(courseName, courseCode, courseNumber));
+                                            warningGenerated = true;
+                                        }
+                                        if (courseName.Length > 100)
+                                            StackPanelWarningsErrors.Children.Add(GenerateWarning("Course Name \"" + courseName + "\" is too long", csvParser.LineNumber));
+                                        if(courseCode.Length >= 5)
+                                            StackPanelWarningsErrors.Children.Add(GenerateWarning("Course Code \"" + courseCode + "\" is too long", csvParser.LineNumber));
+                                        if (Convert.ToInt16(courseNumber) <= 0)
+                                            StackPanelWarningsErrors.Children.Add(GenerateWarning("The Course Number {" + courseNumber + "} is less than or equal to zero", csvParser.LineNumber));
+                                        if (warningGenerated != true)
+                                        {
+                                            //This is were it need to get sent to the server
+                                            bool addedSuccessfully = UnstuckME.Server.AddClass(new UserClass(courseName, courseCode, courseNumber)); 
+                                            if (addedSuccessfully == false)
+                                                StackPanelWarningsErrors.Children.Add(GenerateError(fields,"Database rejected insertion of class (perhaps it already exits?)", csvParser.LineNumber));
                                         }
                                     }
                                 }
@@ -150,7 +143,7 @@ namespace UnstuckMEUserGUI.SubWindows
                     }   
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -158,9 +151,9 @@ namespace UnstuckMEUserGUI.SubWindows
 
         void UpdateTextBoxAsync(long lineNumber)
         {
-            this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
             {
-                textBlockCurrentLine.Text = "Reading line " + lineNumber.ToString();
+                textBlockCurrentLine.Text = "Reading line " + lineNumber;
             });
         }
 
@@ -187,10 +180,12 @@ namespace UnstuckMEUserGUI.SubWindows
 
         TextBlock GenerateWarning(string errMsg, long lineNumber)
         {
-            TextBlock warnTextBox = new TextBlock();
-            warnTextBox.Foreground = new SolidColorBrush(Colors.Yellow);
-            warnTextBox.Text = "WARNING: on line[" + lineNumber.ToString() + "] " + errMsg;
-            warnTextBox.TextWrapping = TextWrapping.Wrap;
+            TextBlock warnTextBox = new TextBlock()
+            {
+                Foreground = new SolidColorBrush(Colors.Yellow),
+                Text = "WARNING: on line[" + lineNumber + "] " + errMsg,
+                TextWrapping = TextWrapping.Wrap
+            };
             return warnTextBox;
         }
 
@@ -198,43 +193,45 @@ namespace UnstuckMEUserGUI.SubWindows
         {
             string errorTxt = "ERROR: ";
             if (linenumber != -1)
-                errorTxt += "on line [" + linenumber.ToString() + "] Unable to add";
+                errorTxt += "on line [" + linenumber + "] Unable to add";
             else
                 errorTxt += "Unable to add the course containing:";
 
             for (int i=0; i < (int)Course.CourseDescItems; i++)
-            {
                 errorTxt += " {" + fields[i] + "}";
-            }
             errorTxt += " " + errorMsg;
 
-            TextBlock errorTextBlock = new TextBlock();
-            errorTextBlock.Text = errorTxt;
-            errorTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-            errorTextBlock.TextWrapping = TextWrapping.Wrap;
+            TextBlock errorTextBlock = new TextBlock()
+            {
+                Text = errorTxt,
+                Foreground = new SolidColorBrush(Colors.Red),
+                TextWrapping = TextWrapping.Wrap
+            };
             return errorTextBlock;
         }
 
         TextBlock GenerateError(string[] fields, long lineNumber)
         {
-            string errorStmt = "ERROR: on line[" + lineNumber.ToString() + "] ";
+            string errorStmt = "ERROR: on line[" + lineNumber + "] ";
 
             bool foundError = false;
             for (int i =0; i < (int)Course.CourseDescItems; i++)
             {
-                if (string.IsNullOrEmpty(fields[i]) == true)
+                if (string.IsNullOrEmpty(fields[i]))
                 {
-                    if (foundError == true)
+                    if (foundError)
                         errorStmt += "and ";
                     errorStmt += CourseNames[i] + " Does not have a value ";
                     foundError = true;
                 }
             }
 
-            TextBlock errorTextBlock = new TextBlock();
-            errorTextBlock.Text = errorStmt;
-            errorTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-            errorTextBlock.TextWrapping = TextWrapping.Wrap;
+            TextBlock errorTextBlock = new TextBlock()
+            {
+                Text = errorStmt,
+                Foreground = new SolidColorBrush(Colors.Red),
+                TextWrapping = TextWrapping.Wrap
+            };
             return errorTextBlock;
         }
     }

@@ -34,7 +34,7 @@
                 </Grid>
                 <Grid Grid.Row="1" Focusable="False">
                     <ScrollViewer x:Name="ScrollViewerNotifications" VerticalScrollBarVisibility="Auto" Height="Auto" VerticalAlignment="Top">
-                        <StackPanel x:Name="NotificationStack" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Grid.Row="1"/>
+                        <StackPanel x:Name="NotificationStack" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" />
                     </ScrollViewer>
                 </Grid>
                 <Grid Grid.Row="2" Background="#336699" Focusable="False">

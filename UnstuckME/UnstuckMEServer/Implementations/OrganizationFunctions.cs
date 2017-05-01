@@ -27,20 +27,21 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var organizations = db.GetAllOrganizations();
-
                 List<Organization> orgs = new List<Organization>();
-
-                foreach (var org in organizations)
+                using (var organizations = db.GetAllOrganizations())
                 {
-                    Organization new_org = new Organization()
+                    foreach (var org in organizations)
                     {
-                        MentorID = org.MentorID,
-                        OrganizationName = org.OrganizationName
-                    };
-                    orgs.Add(new_org);
+                        Organization newOrg = new Organization()
+                        {
+                            MentorID = org.MentorID,
+                            OrganizationName = org.OrganizationName
+                        };
+
+                        orgs.Add(newOrg);
+                    }
                 }
-                //organizations.Dispose();		//need this to release memory   
+
                 return orgs;
             }
         }

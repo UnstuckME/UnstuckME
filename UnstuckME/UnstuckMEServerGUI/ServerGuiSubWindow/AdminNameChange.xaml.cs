@@ -54,7 +54,7 @@ namespace UnstuckMEServerGUI
                     Admin.FirstName = textBoxFirstName.Text;
                     Admin.LastName = textBoxLastName.Text;
                     MessageBox.Show("Changes Saved", "Success", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                    this.Close();
+                    Close();
                 }
             }
             catch(Exception ex)
@@ -65,7 +65,7 @@ namespace UnstuckMEServerGUI
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

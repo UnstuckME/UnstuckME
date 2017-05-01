@@ -1,23 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Configuration;
 using System.Data.SqlClient;
 using UnstuckMEServerGUI.ServerGuiSubWindow;
 using System.ServiceModel.Configuration;
 using System.Data.Entity.Core.EntityClient;
+using System.IO;
 
 namespace UnstuckMEServerGUI
 {
@@ -29,32 +21,30 @@ namespace UnstuckMEServerGUI
 		public ChangeDBSchoolInfo()
 		{
 			InitializeComponent();
-			var entityConnectionString = new EntityConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString);
+			var entityConnectionString = new EntityConnectionStringBuilder(ConfigurationManager.ConnectionStrings["UnstuckMEServer_DBEntities"].ConnectionString);
 			var basicConnectionString = new SqlConnectionStringBuilder(entityConnectionString.ProviderConnectionString);
 			textBoxDatabaseIP.Text = basicConnectionString.DataSource;
 
-		    textBoxSchoolName.Text = System.Configuration.ConfigurationManager.AppSettings["SchoolName"];
-            textBoxDatabaseIP.Text = System.Configuration.ConfigurationManager.AppSettings["DatabaseName"];
-		    textBoxUnstuckMEServerIP.Text = System.Configuration.ConfigurationManager.AppSettings["UnstuckMEServerIP"];
-
+		    textBoxSchoolName.Text = ConfigurationManager.AppSettings["SchoolName"];
+            textBoxDatabaseIP.Text = ConfigurationManager.AppSettings["DatabaseName"];
+		    textBoxUnstuckMEServerIP.Text = ConfigurationManager.AppSettings["UnstuckMEServerIP"];
 		}
 		
 
 		private void buttonBrowse_Click(object sender, RoutedEventArgs e)
 		{
-			//Create the actual brwse window
-			Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+			//Create the actual browse window
+		    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+		    {
+		        DefaultExt = ".png",            //Set what file they are trying to upload
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+		        Multiselect = false,
+		        //gifs do not work in WPF image controls
+                Filter = "Image Files (*.jpeg; *.png; *.jpg)| *.jpeg; *.png; *.jpg | JPEG Files(*.jpeg) | *.jpeg | PNG Files(*.png) | *.png | JPG Files(*.jpg) | *.jpg|GIF Files (*.gif)|*.gif"
+		    };
 
-			//Set what file they are trying to upload
-			dlg.DefaultExt = ".png";
-			dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-			dlg.Multiselect = false;
-
-			//gifs do not work in WPF image controls
-			dlg.Filter = "Image Files (*.jpeg; *.png; *.jpg)| *.jpeg; *.png; *.jpg | JPEG Files(*.jpeg) | *.jpeg | PNG Files(*.png) | *.png | JPG Files(*.jpg) | *.jpg|GIF Files (*.gif)|*.gif";
-
-			//Make sure they selected something
-			Nullable<bool> result = dlg.ShowDialog();
+		    //Make sure they selected something
+			bool? result = dlg.ShowDialog();
 
 			//If they did select a logo update the file path
 			if (result == true)
@@ -72,22 +62,16 @@ namespace UnstuckMEServerGUI
 
 			try
 			{
-				if (!System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
-				{
-					throw new Exception("Please Enter a valid file path for the image");
-				}
-				using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
+				if (!File.Exists(textBoxPathToSchoolPhoto.Text))
+				    throw new Exception("Please Enter a valid file path for the image");
+			    using (UnstuckME_SchoolsEntities schoolDB = new UnstuckME_SchoolsEntities())
 				{
 					var schoolIDs = schoolDB.GetSchoolID(textBoxSchoolName.Text);
-					if (schoolIDs.Count() < 1)
-					{
-						throw new Exception("No school matching that name exists as registered school site of UnstuckME");
-					}
-
+					if (!schoolIDs.Any())
+					    throw new Exception("No school matching that name exists as registered school site of UnstuckME");
 				}
 				MessageBox.Show("Successfully Updated School Info", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-				this.Close();
-
+                Close();
 			}
 			catch (Exception ex)
 			{
@@ -97,15 +81,13 @@ namespace UnstuckMEServerGUI
 
 		private void buttonCancel_Click(object sender, RoutedEventArgs e)
 		{
-			this.Close();
+            Close();
 		}
 
 		private void textBoxPathToSchoolPhoto_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			if (System.IO.File.Exists(textBoxPathToSchoolPhoto.Text))
-			{
-				UpdatePhoto(textBoxPathToSchoolPhoto.Text);
-			}
+			if (File.Exists(textBoxPathToSchoolPhoto.Text))
+			    UpdatePhoto(textBoxPathToSchoolPhoto.Text);
 		}
 
 		private void UpdatePhoto(string filePath)
@@ -129,7 +111,7 @@ namespace UnstuckMEServerGUI
 		{
 			ChangeDabaseConnectionSettings settingsWindow = new ChangeDabaseConnectionSettings();
 
-			App.Current.MainWindow = settingsWindow;
+            Application.Current.MainWindow = settingsWindow;
 			settingsWindow.ShowDialog();
 		}
 
@@ -140,12 +122,12 @@ namespace UnstuckMEServerGUI
 			Configuration wConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 			ServiceModelSectionGroup wServiceSection = ServiceModelSectionGroup.GetSectionGroup(wConfig);
 
-			ClientSection wClientSection = wServiceSection.Client;
-			wClientSection.Endpoints[0].Address = new Uri(textBoxUnstuckMEServerIP.Text);
-			wConfig.Save();
-
+		    if (wServiceSection != null)
+		    {
+		        ClientSection wClientSection = wServiceSection.Client;
+		        wClientSection.Endpoints[0].Address = new Uri(textBoxUnstuckMEServerIP.Text);
+		    }
+		    wConfig.Save();
 		}
-
-       
     }
 }

@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
@@ -34,10 +23,7 @@ namespace UnstuckMEUserGUI
             ImageProfilePicture.Source = inMessage.ProfilePic;
             Message = inMessage;
 
-            if (inMessage.SenderID == UnstuckME.User.UserID)
-                EditMessageButton.Visibility = Visibility.Visible;
-            else
-                EditMessageButton.Visibility = Visibility.Collapsed;
+            EditMessageButton.Visibility = inMessage.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void EditMessageButton_Click(object sender, RoutedEventArgs e)
@@ -56,7 +42,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckMEMessage edited_message = new UnstuckMEMessage()
+                UnstuckMEMessage editedMessage = new UnstuckMEMessage()
                 {
                     ChatID = Message.ChatID,
                     FilePath = Message.FilePath,
@@ -68,8 +54,8 @@ namespace UnstuckMEUserGUI
                     UsersInConvo = Message.UsersInConvo
                 };
 
-                if (UnstuckME.Server.EditMessage(edited_message) == -1)
-                    throw new Exception(string.Format("Failed to edit message {0}", edited_message.Message));
+                if (UnstuckME.Server.EditMessage(editedMessage) == -1)
+                    throw new Exception(string.Format("Failed to edit message {0}", editedMessage.Message));
 
                 TextBoxChatMessage.Foreground = Brushes.White;
                 TextBoxChatMessage.Background = null;

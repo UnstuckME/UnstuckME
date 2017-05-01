@@ -52,7 +52,12 @@ namespace UnstuckMEServer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddFriend", currentUserIDParameter, newFriendUserIDParameter);
         }
-    
+
+        internal void UpdateProfilePicture(int userID, string directory)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual int AddOrgToSticker(Nullable<int> stickerID, Nullable<int> organizationID)
         {
             var stickerIDParameter = stickerID.HasValue ?

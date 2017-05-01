@@ -49,7 +49,7 @@ namespace UnstuckMEServerGUI
                     db.CreateServerAdmin(textBoxFirstName.Text, textBoxLastName.Text, textBoxEmailAddress.Text, hashedPassword.Password, hashedPassword.Salt);
                 }
                 MessageBox.Show("Administrator Successfully Created", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
+                Close();
             }
             catch(Exception ex)
             {
@@ -59,7 +59,7 @@ namespace UnstuckMEServerGUI
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

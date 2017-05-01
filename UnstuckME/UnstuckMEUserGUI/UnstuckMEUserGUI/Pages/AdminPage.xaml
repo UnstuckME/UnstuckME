@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="900" d:DesignWidth="900"
       Title="AdminPage">
-
     <Grid>
         <TabControl x:Name="tabControl" BorderBrush="Gray" Background="LightGray" HorizontalAlignment="Left" Height="900" VerticalAlignment="Top" Width="900">
             <TabItem Header="Classes">
@@ -22,7 +21,6 @@
             </TabItem>
             <TabItem Header="Users">
                 <Grid Background="Gray">
-
                     <TextBox x:Name="UserEmailTxtBx" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" ToolTip="User Email" VerticalAlignment="Top" Width="198"/>
                     <Button x:Name="FindUserBtn" Content="Find User" HorizontalAlignment="Left" Margin="223,10,0,0" VerticalAlignment="Top" Width="75" Click="FindUserBtn_Click"/>
                     <Label x:Name="UserRoleLbl" Content="User's Role" HorizontalAlignment="Left" Margin="342,49,0,0" VerticalAlignment="Top"/>
@@ -34,7 +32,6 @@
                     </StackPanel>
                     <Button x:Name="UpdateRoleBtn" Content="Update User Info" HorizontalAlignment="Left" Margin="342,428,0,0" VerticalAlignment="Top" Width="156" Click="UpdateRoleBtn_Click" Height="50"/>
                     <Button x:Name="button1" Content="Add/Remove Mentors" HorizontalAlignment="Left" Margin="342,132,0,0" VerticalAlignment="Top" Width="156" Click="button1_Click"/>
-
 
                     <TextBox TabIndex="0" x:Name="textBoxFirstName" VerticalContentAlignment="Center" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="10,80,675.6,769.2"/>
                     <TextBox TabIndex="1" x:Name="textBoxLastName" VerticalContentAlignment="Center" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="10,132,675.6,717.2"/>
@@ -52,7 +49,6 @@
                     <Label x:Name="TutorRatingsNumberlabel" Content="Number of Tutor Reviews" HorizontalAlignment="Left" Margin="11,363,0,0" VerticalAlignment="Top" Width="169"/>
                     <Label x:Name="NumberOfTutorReviews" Content="0" HorizontalAlignment="Left" Margin="202,363,0,0" VerticalAlignment="Top" Width="65"/>
                     <Button x:Name="CreateUserBtn" Content="Create New User" HorizontalAlignment="Left" Margin="163,428,0,0" VerticalAlignment="Top" Width="135" Height="50" Click="CreateUserBtn_Click"/>
-
                 </Grid>
             </TabItem>
             <TabItem Header="Admin Chats">

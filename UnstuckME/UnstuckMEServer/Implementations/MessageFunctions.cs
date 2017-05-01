@@ -12,14 +12,15 @@ namespace UnstuckMEInterfaces
 		/// Gets the number of messages in a particular chat.
 		/// </summary>
 		/// <param name="chatID">The unique identifier of a specific chat.</param>
-		/// <returns>A number indicating how many messages a chat has.</returns>
-        public int GetNumberOFMessages(int chatID)
+		/// <returns>A number indicating how many messages a chat has. Returns -1 if no messages are found.</returns>
+        public int GetNumberOfMessages(int chatID)
         {
             try
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    return (db.GetNumMsgsInAChat(chatID)).First().Value;
+                    int? first = db.GetNumMsgsInAChat(chatID).First();
+                    return first ?? -1;
                 }
             }
             catch (Exception)
@@ -39,10 +40,15 @@ namespace UnstuckMEInterfaces
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var messageID = db.InsertMessage(message.ChatID, message.Message, null, message.SenderID);
-                    message.MessageID = messageID.First().Value;
-                    _MessageList.Enqueue(message);
+                    using (var messageID = db.InsertMessage(message.ChatID, message.Message, null, message.SenderID))
+                    {
+                        int? first = messageID.First();
 
+                        if (first.HasValue)
+                            message.MessageID = first.Value;
+                    }
+
+                    _messageList.Enqueue(message);
                     return message.MessageID;
                 }
             }
@@ -67,7 +73,7 @@ namespace UnstuckMEInterfaces
                     foreach (var client in _connectedClients)
                     {
                         if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
-                            client.Value.connection.UpdateChatMessage(message);
+                            client.Value.Connection.UpdateChatMessage(message);
                     }
 
                     db.UpdateMessageByMessageID(message.MessageID, message.Message);
@@ -94,7 +100,7 @@ namespace UnstuckMEInterfaces
                     foreach (var client in _connectedClients)
                     {
                         if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
-                            client.Value.connection.DeleteChatMessage(message);
+                            client.Value.Connection.DeleteChatMessage(message);
                     }
 
                     db.DeleteMessageByMessageID(message.MessageID);
@@ -121,29 +127,29 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                List<UnstuckMEMessage> MessageList = new List<UnstuckMEMessage>();
+                List<UnstuckMEMessage> messageList = new List<UnstuckMEMessage>();
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var messages = db.GetChatMessages(chatID, firstrow, lastrow);
-
-                    foreach (var message in messages)
+                    using (var messages = db.GetChatMessages(chatID, firstrow, lastrow))
                     {
-                        UnstuckMEMessage temp = new UnstuckMEMessage()
+                        foreach (var message in messages)
                         {
-                            Message = message.MessageData,
-                            MessageID = message.MessageID,
-                            Time = message.SentTime,
-                            FilePath = message.FilePath,
-                            ChatID = chatID,
-                            SenderID = message.SentBy,
-                            Username = message.DisplayFName
-                        };
-                        MessageList.Add(temp);
+                            UnstuckMEMessage temp = new UnstuckMEMessage()
+                            {
+                                Message = message.MessageData,
+                                MessageID = message.MessageID,
+                                Time = message.SentTime,
+                                FilePath = message.FilePath,
+                                ChatID = chatID,
+                                SenderID = message.SentBy,
+                                Username = message.DisplayFName
+                            };
+                            messageList.Add(temp);
+                        }
                     }
-
-                    //messages.Dispose();		//need this to release memory   
                 }
-                return MessageList;
+
+                return messageList;
             }
             catch (Exception ex)
             {
@@ -152,23 +158,30 @@ namespace UnstuckMEInterfaces
             }
         }
 
-        public List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int num_messages = 20)
+        /// <summary>
+        /// Currently for Ryan's use with chat caching.
+        /// </summary>
+        /// <param name="chatID">The unique identifier of the chat to get messages from.</param>
+        /// <param name="messageID">The unique identifier of the message to begin the query at.</param>
+        /// <param name="numMessages">The number of messages to return. Default is 20.</param>
+        /// <returns>A list of UnstuckMEMessages.</returns>
+        public List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int numMessages = 20)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var messages = db.Ryans_GetChatMessage(chatID, messageID, num_messages);
-
                 List<UnstuckMEMessage> messagelist = new List<UnstuckMEMessage>();
-
-                foreach (var message in messages)
+                using (var messages = db.Ryans_GetChatMessage(chatID, messageID, numMessages))
                 {
-                    messagelist.Add(new UnstuckMEMessage()
+                    foreach (var message in messages)
                     {
-                        MessageID = message.MessageID,
-                        Message = message.MessageData,
-                        SenderID = message.SentBy,
-                        Time = message.SentTime
-                    });
+                        messagelist.Add(new UnstuckMEMessage()
+                        {
+                            MessageID = message.MessageID,
+                            Message = message.MessageData,
+                            SenderID = message.SentBy,
+                            Time = message.SentTime
+                        });
+                    }
                 }
 
                 return messagelist;

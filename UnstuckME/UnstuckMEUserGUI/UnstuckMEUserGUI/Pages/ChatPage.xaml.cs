@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 
 namespace UnstuckMEUserGUI
 {
@@ -39,9 +31,7 @@ namespace UnstuckMEUserGUI
 			foreach (Conversation item in StackPanelConversations.Children.OfType<Conversation>())
 			{
 				if(item.Chat.ChatID == message.ChatID)
-				{
-					item.ShowConversation();
-				}
+				    item.ShowConversation();
 			}
 		}
 
@@ -202,9 +192,7 @@ namespace UnstuckMEUserGUI
 		private void MessageTextBox_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Enter)
-			{
-				SendButton_Click(null, null);
-			}
+			    SendButton_Click(null, null);
 		}
 
 		private void SendMessage(string message)
@@ -229,9 +217,7 @@ namespace UnstuckMEUserGUI
 				foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
 				{
 					if (user.UserID != UnstuckME.User.UserID)
-					{
-						sendingMessage.UsersInConvo.Add(user.UserID);
-					}
+					    sendingMessage.UsersInConvo.Add(user.UserID);
 				}
 
 				sendingMessage.MessageID = UnstuckME.Server.SendMessage(sendingMessage);
@@ -272,18 +258,15 @@ namespace UnstuckMEUserGUI
 			try
 			{
 				LabelInvalidUserNameSearch.Visibility = Visibility.Hidden;
-				int searchedUserID = -1;
-				if(UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
+			    if (UnstuckME.Server.IsValidUser(TextBoxManualUserNameSearch.Text))
 				{
-					searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
-					StartNewConversation(searchedUserID);
+				    int searchedUserID = UnstuckME.Server.GetUserID(TextBoxManualUserNameSearch.Text);
+				    StartNewConversation(searchedUserID);
 				}
 				else
-				{
-					LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
-				}
+			        LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
 			}
-			catch(Exception)
+			catch (Exception)
 			{
 				LabelInvalidUserNameSearch.Visibility = Visibility.Visible;
 			}
@@ -310,32 +293,28 @@ namespace UnstuckMEUserGUI
 			try
 			{
 				if (SoloConversationAlreadyExists(TargetUser))
-				{
-					throw new Exception();
-				}
-				int searchedUserID = -1;
-				int chatID;
-				chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
+				    throw new Exception();
+
+			    int searchedUserID = -1;
+			    int chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
 				UnstuckME.Server.InsertUserIntoChat(TargetUser, chatID);
-				UnstuckMEMessage temp = new UnstuckMEMessage();
-				temp.ChatID = chatID;
-				temp.FilePath = string.Empty;
-				temp.Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.";
-				temp.MessageID = 0;
-				temp.Username = UnstuckME.User.FirstName;
-				temp.SenderID = UnstuckME.User.UserID;
-				temp.UsersInConvo = new List<int>();
-				temp.UsersInConvo.Add(UnstuckME.User.UserID);
-				temp.UsersInConvo.Add(searchedUserID);
-				UnstuckME.Server.SendMessage(temp);
+			    UnstuckMEMessage temp = new UnstuckMEMessage
+			    {
+			        ChatID = chatID,
+			        FilePath = string.Empty,
+			        Message = "New Conversation with " + UnstuckME.User.FirstName + " " + UnstuckME.User.LastName + " started.",
+			        MessageID = 0,
+			        Username = UnstuckME.User.FirstName,
+			        SenderID = UnstuckME.User.UserID,
+			        UsersInConvo = new List<int> {UnstuckME.User.UserID, searchedUserID}
+			    };
+			    UnstuckME.Server.SendMessage(temp);
 				AddMessage(temp);
 				ButtonAddUserDone_Click(null, null);
 				foreach (Conversation convo in StackPanelConversations.Children.OfType<Conversation>())
 				{
 					if (convo.Chat.ChatID == chatID)
-					{
-						convo.ConversationUserControl_MouseLeftButtonDown(null, null);
-					}
+					    convo.ConversationUserControl_MouseLeftButtonDown(null, null);
 				}
 			}
 			catch (Exception)
@@ -360,9 +339,7 @@ namespace UnstuckMEUserGUI
 							foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
 							{
 								if (convo.Chat.ChatID == chat.ChatID)
-								{
-									convo.ShowConversation();
-								}
+								    convo.ShowConversation();
 							}
 						}
 					}

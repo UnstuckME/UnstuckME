@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="SettingsPage">
-
     <Grid>
         <Label Foreground="White" FontWeight="Heavy" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="32" Content="Settings Page" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
     </Grid>

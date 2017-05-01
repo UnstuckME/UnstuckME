@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -20,35 +12,40 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UserMenu : Window
     {
-        UnstuckMEChatUser Friend;
+        private readonly UnstuckMEChatUser _friend;
+
         public UserMenu(UnstuckMEChatUser inFriend)
         {
             InitializeComponent();
             Activate();
             Topmost = true;
             Focus();
-            Friend = inFriend;
-            ProfilePicture.Source = Friend.ProfilePicture;
-            LabelUsername.Content = Friend.UserName;
+            _friend = inFriend;
+            ProfilePicture.Source = _friend.ProfilePicture;
+            LabelUsername.Content = _friend.UserName;
         }
 
         private void MoveBottomRightEdgeOfWindowToMousePosition()
         {
-            var transform = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
-            var mouse = transform.Transform(GetMousePosition());
-            Left = mouse.X - Width;
-            Top = mouse.Y - Width;
+            PresentationSource presentationSource = PresentationSource.FromVisual(this);
+            if (presentationSource?.CompositionTarget != null)
+            {
+                var transform = presentationSource.CompositionTarget.TransformFromDevice;
+                var mouse = transform.Transform(GetMousePosition());
+                Left = mouse.X - Width;
+                Top = mouse.Y - Width;
+            }
         }
 
-        public System.Windows.Point GetMousePosition()
+        public Point GetMousePosition()
         {
             System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
-            return new System.Windows.Point(point.X, point.Y);
+            return new Point(point.X, point.Y);
         }
 
         private void MenuWindow_Deactivated(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -58,37 +55,33 @@ namespace UnstuckMEUserGUI
 
         private void CloseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void ButtonRemoveFriend_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
             OnlineUser temp = null;
             ContactCreateConversation temp2 = null;
-            UnstuckME.Server.DeleteFriend(UnstuckME.User.UserID, Friend.UserID);
+            UnstuckME.Server.DeleteFriend(UnstuckME.User.UserID, _friend.UserID);
+
             foreach (OnlineUser user in UnstuckME.MainWindow.OnlineUsersStack.Children.OfType<OnlineUser>())
             {
-                if(user.Friend.UserID == Friend.UserID)
-                {
+                if(user.Friend.UserID == _friend.UserID)
                     temp = user;
-                }
             }
             foreach (ContactCreateConversation contact in UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.OfType< ContactCreateConversation>())
             {
-                if(contact.Contact.UserID == Friend.UserID)
-                {
+                if(contact.Contact.UserID == _friend.UserID)
                     temp2 = contact;
-                }
             }
-            if(temp != null)
+
+            if (temp != null)
             {
                 UnstuckME.MainWindow.OnlineUsersStack.Children.Remove(temp);
                 UnstuckME.FriendsList.Remove(temp.Friend);
                 if(temp2 != null)
-                {
                     UnstuckME.Pages.ChatPage.StackPanelAddContacts.Children.Remove(temp2);
-                }
             }
         }
 
@@ -114,9 +107,9 @@ namespace UnstuckMEUserGUI
 
         private void ButtonSendMessage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
             UnstuckME.MainWindow.SwitchToChatTab();
-            UnstuckME.Pages.ChatPage.StartNewConversation(Friend.UserID);
+            UnstuckME.Pages.ChatPage.StartNewConversation(_friend.UserID);
         }
     }
 }

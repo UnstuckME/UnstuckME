@@ -17,26 +17,28 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                List<UserClass> Rlist = new List<UserClass>();
+                List<UserClass> rlist = new List<UserClass>();
 
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var classes = db.GetUserClasses(UserID);
-
-                    foreach (var c in classes)
+                    using (var classes = db.GetUserClasses(UserID))
                     {
-                        UserClass temp = new UserClass()
+                        foreach (var c in classes)
                         {
-                            ClassID = c.ClassID,
-                            CourseCode = c.CourseCode,
-                            CourseName = c.CourseName,
-                            CourseNumber = c.CourseNumber
-                        };
-                        Rlist.Add(temp);
+                            UserClass temp = new UserClass()
+                            {
+                                ClassID = c.ClassID,
+                                CourseCode = c.CourseCode,
+                                CourseName = c.CourseName,
+                                CourseNumber = c.CourseNumber
+                            };
+
+                            rlist.Add(temp);
+                        }
                     }
                 }
 
-                return Rlist;
+                return rlist;
             }
             catch (Exception ex)
             {
@@ -79,21 +81,20 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var codes = db.GetCourseCodes();
-
                 List<string> rlist = new List<string>();
                 List<string> rlist2 = new List<string>();
-                foreach (var code in codes)
+
+                using (var codes = db.GetCourseCodes())
                 {
-                    rlist.Add(code.ToString());
+                    foreach (var code in codes)
+                        rlist.Add(code);
                 }
 
                 IEnumerable<string> list = rlist.Distinct();
+
                 foreach (string classcode in list)
-                {
                     rlist2.Add(classcode);
-                }
-                //codes.Dispose();		//need this to release memory   
+
                 return rlist2;
             }
         }
@@ -111,7 +112,7 @@ namespace UnstuckMEInterfaces
                 int num = Convert.ToInt32(number);
                 var ID = db.GetCourseIDByCodeAndNumber(code, (short)num).First();
 
-                return ID.Value;
+                return ID ?? -1;
             }
         }
 
@@ -126,9 +127,7 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 int num = Convert.ToInt32(number);
-                var name = db.GetCourseNameByCodeAndNumber(code, (short)num).First();
-
-                return name;
+                return db.GetCourseNameByCodeAndNumber(code, (short)num).First();
             }
         }
 
@@ -141,21 +140,23 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var codes = db.GetCourseNumberByCourseCode(CourseCode);
-
                 List<string> rlist = new List<string>();
                 List<string> rlist2 = new List<string>();
-                foreach (var code in codes)
+
+                using (var codes = db.GetCourseNumberByCourseCode(CourseCode))
                 {
-                    rlist.Add(code.Value.ToString());
+                    foreach (var code in codes)
+                    {
+                        if (code != null)
+                            rlist.Add(code.Value.ToString());
+                    }
                 }
 
                 IEnumerable<string> list = rlist.Distinct();
+
                 foreach (string classcode in list)
-                {
                     rlist2.Add(classcode);
-                }
-                //codes.Dispose();		//need this to release memory   
+
                 return rlist2;
             }
         }
@@ -169,17 +170,20 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-                UserClass temp = new UserClass();
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    var classDB = db.ViewClasses(classID).First();
+                    var _class = db.ViewClasses(classID).First();
 
-                    temp.ClassID = classDB.ClassID;
-                    temp.CourseNumber = classDB.CourseNumber;
-                    temp.CourseName = classDB.CourseName;
-                    temp.CourseCode = classDB.CourseCode;
+                    UserClass temp = new UserClass
+                    {
+                        ClassID = _class.ClassID,
+                        CourseNumber = _class.CourseNumber,
+                        CourseName = _class.CourseName,
+                        CourseCode = _class.CourseCode
+                    };
+
+                    return temp;
                 }
-                return temp;
             }
             catch (Exception ex)
             {
@@ -214,9 +218,11 @@ namespace UnstuckMEInterfaces
                 {
                     if (client.Key == userID)
                     {
-                        client.Value.connection.AddClasses(temp);
+                        client.Value.Connection.AddClasses(temp);
                         foreach (UnstuckMEAvailableSticker sticker in newstickers)
-                            client.Value.connection.RecieveNewSticker(sticker);
+                            client.Value.Connection.RecieveNewSticker(sticker);
+
+                        break;
                     }
                 }
             }
@@ -229,7 +235,7 @@ namespace UnstuckMEInterfaces
         /// <summary>
         /// Adds a new class to the UnstuckME Database 
         /// </summary>
-        /// <param name="DBClass">Passes a DBClass object that contains the (CourseName, CourseCode, CourseNUmber)</param>
+        /// <param name="newClass">Passes a DBClass object that contains the (CourseName, CourseCode, CourseNUmber)</param>
         /// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB</returns>
         public bool AddClass(UserClass newClass)
         {

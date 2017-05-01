@@ -59,7 +59,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                     db.SaveChanges();
                 }
 
-                this.Close();
+                Close();
 
             }
             catch (Exception ex)
@@ -71,7 +71,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

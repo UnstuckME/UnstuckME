@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
@@ -21,7 +17,7 @@ namespace UnstuckMEInterfaces
         /// <summary>
         /// Attempts to log in a server administrator.
         /// </summary>
-        /// <param name="LoggingInAdmin">The information of the server administrator.</param>
+        /// <param name="admin">The information of the server administrator.</param>
         [OperationContract]
         void RegisterServerAdmin(AdminInfo admin);
 

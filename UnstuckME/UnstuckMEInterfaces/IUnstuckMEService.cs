@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using UnstuckME_Classes;
 
@@ -11,21 +10,27 @@ namespace UnstuckMEInterfaces
 		/// <summary>
 		/// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
 		/// </summary>
-		/// <param name="userID">The unique identifier of the user who has accepted the sticker.</param>
+		/// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
 		/// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
 		[OperationContract(IsOneWay = true)]
 		void AcceptSticker(int tutorID, int stickerID);
+
+        /// <summary>
+        /// Gets the information for a single sticker.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to get all the info for.</param>
+        /// <returns>An UnstuckMESticker containing the stickerID, classID, student and tutor IDs, among other fields.</returns>
 		[OperationContract]
-		UnstuckMESticker GetSticker(int sticker);
+		UnstuckMESticker GetSticker(int stickerID);
 
 		/// <summary>
 		/// Registers another user as a contact.
 		/// </summary>
-		/// <param name="userId">The unique identifier of the callee.</param>
+		/// <param name="userID">The unique identifier of the callee.</param>
 		/// <param name="friendUserID">The unique identifier of the user to add as a contact.</param>
 		/// <returns>The unique identifier of the user to add as a contact if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
-		int AddFriend(int userId, int friendUserID);
+		int AddFriend(int userID, int friendUserID);
 
 		/// <summary>
 		/// Creates a chat associated with a user.
@@ -44,7 +49,7 @@ namespace UnstuckMEInterfaces
 		/// tutor ranks, the total number of reviews submitted as a student and tutor, password, salt value used for hashing, and the bytes
 		/// representing the data of their profile picture.</returns>
 		[OperationContract]
-		UserInfo GetUserInfo(Nullable<int> userID, string emailAddress);
+		UserInfo GetUserInfo(int? userID, string emailAddress);
 
 		/// <summary>
 		/// Gets the unique identifier of a particular user.
@@ -76,17 +81,19 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		UserInfo UserLoginAttempt(string emailAddress, string passWord);
 
-		/// <summary>
-		/// Attempts to log the user in. Starts by recreating the hashed password, then checks to see if the user is already logged on so
-		/// that they can't be logged in more than once. If successful, logs the callback channel, the incoming message properties, and
-		/// the all the user's info from the database in the server's list of connected clients.
-		/// </summary>
-		/// <param name="emailAddress">The email address of the user attempting to log in.</param>
-		/// <param name="passWord">The password of the user attempting to log in.</param>
-		/// <returns>A UserInfo structure that contains the UserID, first and last name, email address, privileges, average student and
-		/// tutor ranks, the total number of reviews submitted as a student and tutor, password, salt value used for hashing, and the bytes
-		/// representing the data of their profile picture.</returns>
-		[OperationContract]
+        /// <summary>
+        /// Attempts to log the user in. Starts by recreating the hashed password, then checks to see if the user is already logged on so
+        /// that they can't be logged in more than once. If successful, logs the callback channel, the incoming message properties, and
+        /// the all the user's info from the database in the server's list of connected clients.
+        /// </summary>
+        /// <param name="displayFName">The first name of the new user.</param>
+        /// <param name="displayLName">The last name of the new user.</param>
+        /// <param name="emailAddress">The email address of the user attempting to log in.</param>
+        /// <param name="userPassword">The password of the user attempting to log in.</param>
+        /// <returns>A UserInfo structure that contains the UserID, first and last name, email address, privileges, average student and
+        /// tutor ranks, the total number of reviews submitted as a student and tutor, password, salt value used for hashing, and the bytes
+        /// representing the data of their profile picture.</returns>
+        [OperationContract]
 		bool CreateNewUser(string displayFName, string displayLName, string emailAddress, string userPassword);
 
 		/// <summary>
@@ -151,7 +158,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers that have tutors and marked as resolved.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null);
 
 		/// <summary>
 		/// Gets the stickers that have not been accepted by a tutor and surpassed the timeout date.
@@ -162,7 +169,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers that have not been accepted by a tutor and surpassed the timeout date.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, Nullable<int> organizationID = null, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null);
 
 		/// <summary>
 		/// Returns the reviews submitted by a specific user as a student.
@@ -191,7 +198,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers that have been submitted by a specific user that matches the filtering criteria.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetUserSubmittedStickers(int userID, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetUserSubmittedStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null);
 
 		/// <summary>
 		/// Gets the stickers a user has tutored, regardless if they are resolved or active.
@@ -202,7 +209,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers that a specific user has tutored that matches the filtering criteria.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetUserTutoredStickers(int userID, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> classID = null);
+		List<UnstuckMESticker> GetUserTutoredStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null);
 
 		/// <summary>
 		/// Gets the stickers available to tutor. This is currently untested, though it should work.
@@ -214,7 +221,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="classID">the unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
 		[OperationContract]
-		List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, Nullable<int> organizationID = null, float minstarrank = 0, Nullable<int> userID = null, Nullable<int> classID = null);
+		List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, int? organizationID = null, float minstarrank = 0, int? userID = null, int? classID = null);
 
 		/// <summary>
 		/// Associates a user with an official tutoring organization.
@@ -296,13 +303,13 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
 
-		/// <summary>
-		/// Removes a user from their contacts.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the callee.</param>
-		/// <param name="fileID">The unique identifier of the user to removed from contacts.</param>
-		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-		[OperationContract]
+        /// <summary>
+        /// Removes a user from their contacts.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the callee.</param>
+        /// <param name="friendID">The unique identifier of the user to removed from contacts.</param>
+        /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+        [OperationContract]
 		int DeleteFriend(int userID, int friendID);
 
 		/// <summary>
@@ -345,7 +352,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="chatID">The unique identifier of a specific chat.</param>
 		/// <returns>A number indicating how many messages a chat has.</returns>
 		[OperationContract]
-		int GetNumberOFMessages(int chatID);
+		int GetNumberOfMessages(int chatID);
 
 		/// <summary> 
 		/// Gets unique identifiers of all the chats a user is associated with. 
@@ -440,10 +447,10 @@ namespace UnstuckMEInterfaces
 		void CreateMentorOrg(string name);
 
 		/// <summary>
-		/// Adds a new class to the UnstuckME Database 
+		/// Adds a new class to the UnstuckME Database.
 		/// </summary>
-		/// <param name="DBClass">Passes a DBClass object that contains the (CourseName, CourseCode, CourseNUmber)</param>
-		/// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB</returns>
+		/// <param name="newClass">Passes a UserClass object that contains the CourseName, CourseCode, CourseNumber.</param>
+		/// <returns>A boolean indicating whether or not it was able to add the class to the UnstuckME_DB.</returns>
 		[OperationContract]
 		bool AddClass(UserClass newClass);
 
@@ -490,19 +497,30 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int RemoveTutorFromSticker(int stickerID);
 
-		[OperationContract]
-		List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int num_messages = 20);
+        /// <summary>
+        /// Currently for Ryan's use with chat caching.
+        /// </summary>
+        /// <param name="chatID">The unique identifier of the chat to get messages from.</param>
+        /// <param name="messageID">The unique identifier of the message to begin the query at.</param>
+        /// <param name="numMessages">The number of messages to return. Default is 20.</param>
+        /// <returns>A list of UnstuckMEMessages.</returns>
+        [OperationContract]
+		List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int numMessages = 20);
 
 		/// <summary>
 		/// Gets all the SentBy ID's of a particualr chat
 		/// </summary>
-		/// <param name="chatID">The Id of a particular chat
+		/// <param name="chatID">The Id of a particular chat</param>
 		/// <returns>A list of nullable integers indicating each members ID</returns>
 		[OperationContract]
-		List<int?> GetMemeberIdsFromChat(int chatID);
+		List<int?> GetMemberIDsFromChat(int chatID);
 
-
+        /// <summary>
+        /// Gets the info of a user who is friends with the specified user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user to get the info for.</param>
+        /// <returns>An UnstuckMEChatUser with information on a specific user.</returns>
         [OperationContract]
-        UnstuckMEChatUser GetFriendInfo(int userId);
+        UnstuckMEChatUser GetFriendInfo(int userID);
 	}
 }

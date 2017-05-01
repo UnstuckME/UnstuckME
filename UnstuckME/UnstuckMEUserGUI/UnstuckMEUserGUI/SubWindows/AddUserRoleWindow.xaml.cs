@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
@@ -22,12 +10,13 @@ namespace UnstuckMEUserGUI.SubWindows
     /// </summary>
     public partial class AddUserRoleWindow : Window
     {
-        bool isUser = false;
-        bool isModerator = false;
-        bool isAdmin = false;
-        bool isDisabled = false;
-        UserInfo targetUser;
-        int userId = -1;
+        private bool isUser = false;
+        private bool isModerator = false;
+        private bool isAdmin = false;
+        private bool isDisabled = false;
+        private UserInfo targetUser;
+        private int userID = -1;
+
         public AddUserRoleWindow()
         {
             InitializeComponent();
@@ -36,36 +25,28 @@ namespace UnstuckMEUserGUI.SubWindows
         private void UpdateRoleBtn_Click(object sender, RoutedEventArgs e)
         {
             if (isUser)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.User, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.User, userID);
             else if (isModerator)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userID);
             else if (isAdmin)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userID);
             else if (isDisabled)
-            {
-                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userId);
-            }
+                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userID);
         }
 
         private void FindUserBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                userId = UnstuckME.Server.GetUserID(UserEmailTxtBx.Text);
+                userID = UnstuckME.Server.GetUserID(UserEmailTxtBx.Text);
             }
             catch (Exception ex)
             {
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "While attempting a change to the user role an bad email was entered");
             }
-            if (userId != -1)
+            if (userID != -1)
             {
-                targetUser = UnstuckME.Server.GetUserInfo(userId, UserEmailTxtBx.Text);
+                targetUser = UnstuckME.Server.GetUserInfo(userID, UserEmailTxtBx.Text);
                 if (targetUser.Privileges == (int)Privileges.User)
                 {
                     isUser = true;

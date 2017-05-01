@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Configuration;
 
 namespace UnstuckMEServerGUI.ServerGuiSubWindow
@@ -21,7 +11,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
     /// </summary>
     public partial class ChangeDabaseConnectionSettings : Window
     {
-        private string schoolName = (System.Configuration.ConfigurationManager.AppSettings["SchoolName"]);
+        private readonly string schoolName = ConfigurationManager.AppSettings["SchoolName"];
         private int? m_databaseID = null;
         private bool useWindowsAuthenfication = false;
 
@@ -31,12 +21,10 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
             try
             {
-
                 //Load in content from school_DB (Tranlated SQL Query)
                 using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
                 {
-                    var firstDatabse =
-                        (from Databases in db.Databases where Databases.School.SchoolName == schoolName select Databases).First();
+                    var firstDatabse = (from Databases in db.Databases where Databases.School.SchoolName == schoolName select Databases).First();
 
                     if (firstDatabse != null)
                     {
@@ -51,10 +39,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                         m_databaseID = firstDatabse.DatabaseID;
                     }
                     else
-                    {
                         MessageBox.Show( "It appears you have never configured your School's MSSQL Database with us. Please enter your database information so we can connect your new UnstuckME server to it.", "UnstuckME MSSQL Server Configuration", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    }
-
                 }
             }
             catch (Exception)
@@ -66,20 +51,12 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void buttonTestConnection_Click(object sender, RoutedEventArgs e)
         {
-            bool displayOutput = true;
-            if (testConnection(displayOutput) == true)
-            {
-                textBlockConnectionTestedCheck.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                textBlockConnectionTestedCheck.Visibility = Visibility.Hidden;
-            }
+            textBlockConnectionTestedCheck.Visibility = TestConnection(true) ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void checkBox_Checked(object sender, RoutedEventArgs e)
@@ -94,33 +71,29 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
         private void textBoxSaveConnection_Click(object sender, RoutedEventArgs e)
         {
-            bool displayOutput = false;
-            if(testConnection(displayOutput) == true)
+            if (TestConnection(false))
             {  
                 textBlockConnectionTestedCheck.Visibility = Visibility.Visible;
-                this.Close();
+                Close();
             }
             else
-            {
                 textBlockConnectionTestedCheck.Visibility = Visibility.Hidden;
-            }
         }
 
-        private bool testConnection(bool displayOutput)
+        private bool TestConnection(bool displayOutput)
         {
             bool successfullConnection = true;
 
-            if(textBoxDatabaseName.Text == "")
+            if(textBoxDatabaseName.Text == string.Empty)
                 throw new Exception("Please enter the name of your Database");
-            if(textBoxDataSource.Text == "")
+            if(textBoxDataSource.Text == string.Empty)
                 throw new Exception("Please enter the ip or domain address of your MSSQL server");
-            if(textBoxUsername.Text == "")
+            if(textBoxUsername.Text == string.Empty)
                 throw new Exception("Please enter a username that has READ/WRITE permissions for your MSSQL server");
-            if(passwordBoxPassword.Password == "")
+            if(passwordBoxPassword.Password == string.Empty)
                 throw new Exception(string.Concat("Please enter/re-enter the password associated with: ", textBoxUsername.Text));
             try
             {
-
                 using (UnstuckME_DBEntities SelectedDB = new UnstuckME_DBEntities())
                 {
                     //MessageBox.Show(SelectedDB.Database.Connection.ConnectionString.ToString());
@@ -128,15 +101,15 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 
                     using (var connection = new SqlConnection(SelectedDB.Database.Connection.ConnectionString))
                     {
-                        var query = "select 1";
-                        if (displayOutput == true)
+                        string query = "select 1";
+                        if (displayOutput)
                             MessageBox.Show("Executing: test query");
 
                         var command = new SqlCommand(query, connection);
 
                         connection.Open();
                         command.ExecuteScalar();
-                        if (displayOutput == true)
+                        if (displayOutput)
                             MessageBox.Show("SQL Query execution successful\nSQL Connection successful.");
 
                         if (displayOutput == false) // Actually modify the app.config here

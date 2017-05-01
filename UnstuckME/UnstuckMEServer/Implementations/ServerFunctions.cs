@@ -34,7 +34,7 @@ namespace UnstuckMEInterfaces
                     if (onlineAdmin.Key == LoggingInAdmin.ServerAdminID)
                     {
                         oldConnection = true;
-                        onlineAdmin.Value.connection = establishedUserConnection;
+                        onlineAdmin.Value.Connection = establishedUserConnection;
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("Server Admin Re-Login: {0} at {1}", onlineAdmin.Value.Admin.EmailAddress, DateTime.Now);
                         Console.ResetColor();
@@ -45,7 +45,7 @@ namespace UnstuckMEInterfaces
                 {
                     ConnectedServerAdmin newAdmin = new ConnectedServerAdmin()
                     {
-                        connection = establishedUserConnection,
+                        Connection = establishedUserConnection,
                         Admin = LoggingInAdmin
                     };
                     _connectedServerAdmins.TryAdd(newAdmin.Admin.ServerAdminID, newAdmin);
@@ -113,35 +113,31 @@ namespace UnstuckMEInterfaces
         /// <param name="message"></param>
         public void AdminSendMessageToUsers(List<string> recipients, string message)
         {
-            if (recipients.Count == 0)
+            try
             {
-                try
+
+                if (recipients.Count == 0)
                 {
                     foreach (var client in _connectedClients)
-                        client.Value.connection.GetMessageFromServer(message);
+                        client.Value.Connection.GetMessageFromServer(message);
                 }
-                catch (Exception)
-                { }
-            }
-            else
-            {
-                try
+                else
                 {
-                    for (int i = 0; i < recipients.Count; i++)
+                    foreach (string recipient in recipients)
                     {
                         var client = _connectedClients.First();
 
                         for (int j = 0; j < _connectedClients.Count; j++)
                         {
-                            if (client.Value.User.EmailAddress == recipients[i])
-                                client.Value.connection.GetMessageFromServer(message);
+                            if (client.Value.User.EmailAddress == recipient)
+                                client.Value.Connection.GetMessageFromServer(message);
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -153,9 +149,7 @@ namespace UnstuckMEInterfaces
             try
             {
                 foreach (var client in _connectedClients)
-                {
-                    client.Value.connection.ForceClose();
-                }
+                    client.Value.Connection.ForceClose();
             }
             catch (Exception)
             { }
@@ -168,9 +162,10 @@ namespace UnstuckMEInterfaces
         /// <returns>The unique identifier of the newly created organization if successful, -1 if unsuccessful.</returns>
         public int AdminCreateMentoringOrganization(string organizationName)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.CreateMentorOrganization(organizationName);
@@ -180,7 +175,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to create organization
+                return retVal; //If Failure to create organization
             }
         }
 
@@ -193,9 +188,10 @@ namespace UnstuckMEInterfaces
         /// <returns>The unique identifier of the newly created class if successful, -1 if unsuccessful.</returns>
         public int AdminCreateClass(string courseName, string courseCode, int courseNumber)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.CreateNewClass(courseName, courseCode, (short)courseNumber);
@@ -205,7 +201,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to create class
+                return retVal; //If Failure to create class
             }
         }
 
@@ -216,9 +212,10 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
         public int AdminDeleteClass(int classID)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.DeleteClassByClassID(classID);
@@ -228,7 +225,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to delete class
+                return retVal; //If Failure to delete class
             }
         }
 
@@ -239,9 +236,10 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
         public int AdminDeleteMentoringOrganization(int organizationID)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.DeleteMentorOrganizationByMentorID(organizationID);
@@ -251,7 +249,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to delete organization
+                return retVal; //If Failure to delete organization
             }
         }
 
@@ -262,9 +260,10 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
         public int AdminDeleteReport(int reportID)
         {
+            int retVal = -1;
+
             try
             {
-                int retVal = -1;
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.DeleteReportByReportID(reportID);
@@ -274,7 +273,7 @@ namespace UnstuckMEInterfaces
             }
             catch (Exception)
             {
-                return -1; //If Failure to delete report
+                return retVal; //If Failure to delete report
             }
         }
     }

@@ -4,25 +4,17 @@ using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Security.Cryptography;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
-using UnstuckMEUserGUI.SubWindows;
 
 namespace UnstuckMEUserGUI
 {
@@ -31,38 +23,38 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class LoginWindow : Window
 	{
-		private static List<UnstuckMESchool> schools;
-		private string m_SchoolName = null;
+		private static List<UnstuckMESchool> _schools;
+		private string m_schoolName = null;
 		private string m_orginalSchoolName = null;
-		private string m_SchoolInfoFilePath = null;
-		private string verification_code = null;
-		private bool content_rendered = true;
-		private short failed_attempts = 0;
+		private string m_schoolInfoFilePath = null;
+		private string m_verificationCode = null;
+		private bool m_contentRendered = true;
+		private short m_failedAttempts = 0;
 
 		public LoginWindow()
 		{
 			InitializeComponent();
 			UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
 			UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
-			UnstuckME.Stream_ChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
-			UnstuckME.FileStream = UnstuckME.Stream_ChannelFactory.CreateChannel();
+			UnstuckME.StreamChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
+			UnstuckME.FileStream = UnstuckME.StreamChannelFactory.CreateChannel();
 			UnstuckME.Blue = buttonCreateAccount.Background;
 			UnstuckME.Red = buttonCancel.Background;
 
 			var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-			m_orginalSchoolName = m_SchoolName = config.AppSettings.Settings["SchoolName"].Value;
+			m_orginalSchoolName = m_schoolName = config.AppSettings.Settings["SchoolName"].Value;
 
 			try
 			{
 				UnstuckME.ProgramDir = new UnstuckMEDirectory();
-				m_SchoolInfoFilePath = System.IO.Path.Combine(UnstuckME.ProgramDir.SchoolDir, "schoolLogo.dat");
+				m_schoolInfoFilePath = Path.Combine(UnstuckME.ProgramDir.SchoolDir, "schoolLogo.dat");
 
-				if (File.Exists(m_SchoolInfoFilePath) != true)
+				if (File.Exists(m_schoolInfoFilePath) != true)
 				{
-					FileStream fs = new FileStream(m_SchoolInfoFilePath, FileMode.CreateNew);
+					FileStream fs = new FileStream(m_schoolInfoFilePath, FileMode.CreateNew);
 					fs.Close();
 
-					using (StreamWriter file = new StreamWriter(m_SchoolInfoFilePath, false))
+					using (StreamWriter file = new StreamWriter(m_schoolInfoFilePath, false))
 					{
 						file.WriteLine("Last Modified = NULL");
 						file.WriteLine("Photo ID = NULL");
@@ -70,23 +62,23 @@ namespace UnstuckMEUserGUI
 					}
 				}
 
-				string remember_me = config.AppSettings.Settings["RememberMe"].Value;
-				string m_username = config.AppSettings.Settings["Username"].Value;
-				string m_password = config.AppSettings.Settings["Password"].Value;
+				string rememberMe = config.AppSettings.Settings["RememberMe"].Value;
+				string username = config.AppSettings.Settings["Username"].Value;
+				string password = config.AppSettings.Settings["Password"].Value;
 
-				if (m_username != string.Empty)
+				if (username != string.Empty)
 				{
 					//System.Windows.Media.Brush brush = (System.Windows.Media.Brush)(new BrushConverter().ConvertFromString("#FFCFCF56"));
 
 					textBoxUserName_GotFocus(null, null);
 					textBoxPasswordPreview_GotFocus(null, null);
-					textBoxUserName.Text = m_username;
+					textBoxUserName.Text = username;
 					//textBoxUserName.Background = brush;
-					passwordBox.Password = m_password;
+					passwordBox.Password = password;
 					//passwordBox.Background = brush;
 					checkboxRememberMe.IsChecked = true;
 
-					if (remember_me == "true")
+					if (rememberMe == "true")
 						buttonLogin_Click(null, null);
 				}
 			}
@@ -99,18 +91,13 @@ namespace UnstuckMEUserGUI
 
 		private async void Window_ContentRendered(object sender, EventArgs e)
 		{
-			schools = await LoadSchoolsAsync();
-			foreach (UnstuckMESchool school in schools)
-			{
-				comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
-			}
+			_schools = await LoadSchoolsAsync();
+			foreach (UnstuckMESchool school in _schools)
+			    comboBoxSchools.Items.Add(new ComboBoxItem().Content = school.SchoolName);
 
-			if (!string.IsNullOrEmpty(m_SchoolName))
-				comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf(m_SchoolName);
-			else
-				comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf("Local Ip");
+		    comboBoxSchools.SelectedIndex = comboBoxSchools.Items.IndexOf(!string.IsNullOrEmpty(m_schoolName) ? m_schoolName : "Local Ip");
 
-			content_rendered = false;
+		    m_contentRendered = false;
 		}
 
 		private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
@@ -129,13 +116,13 @@ namespace UnstuckMEUserGUI
 								//join j in db.Servers on s.SchoolID equals j.SchoolID      /*No Schools have a server currently*/
 								select new
 								{
-									SchoolName = s.SchoolName,                                      //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/   
-									EmailCredentials = s.EmailCredentials,
-									SchoolID = s.SchoolID,
-									LastModified = l.LastModified//,
-									//Domain = j.ServerDomain,
-									//ServerName = j.ServerName,
-									//IPAddress = j.ServerIPAddress
+								    s.SchoolName,                                      //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/   
+								    s.EmailCredentials,
+								    s.SchoolID,
+								    l.LastModified//,
+									//j.ServerDomain,
+									//j.ServerName,
+									//j.ServerIPAddress
 								};
 
 				foreach (var dbschool in dbSchools)
@@ -163,7 +150,7 @@ namespace UnstuckMEUserGUI
 
 			string emailAttempt = textBoxUserName.Text;
 			string passwordAttempt = passwordBox.Password;
-			_labelInvalidLogin.Visibility = Visibility.Hidden;
+			labelInvalidLogin.Visibility = Visibility.Hidden;
 			try
 			{
 				if (textBoxUserName.Text.Length <= 0)
@@ -177,8 +164,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception ex)
 			{
-				failed_attempts++;
-				if (failed_attempts > 5)
+				m_failedAttempts++;
+				if (m_failedAttempts > 5)
 				{
 					buttonResetPassword.IsEnabled = true;
 					buttonResetPassword.Visibility = Visibility.Visible;
@@ -189,10 +176,10 @@ namespace UnstuckMEUserGUI
 				else
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, "NET TCP client issued a request, but received no or failed response along specified channel");
 
-				_labelInvalidLogin.Content = ex.Message;
+				labelInvalidLogin.Content = ex.Message;
 				passwordBox.Password = string.Empty;
 				textBoxUserName_TextChanged(sender, e as TextChangedEventArgs);
-				_labelInvalidLogin.Visibility = Visibility.Visible;
+				labelInvalidLogin.Visibility = Visibility.Visible;
 				isValid = false;
 			}
 			if (isValid)
@@ -203,14 +190,14 @@ namespace UnstuckMEUserGUI
 
 					if (UnstuckME.User.EmailAddress.ToLower() != emailAttempt.ToLower())
 					{
-						_labelInvalidLogin.Content = "Invalid Username/Password";
+						labelInvalidLogin.Content = "Invalid Username/Password";
 						throw new Exception();
 					}
 					else
 					{
 						var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-						if (checkboxRememberMe.IsChecked.Value)
+						if (checkboxRememberMe.IsChecked.HasValue && checkboxRememberMe.IsChecked.Value)
 						{
 							config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
 							config.AppSettings.Settings["Password"].Value = passwordBox.Password;
@@ -230,20 +217,19 @@ namespace UnstuckMEUserGUI
 
 						UnstuckMEWindow mainWindow = new UnstuckMEWindow();
 						mainWindow.Show();
-						this.Close();
+                        Close();
 					}
 				}
 				catch (Exception exp)
 				{
-					failed_attempts++;
-					if (failed_attempts > 5)
+					m_failedAttempts++;
+					if (m_failedAttempts > 5)
 					{
 						buttonResetPassword.IsEnabled = true;
 						buttonResetPassword.Visibility = Visibility.Visible;
 					}
 
-					isValid = false;
-					_labelInvalidLogin.Visibility = Visibility.Visible;
+					labelInvalidLogin.Visibility = Visibility.Visible;
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message);
 
 					try
@@ -256,7 +242,7 @@ namespace UnstuckMEUserGUI
 					{
 						MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
 						UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message);
-						this.Close();
+                        Close();
 					}
 				}
 			}
@@ -274,7 +260,7 @@ namespace UnstuckMEUserGUI
 		private UserInfo ServerLoginAttemptAsynch(string emailAttempt, string passwordAttempt)
 		{
 			UserInfo temp = new UserInfo();
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				try
 				{
@@ -284,7 +270,7 @@ namespace UnstuckMEUserGUI
 				{
 					UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
 					logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
-					_labelInvalidLogin.Content = "Server Unavailable!";
+					labelInvalidLogin.Content = "Server Unavailable!";
 				}
 			});
 
@@ -331,7 +317,7 @@ namespace UnstuckMEUserGUI
 
 		private async void buttonCreate_Click(object sender, RoutedEventArgs e)
 		{
-			if (textboxVerificationCode.Text == verification_code)
+			if (textboxVerificationCode.Text == m_verificationCode)
 			{
 				try
 				{
@@ -341,17 +327,16 @@ namespace UnstuckMEUserGUI
 						await Task.Factory.StartNew(() => InsertProfilePictureAsynch(userID));
 					}
 					else
-					{
-						throw new Exception("Error occurred creating a new user, Please Contact Your Server Administrator");
-					}
-					_LoginGrid.IsEnabled = true;
+					    throw new Exception("Error occurred creating a new user, Please Contact Your Server Administrator");
+
+				    LoginGrid.IsEnabled = true;
 					textBoxUserName.Text = textBoxCreateEmailAddress.Text;
 					passwordBox.Password = passwordBoxCreate.Password;
-					_AccountCreationGrid.IsEnabled = false;
-					_AccountCreationGrid.Visibility = Visibility.Hidden;
+					AccountCreationGrid.IsEnabled = false;
+					AccountCreationGrid.Visibility = Visibility.Hidden;
 					AccountVerificationGrid.IsEnabled = false;
 					AccountVerificationGrid.Visibility = Visibility.Collapsed;
-					_LoginGrid.Visibility = Visibility.Visible;
+					LoginGrid.Visibility = Visibility.Visible;
 					AfterUserCreationTextBoxandPasswordBoxUpdate();
 				}
 				catch (Exception ex)
@@ -370,7 +355,7 @@ namespace UnstuckMEUserGUI
 					{
 						MessageBox.Show("There is a problem re-connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
 						logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
-						this.Close();
+                        Close();
 					}
 				}
 			}
@@ -381,12 +366,11 @@ namespace UnstuckMEUserGUI
 		private bool CreateUserAsynch()
 		{
 			bool temp = false;
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				try
 				{
 					temp = UnstuckME.Server.CreateNewUser(textBoxCreateFirstName.Text, textBoxCreateLastName.Text, textBoxCreateEmailAddress.Text, passwordBoxCreate.Password);
-
 				}
 				catch (Exception exp)
 				{
@@ -394,13 +378,14 @@ namespace UnstuckMEUserGUI
 					logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
 				}
 			});
+
 			return temp;
 		}
 
 		private int GetUserIDAsynch()
 		{
 			int temp = -1;
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				try
 				{
@@ -417,7 +402,7 @@ namespace UnstuckMEUserGUI
 
 		private void InsertProfilePictureAsynch(int userID)
 		{
-			this.Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
 			{
 				ImageConverter converter = new ImageConverter();
 				byte[] avatar = (byte[])converter.ConvertTo(Properties.Resources.UserBlue, typeof(byte[]));
@@ -425,10 +410,7 @@ namespace UnstuckMEUserGUI
 				{
 					using (UnstuckMEStream stream = new UnstuckMEStream(avatar, true))
 					{
-						stream.User = new UserInfo()
-						{
-							UserID = userID
-						};
+                        stream.UserID = userID;
 						UnstuckME.FileStream.SetProfilePicture(stream);
 					}
 				}
@@ -451,10 +433,10 @@ namespace UnstuckMEUserGUI
 
 		private void buttonCreateAccount_Click(object sender, RoutedEventArgs e)
 		{
-			_LoginGrid.IsEnabled = false;
-			_LoginGrid.Visibility = Visibility.Hidden;
-			_AccountCreationGrid.IsEnabled = true;
-			_AccountCreationGrid.Visibility = Visibility.Visible;
+			LoginGrid.IsEnabled = false;
+			LoginGrid.Visibility = Visibility.Hidden;
+			AccountCreationGrid.IsEnabled = true;
+			AccountCreationGrid.Visibility = Visibility.Visible;
 			buttonResetPassword.IsEnabled = false;
 			buttonResetPassword.Visibility = Visibility.Collapsed;
 		}
@@ -480,10 +462,10 @@ namespace UnstuckMEUserGUI
 
 		private void buttonCancel_Click(object sender, RoutedEventArgs e)
 		{
-			_AccountCreationGrid.IsEnabled = false;
-			_AccountCreationGrid.Visibility = Visibility.Hidden;
-			_LoginGrid.IsEnabled = true;
-			_LoginGrid.Visibility = Visibility.Visible;
+			AccountCreationGrid.IsEnabled = false;
+			AccountCreationGrid.Visibility = Visibility.Hidden;
+			LoginGrid.IsEnabled = true;
+			LoginGrid.Visibility = Visibility.Visible;
 			textBoxCreateFirstName.Text = string.Empty;
 			textBoxCreateLastName.Text = string.Empty;
 			textBoxCreateEmailAddress.Text = string.Empty;
@@ -556,11 +538,9 @@ namespace UnstuckMEUserGUI
 			}
 
 			if (foundCDrive != true)
-			{
-				driveToUse = myDrives[0].Name;
-			}
+			    driveToUse = myDrives[0].Name;
 
-			return driveToUse;
+		    return driveToUse;
 		}
 
 		private void comboBoxSchools_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -571,15 +551,15 @@ namespace UnstuckMEUserGUI
 			if (comboBoxSchools.SelectedIndex != 0)
 			{
 				//Choose a new school
-				if (m_SchoolName != comboBoxSchools.SelectedValue.ToString())
+				if (m_schoolName != comboBoxSchools.SelectedValue.ToString())
 				{
-					System.Configuration.ConfigurationManager.AppSettings["SchoolName"] = selectedItem;
-					m_SchoolName = selectedItem;
+                    ConfigurationManager.AppSettings["SchoolName"] = selectedItem;
+					m_schoolName = selectedItem;
 				}
 
-				foreach (UnstuckMESchool school in schools)
+				foreach (UnstuckMESchool school in _schools)
 				{
-					if (school.SchoolName == m_SchoolName)
+					if (school.SchoolName == m_schoolName)
 					{
 						CheckSchoolLogo(school.SchoolID);
 						break;
@@ -590,55 +570,45 @@ namespace UnstuckMEUserGUI
 
 		private void CheckSchoolLogo(int logoID)
 		{
-			string lastmodifiedDate = null;
-
-			bool lastModifiedMatches = false;
+		    bool lastModifiedMatches = false;
 			bool logoIdMatches = false;
 			bool stopCheck = false;
 			bool newLogoNeeded = true;
 
 			using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
 			{
-				lastmodifiedDate = (from l in db.SchoolLogoes where l.LogoID == logoID select new { lastModified = l.LastModified }).First().ToString();
+			    string lastmodifiedDate = (from l in db.SchoolLogoes where l.LogoID == logoID select new { lastModified = l.LastModified }).First().ToString();
 
-				try
+			    try
 				{
-					string line = "";
-					StreamReader file = new StreamReader(m_SchoolInfoFilePath);
+					string line = string.Empty;
+					StreamReader file = new StreamReader(m_schoolInfoFilePath);
 
-					while (stopCheck != true && ((line = file.ReadLine()) != null))
+					while (stopCheck != true && (line = file.ReadLine()) != null)
 					{
 						if (line.Contains("Last Modified ="))
 						{
 							if (line.Contains(lastmodifiedDate))
-							{
-								lastModifiedMatches = true;
-							}
+							    lastModifiedMatches = true;
 							else
-							{
-								stopCheck = true;
-							}
+							    stopCheck = true;
 						}
 						else if (line.Contains("Photo ID ="))
 						{
 							if (line.Contains(logoID.ToString()))
-							{
-								logoIdMatches = true;
-							}
+							    logoIdMatches = true;
 							else
-							{
-								stopCheck = true;
-							}
+							    stopCheck = true;
 						}
 
-						if (lastModifiedMatches == true && logoIdMatches == true)
+						if (lastModifiedMatches && logoIdMatches)
 						{
 							stopCheck = true;
 							newLogoNeeded = false;
 						}
 					}
 
-					if (newLogoNeeded == true)
+					if (newLogoNeeded)
 					{
 						var schoolLogoObj = (from l in db.SchoolLogoes where l.LogoID == logoID select new { logo = l.Logo }).First();
 						byte[] imgByteArray = schoolLogoObj.logo;
@@ -699,7 +669,7 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				verification_code = UnstuckME.Server.SendEmail(EmailType.CreateAccount, textBoxCreateEmailAddress.Text, textBoxCreateFirstName.Text);
+				m_verificationCode = UnstuckME.Server.SendEmail(EmailType.CreateAccount, textBoxCreateEmailAddress.Text, textBoxCreateFirstName.Text);
 				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Please check your email for the verification code to verify your account", "Verification Code Sent", UnstuckMEBoxImage.Information);
 				messagebox.ShowDialog();
 			}
@@ -714,7 +684,7 @@ namespace UnstuckMEUserGUI
 
 		private void AccountVerificationCanvas_MouseDown(object sender, MouseEventArgs e)
 		{
-			verification_code = string.Empty;
+			m_verificationCode = string.Empty;
 			AccountVerificationGrid.IsEnabled = false;
 			AccountVerificationGrid.Visibility = Visibility.Collapsed;
 		}
@@ -765,11 +735,11 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
+				System.Windows.Media.Color brush = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56");
 
 				if ((textBoxUserName.Background as SolidColorBrush).Color == brush)
 					textBoxUserName.Background = System.Windows.Media.Brushes.White;
-				if (!content_rendered && (passwordBox.Background as SolidColorBrush).Color == brush)
+				if (!m_contentRendered && (passwordBox.Background as SolidColorBrush).Color == brush)
 					passwordBox.Background = System.Windows.Media.Brushes.White;
 			}
 			catch (Exception)
@@ -780,11 +750,11 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				System.Windows.Media.Color brush = (System.Windows.Media.Color)(System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56"));
+				System.Windows.Media.Color brush = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56");
 
 				if ((passwordBox.Background as SolidColorBrush).Color == brush)
 					passwordBox.Background = System.Windows.Media.Brushes.White;
-				if (!content_rendered && (textBoxUserName.Background as SolidColorBrush).Color == brush)
+				if (!m_contentRendered && (textBoxUserName.Background as SolidColorBrush).Color == brush)
 					textBoxUserName.Background = System.Windows.Media.Brushes.White;
 			}
 			catch (Exception)
@@ -800,17 +770,17 @@ namespace UnstuckMEUserGUI
 					UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, string.Format("Is {0} the email address of the account you wish to reset your password for?", textBoxUserName.Text), "Please Verify the Account to Reset the Password", UnstuckMEBoxImage.Warning);
 					messagebox.ShowDialog();
 
-					if (messagebox.DialogResult.Value)  //user pressed yes
+					if (messagebox.DialogResult.HasValue && messagebox.DialogResult.Value)  //user pressed yes
 					{
 						try
 						{
 							UserInfo user = UnstuckME.Server.GetUserInfo(null, textBoxUserName.Text);
 
-							string new_password = UnstuckME.Server.SendEmail(EmailType.ResetPassword, textBoxUserName.Text, user.FirstName);
+							string newPassword = UnstuckME.Server.SendEmail(EmailType.ResetPassword, textBoxUserName.Text, user.FirstName);
 							messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Please check your email for your new password", "New Password Sent", UnstuckMEBoxImage.Information);
 							messagebox.ShowDialog();
 
-							UnstuckME.Server.ChangePassword(user, new_password);
+							UnstuckME.Server.ChangePassword(user, newPassword);
 						}
 						catch (Exception ex)
 						{
@@ -828,7 +798,7 @@ namespace UnstuckMEUserGUI
 							{
 								MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
 								UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message);
-								this.Close();
+                                Close();
 							}
 						}
 					}

@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -22,19 +11,15 @@ namespace UnstuckMEUserGUI
     {
         public UnstuckMEAvailableSticker Sticker;
         public static UserClass Class;
+
         public StickerInfoWindow(ref UnstuckMEAvailableSticker inSticker)
         {
             InitializeComponent();
             Sticker = inSticker;
             Topmost = true;
-            if(Sticker.ProblemDescription == string.Empty)
-            {
-                TextBoxProblemDescription.Text = "(No Description Given)";
-            }
-            else
-            {
-                TextBoxProblemDescription.Text = Sticker.ProblemDescription;
-            }
+
+            TextBoxProblemDescription.Text = Sticker.ProblemDescription == string.Empty ? "(No Description Given)" : Sticker.ProblemDescription;
+
             LabelLongTimeout.Content = "Timeout: " + DateTime.Now.AddSeconds((Sticker.Timeout - DateTime.Now).TotalSeconds).ToLongDateString() + " " + DateTime.Now.AddSeconds((Sticker.Timeout - DateTime.Now).TotalSeconds).ToShortTimeString();
             LabelClassName.Content = "Class: " + Sticker.CourseCode  + " " + Sticker.CourseNumber + " " + Sticker.CourseName;
 
@@ -42,26 +27,30 @@ namespace UnstuckMEUserGUI
 
         private void MoveBottomRightEdgeOfWindowToMousePosition()
         {
-            var transform = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
-            var mouse = transform.Transform(GetMousePosition());
-            Left = mouse.X;
-            Top = mouse.Y;
+            PresentationSource presentationSource = PresentationSource.FromVisual(this);
+            if (presentationSource?.CompositionTarget != null)
+            {
+                var transform = presentationSource.CompositionTarget.TransformFromDevice;
+                var mouse = transform.Transform(GetMousePosition());
+                Left = mouse.X;
+                Top = mouse.Y;
+            }
         }
 
-        public System.Windows.Point GetMousePosition()
+        public Point GetMousePosition()
         {
             System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
-            return new System.Windows.Point(point.X, point.Y);
+            return new Point(point.X, point.Y);
         }
 
-         private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             MoveBottomRightEdgeOfWindowToMousePosition();
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
