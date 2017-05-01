@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -60,11 +61,13 @@ namespace UnstuckMEUserGUI
         private void MainContainer_MouseEnter(object sender, MouseEventArgs e)
         {
             Deletebtn.Visibility = Visibility.Visible;
+            ClassBorder.BorderBrush = Brushes.LightGray;
         }
 
         private void MainContainer_MouseLeave(object sender, MouseEventArgs e)
         {
             Deletebtn.Visibility = Visibility.Collapsed;
+            ClassBorder.BorderBrush = null;
         }
     }
 }

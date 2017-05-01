@@ -388,5 +388,12 @@ namespace UnstuckMEUserGUI
         {
             ButtonDeleteProfile.Background = Brushes.DarkRed;
         }
+
+        private void ComboBoxOrgName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //ComboBoxOrgName.Background = Brushes.Indigo;
+            //ComboBoxOrgName.Foreground = Brushes.Honeydew;
+            //ComboBoxOrgName.SelectedIndex = 3;
+        }
     }
 }
