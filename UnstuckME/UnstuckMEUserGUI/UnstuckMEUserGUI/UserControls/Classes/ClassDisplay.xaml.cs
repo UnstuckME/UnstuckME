@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -10,8 +11,7 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ClassDisplay : UserControl
     {
-        private UserClass Class;
-        private FrameworkElement lastClick = null;
+        private readonly UserClass Class;
 
         public ClassDisplay(UserClass inClass)
         {
@@ -25,35 +25,46 @@ namespace UnstuckMEUserGUI
             MainContainer.Name = "MainContainer" + Class.ClassID;
         }
 
-        private void MainContainer_Click(object sender, RoutedEventArgs e)
-        {
-            Deletebtn.Visibility = Deletebtn.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            lastClick = e.Source as FrameworkElement;
-        }
         private void Deletebtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                UnstuckME.Server.RemoveUserFromClass(UnstuckME.User.UserID, Class.ClassID);
+                UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OKCancel, string.Format("Are you sure you wish to remove {0} from your profile?", Class.CourseName), "Remove Class?", UnstuckMEBoxImage.Warning);
+                bool? open = messagebox.ShowDialog();
 
-                UIElementCollection availablestickers = UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children;
-                for (int index = availablestickers.Count - 1; index >= 0; index--)
+                if (open.HasValue && open.Value)
                 {
-                    AvailableSticker availSticker = availablestickers[index] as AvailableSticker;
-                    if (availSticker != null && availSticker.Sticker.ClassID == Class.ClassID)
-                    {
-                        UnstuckME.Pages.StickerPage.AvailableStickers.Remove(availSticker.Sticker);
-                        availSticker.RemoveFromStackPanel();
-                    }
-                }
+                    UnstuckME.Server.RemoveUserFromClass(UnstuckME.User.UserID, Class.ClassID);
 
-                //Removes Sticker From Stack Panel
-                ((StackPanel)Parent).Children.Remove(this);
+                    UIElementCollection availablestickers = UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children;
+                    for (int index = availablestickers.Count - 1; index >= 0; index--)
+                    {
+                        AvailableSticker availSticker = availablestickers[index] as AvailableSticker;
+                        if (availSticker != null && availSticker.Sticker.ClassID == Class.ClassID)
+                        {
+                            UnstuckME.Pages.StickerPage.AvailableStickers.Remove(availSticker.Sticker);
+                            availSticker.RemoveFromStackPanel();
+                        }
+                    }
+
+                    //Removes Sticker From Stack Panel
+                    ((StackPanel) Parent).Children.Remove(this);
+                }
             }
             catch (Exception ex)
             {
-                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
+                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
             }
+        }
+
+        private void MainContainer_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Deletebtn.Visibility = Visibility.Visible;
+        }
+
+        private void MainContainer_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Deletebtn.Visibility = Visibility.Collapsed;
         }
     }
 }

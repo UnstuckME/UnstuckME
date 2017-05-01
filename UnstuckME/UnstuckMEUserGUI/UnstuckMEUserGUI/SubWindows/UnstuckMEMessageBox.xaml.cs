@@ -198,9 +198,7 @@ namespace UnstuckMEUserGUI
                         break;
                     }
                 default:
-                    {
-                        break;
-                    }
+                    break;
             }
             DialogResult = null;
             try

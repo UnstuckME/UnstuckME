@@ -356,10 +356,9 @@ go
 create proc GetUserOrganizations
 (	@userid int	) as
 begin
-	select OrganizationName
-	from UserProfile join OmToUser		on UserProfile.UserID = OmToUser.UserID
-		join OfficialMentor				on OfficialMentor.MentorID = OmToUser.MentorID
-	where UserProfile.UserID = @userid;
+	select OmToUser.MentorID, OrganizationName
+	from OmToUser join OfficialMentor	on OmToUser.MentorID = OfficialMentor.MentorID
+	where OmToUser.UserID = @userid;
 end;
 
 /**************************************************************************

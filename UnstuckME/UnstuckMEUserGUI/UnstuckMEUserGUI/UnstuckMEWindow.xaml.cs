@@ -181,9 +181,6 @@ namespace UnstuckMEUserGUI
 				{
 					UnstuckME.Pages.UserProfilePage.ProfilePicture.Source = UnstuckME.UserProfilePicture;  //convert image so it can be displayed
 					UnstuckME.Pages.UserProfilePage.ImageEditProfilePicture.Source = UnstuckME.UserProfilePicture;
-					UnstuckME.Pages.UserProfilePage.FirstName.Text = UnstuckME.User.FirstName;
-					UnstuckME.Pages.UserProfilePage.LastName.Text = UnstuckME.User.LastName;
-					UnstuckME.Pages.UserProfilePage.EmailAddress.Text = UnstuckME.User.EmailAddress;
 					UnstuckME.Pages.UserProfilePage.SetStudentRating(UnstuckME.User.AverageStudentRank);
 					UnstuckME.Pages.UserProfilePage.SetTutorRating(UnstuckME.User.AverageTutorRank);
 					UnstuckME.Pages.UserProfilePage.RepopulateClasses();
@@ -256,7 +253,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception ex)
 			{
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
 				UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to submit a review for the stickers you have open.", "Review Needed", UnstuckMEBoxImage.Information);
 				error.ShowDialog();
 			}
@@ -387,16 +384,17 @@ namespace UnstuckMEUserGUI
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, UnstuckME.User.EmailAddress);
 			try
 			{
 				UnstuckME.Server.Logout();
 			}
 			catch (Exception)
 			{ /*This is empty because we don't want the program to break but we also don't want to catch this exception*/ }
-		}
 
-		public void RecieveChatMessage(UnstuckMEMessage message)
+		    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, UnstuckME.User.EmailAddress);
+        }
+
+        public void RecieveChatMessage(UnstuckMEMessage message)
 		{
 			UnstuckME.Pages.ChatPage.AddMessage(message);
 			if (UnstuckME.CurrentChatSession.ChatID != message.ChatID || MainFrame.Content != UnstuckME.Pages.ChatPage)
@@ -579,15 +577,24 @@ namespace UnstuckMEUserGUI
 
 		private void ButtonLogout_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			UnstuckME.Server.Logout();
+		    try
+		    {
+		        UnstuckME.Server.Logout();
 
-			var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
-			config.AppSettings.Settings["RememberMe"].Value = "false";
-			config.Save();
+		        var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
+		        config.AppSettings.Settings["RememberMe"].Value = "false";
+		        config.Save();
 
-			Application.Current.MainWindow = new LoginWindow();
-			Application.Current.MainWindow.Show();
-            Close();
+		        Application.Current.MainWindow = new LoginWindow();
+		        Application.Current.MainWindow.Show();
+		        Close();
+		    }
+		    catch (Exception ex)
+		    {
+		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message,
+                    string.Format("Server failed to log out user {0}, Source = {1}", UnstuckME.User.EmailAddress, ex.Source));
+		        Close();
+		    }
 		}
 
 		private void ButtonAddContact_MouseEnter(object sender, MouseEventArgs e)

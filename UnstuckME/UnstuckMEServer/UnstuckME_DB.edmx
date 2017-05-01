@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="UnstuckME_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="UnstuckME_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Chat">
           <Key>
             <PropertyRef Name="ChatID" />
@@ -876,7 +876,8 @@
             <End Role="UserToClass" EntitySet="UserToClass" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UnstuckME_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1285,16 +1286,16 @@
             <Parameter Name="StarRanking" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="AdminPullReportsForOptionalUser" ReturnType="Collection(UnstuckME_DBModel.AdminPullReportsForOptionalUser_Result)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ClearReviewDescriptionByReviewID">
-          <Parameter Name="ReviewID" Mode="In" Type="Int32" />
+            <Parameter Name="ReviewID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateChat" ReturnType="Collection(Int32)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateMentorOrganization">
-          <Parameter Name="OrganizationName" Mode="In" Type="String" />
+            <Parameter Name="OrganizationName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CreateNewAdminUser">
             <Parameter Name="FirstName" Mode="In" Type="String" />
@@ -1341,39 +1342,39 @@
             <Parameter Name="Timeout" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteClassByClassID">
-          <Parameter Name="ClassID" Mode="In" Type="Int32" />
+            <Parameter Name="ClassID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteFriend">
             <Parameter Name="CurrentUserID" Mode="In" Type="Int32" />
             <Parameter Name="TargetFriendUserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteMentorOrganizationByMentorID">
-          <Parameter Name="MentorID" Mode="In" Type="Int32" />
+            <Parameter Name="MentorID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteMessageByMessageID">
-          <Parameter Name="MessageID" Mode="In" Type="Int32" />
+            <Parameter Name="MessageID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteReportByReportID">
-          <Parameter Name="ReportID" Mode="In" Type="Int32" />
+            <Parameter Name="ReportID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteReviewByReviewID">
-          <Parameter Name="ReviewID" Mode="In" Type="Int32" />
+            <Parameter Name="ReviewID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteServerAdmin">
-          <Parameter Name="AdminID" Mode="In" Type="Int32" />
+            <Parameter Name="AdminID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteStickerByStickerID">
-          <Parameter Name="StickerID" Mode="In" Type="Int32" />
+            <Parameter Name="StickerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteUserFromClass">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteUserPictureByUserID">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteUserProfileByUserID">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetActiveStickers" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickers_Result)">
             <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
@@ -1383,10 +1384,10 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllChatsAUserIsPartOF" ReturnType="Collection(Int32)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllMembersOfAChat" ReturnType="Collection(UnstuckME_DBModel.GetAllMembersOfAChat_Result)">
-          <Parameter Name="chatid" Mode="In" Type="Int32" />
+            <Parameter Name="chatid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllOrganizations" ReturnType="Collection(UnstuckME_DBModel.GetAllOrganizations_Result)" />
           <FunctionImport Name="GetAllResolvedOrTimedOutStickers" ReturnType="Collection(UnstuckME_DBModel.GetAllResolvedOrTimedOutStickers_Result)">
@@ -1399,7 +1400,10 @@
           <FunctionImport Name="GetAllStudentReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllStudentReviews_Result)" />
           <FunctionImport Name="GetAllTutorReviews" ReturnType="Collection(UnstuckME_DBModel.GetAllTutorReviews_Result)" />
           <FunctionImport Name="GetAllUsersInAnOrganization" ReturnType="Collection(UnstuckME_DBModel.GetAllUsersInAnOrganization_Result)">
-          <Parameter Name="orgid" Mode="In" Type="Int32" />
+            <Parameter Name="orgid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetChatMemeberIds" ReturnType="Collection(Int32)">
+            <Parameter Name="chatid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetChatMessages" ReturnType="Collection(UnstuckME_DBModel.GetChatMessages_Result)">
             <Parameter Name="chatid" Mode="In" Type="Int32" />
@@ -1416,19 +1420,22 @@
             <Parameter Name="Number" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="GetCourseNumberByCourseCode" ReturnType="Collection(Int16)">
-          <Parameter Name="Code" Mode="In" Type="String" />
+            <Parameter Name="Code" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetDisplayNameAndEmail" ReturnType="Collection(UnstuckME_DBModel.GetDisplayNameAndEmail_Result)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetInfoForFriend" ReturnType="Collection(UnstuckME_DBModel.GetInfoForFriend_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetNumMsgsInAChat" ReturnType="Collection(Int32)">
-          <Parameter Name="chatID" Mode="In" Type="Int32" />
+            <Parameter Name="chatID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetProfilePicture" ReturnType="Collection(Binary)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetReportsSubmittedByUser" ReturnType="Collection(UnstuckME_DBModel.GetReportsSubmittedByUser_Result)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetResolvedStickers" ReturnType="Collection(UnstuckME_DBModel.GetResolvedStickers_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
@@ -1437,7 +1444,7 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetStickerInfo" ReturnType="Collection(UnstuckME_DBModel.GetStickerInfo_Result)">
-          <Parameter Name="stickerID" Mode="In" Type="Int32" />
+            <Parameter Name="stickerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTimedOutStickers" ReturnType="Collection(UnstuckME_DBModel.GetTimedOutStickers_Result)">
             <Parameter Name="starrank" Mode="In" Type="Double" />
@@ -1446,38 +1453,38 @@
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserAvgStudentStarRank" ReturnType="Collection(Double)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserAvgTutorStarRank" ReturnType="Collection(Double)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserClasses" ReturnType="Collection(UnstuckME_DBModel.GetUserClasses_Result)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserFriends" ReturnType="Collection(UnstuckME_DBModel.GetUserFriends_Result)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserID" ReturnType="Collection(Int32)">
-          <Parameter Name="useremail" Mode="In" Type="String" />
+            <Parameter Name="useremail" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserInfo" ReturnType="Collection(UnstuckME_DBModel.GetUserInfo_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetUserOrganizations" ReturnType="Collection(String)">
-          <Parameter Name="userid" Mode="In" Type="Int32" />
+          <FunctionImport Name="GetUserOrganizations" ReturnType="Collection(UnstuckME_DBModel.GetUserOrganizations_Result)">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserPasswordAndSalt" ReturnType="Collection(UnstuckME_DBModel.GetUserPasswordAndSalt_Result)">
-          <Parameter Name="EmailAddress" Mode="In" Type="String" />
+            <Parameter Name="EmailAddress" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUsersInAClass" ReturnType="Collection(UnstuckME_DBModel.GetUsersInAClass_Result)">
-          <Parameter Name="classid" Mode="In" Type="Int32" />
+            <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUsersOverallStarRank" ReturnType="Collection(UnstuckME_DBModel.GetUsersOverallStarRank_Result)">
-          <Parameter Name="starrank" Mode="In" Type="Double" />
+            <Parameter Name="starrank" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="GetUsersThatCanTutorASticker" ReturnType="Collection(Int32)">
-          <Parameter Name="inStickerID" Mode="In" Type="Int32" />
+            <Parameter Name="inStickerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserStudentReviews" ReturnType="Collection(UnstuckME_DBModel.GetUserStudentReviews_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
@@ -1500,7 +1507,7 @@
             <Parameter Name="starrank" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="InitialStickerPull" ReturnType="Collection(UnstuckME_DBModel.InitialStickerPull_Result)">
-          <Parameter Name="InUserID" Mode="In" Type="Int32" />
+            <Parameter Name="InUserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertMessage" ReturnType="Collection(Int32)">
             <Parameter Name="ChatID" Mode="In" Type="Int32" />
@@ -1521,7 +1528,12 @@
             <Parameter Name="MentorID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MarkStickerAsResolved">
-          <Parameter Name="StickerID" Mode="In" Type="Int32" />
+            <Parameter Name="StickerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Ryans_GetChatMessage" ReturnType="Collection(UnstuckME_DBModel.Ryans_GetChatMessage_Result)">
+            <Parameter Name="chatid" Mode="In" Type="Int32" />
+            <Parameter Name="startingID" Mode="In" Type="Int32" />
+            <Parameter Name="nummessages" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1625,29 +1637,18 @@
             <Parameter Name="StickerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateUserAverageRank" ReturnType="Collection(Double)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateUserPasswordByUserID">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="UserPassword" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UpdateUserTotalReviews" ReturnType="Collection(UnstuckME_DBModel.UpdateUserTotalReviews_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ViewAllUsers" ReturnType="Collection(UnstuckME_DBModel.ViewAllUsers_Result)" />
           <FunctionImport Name="ViewClasses" ReturnType="Collection(UnstuckME_DBModel.ViewClasses_Result)">
-          <Parameter Name="ClassID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Ryans_GetChatMessage" ReturnType="Collection(UnstuckME_DBModel.Ryans_GetChatMessage_Result)">
-            <Parameter Name="chatid" Mode="In" Type="Int32" />
-            <Parameter Name="startingID" Mode="In" Type="Int32" />
-            <Parameter Name="nummessages" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetChatMemeberIds" ReturnType="Collection(Int32)">
-          <Parameter Name="chatid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetInfoForFriend" ReturnType="Collection(UnstuckME_DBModel.GetInfoForFriend_Result)">
-            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="ClassID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AdminPullReportsForOptionalUser_Result">
@@ -1754,6 +1755,11 @@
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="GetInfoForFriend_Result">
+          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
+          <Property Type="Binary" Name="Photo" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="GetReportsSubmittedByUser_Result">
           <Property Type="Int32" Name="ReportID" Nullable="false" />
           <Property Type="String" Name="ReportDescription" Nullable="true" MaxLength="200" />
@@ -1777,19 +1783,19 @@
           <Property Type="DateTime" Name="Timeout" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetStickerInfo_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="Int32" Name="StickerID" Nullable="false" />
-          <Property Type="Int32" Name="ClassID" Nullable="false" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="String" Name="DisplayFName" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="true" MaxLength="32" />
+          <Property Type="Int32" Name="StickerID" Nullable="true" />
+          <Property Type="Int32" Name="ClassID" Nullable="true" />
+          <Property Type="Int32" Name="StudentID" Nullable="true" />
           <Property Type="Int32" Name="TutorID" Nullable="true" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CourseCode" Nullable="true" MaxLength="5" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="true" />
+          <Property Type="String" Name="CourseName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProblemDescription" Nullable="true" MaxLength="500" />
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetTimedOutStickers_Result">
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
@@ -1831,6 +1837,10 @@
           <Property Type="Int32" Name="TotalStudentReviews" Nullable="false" />
           <Property Type="Int32" Name="Privileges" Nullable="false" />
           <Property Type="String" Name="Salt" Nullable="false" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="GetUserOrganizations_Result">
+          <Property Type="Int32" Name="MentorID" Nullable="false" />
+          <Property Type="String" Name="OrganizationName" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="GetUserPasswordAndSalt_Result">
           <Property Type="String" Name="UserPassword" Nullable="false" MaxLength="256" />
@@ -1913,6 +1923,12 @@
           <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="Timeout" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="Ryans_GetChatMessage_Result">
+          <Property Type="Int32" Name="MessageID" Nullable="false" />
+          <Property Type="String" Name="MessageData" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="SentBy" Nullable="false" />
+          <Property Type="DateTime" Name="SentTime" Nullable="false" Precision="16" />
+        </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -1946,17 +1962,6 @@
           <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
           <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="Ryans_GetChatMessage_Result">
-          <Property Type="Int32" Name="MessageID" Nullable="false" />
-          <Property Type="String" Name="MessageData" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="SentBy" Nullable="false" />
-          <Property Type="DateTime" Name="SentTime" Nullable="false" Precision="16" />
-        </ComplexType>
-        <ComplexType Name="GetInfoForFriend_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" />
-          <Property Type="Binary" Name="Photo" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2278,6 +2283,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetChatMemeberIds" FunctionName="UnstuckME_DBModel.Store.GetChatMemeberIds" />
           <FunctionImportMapping FunctionImportName="GetChatMessages" FunctionName="UnstuckME_DBModel.Store.GetChatMessages">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetChatMessages_Result">
@@ -2302,6 +2308,15 @@
                 <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
                 <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetInfoForFriend" FunctionName="UnstuckME_DBModel.Store.GetInfoForFriend">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetInfoForFriend_Result">
+                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2416,7 +2431,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetUserOrganizations" FunctionName="UnstuckME_DBModel.Store.GetUserOrganizations" />
+          <FunctionImportMapping FunctionImportName="GetUserOrganizations" FunctionName="UnstuckME_DBModel.Store.GetUserOrganizations">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUserOrganizations_Result">
+                <ScalarProperty Name="MentorID" ColumnName="MentorID" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetUserPasswordAndSalt" FunctionName="UnstuckME_DBModel.Store.GetUserPasswordAndSalt">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetUserPasswordAndSalt_Result">
@@ -2536,6 +2558,16 @@
           <FunctionImportMapping FunctionImportName="InsertUserIntoChat" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoChat" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoMentorProgram" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoMentorProgram" />
           <FunctionImportMapping FunctionImportName="MarkStickerAsResolved" FunctionName="UnstuckME_DBModel.Store.MarkStickerAsResolved" />
+          <FunctionImportMapping FunctionImportName="Ryans_GetChatMessage" FunctionName="UnstuckME_DBModel.Store.Ryans_GetChatMessage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.Ryans_GetChatMessage_Result">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="MessageData" ColumnName="MessageData" />
+                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+                <ScalarProperty Name="SentTime" ColumnName="SentTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="UnstuckME_DBModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="UnstuckME_DBModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="UnstuckME_DBModel.Store.sp_dropdiagram" />
@@ -2611,26 +2643,6 @@
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
                 <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Ryans_GetChatMessage" FunctionName="UnstuckME_DBModel.Store.Ryans_GetChatMessage">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.Ryans_GetChatMessage_Result">
-                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
-                <ScalarProperty Name="MessageData" ColumnName="MessageData" />
-                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
-                <ScalarProperty Name="SentTime" ColumnName="SentTime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetChatMemeberIds" FunctionName="UnstuckME_DBModel.Store.GetChatMemeberIds" />
-          <FunctionImportMapping FunctionImportName="GetInfoForFriend" FunctionName="UnstuckME_DBModel.Store.GetInfoForFriend">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetInfoForFriend_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

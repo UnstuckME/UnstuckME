@@ -6,11 +6,11 @@ namespace UnstuckMEUserGUI
     /// <summary>
     /// Interaction logic for TutorStickerSubmit.xaml
     /// </summary>
-    public partial class TutorStickerSubmit : UserControl
+    public partial class TutoringOrganizationDisplay : UserControl
     {
         public string OrganizationName { get; set; }
         public int OrganizationID { get; set; }
-        public TutorStickerSubmit(int inOrgID, string inOrgName)
+        public TutoringOrganizationDisplay(int inOrgID, string inOrgName)
         {
             InitializeComponent();
             OrganizationID = inOrgID;

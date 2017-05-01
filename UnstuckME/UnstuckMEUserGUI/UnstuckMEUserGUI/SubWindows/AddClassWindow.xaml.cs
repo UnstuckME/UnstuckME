@@ -32,7 +32,7 @@ namespace UnstuckMEUserGUI.SubWindows
             catch (Exception exp)
             {
                 UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
             }
             courseCodeList[0] = "(Class)";
             ComboBoxCourseNumberAndName.ItemsSource = courseCodeList;
@@ -55,7 +55,7 @@ namespace UnstuckMEUserGUI.SubWindows
                 catch (Exception exp)
                 {
                     UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
                 }
                 ComboBoxCourseNumberAndName.IsEnabled = true;
                 ComboBoxCourseNumberAndName.ItemsSource = courseNameList;
@@ -79,7 +79,7 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
             }
 
             ComboBoxCourseCode.SelectedIndex = 0;

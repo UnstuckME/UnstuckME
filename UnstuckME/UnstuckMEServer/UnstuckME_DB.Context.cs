@@ -52,12 +52,7 @@ namespace UnstuckMEServer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddFriend", currentUserIDParameter, newFriendUserIDParameter);
         }
-
-        internal void UpdateProfilePicture(int userID, string directory)
-        {
-            throw new NotImplementedException();
-        }
-
+    
         public virtual int AddOrgToSticker(Nullable<int> stickerID, Nullable<int> organizationID)
         {
             var stickerIDParameter = stickerID.HasValue ?
@@ -488,6 +483,15 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllUsersInAnOrganization_Result>("GetAllUsersInAnOrganization", orgidParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> GetChatMemeberIds(Nullable<int> chatid)
+        {
+            var chatidParameter = chatid.HasValue ?
+                new ObjectParameter("chatid", chatid) :
+                new ObjectParameter("chatid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetChatMemeberIds", chatidParameter);
+        }
+    
         public virtual ObjectResult<GetChatMessages_Result> GetChatMessages(Nullable<int> chatid, Nullable<short> startrow, Nullable<short> endrow)
         {
             var chatidParameter = chatid.HasValue ?
@@ -552,6 +556,15 @@ namespace UnstuckMEServer
                 new ObjectParameter("userid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDisplayNameAndEmail_Result>("GetDisplayNameAndEmail", useridParameter);
+        }
+    
+        public virtual ObjectResult<GetInfoForFriend_Result> GetInfoForFriend(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInfoForFriend_Result>("GetInfoForFriend", userIDParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> GetNumMsgsInAChat(Nullable<int> chatID)
@@ -690,13 +703,13 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserInfo_Result>("GetUserInfo", useridParameter, emailParameter);
         }
     
-        public virtual ObjectResult<string> GetUserOrganizations(Nullable<int> userid)
+        public virtual ObjectResult<GetUserOrganizations_Result> GetUserOrganizations(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
                 new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetUserOrganizations", useridParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserOrganizations_Result>("GetUserOrganizations", useridParameter);
         }
     
         public virtual ObjectResult<GetUserPasswordAndSalt_Result> GetUserPasswordAndSalt(string emailAddress)
@@ -879,6 +892,23 @@ namespace UnstuckMEServer
                 new ObjectParameter("StickerID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkStickerAsResolved", stickerIDParameter);
+        }
+    
+        public virtual ObjectResult<Ryans_GetChatMessage_Result> Ryans_GetChatMessage(Nullable<int> chatid, Nullable<int> startingID, Nullable<int> nummessages)
+        {
+            var chatidParameter = chatid.HasValue ?
+                new ObjectParameter("chatid", chatid) :
+                new ObjectParameter("chatid", typeof(int));
+    
+            var startingIDParameter = startingID.HasValue ?
+                new ObjectParameter("startingID", startingID) :
+                new ObjectParameter("startingID", typeof(int));
+    
+            var nummessagesParameter = nummessages.HasValue ?
+                new ObjectParameter("nummessages", nummessages) :
+                new ObjectParameter("nummessages", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ryans_GetChatMessage_Result>("Ryans_GetChatMessage", chatidParameter, startingIDParameter, nummessagesParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -1260,41 +1290,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("ClassID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ViewClasses_Result>("ViewClasses", classIDParameter);
-        }
-    
-        public virtual ObjectResult<Ryans_GetChatMessage_Result> Ryans_GetChatMessage(Nullable<int> chatid, Nullable<int> startingID, Nullable<int> nummessages)
-        {
-            var chatidParameter = chatid.HasValue ?
-                new ObjectParameter("chatid", chatid) :
-                new ObjectParameter("chatid", typeof(int));
-    
-            var startingIDParameter = startingID.HasValue ?
-                new ObjectParameter("startingID", startingID) :
-                new ObjectParameter("startingID", typeof(int));
-    
-            var nummessagesParameter = nummessages.HasValue ?
-                new ObjectParameter("nummessages", nummessages) :
-                new ObjectParameter("nummessages", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ryans_GetChatMessage_Result>("Ryans_GetChatMessage", chatidParameter, startingIDParameter, nummessagesParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> GetChatMemeberIds(Nullable<int> chatid)
-        {
-            var chatidParameter = chatid.HasValue ?
-                new ObjectParameter("chatid", chatid) :
-                new ObjectParameter("chatid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetChatMemeberIds", chatidParameter);
-        }
-    
-        public virtual ObjectResult<GetInfoForFriend_Result> GetInfoForFriend(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("userID", userID) :
-                new ObjectParameter("userID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInfoForFriend_Result>("GetInfoForFriend", userIDParameter);
         }
     }
 }

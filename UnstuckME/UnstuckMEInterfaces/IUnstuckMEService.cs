@@ -522,5 +522,13 @@ namespace UnstuckMEInterfaces
         /// <returns>An UnstuckMEChatUser with information on a specific user.</returns>
         [OperationContract]
         UnstuckMEChatUser GetFriendInfo(int userID);
+
+        /// <summary>
+        /// Gets all the organizations that a user is a member of.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A list of organizations that contains the unique identifiers and the name of each.</returns>
+        [OperationContract]
+	    List<Organization> GetUserOrganizations(int userID);
 	}
 }

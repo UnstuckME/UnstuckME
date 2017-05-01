@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnstuckMEServer;
 using UnstuckME_Classes;
 
@@ -16,6 +17,19 @@ namespace UnstuckMEInterfaces
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 db.InsertUserIntoMentorProgram(userID, organizationID);
+                var stickers = GetActiveStickers(userID, organizationID);
+
+                int index = -1;
+                do
+                {
+                    index++;
+
+                    if (_connectedClients[index].User.UserID == userID)
+                    {
+                        foreach (UnstuckMEAvailableSticker sticker in stickers)
+                            _connectedClients[index].Connection.RecieveNewSticker(sticker);
+                    }
+                } while (_connectedClients[index].User.UserID != userID && index < _connectedClients.Count);
             }
         }
 
@@ -43,6 +57,40 @@ namespace UnstuckMEInterfaces
                 }
 
                 return orgs;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the organizations that a user is a member of.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>A list of organizations that contains the unique identifiers and the name of each.</returns>
+        public List<Organization> GetUserOrganizations(int userID)
+        {
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    List<Organization> orgs = new List<Organization>();
+
+                    using (var userOrgs = db.GetUserOrganizations(userID))
+                    {
+                        foreach (var org in userOrgs)
+                        {
+                            orgs.Add(new Organization()
+                            {
+                                MentorID = org.MentorID,
+                                OrganizationName = org.OrganizationName
+                            });
+                        }
+                    }
+
+                    return orgs;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

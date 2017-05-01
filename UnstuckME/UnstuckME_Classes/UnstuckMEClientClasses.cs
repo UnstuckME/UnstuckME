@@ -11,7 +11,9 @@ using UnstuckMeLoggers;
 namespace UnstuckME_Classes
 {
     public enum Privileges
-	{ InvalidUser, Admin, Moderator, User }
+    {
+        InvalidUser, Admin, Moderator, User
+    }
 
 	public enum UnstuckMEBox
 	{
@@ -126,7 +128,7 @@ namespace UnstuckME_Classes
 			Username = inMessage.Username;
 			foreach (UnstuckMEChatUser User in inChat.Users)
 			{
-				if(User.UserID == SenderID)
+				if (User.UserID == SenderID)
 				    ProfilePic = User.ProfilePicture;
 
 			    UsersInConvo.Add(User.UserID);
@@ -397,6 +399,17 @@ namespace UnstuckME_Classes
             {
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
             }
+        }
+    }
+
+    public sealed class ComboboxItem
+    {
+        public string Text { get; set; }
+        public int Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 }

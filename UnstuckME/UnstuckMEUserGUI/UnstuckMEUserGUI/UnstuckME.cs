@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Windows;
 using System.Windows.Media;
 using UnstuckME_Classes;
 using UnstuckMEInterfaces;
@@ -24,8 +25,9 @@ namespace UnstuckMEUserGUI
         public static List<UnstuckMEChat> ChatSessions;
         public static UnstuckMEChat CurrentChatSession;
         public static UnstuckMEDirectory ProgramDir;
-        private static int _RetryCount = 0;
+        private static int _retryCount = 0;
         private static string _UPW = string.Empty;
+
         public static void ConnectToServer()
         {
             try
@@ -34,22 +36,20 @@ namespace UnstuckMEUserGUI
                 Server = ChannelFactory.CreateChannel();
                 ChannelFactory.Faulted += OnConnectionToServerFaulted;
                 ChannelFactory.Closed += OnConnectionToServerClosed;
-                _RetryCount = 0;
+                _retryCount = 0;
             }
             catch(Exception)
             {
-                if(_RetryCount == 5)
+                if (_retryCount == 5)
                 {
-                    App.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        System.Windows.MessageBox.Show("ERROR CONNECTION FAULTED");
+                        MessageBox.Show("ERROR CONNECTION FAULTED");
                         //App.Current.Shutdown();
                     });
                 }
                 else
-                {
-                    _RetryCount++;
-                }
+                    _retryCount++;
             }
         }
 
@@ -66,9 +66,9 @@ namespace UnstuckMEUserGUI
         static void OnConnectionToServerClosed(object sender, EventArgs ea)
         {
             bool ReLoginAttempt = false;
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                System.Windows.MessageBox.Show("ERROR CONNECTION FAULTED");
+                MessageBox.Show("ERROR CONNECTION FAULTED");
             });
             ChannelFactory.Faulted -= OnConnectionToServerFaulted;
             ChannelFactory.Closed -= OnConnectionToServerClosed;
@@ -86,7 +86,8 @@ namespace UnstuckMEUserGUI
         static bool ReLogin()
         {
             bool success = false;
-            App.Current.Dispatcher.Invoke(() =>
+
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 try
                 {
@@ -98,6 +99,7 @@ namespace UnstuckMEUserGUI
                     success = false;
                 }
             });
+
             return success;
         }
     }

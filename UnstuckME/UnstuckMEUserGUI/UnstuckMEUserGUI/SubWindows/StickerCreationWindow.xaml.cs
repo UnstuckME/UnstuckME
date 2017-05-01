@@ -21,17 +21,6 @@ namespace UnstuckMEUserGUI
         private List<string> courseNameList = new List<string>();
         private List<Organization> orgList;
 
-        private sealed class ComboboxItem
-        {
-            public string Text { get; set; }
-            public int Value { get; set; }
-
-            public override string ToString()
-            {
-                return Text;
-            }
-        }
-
         public StickerCreationWindow()
         {
             InitializeComponent();
@@ -108,7 +97,7 @@ namespace UnstuckMEUserGUI
                     newSticker.TutorID = 0;
                     newSticker.TutorRanking = 0;
 
-                    foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
+                    foreach (TutoringOrganizationDisplay a in StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>())
                         newSticker.AttachedOrganizations.Add(a.OrganizationID);
                     try
                     {
@@ -117,7 +106,7 @@ namespace UnstuckMEUserGUI
                     catch (Exception exp)
                     {
                         UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
                         throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     try
@@ -129,7 +118,7 @@ namespace UnstuckMEUserGUI
                     catch (Exception exp)
                     {
                         UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
                         throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     Close();
@@ -137,7 +126,7 @@ namespace UnstuckMEUserGUI
             }
             catch(Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
                 MessageBox.Show(ex.Message, "Sticker Submission Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
@@ -171,8 +160,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception exp)
             {
-                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
             }
 
             ComboboxItem temp1 = new ComboboxItem
@@ -197,7 +185,6 @@ namespace UnstuckMEUserGUI
             coursenumberList[0] = "(Class)";
             ComboBoxCourseNumber.ItemsSource = coursenumberList;
             ComboBoxCourseName.ItemsSource = courseNameList;
-
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -223,9 +210,9 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
                 }
+
                 ComboBoxCourseName.IsEnabled = true;
                 ComboBoxCourseName.ItemsSource = courseNameList;
                 ComboBoxCourseName.SelectedIndex = 0;
@@ -246,17 +233,14 @@ namespace UnstuckMEUserGUI
             if (ComboBoxOrgName.SelectedIndex == 0)
                 return;
 
-            foreach (TutorStickerSubmit a in StackPanelOrganization.Children.OfType<TutorStickerSubmit>())
+            foreach (TutoringOrganizationDisplay a in StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>())
             {
                 if (temp != null && temp.Value == a.OrganizationID)
                     exists = true;
             }
 
-            if (!exists)
-            {
-                if (temp != null)
-                    StackPanelOrganization.Children.Add(new TutorStickerSubmit(temp.Value, temp.Text));
-            }
+            if (!exists && temp != null)
+                StackPanelOrganization.Children.Add(new TutoringOrganizationDisplay(temp.Value, temp.Text));
         }
     }
 }

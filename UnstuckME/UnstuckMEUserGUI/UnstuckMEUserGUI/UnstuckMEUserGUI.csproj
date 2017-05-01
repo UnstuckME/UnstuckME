@@ -118,6 +118,7 @@
     <Compile Include="GetSchoolServerInfo_Result.cs">
       <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="School.cs">
       <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
     </Compile>
@@ -218,8 +219,8 @@
     <Compile Include="Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TutoringOrganizations\TutorStickerSubmit.xaml.cs">
-      <DependentUpon>TutorStickerSubmit.xaml</DependentUpon>
+    <Compile Include="UserControls\TutoringOrganizations\TutoringOrganizationDisplay.xaml.cs">
+      <DependentUpon>TutoringOrganizationDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\StarRanking\StarRanking.xaml.cs">
       <DependentUpon>StarRanking.xaml</DependentUpon>
@@ -349,7 +350,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\TutoringOrganizations\TutorStickerSubmit.xaml">
+    <Page Include="UserControls\TutoringOrganizations\TutoringOrganizationDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

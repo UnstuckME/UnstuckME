@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         AllowsTransparency="True"
         Title="StickerCreationWindow" Height="900" Width="900" WindowStyle="None" WindowState="Maximized" Background="{x:Null}">
-
     <Grid>
         <Rectangle Fill="Black" Opacity=".7" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown">
         </Rectangle>

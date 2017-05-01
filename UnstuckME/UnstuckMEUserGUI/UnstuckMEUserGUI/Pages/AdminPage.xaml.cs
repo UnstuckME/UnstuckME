@@ -26,7 +26,7 @@ namespace UnstuckMEUserGUI
             List<Organization> orgList = UnstuckME.Server.GetAllOrganizations();
             foreach (Organization item in orgList)
             // this is going to end up needing to be a different control with the same look so we can remove these on click from the db
-                StackPanelOrganization.Children.Add(new TutorStickerSubmit(item.MentorID, item.OrganizationName));
+                StackPanelOrganization.Children.Add(new TutoringOrganizationDisplay(item.MentorID, item.OrganizationName));
         }
 
         private void AddRemoveClassesBtn_Click(object sender, RoutedEventArgs e)
@@ -65,7 +65,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org");
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org, Source = " + ex.Source);
                 }
             }
         }
@@ -103,8 +103,9 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "While attempting a change to the user role an bad email was entered");
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "While attempting a change to the user role an bad email was entered, Source = " + ex.Source);
             }
+
             if (userID != -1)
             {
                 targetUser = UnstuckME.Server.GetUserInfo(userID, UserEmailTxtBx.Text);

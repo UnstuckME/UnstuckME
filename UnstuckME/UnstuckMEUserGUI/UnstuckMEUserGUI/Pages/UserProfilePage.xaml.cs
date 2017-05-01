@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,8 +19,26 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class UserProfilePage : Page
     {
-        private static StarRanking _studentRanking;
+        public static StarRanking _studentRanking;
         private static StarRanking _tutorRanking;
+
+        public string FirstName
+        {
+            get { return UnstuckME.User.FirstName; }
+            set { UnstuckME.User.FirstName = value; }
+        }
+
+        public string LastName
+        {
+            get { return UnstuckME.User.LastName; }
+            set { UnstuckME.User.LastName = value; }
+        }
+
+        public string EmailAddress
+        {
+            get { return UnstuckME.User.EmailAddress; }
+            set { UnstuckME.User.LastName = value; }
+        }
 
         public UserProfilePage()
         {
@@ -29,9 +49,42 @@ namespace UnstuckMEUserGUI
             RatingsStack.Children.Add(_studentRanking);
             RatingsStack.Children.Add(_tutorRanking);
 
-            TextBoxNewFirstName.Text = UnstuckME.User.FirstName;
-            TextBoxNewLastName.Text = UnstuckME.User.LastName;
+            try
+            {
+                List<Organization> orgList = UnstuckME.Server.GetAllOrganizations();
+                List<Organization> userOrgs = UnstuckME.Server.GetUserOrganizations(UnstuckME.User.UserID);
+
+                ComboboxItem temp1 = new ComboboxItem
+                {
+                    Text = "(OfficialMentors)",
+                    Value = 0
+                };
+
+                ComboBoxOrgName.Items.Add(temp1);
+
+                foreach (Organization org in orgList)
+                {
+                    ComboboxItem temp2 = new ComboboxItem
+                    {
+                        Text = org.OrganizationName,
+                        Value = org.MentorID
+                    };
+
+                    ComboBoxOrgName.Items.Add(temp2);
+                }
+                foreach (Organization org in userOrgs)
+                    StackPanelOrganization.Children.Add(new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName));
+            }
+            catch (CommunicationException ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+            }
         }
+
         public void RepopulateClasses()
         {
             BottomLeftStack.Children.Clear();
@@ -163,11 +216,11 @@ namespace UnstuckMEUserGUI
                 {
                     UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, TextBoxNewFirstName.Text, UnstuckME.User.LastName);
                     UnstuckME.User.FirstName = TextBoxNewFirstName.Text;
-                    FirstName.Text = TextBoxNewFirstName.Text;
+                    TextBoxFirstName.Text = TextBoxNewFirstName.Text;
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName");
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName, Source = " + ex.Source);
                 }
             }
             if (TextBoxNewLastName.Text != UnstuckME.User.LastName && !string.IsNullOrEmpty(TextBoxNewLastName.Text))
@@ -176,11 +229,11 @@ namespace UnstuckMEUserGUI
                 {
                     UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, UnstuckME.User.FirstName, TextBoxNewLastName.Text);
                     UnstuckME.User.LastName = TextBoxNewFirstName.Text;
-                    LastName.Text = TextBoxNewFirstName.Text;
+                    TextBoxLastName.Text = TextBoxNewFirstName.Text;
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName");
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName, Source = " + ex.Source);
                 }
             }
             if (!string.IsNullOrEmpty(PasswordBoxNewPassword.Password) && !string.IsNullOrEmpty(PasswordBoxConfirm.Password))
@@ -195,7 +248,7 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception ex)
                     {
-                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password");
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password, Source = " + ex.Source);
                     }
                 }
                 else
@@ -242,7 +295,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while attempting to change your profile picture");
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while attempting to change your profile picture, Source = " + ex.Source);
                 }
             }
 
@@ -279,6 +332,61 @@ namespace UnstuckMEUserGUI
         private void PasswordBoxConfirm_MouseLeave(object sender, MouseEventArgs e)
         {
 
+        }
+
+        private void ButtonAddOrganization_OnClick(object sender, RoutedEventArgs e)
+        {
+            ComboboxItem temp = ComboBoxOrgName.SelectedItem as ComboboxItem;
+            bool exists = false;
+
+            if (ComboBoxOrgName.SelectedIndex == 0)
+                return;
+
+            foreach (TutoringOrganizationDisplay a in StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>())
+            {
+                if (temp != null && temp.Value == a.OrganizationID)
+                    exists = true;
+            }
+
+            if (!exists && temp != null)
+            {
+                StackPanelOrganization.Children.Add(new TutoringOrganizationDisplay(temp.Value, temp.Text));
+                UnstuckME.Server.AddUserToTutoringOrganization(UnstuckME.User.UserID, temp.Value);
+            }
+        }
+
+        private void ButtonDeleteProfile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, "Are you sure you want to delete your account? This cannot be undone.", "Delete Account?", UnstuckMEBoxImage.Warning);
+            bool? open = messagebox.ShowDialog();
+
+            if (open.HasValue && open.Value)
+            {
+                try
+                {
+                    UnstuckME.Server.Logout();
+                    UnstuckME.Server.DeleteUserAccount(UnstuckME.User.UserID);
+                    Application.Current.MainWindow.Close();
+                    Application.Current.MainWindow = new LoginWindow();
+                    Application.Current.MainWindow.Show();
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, 
+                        string.Format("Server failed to log out user {0}, Source = {1}", UnstuckME.User.EmailAddress, ex.Source));
+                    Application.Current.Shutdown();
+                }
+            }
+        }
+
+        private void ButtonDeleteProfile_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonDeleteProfile.Background = Brushes.IndianRed;
+        }
+
+        private void ButtonDeleteProfile_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonDeleteProfile.Background = Brushes.DarkRed;
         }
     }
 }
