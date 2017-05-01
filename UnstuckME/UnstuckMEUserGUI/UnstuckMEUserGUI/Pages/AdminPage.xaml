@@ -8,73 +8,133 @@
       d:DesignHeight="900" d:DesignWidth="900"
       Title="AdminPage">
 
-    <Grid>
-        <TabControl x:Name="tabControl" BorderBrush="Gray" Background="LightGray" HorizontalAlignment="Left" Height="900" VerticalAlignment="Top" Width="900">
-            <TabItem Header="Classes">
-                <Grid Background="Gray">
-                    <Button x:Name="AddRemoveClassesBtn" Content="Add/Remove Classes" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Click="AddRemoveClassesBtn_Click" Margin="10,111,0,0"/>
-                    <TextBox x:Name="CourseCodeTextBox" HorizontalAlignment="Left" Height="23" Margin="10,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="CourseNumberTextBox" HorizontalAlignment="Left" Height="23" Margin="159,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="129"/>
-                    <TextBox x:Name="CourseDescTextBox" HorizontalAlignment="Left" Height="23" Margin="323,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="260"/>
-                    <Button x:Name="AddSingleClassBtn" Content="Add Class" HorizontalAlignment="Left" Margin="619,23,0,0" VerticalAlignment="Top" Width="85" Height="23" Click="AddSingleClassBtn_Click"/>
-                    <GridSplitter x:Name="gridSplitter" Background="Black" HorizontalAlignment="Left" Height="4" Margin="0,76,-0.4,0" VerticalAlignment="Top" Width="894"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Users">
-                <Grid Background="Gray">
 
-                    <TextBox x:Name="UserEmailTxtBx" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" ToolTip="User Email" VerticalAlignment="Top" Width="198"/>
-                    <Button x:Name="FindUserBtn" Content="Find User" HorizontalAlignment="Left" Margin="223,10,0,0" VerticalAlignment="Top" Width="75" Click="FindUserBtn_Click"/>
-                    <Label x:Name="UserRoleLbl" Content="User's Role" HorizontalAlignment="Left" Margin="342,49,0,0" VerticalAlignment="Top"/>
-                    <StackPanel x:Name="btnPan" Height="26" Margin="342,80,175.6,0" VerticalAlignment="Top" Orientation="Horizontal">
-                        <RadioButton x:Name="DisabledBtn" GroupName="Roles" Content="Disable" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="62" Checked="DisabledBtn_Checked"/>
-                        <RadioButton x:Name="UserBtn" GroupName="Roles" Content="User" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="50" Checked="radioButton_Checked"/>
-                        <RadioButton x:Name="ModeratorBtn" GroupName="Roles" Content="Moderator" HorizontalAlignment="Center" Margin="0,0,0,-0.2" Width="80" Checked="ModeratorBtn_Checked"/>
-                        <RadioButton x:Name="AdminBtn" GroupName="Roles" Content="Administrator" HorizontalAlignment="Right" Checked="AdminBtn_Checked"/>
-                    </StackPanel>
-                    <Button x:Name="UpdateRoleBtn" Content="Update User Info" HorizontalAlignment="Left" Margin="342,428,0,0" VerticalAlignment="Top" Width="156" Click="UpdateRoleBtn_Click" Height="50"/>
-                    <Button x:Name="button1" Content="Add/Remove Mentors" HorizontalAlignment="Left" Margin="342,132,0,0" VerticalAlignment="Top" Width="156" Click="button1_Click"/>
+    <ScrollViewer Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+        <Grid Height="Auto" Width="Auto" Background="DimGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Height="Auto" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Name="AddClassLabel" Grid.Row="0" Content="Add Class" Foreground="White" FontSize="24"/>
+                <TextBox x:Name="CourseCodeTextBox" Grid.Row="1" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="CourseNumberTextBox" Grid.Row="1" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" Height="23" Margin="159,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="129"/>
+                <TextBox x:Name="CourseDescTextBox" Grid.Row="1" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" Height="23" Margin="323,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="260"/>
+                <Border x:Name="AddSingleClassBtn" Grid.Row="2" Cursor="Hand" MouseLeftButtonDown="AddSingleClassBtn_Click" Height="23" Width="85" CornerRadius="5,5,0,0" Background="#336699" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="619,0,0,0" BorderBrush="Black" BorderThickness="1,1,1,0">
+                    <Label Content="Add Class" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                </Border>
+
+            </Grid>
+            
+            <GridSplitter x:Name="gridSplitter" Grid.Row="1" Background="Black" HorizontalAlignment="Stretch" Height="4"  VerticalAlignment="Center" Width="Auto"/>
+            
+            <Grid Grid.Row="2" Height="Auto" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Name="AddClassesLabel" Grid.Row="0" Content="Add Classes From File" Foreground="White" FontSize="24"/>
+                <Button x:Name="AddRemoveClassesBtn" Grid.Row="1" Content="Add/Remove Classes" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Click="AddRemoveClassesBtn_Click"/>
+            </Grid>
+            
+            <GridSplitter Grid.Row="3" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+            
+            <Grid Grid.Row="4" Height="Auto" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Name="UserMaitLabel" Grid.Row="0" Content="User Maintenance" Foreground="White" FontSize="24"/>
+                <TextBox x:Name="UserEmailTxtBx" Grid.Row="1" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" Height="23"  TextWrapping="Wrap" ToolTip="User Email" VerticalAlignment="Top" Width="198"/>
+                <Button x:Name="FindUserBtn" Grid.Row="1" Content="Find User" Margin="225,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="FindUserBtn_Click"/>
+                <Label x:Name="UserRoleLbl" Grid.Row="2" Content="User's Role" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <StackPanel x:Name="btnPan" Grid.Row="3" Height="26" VerticalAlignment="Top" Orientation="Horizontal">
+                    <RadioButton x:Name="DisabledBtn" GroupName="Roles" Foreground="White" Content="Disable" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="62" Checked="DisabledBtn_Checked"/>
+                    <RadioButton x:Name="UserBtn" GroupName="Roles" Foreground="White" Content="User" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="50" Checked="radioButton_Checked"/>
+                    <RadioButton x:Name="ModeratorBtn" GroupName="Roles" Foreground="White" Content="Moderator" HorizontalAlignment="Center" Margin="0,0,0,-0.2" Width="80" Checked="ModeratorBtn_Checked"/>
+                    <RadioButton x:Name="AdminBtn" GroupName="Roles" Content="Administrator" Foreground="White" HorizontalAlignment="Right" Checked="AdminBtn_Checked"/>
+                </StackPanel>
 
 
-                    <TextBox TabIndex="0" x:Name="textBoxFirstName" VerticalContentAlignment="Center" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="10,80,675.6,769.2"/>
-                    <TextBox TabIndex="1" x:Name="textBoxLastName" VerticalContentAlignment="Center" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="10,132,675.6,717.2"/>
-                    <TextBox TabIndex="2" x:Name="textBoxEmailAddress" VerticalContentAlignment="Center" HorizontalAlignment="Center" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208" Margin="11,185,674.6,664.2"/>
-                    <Label x:Name="labelCreateFirstName" Content="First Name" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="208" FontSize="12" Height="26" Foreground="White" Margin="10,49,675.6,796.2"/>
-                    <Label x:Name="labelCreateLastName" Content="Last Name" HorizontalAlignment="Center" Margin="10,102,675.6,743.2" VerticalAlignment="Center" Width="208" Foreground="White" FontSize="12"/>
-                    <Label x:Name="labelCreateEmailAddress" Content="Email Address" HorizontalAlignment="Center" Margin="10,159,674.6,686.2" VerticalAlignment="Center" Width="209" Foreground="White" FontSize="12"/>
-                    <Button x:Name="ResetPasswordBtn" Content="Reset Users Password" HorizontalAlignment="Left" Margin="11,229,0,0" VerticalAlignment="Top" Width="207" RenderTransformOrigin="-1.757,-0.891" Click="ResetPasswordBtn_Click"/>
-                    <Label x:Name="AverageStudentRanklabel" Content="Average Student Rank" HorizontalAlignment="Left" Margin="11,275,0,0" VerticalAlignment="Top" Width="169"/>
-                    <Label x:Name="AverageTutorRanklabel" Content="Average Tutor Rank" HorizontalAlignment="Left" Margin="11,332,0,0" VerticalAlignment="Top" Width="169"/>
-                    <Label x:Name="AverageStudentRankTxt" Content="0" HorizontalAlignment="Left" Margin="202,275,0,0" VerticalAlignment="Top" Width="65"/>
-                    <Label x:Name="AverageTutorRankTxt" Content="0" HorizontalAlignment="Left" Margin="202,332,0,0" VerticalAlignment="Top" Width="65"/>
-                    <Label x:Name="StudentRatingsNumberlabel" Content="Number of Student Reviews" HorizontalAlignment="Left" Margin="11,301,0,0" VerticalAlignment="Top" Width="169"/>
-                    <Label x:Name="NumberOfStudentReviews" Content="0" HorizontalAlignment="Left" Margin="202,301,0,0" VerticalAlignment="Top" Width="65"/>
-                    <Label x:Name="TutorRatingsNumberlabel" Content="Number of Tutor Reviews" HorizontalAlignment="Left" Margin="11,363,0,0" VerticalAlignment="Top" Width="169"/>
-                    <Label x:Name="NumberOfTutorReviews" Content="0" HorizontalAlignment="Left" Margin="202,363,0,0" VerticalAlignment="Top" Width="65"/>
-                    <Button x:Name="CreateUserBtn" Content="Create New User" HorizontalAlignment="Left" Margin="163,428,0,0" VerticalAlignment="Top" Width="135" Height="50" Click="CreateUserBtn_Click"/>
+                <Label x:Name="labelCreateFirstName" Content="First Name" Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="208" FontSize="12" Height="26" Foreground="White"/>
+                <TextBox TabIndex="0" x:Name="textBoxFirstName" Grid.Row="5" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208"/>
+                <Label x:Name="labelCreateLastName" Content="Last Name" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="208" Foreground="White" FontSize="12"/>
+                <TextBox TabIndex="1" x:Name="textBoxLastName" Grid.Row="5" Grid.Column="1" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208"/>
+                <Label x:Name="labelCreateEmailAddress" Content="Email Address" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Width="209" Foreground="White" FontSize="12"/>
+                <TextBox TabIndex="2" x:Name="textBoxEmailAddress" Grid.Row="9" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22"  TextWrapping="Wrap" VerticalAlignment="Center" Width="208"/>
 
-                </Grid>
-            </TabItem>
-            <TabItem Header="Admin Chats">
-                <Grid Background="Gray">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="66*"/>
-                        <ColumnDefinition Width="227*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="button3" Content="Start Admin Chat" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="132" Grid.ColumnSpan="2"/>
-                    <Button x:Name="button2" Content="Message All Uers" HorizontalAlignment="Left" Margin="85.505,7,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
+                <Button x:Name="ResetPasswordBtn" Content="Reset Users Password" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="207" RenderTransformOrigin="-1.757,-0.891" Click="ResetPasswordBtn_Click"/>
+                <Label x:Name="AverageStudentRanklabel" Content="Average Student Rank" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="169"/>
+                <Label x:Name="AverageTutorRanklabel" Content="Average Tutor Rank" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="169"/>
+                <Label x:Name="AverageStudentRankTxt" Content="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Foreground="White"/>
+                <Label x:Name="AverageTutorRankTxt" Content="0" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="65" Foreground="White"/>
+                <Label x:Name="StudentRatingsNumberlabel" Content="Number of Student Reviews" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Foreground="White"/>
+                <Label x:Name="NumberOfStudentReviews" Content="0" HorizontalAlignment="Left" Grid.Row="13" VerticalAlignment="Top" Width="65" Foreground="White"/>
+                <Label x:Name="TutorRatingsNumberlabel" Content="Number of Tutor Reviews" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Foreground="White"/>
+                <Label x:Name="NumberOfTutorReviews" Content="0" HorizontalAlignment="Left" Grid.Row="13" Grid.Column="1" VerticalAlignment="Top" Width="65" Foreground="White"/>
+                <Button x:Name="CreateUserBtn" Content="Create New User" HorizontalAlignment="Left" Grid.Row="14"  VerticalAlignment="Top" Width="135" Height="50" Click="CreateUserBtn_Click"/>
+                <Button x:Name="UpdateRoleBtn" Content="Update User Info" HorizontalAlignment="Left" Grid.Row="14" Grid.Column="1" VerticalAlignment="Top" Width="156" Click="UpdateRoleBtn_Click" Height="50"/>
+                <Button x:Name="button1" Content="Add/Remove Mentors" HorizontalAlignment="Left" Grid.Row="15"  VerticalAlignment="Top" Width="156" Click="button1_Click"/>
+            </Grid>
+            
+            <GridSplitter Grid.Row="5" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+            
+            <Grid Grid.Row="6" Height="Auto" Width="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="66*"/>
+                    <ColumnDefinition Width="227*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="button3" Content="Start Admin Chat" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="132" Grid.ColumnSpan="2"/>
+                <Button x:Name="button2" Content="Message All Uers" HorizontalAlignment="Left" Margin="85.505,7,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
 
-                </Grid>
-            </TabItem>
-            <TabItem Header="Server Management">
-                <Grid Background="Gray">
-                    <TextBox x:Name="orgName" HorizontalAlignment="Left" Height="23" Margin="10,24,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="274"/>
-                    <Button x:Name="AddOrgBtn" Content="Add Org." HorizontalAlignment="Left" Margin="111,75,0,0" VerticalAlignment="Top" Width="75" Click="AddOrgBtn_Click"/>
-                    <ScrollViewer Height="307" Width="257" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,120,0,0">
-                        <StackPanel x:Name="StackPanelOrganization" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
-                    </ScrollViewer>
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+            </Grid>
+           
+            <GridSplitter Grid.Row="7" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+            
+            <Grid Grid.Row="8" Height="Auto" Width="Auto">
+                <TextBox x:Name="orgName" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="DarkBlue" Height="23" Margin="10,24,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="274"/>
+                <Button x:Name="AddOrgBtn" Content="Add Org." HorizontalAlignment="Left" Margin="111,75,0,0" VerticalAlignment="Top" Width="75" Click="AddOrgBtn_Click"/>
+                <ScrollViewer Height="307" Width="257" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,120,0,0">
+                    <StackPanel x:Name="StackPanelOrganization" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>
