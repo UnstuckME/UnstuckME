@@ -34,10 +34,8 @@ namespace UnstuckMEUserGUI
 		public LoginWindow()
 		{
 			InitializeComponent();
-			UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-			UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
-			UnstuckME.StreamChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
-			UnstuckME.FileStream = UnstuckME.StreamChannelFactory.CreateChannel();
+            UnstuckME.ConnectToServer();
+            UnstuckME.ConnectToStreamService();
 			UnstuckME.Blue = buttonCreateAccount.Background;
 			UnstuckME.Red = buttonCancel.Background;
 
@@ -214,6 +212,8 @@ namespace UnstuckMEUserGUI
 						ChannelEndpointElement endpoint = ((ClientSection)config.GetSection("system.serviceModel/client")).Endpoints[0];
 						//endpoint.Address = new Uri("net.tcp://" + (comboBoxSchools.SelectedItem as UnstuckMESchool).ServerIPAdress + @"/UnstuckMEService");
 						config.Save();
+
+                        UnstuckME.SetUPW(passwordBox.Password);
 
 						UnstuckMEWindow mainWindow = new UnstuckMEWindow();
 						mainWindow.Show();

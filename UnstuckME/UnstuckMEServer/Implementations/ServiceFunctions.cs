@@ -76,6 +76,7 @@ namespace UnstuckMEInterfaces
 	                if (sticker.Value <= DateTime.Now)
 	                    await Task.Factory.StartNew(() => AsyncCheckForTimedOutStickers(sticker));
 	            }
+                Thread.Sleep(1000);
 	        }
 	    }
 
@@ -115,7 +116,7 @@ namespace UnstuckMEInterfaces
 
 	        while (true)
 	        {
-	            if (_messageList.Count != 0)
+	            while (_messageList.Count != 0)
 	            {
 	                UnstuckMEMessage temp;
 	                _messageList.TryDequeue(out temp);
@@ -129,6 +130,7 @@ namespace UnstuckMEInterfaces
 	                    /*If Failure Message Will Be Lost, but server will not fail.*/
 	                }
 	            }
+                Thread.Sleep(500);
 	        }
 	    }
 
@@ -156,7 +158,7 @@ namespace UnstuckMEInterfaces
 			_stickerList = new ConcurrentQueue<UnstuckMEBigSticker>();
 			while (true)
 			{
-				if (_stickerList.Count != 0)
+				while (_stickerList.Count != 0)
 				{
 					UnstuckMEBigSticker temp;
 					_stickerList.TryDequeue(out temp);
@@ -166,6 +168,7 @@ namespace UnstuckMEInterfaces
 					DateTime timeout;
 					_activeStickers.TryRemove(temp.StickerID, out timeout);
 				}
+                Thread.Sleep(5000);
 			}
 		}
 
@@ -231,7 +234,7 @@ namespace UnstuckMEInterfaces
 						Console.ResetColor();
 					}
 					offlineUsers.Clear();
-					Thread.Sleep(5000);
+					Thread.Sleep(1000);
 				}
 			}
 			catch (Exception ex)
