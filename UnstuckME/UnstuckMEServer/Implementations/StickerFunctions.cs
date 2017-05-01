@@ -382,18 +382,18 @@ namespace UnstuckMEInterfaces
                     {
                         StickerID = stickerID,
                         ProblemDescription = sticker.ProblemDescription,
-                        StudentID = sticker.StudentID,
+                        StudentID = sticker.StudentID ?? 0,
                         TutorID = sticker.TutorID ?? 0,
                         MinimumStarRanking = sticker.MinimumStarRanking ?? 0,
                         Class = new UserClass()
                         {
-                            ClassID = sticker.ClassID,
+                            ClassID = sticker.ClassID ?? 0,
                             CourseCode = sticker.CourseCode,
                             CourseName = sticker.CourseName,
-                            CourseNumber = sticker.CourseNumber
+                            CourseNumber = sticker.CourseNumber ?? 0
                         },
-                        SubmitTime = sticker.SubmitTime,
-                        Timeout = sticker.Timeout
+                        SubmitTime = sticker.SubmitTime ?? DateTime.MinValue,
+                        Timeout = sticker.Timeout ?? DateTime.MinValue
                     };
 
                     _stickerList.Enqueue(bigsticker);
