@@ -16,9 +16,6 @@ namespace UnstuckMEInterfaces
                 using (ServiceHost host = new ServiceHost(_server))
                 {
                     host.Open();
-
-                    Thread userStatusCheck = new Thread(_server.CheckUserStatus);
-                    userStatusCheck.Start();
                     Thread newMessageCheck = new Thread(_server.CheckForNewMessages);
                     newMessageCheck.Start();
                     Thread newStickerCheck = new Thread(_server.CheckForNewStickers);

@@ -44,12 +44,15 @@ namespace UnstuckMEUserGUI
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        MessageBox.Show("ERROR CONNECTION FAULTED");
+                        System.Windows.MessageBox.Show("Failed To Reconnect");
                         //App.Current.Shutdown();
                     });
                 }
                 else
+                {
                     _retryCount++;
+                    ConnectToServer();
+                }
             }
         }
 
@@ -73,8 +76,19 @@ namespace UnstuckMEUserGUI
             ChannelFactory.Faulted -= OnConnectionToServerFaulted;
             ChannelFactory.Closed -= OnConnectionToServerClosed;
             ConnectToServer();
-
-            ReLoginAttempt = ReLogin();
+            int test = 0;
+            while (!ReLoginAttempt)
+            {
+                ReLoginAttempt = ReLogin();
+                if(test == 10)
+                {
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        System.Windows.MessageBox.Show("Failed To Relogin");
+                        //App.Current.Shutdown();
+                    });
+                }
+            }
         }
 
         public static void ConnectToStreamService()
@@ -91,7 +105,9 @@ namespace UnstuckMEUserGUI
             {
                 try
                 {
-                    Server.UserLoginAttempt(User.EmailAddress, _UPW);
+                    if (Server.UserLoginAttempt(User.EmailAddress, _UPW) == null)
+                        throw new Exception();
+                    
                     success = true;
                 }
                 catch (Exception)

@@ -4,6 +4,7 @@ using System.ServiceModel;
 using UnstuckMEServer;
 using UnstuckME_Classes;
 using System.ServiceModel.Channels;
+using System.Collections.Generic;
 
 namespace UnstuckMEInterfaces
 {
@@ -109,6 +110,7 @@ namespace UnstuckMEInterfaces
                     var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
                     newClient.ChannelInfo = OperationContext.Current;
                     newClient.Connection = establishedUserConnection;
+                    newClient.ChannelInfo.Channel.Closing += UserFaultedLogout;
                     newClient.User = user;
                     newClient.ReturnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
                     _connectedClients.TryAdd(newClient.User.UserID, newClient);
@@ -128,6 +130,53 @@ namespace UnstuckMEInterfaces
             }
 
             return newClient.User;
+        }
+
+        /// <summary>
+        /// Called when the server faults a connected client's connection. Removes them from the online user list.
+        /// </summary>
+        /// <param name="sender">The clients IUnstuckMEService Channel.</param>
+        /// <param name="ea"> Event args.</param>
+        void UserFaultedLogout(object sender, EventArgs ea)
+        {
+            try
+            {
+                KeyValuePair<int, ConnectedClient> faultedConnection = new KeyValuePair<int, ConnectedClient>(-1, null);
+                ConnectedClient faultedClient = null;
+                foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
+                {
+                    if (client.Value.ChannelInfo.SessionId == ((IClientChannel)sender).SessionId)
+                    {
+                        faultedConnection = client;
+                    }
+                }
+                if (faultedConnection.Key != -1)
+                {
+                    _connectedClients.TryRemove(faultedConnection.Key, out faultedClient);
+                }
+                if(faultedClient != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(faultedClient.User.EmailAddress + "'s socket is in a faulted state. They are now considered offline");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Faulted Client Removal Failed, Server Restart May be required.\nFaulted Clients:");
+                foreach(KeyValuePair<int, ConnectedClient> client in _connectedClients)
+                {
+                    if(client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
+                    {
+                        Console.WriteLine("Faulted Client: {0}  Connection State: {1}.", client.Value.User.EmailAddress, client.Value.ChannelInfo.Channel.State.ToString());
+                    }
+                }
+                Console.WriteLine("***Faulted Client Display End***");
+            }
         }
 
         /// <summary>

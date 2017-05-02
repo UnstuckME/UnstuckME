@@ -209,39 +209,6 @@ namespace UnstuckMEInterfaces
 				Console.WriteLine("SendStickerToClients Function Error: " + ex.Message);
 			}
 		}
-
-		/// <summary>
-		/// Checks that clients are still connected to the server. This is called on a separate thread every five seconds by the server.
-		/// </summary>
-		public void CheckUserStatus()
-		{
-			List<int> offlineUsers = new List<int>();
-			try
-			{
-				while (true)
-				{
-					foreach (KeyValuePair<int, ConnectedClient> client in _connectedClients)
-					{
-						if (client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
-							offlineUsers.Add(client.Key);
-					}
-					foreach (int user in offlineUsers)
-					{
-						ConnectedClient removedClient;
-						_connectedClients.TryRemove(user, out removedClient);
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine(removedClient.User.EmailAddress + "'s socket is in a faulted state. They are now considered offline");
-						Console.ResetColor();
-					}
-					offlineUsers.Clear();
-					Thread.Sleep(1000);
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-			}
-		}
         #endregion
 
 	    /// <summary>
