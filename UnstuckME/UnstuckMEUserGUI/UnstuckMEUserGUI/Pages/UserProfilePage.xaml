@@ -31,7 +31,7 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <Grid x:Name="GridDefault">
+        <Grid x:Name="GridDefault" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
                 <RowDefinition Height="80"/>
@@ -49,34 +49,27 @@
             </Grid>
             <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210*"/>
-                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="350*"/>
                 </Grid.ColumnDefinitions>
                 <Grid x:Name="UserInfoGrid" Grid.Column="0">
-                    <TextBox x:Name="TextBoxFirstName" Padding="10,0,0,0" Height="25" Width="{Binding ActualWidth, ElementName=UserInfoGrid}" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=FirstName}" Cursor="Arrow"
-                             SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,8,0,0" TextWrapping="NoWrap" Grid.Column="0"/>
-                    <TextBox x:Name="TextBoxLastName" Padding="10,0,0,0" Height="25" Width="{Binding ActualWidth, ElementName=UserInfoGrid}" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=LastName}" Cursor="Arrow"
-                             SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,38,346,0" TextWrapping="NoWrap" Grid.Column="0"/>
-                    <TextBox x:Name="TextBoxEmailAddress" Padding="10,0,0,0" Height="25" Width="{Binding ActualWidth, ElementName=UserInfoGrid}" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=EmailAddress}" Cursor="Arrow"
-                             SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,68,0,0" TextWrapping="NoWrap" Grid.Column="0"/>
-                    <StackPanel x:Name="RatingsStack" Height="105" Width="{Binding ActualWidth, ElementName=UserInfoGrid}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="TextBoxFirstName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=FirstName}" Cursor="Arrow"
+                             SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,8,0,0" TextWrapping="NoWrap" Grid.Column="0" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="TextBoxLastName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=LastName}" Cursor="Arrow"
+                             SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,38,0,0" TextWrapping="NoWrap" Grid.Column="0" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="TextBoxEmailAddress" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=EmailAddress}" Cursor="Arrow"
+                             SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,68,0,0" TextWrapping="NoWrap" Grid.Column="0" VerticalContentAlignment="Center"/>
+                    <StackPanel x:Name="RatingsStack" Height="105" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                 </Grid>
                 <Grid x:Name="OrganizationGrid" Grid.Column="1">
-                    <Label x:Name="labelOrganizations" Content="Organizations" Height="25" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Right" VerticalAlignment="Top" Width="325" Margin="0,15,15,0"/>
-                    <Label x:Name="labelOrganizationsHelp" Cursor="Help" Content="?" Height="25" Foreground="#FF11850A" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Margin="0,15,15,0">
-                        <Label.ToolTip>
-                            <Border BorderBrush="#336699" BorderThickness="0,0,0,0">
-                                <TextBlock Background="DimGray" Foreground="White">
-                                    If you are a member of a tutoring organization, add it here!
-                                </TextBlock>
-                            </Border>
-                        </Label.ToolTip>
-                    </Label>
-                    <Button x:Name="ButtonAddOrganization" Click="ButtonAddOrganization_OnClick" Height="25" Width="50" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,40,15,0" Content="Add" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF11850A" />
-                    <ComboBox x:Name="ComboBoxOrgName" MaxDropDownHeight="135" Height="25" Width="265" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,70,0" SelectionChanged="ComboBoxOrgName_SelectionChanged" TabIndex="0"/>
-                    <ScrollViewer Height="175" Width="265" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,70,0">
-                        <StackPanel x:Name="StackPanelOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
-                    </ScrollViewer>
+                    <Border BorderThickness="0,0,0,0" Background="#336699" Height="35" VerticalAlignment="Top">
+                        <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Organizations" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1,1,0,0">
+                        <ScrollViewer BorderBrush="Black" Height="195" Width="340" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,35,0,0">
+                            <StackPanel x:Name="StackPanelOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                        </ScrollViewer>
+                    </Border>
                 </Grid>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="1">
@@ -98,7 +91,7 @@
                     <ColumnDefinition Width="350*"/>
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="Black" BorderThickness="0,1,1,1">
-                    <Grid Grid.Column="0" Grid.Row="0" Background="#336699" Grid.ColumnSpan="2">
+                    <Grid Background="#336699">
                         <Border BorderBrush="Black" BorderThickness="0,0,0,0">
                             <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Classes" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
                         </Border>
@@ -149,11 +142,15 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="351*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="550"/>
+                <ColumnDefinition Width="350*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
                 <Border BorderBrush="DimGray" BorderThickness="0,0,0,1" ></Border>
                 <Label x:Name="LabelEditProfile" Content="Edit User Profile" FontSize="24" FontWeight="Medium" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="527*"/>
@@ -187,8 +184,21 @@
                     <PasswordBox x:Name="PasswordBoxConfirm" MouseLeave="PasswordBoxConfirm_MouseLeave" Margin="80,295,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></PasswordBox>
                 </Grid>
             </Grid>
-
-
+            <Grid x:Name="OrganizationEditGrid" Grid.Row="1" Grid.Column="1">
+                <Label x:Name="labelOrganizations" Content="Organizations" Height="25" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Right" VerticalAlignment="Top" Width="325" Margin="0,10,15,0"/>
+                <Label x:Name="labelOrganizationsHelp" Cursor="Help" Content="?" Height="25" Foreground="#FF11850A" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Margin="0,10,15,0">
+                    <Label.ToolTip>
+                        <Border BorderBrush="#336699" BorderThickness="0,0,0,0">
+                            <TextBlock Background="DimGray" Foreground="White" Text="If you are a member of a tutoring organization, add it here!"/>
+                        </Border>
+                    </Label.ToolTip>
+                </Label>
+                <Button x:Name="ButtonAddOrganization" Click="ButtonAddOrganization_OnClick" Height="25" Width="50" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,40,15,0" Content="Add" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF11850A" />
+                <ComboBox x:Name="ComboBoxOrgName" MaxDropDownHeight="135" Height="25" Width="265" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,70,0" TabIndex="0"/>
+                <ScrollViewer Height="265" Width="265" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,65,70,0">
+                    <StackPanel x:Name="StackPanelEditOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

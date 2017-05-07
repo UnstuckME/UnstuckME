@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
@@ -460,7 +461,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="message">The message that has been edited.</param>
 		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
-		int EditMessage(UnstuckMEMessage message);
+		Task<int> EditMessage(UnstuckMEMessage message);
 
 		/// <summary>
 		/// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
@@ -468,7 +469,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="message">The message to be deleted.</param>
 		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
-		int DeleteMessage(UnstuckMEMessage message);
+		Task<int> DeleteMessage(UnstuckMEMessage message);
 
 		/// <summary>
 		/// When logging on, checks for any stickers that need reviews. This will only occur if the other member of the
@@ -486,7 +487,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="stickerID">The unique identifier of the sticker to delete.</param>
 		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
-		int DeleteSticker(int stickerID);
+		Task<int> DeleteSticker(int stickerID);
 
 		/// <summary>
 		/// Removes the tutor associated with the sticker given by <paramref name="stickerID"/> and sends it out

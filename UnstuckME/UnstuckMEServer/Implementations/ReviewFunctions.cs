@@ -177,15 +177,14 @@ namespace UnstuckMEInterfaces
 
                         foreach (var rev in reviews)
                         {
+                            int temp = 0;
                             if (userID == rev.TutorID && userID != rev.ReviewerID)
                             {
-                                int temp;
                                 _reviewList.TryDequeue(out temp);
                                 return new KeyValuePair<int, bool>(rev.StickerID, false);
                             }
                             if (userID == rev.StudentID && userID != rev.ReviewerID)
                             {
-                                int temp;
                                 _reviewList.TryDequeue(out temp);
                                 return new KeyValuePair<int, bool>(rev.StickerID, true);
                             }

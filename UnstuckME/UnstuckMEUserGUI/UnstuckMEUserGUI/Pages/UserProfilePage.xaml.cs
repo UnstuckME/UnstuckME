@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 using UnstuckME_Classes;
 using UnstuckMeLoggers;
 using UnstuckMEUserGUI.SubWindows;
@@ -70,10 +71,17 @@ namespace UnstuckMEUserGUI
                         Value = org.MentorID
                     };
 
+                    TutoringOrganizationDisplay tutororg = new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName)
+                    {
+                        buttonRemoveOrg = { Visibility = Visibility.Hidden }
+                    };
+
                     ComboBoxOrgName.Items.Add(temp2);
+                    StackPanelOrganization.Children.Add(tutororg);
+
+                    if (userOrgs.Contains(org))
+                        StackPanelEditOrganization.Children.Add(new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName));
                 }
-                foreach (Organization org in userOrgs)
-                    StackPanelOrganization.Children.Add(new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName));
             }
             catch (CommunicationException ex)
             {
@@ -145,7 +153,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                Microsoft.Win32.OpenFileDialog fileBrowser = new Microsoft.Win32.OpenFileDialog()
+                OpenFileDialog fileBrowser = new OpenFileDialog()
                 {
                     AddExtension = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
@@ -299,6 +307,29 @@ namespace UnstuckMEUserGUI
                 }
             }
 
+            try
+            {
+                for (int index = 0; index < StackPanelEditOrganization.Children.Count; index++)
+                {
+                    TutoringOrganizationDisplay org = StackPanelEditOrganization.Children[index] as TutoringOrganizationDisplay;
+
+                    if (!StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>().Contains(org))
+                    {
+                        //UnstuckME.Server.AddUserToTutoringOrganization(UnstuckME.User.UserID, org.OrganizationID);
+                        StackPanelOrganization.Children.Add(org);
+                    }
+                    else
+                    {
+                        //UnstuckME.Server.RemoveUserFromTutoringOrganization(UnstuckME.User.UserID, org.OrganizationID);
+                        StackPanelOrganization.Children.Remove(org);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+            }
+
             GridDefault.IsEnabled = true;
             GridDefault.Visibility = Visibility.Visible;
             GridEditProfile.Visibility = Visibility.Hidden;
@@ -349,10 +380,7 @@ namespace UnstuckMEUserGUI
             }
 
             if (!exists && temp != null)
-            {
-                StackPanelOrganization.Children.Add(new TutoringOrganizationDisplay(temp.Value, temp.Text));
-                UnstuckME.Server.AddUserToTutoringOrganization(UnstuckME.User.UserID, temp.Value);
-            }
+                StackPanelEditOrganization.Children.Add(new TutoringOrganizationDisplay(temp.Value, temp.Text));
         }
 
         private void ButtonDeleteProfile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -387,13 +415,6 @@ namespace UnstuckMEUserGUI
         private void ButtonDeleteProfile_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonDeleteProfile.Background = Brushes.DarkRed;
-        }
-
-        private void ComboBoxOrgName_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //ComboBoxOrgName.Background = Brushes.Indigo;
-            //ComboBoxOrgName.Foreground = Brushes.Honeydew;
-            //ComboBoxOrgName.SelectedIndex = 3;
         }
     }
 }

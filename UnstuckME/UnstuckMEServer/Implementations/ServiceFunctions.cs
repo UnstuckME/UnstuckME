@@ -21,32 +21,13 @@ namespace UnstuckMEInterfaces
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single)]
 	public partial class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
 	{
-		private ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
-		private ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
+		private readonly ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
+		private readonly ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
 		private static ConcurrentDictionary<int, DateTime> _activeStickers;
 		private static ConcurrentQueue<UnstuckMEBigSticker> _stickerList;
 		private static ConcurrentQueue<UnstuckMEMessage> _messageList;
-		private static ConcurrentQueue<int> _reviewList = new ConcurrentQueue<int>();
+		private static readonly ConcurrentQueue<int> _reviewList = new ConcurrentQueue<int>();
 		
-		/// <summary>
-		/// This function is for testing stored procedures. In program.cs replace:
-		/// Thread userStatusCheck = new Thread(_server.CheckStatus); with Thread userStatusCheck = new Thread(_server.SPTest); 
-		/// </summary>
-		public void SPTest()
-		{
-			using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-			{
-				try
-				{
-					db.CreateChat(2);
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.Message);
-				}
-			}
-		}
-
 		#region Thread Functions
 
 	    /// <summary>
@@ -125,9 +106,9 @@ namespace UnstuckMEInterfaces
 	                {
 	                    await Task.Factory.StartNew(() => AsyncMessageSendToUsers(temp));
 	                }
-	                catch (Exception)
+	                catch (Exception ex)
 	                {
-	                    /*If Failure Message Will Be Lost, but server will not fail.*/
+	                    Console.WriteLine("Failed to send message to users, {0}", ex.Message);
 	                }
 	            }
                 Thread.Sleep(500);
@@ -222,11 +203,13 @@ namespace UnstuckMEInterfaces
 
 	        try
 	        {
-	            var user = GetUserInfo(null, emailAddress);
-	            retVal = true;
+	            if (GetUserInfo(null, emailAddress) != null)
+    	            retVal = true;
 	        }
-	        catch
-	        { }
+	        catch (Exception ex)
+	        {
+	            Console.WriteLine(ex.Message);
+	        }
 
             return retVal;
         }
@@ -376,7 +359,7 @@ namespace UnstuckMEInterfaces
 		/// Generates a random 8-character verification code for a user to activate their account.
 		/// </summary>
 		/// <returns>A randomly generated 8-character code.</returns>
-		private string GenerateVerificationCode()
+		private static string GenerateVerificationCode()
 		{
 			string value = string.Empty;
 

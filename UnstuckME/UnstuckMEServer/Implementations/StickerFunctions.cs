@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnstuckMEServer;
 using UnstuckME_Classes;
+using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -12,28 +13,43 @@ namespace UnstuckMEInterfaces
         /// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
         /// </summary>
         /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
-        /// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
-        public void AcceptSticker(int tutorID, int stickerID)
+        /// <param name="stickerID">The unique identifier of the sticker that has been accepted.</param>
+        public async void AcceptSticker(int tutorID, int stickerID)
         {
             try
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     db.UpdateTutorIDByTutorIDAndStickerID(tutorID, stickerID);
-                    DateTime time;
-                    _activeStickers.TryRemove(stickerID, out time);
-                    var tutors = db.GetUsersThatCanTutorASticker(stickerID);
-
-                    foreach (var client in _connectedClients)
-                    {
-                        if (client.Key != tutorID && tutors.Contains(client.Key))
-                            client.Value.Connection.RemoveGUISticker(stickerID);
-                    }
                 }
+
+                DateTime time;
+                _activeStickers.TryRemove(stickerID, out time);
+                await Task.Factory.StartNew(() => AsyncAcceptSticker(tutorID, stickerID));
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Asyncronously gets all the online users who can see the sticker that has been accepted and
+        /// removes it from their interface.
+        /// </summary>
+        /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
+        /// <param name="stickerID">The unique identifier of the sticker that has been accepted.</param>
+        private void AsyncAcceptSticker(int tutorID, int stickerID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var tutors = db.GetUsersThatCanTutorASticker(stickerID);
+
+                foreach (var client in _connectedClients)
+                {
+                    if (client.Key != tutorID && tutors.Contains(client.Key))
+                        client.Value.Connection.RemoveGUISticker(stickerID);
+                }
             }
         }
 
@@ -334,7 +350,7 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="stickerID">The unique identifier of the sticker to delete.</param>
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public int DeleteSticker(int stickerID)
+        public async Task<int> DeleteSticker(int stickerID)
         {
             int retVal = -1;
 
@@ -343,21 +359,36 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     db.DeleteStickerByStickerID(stickerID);
-                    var tutors = db.GetUsersThatCanTutorASticker(stickerID);
-
-                    foreach (var tutor in tutors)
-                    {
-                        if (tutor.HasValue && _connectedClients.ContainsKey(tutor.Value))
-                            _connectedClients[tutor.Value].Connection.RemoveGUISticker(stickerID);
-                    }
-
-                    retVal = 0;
                 }
+
+                await Task.Factory.StartNew(() => AsyncDeleteSticker(stickerID));
+                retVal = 0;
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             return retVal;
+        }
+
+        /// <summary>
+        /// Asyncronously gets all the online users who can see the sticker that has been deleted
+        /// and removes it from their interface.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to delete.</param>
+        private void AsyncDeleteSticker(int stickerID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var tutors = db.GetUsersThatCanTutorASticker(stickerID);
+
+                foreach (var tutor in tutors)
+                {
+                    if (tutor.HasValue && _connectedClients.ContainsKey(tutor.Value))
+                        _connectedClients[tutor.Value].Connection.RemoveGUISticker(stickerID);
+                }
+            }
         }
 
         /// <summary>
@@ -402,8 +433,10 @@ namespace UnstuckMEInterfaces
                     retVal = 0;
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             return retVal;
         }
@@ -426,8 +459,10 @@ namespace UnstuckMEInterfaces
                     rsticker.ProblemDescription = sticker.ProblemDescription;
                 }
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             return rsticker;
         }

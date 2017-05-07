@@ -19,17 +19,27 @@ namespace UnstuckMEInterfaces
                 db.InsertUserIntoMentorProgram(userID, organizationID);
                 var stickers = GetActiveStickers(userID, organizationID);
 
-                int index = -1;
-                do
+                foreach (var client in _connectedClients)
                 {
-                    index++;
-
-                    if (_connectedClients[index].User.UserID == userID)
+                    if (client.Value.User.UserID == userID)
                     {
                         foreach (UnstuckMEAvailableSticker sticker in stickers)
-                            _connectedClients[index].Connection.RecieveNewSticker(sticker);
+                            client.Value.Connection.RecieveNewSticker(sticker);
+
+                        break;
                     }
-                } while (_connectedClients[index].User.UserID != userID && index < _connectedClients.Count);
+                }
+                //int index = -1;
+                //do
+                //{
+                //    ++index;
+
+                //    if (_connectedClients[index].User.UserID == userID)
+                //    {
+                //        foreach (UnstuckMEAvailableSticker sticker in stickers)
+                //            _connectedClients[index].Connection.RecieveNewSticker(sticker);
+                //    }
+                //} while (_connectedClients[index].User.UserID != userID && index < _connectedClients.Count);
             }
         }
 

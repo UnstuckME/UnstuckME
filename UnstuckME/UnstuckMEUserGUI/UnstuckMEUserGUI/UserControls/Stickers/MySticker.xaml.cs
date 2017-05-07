@@ -50,7 +50,7 @@ namespace UnstuckMEUserGUI
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (UnstuckME.Server.DeleteSticker(Sticker.StickerID) == 0)
+            if (UnstuckME.Server.DeleteSticker(Sticker.StickerID) == Task.FromResult(0))
                 ((StackPanel)Parent).Children.Remove(this);
         }
 

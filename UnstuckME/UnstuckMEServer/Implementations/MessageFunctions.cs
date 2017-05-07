@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnstuckMEServer;
 using UnstuckME_Classes;
+using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -64,19 +65,15 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="message">The message that has been edited.</param>
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public int EditMessage(UnstuckMEMessage message)
+        public async Task<int> EditMessage(UnstuckMEMessage message)
         {
             try
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    foreach (var client in _connectedClients)
-                    {
-                        if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
-                            client.Value.Connection.UpdateChatMessage(message);
-                    }
-
                     db.UpdateMessageByMessageID(message.MessageID, message.Message);
+                    await Task.Factory.StartNew(() => AsyncEditMessage(message));
+
                     return 0;
                 }
             }
@@ -87,29 +84,53 @@ namespace UnstuckMEInterfaces
         }
 
         /// <summary>
+        /// Asyncronously gets all the online users who can see the message that has been edited and 
+        /// changes it on their interface.
+        /// </summary>
+        /// <param name="message">The message that has been edited.</param>
+        private void AsyncEditMessage(UnstuckMEMessage message)
+        {
+            foreach (var client in _connectedClients)
+            {
+                if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
+                    client.Value.Connection.UpdateChatMessage(message);
+            }
+        }
+
+        /// <summary>
         /// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
         /// </summary>
         /// <param name="message">The message to be deleted.</param>
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public int DeleteMessage(UnstuckMEMessage message)
+        public async Task<int> DeleteMessage(UnstuckMEMessage message)
         {
             try
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    foreach (var client in _connectedClients)
-                    {
-                        if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
-                            client.Value.Connection.DeleteChatMessage(message);
-                    }
-
                     db.DeleteMessageByMessageID(message.MessageID);
+                    await Task.Factory.StartNew(() => AsyncDeleteMessage(message));
+
                     return 0;
                 }
             }
             catch (Exception)
             {
                 return -1;
+            }
+        }
+
+        /// <summary>
+        /// Asyncronously gets all the online users who can see the message that has been deleted and 
+        /// removes it from their interface.
+        /// </summary>
+        /// <param name="message">The message to be deleted.</param>
+        private void AsyncDeleteMessage(UnstuckMEMessage message)
+        {
+            foreach (var client in _connectedClients)
+            {
+                if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
+                    client.Value.Connection.DeleteChatMessage(message);
             }
         }
 

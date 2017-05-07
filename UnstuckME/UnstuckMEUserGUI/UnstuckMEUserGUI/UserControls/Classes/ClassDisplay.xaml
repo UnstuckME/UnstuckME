@@ -12,7 +12,7 @@
                 <TextBlock x:Name="CourseCode" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Padding="10,1,0,0" Text="CourseCode"/>
                 <TextBlock x:Name="CourseNumber" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" Padding="10,1,0,0" TextWrapping="Wrap" Text="CourseNumber"/>
                 <TextBlock x:Name="Coursedesc" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Padding="10,0,0,1" TextWrapping="Wrap" Text="CourseDesc"/>
-                <Border x:Name="ClassBorder" BorderThickness="1,1,1,1" BorderBrush="{x:Null}" Height="{Binding ActualHeight, ElementName=ClassGrid}" Width="{Binding ActualWidth, ElementName=ClassGrid}"/>
+                <Border x:Name="ClassBorder" BorderThickness="2,2,2,2" BorderBrush="{x:Null}" Height="{Binding ActualHeight, ElementName=ClassGrid}" Width="{Binding ActualWidth, ElementName=ClassGrid}"/>
             </Grid>
         </TextBlock>
     </Grid>

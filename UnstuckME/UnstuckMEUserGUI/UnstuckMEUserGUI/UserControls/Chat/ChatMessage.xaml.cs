@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -54,7 +55,7 @@ namespace UnstuckMEUserGUI
                     UsersInConvo = Message.UsersInConvo
                 };
 
-                if (UnstuckME.Server.EditMessage(editedMessage) == -1)
+                if (UnstuckME.Server.EditMessage(editedMessage) == Task.FromResult(-1))
                     throw new Exception(string.Format("Failed to edit message {0}", editedMessage.Message));
 
                 TextBoxChatMessage.Foreground = Brushes.White;
@@ -96,7 +97,7 @@ namespace UnstuckMEUserGUI
                     UsersInConvo = Message.UsersInConvo
                 };
 
-                if (UnstuckME.Server.DeleteMessage(deleted) == -1)
+                if (UnstuckME.Server.DeleteMessage(deleted) == Task.FromResult(-1))
                     throw new Exception(string.Format("Failed to delete message {0}", deleted.MessageID));
 
                 UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Remove(this);

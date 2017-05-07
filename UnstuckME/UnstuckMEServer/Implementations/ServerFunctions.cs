@@ -115,7 +115,6 @@ namespace UnstuckMEInterfaces
         {
             try
             {
-
                 if (recipients.Count == 0)
                 {
                     foreach (var client in _connectedClients)
@@ -125,9 +124,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (string recipient in recipients)
                     {
-                        var client = _connectedClients.First();
-
-                        for (int j = 0; j < _connectedClients.Count; j++)
+                        foreach (var client in _connectedClients)
                         {
                             if (client.Value.User.EmailAddress == recipient)
                                 client.Value.Connection.GetMessageFromServer(message);
