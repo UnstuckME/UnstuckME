@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              mc:Ignorable="d" MinHeight="40" MinWidth="350" Height="35" Width="Auto">
-    <Grid x:Name="ClassGrid" Height="Auto" Width="Auto" MinHeight="40" MinWidth="350" Background="{x:Null}">
-        <TextBlock x:Name="MainContainer" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="350" Width="Auto" Height="Auto" Margin="0,-1,0,0" MouseEnter="MainContainer_MouseEnter" MouseLeave="MainContainer_MouseLeave">
+    <Grid x:Name="ClassGrid" MinHeight="40" MinWidth="350" Background="{x:Null}">
+        <Canvas x:Name="MainContainer" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="350" Margin="0,-1,0,0" MouseEnter="MainContainer_MouseEnter" MouseLeave="MainContainer_MouseLeave">
             <Grid Width="350">
                 <Button x:Name="Deletebtn" Foreground="White" Visibility="Collapsed" Background="#993333" Margin="0,0,5,0" Content="Delete" HorizontalAlignment="Right" Width="75" Click="Deletebtn_Click"/>
                 <TextBlock x:Name="CourseCode" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Padding="10,1,0,0" Text="CourseCode"/>
@@ -14,6 +14,6 @@
                 <TextBlock x:Name="Coursedesc" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Padding="10,0,0,1" TextWrapping="Wrap" Text="CourseDesc"/>
                 <Border x:Name="ClassBorder" BorderThickness="2,2,2,2" BorderBrush="{x:Null}" Height="{Binding ActualHeight, ElementName=ClassGrid}" Width="{Binding ActualWidth, ElementName=ClassGrid}"/>
             </Grid>
-        </TextBlock>
+        </Canvas>
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.Windows;
 using UnstuckMEInterfaces;
 using UnstuckME_Classes;
+using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
@@ -22,9 +23,9 @@ namespace UnstuckMEUserGUI
 			}
 			catch(InvalidOperationException ex)
 			{
-				MessageBox.Show(ex.Message);
+			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
 			}
-		}
+        }
 
 		/// <summary>
 		/// Forces the client to close with a messagebox popup.
@@ -51,8 +52,15 @@ namespace UnstuckMEUserGUI
 		/// <param name="message">The message being sent to the user.</param>
 		public void GetMessage(UnstuckMEMessage message)
 		{
-			Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatMessage(message);
-		}
+		    try
+		    {
+		        Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveChatMessage(message);
+		    }
+		    catch (Exception ex)
+		    {
+		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+            }
+        }
 
 		/// <summary>
 		/// Removes a sticker from any online, qualified user's GUI.
@@ -66,9 +74,9 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-				MessageBox.Show(ex.Message);
+			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
 			}
-		}
+        }
 
 		/// <summary>
 		/// Updates a user's list of stickers if they are online and meet the qualifications to see the newly submitted sticker.
@@ -82,9 +90,9 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-				MessageBox.Show(ex.Message);
+			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
 			}
-		}
+        }
 
         /// <summary>
         /// Updates a chat message if a user in the conversation has edited it.
@@ -98,7 +106,7 @@ namespace UnstuckMEUserGUI
             }
             catch (InvalidOperationException ex)
             {
-                MessageBox.Show(ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
             }
         }
 
@@ -114,7 +122,7 @@ namespace UnstuckMEUserGUI
             }
             catch (InvalidOperationException ex)
             {
-                MessageBox.Show(ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
             }
         }
 
@@ -134,7 +142,11 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to logout and log back in to submit a review on " + stickerID +
+                                                                         ". If this does not work, please contact an UnstuckME administrator to resolve this issue.",
+                                                                         "Could not create a new review", UnstuckMEBoxImage.Error);
+                messagebox.ShowDialog();
             }
         }
 
@@ -154,7 +166,11 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to logout and log back in to submit a review on " + stickerID +
+                                                                                          ". If this does not work, please contact an UnstuckME administrator to resolve this issue.",
+                                                                         "Could not create a new review", UnstuckMEBoxImage.Error);
+                messagebox.ShowDialog();
             }
         }
 
@@ -171,8 +187,25 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Could not update status of sticker " + stickerID + ", Source = " + ex.Source);
             }
         }
+
+	    /// <summary>
+	    /// When a review is submitted of a user, adds it to the list of reviews that have been
+	    /// submitted on that user.
+	    /// </summary>
+	    /// <param name="review">The review to add to the user's profile page.</param>
+	    public void RecieveReview(UnstuckMEReview review)
+	    {
+	        try
+	        {
+	            UnstuckME.Pages.UserProfilePage.AddReview(review);
+	        }
+	        catch (Exception ex)
+	        {
+	            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Could not add review " + review.ReviewID + " to interface, Source = " + ex.Source);
+	        }
+	    }
     }
 }

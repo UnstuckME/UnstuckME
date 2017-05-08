@@ -280,15 +280,15 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		List<Organization> GetAllOrganizations();
 
-		/// <summary>
-		/// Submits a report to the database.
+        /// <summary>
+        /// Submits a report to the database and notifies online admins of the sent report.
 		/// </summary>
-		/// <param name="reportDescription">The description of the report.</param>
-		/// <param name="flaggerID">The unique identifier of the client who submitted the report.</param>
-		/// <param name="reviewID">The unique idenitifer of the review that is being reported.</param>
-		/// <returns>The unique identifier of the newly submitted report if successul, -1 if unsuccessful.</returns>
-		[OperationContract]
-		int CreateReport(string reportDescription, int flaggerID, int reviewID);
+        /// <param name="reportDescription">The description of the report.</param>
+        /// <param name="flaggerID">The unique identifier of the client who submitted the report.</param>
+        /// <param name="reviewID">The unique idenitifer of the review that is being reported.</param>
+        /// <returns>The unique identifier of the newly submitted report if successul, -1 if unsuccessful.</returns>
+        [OperationContract]
+		Task<int> CreateReport(string reportDescription, int flaggerID, int reviewID);
 
 		/// <summary>
 		/// Submits a review to the database. Finds the other user associated with the sticker and makes them submit
@@ -531,5 +531,23 @@ namespace UnstuckMEInterfaces
         /// <returns>A list of organizations that contains the unique identifiers and the name of each.</returns>
         [OperationContract]
 	    List<Organization> GetUserOrganizations(int userID);
+
+        /// <summary>
+        /// Gets the review that have been submitted of a particular user to display on their Profile
+        /// Page.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who has reviews.</param>
+        /// <returns>A list containing all the reviews submitted on the user.</returns>
+        [OperationContract]
+        List<UnstuckMEReview> GetReviewsOfUser(int userID);
+
+        /// <summary>
+        /// Gets a list of Review IDs that have been reported by a user.
+        /// </summary>
+        /// <param name="userID">The unique identifer of the user who has submitted reports.</param>
+        /// <returns>A list of integers containing the unique identifiers of the reviews that
+        /// have been reported by the user.</returns>
+	    [OperationContract]
+	    List<int> GetReportedReviewIDs(int userID);
 	}
 }

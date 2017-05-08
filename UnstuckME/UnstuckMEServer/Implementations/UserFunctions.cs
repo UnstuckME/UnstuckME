@@ -30,7 +30,7 @@ namespace UnstuckMEInterfaces
                     FirstName = users.DisplayFName,
                     LastName = users.DisplayLName,
                     EmailAddress = users.EmailAddress,
-                    Privileges = users.Privileges,
+                    Privileges = (Privileges)users.Privileges,
                     AverageStudentRank = (float)users.AverageStudentRank,
                     AverageTutorRank = (float)users.AverageTutorRank,
                     TotalStudentReviews = users.TotalStudentReviews,
@@ -110,7 +110,7 @@ namespace UnstuckMEInterfaces
                     var establishedUserConnection = OperationContext.Current.GetCallbackChannel<IClient>();
                     newClient.ChannelInfo = OperationContext.Current;
                     newClient.Connection = establishedUserConnection;
-                    //newClient.ChannelInfo.Channel.Closing += UserFaultedLogout;
+                    newClient.ChannelInfo.Channel.Closing += UserFaultedLogout;
                     newClient.User = user;
                     newClient.ReturnAddress = OperationContext.Current.IncomingMessageProperties[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
                     _connectedClients.TryAdd(newClient.User.UserID, newClient);
@@ -167,8 +167,8 @@ namespace UnstuckMEInterfaces
                 Console.WriteLine("Faulted Client Removal Failed, Server Restart May be required.\nFaulted Clients:");
                 foreach(KeyValuePair<int, ConnectedClient> client in _connectedClients)
                 {
-                    if(client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
-                        Console.WriteLine("Faulted Client: {0}  Connection State: {1}.", client.Value.User.EmailAddress, client.Value.ChannelInfo.Channel.State.ToString());
+                    if (client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)
+                        Console.WriteLine("Faulted Client: {0}  Connection State: {1}.", client.Value.User.EmailAddress, client.Value.ChannelInfo.Channel.State);
                 }
                 Console.WriteLine("***Faulted Client Display End***");
             }

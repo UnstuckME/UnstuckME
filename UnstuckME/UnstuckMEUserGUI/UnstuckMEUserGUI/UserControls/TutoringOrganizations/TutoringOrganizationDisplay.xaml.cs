@@ -10,6 +10,7 @@ namespace UnstuckMEUserGUI
     {
         public string OrganizationName { get; set; }
         public int OrganizationID { get; set; }
+
         public TutoringOrganizationDisplay(int inOrgID, string inOrgName)
         {
             InitializeComponent();

@@ -84,5 +84,13 @@ namespace UnstuckMEInterfaces
         /// <param name="stickerID">The unique identifier of the sticker to make active.</param>
         [OperationContract(IsOneWay = true)]
         void UpdateStickerStatus(int stickerID);
+
+        /// <summary>
+        /// When a review is submitted of a user, adds it to the list of reviews that have been
+        /// submitted on that user.
+        /// </summary>
+        /// <param name="review">The review to add to the user's profile page.</param>
+        [OperationContract(IsOneWay = true)]
+        void RecieveReview(UnstuckMEReview review);
     }
 }

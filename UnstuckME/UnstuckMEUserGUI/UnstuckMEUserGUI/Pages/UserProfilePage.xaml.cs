@@ -93,7 +93,7 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        public void RepopulateClasses()
+        internal void RepopulateClasses()
         {
             BottomLeftStack.Children.Clear();
             List<UserClass> classes = UnstuckME.Server.GetUserClasses(UnstuckME.User.UserID);
@@ -104,15 +104,35 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        public void SetStudentRating(float inRating)
+        internal void SetStudentRating(float inRating)
         {
             _studentRanking.SetRatingText("Avg Student Rating: (" + Math.Round(inRating, 2) + ")");
             _studentRanking.SetRatingValue(inRating);
         }
-        public void SetTutorRating(float inRating)
+
+        internal void SetTutorRating(float inRating)
         {
             _tutorRanking.SetRatingText("Avg Tutor Rating: (" + Math.Round(inRating, 2) + ")");
             _tutorRanking.SetRatingValue(inRating);
+        }
+
+        internal void PopulateReviews()
+        {
+            BottomRightStack.Children.Clear();
+            List<UnstuckMEReview> reviews = UnstuckME.Server.GetReviewsOfUser(UnstuckME.User.UserID);
+            List<int> reportedReviews = UnstuckME.Server.GetReportedReviewIDs(UnstuckME.User.UserID);
+
+            foreach (UnstuckMEReview review in reviews)
+            {
+                ReviewDisplay userReview = reportedReviews.Contains(review.ReviewID) ? new ReviewDisplay(review, true) : new ReviewDisplay(review, false);
+                BottomRightStack.Children.Add(userReview);
+            }
+        }
+
+        internal void AddReview(UnstuckMEReview review)
+        {
+            ReviewDisplay newReview = new ReviewDisplay(review, false);
+            BottomRightStack.Children.Insert(0, newReview);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -336,7 +356,7 @@ namespace UnstuckMEUserGUI
             GridEditProfile.IsEnabled = false;
         }
 
-        public void UpdateRatings()
+        internal void UpdateRatings()
         {
             UserInfo temp = UnstuckME.Server.GetUserInfo(UnstuckME.User.UserID, UnstuckME.User.EmailAddress);
             UnstuckME.User.AverageStudentRank = temp.AverageStudentRank;

@@ -119,6 +119,9 @@
       <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="SubWindows\ReportSubmitWindow.xaml.cs">
+      <DependentUpon>ReportSubmitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="School.cs">
       <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
     </Compile>
@@ -262,6 +265,10 @@
     <Compile Include="SubWindows\UserMenu.xaml.cs">
       <DependentUpon>UserMenu.xaml</DependentUpon>
     </Compile>
+    <Page Include="SubWindows\ReportSubmitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SubWindows\AddClassToServerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

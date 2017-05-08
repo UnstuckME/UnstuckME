@@ -40,7 +40,7 @@ namespace UnstuckME_Classes
 		public float AverageTutorRank { get; set; }
 		public int TotalTutorReviews { get; set; }
 		public int TotalStudentReviews { get; set; }
-		public int Privileges { get; set; }
+		public Privileges Privileges { get; set; }
 		public byte[] UserProfilePictureBytes { get; set; }
 		public string UserPassword { get; set; }
 		public string Salt { get; set; }

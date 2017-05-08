@@ -9,8 +9,7 @@
         AllowsTransparency="True"
         Title="AddStudentReviewWindow" Height="Auto" Width="Auto" WindowStyle="None" WindowState="Maximized" Background="{x:Null}">
     <Grid>
-        <Rectangle Fill="Black" Opacity=".7">
-        </Rectangle>
+        <Rectangle Fill="Black" Opacity=".7"/>
         <Grid HorizontalAlignment="Center" Background="DimGray" VerticalAlignment="Center" MaxHeight="700" MaxWidth="675" MinHeight="500" MinWidth="650" Height="Auto" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="62*"/>

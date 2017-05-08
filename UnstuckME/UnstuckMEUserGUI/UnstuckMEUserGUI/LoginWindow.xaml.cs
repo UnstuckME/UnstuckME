@@ -98,47 +98,61 @@ namespace UnstuckMEUserGUI
 		    LoadingScreen.Visibility = Visibility.Collapsed;
 		}
 
-		private Task<List<UnstuckMESchool>> LoadSchoolsAsync()
+		private static Task<List<UnstuckMESchool>> LoadSchoolsAsync()
 		{
 			return Task.Factory.StartNew(() => LoadSchools());
 		}
 
-		List<UnstuckMESchool> LoadSchools()
+		private static List<UnstuckMESchool> LoadSchools()
 		{
 			List<UnstuckMESchool> tempSchools = new List<UnstuckMESchool>();
-			using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
-			{
-				var dbSchools = from s in db.Schools
-								join l in db.SchoolLogoes on s.SchoolID equals l.LogoID
-								//join j in db.Servers on s.SchoolID equals j.SchoolID      /*No Schools have a server currently*/
-								select new
-								{
-								    s.SchoolName,                                      //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/   
-								    s.EmailCredentials,
-								    s.SchoolID,
-								    l.LastModified//,
-									//j.ServerDomain,
-									//j.ServerName,
-									//j.ServerIPAddress
-								};
+		    try
+		    {
+		        using (UnstuckME_SchoolsEntities db = new UnstuckME_SchoolsEntities())
+		        {
+		            var dbSchools = from s in db.Schools
+		                            join l in db.SchoolLogoes on s.SchoolID equals l.LogoID
+		                            //join j in db.Servers on s.SchoolID equals j.SchoolID      /*No Schools have a server currently*/
+		                            select new
+		                            {
+		                                s.SchoolName, //join l in db.SchoolLogoes on s.SchoolID equals l.LogoID /*No Logos need to be pulled*/   
+		                                s.EmailCredentials,
+		                                s.SchoolID,
+		                                l.LastModified //,
+		                                //j.ServerDomain,
+		                                //j.ServerName,
+		                                //j.ServerIPAddress
+		                            };
 
-				foreach (var dbschool in dbSchools)
-				{
-					UnstuckMESchool newSchool = new UnstuckMESchool()
-					{
-						SchoolID = dbschool.SchoolID,
-						SchoolName = dbschool.SchoolName,
-						SchoolEmailCredentials = dbschool.EmailCredentials,
-						LogoLastModified = dbschool.LastModified.ToString()//,
-						//SchoolDomain = dbschool.Domain,
-						//ServerName = dbschool.ServerName,
-						//ServerIPAdress = dbschool.IPAddress
-					};
+		            foreach (var dbschool in dbSchools)
+		            {
+		                UnstuckMESchool newSchool = new UnstuckMESchool()
+		                {
+		                    SchoolID = dbschool.SchoolID,
+		                    SchoolName = dbschool.SchoolName,
+		                    SchoolEmailCredentials = dbschool.EmailCredentials,
+		                    LogoLastModified = dbschool.LastModified.ToString() //,
+		                    //SchoolDomain = dbschool.Domain,
+		                    //ServerName = dbschool.ServerName,
+		                    //ServerIPAdress = dbschool.IPAddress
+		                };
 
-					tempSchools.Add(newSchool);
-				}
-			}
-			return tempSchools;
+		                tempSchools.Add(newSchool);
+		            }
+		        }
+		    }
+		    catch (Exception ex)
+		    {
+		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+		        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK,
+                                                                         "Could not connect to the server/database. Please contact an UnstuckME administrator for more help.",
+                                                                         "Server/Database Connection Error",
+                                                                         UnstuckMEBoxImage.Error);
+		        messagebox.ShowDialog();
+		        Application.Current.Shutdown();
+		    }
+
+		    return tempSchools;
 		}
 
 		private async void buttonLogin_Click(object sender, RoutedEventArgs e)
@@ -370,8 +384,7 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-					UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-					logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
 				}
 			});
 
@@ -516,27 +529,27 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
-		private string FindDrive()
-		{
-			bool foundCDrive = false;
-			string driveToUse = null;
-			DriveInfo[] myDrives = DriveInfo.GetDrives();
+		//private string FindDrive()
+		//{
+		//	bool foundCDrive = false;
+		//	string driveToUse = null;
+		//	DriveInfo[] myDrives = DriveInfo.GetDrives();
 
-			foreach (DriveInfo drive in myDrives)
-			{
-				if (drive.Name.ToLower() == @"c:\")
-				{
-					foundCDrive = true;
-					driveToUse = drive.Name;
-					break;
-				}
-			}
+		//	foreach (DriveInfo drive in myDrives)
+		//	{
+		//		if (drive.Name.ToLower() == @"c:\")
+		//		{
+		//			foundCDrive = true;
+		//			driveToUse = drive.Name;
+		//			break;
+		//		}
+		//	}
 
-			if (foundCDrive != true)
-			    driveToUse = myDrives[0].Name;
+		//	if (foundCDrive != true)
+		//	    driveToUse = myDrives[0].Name;
 
-		    return driveToUse;
-		}
+		//    return driveToUse;
+		//}
 
 		private void comboBoxSchools_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -618,8 +631,6 @@ namespace UnstuckMEUserGUI
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
 				}
 			}
-
-
 		}
 
 		//private void ChangeConnectionString()
@@ -642,8 +653,6 @@ namespace UnstuckMEUserGUI
 		//        {
 		//            schoolIp = (from server in db.Servers where server.SchoolID == schoolId select new {server.ServerIPAddress}).First().ToString();
 		//        }
-
-
 		//    }
 		//}
 
@@ -728,17 +737,19 @@ namespace UnstuckMEUserGUI
 
 		private void textBoxUserName_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			try
-			{
-				System.Windows.Media.Color brush = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56");
+		    try
+		    {
+		        System.Windows.Media.Color brush = (System.Windows.Media.Color) System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56");
 
-				if ((textBoxUserName.Background as SolidColorBrush).Color == brush)
-					textBoxUserName.Background = System.Windows.Media.Brushes.White;
-				if (!m_contentRendered && (passwordBox.Background as SolidColorBrush).Color == brush)
-					passwordBox.Background = System.Windows.Media.Brushes.White;
-			}
-			catch (Exception)
-			{ }
+		        if ((textBoxUserName.Background as SolidColorBrush).Color == brush)
+		            textBoxUserName.Background = System.Windows.Media.Brushes.White;
+		        if (!m_contentRendered && (passwordBox.Background as SolidColorBrush).Color == brush)
+		            passwordBox.Background = System.Windows.Media.Brushes.White;
+		    }
+		    catch (Exception ex)
+		    {
+		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+		    }
 		}
 
 		private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -752,11 +763,13 @@ namespace UnstuckMEUserGUI
 				if (!m_contentRendered && (textBoxUserName.Background as SolidColorBrush).Color == brush)
 					textBoxUserName.Background = System.Windows.Media.Brushes.White;
 			}
-			catch (Exception)
-			{ }
+		    catch (Exception ex)
+		    {
+		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+		    }
 		}
 
-		private void buttonResetPassword_Click(object sender, RoutedEventArgs e)
+        private void buttonResetPassword_Click(object sender, RoutedEventArgs e)
 		{
 			try
 			{

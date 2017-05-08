@@ -109,22 +109,22 @@ namespace UnstuckMEUserGUI
             if (userID != -1)
             {
                 targetUser = UnstuckME.Server.GetUserInfo(userID, UserEmailTxtBx.Text);
-                if (targetUser.Privileges == (int)Privileges.User)
+                if (targetUser.Privileges == Privileges.User)
                 {
                     isUser = true;
                     UserBtn.IsChecked = true;
                 }
-                else if (targetUser.Privileges == (int)Privileges.Moderator)
+                else if (targetUser.Privileges == Privileges.Moderator)
                 {
                     isModerator = true;
                     ModeratorBtn.IsChecked = true;
                 }
-                else if (targetUser.Privileges == (int)Privileges.Admin)
+                else if (targetUser.Privileges == Privileges.Admin)
                 {
                     isAdmin = true;
                     AdminBtn.IsChecked = true;
                 }
-                else if (targetUser.Privileges == (int)Privileges.InvalidUser)
+                else if (targetUser.Privileges == Privileges.InvalidUser)
                 {
                     isDisabled = true;
                     DisabledBtn.IsChecked = true;

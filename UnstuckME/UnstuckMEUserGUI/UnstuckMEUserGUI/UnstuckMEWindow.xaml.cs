@@ -98,7 +98,7 @@ namespace UnstuckMEUserGUI
 					    UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
 				});
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Error Loading Stickers, Please Contact Your Server Administrator if Problem Persists.\n" + "Error Message: " + ex.Message, "Sticker Loading Error", UnstuckMEBoxImage.Error);
 				error.ShowDialog();
@@ -184,6 +184,7 @@ namespace UnstuckMEUserGUI
 					UnstuckME.Pages.UserProfilePage.SetStudentRating(UnstuckME.User.AverageStudentRank);
 					UnstuckME.Pages.UserProfilePage.SetTutorRating(UnstuckME.User.AverageTutorRank);
 					UnstuckME.Pages.UserProfilePage.RepopulateClasses();
+				    UnstuckME.Pages.UserProfilePage.PopulateReviews();
 				});
 			}
 			catch (Exception ex)

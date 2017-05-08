@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using UnstuckMEServer;
 
 namespace UnstuckMEInterfaces
@@ -7,13 +8,13 @@ namespace UnstuckMEInterfaces
     public partial class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
     {
         /// <summary>
-        /// Submits a report to the database.
+        /// Submits a report to the database and notifies online admins of the sent report.
         /// </summary>
         /// <param name="reportDescription">The description of the report.</param>
         /// <param name="flaggerID">The unique identifier of the client who submitted the report.</param>
         /// <param name="reviewID">The unique idenitifer of the review that is being reported.</param>
         /// <returns>The unique identifier of the newly submitted report if successul, -1 if unsuccessful.</returns>
-        public int CreateReport(string reportDescription, int flaggerID, int reviewID)
+        public async Task<int> CreateReport(string reportDescription, int flaggerID, int reviewID)
         {
             int retVal = -1;
 
@@ -22,6 +23,9 @@ namespace UnstuckMEInterfaces
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     retVal = db.CreateReport(reportDescription, flaggerID, reviewID);
+
+                    if (retVal != -1)
+                        await Task.Factory.StartNew(() => AsyncNotifyAdmin(reportDescription, flaggerID, reviewID));
                 }
 
                 return retVal;

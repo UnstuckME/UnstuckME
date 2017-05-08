@@ -28,7 +28,7 @@ namespace UnstuckMEUserGUI
         private static int _retryCount = 0;
         private static string _UPW = string.Empty;
 
-        public static void ConnectToServer()
+        internal static void ConnectToServer()
         {
             try
             {
@@ -38,13 +38,14 @@ namespace UnstuckMEUserGUI
                 ChannelFactory.Closed += OnConnectionToServerClosed;
                 _retryCount = 0;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 if (_retryCount == 5)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        System.Windows.MessageBox.Show("Failed To Reconnect");
+                        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Failed to connect to server", "Server Connection Error", UnstuckMEBoxImage.Error);
+                        messagebox.ShowDialog();
                         //App.Current.Shutdown();
                     });
                 }
@@ -56,48 +57,52 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        public static void SetUPW(string P)
+        internal static void SetUPW(string P)
         {
             _UPW = P;
         }
 
-        static void OnConnectionToServerFaulted(object sender, EventArgs ea)
+        internal static void OnConnectionToServerFaulted(object sender, EventArgs ea)
         {
             ChannelFactory.Abort();
         }
 
-        static void OnConnectionToServerClosed(object sender, EventArgs ea)
+        internal static void OnConnectionToServerClosed(object sender, EventArgs ea)
         {
-            bool ReLoginAttempt = false;
+            bool reLoginAttempt = false;
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show("ERROR CONNECTION FAULTED");
+                UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Connection Faulted", "Server Connection Error", UnstuckMEBoxImage.Error);
+                messagebox.ShowDialog();
             });
+
             ChannelFactory.Faulted -= OnConnectionToServerFaulted;
             ChannelFactory.Closed -= OnConnectionToServerClosed;
             ConnectToServer();
+
             int test = 0;
-            while (!ReLoginAttempt)
+            while (!reLoginAttempt)
             {
-                ReLoginAttempt = ReLogin();
-                if(test == 10)
+                reLoginAttempt = ReLogin();
+                if (test == 10)
                 {
-                    App.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        System.Windows.MessageBox.Show("Failed To Relogin");
+                        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Failed to relogin", "Server Connection Error", UnstuckMEBoxImage.Error);
+                        messagebox.ShowDialog();
                         //App.Current.Shutdown();
                     });
                 }
             }
         }
 
-        public static void ConnectToStreamService()
+        internal static void ConnectToStreamService()
         {
             StreamChannelFactory = new ChannelFactory<IUnstuckMEFileStream>("UnstuckMEStreamingEndPoint");
             FileStream = StreamChannelFactory.CreateChannel();
         }
 
-        static bool ReLogin()
+        internal static bool ReLogin()
         {
             bool success = false;
 

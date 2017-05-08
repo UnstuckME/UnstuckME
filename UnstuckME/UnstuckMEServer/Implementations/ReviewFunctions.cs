@@ -71,6 +71,80 @@ namespace UnstuckMEInterfaces
         }
 
         /// <summary>
+        /// Gets the review that have been submitted of a particular user to display on their Profile
+        /// Page.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who has reviews.</param>
+        /// <returns>A list containing all the reviews submitted on the user.</returns>
+        public List<UnstuckMEReview> GetReviewsOfUser(int userID)
+        {
+            List<UnstuckMEReview> reviewsOfUser = new List<UnstuckMEReview>();
+
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    //var reviews = db.GetReviewsOfUser(userID);
+                    var reviews = from r in db.Reviews join s in db.Stickers
+                                  on r.StickerID equals s.StickerID
+                                  where r.ReviewerID != userID && s.StudentID == userID
+                                  select new { r.ReviewID, r.StickerID, r.StarRanking, r.Description };
+
+                    foreach (var review in reviews)
+                    {
+                        UnstuckMEReview newReview = new UnstuckMEReview()
+                        {
+                            ReviewID = review.ReviewID,
+                            StickerID = review.StickerID,
+                            StarRanking = review.StarRanking.HasValue ? (float) review.StarRanking : 0F,
+                            Description = review.Description
+                        };
+
+                        reviewsOfUser.Add(newReview);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Failed to get reviews of user " + userID);
+            }
+
+            return reviewsOfUser;
+        }
+
+        /// <summary>
+        /// Gets a list of Review IDs that have been reported by a user.
+        /// </summary>
+        /// <param name="userID">The unique identifer of the user who has submitted reports.</param>
+        /// <returns>A list of integers containing the unique identifiers of the reviews that
+        /// have been reported by the user.</returns>
+        public List<int> GetReportedReviewIDs(int userID)
+        {
+            List<int> reportedReviewIDs = new List<int>();
+
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    //var reviewIDs = db.GetReportedReviewIDS(userID);
+                    var reviewIDs = from r in db.Reviews join rp in db.Reports
+                                    on r.ReviewID equals rp.ReviewID
+                                    where rp.FlaggerID == userID
+                                    select rp.ReviewID;
+
+                    foreach (int reviewID in reviewIDs)
+                        reportedReviewIDs.Add(reviewID);
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Failed to get review IDs that have been reported by user " + userID);
+            }
+
+            return reportedReviewIDs;
+        }
+
+        /// <summary>
         /// Submits a review to the database. Finds the other user associated with the sticker and makes them submit
         /// a review if they are online, otherwise adds it to the _ReviewList queue so they can submit it when they
         /// next log on.

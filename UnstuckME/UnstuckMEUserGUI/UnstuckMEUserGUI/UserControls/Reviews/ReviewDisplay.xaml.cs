@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnstuckME_Classes;
-using UnstuckMEInterfaces;
+using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
@@ -22,22 +13,78 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class ReviewDisplay : UserControl
 	{
-		private static UnstuckMEReview _review;
-		private static IUnstuckMEService Server;
+        private static UnstuckMEReview _review;
+        private static bool _reported;
 
-		public ReviewDisplay(ref IUnstuckMEService OpenServer, UnstuckMEReview review)
+        public string Description
+        {
+            get { return _review.Description; }
+        }
+
+        public float StarRank
+        {
+            get { return _review.StarRanking; }
+        }
+
+        internal bool Reported
+        {
+            get { return _reported; }
+        }
+
+		public ReviewDisplay(UnstuckMEReview review, bool reported)
 		{
 			InitializeComponent();
-			Server = OpenServer;
-			_review = review;
+            _review = review;
+            _reported = reported;
 
-			//DescriptionLabel.Content = _review.Description;
-			//ReviewStarRank.StarRank = _review.StarRanking;
+            if (_reported)
+                UpdateReportStatus();
 		}
 
-		private void ReportBtn_Click(object sender, RoutedEventArgs e)
-		{
-			
-		}
-	}
+        private void UpdateReportStatus()
+        {
+            ReportBorder.Background = Brushes.DimGray;
+            ReportLabel.Content = "Reported";
+        }
+
+	    private void ReportLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+	    {
+	        try
+	        {
+	            ReportSubmitWindow reportWindow = new ReportSubmitWindow(_review)
+	            {
+	                Owner = Application.Current.MainWindow
+	            };
+
+	            bool? result = reportWindow.ShowDialog();
+
+                if (result.HasValue && result.Value)
+    	            UpdateReportStatus();
+	        }
+	        catch (Exception ex)
+	        {
+	            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+	        }
+	    }
+
+        private void DescriptionTextBox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ReportBorder.Visibility = Visibility.Visible;
+        }
+
+        private void DescriptionTextBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ReportBorder.Visibility = Visibility.Hidden;
+        }
+
+        private void ReportBorder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ReportBorder.Background = Brushes.IndianRed;
+        }
+
+        private void ReportBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ReportBorder.Background = Brushes.DarkRed;
+        }
+    }
 }
