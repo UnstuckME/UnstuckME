@@ -163,7 +163,7 @@ namespace UnstuckMEInterfaces
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    retVal = db.CreateReview(stickerID, reviewerID, starRanking, description).First();
+                    int? newReviewID = db.CreateReview(stickerID, reviewerID, starRanking, description).First();
 
                     if (retVal.HasValue && retVal.Value != -1)
                     {
@@ -203,6 +203,15 @@ namespace UnstuckMEInterfaces
                                         client.Value.Connection.CreateReviewAsTutor(stickerID);
                                     else
                                         client.Value.Connection.CreateReviewAsStudent(stickerID);
+
+                                    client.Value.Connection.RecieveReview(new UnstuckMEReview()
+                                    {
+                                        StickerID = stickerID,
+                                        ReviewID = newReviewID ?? 0,
+                                        Description = description,
+                                        ReviewerID = reviewerID,
+                                        StarRanking = (float)starRanking
+                                    });
 
                                     found = true; //other sticker member is online
                                     break;
