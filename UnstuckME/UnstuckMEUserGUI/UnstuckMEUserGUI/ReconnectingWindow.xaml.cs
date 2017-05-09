@@ -37,28 +37,8 @@ namespace UnstuckMEUserGUI
                 {
                     TimerLabel.Content = string.Format("{0}:{1}", _time.Minutes, _time.Seconds);
                 }
-                //if (_time == TimeSpan.Zero) _timer.Stop();
                 _time = _time.Add(TimeSpan.FromSeconds(1));
             }, Application.Current.Dispatcher);
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                while (UnstuckME.ChannelFactory.State != System.ServiceModel.CommunicationState.Opened)
-                {
-                    UnstuckME.ConnectToServer();
-                }
-                UserInfo test = new UserInfo();
-                test = UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
-                this.Close();
-                UnstuckME.MainWindow.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void REWindow_ContentRendered(object sender, EventArgs e)
@@ -87,15 +67,24 @@ namespace UnstuckMEUserGUI
                 while (UnstuckME.ChannelFactory.State != System.ServiceModel.CommunicationState.Opened)
                 {
                     UnstuckME.ConnectToServer();
+                    if(_time.Minutes > 5)
+                    {
+                        throw new Exception("Reconnecting Time Exceeded 5 Minutes.");
+                    }
                 }
                 UserInfo test = new UserInfo();
                 test = UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
                 this.Close();
                 UnstuckME.MainWindow.Show();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                TimerLabel.Visibility = Visibility.Hidden;
+                ReconnectingLabel.Visibility = Visibility.Hidden;
+                FailedLabel.Visibility = Visibility.Visible;
+                TryAgainLabel.Visibility = Visibility.Visible;
+                ExitButton.Visibility = Visibility.Visible;
+                _timer.Stop();
             }
         }
 
@@ -107,6 +96,22 @@ namespace UnstuckMEUserGUI
         private void ReconnectButton_MouseLeave(object sender, MouseEventArgs e)
         {
             ReconnectButton.Background = UnstuckME.Red;
+        }
+
+        private void ExitButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ReconnectButton.Background = Brushes.IndianRed;
+        }
+
+        private void ExitButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ExitButton.Background = UnstuckME.Red;
+        }
+
+        private void ExitButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            UnstuckME.UserExit = true;
+            App.Current.Shutdown();
         }
     }
 }
