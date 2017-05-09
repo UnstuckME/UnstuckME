@@ -34,6 +34,7 @@ namespace UnstuckMEUserGUI
 		public LoginWindow()
 		{
 			InitializeComponent();
+            //UnstuckME.UserExit = false;
             UnstuckME.ConnectToServer();
             UnstuckME.ConnectToStreamService();
 			UnstuckME.Blue = buttonCreateAccount.Background;
@@ -226,8 +227,6 @@ namespace UnstuckMEUserGUI
 						//endpoint.Address = new Uri("net.tcp://" + (comboBoxSchools.SelectedItem as UnstuckMESchool).ServerIPAdress + @"/UnstuckMEService");
 						config.Save();
 
-                        UnstuckME.SetUPW(passwordBox.Password);
-
 						UnstuckMEWindow mainWindow = new UnstuckMEWindow();
 						mainWindow.Show();
                         Close();
@@ -278,6 +277,7 @@ namespace UnstuckMEUserGUI
 				try
 				{
 					temp = UnstuckME.Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+                    UnstuckME.UPW = passwordAttempt;
 				}
 				catch (Exception exp)
 				{

@@ -164,7 +164,7 @@ namespace UnstuckMEInterfaces
             }
             catch(Exception)
             {
-                Console.WriteLine("Faulted Client Removal Failed, Server Restart May be required.\nFaulted Clients:");
+                Console.WriteLine("Faulted Client Removal Failed, Server Restart May be required if Faulted client list is not empty.\nFaulted Clients:");
                 foreach(KeyValuePair<int, ConnectedClient> client in _connectedClients)
                 {
                     if (client.Value.ChannelInfo.Channel.State != CommunicationState.Opened)

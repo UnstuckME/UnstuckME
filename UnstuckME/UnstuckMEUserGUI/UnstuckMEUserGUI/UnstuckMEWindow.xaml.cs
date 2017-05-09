@@ -385,13 +385,14 @@ namespace UnstuckMEUserGUI
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+            UnstuckME.UserExit = true;
 			try
 			{
-				UnstuckME.Server.Logout();
+                UnstuckME.ChannelFactory.Abort();
+				//UnstuckME.Server.Logout();
 			}
 			catch (Exception)
 			{ /*This is empty because we don't want the program to break but we also don't want to catch this exception*/ }
-
 		    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGOUT, UnstuckME.User.EmailAddress);
         }
 
@@ -704,10 +705,22 @@ namespace UnstuckMEUserGUI
 		{
 			SwitchToStickerTab();
 		}
-		#endregion
-	}
+        #endregion
 
-	public class UnstuckMEPages
+        public void ConnectionLost_AttemptToReconnect()
+        {
+            this.Hide();
+            ReconnectingWindow reconnect = new ReconnectingWindow();
+            reconnect.Show();
+        }
+
+        private void TestButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            UnstuckME.ChannelFactory.Abort();
+        }
+    }
+
+    public class UnstuckMEPages
 	{
 		public StickerPage StickerPage { get; set; }
 		public SettingsPage SettingsPage { get; set; }

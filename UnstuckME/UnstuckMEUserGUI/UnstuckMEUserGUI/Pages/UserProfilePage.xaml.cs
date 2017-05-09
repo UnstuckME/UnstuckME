@@ -272,7 +272,7 @@ namespace UnstuckMEUserGUI
                     {
                         UnstuckME.Server.ChangePassword(UnstuckME.User, PasswordBoxNewPassword.Password);
                         UnstuckME.User.UserPassword = PasswordBoxNewPassword.Password;
-                        UnstuckME.SetUPW(PasswordBoxNewPassword.Password);
+                        UnstuckME.UPW = PasswordBoxNewPassword.Password;
                     }
                     catch (Exception ex)
                     {
