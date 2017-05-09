@@ -31,11 +31,11 @@ namespace UnstuckMEUserGUI
             {
                 if(_time.Seconds < 10)
                 {
-                    ReconnectingLabel.Content = string.Format("{0}:0{1}", _time.Minutes, _time.Seconds);
+                    TimerLabel.Content = string.Format("{0}:0{1}", _time.Minutes, _time.Seconds);
                 }
                 else
                 {
-                    ReconnectingLabel.Content = string.Format("{0}:{1}", _time.Minutes, _time.Seconds);
+                    TimerLabel.Content = string.Format("{0}:{1}", _time.Minutes, _time.Seconds);
                 }
                 //if (_time == TimeSpan.Zero) _timer.Stop();
                 _time = _time.Add(TimeSpan.FromSeconds(1));
@@ -63,7 +63,50 @@ namespace UnstuckMEUserGUI
 
         private void REWindow_ContentRendered(object sender, EventArgs e)
         {
+            //try
+            //{
+            //    while (UnstuckME.ChannelFactory.State != System.ServiceModel.CommunicationState.Opened)
+            //    {
+            //        UnstuckME.ConnectToServer();
+            //    }
+            //    UserInfo test = new UserInfo();
+            //    test = UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
+            //    this.Close();
+            //    UnstuckME.MainWindow.Show();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+        }
 
+        private void ReconnectButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                while (UnstuckME.ChannelFactory.State != System.ServiceModel.CommunicationState.Opened)
+                {
+                    UnstuckME.ConnectToServer();
+                }
+                UserInfo test = new UserInfo();
+                test = UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
+                this.Close();
+                UnstuckME.MainWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ReconnectButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ReconnectButton.Background = Brushes.IndianRed;
+        }
+
+        private void ReconnectButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ReconnectButton.Background = UnstuckME.Red;
         }
     }
 }

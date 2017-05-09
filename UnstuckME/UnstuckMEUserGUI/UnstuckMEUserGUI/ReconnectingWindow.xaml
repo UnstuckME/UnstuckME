@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
         mc:Ignorable="d"
-        Title="ReconnectingWindow" Height="300" Width="300" ContentRendered="REWindow_ContentRendered" ResizeMode="NoResize"
+        Title="ReconnectingWindow" Height="400" Width="300" ContentRendered="REWindow_ContentRendered" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{x:Null}" BorderBrush="{x:Null}">
     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Background="#336699">
         <Grid>
             <Image Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0" Source="Resources/UnstuckMEGraphic.png"/>
-            <Label Name="ReconnectingLabel" Content="Reconnecting" Foreground="White" FontSize="20" Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
-            <Button x:Name="button" Content="Button" HorizontalAlignment="Center" Margin="0,100,0,0" Click="button_Click" VerticalAlignment="Center" Width="75"/>
+            <Label Name="TimerLabel" Content="00:00" Foreground="White" FontSize="20" Margin="0,75,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+            <Label Name="ReconnectingLabel" Content="Reconnecting" Foreground="White" FontSize="20" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+            <Border Name="ReconnectButton" CornerRadius="10" BorderBrush="White" BorderThickness="1" Cursor="Hand" MouseLeftButtonDown="ReconnectButton_MouseLeftButtonDown" MouseEnter="ReconnectButton_MouseEnter" MouseLeave="ReconnectButton_MouseLeave" Height="40" Width="150" Background="#993333" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,200,0,0">
+                <Label Name="ReconnectLabel" Content="Reconnect" Foreground="White" FontSize="16" FontWeight="Medium" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+            </Border>
         </Grid>
     </Border>
 </Window>
