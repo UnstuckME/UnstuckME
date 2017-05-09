@@ -82,7 +82,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur", "Unexpected Error", UnstuckMEBoxImage.Error);
+                error.Show();
 				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
 			}
 		}

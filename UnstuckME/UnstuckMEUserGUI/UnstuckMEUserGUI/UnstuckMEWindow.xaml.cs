@@ -354,8 +354,9 @@ namespace UnstuckMEUserGUI
 					}
 				default: //In case someone figures out a way to make admin button show
 					{
-						MessageBox.Show("You do not have access to this tab.", "Unauthorized Access", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-						return;
+                        UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You do not have access to this tab.", "Unauthorized Access", UnstuckMEBoxImage.Warning);
+                        error.Show();
+                        return;
 					}
 			}
 
@@ -452,8 +453,9 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception)
 				{
-					MessageBox.Show("Sticker Update Failed");
-				}
+                    UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Sticker Update Failed", "Sticker Update Failure", UnstuckMEBoxImage.Warning);
+                    error.ShowDialog();
+                }
 			});
 		}
 

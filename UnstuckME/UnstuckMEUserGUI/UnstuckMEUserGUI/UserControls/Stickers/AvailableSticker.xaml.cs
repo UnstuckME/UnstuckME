@@ -69,7 +69,8 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Accept Failed In Available Sticker User Control. " + ex.Message);
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Accept Failed In Available Sticker User Control. " + ex.Message, "Sticker Accept Failure", UnstuckMEBoxImage.Warning);
+                error.ShowDialog();
             }
         }
     }

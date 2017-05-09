@@ -122,7 +122,7 @@
     <Compile Include="SubWindows\ReportSubmitWindow.xaml.cs">
       <DependentUpon>ReportSubmitWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ReconnectingWindow.xaml.cs">
+    <Compile Include="SubWindows\ReconnectingWindow.xaml.cs">
       <DependentUpon>ReconnectingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="School.cs">
@@ -272,7 +272,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ReconnectingWindow.xaml">
+    <Page Include="SubWindows\ReconnectingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

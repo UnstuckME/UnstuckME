@@ -127,7 +127,8 @@ namespace UnstuckMEUserGUI
             catch(Exception ex)
             {
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
-                MessageBox.Show(ex.Message, "Sticker Submission Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Sticker Submission Failure", UnstuckMEBoxImage.Warning);
+                error.ShowDialog();
             }
         }
 

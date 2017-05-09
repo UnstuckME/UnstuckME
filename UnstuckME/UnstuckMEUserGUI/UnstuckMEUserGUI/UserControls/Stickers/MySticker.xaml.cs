@@ -43,7 +43,8 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "No Tutor Found", UnstuckMEBoxImage.Warning);
+                    error.ShowDialog();
                 }
             }
         }

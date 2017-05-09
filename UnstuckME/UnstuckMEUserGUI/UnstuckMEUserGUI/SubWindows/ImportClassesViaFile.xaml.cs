@@ -145,7 +145,8 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "CSV Upload Failure", UnstuckMEBoxImage.Warning);
+                error.ShowDialog();
             }
         }
 
