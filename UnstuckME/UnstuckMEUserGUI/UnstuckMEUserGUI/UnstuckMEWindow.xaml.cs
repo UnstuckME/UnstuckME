@@ -95,7 +95,7 @@ namespace UnstuckMEUserGUI
 				    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
 					UnstuckME.Pages.StickerPage.RecentStickers.AddRange(UnstuckME.Server.GetTimedOutStickers(userID: UnstuckME.User.UserID));
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.RecentStickers)
-					    UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
+					    UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new StickerHistory(sticker));
 				});
 			}
 			catch (Exception ex)
