@@ -14,8 +14,6 @@ IF OBJECT_ID('DeleteUserProfileByUserID') is not null
 	DROP PROCEDURE [DeleteUserProfileByUserID];
 IF OBJECT_ID('DeleteUserPictureByUserID') is not null
 	DROP PROCEDURE [DeleteUserPictureByUserID];
---IF OBJECT_ID('DeleteFileByFileID') is not null
---	DROP PROCEDURE [DeleteFileByFileID];
 IF OBJECT_ID('DeleteMessageByMessageID') is not null
 	DROP PROCEDURE [DeleteMessageByMessageID];
 IF OBJECT_ID('DeleteMentorOrganizationByMentorID') is not null
@@ -32,6 +30,8 @@ IF OBJECT_ID('DeleteReportByReportID') is not null
 	DROP PROCEDURE DeleteReportByReportID;
 IF OBJECT_ID('DeleteFriend') is not null
 	DROP PROCEDURE DeleteFriend;
+IF OBJECT_ID('RemoveUserFromMentorProgram') is not null
+	DROP PROCEDURE RemoveUserFromMentorProgram;
 
 --Photo
 /********************************NEED MORE INFO ON HOW WE ARE STORING PHOTOS*******************************/
@@ -61,13 +61,10 @@ IF OBJECT_ID('UpdateCourseCodeByClassID') is not null
 	DROP PROCEDURE UpdateCourseCodeByClassID;
 IF OBJECT_ID('UpdateCourseNumberByClassID') is not null
 	DROP PROCEDURE UpdateCourseNumberByClassID;
---IF OBJECT_ID('UpdateTermsOfferedByClassID') is not null
---	DROP PROCEDURE UpdateTermsOfferedByClassID;
 IF OBJECT_ID('UpdateStarRankingByReviewID') is not null
 	DROP PROCEDURE UpdateStarRankingByReviewID;
 IF OBJECT_ID('UpdateReviewDescriptionByReviewID') is not null
 	DROP PROCEDURE UpdateReviewDescriptionByReviewID;
-
 IF OBJECT_ID('UpdateMessageByMessageID') is not null
 	DROP PROCEDURE UpdateMessageByMessageID;
 IF OBJECT_ID('UpdateTutorIDByTutorIDAndStickerID') is not null
@@ -210,27 +207,6 @@ AS
         END
     END
 GO
-
-/*********************************************************
---Delete File PROCEDURE Creation Script (Delete Message Can now be used instead)
-*********************************************************/
---CREATE PROC [dbo].[DeleteFileByFileID]
---    (
---    @FileID INT
---    )
---AS
---    BEGIN
---        IF  (NOT Exists(SELECT FileID FROM Files WHERE FileID = @FileID))
---            RETURN 1;
---        ELSE
---            BEGIN
---                DELETE Files
---				WHERE FileID = @fileID;
---                RETURN 0;
---            END
-
---    END
---GO
 
 /*********************************************************
 --Delete Message PROCEDURE Creation Script
@@ -408,6 +384,24 @@ AS
 			END
 	END
 GO
+
+CREATE PROC [dbo].[RemoveUserFromMentorProgram]
+    (
+	@UserID		INT,
+	@MentorID	INT
+    )
+AS
+    BEGIN
+        if  (NOT EXISTS(Select * from OmToUser WHERE UserID = @UserID AND MentorID = @MentorID))
+			RETURN 1;
+        ELSE BEGIN
+            DELETE FROM OmToUser
+			WHERE UserID = @UserID and MentorID = @MentorID
+			RETURN 0;
+        END
+    END
+GO
+
 --********Update********
 
 --Photo

@@ -8,8 +8,6 @@ USE UnstuckME_DB;
 GO
 
 /******DROP PROCEDURE STATEMENTS*************************/
---IF OBJECT_ID('CreateOfficialMentor') is not null
---	DROP PROCEDURE CreateOfficialMentor;
 IF OBJECT_ID('CreateNewAdminUser') is not null
 	DROP PROCEDURE CreateNewAdminUser;
 IF OBJECT_ID('AddTutorStarRankToUser') is not null
@@ -36,23 +34,17 @@ IF OBJECT_ID('CreateReport') is not null
 	DROP PROCEDURE CreateReport;
 IF OBJECT_ID('UpdateProfilePicture') is not null
 	DROP PROCEDURE UpdateProfilePicture;
---IF OBJECT_ID('ChangeProfilePicture') is not null
---	DROP PROCEDURE ChangeProfilePicture;
 IF OBJECT_ID('CreateChat') is not null
 	DROP PROCEDURE CreateChat;
 IF OBJECT_ID('InsertUserIntoChat') is not null
 	DROP PROCEDURE InsertUserIntoChat;
 IF OBJECT_ID('InsertMessage') is not null
 	DROP PROCEDURE InsertMessage;
---IF OBJECT_ID('InsertFile') is not null
---	DROP PROCEDURE InsertFile;
 IF OBJECT_ID('AddFriend') is not null
 	DROP PROCEDURE AddFriend;
 IF OBJECT_ID('InsertUserIntoMentorProgram') is not null
 	DROP PROCEDURE InsertUserIntoMentorProgram;
-
 GO
-
 
 
 CREATE PROC [dbo].[AddTutorStarRankToUser]
@@ -63,9 +55,9 @@ CREATE PROC [dbo].[AddTutorStarRankToUser]
 AS
 	BEGIN
 		IF (NOT EXISTS(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
-			RETURN 1;
+			RETURN -1;
 		ELSE IF (@StarRanking > 5 OR @StarRanking < 0)
-			RETURN 1;
+			RETURN -1;
 		ELSE BEGIN
 			DECLARE @AverageTutorRank FLOAT;
 			SELECT @AverageTutorRank = (AverageTutorRank * TotalTutorReviews)
@@ -77,7 +69,7 @@ AS
 			WHERE @UserID = UserID;
 
 			UPDATE UserProfile
-			SET AverageTutorRank = ((@AverageTutorRank + @StarRanking)/ TotalTutorReviews)
+			SET AverageTutorRank = ((@AverageTutorRank + @StarRanking) / TotalTutorReviews)
 			WHERE @UserID = UserID;
 		END
 	END
@@ -92,9 +84,9 @@ CREATE PROC [dbo].[AddStudentStarRankToUser]
 AS
 	BEGIN
 		IF (NOT EXISTS(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
-			RETURN 1;
+			RETURN -1;
 		ELSE IF (@StarRanking > 5 OR @StarRanking < 0)
-			RETURN 1;
+			RETURN -1;
 		ELSE BEGIN
 			DECLARE @AverageStudentRank FLOAT;
 			SELECT @AverageStudentRank = (AverageStudentRank * TotalStudentReviews)
@@ -280,11 +272,14 @@ CREATE PROC [dbo].[CreateReview]
     )
 AS
     BEGIN
+		DECLARE @Return INT
         IF (EXISTS(Select StickerID from Review where StickerID = @StickerID AND ReviewerID = @ReviewerID))
-			SELECT 1;
+			SELECT -1;
         ELSE BEGIN
             INSERT INTO Review
 			VALUES(@StickerID, @ReviewerID, @StarRanking, @Description)
+			SET @Return = @@IDENTITY
+			SELECT @Return
 		END
     END
 GO

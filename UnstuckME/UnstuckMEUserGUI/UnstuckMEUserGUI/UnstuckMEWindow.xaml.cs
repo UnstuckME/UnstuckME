@@ -92,8 +92,7 @@ namespace UnstuckMEUserGUI
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
 					    UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
 
-				    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
-					UnstuckME.Pages.StickerPage.RecentStickers.AddRange(UnstuckME.Server.GetTimedOutStickers(userID: UnstuckME.User.UserID));
+				    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetStickerHistory(UnstuckME.User.UserID);
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.RecentStickers)
 					    UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new StickerHistory(sticker));
 				});
@@ -355,7 +354,7 @@ namespace UnstuckMEUserGUI
 				default: //In case someone figures out a way to make admin button show
 					{
                         UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You do not have access to this tab.", "Unauthorized Access", UnstuckMEBoxImage.Warning);
-                        error.Show();
+                        error.ShowDialog();
                         return;
 					}
 			}

@@ -150,35 +150,21 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		void DeleteUserAccount(int userID);
 
-		/// <summary>
-		/// Gets the stickers that have been accepted by a tutor and marked as resolved.
-		/// </summary>
-		/// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
-		/// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
-		/// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
-		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
-		/// <returns>A list of stickers that have tutors and marked as resolved.</returns>
-		[OperationContract]
-		List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null);
-
-		/// <summary>
-		/// Gets the stickers that have not been accepted by a tutor and surpassed the timeout date.
-		/// </summary>
-		/// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
-		/// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
-		/// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
-		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
-		/// <returns>A list of stickers that have not been accepted by a tutor and surpassed the timeout date.</returns>
-		[OperationContract]
-		List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null);
-
-		/// <summary>
-		/// Returns the reviews submitted by a specific user as a student.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the account holder.</param>
-		/// <param name="minstarrank">The minimum star ranking to see reviews. This parameter is optional, with a default value of 0.</param>
-		/// <returns>A list containing all the reviews submitted by the user specified as a student.</returns>
-		[OperationContract]
+	    /// <summary>
+	    /// Gets the stickers that have been accepted by a tutor and marked as resolved.
+	    /// </summary>
+	    /// <param name="userID">The unique identifer of the account that submitted the stickers.</param>
+	    /// <returns>A list of stickers that have tutors and marked as resolved.</returns>
+        [OperationContract]
+	    List<UnstuckMESticker> GetStickerHistory(int userID);
+        
+        /// <summary>
+        /// Returns the reviews submitted by a specific user as a student.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the account holder.</param>
+        /// <param name="minstarrank">The minimum star ranking to see reviews. This parameter is optional, with a default value of 0.</param>
+        /// <returns>A list containing all the reviews submitted by the user specified as a student.</returns>
+        [OperationContract]
 		List<UnstuckMEReview> GetUserStudentReviews(int userID, float minstarrank = 0);
 
 		/// <summary>
@@ -224,20 +210,37 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, int? organizationID = null, float minstarrank = 0, int? userID = null, int? classID = null);
 
-		/// <summary>
-		/// Associates a user with an official tutoring organization.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
-		/// <param name="organizationID">The unique identifier of the tutoring organization.</param>
-		[OperationContract]
+        /// <summary>
+        /// Gets the stickers available to tutor from a specific tutoring organization.
+        /// </summary>
+        /// <param name="caller">The unqiue identifier of the caller of the function.</param>
+        /// <param name="organizationID">The unique identifier of the of the organization to filter. This parameter is optional, with a default value of null.</param>
+        /// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
+        [OperationContract]
+        List<UnstuckMEAvailableSticker> GetActiveStickersFromOrganization(int caller, int organizationID);
+
+        /// <summary>
+        /// Associates a user with an official tutoring organization.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <param name="organizationID">The unique identifier of the tutoring organization.</param>
+        [OperationContract]
 		void AddUserToTutoringOrganization(int userID, int organizationID);
 
-		/// <summary>
-		/// Submits a new sticker to the database and associates it with any specified tutoring organizations. Queues the sticker to be sent to qualified online users.
-		/// </summary>
-		/// <param name="newSticker">The new sticker.</param>
-		/// <returns>The new sticker's unique identifier if it was submitted successfully, -1 if not.</returns>
-		[OperationContract]
+        /// <summary>
+        /// Associates a user with an official tutoring organization.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <param name="organizationID">The unique identifier of the tutoring organization.</param>
+        [OperationContract]
+        void RemoveUserFromTutoringOrganization(int userID, int organizationID);
+
+        /// <summary>
+        /// Submits a new sticker to the database and associates it with any specified tutoring organizations. Queues the sticker to be sent to qualified online users.
+        /// </summary>
+        /// <param name="newSticker">The new sticker.</param>
+        /// <returns>The new sticker's unique identifier if it was submitted successfully, -1 if not.</returns>
+        [OperationContract]
 		int SubmitSticker(UnstuckMEBigSticker newSticker);
 
 		/// <summary>

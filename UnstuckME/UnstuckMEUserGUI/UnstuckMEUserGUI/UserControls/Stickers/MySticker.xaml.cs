@@ -22,13 +22,12 @@ namespace UnstuckMEUserGUI
     public partial class MySticker : UserControl
     {
         public UnstuckMESticker Sticker;
-        UserClass Class;
 
         public MySticker(UnstuckMESticker inSticker)
         {
             InitializeComponent();
             Sticker = inSticker;
-            Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
+            UserClass Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
             ProblemDescription.Text = "Problem Description:\n" + Sticker.ProblemDescription;
 

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace UnstuckMEInterfaces
 {
-    class Program
+    internal class Program
     {
         private static UnstuckMEService _server;
 
@@ -20,8 +20,6 @@ namespace UnstuckMEInterfaces
                     newMessageCheck.Start();
                     Thread newStickerCheck = new Thread(_server.CheckForNewStickers);
                     newStickerCheck.Start();
-                    Thread timedOutStickerCheck = new Thread(_server.CheckForTimedOutStickers);
-                    timedOutStickerCheck.Start();
 
                     Console.WriteLine("Server is Running...");
                     Console.WriteLine("<Press Enter to Shut Down Server>");
