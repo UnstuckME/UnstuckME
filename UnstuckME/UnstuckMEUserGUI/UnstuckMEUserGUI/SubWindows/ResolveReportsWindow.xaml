@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ResolveReportsWindow" Height="300" Width="300">
     <Grid>
-        <StackPanel x:Name="stackPan" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto"/>
+        <StackPanel x:Name="stackPan" Background="DimGray" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto"/>
 
     </Grid>
 </Window>
