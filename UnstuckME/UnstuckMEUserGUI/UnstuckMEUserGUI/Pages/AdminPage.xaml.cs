@@ -291,6 +291,12 @@ namespace UnstuckMEUserGUI
             else if (isDisabled)
                 UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userID);
         }
+
+        private void ResolveReportsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window win = new SubWindows.ResolveReportsWindow();
+            win.Show();
+        }
     }
 
 
