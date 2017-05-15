@@ -617,6 +617,7 @@
     <Resource Include="Resources\UnstuckME Application Icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Download\UploadWhite.png" />
     <Content Include="UnstuckME_Schools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckME_Schools.edmx</DependentUpon>

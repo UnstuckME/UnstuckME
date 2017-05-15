@@ -77,18 +77,9 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Button Width="40" HorizontalAlignment="Left" Background="{x:Null}" BorderThickness="0,0,0,0" Cursor="Hand">
-                        <Image Source="/Resources/Download/DownloadWhite.png" Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="540"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                    </Button>
+                    <Border Name="UploadButton" MouseEnter="UploadButton_MouseEnter" MouseLeave="UploadButton_MouseLeave" MouseLeftButtonDown="UploadButton_MouseLeftButtonDown" Width="40" HorizontalAlignment="Left" Background="{x:Null}" BorderThickness="4" BorderBrush="{x:Null}" Cursor="Hand">
+                        <Image Source="/Resources/Download/UploadWhite.png" Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
+                    </Border>
                     <TextBox x:Name="MessageTextBox" Padding="5,0,0,0" MaxLength="450" KeyDown="MessageTextBox_KeyDown" Margin="40,0,0,0" SizeChanged="MessageTextBox_SizeChanged" BorderBrush="{x:Null}" BorderThickness="4,4,4,4"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextWrapping="WrapWithOverflow"/>
                 </Grid>
                 <Grid Grid.Column="1">

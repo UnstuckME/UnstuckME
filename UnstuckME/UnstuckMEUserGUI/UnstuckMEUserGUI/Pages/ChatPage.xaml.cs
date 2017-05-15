@@ -307,5 +307,20 @@ namespace UnstuckMEUserGUI
 
 			return convoExists;
 		}
-	}
+
+        private void UploadButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            UploadButton.BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF7EB4EA"));
+        }
+
+        private void UploadButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            UploadButton.BorderBrush = null;
+        }
+
+        private void UploadButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+    }
 }
