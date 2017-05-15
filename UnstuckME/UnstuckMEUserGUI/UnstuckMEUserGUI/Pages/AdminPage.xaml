@@ -21,6 +21,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Height="Auto" Width="Auto">
                 <Grid.RowDefinitions>
@@ -134,6 +136,11 @@
                 <ScrollViewer Height="307" Width="257" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,120,0,0">
                     <StackPanel x:Name="StackPanelOrganization" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
                 </ScrollViewer>
+            </Grid>
+            <GridSplitter Grid.Row="7" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+
+            <Grid Grid.Row="9" Height="Auto" Width="Auto">
+                <Button x:Name="ResolveReportsBtn" Content="Resolve Issues" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Click="ResolveReportsBtn_Click"/>
             </Grid>
         </Grid>
     </ScrollViewer>

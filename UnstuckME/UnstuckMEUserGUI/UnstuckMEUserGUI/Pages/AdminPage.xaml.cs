@@ -76,13 +76,50 @@ namespace UnstuckMEUserGUI
         {
             bool userInfoUpdated = false;
             if (isUser)
-                UnstuckME.Server.SetUserPrivileges(Privileges.User, userID);
+            {
+                try
+                {
+                    UnstuckME.Server.SetUserPrivileges(Privileges.User, userID);
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while updating a user role. " + "User = " + userID);
+                }
+
+            }
             else if (isModerator)
-                UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userID);
+            {
+                try
+                {
+                    UnstuckME.Server.SetUserPrivileges(Privileges.Moderator, userID);
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while updating a user role. " + "User = " + userID);
+                }
+            }
             else if (isAdmin)
-                UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userID);
+            {
+                try
+                { 
+                    UnstuckME.Server.SetUserPrivileges(Privileges.Admin, userID);
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while updating a user role. " + "User = " + userID);
+                }
+            }
             else if (isDisabled)
-                UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userID);
+            {
+                try
+                { 
+                    UnstuckME.Server.SetUserPrivileges(Privileges.InvalidUser, userID);
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while updating a user role. " + "User = " + userID);
+                }
+            }
             if (textBoxFirstName.Text != targetUser.FirstName && textBoxFirstName.Text != string.Empty)
                 userInfoUpdated = true;
             if (textBoxLastName.Text != targetUser.LastName && textBoxLastName.Text != string.Empty)
@@ -91,7 +128,14 @@ namespace UnstuckMEUserGUI
                 userInfoUpdated = true;
             if (userInfoUpdated)
             {
-                UnstuckME.Server.ChangeUserName(targetUser.EmailAddress, textBoxFirstName.Text, textBoxLastName.Text);
+                try
+                {
+                    UnstuckME.Server.ChangeUserName(targetUser.EmailAddress, textBoxFirstName.Text, textBoxLastName.Text);
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while updating a user name. " + "User = " + userID);
+                }
                 // Add code to update email
                 //UnstuckME.Server.
             }
@@ -111,7 +155,14 @@ namespace UnstuckMEUserGUI
 
             if (userID != -1)
             {
-                targetUser = UnstuckME.Server.GetUserInfo(userID, UserEmailTxtBx.Text);
+                try
+                { 
+                    targetUser = UnstuckME.Server.GetUserInfo(userID, UserEmailTxtBx.Text);
+                }
+                catch (Exception ex)
+                {
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while searching a user " + "User = " + userID);
+                }
                 if (targetUser.Privileges == Privileges.User)
                 {
                     isUser = true;
@@ -209,13 +260,27 @@ namespace UnstuckMEUserGUI
 
         private void ResetPasswordBtn_Click(object sender, RoutedEventArgs e)
         {
-            UnstuckME.Server.ChangePassword(targetUser, "Password");
+            try
+            {
+                UnstuckME.Server.ChangePassword(targetUser, "Password");
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while updating a users password. " + "User = " + userID);
+            }
         }
 
         private void CreateUserBtn_Click(object sender, RoutedEventArgs e)
         {
             // Add checks
-            UnstuckME.Server.CreateNewUser(textBoxFirstName.Text, textBoxLastName.Text, textBoxEmailAddress.Text, "Password");
+            try
+            { 
+                UnstuckME.Server.CreateNewUser(textBoxFirstName.Text, textBoxLastName.Text, textBoxEmailAddress.Text, "Password");
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "An Error Occured while Admin creating a user ");
+            }
 
             if (isUser)
                 UnstuckME.Server.SetUserPrivileges(Privileges.User, userID);
