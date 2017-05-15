@@ -303,5 +303,76 @@ namespace UnstuckMEInterfaces
                 return (from r in db.Reviews where r.StickerID == stickerID && r.ReviewerID == userID select r).Any();
             }
         }
+
+        public List<int> GetAllReportedReviewIDs()
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                return (from r in db.Reports select r.ReportID) as List<int>;
+            }
+        }
+
+
+        public void MarkReportedReviewAsResolved(bool acceptable, int reviewID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                if (acceptable)
+                {
+                    var target = from r in db.Reports where r.ReportID == reviewID select r;
+    
+                    foreach (var item in target)
+                    {
+                        //db.Reports.DeleteOnSubmit(item);
+                        db.Reports.Remove(item);
+                    }
+
+                    try
+                    {
+                        //db.SubmitChanges();
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        // Provide for exceptions.
+                    }
+                }
+                else
+                {
+                    //Person result = (from p in Context.Persons
+                    //                 where p.person_id == 5
+                    //                 select p).SingleOrDefault();
+
+                    //result.is_default = false;
+
+                    //Context.SaveChanges();
+                    Report target = (from r in db.Reports where r.ReportID == reviewID select r).SingleOrDefault();
+                    int reviewToChange = target.ReviewID;
+
+                    Review ToChange = (from r in db.Reviews where r.ReviewID == reviewToChange select r).SingleOrDefault();
+                    ToChange.Description = "This review fell into an open man hole and was eaten by a sewer gator...";
+                    db.SaveChanges();
+                    
+                }
+                //(from r in db.Reports select r.ReportID) as List<int>;
+            }
+
+        }
+        public UnstuckMEReview GetReportedReview(int ReportID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                int target = (from r in db.Reports where r.ReportID == ReportID  select r.ReviewID).Single();
+                var review = (from r in db.Reviews where r.ReviewID == target select r).Single();
+                UnstuckMEReview rval = new UnstuckMEReview();
+                rval.Description = review.Description;
+                rval.ReviewerID = review.ReviewerID;
+                rval.ReviewID = review.ReviewID;
+                //rval.StarRanking = review.StarRanking;
+                rval.StickerID = review.StickerID;
+                return rval;
+            }
+        }
     }
 }

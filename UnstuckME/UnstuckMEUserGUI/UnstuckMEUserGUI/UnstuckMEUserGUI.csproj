@@ -119,6 +119,12 @@
       <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="SubWindows\ResolveReportsWindow.xaml.cs">
+      <DependentUpon>ResolveReportsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Reviews\ResolveReportsDisplay.xaml.cs">
+      <DependentUpon>ResolveReportsDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Stickers\StickerHistory.xaml.cs">
       <DependentUpon>StickerHistory.xaml</DependentUpon>
     </Compile>
@@ -268,6 +274,14 @@
     <Compile Include="SubWindows\UserMenu.xaml.cs">
       <DependentUpon>UserMenu.xaml</DependentUpon>
     </Compile>
+    <Page Include="SubWindows\ResolveReportsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Reviews\ResolveReportsDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Stickers\StickerHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

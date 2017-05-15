@@ -562,5 +562,28 @@ namespace UnstuckMEInterfaces
         /// <returns>Returns true if user <paramref name="userID"/> has submitted a review on sticker <paramref name="stickerID"/>, false if not.</returns>
         [OperationContract]
         bool BeenReviewed(int stickerID, int userID);
+
+        /// <summary>
+        /// Gets the list of Review IDs that have been reported
+        /// </summary>
+        /// <returns>A list of integers containing the unique identifiers of the reviews that
+        /// have been reported</returns>
+        [OperationContract]
+        List<int> GetAllReportedReviewIDs();
+
+        /// <summary>
+        /// resolves the review
+        /// </summary>
+        /// <param name="acceptable">True if this review is ok, false if it is not ok</param>
+        /// <param name="reviewID">the id of the review that you want to resolve</param>
+        [OperationContract]
+        void MarkReportedReviewAsResolved(bool acceptable, int reviewID);
+        /// <summary>
+        /// returns the review that was reported
+        /// </summary>
+        /// <param name="ReportID"></param>
+        /// <returns></returns>
+        [OperationContract]
+        UnstuckMEReview GetReportedReview(int ReportID);
 	}
 }
