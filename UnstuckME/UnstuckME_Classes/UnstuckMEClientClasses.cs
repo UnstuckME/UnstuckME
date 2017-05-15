@@ -309,8 +309,8 @@ namespace UnstuckME_Classes
 				}
 				catch (Exception ex)
 				{
-				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
+				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 				}
 			}
 		}
@@ -353,8 +353,8 @@ namespace UnstuckME_Classes
 			}
 			catch (Exception ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 			}
 
 			return false;
@@ -368,8 +368,8 @@ namespace UnstuckME_Classes
 			}
 			catch (Exception ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 				return null;
 			}
 		}
@@ -405,8 +405,8 @@ namespace UnstuckME_Classes
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
             }
         }
     }
