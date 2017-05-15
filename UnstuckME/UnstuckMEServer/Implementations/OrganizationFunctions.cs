@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnstuckMEServer;
 using UnstuckME_Classes;
+using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -12,13 +14,41 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="userID">The unique identifier of the user.</param>
         /// <param name="organizationID">The unique identifier of the tutoring organization.</param>
-        public void AddUserToTutoringOrganization(int userID, int organizationID)
+        /// <returns>Returns -1 if failed, 0 if successful.</returns>
+        public async Task<int> AddUserToTutoringOrganization(int userID, int organizationID)
         {
-            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-            {
-                db.InsertUserIntoMentorProgram(userID, organizationID);
-                var stickers = GetActiveStickers(userID, organizationID);
+            int? retVal = -1;
 
+            try
+            {
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    if (db.InsertUserIntoMentorProgram(userID, organizationID).First() != -1)
+                    {
+                        await Task.Factory.StartNew(() => AddOrganizationStickerToUser(userID, organizationID));
+                        retVal = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return retVal.Value;
+        }
+
+        /// <summary>
+        /// Asynchronously adds active stickers from the organization to the client's interface.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <param name="organizationID">The unique identifier of the tutoring organization.</param>
+        private void AddOrganizationStickerToUser(int userID, int organizationID)
+        {
+            List<UnstuckMEAvailableSticker> stickers = GetActiveStickersFromOrganization(userID, organizationID);
+
+            if (stickers.Count > 0)
+            {
                 foreach (var client in _connectedClients)
                 {
                     if (client.Value.User.UserID == userID)
@@ -29,17 +59,56 @@ namespace UnstuckMEInterfaces
                         break;
                     }
                 }
-                //int index = -1;
-                //do
-                //{
-                //    ++index;
+            }
+        }
 
-                //    if (_connectedClients[index].User.UserID == userID)
-                //    {
-                //        foreach (UnstuckMEAvailableSticker sticker in stickers)
-                //            _connectedClients[index].Connection.RecieveNewSticker(sticker);
-                //    }
-                //} while (_connectedClients[index].User.UserID != userID && index < _connectedClients.Count);
+        /// <summary>
+        /// Associates a user with an official tutoring organization.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <param name="organizationID">The unique identifier of the tutoring organization.</param>
+        /// <returns>Returns -1 if failed, 0 if successful.</returns>
+        public async Task<int> RemoveUserFromTutoringOrganization(int userID, int organizationID)
+        {
+            int? retVal = -1;
+
+            try
+            {
+                List<UnstuckMEAvailableSticker> stickers = GetActiveStickersFromOrganization(userID, organizationID);
+
+                using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+                {
+                    if (stickers.Count > 0 && db.RemoveUserFromMentorProgram(userID, organizationID).First() != -1)
+                    {
+                        await Task.Factory.StartNew(() => RemoveOrganizationStickerToUser(stickers, userID));
+                        retVal = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return retVal.Value;
+        }
+
+        /// <summary>
+        /// Asynchronously adds active stickers from the organization to the client's interface.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <param name="stickers"></param>
+        private void RemoveOrganizationStickerToUser(IEnumerable<UnstuckMEAvailableSticker> stickers, int userID)
+        {
+            foreach (var client in _connectedClients)
+            {
+                if (client.Value.User.UserID == userID)
+                {
+                    foreach (UnstuckMEAvailableSticker sticker in stickers)
+                        client.Value.Connection.RemoveGUISticker(sticker.StickerID);
+
+                    break;
+                }
             }
         }
 

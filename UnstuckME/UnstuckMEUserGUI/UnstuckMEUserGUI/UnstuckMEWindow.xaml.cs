@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -24,7 +25,7 @@ namespace UnstuckMEUserGUI
 			InitializeComponent();
 			UnstuckME.MainWindow = this;
 
-			userPrivileges = (Privileges)UnstuckME.User.Privileges;
+			userPrivileges = UnstuckME.User.Privileges;
 			CheckAdminPrivledges(userPrivileges); //Disables/Enables Admin/Moderator Tab Depending on Privilege
 
 			UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_LOGIN, UnstuckME.User.EmailAddress);
@@ -53,7 +54,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 			}
 
 			LoadingScreen.Visibility = Visibility.Collapsed;
@@ -92,10 +94,9 @@ namespace UnstuckMEUserGUI
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.OpenStickers)
 					    UnstuckME.Pages.StickerPage.StackPanelOpenStickers.Children.Add(new OpenSticker(sticker));
 
-				    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetResolvedStickers(userID: UnstuckME.User.UserID);
-					UnstuckME.Pages.StickerPage.RecentStickers.AddRange(UnstuckME.Server.GetTimedOutStickers(userID: UnstuckME.User.UserID));
+				    UnstuckME.Pages.StickerPage.RecentStickers = UnstuckME.Server.GetStickerHistory(UnstuckME.User.UserID);
 					foreach (UnstuckMESticker sticker in UnstuckME.Pages.StickerPage.RecentStickers)
-					    UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new MySticker(sticker));
+					    UnstuckME.Pages.StickerPage.StackPanelStickerHistory.Children.Add(new StickerHistory(sticker));
 				});
 			}
 			catch (Exception ex)
@@ -181,8 +182,7 @@ namespace UnstuckMEUserGUI
 				{
 					UnstuckME.Pages.UserProfilePage.ProfilePicture.Source = UnstuckME.UserProfilePicture;  //convert image so it can be displayed
 					UnstuckME.Pages.UserProfilePage.ImageEditProfilePicture.Source = UnstuckME.UserProfilePicture;
-					UnstuckME.Pages.UserProfilePage.SetStudentRating(UnstuckME.User.AverageStudentRank);
-					UnstuckME.Pages.UserProfilePage.SetTutorRating(UnstuckME.User.AverageTutorRank);
+					UnstuckME.Pages.UserProfilePage.UpdateRatings(UnstuckME.User.AverageStudentRank, UnstuckME.User.AverageTutorRank);
 					UnstuckME.Pages.UserProfilePage.RepopulateClasses();
 				    UnstuckME.Pages.UserProfilePage.PopulateReviews();
 				});
@@ -247,14 +247,15 @@ namespace UnstuckMEUserGUI
 						else
 							win = new SubWindows.AddStudentReviewWindow(needsreview.Key);
 
-						win.Show();
-						win.Focus();
+						win.ShowDialog();
+						//win.Focus();
 					}
 				});
 			}
 			catch (Exception ex)
 			{
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 				UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to submit a review for the stickers you have open.", "Review Needed", UnstuckMEBoxImage.Information);
 				error.ShowDialog();
 			}
@@ -355,7 +356,7 @@ namespace UnstuckMEUserGUI
 				default: //In case someone figures out a way to make admin button show
 					{
                         UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You do not have access to this tab.", "Unauthorized Access", UnstuckMEBoxImage.Warning);
-                        error.Show();
+                        error.ShowDialog();
                         return;
 					}
 			}
@@ -373,6 +374,7 @@ namespace UnstuckMEUserGUI
 			CreateStickerButton.Visibility = Visibility.Hidden;
 			CreateStickerButton.IsEnabled = false;
 		}
+
 		private void EnableStickerSubmit()
 		{
 			CreateStickerButton.Visibility = Visibility.Visible;
@@ -417,15 +419,6 @@ namespace UnstuckMEUserGUI
 				}
 			}
 		}
-
-		//public void RecieveChatFile(UnstuckMEMessage message, UnstuckMEFile file)
-		//{
-		//    if ((UnstuckME.CurrentChatSession.ChatID != message.ChatID) || (MainFrame.Content != UnstuckME.Pages.ChatPage))
-		//    {
-		//        UnstuckME.Pages.ChatPage.AddMessage(message, file);
-		//        NotificationStack.Children.Insert(0, new NewMessageNotification(message));
-		//    }
-		//}
 
 		public void RecieveAddedClass(UserClass inClass)
 		{
@@ -474,9 +467,10 @@ namespace UnstuckMEUserGUI
 					if (temp != null)
 					    UnstuckME.Pages.StickerPage.StackPanelAvailableStickers.Children.Remove(temp);
 				}
-				catch (Exception)
+				catch (Exception ex)
 				{
-					MessageBox.Show("Remove Failed");
+				    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+				    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, "Failed to remove sticker from available stickers", trace.Name);
 				}
 			});
 		}
@@ -595,8 +589,9 @@ namespace UnstuckMEUserGUI
 		    }
 		    catch (Exception ex)
 		    {
-		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message,
-                    string.Format("Server failed to log out user {0}, Source = {1}", UnstuckME.User.EmailAddress, ex.Source));
+		        var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message,
+                    string.Format("Server failed to log out user {0}, Source = {1}", UnstuckME.User.EmailAddress, trace.Name));
 		        Close();
 		    }
 		}
@@ -711,7 +706,7 @@ namespace UnstuckMEUserGUI
 
         public void ConnectionLost_AttemptToReconnect()
         {
-            this.Hide();
+            Hide();
             ReconnectingWindow reconnect = new ReconnectingWindow();
             reconnect.Show();
         }

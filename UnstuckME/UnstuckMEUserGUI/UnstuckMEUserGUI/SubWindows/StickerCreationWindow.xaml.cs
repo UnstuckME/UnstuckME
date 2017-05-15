@@ -98,15 +98,15 @@ namespace UnstuckMEUserGUI
                     newSticker.TutorRanking = 0;
 
                     foreach (TutoringOrganizationDisplay a in StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>())
-                        newSticker.AttachedOrganizations.Add(a.OrganizationID);
+                        newSticker.AttachedOrganizations.Add(a.TutoringOrg.MentorID);
                     try
                     {
                         newSticker.Class = UnstuckME.Server.GetSingleClass(UnstuckME.Server.GetCourseIdNumberByCodeAndNumber(ComboBoxCourseNumber.SelectedValue as string, ComboBoxCourseName.SelectedValue as string));
                     }
                     catch (Exception exp)
                     {
-                        UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+                        var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                         throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     try
@@ -117,16 +117,17 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception exp)
                     {
-                        UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                        logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+                        var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                         throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
                     Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Sticker Submission Failure", UnstuckMEBoxImage.Warning);
                 error.ShowDialog();
             }
@@ -161,7 +162,8 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception exp)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+                var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
             }
 
             ComboboxItem temp1 = new ComboboxItem
@@ -211,7 +213,8 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message);
+                    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                 }
 
                 ComboBoxCourseName.IsEnabled = true;
@@ -236,7 +239,7 @@ namespace UnstuckMEUserGUI
 
             foreach (TutoringOrganizationDisplay a in StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>())
             {
-                if (temp != null && temp.Value == a.OrganizationID)
+                if (temp != null && temp.Value == a.TutoringOrg.MentorID)
                     exists = true;
             }
 

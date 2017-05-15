@@ -48,7 +48,7 @@ namespace UnstuckMEInterfaces
 			string directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create) + @"\UnstuckME\";
 			Directory.CreateDirectory(directory += image.UserID.ToString());
 			Directory.CreateDirectory(directory);
-			directory += @"\ProfilePicture.jpeg";
+			directory += image.Filename;
 
 			using (FileStream newfile = new FileStream(directory, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite, 26214400, FileOptions.Encrypted))
 			{

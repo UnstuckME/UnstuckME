@@ -7,12 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="500" Margin="5,5,5,0">
     <Border Background="#336699" CornerRadius="5,5,5,5" Height="150" BorderBrush="DimGray" BorderThickness="1">
-        <Grid x:Name="FullBackGround" >
+        <Grid x:Name="FullBackGround">
             <Label x:Name="LabelClassName" Content="Class Description" Foreground="White" FontSize="18" FontWeight="Heavy" FontFamily="Arial" Padding="10,0,0,0" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,175,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
             <TextBox x:Name="ProblemDescription" Margin="0,0,50,0" FontSize="14" Padding="10,2,5,2" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="White" BorderThickness="0" Background="{x:Null}" Height="75" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
             <Label x:Name="LabelTutorName" Content="Tutor:" Foreground="White" FontSize="16" FontWeight="Heavy" FontFamily="Arial" Padding="10,0,0,0" Height="30" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,155,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
             <Border x:Name="ButtonCompleted" MouseEnter="ButtonCompleted_MouseEnter" MouseLeave="ButtonCompleted_MouseLeave" Cursor="Hand" MouseLeftButtonDown="ButtonCompleted_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" Width="90" Margin="0,0,10,5" Background="DarkGreen">
                 <Label Foreground="White" Content="Complete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            </Border>
+            <Border x:Name="ButtonDelete" Cursor="Hand" MouseEnter="ButtonDelete_MouseEnter" MouseLeave="ButtonDelete_MouseLeave" MouseLeftButtonDown="ButtonRemove_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Margin="0,5,10,0" Background="White" ToolTip="Delete sticker" CornerRadius="15">
+                <Image Source="..\..\Resources/Close/CloseRed.png" />
             </Border>
         </Grid>
     </Border>

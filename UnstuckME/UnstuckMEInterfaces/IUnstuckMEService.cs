@@ -8,13 +8,14 @@ namespace UnstuckMEInterfaces
 	[ServiceContract(CallbackContract = typeof(IClient))]
 	public interface IUnstuckMEService
 	{
-		/// <summary>
-		/// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
-		/// </summary>
-		/// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
-		/// <param name="stickerID">The unique identifier fo the sticker that has been accepted.</param>
+	    /// <summary>
+	    /// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
+	    /// </summary>
+	    /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
+	    /// <param name="stickerID">The unique identifier of the sticker that has been accepted.</param>
+	    /// <param name="studentID">The unique identifier of the user who submitted the sticker.</param>
 		[OperationContract(IsOneWay = true)]
-		void AcceptSticker(int tutorID, int stickerID);
+		void AcceptSticker(int tutorID, int studentID, int stickerID);
 
         /// <summary>
         /// Gets the information for a single sticker.
@@ -66,7 +67,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="emailaddress">The email address of the user.</param>
 		/// <param name="newFirstName">The new first name of the user.</param>
 		/// <param name="newLastName">The new last name of the user.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
 
 		/// <summary>
@@ -110,7 +111,7 @@ namespace UnstuckMEInterfaces
 		/// </summary>
 		/// <param name="UserID">The unique identifier of the user.</param>
 		/// <param name="ClassID">The unique identifier of the class.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void RemoveUserFromClass(int UserID, int ClassID);
 
 		/// <summary>
@@ -118,7 +119,7 @@ namespace UnstuckMEInterfaces
 		/// </summary>
 		/// <param name="UserID">The unique identifier of the user.</param>
 		/// <param name="ClassID">The unique identifier of the class.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void InsertStudentIntoClass(int UserID, int ClassID);
 
 		/// <summary>
@@ -132,7 +133,7 @@ namespace UnstuckMEInterfaces
 		/// <summary>
 		/// Disconnects a user from the server.
 		/// </summary>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void Logout();
 
 		/// <summary>
@@ -140,45 +141,31 @@ namespace UnstuckMEInterfaces
 		/// </summary>
 		/// <param name="User">All the necessary user information.</param>
 		/// <param name="newPassword">The new password.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void ChangePassword(UserInfo User, string newPassword);
 
 		/// <summary>
 		/// Deletes an account and everything associated with that account.
 		/// </summary>
 		/// <param name="userID">The unique identifier of the account.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void DeleteUserAccount(int userID);
 
-		/// <summary>
-		/// Gets the stickers that have been accepted by a tutor and marked as resolved.
-		/// </summary>
-		/// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
-		/// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
-		/// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
-		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
-		/// <returns>A list of stickers that have tutors and marked as resolved.</returns>
-		[OperationContract]
-		List<UnstuckMESticker> GetResolvedStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null);
-
-		/// <summary>
-		/// Gets the stickers that have not been accepted by a tutor and surpassed the timeout date.
-		/// </summary>
-		/// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
-		/// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
-		/// <param name="userID">The unique identifer of the account that submitted the stickers. This parameter is optional, with a default value of null.</param>
-		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
-		/// <returns>A list of stickers that have not been accepted by a tutor and surpassed the timeout date.</returns>
-		[OperationContract]
-		List<UnstuckMESticker> GetTimedOutStickers(double minstarrank = 0, int? organizationID = null, int? userID = null, int? classID = null);
-
-		/// <summary>
-		/// Returns the reviews submitted by a specific user as a student.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the account holder.</param>
-		/// <param name="minstarrank">The minimum star ranking to see reviews. This parameter is optional, with a default value of 0.</param>
-		/// <returns>A list containing all the reviews submitted by the user specified as a student.</returns>
-		[OperationContract]
+	    /// <summary>
+	    /// Gets the stickers that have been accepted by a tutor and marked as resolved.
+	    /// </summary>
+	    /// <param name="userID">The unique identifer of the account that submitted the stickers.</param>
+	    /// <returns>A list of stickers that have tutors and marked as resolved.</returns>
+        [OperationContract]
+	    List<UnstuckMESticker> GetStickerHistory(int userID);
+        
+        /// <summary>
+        /// Returns the reviews submitted by a specific user as a student.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the account holder.</param>
+        /// <param name="minstarrank">The minimum star ranking to see reviews. This parameter is optional, with a default value of 0.</param>
+        /// <returns>A list containing all the reviews submitted by the user specified as a student.</returns>
+        [OperationContract]
 		List<UnstuckMEReview> GetUserStudentReviews(int userID, float minstarrank = 0);
 
 		/// <summary>
@@ -194,23 +181,21 @@ namespace UnstuckMEInterfaces
 		/// Gets the stickers submitted by a user, regardless if they are resolved or active.
 		/// </summary>
 		/// <param name="userID">The unique identifer of the account.</param>
-		/// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
 		/// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
 		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers that have been submitted by a specific user that matches the filtering criteria.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetUserSubmittedStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null);
+		List<UnstuckMESticker> GetUserSubmittedStickers(int userID, float minstarrank = 0, int classID = 0);
 
 		/// <summary>
 		/// Gets the stickers a user has tutored, regardless if they are resolved or active.
 		/// </summary>
 		/// <param name="userID">The unique identifer of the account.</param>
-		/// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
 		/// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
 		/// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
 		/// <returns>A list of stickers that a specific user has tutored that matches the filtering criteria.</returns>
 		[OperationContract]
-		List<UnstuckMESticker> GetUserTutoredStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null);
+		List<UnstuckMESticker> GetUserTutoredStickers(int userID, float minstarrank = 0, int classID = 0);
 
 		/// <summary>
 		/// Gets the stickers available to tutor. This is currently untested, though it should work.
@@ -224,20 +209,39 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		List<UnstuckMEAvailableSticker> GetActiveStickers(int caller, int? organizationID = null, float minstarrank = 0, int? userID = null, int? classID = null);
 
-		/// <summary>
-		/// Associates a user with an official tutoring organization.
-		/// </summary>
-		/// <param name="userID">The unique identifier of the user.</param>
-		/// <param name="organizationID">The unique identifier of the tutoring organization.</param>
-		[OperationContract]
-		void AddUserToTutoringOrganization(int userID, int organizationID);
+        /// <summary>
+        /// Gets the stickers available to tutor from a specific tutoring organization.
+        /// </summary>
+        /// <param name="caller">The unqiue identifier of the caller of the function.</param>
+        /// <param name="organizationID">The unique identifier of the of the organization to filter. This parameter is optional, with a default value of null.</param>
+        /// <returns>A list of stickers available to tutor that meets the filtering criteria.</returns>
+        [OperationContract]
+        List<UnstuckMEAvailableSticker> GetActiveStickersFromOrganization(int caller, int organizationID);
 
-		/// <summary>
-		/// Submits a new sticker to the database and associates it with any specified tutoring organizations. Queues the sticker to be sent to qualified online users.
-		/// </summary>
-		/// <param name="newSticker">The new sticker.</param>
-		/// <returns>The new sticker's unique identifier if it was submitted successfully, -1 if not.</returns>
-		[OperationContract]
+        /// <summary>
+        /// Associates a user with an official tutoring organization.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <param name="organizationID">The unique identifier of the tutoring organization.</param>
+        /// <returns>Returns -1 if failed, 0 if successful.</returns>
+        [OperationContract]
+		Task<int> AddUserToTutoringOrganization(int userID, int organizationID);
+
+        /// <summary>
+        /// Associates a user with an official tutoring organization.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <param name="organizationID">The unique identifier of the tutoring organization.</param>
+        /// <returns>Returns -1 if failed, 0 if successful.</returns>
+        [OperationContract]
+        Task<int> RemoveUserFromTutoringOrganization(int userID, int organizationID);
+
+        /// <summary>
+        /// Submits a new sticker to the database and associates it with any specified tutoring organizations. Queues the sticker to be sent to qualified online users.
+        /// </summary>
+        /// <param name="newSticker">The new sticker.</param>
+        /// <returns>The new sticker's unique identifier if it was submitted successfully, -1 if not.</returns>
+        [OperationContract]
 		int SubmitSticker(UnstuckMEBigSticker newSticker);
 
 		/// <summary>
@@ -302,7 +306,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="isAStudent">True if the user being reviewed is a student, false otherwise.</param>
 		/// <returns>Returns 0 if the review was created successfully, 1 if unsuccessful.</returns>
 		[OperationContract]
-		int CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
+		Task<int> CreateReview(int stickerID, int reviewerID, double starRanking, string description, bool isAStudent);
 
         /// <summary>
         /// Removes a user from their contacts.
@@ -368,7 +372,7 @@ namespace UnstuckMEInterfaces
 		/// </summary>
 		/// <param name="chatID">The unique identifier of the chat.</param>
 		/// <param name="stickerID">The unique identifier of the sticker.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void AddChatToSticker(int chatID, int stickerID);
 
 		/// <summary>
@@ -426,7 +430,7 @@ namespace UnstuckMEInterfaces
 		/// </summary>
 		/// <param name="userPrivs">The new user's privlieges.</param>
 		/// <param name="userID">The unique identifier of a specific user.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void SetUserPrivileges(Privileges userPrivs, int userID);
 
 		/// <summary>
@@ -444,7 +448,7 @@ namespace UnstuckMEInterfaces
 		/// Creates a new mentor organzation on the database.
 		/// </summary>
 		/// <param name="name">The name of the new organization.</param>
-		[OperationContract]
+		[OperationContract(IsOneWay = true)]
 		void CreateMentorOrg(string name);
 
 		/// <summary>
@@ -496,7 +500,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
 		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
-		int RemoveTutorFromSticker(int stickerID);
+		Task<int> RemoveTutorFromSticker(int stickerID);
 
         /// <summary>
         /// Currently for Ryan's use with chat caching.
@@ -549,5 +553,14 @@ namespace UnstuckMEInterfaces
         /// have been reported by the user.</returns>
 	    [OperationContract]
 	    List<int> GetReportedReviewIDs(int userID);
+
+        /// <summary>
+        /// Determines if a sticker has been reviewed.
+        /// </summary>
+        /// <param name="stickerID">The unique identifier of the sticker to find reviews of.</param>
+        /// <param name="userID">The unique identifier of the user who may have submitted a review.</param>
+        /// <returns>Returns true if user <paramref name="userID"/> has submitted a review on sticker <paramref name="stickerID"/>, false if not.</returns>
+        [OperationContract]
+        bool BeenReviewed(int stickerID, int userID);
 	}
 }

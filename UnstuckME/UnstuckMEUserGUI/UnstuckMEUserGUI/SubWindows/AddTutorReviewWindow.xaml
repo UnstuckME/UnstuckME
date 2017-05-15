@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:UnstuckMEUserGUI.SubWindows"
         xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         mc:Ignorable="d"
-        AllowsTransparency="True"
-        Title="AddTutorReviewWindow" Height="Auto" Width="Auto" WindowStyle="None" WindowState="Maximized" Background="{x:Null}">
+        AllowsTransparency="True" WindowStartupLocation="CenterOwner"
+        Title="AddTutorReviewWindow" Height="Auto" Width="Auto" WindowStyle="None" WindowState="Maximized" Background="{x:Null}" ShowInTaskbar="False">
     <Grid>
         <Rectangle Fill="Black" Opacity=".7">
         </Rectangle>

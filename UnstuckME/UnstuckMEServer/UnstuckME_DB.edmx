@@ -511,6 +511,10 @@
           <Parameter Name="userid" Type="int" Mode="In" />
           <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetActiveStickersFromOrganization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="loggedin_user" Type="int" Mode="In" />
+          <Parameter Name="organization" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetAllChatsAUserIsPartOF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
@@ -565,20 +569,11 @@
         <Function Name="GetReportsSubmittedByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetResolvedStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="starrank" Type="float" Mode="In" />
-          <Parameter Name="organization" Type="int" Mode="In" />
+        <Function Name="GetReviewsOfUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
-          <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetStickerInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="stickerID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetTimedOutStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="starrank" Type="float" Mode="In" />
-          <Parameter Name="organization" Type="int" Mode="In" />
-          <Parameter Name="userid" Type="int" Mode="In" />
-          <Parameter Name="classid" Type="int" Mode="In" />
         </Function>
         <Function Name="GetUserAvgStudentStarRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
@@ -620,13 +615,11 @@
         </Function>
         <Function Name="GetUserSubmittedStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
-          <Parameter Name="organization" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="classID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetUserTutoredStickers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userID" Type="int" Mode="In" />
-          <Parameter Name="organization" Type="int" Mode="In" />
           <Parameter Name="starrank" Type="float" Mode="In" />
           <Parameter Name="classID" Type="int" Mode="In" />
         </Function>
@@ -657,6 +650,10 @@
         </Function>
         <Function Name="MarkStickerAsResolved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StickerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RemoveUserFromMentorProgram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="MentorID" Type="int" Mode="In" />
         </Function>
         <Function Name="Ryans_GetChatMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="chatid" Type="int" Mode="In" />
@@ -1383,6 +1380,10 @@
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetActiveStickersFromOrganization" ReturnType="Collection(UnstuckME_DBModel.GetActiveStickersFromOrganization_Result)">
+            <Parameter Name="loggedin_user" Mode="In" Type="Int32" />
+            <Parameter Name="organization" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetAllChatsAUserIsPartOF" ReturnType="Collection(Int32)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1437,20 +1438,11 @@
           <FunctionImport Name="GetReportsSubmittedByUser" ReturnType="Collection(UnstuckME_DBModel.GetReportsSubmittedByUser_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetResolvedStickers" ReturnType="Collection(UnstuckME_DBModel.GetResolvedStickers_Result)">
-            <Parameter Name="starrank" Mode="In" Type="Double" />
-            <Parameter Name="organization" Mode="In" Type="Int32" />
+          <FunctionImport Name="GetReviewsOfUser" ReturnType="Collection(UnstuckME_DBModel.GetReviewsOfUser_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
-            <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetStickerInfo" ReturnType="Collection(UnstuckME_DBModel.GetStickerInfo_Result)">
             <Parameter Name="stickerID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetTimedOutStickers" ReturnType="Collection(UnstuckME_DBModel.GetTimedOutStickers_Result)">
-            <Parameter Name="starrank" Mode="In" Type="Double" />
-            <Parameter Name="organization" Mode="In" Type="Int32" />
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-            <Parameter Name="classid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserAvgStudentStarRank" ReturnType="Collection(Double)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
@@ -1492,13 +1484,11 @@
           </FunctionImport>
           <FunctionImport Name="GetUserSubmittedStickers" ReturnType="Collection(UnstuckME_DBModel.GetUserSubmittedStickers_Result)">
             <Parameter Name="userID" Mode="In" Type="Int32" />
-            <Parameter Name="organization" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="classID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserTutoredStickers" ReturnType="Collection(UnstuckME_DBModel.GetUserTutoredStickers_Result)">
             <Parameter Name="userID" Mode="In" Type="Int32" />
-            <Parameter Name="organization" Mode="In" Type="Int32" />
             <Parameter Name="starrank" Mode="In" Type="Double" />
             <Parameter Name="classID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1523,12 +1513,16 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ChatID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="InsertUserIntoMentorProgram">
+          <FunctionImport Name="InsertUserIntoMentorProgram" ReturnType="Collection(Int32)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="MentorID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MarkStickerAsResolved">
             <Parameter Name="StickerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RemoveUserFromMentorProgram" ReturnType="Collection(Int32)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="MentorID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Ryans_GetChatMessage" ReturnType="Collection(UnstuckME_DBModel.Ryans_GetChatMessage_Result)">
             <Parameter Name="chatid" Mode="In" Type="Int32" />
@@ -1676,6 +1670,22 @@
           <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="Timeout" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetActiveStickersFromOrganization_Result">
+          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
+          <Property Type="Int32" Name="StickerID" Nullable="false" />
+          <Property Type="Int32" Name="ClassID" Nullable="false" />
+          <Property Type="Int32" Name="ChatID" Nullable="true" />
+          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="TutorID" Nullable="true" />
+          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
+          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="GetAllMembersOfAChat_Result">
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
@@ -1766,21 +1776,11 @@
           <Property Type="Int32" Name="FlaggerID" Nullable="true" />
           <Property Type="Int32" Name="ReviewID" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="GetResolvedStickers_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
+        <ComplexType Name="GetReviewsOfUser_Result">
+          <Property Type="Int32" Name="ReviewID" Nullable="false" />
           <Property Type="Int32" Name="StickerID" Nullable="false" />
-          <Property Type="Int32" Name="ClassID" Nullable="false" />
-          <Property Type="Int32" Name="ChatID" Nullable="true" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
-          <Property Type="Int32" Name="TutorID" Nullable="true" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
-          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+          <Property Type="Double" Name="StarRanking" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
         <ComplexType Name="GetStickerInfo_Result">
           <Property Type="String" Name="DisplayFName" Nullable="true" MaxLength="32" />
@@ -1796,22 +1796,6 @@
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
           <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="Timeout" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetTimedOutStickers_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="Int32" Name="StickerID" Nullable="false" />
-          <Property Type="Int32" Name="ClassID" Nullable="false" />
-          <Property Type="Int32" Name="ChatID" Nullable="true" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
-          <Property Type="Int32" Name="TutorID" Nullable="true" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
-          <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetUserClasses_Result">
           <Property Type="Int32" Name="ClassID" Nullable="false" />
@@ -1870,33 +1854,32 @@
           <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
         <ComplexType Name="GetUserSubmittedStickers_Result">
-          <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
-          <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
-          <Property Type="Int32" Name="StickerID" Nullable="false" />
-          <Property Type="Int32" Name="ClassID" Nullable="false" />
+          <Property Type="String" Name="DisplayFName" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="DisplayLName" Nullable="true" MaxLength="32" />
+          <Property Type="Int32" Name="StickerID" Nullable="true" />
+          <Property Type="String" Name="ProblemDescription" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="ChatID" Nullable="true" />
-          <Property Type="Int32" Name="StudentID" Nullable="false" />
+          <Property Type="Int32" Name="ClassID" Nullable="true" />
+          <Property Type="String" Name="CourseCode" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="CourseName" Nullable="true" MaxLength="100" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="true" />
+          <Property Type="Int32" Name="StudentID" Nullable="true" />
           <Property Type="Int32" Name="TutorID" Nullable="true" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
-          <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Timeout" Nullable="false" />
+          <Property Type="DateTime" Name="SubmitTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Timeout" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetUserTutoredStickers_Result">
           <Property Type="String" Name="DisplayFName" Nullable="false" MaxLength="32" />
           <Property Type="String" Name="DisplayLName" Nullable="false" MaxLength="32" />
           <Property Type="Int32" Name="StickerID" Nullable="false" />
+          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
           <Property Type="Int32" Name="ClassID" Nullable="false" />
-          <Property Type="Int32" Name="ChatID" Nullable="true" />
+          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
+          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
           <Property Type="Int32" Name="StudentID" Nullable="false" />
           <Property Type="Int32" Name="TutorID" Nullable="true" />
-          <Property Type="String" Name="CourseCode" Nullable="false" MaxLength="5" />
-          <Property Type="Int16" Name="CourseNumber" Nullable="false" />
-          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ProblemDescription" Nullable="false" MaxLength="500" />
           <Property Type="Double" Name="MinimumStarRanking" Nullable="true" />
           <Property Type="DateTime" Name="SubmitTime" Nullable="false" Precision="23" />
           <Property Type="DateTime" Name="Timeout" Nullable="false" />
@@ -2190,6 +2173,26 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetActiveStickersFromOrganization" FunctionName="UnstuckME_DBModel.Store.GetActiveStickersFromOrganization">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetActiveStickersFromOrganization_Result">
+                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
+                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
+                <ScalarProperty Name="StickerID" ColumnName="StickerID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
+                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllChatsAUserIsPartOF" FunctionName="UnstuckME_DBModel.Store.GetAllChatsAUserIsPartOF" />
           <FunctionImportMapping FunctionImportName="GetAllMembersOfAChat" FunctionName="UnstuckME_DBModel.Store.GetAllMembersOfAChat">
             <ResultMapping>
@@ -2332,23 +2335,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetResolvedStickers" FunctionName="UnstuckME_DBModel.Store.GetResolvedStickers">
+          <FunctionImportMapping FunctionImportName="GetReviewsOfUser" FunctionName="UnstuckME_DBModel.Store.GetReviewsOfUser">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetResolvedStickers_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
+              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetReviewsOfUser_Result">
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
                 <ScalarProperty Name="StickerID" ColumnName="StickerID" />
-                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
-                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
-                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
-                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
-                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+                <ScalarProperty Name="StarRanking" ColumnName="StarRanking" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2359,26 +2352,6 @@
                 <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
                 <ScalarProperty Name="StickerID" ColumnName="StickerID" />
                 <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
-                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
-                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
-                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
-                <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
-                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
-                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetTimedOutStickers" FunctionName="UnstuckME_DBModel.Store.GetTimedOutStickers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UnstuckME_DBModel.GetTimedOutStickers_Result">
-                <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
-                <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
-                <ScalarProperty Name="StickerID" ColumnName="StickerID" />
-                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="TutorID" ColumnName="TutorID" />
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
@@ -2489,14 +2462,14 @@
                 <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
                 <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
                 <ScalarProperty Name="StickerID" ColumnName="StickerID" />
-                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
                 <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="TutorID" ColumnName="TutorID" />
-                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
-                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
                 <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
                 <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
                 <ScalarProperty Name="Timeout" ColumnName="Timeout" />
@@ -2509,14 +2482,13 @@
                 <ScalarProperty Name="DisplayFName" ColumnName="DisplayFName" />
                 <ScalarProperty Name="DisplayLName" ColumnName="DisplayLName" />
                 <ScalarProperty Name="StickerID" ColumnName="StickerID" />
+                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
                 <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="TutorID" ColumnName="TutorID" />
-                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
-                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
-                <ScalarProperty Name="ProblemDescription" ColumnName="ProblemDescription" />
                 <ScalarProperty Name="MinimumStarRanking" ColumnName="MinimumStarRanking" />
                 <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
                 <ScalarProperty Name="Timeout" ColumnName="Timeout" />
@@ -2558,6 +2530,7 @@
           <FunctionImportMapping FunctionImportName="InsertUserIntoChat" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoChat" />
           <FunctionImportMapping FunctionImportName="InsertUserIntoMentorProgram" FunctionName="UnstuckME_DBModel.Store.InsertUserIntoMentorProgram" />
           <FunctionImportMapping FunctionImportName="MarkStickerAsResolved" FunctionName="UnstuckME_DBModel.Store.MarkStickerAsResolved" />
+          <FunctionImportMapping FunctionImportName="RemoveUserFromMentorProgram" FunctionName="UnstuckME_DBModel.Store.RemoveUserFromMentorProgram" />
           <FunctionImportMapping FunctionImportName="Ryans_GetChatMessage" FunctionName="UnstuckME_DBModel.Store.Ryans_GetChatMessage">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UnstuckME_DBModel.Ryans_GetChatMessage_Result">

@@ -105,6 +105,9 @@
     <Compile Include="Friend.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetActiveStickersFromOrganization_Result.cs">
+      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetActiveStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
@@ -141,13 +144,10 @@
     <Compile Include="GetReportsSubmittedByUser_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetResolvedStickers_Result.cs">
+    <Compile Include="GetReviewsOfUser_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetStickerInfo_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetTimedOutStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserClasses_Result.cs">

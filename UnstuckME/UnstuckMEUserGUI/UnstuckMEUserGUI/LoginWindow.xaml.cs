@@ -34,7 +34,6 @@ namespace UnstuckMEUserGUI
 		public LoginWindow()
 		{
 			InitializeComponent();
-            //UnstuckME.UserExit = false;
             UnstuckME.ConnectToServer();
             UnstuckME.ConnectToStreamService();
 			UnstuckME.Blue = buttonCreateAccount.Background;
@@ -83,8 +82,9 @@ namespace UnstuckMEUserGUI
 			catch (Exception ex)
 			{
                 UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur", "Unexpected Error", UnstuckMEBoxImage.Error);
-                error.Show();
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+                error.ShowDialog();
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 			}
 		}
 
@@ -145,7 +145,8 @@ namespace UnstuckMEUserGUI
 		    }
 		    catch (Exception ex)
 		    {
-		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 		        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK,
                                                                          "Could not connect to the server/database. Please contact an UnstuckME administrator for more help.",
                                                                          "Server/Database Connection Error",
@@ -170,8 +171,6 @@ namespace UnstuckMEUserGUI
 					throw new Exception("Enter an Email Address");
 				if (passwordBox.Password.Length <= 6 || passwordBox.Password.Length >= 32)
 					throw new Exception("Enter a Valid Password");
-				//if (comboBoxSchools.SelectedValue.ToString() != "Oregon Institute of Technology") // This is a serious hack around for the presentation
-					//throw new Exception("Unable to connect to server");
 				
 				isValid = true;
 			}
@@ -184,10 +183,11 @@ namespace UnstuckMEUserGUI
 					buttonResetPassword.Visibility = Visibility.Visible;
 				}
 
-				if (ex.Message != "Unable to connect to server")
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                if (ex.Message != "Unable to connect to server")
+					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 				else
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, "NET TCP client issued a request, but received no or failed response along specified channel, Source = " + ex.Source);
+					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, "NET TCP client issued a request, but received none or failed response along specified channel, Source = " + trace.Name);
 
 				labelInvalidLogin.Content = ex.Message;
 				passwordBox.Password = string.Empty;
@@ -206,32 +206,30 @@ namespace UnstuckMEUserGUI
 						labelInvalidLogin.Content = "Invalid Username/Password";
 						throw new Exception();
 					}
-					else
-					{
-						var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-						if (checkboxRememberMe.IsChecked.HasValue && checkboxRememberMe.IsChecked.Value)
-						{
-							config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
-							config.AppSettings.Settings["Password"].Value = passwordBox.Password;
-							config.AppSettings.Settings["RememberMe"].Value = "true";
-						}
-						else
-						{
-							config.AppSettings.Settings["Username"].Value = string.Empty;
-							config.AppSettings.Settings["Password"].Value = string.Empty;
-							config.AppSettings.Settings["RememberMe"].Value = "false";
-						}
+				    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-						config.AppSettings.Settings["SchoolName"].Value = comboBoxSchools.SelectedValue.ToString();
-						ChannelEndpointElement endpoint = ((ClientSection)config.GetSection("system.serviceModel/client")).Endpoints[0];
-						//endpoint.Address = new Uri("net.tcp://" + (comboBoxSchools.SelectedItem as UnstuckMESchool).ServerIPAdress + @"/UnstuckMEService");
-						config.Save();
+				    if (checkboxRememberMe.IsChecked.HasValue && checkboxRememberMe.IsChecked.Value)
+				    {
+				        config.AppSettings.Settings["Username"].Value = textBoxUserName.Text;
+				        config.AppSettings.Settings["Password"].Value = passwordBox.Password;
+				        config.AppSettings.Settings["RememberMe"].Value = "true";
+				    }
+				    else
+				    {
+				        config.AppSettings.Settings["Username"].Value = string.Empty;
+				        config.AppSettings.Settings["Password"].Value = string.Empty;
+				        config.AppSettings.Settings["RememberMe"].Value = "false";
+				    }
 
-						UnstuckMEWindow mainWindow = new UnstuckMEWindow();
-						mainWindow.Show();
-                        Close();
-					}
+				    config.AppSettings.Settings["SchoolName"].Value = comboBoxSchools.SelectedValue.ToString();
+				    ChannelEndpointElement endpoint = ((ClientSection)config.GetSection("system.serviceModel/client")).Endpoints[0];
+				    //endpoint.Address = new Uri("net.tcp://" + (comboBoxSchools.SelectedItem as UnstuckMESchool).ServerIPAdress + @"/UnstuckMEService");
+				    config.Save();
+
+				    UnstuckMEWindow mainWindow = new UnstuckMEWindow();
+				    mainWindow.Show();
+				    Close();
 				}
 				catch (Exception exp)
 				{
@@ -243,21 +241,22 @@ namespace UnstuckMEUserGUI
 					}
 
 					labelInvalidLogin.Visibility = Visibility.Visible;
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message, exp.Source);
+				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message, trace.Name);
 
-					try
-					{
-						UnstuckME.ChannelFactory.Abort();
-						UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
-						UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
-					}
-					catch (Exception exp2)
-					{
-						MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-						UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message, exp2.Source);
-                        Close();
-					}
-				}
+                    try
+                    {
+                        UnstuckME.ChannelFactory.Abort();
+                        UnstuckME.ChannelFactory = new DuplexChannelFactory<IUnstuckMEService>(new ClientCallback(), "UnstuckMEServiceEndPoint");
+                        UnstuckME.Server = UnstuckME.ChannelFactory.CreateChannel();
+                    }
+                    catch (Exception exp2)
+                    {
+                        MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        trace = new System.Diagnostics.StackTrace(exp2, true).GetFrame(0).GetMethod();
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message, trace.Name);
+                    }
+                }
 			}
 		}
 		//Warning was bothering me. Sorry If I forget to uncomment this.
@@ -282,7 +281,8 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 					labelInvalidLogin.Content = "Server Unavailable!";
 				}
 			});
@@ -314,7 +314,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception exp)
 			{
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message, exp.Source);
+			    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message, trace.Name);
 				validCredentials = false;
 				labelCreateIncorrectCreds.Visibility = Visibility.Visible;
 			}
@@ -353,7 +354,8 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception ex)
 				{
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 
 					MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
 					try
@@ -365,7 +367,8 @@ namespace UnstuckMEUserGUI
 					catch (Exception exp)
 					{
 						MessageBox.Show("There is a problem re-connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-						UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+					    trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                         Close();
 					}
 				}
@@ -385,7 +388,8 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 				}
 			});
 
@@ -403,7 +407,8 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 				}
 			});
 
@@ -426,7 +431,8 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 				}
 			});
 		}
@@ -629,7 +635,8 @@ namespace UnstuckMEUserGUI
 				catch (Exception ex)
 				{
 					MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 				}
 			}
 		}
@@ -681,7 +688,8 @@ namespace UnstuckMEUserGUI
 			catch (Exception ex)
 			{
 				AccountVerificationCanvas_MouseDown(sender, e as MouseEventArgs);
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "An error occured trying to connect to the server. If this problem persists, please contact an UnstuckME server administrator to resolve this issue. Thank you.", "Email Verification Code Failed to Send", UnstuckMEBoxImage.Warning);
 				messagebox.ShowDialog();
 			}
@@ -749,7 +757,8 @@ namespace UnstuckMEUserGUI
 		    }
 		    catch (Exception ex)
 		    {
-		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 		    }
 		}
 
@@ -766,7 +775,8 @@ namespace UnstuckMEUserGUI
 			}
 		    catch (Exception ex)
 		    {
-		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 		    }
 		}
 
@@ -795,7 +805,8 @@ namespace UnstuckMEUserGUI
 						{
 							messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, string.Format("The email address {0} is not associated with an account. Please enter a valid email address.", textBoxUserName.Text), "Email Address Is Not Associated With An Account", UnstuckMEBoxImage.Error);
 							messagebox.ShowDialog();
-							UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+						    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 
 							try
 							{
@@ -806,7 +817,8 @@ namespace UnstuckMEUserGUI
 							catch (Exception exp2)
 							{
 								MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-								UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message, exp2.Source);
+							    trace = new System.Diagnostics.StackTrace(exp2, true).GetFrame(0).GetMethod();
+                                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message, trace.Name);
                                 Close();
 							}
 						}
@@ -820,7 +832,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception ex)
 			{
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "An error occured trying to connect to the server. If this problem persists, please contact an UnstuckME server administrator to resolve this issue. Thank you.", "New Password Email Failed to Send", UnstuckMEBoxImage.Warning);
 				messagebox.ShowDialog();
 			}

@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -22,24 +15,31 @@ namespace UnstuckMEUserGUI
     public partial class MySticker : UserControl
     {
         public UnstuckMESticker Sticker;
-        UserClass Class;
 
         public MySticker(UnstuckMESticker inSticker)
         {
             InitializeComponent();
             Sticker = inSticker;
-            Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
+            UserClass Class = UnstuckME.Server.GetSingleClass(Sticker.ClassID);
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ":  " + Class.CourseName;
             ProblemDescription.Text = "Problem Description:\n" + Sticker.ProblemDescription;
 
-            if(Sticker.TutorID <= 1)
+            if (Sticker.TutorID <= 1)
+            {
                 LabelTutorName.Content = "Currently Not Tutored";
+                ButtonCompleted.Visibility = Visibility.Hidden;
+            }
             else
             {
                 try
                 {
                     if (Sticker.TutorID.HasValue)
+                    {
                         LabelTutorName.Content = "Tutor: " + UnstuckME.Server.GetUserDisplayName(Sticker.TutorID.Value);
+                        ButtonDelete.Visibility = Visibility.Collapsed;
+                        if (UnstuckME.Server.BeenReviewed(Sticker.StickerID, UnstuckME.User.UserID))
+                            ButtonCompleted.Visibility = Visibility.Hidden;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -51,14 +51,22 @@ namespace UnstuckMEUserGUI
 
         private void ButtonRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (UnstuckME.Server.DeleteSticker(Sticker.StickerID) == Task.FromResult(0))
-                ((StackPanel)Parent).Children.Remove(this);
+            try
+            {
+                if (UnstuckME.Server.DeleteSticker(Sticker.StickerID) != Task.FromResult(-1))
+                    ((StackPanel)Parent).Children.Remove(this);
+            }
+            catch (Exception ex)
+            {
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
+            }
         }
 
         private void ButtonCompleted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Window win = new SubWindows.AddTutorReviewWindow(Sticker.StickerID);
-            win.Show();
+            win.ShowDialog();
         }
 
         private void ButtonCompleted_MouseEnter(object sender, MouseEventArgs e)
@@ -69,6 +77,16 @@ namespace UnstuckMEUserGUI
         private void ButtonCompleted_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonCompleted.Background = Brushes.DarkGreen;
+        }
+
+        private void ButtonDelete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonDelete.Background = Brushes.IndianRed;
+        }
+
+        private void ButtonDelete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonDelete.Background = Brushes.White;
         }
     }
 }

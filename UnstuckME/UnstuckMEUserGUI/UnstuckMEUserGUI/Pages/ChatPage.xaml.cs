@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -83,11 +84,11 @@ namespace UnstuckMEUserGUI
 					StackPanelConversations.Children.Add(new Conversation(temp));
 				}
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
-				MessageBox.Show("Add Message Failed" + ": " + ex.Message);
+			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.TargetSite.Name);
 			}
-		}
+        }
 
 		public void RemoveMessage(UnstuckMEMessage message)
 		{
@@ -108,11 +109,11 @@ namespace UnstuckMEUserGUI
 					}
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				//Remove message failed
+			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.TargetSite.Name);
 			}
-		}
+        }
 
 		public void EditMessage(UnstuckMEMessage message)
 		{
@@ -128,61 +129,18 @@ namespace UnstuckMEUserGUI
 							{
 								((ChatMessage)StackPanelMessages.Children[i]).Message.Message = message.Message;
 								((ChatMessage)StackPanelMessages.Children[i]).TextBoxChatMessage.Text = message.Message;
-								break;
+							    ((ChatMessage)StackPanelMessages.Children[i]).TextBlockChatMessage.Text = message.Message;
+                                break;
 							}
 						}
 					}
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				//edit message failed
+			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.TargetSite.Name);
 			}
 		}
-
-		#region commented out method 
-
-		//should make a new GUIChatMessagethat can contain a file
-		/// <summary>
-		/// Currently doesn't implement the file, use first overload instead
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="file"></param>
-		//public void AddMessage(UnstuckMEMessage message, UnstuckMEFile file)
-		//{
-		//	bool chatIDexists = false;
-
-		//	try
-		//	{
-		//		foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
-		//		{
-		//			if (chat.ChatID == message.ChatID)
-		//			{
-		//				chatIDexists = true;
-		//				chat.Messages.Add(message);
-		//				if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
-		//				{
-		//					UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
-		//					StackPanelMessages.Children.Add(new ChatMessage(temp));
-		//					ScrollViewerMessagesBox.ScrollToBottom();
-		//				}
-		//			}
-		//		}
-
-		//		if (!chatIDexists)
-		//		{
-		//			UnstuckMEChat temp = UnstuckME.Server.GetSingleChat(message.ChatID);
-		//                  UnstuckME.ChatSessions.Add(temp);
-		//			StackPanelConversations.Children.Add(new Conversation(temp));
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Add Message Failed", UnstuckMEBoxImage.Warning);
-		//              messagebox.ShowDialog();
-		//	}
-		//}
-		#endregion
 
 		private void ScrollViewerConversationBox_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
@@ -229,6 +187,7 @@ namespace UnstuckMEUserGUI
 			catch(Exception ex)
 			{
 				MessageBox.Show("Chat Send Failed. Error: " + ex.Message, "Failed Message Send", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.TargetSite.Name);
 			}
 		}
 
@@ -295,7 +254,7 @@ namespace UnstuckMEUserGUI
 				if (SoloConversationAlreadyExists(TargetUser))
 				    throw new Exception();
 
-			    int searchedUserID = -1;
+			    const int searchedUserID = -1;
 			    int chatID = UnstuckME.Server.CreateChat(UnstuckME.User.UserID);
 				UnstuckME.Server.InsertUserIntoChat(TargetUser, chatID);
 			    UnstuckMEMessage temp = new UnstuckMEMessage
@@ -323,7 +282,7 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
-		bool SoloConversationAlreadyExists(int TargetUser)
+	    private bool SoloConversationAlreadyExists(int TargetUser)
 		{
 			bool convoExists = false;
 
@@ -345,6 +304,7 @@ namespace UnstuckMEUserGUI
 					}
 				}
 			}
+
 			return convoExists;
 		}
 	}

@@ -18,20 +18,20 @@ namespace UnstuckMEInterfaces
         /// Attempts to log in a server administrator.
         /// </summary>
         /// <param name="admin">The information of the server administrator.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void RegisterServerAdmin(AdminInfo admin);
 
         /// <summary>
         /// Disconnects a server administrator.
         /// </summary>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void AdminLogout();
 
         /// <summary>
         /// Logs information for actions invoked by a server administrator. Currently only writes a message to the console.
         /// </summary>
         /// <param name="message">The message to be logged.</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void AdminLogMessage(string message);
 
         /// <summary>
@@ -46,13 +46,13 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="recipients">The recipients of the </param>
         /// <param name="message"></param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void AdminSendMessageToUsers(List<string> recipients, string message);
 
         /// <summary>
         /// Sends a message to all connected clients that the server is shutting down.
         /// </summary>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void AdminServerShuttingDown();
 
         /// <summary>

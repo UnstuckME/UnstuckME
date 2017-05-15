@@ -248,7 +248,6 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception)
             {/*In Case of App Shutdown and Error is thrown*/ }
-
         }
 
         private void ButtonNo_MouseEnter(object sender, MouseEventArgs e)

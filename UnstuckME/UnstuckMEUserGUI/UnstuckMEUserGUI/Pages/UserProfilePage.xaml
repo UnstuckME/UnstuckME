@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UnstuckMEUserGUI"
       mc:Ignorable="d" 
-      d:DesignHeight="400" d:DesignWidth="700"
+      d:DesignHeight="400" d:DesignWidth="1000"
       Name="UserProfile">
     <Page.Resources>
         <Style TargetType="Button" x:Key="NoHighlightButton">
@@ -34,7 +34,7 @@
         <Grid x:Name="GridDefault" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="80*" MaxHeight="120"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="33*"/>
             </Grid.RowDefinitions>
@@ -49,8 +49,8 @@
             </Grid>
             <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210"/>
-                    <ColumnDefinition Width="350*"/>
+                    <ColumnDefinition Width="210*" MinWidth="210" MaxWidth="350"/>
+                    <ColumnDefinition Width="450*" MinWidth="450"/>
                 </Grid.ColumnDefinitions>
                 <Grid x:Name="UserInfoGrid" Grid.Column="0">
                     <TextBox x:Name="TextBoxFirstName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=FirstName}" Cursor="Arrow"
@@ -63,10 +63,10 @@
                 </Grid>
                 <Grid x:Name="OrganizationGrid" Grid.Column="1">
                     <Border BorderThickness="0,0,0,0" Background="#336699" Height="35" VerticalAlignment="Top">
-                        <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Organizations" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
+                        <Label Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Top" Content="Organizations" Cursor="Arrow"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1,1,0,0">
-                        <ScrollViewer BorderBrush="Black" Height="195" Width="340" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,35,0,0">
+                        <ScrollViewer BorderBrush="Black" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,35,0,0">
                             <StackPanel x:Name="StackPanelOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
                         </ScrollViewer>
                     </Border>
@@ -75,7 +75,7 @@
             <Grid Grid.Column="0" Grid.Row="1">
                 <Grid x:Name="ButtonEditProfile" Cursor="Hand" VerticalAlignment="Top" HorizontalAlignment="Left" Background="SteelBlue" Width="125" Height="35" MouseEnter="ButtonEditProfile_MouseEnter" MouseLeave="ButtonEditProfile_MouseLeave" MouseLeftButtonDown="ButtonEditProfile_MouseLeftButtonDown">
                     <Border BorderThickness="0" Width="35" HorizontalAlignment="Right">
-                        <Image Source="/Resources/Edit/EditWhite.png" Width="25" Height="25" HorizontalAlignment="Right"></Image>
+                        <Image Source="/Resources/Edit/EditWhite.png" Width="25" Height="25" HorizontalAlignment="Right"/>
                     </Border>
                     <Label Content="Edit Profile" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="115" VerticalContentAlignment="Center" Foreground="White"/>
                     <Border BorderBrush="DimGray" BorderThickness="0,0,2,2"/>
@@ -87,43 +87,41 @@
             </Grid>
             <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Panel.ZIndex="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="350"/>
-                    <ColumnDefinition Width="350*"/>
+                    <ColumnDefinition Width="450"/>
+                    <ColumnDefinition Width="450*"/>
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="Black" BorderThickness="0,1,1,1">
                     <Grid Background="#336699">
                         <Border BorderBrush="Black" BorderThickness="0,0,0,0">
-                            <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Classes" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
+                            <Label Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Content="Classes" Cursor="Arrow" BorderThickness="0,0,0,0" BorderBrush="{x:Null}" />
                         </Border>
                         <Button Style="{StaticResource NoHighlightButton}" Width="35" HorizontalAlignment="Right" Height="34" Margin="0,0,-0.4,-0.4" VerticalAlignment="Top" Click="Button_Click">
-                            <Image Source="/Resources/Plus/PlusWhite.png" Height="25" Width="25"></Image>
+                            <Image Source="/Resources/Plus/PlusWhite.png" Height="25" Width="25"/>
                         </Button>
                     </Grid>
                 </Border>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="2" Background="#336699" >
+            <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="150*"/>
+                    <ColumnDefinition Width="450"/>
+                    <ColumnDefinition Width="450*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Background="#336699">
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0">
-                        <TextBox Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="Recent Reviews" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}"  TextWrapping="NoWrap"></TextBox>
+                        <Label Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" VerticalContentAlignment="Center" Content="Recent Reviews" Cursor="Arrow" BorderThickness="0,0,0,0" BorderBrush="{x:Null}"/>
                     </Border>
                 </Grid>
-                <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.ColumnSpan="2" Grid.Column="0"></Border>
+                <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.ColumnSpan="2" Grid.Column="0"/>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="350"/>
-                    <ColumnDefinition Width="350"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="450"/>
+                    <ColumnDefinition Width="450*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Grid.Row="0" >
+                <Grid Grid.Column="0" Grid.Row="0">
                     <Border BorderBrush="Black" BorderThickness="0,0,1,0">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="BottomLeftStack" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            </StackPanel>
+                            <StackPanel x:Name="BottomLeftStack" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                         </ScrollViewer>
                     </Border>
                 </Grid>
@@ -170,18 +168,18 @@
                         <Label HorizontalAlignment="Stretch" Foreground="White" Content="Save" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
                     </Border>
                     <Border x:Name="ButtonBack" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="35" Background="#993333" MouseLeftButtonDown="ButtonBack_MouseLeftButtonDown">
-                        <Label HorizontalAlignment="Stretch" Foreground="White" Content="Back" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+                        <Label HorizontalAlignment="Stretch" Foreground="White" Content="Back" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                    <Label Margin="75,20,0,0" Content="New First Name" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <TextBox x:Name="TextBoxNewFirstName" MouseLeave="TextBoxNewFirstName_MouseLeave" Margin="80,55,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></TextBox>
-                    <Label Margin="75,100,0,0" Content="New Last Name" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <TextBox x:Name="TextBoxNewLastName" MouseLeave="TextBoxNewLastName_MouseLeave" Margin="80,135,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></TextBox>
-                    <Label Margin="75,180,0,0" Content="New Password" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <PasswordBox x:Name="PasswordBoxNewPassword" MouseLeave="PasswordBoxNewPassword_MouseLeave" Margin="80,215,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></PasswordBox>
-                    <Label Margin="75,260,0,0" Content="Confirm Password" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" ></Label>
-                    <PasswordBox x:Name="PasswordBoxConfirm" MouseLeave="PasswordBoxConfirm_MouseLeave" Margin="80,295,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"></PasswordBox>
+                    <Label Margin="75,20,0,0" Content="New First Name" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" />
+                    <TextBox x:Name="TextBoxNewFirstName" Margin="80,55,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                    <Label Margin="75,100,0,0" Content="New Last Name" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" />
+                    <TextBox x:Name="TextBoxNewLastName" Margin="80,135,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                    <Label Margin="75,180,0,0" Content="New Password" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" />
+                    <PasswordBox x:Name="PasswordBoxNewPassword" Margin="80,215,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                    <Label Margin="75,260,0,0" Content="Confirm Password" Height="35" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Top" />
+                    <PasswordBox x:Name="PasswordBoxConfirm" Margin="80,295,0,0" Width="300" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                 </Grid>
             </Grid>
             <Grid x:Name="OrganizationEditGrid" Grid.Row="1" Grid.Column="1">
@@ -194,7 +192,7 @@
                     </Label.ToolTip>
                 </Label>
                 <Button x:Name="ButtonAddOrganization" Click="ButtonAddOrganization_OnClick" Height="25" Width="50" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,40,15,0" Content="Add" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF11850A" />
-                <ComboBox x:Name="ComboBoxOrgName" MaxDropDownHeight="135" Height="25" Width="265" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,70,0" TabIndex="0"/>
+                <ComboBox x:Name="ComboBoxOrgName" MaxDropDownHeight="135" Height="25" Width="265" SelectedIndex="0" Padding="8,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,70,0"/>
                 <ScrollViewer Height="265" Width="265" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,65,70,0">
                     <StackPanel x:Name="StackPanelEditOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
                 </ScrollViewer>

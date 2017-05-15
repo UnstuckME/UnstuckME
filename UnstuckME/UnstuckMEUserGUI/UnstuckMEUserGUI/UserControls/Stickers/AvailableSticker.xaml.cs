@@ -30,7 +30,11 @@ namespace UnstuckMEUserGUI
             _timer = new DispatcherTimer(new TimeSpan(0,0,0,1), DispatcherPriority.Normal, delegate
             {
                 CountdownTimer.Content = string.Format("D: {0} H: {1} M: {2} S: {3}", _time.Days, _time.Hours, _time.Minutes, _time.Seconds);
-                if (_time == TimeSpan.Zero) _timer.Stop();
+                if (_time <= TimeSpan.Zero)
+                {
+                    _timer.IsEnabled = false;
+                    RemoveFromStackPanel();
+                }
                 _time = _time.Add(TimeSpan.FromSeconds(-1));
             }, Application.Current.Dispatcher);
 
@@ -63,7 +67,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckME.Server.AcceptSticker(UnstuckME.User.UserID, Sticker.StickerID);
+                UnstuckME.Server.AcceptSticker(UnstuckME.User.UserID, Sticker.StudentID, Sticker.StickerID);
                 Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker, UnstuckME.User.UserID);
                 RemoveFromStackPanel();
             }

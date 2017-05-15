@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using UnstuckME_Classes;
 using UnstuckMeLoggers;
 using UnstuckMEUserGUI.SubWindows;
+using System.Threading.Tasks;
 
 namespace UnstuckMEUserGUI
 {
@@ -71,25 +72,28 @@ namespace UnstuckMEUserGUI
                         Value = org.MentorID
                     };
 
-                    TutoringOrganizationDisplay tutororg = new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName)
-                    {
-                        buttonRemoveOrg = { Visibility = Visibility.Hidden }
-                    };
-
+                    TutoringOrganizationDisplay tutororg = new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName);
                     ComboBoxOrgName.Items.Add(temp2);
-                    StackPanelOrganization.Children.Add(tutororg);
 
                     if (userOrgs.Contains(org))
-                        StackPanelEditOrganization.Children.Add(new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName));
+                    {
+                        StackPanelEditOrganization.Children.Add(tutororg);
+                        StackPanelOrganization.Children.Add(new TutoringOrganizationDisplay(org.MentorID, org.OrganizationName)
+                        {
+                            buttonRemoveOrg = { Visibility = Visibility.Hidden }
+                        });
+                    }
                 }
             }
             catch (CommunicationException ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
 
@@ -104,13 +108,13 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        internal void SetStudentRating(float inRating)
+        private void SetStudentRating(float inRating)
         {
             _studentRanking.SetRatingText("Avg Student Rating: (" + Math.Round(inRating, 2) + ")");
             _studentRanking.SetRatingValue(inRating);
         }
 
-        internal void SetTutorRating(float inRating)
+        private void SetTutorRating(float inRating)
         {
             _tutorRanking.SetRatingText("Avg Tutor Rating: (" + Math.Round(inRating, 2) + ")");
             _tutorRanking.SetRatingValue(inRating);
@@ -243,12 +247,13 @@ namespace UnstuckMEUserGUI
                 try
                 {
                     UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, TextBoxNewFirstName.Text, UnstuckME.User.LastName);
-                    UnstuckME.User.FirstName = TextBoxNewFirstName.Text;
+                    FirstName = TextBoxNewFirstName.Text;
                     TextBoxFirstName.Text = TextBoxNewFirstName.Text;
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName, Source = " + ex.Source);
+                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName, Source = " + trace.Name);
                 }
             }
             if (TextBoxNewLastName.Text != UnstuckME.User.LastName && !string.IsNullOrEmpty(TextBoxNewLastName.Text))
@@ -256,12 +261,13 @@ namespace UnstuckMEUserGUI
                 try
                 {
                     UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, UnstuckME.User.FirstName, TextBoxNewLastName.Text);
-                    UnstuckME.User.LastName = TextBoxNewFirstName.Text;
-                    TextBoxLastName.Text = TextBoxNewFirstName.Text;
+                    LastName = TextBoxNewLastName.Text;
+                    TextBoxLastName.Text = TextBoxNewLastName.Text;
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName, Source = " + ex.Source);
+                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName, Source = " + trace.Name);
                 }
             }
             if (!string.IsNullOrEmpty(PasswordBoxNewPassword.Password) && !string.IsNullOrEmpty(PasswordBoxConfirm.Password))
@@ -276,7 +282,8 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception ex)
                     {
-                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password, Source = " + ex.Source);
+                        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password, Source = " + trace.Name);
                     }
                 }
                 else
@@ -306,6 +313,7 @@ namespace UnstuckMEUserGUI
                         using (UnstuckMEStream stream = new UnstuckMEStream(byteArray, true))
                         {
                             stream.UserID = UnstuckME.User.UserID;
+                            stream.Filename = @"\ProfilePicture.jpeg";
                             UnstuckME.FileStream.SetProfilePicture(stream); //change picture on database/server
                         }
 
@@ -323,31 +331,41 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while attempting to change your profile picture, Source = " + ex.Source);
+                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while attempting to change your profile picture, Source = " + trace.Name);
                 }
             }
 
             try
             {
-                for (int index = 0; index < StackPanelEditOrganization.Children.Count; index++)
+                foreach (ComboboxItem org in ComboBoxOrgName.Items)
                 {
-                    TutoringOrganizationDisplay org = StackPanelEditOrganization.Children[index] as TutoringOrganizationDisplay;
+                    TutoringOrganizationDisplay temp = new TutoringOrganizationDisplay(org.Value, org.Text);
 
-                    if (!StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>().Contains(org))
+                    if (!StackPanelEditOrganization.Children.OfType<TutoringOrganizationDisplay>().Contains(temp)
+                          && StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>().Contains(temp))
                     {
-                        //UnstuckME.Server.AddUserToTutoringOrganization(UnstuckME.User.UserID, org.OrganizationID);
-                        StackPanelOrganization.Children.Add(org);
+                        if (UnstuckME.Server.RemoveUserFromTutoringOrganization(UnstuckME.User.UserID, org.Value) != Task.FromResult(-1))
+                        {
+                            int index = StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>().ToList().IndexOf(temp);
+                            StackPanelOrganization.Children.RemoveAt(index);
+                        }
                     }
-                    else
+                    else if (StackPanelEditOrganization.Children.OfType<TutoringOrganizationDisplay>().Contains(temp)
+                             && !StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>().Contains(temp))
                     {
-                        //UnstuckME.Server.RemoveUserFromTutoringOrganization(UnstuckME.User.UserID, org.OrganizationID);
-                        StackPanelOrganization.Children.Remove(org);
+                        if (UnstuckME.Server.AddUserToTutoringOrganization(UnstuckME.User.UserID, org.Value) != Task.FromResult(-1))
+                        {
+                            temp.buttonRemoveOrg.Visibility = Visibility.Hidden;
+                            StackPanelOrganization.Children.Add(temp);
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
 
             GridDefault.IsEnabled = true;
@@ -356,33 +374,12 @@ namespace UnstuckMEUserGUI
             GridEditProfile.IsEnabled = false;
         }
 
-        internal void UpdateRatings()
+        internal void UpdateRatings(float newstudentrank, float newtutorrank)
         {
-            UserInfo temp = UnstuckME.Server.GetUserInfo(UnstuckME.User.UserID, UnstuckME.User.EmailAddress);
-            UnstuckME.User.AverageStudentRank = temp.AverageStudentRank;
-            UnstuckME.User.AverageTutorRank = temp.AverageTutorRank;
-            _studentRanking.SetRatingValue(temp.AverageStudentRank);
-            _tutorRanking.SetRatingValue(temp.AverageTutorRank);
-        }
-
-        private void TextBoxNewFirstName_MouseLeave(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void TextBoxNewLastName_MouseLeave(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void PasswordBoxNewPassword_MouseLeave(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void PasswordBoxConfirm_MouseLeave(object sender, MouseEventArgs e)
-        {
-
+            UnstuckME.User.AverageStudentRank = newstudentrank;
+            UnstuckME.User.AverageTutorRank = newtutorrank;
+            SetStudentRating(newstudentrank);
+            SetTutorRating(newtutorrank);
         }
 
         private void ButtonAddOrganization_OnClick(object sender, RoutedEventArgs e)
@@ -393,14 +390,17 @@ namespace UnstuckMEUserGUI
             if (ComboBoxOrgName.SelectedIndex == 0)
                 return;
 
-            foreach (TutoringOrganizationDisplay a in StackPanelOrganization.Children.OfType<TutoringOrganizationDisplay>())
+            foreach (TutoringOrganizationDisplay org in StackPanelEditOrganization.Children.OfType<TutoringOrganizationDisplay>())
             {
-                if (temp != null && temp.Value == a.OrganizationID)
+                if (temp != null && temp.Value == org.TutoringOrg.MentorID)
                     exists = true;
             }
 
             if (!exists && temp != null)
+            {
+                ComboBoxOrgName.SelectedIndex = 0;
                 StackPanelEditOrganization.Children.Add(new TutoringOrganizationDisplay(temp.Value, temp.Text));
+            }
         }
 
         private void ButtonDeleteProfile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -420,8 +420,9 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
+                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, 
-                        string.Format("Server failed to log out user {0}, Source = {1}", UnstuckME.User.EmailAddress, ex.Source));
+                        string.Format("Server failed to log out user {0}, Source = {1}", UnstuckME.User.EmailAddress, trace.Name));
                     Application.Current.Shutdown();
                 }
             }

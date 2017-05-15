@@ -415,6 +415,19 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickers_Result>("GetActiveStickers", loggedin_userParameter, organizationParameter, starrankParameter, useridParameter, classidParameter);
         }
     
+        public virtual ObjectResult<GetActiveStickersFromOrganization_Result> GetActiveStickersFromOrganization(Nullable<int> loggedin_user, Nullable<int> organization)
+        {
+            var loggedin_userParameter = loggedin_user.HasValue ?
+                new ObjectParameter("loggedin_user", loggedin_user) :
+                new ObjectParameter("loggedin_user", typeof(int));
+    
+            var organizationParameter = organization.HasValue ?
+                new ObjectParameter("organization", organization) :
+                new ObjectParameter("organization", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveStickersFromOrganization_Result>("GetActiveStickersFromOrganization", loggedin_userParameter, organizationParameter);
+        }
+    
         public virtual ObjectResult<Nullable<int>> GetAllChatsAUserIsPartOF(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?
@@ -594,25 +607,13 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetReportsSubmittedByUser_Result>("GetReportsSubmittedByUser", useridParameter);
         }
     
-        public virtual ObjectResult<GetResolvedStickers_Result> GetResolvedStickers(Nullable<double> starrank, Nullable<int> organization, Nullable<int> userid, Nullable<int> classid)
+        public virtual ObjectResult<GetReviewsOfUser_Result> GetReviewsOfUser(Nullable<int> userid)
         {
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var organizationParameter = organization.HasValue ?
-                new ObjectParameter("organization", organization) :
-                new ObjectParameter("organization", typeof(int));
-    
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
                 new ObjectParameter("userid", typeof(int));
     
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResolvedStickers_Result>("GetResolvedStickers", starrankParameter, organizationParameter, useridParameter, classidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetReviewsOfUser_Result>("GetReviewsOfUser", useridParameter);
         }
     
         public virtual ObjectResult<GetStickerInfo_Result> GetStickerInfo(Nullable<int> stickerID)
@@ -622,27 +623,6 @@ namespace UnstuckMEServer
                 new ObjectParameter("stickerID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStickerInfo_Result>("GetStickerInfo", stickerIDParameter);
-        }
-    
-        public virtual ObjectResult<GetTimedOutStickers_Result> GetTimedOutStickers(Nullable<double> starrank, Nullable<int> organization, Nullable<int> userid, Nullable<int> classid)
-        {
-            var starrankParameter = starrank.HasValue ?
-                new ObjectParameter("starrank", starrank) :
-                new ObjectParameter("starrank", typeof(double));
-    
-            var organizationParameter = organization.HasValue ?
-                new ObjectParameter("organization", organization) :
-                new ObjectParameter("organization", typeof(int));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var classidParameter = classid.HasValue ?
-                new ObjectParameter("classid", classid) :
-                new ObjectParameter("classid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTimedOutStickers_Result>("GetTimedOutStickers", starrankParameter, organizationParameter, useridParameter, classidParameter);
         }
     
         public virtual ObjectResult<Nullable<double>> GetUserAvgStudentStarRank(Nullable<int> userid)
@@ -761,15 +741,11 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserStudentReviews_Result>("GetUserStudentReviews", useridParameter, starrankParameter);
         }
     
-        public virtual ObjectResult<GetUserSubmittedStickers_Result> GetUserSubmittedStickers(Nullable<int> userID, Nullable<int> organization, Nullable<double> starrank, Nullable<int> classID)
+        public virtual ObjectResult<GetUserSubmittedStickers_Result> GetUserSubmittedStickers(Nullable<int> userID, Nullable<double> starrank, Nullable<int> classID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("userID", userID) :
                 new ObjectParameter("userID", typeof(int));
-    
-            var organizationParameter = organization.HasValue ?
-                new ObjectParameter("organization", organization) :
-                new ObjectParameter("organization", typeof(int));
     
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
@@ -779,18 +755,14 @@ namespace UnstuckMEServer
                 new ObjectParameter("classID", classID) :
                 new ObjectParameter("classID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserSubmittedStickers_Result>("GetUserSubmittedStickers", userIDParameter, organizationParameter, starrankParameter, classIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserSubmittedStickers_Result>("GetUserSubmittedStickers", userIDParameter, starrankParameter, classIDParameter);
         }
     
-        public virtual ObjectResult<GetUserTutoredStickers_Result> GetUserTutoredStickers(Nullable<int> userID, Nullable<int> organization, Nullable<double> starrank, Nullable<int> classID)
+        public virtual ObjectResult<GetUserTutoredStickers_Result> GetUserTutoredStickers(Nullable<int> userID, Nullable<double> starrank, Nullable<int> classID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("userID", userID) :
                 new ObjectParameter("userID", typeof(int));
-    
-            var organizationParameter = organization.HasValue ?
-                new ObjectParameter("organization", organization) :
-                new ObjectParameter("organization", typeof(int));
     
             var starrankParameter = starrank.HasValue ?
                 new ObjectParameter("starrank", starrank) :
@@ -800,7 +772,7 @@ namespace UnstuckMEServer
                 new ObjectParameter("classID", classID) :
                 new ObjectParameter("classID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutoredStickers_Result>("GetUserTutoredStickers", userIDParameter, organizationParameter, starrankParameter, classIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserTutoredStickers_Result>("GetUserTutoredStickers", userIDParameter, starrankParameter, classIDParameter);
         }
     
         public virtual ObjectResult<GetUserTutorReviews_Result> GetUserTutorReviews(Nullable<int> userid, Nullable<double> starrank)
@@ -872,7 +844,7 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUserIntoChat", userIDParameter, chatIDParameter);
         }
     
-        public virtual int InsertUserIntoMentorProgram(Nullable<int> userID, Nullable<int> mentorID)
+        public virtual ObjectResult<Nullable<int>> InsertUserIntoMentorProgram(Nullable<int> userID, Nullable<int> mentorID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
@@ -882,7 +854,7 @@ namespace UnstuckMEServer
                 new ObjectParameter("MentorID", mentorID) :
                 new ObjectParameter("MentorID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUserIntoMentorProgram", userIDParameter, mentorIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("InsertUserIntoMentorProgram", userIDParameter, mentorIDParameter);
         }
     
         public virtual int MarkStickerAsResolved(Nullable<int> stickerID)
@@ -892,6 +864,19 @@ namespace UnstuckMEServer
                 new ObjectParameter("StickerID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkStickerAsResolved", stickerIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> RemoveUserFromMentorProgram(Nullable<int> userID, Nullable<int> mentorID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var mentorIDParameter = mentorID.HasValue ?
+                new ObjectParameter("MentorID", mentorID) :
+                new ObjectParameter("MentorID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("RemoveUserFromMentorProgram", userIDParameter, mentorIDParameter);
         }
     
         public virtual ObjectResult<Ryans_GetChatMessage_Result> Ryans_GetChatMessage(Nullable<int> chatid, Nullable<int> startingID, Nullable<int> nummessages)

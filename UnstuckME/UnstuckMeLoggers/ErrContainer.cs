@@ -20,10 +20,10 @@ namespace UnstuckMeLoggers
         }
         public override string ToString()
         {
-            string temp = i_ErrTypeStartMark + Environment.NewLine + "\t" + "<ErrMsg=" + i_ErrorMsg + "/>";
+            string temp = i_ErrTypeStartMark + Environment.NewLine + "\t<ErrMsg=" + i_ErrorMsg + "/>";
             if (i_AdditionalInfo != null)
-                temp = temp + Environment.NewLine + "<AdditionalInfo=" + i_AdditionalInfo + "/>";
-            temp = temp + Environment.NewLine + "\t" + "<ErrTime=" + i_ErrorTime + "/>" + Environment.NewLine + i_ErrTypeEndMark;
+                temp = temp + Environment.NewLine + "\t<AdditionalInfo=" + i_AdditionalInfo + "/>";
+            temp = temp + Environment.NewLine + "\t<ErrTime=" + i_ErrorTime + "/>" + Environment.NewLine + i_ErrTypeEndMark;
             return temp;
         }
     }

@@ -119,6 +119,9 @@
       <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="UserControls\Stickers\StickerHistory.xaml.cs">
+      <DependentUpon>StickerHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\ReportSubmitWindow.xaml.cs">
       <DependentUpon>ReportSubmitWindow.xaml</DependentUpon>
     </Compile>
@@ -210,9 +213,6 @@
     <Compile Include="UserControls\Chat\Conversation.xaml.cs">
       <DependentUpon>Conversation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Chat\ChatFile.xaml.cs">
-      <DependentUpon>ChatFile.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Chat\ChatMessage.xaml.cs">
       <DependentUpon>ChatMessage.xaml</DependentUpon>
     </Compile>
@@ -268,6 +268,10 @@
     <Compile Include="SubWindows\UserMenu.xaml.cs">
       <DependentUpon>UserMenu.xaml</DependentUpon>
     </Compile>
+    <Page Include="UserControls\Stickers\StickerHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SubWindows\ReportSubmitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -341,10 +345,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Chat\Conversation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Chat\ChatFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

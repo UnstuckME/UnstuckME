@@ -4,32 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI"
-        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         mc:Ignorable="d"
-        AllowsTransparency="True" WindowStyle="None" WindowState="Normal" Background="{x:Null}"
-        Title="ReportSubmitWindow" Height="500" Width="500">
-    <Grid x:Name="ReportSubmitWindowGrid" Background="Black" Opacity="0.7" MouseLeftButtonDown="ReportSubmitWindowGrid_MouseLeftButtonDown">
-        <Border x:Name="ReportSubmitBorder" BorderBrush="Snow" BorderThickness="1" Height="{Binding ActualHeight, ElementName=SubmissionGrid}" Width="{Binding ActualWidth, ElementName=SubmissionGrid}" CornerRadius="15" Background="DimGray">
-            <Grid x:Name="SubmissionGrid" Background="{x:Null}" Height="350" Width="350">
+        AllowsTransparency="True" WindowStyle="None" ShowInTaskbar="False" Background="Transparent" WindowStartupLocation="CenterOwner"
+        Name="SubmitReportWindow" MinWidth="1280" MinHeight="465" Height="465" Width="1280">
+    <Grid>
+        <Canvas x:Name="BackgroundCanvas" Background="Black" Opacity="0.7" MouseLeftButtonDown="ReportSubmitWindowGrid_MouseLeftButtonDown"/>
+        <Border x:Name="ReportSubmitBorder" Height="350" Width="350" BorderBrush="Snow" BorderThickness="1" CornerRadius="15" Background="DimGray">
+            <Grid x:Name="SubmissionGrid" Background="Transparent">
                 <TextBlock x:Name="Header" Text="Submit Report" FontSize="28" TextAlignment="Center" Foreground="White" />
-                <Border x:Name="DescriptionTextBox" BorderBrush="Snow" BorderThickness="1" Background="{x:Null}" Height="100" Width="{Binding ActualWidth, ElementName=SubmissionGrid}" VerticalAlignment="Top" Margin="0,50">
-                    <Grid x:Name="textblockGrid" Height="{Binding ActualHeight, ElementName=Review}" Width="{Binding ActualWidth, ElementName=Review}">
-                        <Label x:Name="ReviewDescription" Content="{Binding ElementName=Review, Path=Description}" Foreground="White" Margin="0,0,0,26" ScrollViewer.HorizontalScrollBarVisibility="Auto" BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border x:Name="DescriptionTextBox" BorderBrush="Snow" BorderThickness="1" Background="Transparent" Height="100" Width="{Binding ActualWidth, ElementName=SubmissionGrid}" VerticalAlignment="Top" Margin="0,50">
+                    <Grid x:Name="textblockGrid" Height="{Binding ActualHeight, ElementName=DescriptionTextBox}" Width="{Binding ActualWidth, ElementName=DescriptionTextBox}">
+                        <Label x:Name="ReviewDescription" Foreground="White" Margin="0,0,0,26" ScrollViewer.HorizontalScrollBarVisibility="Auto" BorderBrush="Black" BorderThickness="0,0,0,1" />
                         <TextBlock x:Name="StarRatingTextBlock" Text="Rating: " Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,5" />
-                        <Controls:Rating x:Name="StarRating" ItemCount="5" Value="{Binding ElementName=Review, Path=StarRank}" Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"
-                                         Background="{x:Null}" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0" />
+                        <controls:Rating x:Name="StarRating" ItemCount="5" Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"
+                                     Background="Transparent" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0" />
                     </Grid>
                 </Border>
                 <Label x:Name="ReportdescriptionLabel" Content="What is the issue?" Foreground="White" VerticalContentAlignment="Center" />
                 <TextBox x:Name="Reportdescription" Height="100" Margin="0,120,0,0" />
-                <Border x:Name="ReportBorder" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="DarkRed" Margin="0,0,75,15" Visibility="Visible"
+                <Border x:Name="ReportBorder" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="DarkRed" Margin="0,0,75,15"
                     MouseEnter="ReportBorder_MouseEnter" MouseLeave="ReportBorder_MouseLeave">
-                    <Label x:Name="ReportLabel" Content="Report" FontSize="10" Foreground="White" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                    <Label x:Name="ReportLabel" Content="Report" FontSize="10" Foreground="White" Background="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                        Cursor="Hand" MouseLeftButtonDown="ReportLabel_MouseLeftButtonDown"/>
                 </Border>
-                <Border x:Name="CancelBorder" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="Green" Margin="0,0,-75,15" Visibility="Visible"
+                <Border x:Name="CancelBorder" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="Green" Margin="0,0,-75,15"
                     MouseEnter="CancelBorder_MouseEnter" MouseLeave="CancelBorder_MouseLeave">
-                    <Label x:Name="CancelLabel" Content="Cancel" FontSize="10" Foreground="White" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                    <Label x:Name="CancelLabel" Content="Cancel" FontSize="10" Foreground="White" Background="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                        Cursor="Hand" MouseLeftButtonDown="CancelLabel_MouseLeftButtonDown"/>
                 </Border>
             </Grid>

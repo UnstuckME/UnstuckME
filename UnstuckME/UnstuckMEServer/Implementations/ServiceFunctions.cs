@@ -23,70 +23,11 @@ namespace UnstuckMEInterfaces
 	{
 		private readonly ConcurrentDictionary<int, ConnectedClient> _connectedClients = new ConcurrentDictionary<int, ConnectedClient>();
 		private readonly ConcurrentDictionary<int, ConnectedServerAdmin> _connectedServerAdmins = new ConcurrentDictionary<int, ConnectedServerAdmin>();
-		private static ConcurrentDictionary<int, DateTime> _activeStickers;
 		private static ConcurrentQueue<UnstuckMEBigSticker> _stickerList;
 		private static ConcurrentQueue<UnstuckMEMessage> _messageList;
 		private static readonly ConcurrentQueue<int> _reviewList = new ConcurrentQueue<int>();
 		
 		#region Thread Functions
-
-	    /// <summary>
-	    /// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
-	    /// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
-	    /// checks for all online users who are eligible to view that sticker and removes it from their
-	    /// client interface.
-	    /// </summary>
-	    public async void CheckForTimedOutStickers()
-	    {
-	        _activeStickers = new ConcurrentDictionary<int, DateTime>();
-
-	        using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-	        {
-	            var activestickers = from s in db.Stickers
-	                                 where s.Timeout > DateTime.Now && s.TutorID == null
-	                                 select new {s.StickerID, s.Timeout};
-
-	            foreach (var sticker in activestickers)
-	                _activeStickers.TryAdd(sticker.StickerID, sticker.Timeout);
-	        }
-
-	        while (true)
-	        {
-	            foreach (KeyValuePair<int, DateTime> sticker in _activeStickers)
-	            {
-	                if (sticker.Value <= DateTime.Now)
-	                    await Task.Factory.StartNew(() => AsyncCheckForTimedOutStickers(sticker));
-	            }
-                Thread.Sleep(1000);
-	        }
-	    }
-
-        /// <summary>
-        /// Gets all active stickers and puts them in a list upon server startup, and infinitely checks if
-        /// any of the stickers have timed out without being accepted. If a sticker has timed out, then it
-        /// checks for all online users who are eligible to view that sticker and removes it from their
-        /// client interface.
-	    /// </summary>
-        /// <param name="sticker">A KeyValuePair with the unique identifier of the sticker that has timed out
-        /// and the time that it did so.</param>
-        private void AsyncCheckForTimedOutStickers(KeyValuePair<int, DateTime> sticker)
-	    {
-	        using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
-	        {
-	            var tutors = db.GetUsersThatCanTutorASticker(sticker.Key);
-
-	            foreach (var tutor in tutors)
-	            {
-	                if (tutor.HasValue && _connectedClients.ContainsKey(tutor.Value))
-	                {
-	                    DateTime time;
-	                    _activeStickers.TryRemove(sticker.Key, out time);
-	                    _connectedClients[tutor.Value].Connection.RemoveGUISticker(sticker.Key);
-	                }
-	            }
-	        }
-	    }
-
         /// <summary>
         /// Checks to see if there are any new messages for the client. If there are, sends the message to that client
         /// as long as they are logged into the server.
@@ -145,9 +86,6 @@ namespace UnstuckMEInterfaces
 					_stickerList.TryDequeue(out temp);
 
 					await Task.Factory.StartNew(() => SendStickerToClients(temp));
-
-					DateTime timeout;
-					_activeStickers.TryRemove(temp.StickerID, out timeout);
 				}
                 Thread.Sleep(5000);
 			}

@@ -4,19 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
-             xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
              mc:Ignorable="d" 
-             Name="Review" MinHeight="80" MinWidth="350" MaxHeight="120" d:DesignHeight="40" d:DesignWidth="250">
-    <Grid x:Name="ReviewDisplayGrid" Background="{x:Null}">
-        <Border x:Name="DescriptionTextBox" BorderBrush="Snow" BorderThickness="0.5" Background="{x:Null}" MouseEnter="DescriptionTextBox_MouseEnter" MouseLeave="DescriptionTextBox_MouseLeave">
-            <Grid x:Name="textblockGrid" Height="{Binding ActualHeight, ElementName=Review}" Width="{Binding ActualWidth, ElementName=Review}">
-                <TextBlock x:Name="ReviewDescription" Text="{Binding ElementName=Review, Path=Description}" TextWrapping="Wrap" Foreground="White" Margin="0,0,0,26" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-                <TextBlock x:Name="StarRatingTextBlock" Text="Rating: " Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,5" />
-                <Controls:Rating x:Name="StarRating" ItemCount="5" Value="{Binding ElementName=Review, Path=StarRank}" Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"
-                                 Background="{x:Null}" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0" />
-                <Border x:Name="ReportBorder" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="DarkRed" Margin="5,5" Visibility="Visible"
-                        MouseEnter="ReportBorder_MouseEnter" MouseLeave="ReportBorder_MouseLeave">
-                    <Label x:Name="ReportLabel" Content="Report" FontSize="10" Foreground="White" Background="{x:Null}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+             Name="Review" MinHeight="80" MinWidth="350" MaxHeight="180" d:DesignHeight="80" d:DesignWidth="350">
+    <Grid x:Name="ReviewDisplayGrid" Background="Transparent">
+        <Border x:Name="DescriptionTextBox" BorderBrush="Black" BorderThickness="1" Background="Transparent" MouseEnter="DescriptionTextBox_MouseEnter" MouseLeave="DescriptionTextBox_MouseLeave">
+            <Grid x:Name="textblockGrid" Height="{Binding ActualHeight, ElementName=ReviewDisplayGrid}" Width="{Binding ActualWidth, ElementName=ReviewDisplayGrid}">
+                <TextBlock x:Name="ReviewDescription" FontSize="24" TextWrapping="Wrap" Foreground="White" Margin="0,0,0,26" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+                <TextBlock x:Name="StarRatingTextBlock" FontSize="24" Text="Rating: " Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,5" />
+                <controls:Rating x:Name="StarRating" ItemCount="5" Value="1" Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"
+                                 Background="Transparent" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="85,0" IsManipulationEnabled="False">
+                    <controls:Rating.LayoutTransform>
+                        <ScaleTransform ScaleX="1.6" ScaleY="1.4"></ScaleTransform>
+                    </controls:Rating.LayoutTransform>
+                </controls:Rating>
+                <Border x:Name="ReportBorder" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="35" Width="70" BorderBrush="Snow" BorderThickness="1" Background="DarkRed" Margin="5,5"
+                        Visibility="Hidden" Panel.ZIndex="10" MouseEnter="ReportBorder_MouseEnter" MouseLeave="ReportBorder_MouseLeave">
+                    <Label x:Name="ReportLabel" Content="Report" FontSize="16" Foreground="White" Background="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                            Cursor="Hand" MouseLeftButtonDown="ReportLabel_MouseLeftButtonDown"/>
                 </Border>
             </Grid>
