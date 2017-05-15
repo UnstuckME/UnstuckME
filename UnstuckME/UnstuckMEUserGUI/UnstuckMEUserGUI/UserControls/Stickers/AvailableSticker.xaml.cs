@@ -67,7 +67,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckME.Server.AcceptSticker(UnstuckME.User.UserID, Sticker.StickerID);
+                UnstuckME.Server.AcceptSticker(UnstuckME.User.UserID, Sticker.StudentID, Sticker.StickerID);
                 Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().StickerAcceptedStartConversation(Sticker, UnstuckME.User.UserID);
                 RemoveFromStackPanel();
             }

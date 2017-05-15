@@ -385,6 +385,9 @@ AS
 	END
 GO
 
+/*********************************************************
+--Remove user from mentoring organization
+*********************************************************/
 CREATE PROC [dbo].[RemoveUserFromMentorProgram]
     (
 	@UserID		INT,
@@ -393,11 +396,11 @@ CREATE PROC [dbo].[RemoveUserFromMentorProgram]
 AS
     BEGIN
         if  (NOT EXISTS(Select * from OmToUser WHERE UserID = @UserID AND MentorID = @MentorID))
-			RETURN 1;
+			SELECT -1;
         ELSE BEGIN
             DELETE FROM OmToUser
 			WHERE UserID = @UserID and MentorID = @MentorID
-			RETURN 0;
+			SELECT 0;
         END
     END
 GO

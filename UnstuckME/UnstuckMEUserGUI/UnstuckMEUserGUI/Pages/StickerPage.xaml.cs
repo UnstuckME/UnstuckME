@@ -31,7 +31,8 @@ namespace UnstuckMEUserGUI
 
                 if (opensticker != null && opensticker.Sticker.StickerID == stickerID)
                 {
-                    StackPanelStickerHistory.Children.Add(opensticker.Remove());
+                    opensticker.Remove();
+                    StackPanelStickerHistory.Children.Add(new StickerHistory(opensticker.Sticker));
 
                     for (int i = 0; i < OpenStickers.Count; i++)
                     {
@@ -43,30 +44,45 @@ namespace UnstuckMEUserGUI
                     }
                 }
             }
-
-            //stickers = StackPanelMyStickers.Children;
-            //for (int index = stickers.Count - 1; index >= 0; index--)
-            //{
-            //    MySticker mysticker = stickers[index] as MySticker;
-
-            //    if (mysticker.Sticker.StickerID == stickerID)
-            //        mysticker.ButtonCompleted.Visibility = Visibility.Collapsed;
-            //}
         }
 
-        public void MakeStickerActive(int stickerID)
+        public void MakeMyStickerActive(int stickerID)
         {
-            //UIElementCollection mystickers = StackPanelMyStickers.Children;
-            //for (int index = mystickers.Count - 1; index >= 0; index--)
-            //{
-            //    MySticker sticker = mystickers[index] as MySticker;
+            UIElementCollection mystickers = StackPanelMyStickers.Children;
+            for (int index = mystickers.Count - 1; index >= 0; index--)
+            {
+                MySticker sticker = mystickers[index] as MySticker;
 
-            //    if (sticker != null && sticker.Sticker.StickerID == stickerID)
-            //    {
-            //        sticker.ButtonCompleted.Visibility = Visibility.Visible;
-            //        sticker.ButtonRemove.Visibility = Visibility.Visible;
-            //    }
-            //}
+                if (sticker != null && sticker.Sticker.StickerID == stickerID)
+                {
+                    sticker.Sticker.TutorID = null;
+                    sticker.LabelTutorName.Content = "Currently Not Tutored";
+                    sticker.ButtonCompleted.Visibility = Visibility.Hidden;
+                    sticker.ButtonDelete.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        public void MakeMyStickerAccepted(int stickerID)
+        {
+            UIElementCollection mystickers = StackPanelMyStickers.Children;
+            for (int index = mystickers.Count - 1; index >= 0; index--)
+            {
+                MySticker sticker = mystickers[index] as MySticker;
+
+                if (sticker != null && sticker.Sticker.StickerID == stickerID)
+                {
+                    sticker.Sticker.TutorID = UnstuckME.Server.GetSticker(stickerID).TutorID;
+                    sticker.LabelTutorName.Content = UnstuckME.Server.GetUserDisplayName(sticker.Sticker.TutorID.Value);
+                    sticker.ButtonCompleted.Visibility = Visibility.Visible;
+                    sticker.ButtonDelete.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        public void MakeMyStickerResolved(int stickerID)
+        {
+            
         }
 
         private void ButtonAvailable_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

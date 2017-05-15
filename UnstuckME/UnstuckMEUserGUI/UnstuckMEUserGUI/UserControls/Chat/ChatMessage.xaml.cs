@@ -18,8 +18,9 @@ namespace UnstuckMEUserGUI
         public ChatMessage(UnstuckMEGUIChatMessage inMessage)
         {
             InitializeComponent();
-            TextBoxUserName.Text = inMessage.Username;
+            TextBoxUserName.Content = inMessage.Username;
             TextBoxChatMessage.Text = inMessage.Message;
+            TextBlockChatMessage.Text = inMessage.Message;
 
             ImageProfilePicture.Source = inMessage.ProfilePic;
             Message = inMessage;
@@ -29,12 +30,10 @@ namespace UnstuckMEUserGUI
 
         private void EditMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxChatMessage.Background = Brushes.White;
-            TextBoxChatMessage.Foreground = Brushes.Black;
-            TextBoxChatMessage.SelectionBrush = null;
-            TextBoxChatMessage.IsReadOnly = false;
+            TextBoxChatMessage.Visibility = Visibility.Visible;
+            TextBlockChatMessage.Visibility = Visibility.Collapsed;
             TextBoxChatMessage.Focus();
-            TextBoxChatMessage.CaretIndex = TextBoxChatMessage.Text.Length;
+            TextBoxChatMessage.SelectAll();
             buttonSaveChanges.Visibility = Visibility.Visible;
             buttonCancelChanges.Visibility = Visibility.Visible;
         }
@@ -58,25 +57,26 @@ namespace UnstuckMEUserGUI
                 if (UnstuckME.Server.EditMessage(editedMessage) == Task.FromResult(-1))
                     throw new Exception(string.Format("Failed to edit message {0}", editedMessage.Message));
 
-                TextBoxChatMessage.Foreground = Brushes.White;
-                TextBoxChatMessage.Background = null;
-                TextBoxChatMessage.IsReadOnly = true;
                 Message.Message = TextBoxChatMessage.Text;
+                TextBlockChatMessage.Text = TextBoxChatMessage.Text;
+                TextBoxChatMessage.Visibility = Visibility.Collapsed;
+                TextBlockChatMessage.Visibility = Visibility.Visible;
                 buttonSaveChanges.Visibility = Visibility.Collapsed;
                 buttonCancelChanges.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
         }
 
         private void buttonCancelChanges_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxChatMessage.Foreground = Brushes.White;
-            TextBoxChatMessage.Background = null;
-            TextBoxChatMessage.IsReadOnly = true;
             TextBoxChatMessage.Text = Message.Message;
+            TextBlockChatMessage.Text = Message.Message;
+            TextBoxChatMessage.Visibility = Visibility.Collapsed;
+            TextBlockChatMessage.Visibility = Visibility.Visible;
             buttonSaveChanges.Visibility = Visibility.Collapsed;
             buttonCancelChanges.Visibility = Visibility.Collapsed;
         }
@@ -104,8 +104,14 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+
         }
     }
 }

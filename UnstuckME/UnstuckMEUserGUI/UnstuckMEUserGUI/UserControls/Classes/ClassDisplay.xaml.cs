@@ -22,7 +22,6 @@ namespace UnstuckMEUserGUI
             CourseCode.Text = Class.CourseCode;
             CourseNumber.Text = Class.CourseNumber.ToString();
             Coursedesc.Text = Class.CourseName;
-            //Deletebtn.Name = "DeleteBtn" + m_IDnum.ToString();
             MainContainer.Name = "MainContainer" + Class.ClassID;
         }
 
@@ -54,7 +53,8 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
 
@@ -66,8 +66,8 @@ namespace UnstuckMEUserGUI
 
         private void MainContainer_MouseLeave(object sender, MouseEventArgs e)
         {
-            Deletebtn.Visibility = Visibility.Collapsed;
-            ClassBorder.BorderBrush = null;
+            Deletebtn.Visibility = Visibility.Hidden;
+            ClassBorder.BorderBrush = Brushes.Black;
         }
     }
 }

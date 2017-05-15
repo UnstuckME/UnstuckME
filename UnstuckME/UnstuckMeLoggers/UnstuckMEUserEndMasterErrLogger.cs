@@ -16,7 +16,7 @@ namespace UnstuckMeLoggers
     }
     public class UnstuckMEUserEndMasterErrLogger
     {
-        private string filePath = "./UserGuiAllErrors.txt";
+        private const string filePath = "./UserGuiAllErrors.txt";
         private string errorDesc = "No Desc Transmitted";
         private List<ErrContainer> ErrorsList = new List<ErrContainer>();
         private static UnstuckMEUserEndMasterErrLogger _instance = null;
@@ -26,10 +26,7 @@ namespace UnstuckMeLoggers
 
         public static UnstuckMEUserEndMasterErrLogger GetInstance()
         {
-            if (_instance == null)
-                _instance = new UnstuckMEUserEndMasterErrLogger();
-
-            return _instance;
+            return _instance ?? (_instance = new UnstuckMEUserEndMasterErrLogger());
         }
 
         public void WriteError(ERR_TYPES err_type, string err, string additionalInfo = null)

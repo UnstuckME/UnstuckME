@@ -81,16 +81,19 @@ namespace UnstuckMEInterfaces
         /// When a tutor drops a sticker rather than submitting a review, this will find the sticker of the
         /// student who submitted it and reactivates the completed and delete buttons.
         /// </summary>
-        /// <param name="stickerID">The unique identifier of the sticker to make active.</param>
+        /// <param name="stickerID">The unique identifier of the sticker.</param>
+        /// <param name="status">The new status of the sticker.</param>
         [OperationContract(IsOneWay = true)]
-        void UpdateStickerStatus(int stickerID);
+        void UpdateStickerStatus(StickerStatus status, int stickerID);
 
         /// <summary>
         /// When a review is submitted of a user, adds it to the list of reviews that have been
         /// submitted on that user.
         /// </summary>
         /// <param name="review">The review to add to the user's profile page.</param>
+        /// <param name="newtutorRating">The new average tutor rating of the user.</param>
+        /// <param name="newstudentRating">The new average student rating of the user.</param>
         [OperationContract(IsOneWay = true)]
-        void RecieveReview(UnstuckMEReview review);
+        void RecieveReviewAndUpdateRatings(UnstuckMEReview review, float newtutorRating, float newstudentRating);
     }
 }

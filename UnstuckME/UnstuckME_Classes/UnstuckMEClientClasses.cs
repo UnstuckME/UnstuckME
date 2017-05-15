@@ -30,6 +30,11 @@ namespace UnstuckME_Classes
 		CreateAccount, ResetPassword
 	}
 
+    public enum StickerStatus
+    {
+        Available, Accepted, Resolved
+    }
+
 	public class UserInfo
 	{
 		public int UserID { get; set; }
@@ -126,12 +131,12 @@ namespace UnstuckME_Classes
 			Message = inMessage.Message;
 			SenderID = inMessage.SenderID;
 			Username = inMessage.Username;
-			foreach (UnstuckMEChatUser User in inChat.Users)
+			foreach (UnstuckMEChatUser user in inChat.Users)
 			{
-				if (User.UserID == SenderID)
-				    ProfilePic = User.ProfilePicture;
+				if (user.UserID == SenderID)
+				    ProfilePic = user.ProfilePicture;
 
-			    UsersInConvo.Add(User.UserID);
+			    UsersInConvo.Add(user.UserID);
 			}
 		}
 
@@ -304,7 +309,8 @@ namespace UnstuckME_Classes
 				}
 				catch (Exception ex)
 				{
-					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
 				}
 			}
 		}
@@ -347,7 +353,8 @@ namespace UnstuckME_Classes
 			}
 			catch (Exception ex)
 			{
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
 			}
 
 			return false;
@@ -361,7 +368,8 @@ namespace UnstuckME_Classes
 			}
 			catch (Exception ex)
 			{
-				UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
 				return null;
 			}
 		}
@@ -397,7 +405,8 @@ namespace UnstuckME_Classes
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod().DeclaringType;
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace?.Name);
             }
         }
     }

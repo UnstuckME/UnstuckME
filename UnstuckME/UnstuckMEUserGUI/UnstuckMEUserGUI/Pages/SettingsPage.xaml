@@ -8,6 +8,6 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="SettingsPage">
     <Grid>
-        <Label Foreground="White" FontWeight="Heavy" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="32" Content="Settings Page" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+        <Label Foreground="White" FontWeight="Heavy" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="32" Content="Features Pending" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
     </Grid>
 </Page>

@@ -27,7 +27,8 @@ namespace UnstuckMEUserGUI.SubWindows
                 }
                 catch (Exception ex)
                 {
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org, Source = " + ex.Source);
+                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org, Source = " + trace.Name);
                 }
             }
         }

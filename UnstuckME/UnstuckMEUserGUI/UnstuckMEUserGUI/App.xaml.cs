@@ -10,7 +10,8 @@ namespace UnstuckMEUserGUI
         // this catches unhandled errors and makes sure they are logged, then it gracefully closes the program.
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, e.Exception.Message, "A fatal error occured and was not handled, Source = " + e.Exception.Source);
+            var trace = new System.Diagnostics.StackTrace(e.Exception, true).GetFrame(0).GetMethod();
+            UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, e.Exception.Message, "A fatal error occured and was not handled, Source = " + trace.Name);
             UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().ForceWrite();
             e.Handled = true;
             Current.Shutdown();

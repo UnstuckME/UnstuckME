@@ -213,9 +213,6 @@
     <Compile Include="UserControls\Chat\Conversation.xaml.cs">
       <DependentUpon>Conversation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Chat\ChatFile.xaml.cs">
-      <DependentUpon>ChatFile.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Chat\ChatMessage.xaml.cs">
       <DependentUpon>ChatMessage.xaml</DependentUpon>
     </Compile>
@@ -348,10 +345,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Chat\Conversation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Chat\ChatFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

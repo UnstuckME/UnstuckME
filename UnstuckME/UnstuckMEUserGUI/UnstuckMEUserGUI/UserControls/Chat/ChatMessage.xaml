@@ -5,33 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="150" d:DesignWidth="500" Name="UserChatMessage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="1*" MaxHeight="35"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="DimGray" BorderThickness="0,1,0,1" Grid.ColumnSpan="2" Grid.RowSpan="2"></Border>
-        <Grid Grid.Column="0" Grid.Row="0">
-            <Image x:Name="ImageProfilePicture" Source="/Resources/User/UserRed.png" Stretch="UniformToFill" VerticalAlignment="Top"></Image>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-            <Border BorderBrush="Black" BorderThickness="0,0,0,0" Height="40" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                <TextBox x:Name="TextBoxUserName" Background="{x:Null}" Cursor="Arrow" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnly="True" BorderBrush="Black" Text="UserName" Foreground="White" Padding="10,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBox>
-            </Border>
-            <Button x:Name="EditMessageButton" HorizontalAlignment="Right" Margin="0,25,0,0" Cursor="Hand" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="25" Width="25" Background="{x:Null}" Click="EditMessageButton_Click" ToolTip="Edit">
-                <Image Source="/Resources/Edit/EditWhite.png" Height="15" Width="15" Stretch="UniformToFill"></Image>
-            </Button>
-            <Button x:Name="DeleteMessageButton" HorizontalAlignment="Right" Cursor="Hand" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="25" Width="25" Background="{x:Null}" Click="DeleteMessageButton_Click" ToolTip="Delete">
-                <Image Source="/Resources/Close/CloseRed.png" Height="15" Width="15" Stretch="UniformToFill"></Image>
-            </Button>
-            <TextBox x:Name="TextBoxChatMessage" Background="{x:Null}" TextWrapping="Wrap" Foreground="White" Cursor="Arrow" Text="HELLO WORLD" HorizontalAlignment="Stretch" Margin="0,40,0,0" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnly="True" BorderBrush="Black" Padding="10,0,35,15" VerticalAlignment="Top"></TextBox>
-            <Button x:Name="buttonSaveChanges" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="30" Content="Save" BorderBrush="White" Foreground="White" Background="Green" Click="buttonSaveChanges_Click" Margin="0,0,70,0" />
-            <Button x:Name="buttonCancelChanges" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="30" Content="Cancel" BorderBrush="White" Foreground="White" Background="Red" Click="buttonCancelChanges_Click" />
-        </Grid>
+        <Border BorderBrush="DimGray" BorderThickness="0,1,0,1" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="60" Width="60" VerticalAlignment="Top">
+            <Image x:Name="ImageProfilePicture" Source="/Resources/User/UserRed.png" Stretch="UniformToFill" VerticalAlignment="Top" />
+        </Border>
+        <Border Name="UsernameBorder" Grid.Row="0" Grid.Column="1" Height="40" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Label x:Name="TextBoxUserName" Background="Transparent" Cursor="Arrow" Content="UserName" Foreground="White" Padding="10,0,0,0" VerticalAlignment="Center" Height="{Binding ActualHeight, ElementName=UsernameBorder}" VerticalContentAlignment="Center" FontSize="24" FontWeight="Bold" />
+        </Border>
+        <Button x:Name="DeleteMessageButton" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Cursor="Hand" BorderBrush="Transparent" VerticalAlignment="Top" Height="25" Width="25" Background="Transparent" Click="DeleteMessageButton_Click" ToolTip="Delete">
+            <Image Source="/Resources/Close/CloseRed.png" Height="15" Width="15" Stretch="UniformToFill"/>
+        </Button>
+        <Button x:Name="EditMessageButton" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0,25,0,0" Cursor="Hand" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="25" Width="25" Background="{x:Null}" Click="EditMessageButton_Click" ToolTip="Edit">
+            <Image Source="/Resources/Edit/EditWhite.png" Height="15" Width="15" Stretch="UniformToFill"/>
+        </Button>
+        <TextBox x:Name="TextBoxChatMessage" Grid.Row="1" Grid.Column="1" Visibility="Collapsed" Background="White" Foreground="Black" TextWrapping="Wrap" Cursor="IBeam" Text="HELLO WORLD" HorizontalAlignment="Stretch" Padding="10,0,35,15" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" MaxLength="500"/>
+        <TextBlock x:Name="TextBlockChatMessage" Grid.Row="1" Grid.Column="1" Background="Transparent" TextWrapping="Wrap" Foreground="White" Cursor="Arrow" Text="HELLO WORLD" HorizontalAlignment="Stretch" Padding="10,0,35,15" VerticalAlignment="Top"/>
+        <Button x:Name="buttonSaveChanges" Grid.Row="2" Grid.Column="1" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="30" Content="Save" BorderBrush="White" Foreground="White" Background="Green" Click="buttonSaveChanges_Click" Margin="0,0,70,5" />
+        <Button x:Name="buttonCancelChanges" Grid.Row="2" Grid.Column="1" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="30" Content="Cancel" BorderBrush="White" Foreground="White" Background="DarkRed" Click="buttonCancelChanges_Click" Margin="0,0,5,5" />
     </Grid>
 </UserControl>

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -23,8 +24,6 @@ namespace UnstuckMEUserGUI
             LabelStudentName.Content = student.FirstName + " " + student.LastName;
             LabelClassName.Content = Class.CourseCode + "-" + Class.CourseNumber + ": " + Class.CourseName;
             ProblemDescription.Text = "Problem Description:\n" + Sticker.ProblemDescription;
-            if (Sticker.Timeout < DateTime.Now)
-                Visibility = Visibility.Collapsed;
         }
 
         private void ButtonCompleted_MouseEnter(object sender, MouseEventArgs e)
@@ -40,13 +39,43 @@ namespace UnstuckMEUserGUI
         private void ButtonCompleted_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Window win = new SubWindows.AddStudentReviewWindow(Sticker.StickerID);
-            win.Show();
+            win.ShowDialog();
         }
 
         public OpenSticker Remove()
         {
             ((StackPanel)Parent).Children.Remove(this);
             return this;
+        }
+
+        private void ButtonUnTutor_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonUnTutor.Background = Brushes.IndianRed;
+        }
+
+        private void ButtonUnTutor_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonUnTutor.Background = Brushes.White;
+        }
+
+        private void ButtonUnTutor_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, "Are you sure you wish to untutor this sticker?", "Warning", UnstuckMEBoxImage.Warning);
+            bool? open = messagebox.ShowDialog();
+
+            if (open.HasValue && open.Value)
+            {
+                try
+                {
+                    UnstuckME.Server.RemoveTutorFromSticker(UnstuckME.User.UserID);
+                    Remove();
+                }
+                catch (Exception ex)
+                {
+                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
+                }
+            }
         }
     }
 }

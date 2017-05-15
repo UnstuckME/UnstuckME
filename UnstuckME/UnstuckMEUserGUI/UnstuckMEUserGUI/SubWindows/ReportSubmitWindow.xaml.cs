@@ -14,21 +14,21 @@ namespace UnstuckMEUserGUI
     public partial class ReportSubmitWindow : Window
     {
         private static UnstuckMEReview _review;
+        private static bool _result;
 
-        public string Description
+        public bool Result
         {
-            get { return _review.Description; }
-        }
-
-        public float StarRank
-        {
-            get { return _review.StarRanking; }
+            get { return _result; }
+            set { _result = value; }
         }
 
         public ReportSubmitWindow(UnstuckMEReview review)
         {
+            Owner = UnstuckME.MainWindow;
             InitializeComponent();
             _review = review;
+            ReviewDescription.Content = _review.Description;
+            StarRating.Value = _review.StarRanking;
         }
 
         private void ReportBorder_MouseEnter(object sender, MouseEventArgs e)
@@ -56,7 +56,8 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK,
                                             "An error occured when trying to send the report. Please contact an UnstuckME administrator if this problem persists. Thank you.",
                                             "Report could not be sent", UnstuckMEBoxImage.Error);
@@ -79,12 +80,17 @@ namespace UnstuckMEUserGUI
 
         private void CancelLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Close();
+            try
+            {
+                Close();
+            }
+            catch
+            { }
         }
 
         private void SetDialogResult(bool result)
         {
-            DialogResult = result;
+            _result = result;
         }
 
         private void ReportSubmitWindowGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

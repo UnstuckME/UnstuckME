@@ -9,7 +9,7 @@ using UnstuckMeLoggers;
 namespace UnstuckMEUserGUI
 {
 	[CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
-	class ClientCallback : IClient
+	internal class ClientCallback : IClient
 	{
 		/// <summary>
 		/// Adds a class to the user's GUI.
@@ -21,9 +21,10 @@ namespace UnstuckMEUserGUI
 			{
 				Application.Current.Windows.OfType<UnstuckMEWindow>().SingleOrDefault().RecieveAddedClass(inClass);
 			}
-			catch(InvalidOperationException ex)
+			catch (InvalidOperationException ex)
 			{
-			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 			}
         }
 
@@ -58,7 +59,8 @@ namespace UnstuckMEUserGUI
 		    }
 		    catch (Exception ex)
 		    {
-		        UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
 
@@ -74,7 +76,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 			}
         }
 
@@ -90,7 +93,8 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 			}
         }
 
@@ -106,7 +110,8 @@ namespace UnstuckMEUserGUI
             }
             catch (InvalidOperationException ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
 
@@ -122,7 +127,8 @@ namespace UnstuckMEUserGUI
             }
             catch (InvalidOperationException ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
 
@@ -135,14 +141,16 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckME.Pages.UserProfilePage.UpdateRatings();
-                Window window = new SubWindows.AddTutorReviewWindow(stickerID);
-                window.Show();
-                window.Focus();
+                Window window = new SubWindows.AddTutorReviewWindow(stickerID)
+                {
+                    Topmost = true
+                };
+                window.ShowDialog();
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to logout and log back in to submit a review on " + stickerID +
                                                                          ". If this does not work, please contact an UnstuckME administrator to resolve this issue.",
                                                                          "Could not create a new review", UnstuckMEBoxImage.Error);
@@ -159,16 +167,18 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckME.Pages.UserProfilePage.UpdateRatings();
-                Window window = new SubWindows.AddStudentReviewWindow(stickerID);
-                window.Show();
-                window.Focus();
+                Window window = new SubWindows.AddStudentReviewWindow(stickerID)
+                {
+                    Topmost = true
+                };
+                window.ShowDialog();
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to logout and log back in to submit a review on " + stickerID +
-                                                                                          ". If this does not work, please contact an UnstuckME administrator to resolve this issue.",
+                                                                         ". If this does not work, please contact an UnstuckME administrator to resolve this issue.",
                                                                          "Could not create a new review", UnstuckMEBoxImage.Error);
                 messagebox.ShowDialog();
             }
@@ -178,16 +188,32 @@ namespace UnstuckMEUserGUI
         /// When a tutor drops a sticker rather than submitting a review, this will find the sticker of the
         /// student who submitted it and reactivates the completed and delete buttons.
         /// </summary>
-        /// <param name="stickerID">The unique identifier of the sticker to make active.</param>
-        public void UpdateStickerStatus(int stickerID)
+        /// <param name="stickerID">The unique identifier of the sticker.</param>
+        /// <param name="status">The status to change the sticker to.</param>
+        public void UpdateStickerStatus(StickerStatus status, int stickerID)
         {
             try
             {
-                UnstuckME.Pages.StickerPage.MakeStickerActive(stickerID);
+                switch (status)
+                {
+                    case StickerStatus.Available:   //sticker has been untutored
+                        UnstuckME.Pages.StickerPage.MakeMyStickerActive(stickerID);
+                        break;
+                    case StickerStatus.Accepted:    //sticker has been accepted
+                        UnstuckME.Pages.StickerPage.MakeMyStickerAccepted(stickerID);
+                        break;
+                    case StickerStatus.Resolved:    //sticker has both reviews, move it to sticker history
+                        UnstuckME.Pages.StickerPage.MakeMyStickerResolved(stickerID);
+                        break;
+                    default:
+                        break;
+                }
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Could not update status of sticker " + stickerID + ", Source = " + ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, 
+                                                                         "Could not update status of sticker " + stickerID + ", Source = " + trace.Name);
             }
         }
 
@@ -196,15 +222,19 @@ namespace UnstuckMEUserGUI
 	    /// submitted on that user.
 	    /// </summary>
 	    /// <param name="review">The review to add to the user's profile page.</param>
-	    public void RecieveReview(UnstuckMEReview review)
+	    /// <param name="newtutorRating">The new average tutor rating of the user.</param>
+	    /// <param name="newstudentRating">The new average student rating of the user.</param>
+	    public void RecieveReviewAndUpdateRatings(UnstuckMEReview review, float newtutorRating, float newstudentRating)
 	    {
 	        try
 	        {
 	            UnstuckME.Pages.UserProfilePage.AddReview(review);
+	            UnstuckME.Pages.UserProfilePage.UpdateRatings(newstudentRating, newtutorRating);
 	        }
 	        catch (Exception ex)
 	        {
-	            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Could not add review " + review.ReviewID + " to interface, Source = " + ex.Source);
+	            var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Could not add review " + review.ReviewID + " to interface, Source = " + trace.Name);
 	        }
 	    }
     }

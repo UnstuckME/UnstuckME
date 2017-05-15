@@ -13,7 +13,6 @@ namespace UnstuckMEUserGUI.SubWindows
 
     public partial class AddClassWindow : Window
     {
-        List<string> courseNumberandNameList = new List<string>();
         List<string> courseCodeList = new List<string>();
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -31,20 +30,22 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             catch (Exception exp)
             {
-                UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+                var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
             }
+
             courseCodeList[0] = "(Class)";
             ComboBoxCourseNumberAndName.ItemsSource = courseCodeList;
             ComboBoxCourseCode.ItemsSource = courseCodeList;
             ComboBoxCourseCode.IsEnabled = true;
-            
             ComboBoxCourseCode.SelectedIndex = 0;
         }
+
         private void ComboBoxCourseCode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List<string> courseNameList = new List<string>();
             int selected = ComboBoxCourseCode.SelectedIndex;
+
             if (selected != 0)
             {
                 try
@@ -54,8 +55,8 @@ namespace UnstuckMEUserGUI.SubWindows
                 }
                 catch (Exception exp)
                 {
-                    UnstuckMEUserEndMasterErrLogger logger = UnstuckMEUserEndMasterErrLogger.GetInstance();
-                    logger.WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, exp.Source);
+                    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                 }
                 ComboBoxCourseNumberAndName.IsEnabled = true;
                 ComboBoxCourseNumberAndName.ItemsSource = courseNameList;
@@ -66,7 +67,6 @@ namespace UnstuckMEUserGUI.SubWindows
                 ComboBoxCourseCode.SelectedIndex = 0;
                 ComboBoxCourseNumberAndName.IsEnabled = false;
             }
-
         }
 
         private void AddClassesButton_Click(object sender, RoutedEventArgs e)
@@ -79,7 +79,8 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             catch (Exception ex)
             {
-                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.Source);
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
 
             ComboBoxCourseCode.SelectedIndex = 0;

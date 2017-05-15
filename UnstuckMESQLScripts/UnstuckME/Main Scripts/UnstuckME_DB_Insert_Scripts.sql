@@ -310,11 +310,11 @@ CREATE PROC [dbo].[InsertUserIntoMentorProgram]
 AS
     BEGIN
         if  (EXISTS(Select * from OmToUser WHERE UserID = @UserID AND MentorID = @MentorID))
-			RETURN 1;
+			SELECT 1;
         ELSE BEGIN
             INSERT INTO OmToUser
 			VALUES(@UserID, @MentorID)
-			RETURN 0;
+			SELECT 0;
         END
     END
 GO

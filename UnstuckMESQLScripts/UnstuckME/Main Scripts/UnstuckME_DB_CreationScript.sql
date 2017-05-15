@@ -50,8 +50,6 @@ IF OBJECT_ID('OfficialMentor', 'U') IS NOT NULL
 	DROP TABLE OfficialMentor;
 IF OBJECT_ID('Messages', 'U') IS NOT NULL
 	DROP TABLE [Messages];
---IF OBJECT_ID('Files', 'U') IS NOT NULL
---	DROP TABLE Files;
 IF OBJECT_ID('Friends', 'U') IS NOT NULL
 	DROP TABLE Friends;
 IF OBJECT_ID('UserProfile', 'U') IS NOT NULL
@@ -104,15 +102,6 @@ CREATE TABLE [Messages]
 	SentBy					INT				NOT NULL REFERENCES UserProfile(UserID),
 	SentTime				DATETIME2		NOT NULL)
 GO
-
---Create File Table
---CREATE TABLE Files
---	(FileID				INT					PRIMARY KEY IDENTITY(1,1),
---	ChatID				INT					NOT NULL REFERENCES Chat(ChatID),
---	FileData			VARBINARY(MAX) 		NOT NULL,
---	SentBy				INT					NOT NULL REFERENCES UserProfile(UserID),
---	SentTime			SMALLDATETIME		NOT NULL);
---GO
 
 --Create Official Mentor Table
 CREATE TABLE OfficialMentor

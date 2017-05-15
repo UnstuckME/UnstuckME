@@ -14,7 +14,8 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
         /// <param name="stickerID">The unique identifier of the sticker that has been accepted.</param>
-        public async void AcceptSticker(int tutorID, int stickerID)
+        /// <param name="studentID">The unique identifier of the user who submitted the sticker.</param>
+        public async void AcceptSticker(int tutorID, int studentID, int stickerID)
         {
             try
             {
@@ -23,7 +24,7 @@ namespace UnstuckMEInterfaces
                     db.UpdateTutorIDByTutorIDAndStickerID(tutorID, stickerID);
                 }
 
-                await Task.Factory.StartNew(() => AsyncAcceptSticker(tutorID, stickerID));
+                await Task.Factory.StartNew(() => AsyncAcceptSticker(tutorID, studentID, stickerID));
             }
             catch (Exception ex)
             {
@@ -37,7 +38,8 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
         /// <param name="stickerID">The unique identifier of the sticker that has been accepted.</param>
-        private void AsyncAcceptSticker(int tutorID, int stickerID)
+        /// <param name="studentID">The unique identifier of the user who submitted the sticker.</param>
+        private void AsyncAcceptSticker(int tutorID, int studentID, int stickerID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
@@ -47,6 +49,8 @@ namespace UnstuckMEInterfaces
                 {
                     if (client.Key != tutorID && tutors.Contains(client.Key))
                         client.Value.Connection.RemoveGUISticker(stickerID);
+                    if (client.Key == studentID)
+                        client.Value.Connection.UpdateStickerStatus(StickerStatus.Accepted, stickerID);
                 }
             }
         }
@@ -90,30 +94,29 @@ namespace UnstuckMEInterfaces
         /// Gets the stickers submitted by a user, regardless if they are resolved or active.
         /// </summary>
         /// <param name="userID">The unique identifer of the account.</param>
-        /// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
         /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
         /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
         /// <returns>A list of stickers that have been submitted by a specific user that matches the filtering criteria.</returns>
-        public List<UnstuckMESticker> GetUserSubmittedStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null)
+        public List<UnstuckMESticker> GetUserSubmittedStickers(int userID, float minstarrank = 0, int classID = 0)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
 
-                using (var userStickers = db.GetUserSubmittedStickers(userID, organizationID, minstarrank, classID))
+                using (var userStickers = db.GetUserSubmittedStickers(userID, minstarrank, classID))
                 {
                     foreach (var sticker in userStickers)
                     {
                         UnstuckMESticker usSticker = new UnstuckMESticker()
                         {
-                            StickerID = sticker.StickerID,
+                            StickerID = sticker.StickerID ?? 0,
                             ProblemDescription = sticker.ProblemDescription,
-                            ClassID = sticker.ClassID,
-                            StudentID = sticker.StudentID,
+                            ClassID = sticker.ClassID ?? 0,
+                            StudentID = sticker.StudentID ?? 0,
                             TutorID = sticker.TutorID ?? 1,
                             MinimumStarRanking = sticker.MinimumStarRanking.HasValue ? (float)sticker.MinimumStarRanking : 0,
-                            SubmitTime = sticker.SubmitTime,
-                            Timeout = sticker.Timeout
+                            SubmitTime = sticker.SubmitTime ?? DateTime.MinValue,
+                            Timeout = sticker.Timeout ?? DateTime.MinValue
                         };
 
                         stickerList.Add(usSticker);
@@ -128,17 +131,16 @@ namespace UnstuckMEInterfaces
         /// Gets the stickers a user has tutored, regardless if they are resolved or active.
         /// </summary>
         /// <param name="userID">The unique identifer of the account.</param>
-        /// <param name="organizationID">The unique identifer of the organization to filter. This parameter is optional, with a default value of null.</param>
         /// <param name="minstarrank">The minimum star ranking required in order to see the sticker. This parameter is optional, with a default value of 0.</param>
         /// <param name="classID">The unique identifier of the class to filter the results through. This parameter is optional, with a default value of null.</param>
         /// <returns>A list of stickers that a specific user has tutored that matches the filtering criteria.</returns>
-        public List<UnstuckMESticker> GetUserTutoredStickers(int userID, int? organizationID = null, float minstarrank = 0, int? classID = null)
+        public List<UnstuckMESticker> GetUserTutoredStickers(int userID, float minstarrank = 0, int classID = 0)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 List<UnstuckMESticker> stickerList = new List<UnstuckMESticker>();
 
-                using (var userStickers = db.GetUserTutoredStickers(userID, organizationID, minstarrank, classID))
+                using (var userStickers = db.GetUserTutoredStickers(userID, minstarrank, classID))
                 {
                     foreach (var sticker in userStickers)
                     {
@@ -392,7 +394,7 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="stickerID">The unique identifier of the sticker to be relabeled as active.</param>
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public int RemoveTutorFromSticker(int stickerID)
+        public async Task<int> RemoveTutorFromSticker(int stickerID)
         {
             int retVal = -1;
 
@@ -422,6 +424,7 @@ namespace UnstuckMEInterfaces
                         Timeout = sticker.Timeout ?? DateTime.MinValue
                     };
 
+                    await Task.Factory.StartNew(() => AsyncMakeStickerActive(bigsticker));
                     _stickerList.Enqueue(bigsticker);
 
                     retVal = 0;
@@ -434,6 +437,25 @@ namespace UnstuckMEInterfaces
 
             return retVal;
         }
+
+        /// <summary>
+        /// Update the sticker on the client who submitted it that it has been made active again.
+        /// </summary>
+        /// <param name="sticker">The sticker that has been made active again.</param>
+        private void AsyncMakeStickerActive(UnstuckMEBigSticker sticker)
+        {
+            bool found = false;
+
+            for (int index = 0; index < _connectedClients.Count && !found; index++)
+            {
+                if (_connectedClients[index].User.UserID == sticker.StudentID)
+                {
+                    _connectedClients[index].Connection.UpdateStickerStatus(StickerStatus.Available, sticker.StickerID);
+                    found = true;
+                }
+            }
+        }
+
         /// <summary>
         /// returns a single sticker by ID, sticker currently only contains coursename and problem description
         /// </summary>

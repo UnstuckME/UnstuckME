@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI.SubWindows
@@ -9,31 +11,31 @@ namespace UnstuckMEUserGUI.SubWindows
     public partial class AddStudentReviewWindow : Window
     {
         private UnstuckMESticker _sticker;
-        private int _stickerID = 0;
 
         public AddStudentReviewWindow(int stickerID)
         {
             InitializeComponent();
             StarRatingValue.Value = .8;
-            _stickerID = stickerID;
             
-            _sticker = UnstuckME.Server.GetSticker(_stickerID);
-            
+            _sticker = UnstuckME.Server.GetSticker(stickerID);
+            _sticker.StickerID = stickerID;
+
             StickerCourseName.Content = _sticker.CourseName;
             StickerDescription.Text = _sticker.ProblemDescription;
         }
 
-        //private void sliderRating_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    starVal = sliderRating.Value;
-        //}
-
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            if (StarRatingValue.Value != null)
-                UnstuckME.Server.CreateReview(_stickerID, UnstuckME.User.UserID, StarRatingValue.Value.Value * 5, ReviewDescriptionTxtBox.Text, true);
+            if (StarRatingValue.Value.HasValue)
+            {
+                if (UnstuckME.Server.CreateReview(_sticker.StickerID, UnstuckME.User.UserID, StarRatingValue.Value.Value * 5, 
+                                                                                           ReviewDescriptionTxtBox.Text, true) != Task.FromResult(-1))
+                    UnstuckME.Pages.StickerPage.RemoveOpenSticker(_sticker.StickerID);
+                else
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, "Failed to submit review", "AddStudentReviewWindow: Submit_Click");
+            }
+
             Close();
-            UnstuckME.Pages.StickerPage.RemoveOpenSticker(_stickerID);
         }
     }
 }

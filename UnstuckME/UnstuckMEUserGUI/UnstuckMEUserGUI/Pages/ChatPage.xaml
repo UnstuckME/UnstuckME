@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:UnstuckMEUserGUI"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="500"
-      Title="ChatPage" xmlns:my="clr-namespace:UnstuckMEUserGUI">
+      Title="ChatPage">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -18,15 +18,15 @@
                 <RowDefinition Height="67*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="0" Background="#336699">
-                <Border BorderBrush="Black" BorderThickness="0,0,0,1"></Border>
-                <Label Content="Conversations:" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Label>
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1"/>
+                <Label Content="Conversations:" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                 <Button x:Name="ButtonCreateChat" Click="ButtonCreateChat_Click" HorizontalAlignment="Right" BorderThickness="0,0,0,0" Width="30" Height="30" Background="{x:Null}" Cursor="Hand" VerticalAlignment="Center">
                     <Image Source="/Resources/Plus/PlusWhite.png" Height="15" Width="15" Stretch="UniformToFill"/>
                 </Button>
             </Grid>
             <Grid x:Name="GridConversations" Visibility="Visible" IsEnabled="True" Grid.Column="0" Grid.Row="1">
                 <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="StackPanelConversations" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
+                    <StackPanel x:Name="StackPanelConversations" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                 </ScrollViewer>
             </Grid>
             <Grid x:Name="GridNewConversation" Grid.Column="0" Grid.Row="1" Background="SteelBlue" Visibility="Hidden" IsEnabled="False">
@@ -35,21 +35,21 @@
                     <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Column="0" Grid.Row="0">
-                    <Label Height="25" Width="150" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" VerticalContentAlignment="Stretch" Content="Manual Search" FontSize="12" Margin="25,0" ></Label>
-                    <TextBox x:Name="TextBoxManualUserNameSearch" Height="28" Width="150" Padding="5,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="25,25,25,0" ></TextBox>
-                    <Button x:Name="ButtonStartConversation" Click="ButtonStartConversation_Click" Height="25" Cursor="Hand" Width="50" Content="Start" FontSize="12" BorderBrush="#336699" Foreground="White" Background="ForestGreen" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="125,58,25,0"></Button>
+                    <Label Height="25" Width="150" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" VerticalContentAlignment="Stretch" Content="Manual Search" FontSize="12" Margin="25,0" />
+                    <TextBox x:Name="TextBoxManualUserNameSearch" Height="28" Width="150" Padding="5,0,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="25,25,25,0" />
+                    <Button x:Name="ButtonStartConversation" Click="ButtonStartConversation_Click" Height="25" Cursor="Hand" Width="50" Content="Start" FontSize="12" BorderBrush="#336699" Foreground="White" Background="ForestGreen" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="125,58,25,0"/>
                     <Label x:Name="LabelInvalidUserNameSearch" Height="25" Visibility="Hidden" Content="Invalid Username" Foreground="Red" VerticalContentAlignment="Center" Padding="16,0,0,0" FontWeight="Medium" FontSize="12" VerticalAlignment="Top" Margin="10,57,75,0" />
                     <Label Height="25" Content="Contacts:" Foreground="White" VerticalContentAlignment="Center" FontWeight="Medium" FontSize="12" VerticalAlignment="Top" Margin="10,90,75,0" />
                     <ScrollViewer VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" Height="Auto" Margin="0,115,0,0">
-                        <StackPanel x:Name="StackPanelAddContacts" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
+                        <StackPanel x:Name="StackPanelAddContacts" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
                     </ScrollViewer>
                 </Grid>
                 <Grid Grid.Column="0" Grid.Row="1">
-                    <Border BorderBrush="#336699" BorderThickness="0,2,0,0"></Border>
-                    <Button x:Name="ButtonAddUserDone" Cursor="Hand" BorderBrush="White" Click="ButtonAddUserDone_Click" Foreground="White" Background="#993333" HorizontalAlignment="Right" VerticalAlignment="Center" Height="30" Content="Back" FontWeight="DemiBold" Width="75" Margin="0,0,5,0"></Button>
+                    <Border BorderBrush="#336699" BorderThickness="0,2,0,0"/>
+                    <Button x:Name="ButtonAddUserDone" Cursor="Hand" BorderBrush="White" Click="ButtonAddUserDone_Click" Foreground="White" Background="#993333" HorizontalAlignment="Right" VerticalAlignment="Center" Height="30" Content="Back" FontWeight="DemiBold" Width="75" Margin="0,0,5,0"/>
                 </Grid>
             </Grid>
-            <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.Row="0" Grid.RowSpan="2"></Border>
+            <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.Row="0" Grid.RowSpan="2"/>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -59,22 +59,17 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Background="#336699">
-                <Border BorderBrush="Black" BorderThickness="0,0,0,1">
-
-                </Border>
-                <Label x:Name="LabelConversationName" Foreground="White" Content="Conversation Name" FontSize="16" VerticalContentAlignment="Center" VerticalAlignment="Stretch"></Label>
+                <Border BorderBrush="Black" BorderThickness="0,0,0,1"/>
+                <Label x:Name="LabelConversationName" Foreground="White" Content="Conversation Name" FontSize="16" VerticalContentAlignment="Center" VerticalAlignment="Stretch"/>
                 <Border x:Name="ButtonAddUserToConvo" MouseEnter="ButtonAddUserToConvo_MouseEnter" MouseLeave="ButtonAddUserToConvo_MouseLeave" MouseLeftButtonDown="ButtonAddUserToConvo_MouseLeftButtonDown" Margin="0,0,5,0" BorderThickness="2,2,2,2" CornerRadius="90" Cursor="Hand" Height="40" Width="40" BorderBrush="DimGray" VerticalAlignment="Center" HorizontalAlignment="Right" Background="SteelBlue">
-                    <Image x:Name="ImageAddUserToConvo" Height="30" Width="30" Cursor="Hand" Source="/Resources/Group/GroupWhite.png"></Image>
+                    <Image x:Name="ImageAddUserToConvo" Height="30" Width="30" Cursor="Hand" Source="/Resources/Group/GroupWhite.png"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="1">
                 <ScrollViewer x:Name="ScrollViewerMessagesBox" VerticalScrollBarVisibility="Auto" SizeChanged="ScrollViewerConversationBox_SizeChanged">
-                    <StackPanel x:Name="StackPanelMessages" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    </StackPanel>
+                    <StackPanel x:Name="StackPanelMessages" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </ScrollViewer>
-
-                <Border BorderBrush="DimGray" BorderThickness="0,0,0,1"></Border>
-
+                <Border BorderBrush="DimGray" BorderThickness="0,0,0,1"/>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -92,16 +87,14 @@
                                     <TranslateTransform/>
                                 </TransformGroup>
                             </Image.RenderTransform>
-
                         </Image>
                     </Button>
-                    <TextBox x:Name="MessageTextBox" Padding="5,0,0,0" MaxLength="450" KeyDown="MessageTextBox_KeyDown" Margin="40,0,0,0" SizeChanged="MessageTextBox_SizeChanged" BorderBrush="{x:Null}" BorderThickness="4,4,4,4"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBox>
+                    <TextBox x:Name="MessageTextBox" Padding="5,0,0,0" MaxLength="450" KeyDown="MessageTextBox_KeyDown" Margin="40,0,0,0" SizeChanged="MessageTextBox_SizeChanged" BorderBrush="{x:Null}" BorderThickness="4,4,4,4"  VerticalContentAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextWrapping="WrapWithOverflow"/>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Button x:Name="SendButton" Click="SendButton_Click" Content="Send" Background="#336699" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}" BorderThickness="3,3,3,3"></Button>
+                    <Button x:Name="SendButton" Click="SendButton_Click" Content="Send" Background="#336699" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}" BorderThickness="3,3,3,3"/>
                 </Grid>
             </Grid>
         </Grid>
-
     </Grid>
 </Page>

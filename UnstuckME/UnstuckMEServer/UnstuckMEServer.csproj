@@ -144,13 +144,10 @@
     <Compile Include="GetReportsSubmittedByUser_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetResolvedStickers_Result.cs">
+    <Compile Include="GetReviewsOfUser_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetStickerInfo_Result.cs">
-      <DependentUpon>UnstuckME_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetTimedOutStickers_Result.cs">
       <DependentUpon>UnstuckME_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="GetUserClasses_Result.cs">

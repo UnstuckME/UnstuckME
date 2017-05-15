@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:UnstuckMEUserGUI.SubWindows"
         xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         mc:Ignorable="d"
-        AllowsTransparency="True"
-        Title="AddStudentReviewWindow" Height="Auto" Width="Auto" WindowStyle="None" WindowState="Maximized" Background="{x:Null}">
+        AllowsTransparency="True" WindowStartupLocation="CenterOwner"
+        Title="AddStudentReviewWindow" Height="Auto" Width="Auto" WindowStyle="None" WindowState="Maximized" Background="{x:Null}" ShowInTaskbar="False">
     <Grid>
         <Rectangle Fill="Black" Opacity=".7"/>
-        <Grid HorizontalAlignment="Center" Background="DimGray" VerticalAlignment="Center" MaxHeight="700" MaxWidth="675" MinHeight="500" MinWidth="650" Height="Auto" Width="Auto">
+        <Grid HorizontalAlignment="Center" Background="DimGray" VerticalAlignment="Center" MaxHeight="700" MaxWidth="675" MinHeight="500" MinWidth="650">
             <Grid.RowDefinitions>
                 <RowDefinition Height="62*"/>
                 <RowDefinition Height="43*"/>
@@ -30,9 +30,9 @@
                 </Controls:Rating.LayoutTransform>
             </Controls:Rating>
 
-            <TextBox x:Name="ReviewDescriptionTxtBox" Grid.Row="4"  HorizontalAlignment="Center" Height="187" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="591"/>
-            <Border Cursor="Hand" Grid.Row="5" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" VerticalAlignment="Top" HorizontalAlignment="Center" >
-                <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Click="Submit_Click"></Button>
+            <TextBox x:Name="ReviewDescriptionTxtBox" Grid.Row="4" HorizontalAlignment="Center" Height="187" TextWrapping="Wrap" VerticalAlignment="Top" Width="591"/>
+            <Border Cursor="Hand" Grid.Row="5" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="3" Height="40" Width="160" Background="#336699" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Button x:Name="Submit" Width="155" Content="Submit" FontSize="20" BorderBrush="{x:Null}" Foreground="White" Background="#336699" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="Submit_Click"></Button>
             </Border>
 
         </Grid>

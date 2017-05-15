@@ -85,6 +85,8 @@ if object_id('GetUserStudentReviews') is not null
 	drop procedure GetUserStudentReviews;
 if object_id('GetUserTutorReviews') is not null
 	drop procedure GetUserTutorReviews;
+if object_id('GetReviewsOfUser') is not null
+	drop procedure GetReviewsOfUser;
 if object_id('GetUserSubmittedStickers') is not null
 	drop procedure GetUserSubmittedStickers;
 if object_id('GetUserTutoredStickers') is not null
@@ -631,7 +633,7 @@ create proc GetUserStudentReviews
 begin
 	select distinct ReviewID, Review.StickerID, ReviewerID, StarRanking, Description
 	from Review join Sticker	on Review.StickerID = Sticker.StickerID
-	where Sticker.StudentID = @userID
+	where Sticker.StudentID = @userID and Review.ReviewerID = @userid
 		and StarRanking <= case when @starrank <> 0
 									then @starrank
 							   else StarRanking
@@ -657,6 +659,18 @@ begin
 						  end
 	order by StarRanking asc;
 end;
+
+/*************************************************************************
+* Gets the reviews of a user
+*************************************************************************/
+go
+create proc GetReviewsOfUser
+(	@userid int	) as
+begin
+	select distinct ReviewID, Review.StickerID, StarRanking, Description
+	from Review join Sticker	on Review.StickerID = Sticker.StickerID
+	where Sticker.StudentID = @userid or Sticker.TutorID = @userid and Review.ReviewerID <> @userid;
+end
 
 /*************************************************************************
 * Gets all Course Codes
@@ -726,44 +740,25 @@ end;
 go
 create proc GetUserSubmittedStickers
 (	@userID int,
-	@organization int = null,
 	@starrank float = 0,
-	@classID int = null
+	@classID int = 0
 ) as
 begin
-	select distinct DisplayFName, DisplayLName, StickerID, Sticker.ClassID, ChatID, StudentID, TutorID, 
-		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
-	from UserProfile join Sticker		on UserProfile.UserID = Sticker.StudentID
-		join Classes					on Classes.ClassID = Sticker.ClassID
+	select distinct DisplayFName, DisplayLName, Sticker.StickerID, ProblemDescription, ChatID, Sticker.ClassID, CourseCode, CourseName, CourseNumber, 
+					StudentID, TutorID, MinimumStarRanking, SubmitTime, Timeout
+	from UserProfile join Sticker			on UserProfile.UserID = Sticker.StudentID
+					 join Classes			on Classes.ClassID = Sticker.ClassID
+					 full join Review		on Review.StickerID = Sticker.StickerID
 	where Sticker.StudentID = @userID
-		and MinimumStarRanking <= case when @starrank <> 0
-										then @starrank
-									  else MinimumStarRanking
-								 end
-		and Sticker.ClassID = case when @classID is not null
-								then @classID
-						   else Sticker.ClassID
-					  end
-union
-	select distinct DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, ChatID, StudentID, TutorID,
-		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
-	from UserProfile join Sticker		on UserProfile.UserID = Sticker.StudentID
-		join Classes					on Classes.ClassID = Sticker.ClassID
-		join StickerToMentor			on StickerToMentor.StickerID = Sticker.StickerID
-	where Sticker.StudentID = @userID
-		and MinimumStarRanking <= case when @starrank <> 0
-										then @starrank
-									  else MinimumStarRanking
-								 end
-		and Sticker.ClassID = case when @classID is not null
-								then @classID
-						   else Sticker.ClassID
-					  end
-		and StickerToMentor.MentorID = case when @organization is not null
-												then @organization
-											else StickerToMentor.MentorID
-									   end
-order by [Timeout] asc, SubmitTime asc;
+		  and Sticker.ClassID = case when @classID <> null
+										  then @classID
+									 else Sticker.ClassID
+								end
+		  and MinimumStarRanking >= case when @starrank <> 0
+											  then @starrank
+										 else MinimumStarRanking
+								    end
+	order by Timeout asc, SubmitTime asc
 end;
 
 /*************************************************************************
@@ -772,44 +767,25 @@ end;
 go
 create proc GetUserTutoredStickers
 (	@userID int,
-	@organization int = null,
 	@starrank float = 0,
-	@classID int = null
+	@classID int = 0
 ) as
 begin
-	select distinct DisplayFName, DisplayLName, StickerID, Sticker.ClassID, ChatID, StudentID, TutorID,
-		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
-	from UserProfile join Sticker		on UserProfile.UserID = Sticker.StudentID
-		join Classes					on Classes.ClassID = Sticker.ClassID
+	select distinct DisplayFName, DisplayLName, Sticker.StickerID, ProblemDescription, Sticker.ClassID, CourseCode, CourseName, CourseNumber, 
+					StudentID, TutorID, MinimumStarRanking, SubmitTime, [Timeout]
+	from UserProfile join Sticker			on UserProfile.UserID = Sticker.StudentID
+					 join Classes			on Classes.ClassID = Sticker.ClassID
+					 join Review			on Sticker.StickerID not in (select StickerID from Review group by StickerID having count(StickerID) = 2)
 	where Sticker.TutorID = @userID
-		and MinimumStarRanking <= case when @starrank <> 0
-										then @starrank
-									  else MinimumStarRanking
-								 end
-		and Sticker.ClassID = case when @classID is not null
-								then @classID
-						   else Sticker.ClassID
-					  end
-union
-	select distinct DisplayFName, DisplayLName, Sticker.StickerID, Sticker.ClassID, ChatID, StudentID, TutorID,
-		CourseCode, CourseNumber, CourseName, ProblemDescription, MinimumStarRanking, SubmitTime, [Timeout]
-	from UserProfile join Sticker		on UserProfile.UserID = Sticker.StudentID
-		join Classes					on Classes.ClassID = Sticker.ClassID
-		join StickerToMentor			on StickerToMentor.StickerID = Sticker.StickerID
-	where Sticker.TutorID = @userID
-		and MinimumStarRanking <= case when @starrank <> 0
-										then @starrank
-									  else MinimumStarRanking
-								 end
-		and Sticker.ClassID = case when @classID is not null
-								then @classID
-						   else Sticker.ClassID
-					  end
-		and StickerToMentor.MentorID = case when @organization is not null
-												then @organization
-											else StickerToMentor.MentorID
-									   end
-order by [Timeout] asc, SubmitTime asc;
+		  and Sticker.ClassID = case when @classID <> 0
+									      then @classID
+									 else Sticker.ClassID
+								end
+		  and MinimumStarRanking >= case when @starrank <> 0
+											  then @starrank
+									     else MinimumStarRanking
+								    end
+	order by [Timeout] asc, SubmitTime asc
 end;
 
 /************************************************************************* 
