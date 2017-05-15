@@ -8,8 +8,11 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Width="Auto" Height="Auto">
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto">
-            <Grid Height="Auto" Width="Auto">
+            <Grid Height="Auto" Width="Auto" Background="DimGray">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -17,9 +20,14 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="DescriptionContent" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="Auto"/>
-                <Button x:Name="OkBtn" Grid.Row="1" Content="That's Fine" Background="Green" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="50" Width="150" Click="OkBtn_Click"/>
-                <Button x:Name="NotOkBtn" Grid.Row="1" Grid.Column="1" Background="Red" Content="That's Not Ok" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="50" Width="150" Click="NotOkBtn_Click"/>
+                <TextBox x:Name="DescriptionContent" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="Auto"/>
+                <TextBlock Text="Original Review:" Grid.Row="0"/>
+
+                <TextBox x:Name="IssueContent" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="Auto"/>
+                <TextBlock Text="Issue Description:" Grid.Row="2"/>
+
+                <Button x:Name="OkBtn" Grid.Row="4" Content="That's Fine" Background="Green" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="50" Width="150" Click="OkBtn_Click"/>
+                <Button x:Name="NotOkBtn" Grid.Row="4" Grid.Column="1" Background="Red" Content="That's Not Ok" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="50" Width="150" Click="NotOkBtn_Click"/>
             </Grid>
         </Border>
         
