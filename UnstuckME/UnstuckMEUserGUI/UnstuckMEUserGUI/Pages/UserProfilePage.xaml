@@ -66,7 +66,7 @@
                         <Label Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Top" Content="Organizations" Cursor="Arrow"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1,1,0,0">
-                        <ScrollViewer BorderBrush="Black" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,35,0,0">
+                        <ScrollViewer BorderBrush="Black" VerticalScrollBarVisibility="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,35,0,0">
                             <StackPanel x:Name="StackPanelOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
                         </ScrollViewer>
                     </Border>

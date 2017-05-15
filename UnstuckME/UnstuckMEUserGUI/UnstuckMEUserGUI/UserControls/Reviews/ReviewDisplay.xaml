@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
              mc:Ignorable="d" 
-             Name="Review" MinHeight="80" MinWidth="350" MaxHeight="180" d:DesignHeight="80" d:DesignWidth="350">
+             Name="Review" MinHeight="80" Width="Auto" MaxHeight="80" d:DesignHeight="80" d:DesignWidth="350">
     <Grid x:Name="ReviewDisplayGrid" Background="Transparent">
         <Border x:Name="DescriptionTextBox" BorderBrush="Black" BorderThickness="1" Background="Transparent" MouseEnter="DescriptionTextBox_MouseEnter" MouseLeave="DescriptionTextBox_MouseLeave">
             <Grid x:Name="textblockGrid" Height="{Binding ActualHeight, ElementName=ReviewDisplayGrid}" Width="{Binding ActualWidth, ElementName=ReviewDisplayGrid}">
-                <TextBlock x:Name="ReviewDescription" FontSize="24" TextWrapping="Wrap" Foreground="White" Margin="0,0,0,26" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-                <TextBlock x:Name="StarRatingTextBlock" FontSize="24" Text="Rating: " Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,5" />
+                <TextBlock x:Name="ReviewDescription" Height="40" FontSize="24" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+                <TextBlock x:Name="StarRatingTextBlock" Height="40" FontSize="24" Padding="5,0,0,0" Text="Rating: " Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
                 <controls:Rating x:Name="StarRating" ItemCount="5" Value="1" Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"
                                  Background="Transparent" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="85,0" IsManipulationEnabled="False">
                     <controls:Rating.LayoutTransform>
