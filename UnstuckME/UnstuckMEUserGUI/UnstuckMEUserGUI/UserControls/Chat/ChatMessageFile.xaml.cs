@@ -1,30 +1,52 @@
 ﻿using System;
+using System.IO;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media.Imaging;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using UnstuckME_Classes;
 using UnstuckMeLoggers;
 
 namespace UnstuckMEUserGUI
 {
     /// <summary>
-    /// Interaction logic for ChatMessage.xaml
+    /// Interaction logic for ChatMessageFile.xaml
     /// </summary>
-    public partial class ChatMessage : UserControl
+    public partial class ChatMessageFile : UserControl
     {
         public UnstuckMEGUIChatMessage Message;
 
-        public ChatMessage(UnstuckMEGUIChatMessage inMessage)
+        public ChatMessageFile(UnstuckMEGUIChatMessage inMessage)
         {
             InitializeComponent();
-            TextBoxUserName.Content = inMessage.Username;
-            TextBoxChatMessage.Text = inMessage.Message;
-            TextBlockChatMessage.Text = inMessage.Message;
-
-            ImageProfilePicture.Source = inMessage.ProfilePic;
             Message = inMessage;
+            TextBoxUserName.Content = inMessage.Username;
+            string[] subfilepaths = Message.Message.Split('/');
+            FileHyperlink.Inlines.Add(subfilepaths[subfilepaths.Length - 1]);
+            //long filesize = UnstuckME.Server.GetFileSize(Message.FilePath);
+            //FileSizeLabel.Content = filesize < 1048576 ? filesize / 1048576 + "KB" : filesize / (1048576 * 1024) + "MB";
+            FileInfo file = new FileInfo(FileHyperlink.Inlines.FirstInline.ContentStart.GetTextInRun(LogicalDirection.Forward));
+            
+            //subfilepaths[subfilepaths.Length - 1].Split('.')[1]   //if file.Extension doesn't work, try this
+            if (file.Extension == ".pdf")
+            {
+                filetypeImage.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(Properties.Resources.DocumentPDF.GetHbitmap(), 
+                                                                                                    IntPtr.Zero, Int32Rect.Empty,
+                                                                                                    BitmapSizeOptions.FromEmptyOptions());
+            }
 
-            EditMessageButton.Visibility = inMessage.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
+            if (!string.IsNullOrEmpty(Message.Message))
+            {
+                TextBoxChatMessage.Text = inMessage.Message;
+                TextBlockChatMessage.Text = inMessage.Message;
+                TextBlockChatMessage.Visibility = Visibility.Visible;
+                EditMessageButton.Visibility = inMessage.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
+            }
+            
+            ImageProfilePicture.Source = inMessage.ProfilePic;
         }
 
         private void EditMessageButton_Click(object sender, RoutedEventArgs e)
@@ -105,6 +127,36 @@ namespace UnstuckMEUserGUI
             {
                 var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
+            }
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            try
+            {
+                CommonSaveFileDialog saveDialog = new CommonSaveFileDialog
+                {
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    OverwritePrompt = true,
+                    IsExpandedMode = true,
+                    Title = "Save File",
+                    DefaultFileName = FileHyperlink.Inlines.FirstInline.ContentStart.GetTextInRun(LogicalDirection.Forward)
+                };
+
+                if (saveDialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    //UnstuckME.FileStream.GetFile(Message.FilePath);
+                }
+            }
+            catch (CommunicationException ex)
+            {
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
+            }
+            catch (Exception ex)
+            {
+                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
     }

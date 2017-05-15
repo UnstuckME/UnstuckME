@@ -113,7 +113,6 @@ namespace UnstuckME_Classes
 		public string FilePath { get; set; }
 		public int MessageID { get; set; }
 		public DateTime Time { get; set; }
-		public bool IsFile { get; set; }
 		public string Message { get; set; }
 		public int SenderID { get; set; }
 		public string Username { get; set; }
@@ -231,11 +230,16 @@ namespace UnstuckME_Classes
 		public string LogoLastModified { get; set; }
 	}
 
-	public class Organization
+	public class Organization : IEquatable<Organization>
 	{
 		public int MentorID { get; set; }
 		public string OrganizationName { get; set; }
-	}
+
+        public bool Equals(Organization other)
+        {
+            return other != null && MentorID == other.MentorID && OrganizationName == other.OrganizationName;
+        }
+    }
 
 	public static class Thumbnail
 	{

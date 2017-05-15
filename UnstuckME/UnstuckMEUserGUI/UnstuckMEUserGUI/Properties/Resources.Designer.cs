@@ -63,6 +63,46 @@ namespace UnstuckMEUserGUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DocumentBlack {
+            get {
+                object obj = ResourceManager.GetObject("DocumentBlack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DocumentBlue {
+            get {
+                object obj = ResourceManager.GetObject("DocumentBlue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DocumentPDF {
+            get {
+                object obj = ResourceManager.GetObject("DocumentPDF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DocumentRed {
+            get {
+                object obj = ResourceManager.GetObject("DocumentRed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Edit_Icon__32x32_ {
             get {
                 object obj = ResourceManager.GetObject("Edit_Icon__32x32_", resourceCulture);
