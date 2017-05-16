@@ -44,7 +44,7 @@ namespace UnstuckME_Classes
         /// <summary>
         /// Gets/sets the full path where the file is located locally
         /// </summary>
-        public string Path
+        public string FilePath
         {
             get { return _path; }
             set { _path = value; }

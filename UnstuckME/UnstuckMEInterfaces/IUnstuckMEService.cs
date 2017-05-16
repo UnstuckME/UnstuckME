@@ -585,5 +585,13 @@ namespace UnstuckMEInterfaces
         /// <returns></returns>
         [OperationContract]
         UnstuckMEReview GetReportedReview(int ReportID);
+
+	    /// <summary>
+	    /// Gets the size in bytes of file specified by <paramref name="messageID"/>.
+	    /// </summary>
+	    /// <param name="messageID">The unique identifier of the message to get the filepath from.</param>
+	    /// <returns>Returns the length in bytes of the file if the file exists, -1 if it doesn't.</returns>
+        [OperationContract]
+	    long GetFileSize(int messageID);
 	}
 }

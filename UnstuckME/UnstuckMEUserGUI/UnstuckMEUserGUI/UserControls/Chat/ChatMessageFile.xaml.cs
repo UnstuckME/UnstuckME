@@ -24,10 +24,10 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             Message = inMessage;
             TextBoxUserName.Content = inMessage.Username;
-            string[] subfilepaths = Message.Message.Split('/');
+            string[] subfilepaths = Message.FilePath.Split('\\');
             FileHyperlink.Inlines.Add(subfilepaths[subfilepaths.Length - 1]);
-            //long filesize = UnstuckME.Server.GetFileSize(Message.FilePath);
-            //FileSizeLabel.Content = filesize < 1048576 ? filesize / 1048576 + "KB" : filesize / (1048576 * 1024) + "MB";
+            double filesize = UnstuckME.Server.GetFileSize(Message.MessageID);
+            FileSizeLabel.Content = filesize < 1048576 ? Convert.ToSingle(filesize / 1024) + " KB" : Convert.ToSingle(filesize / 1048576) + " MB";
             FileInfo file = new FileInfo(FileHyperlink.Inlines.FirstInline.ContentStart.GetTextInRun(LogicalDirection.Forward));
             
             //subfilepaths[subfilepaths.Length - 1].Split('.')[1]   //if file.Extension doesn't work, try this
@@ -130,7 +130,7 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void FileHyperlink_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -140,12 +140,19 @@ namespace UnstuckMEUserGUI
                     OverwritePrompt = true,
                     IsExpandedMode = true,
                     Title = "Save File",
+                    EnsurePathExists = true,
                     DefaultFileName = FileHyperlink.Inlines.FirstInline.ContentStart.GetTextInRun(LogicalDirection.Forward)
                 };
 
                 if (saveDialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    //UnstuckME.FileStream.GetFile(Message.FilePath);
+                    using (UnstuckMEStream _stream = UnstuckME.FileStream.GetFile(Message.MessageID))
+                    {
+                        using (FileStream fs = File.Create(saveDialog.FileName, Convert.ToInt32(_stream.Length), FileOptions.WriteThrough))
+                        {
+                            _stream.CopyTo(fs);
+                        }
+                    }
                 }
             }
             catch (CommunicationException ex)

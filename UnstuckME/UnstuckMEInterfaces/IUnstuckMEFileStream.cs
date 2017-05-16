@@ -22,5 +22,21 @@ namespace UnstuckMEInterfaces
         /// <param name="image">A custom stream that contains the data of the image file and the information of the requesting user.</param>
         [OperationContract(IsOneWay = true)]
         void SetProfilePicture(UnstuckMEStream image);
+
+        /// <summary>
+        /// Gets a file from the server using the filepath obtained using a messageID."/>
+        /// </summary>
+        /// <param name="messageID">The unique identifier of the message to get the filepath to download the file.</param>
+        /// <returns>Returns a custom stream that contains the data of the file.</returns>
+        [OperationContract]
+        UnstuckMEStream GetFile(int messageID);
+
+        /// <summary>
+        /// Sends the file to the server and saves it locally.
+        /// </summary>
+        /// <param name="file">A custom stream containing the file bytes, the name of the file, and the user who sent it.</param>
+        /// <returns>The full path where the file was stored on the server.</returns>
+        [OperationContract]
+        string SendFile(UnstuckMEStream file);
     }
 }

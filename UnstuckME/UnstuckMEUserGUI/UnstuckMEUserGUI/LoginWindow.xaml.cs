@@ -426,6 +426,7 @@ namespace UnstuckMEUserGUI
 					using (UnstuckMEStream stream = new UnstuckMEStream(avatar, true))
 					{
                         stream.UserID = userID;
+					    stream.Filename = @"\ProfilePicture.jpeg";
 						UnstuckME.FileStream.SetProfilePicture(stream);
 					}
 				}

@@ -32,13 +32,11 @@
         <DockPanel Grid.Row="1" Grid.Column="1">
             <TextBox x:Name="TextBoxChatMessage" DockPanel.Dock="Top" Visibility="Collapsed" Background="White" Foreground="Black" TextWrapping="Wrap" Cursor="IBeam" Text="HELLO WORLD" HorizontalAlignment="Stretch" Padding="10,0,35,15" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" MaxLength="500"/>
             <TextBlock x:Name="TextBlockChatMessage" DockPanel.Dock="Top" Visibility="Collapsed" Background="Transparent" TextWrapping="Wrap" Foreground="White" Cursor="Arrow" Text="HELLO WORLD" HorizontalAlignment="Stretch" Padding="10,0,35,15" VerticalAlignment="Top"/>
-            <DockPanel x:Name="fileDockPanel">
+            <DockPanel x:Name="fileDockPanel" Margin="15,0,0,0">
                 <Border DockPanel.Dock="Left" BorderBrush="LightGray" BorderThickness="5" Width="4" Height="{Binding ActualHeight, ElementName=fileDockPanel}"/>
-                <!--<Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="0.75" Width="{Binding ActualWidth, ElementName=fileDockPanel}" Height="1"/>
-                <Border DockPanel.Dock="Bottom" BorderBrush="LightGray" BorderThickness="0.75" Width="{Binding ActualWidth, ElementName=fileDockPanel}" Height="1"/>-->
                 <Image x:Name="filetypeImage" DockPanel.Dock="Left" Source="../../Resources/Document/DocumentBlue.png" Height="35" Width="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5"/>
                 <TextBlock x:Name="TextblockFile" DockPanel.Dock="Top" Background="Transparent" Foreground="Blue" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" Padding="10,5,0,0" VerticalAlignment="Top">
-                    <Hyperlink x:Name="FileHyperlink" RequestNavigate="Hyperlink_RequestNavigate"/>
+                    <Hyperlink x:Name="FileHyperlink" Click="FileHyperlink_Click"/>
                 </TextBlock>
                 <Label x:Name="FileSizeLabel" DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,5,0,0" Foreground="Gray" FontSize="8" Content="53.06MB"/>
             </DockPanel>

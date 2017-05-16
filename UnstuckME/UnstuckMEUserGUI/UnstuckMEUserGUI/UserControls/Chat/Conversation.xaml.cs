@@ -97,7 +97,11 @@ namespace UnstuckMEUserGUI
             foreach (UnstuckMEMessage message in Chat.Messages)
             {
                 UnstuckMEGUIChatMessage guiMessage = new UnstuckMEGUIChatMessage(message, Chat);
-                UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
+
+                if (string.IsNullOrEmpty(message.FilePath))
+                    UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Add(new ChatMessage(guiMessage));
+                else
+                    UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Add(new ChatMessageFile(guiMessage));
             }
             UnstuckME.Pages.ChatPage.ScrollViewerMessagesBox.ScrollToBottom();
 

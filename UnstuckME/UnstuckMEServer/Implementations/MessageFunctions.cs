@@ -41,7 +41,7 @@ namespace UnstuckMEInterfaces
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
-                    using (var messageID = db.InsertMessage(message.ChatID, message.Message, null, message.SenderID))
+                    using (var messageID = db.InsertMessage(message.ChatID, message.Message, message.FilePath, message.SenderID))
                     {
                         int? first = messageID.First();
 

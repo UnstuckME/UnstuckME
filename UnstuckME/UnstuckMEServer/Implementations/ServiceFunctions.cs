@@ -11,6 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Configuration;
+using System.IO;
 using System.Net.Configuration;
 
 namespace UnstuckMEInterfaces
@@ -347,5 +348,30 @@ namespace UnstuckMEInterfaces
 
 			return value;
 		}
+
+	    /// <summary>
+	    /// Gets the size in bytes of file specified by <paramref name="messageID"/>.
+	    /// </summary>
+	    /// <param name="messageID">The unique identifier of the message to get the filepath from.</param>
+	    /// <returns>Returns the length in bytes of the file if the file exists, -1 if it doesn't.</returns>
+	    public long GetFileSize(int messageID)
+	    {
+	        try
+	        {
+	            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+	            {
+	                string filepath = (from m in db.Messages
+	                                where m.MessageID == messageID
+	                                select m.FilePath).First();
+
+	                FileInfo file = new FileInfo(filepath);
+	                return file.Exists ? file.Length : -1;
+	            }
+	        }
+	        catch (Exception)
+	        {
+	            return -1;
+	        }
+	    }
 	}
 }

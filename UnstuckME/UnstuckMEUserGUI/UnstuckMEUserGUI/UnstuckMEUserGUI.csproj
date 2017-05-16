@@ -106,6 +106,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\Chat\ChatMessageFile.xaml.cs">
+      <DependentUpon>ChatMessageFile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Database.cs">
       <DependentUpon>UnstuckME_Schools.tt</DependentUpon>
     </Compile>
@@ -279,6 +282,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Reviews\ResolveReportsDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Chat\ChatMessageFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -617,6 +624,10 @@
     <Resource Include="Resources\UnstuckME Application Icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Document\DocumentBlack.png" />
+    <Resource Include="Resources\Document\DocumentBlue.png" />
+    <Resource Include="Resources\Document\DocumentPDF.png" />
+    <Resource Include="Resources\Document\DocumentRed.png" />
     <Resource Include="Resources\Download\UploadWhite.png" />
     <Content Include="UnstuckME_Schools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Win32;
 using UnstuckMeLoggers;
 using UnstuckME_Classes;
+using System.Threading.Tasks;
 
 namespace UnstuckMEUserGUI
 {
@@ -15,9 +18,12 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class ChatPage : Page
 	{
+	    private UnstuckMEMessage newMessage;
+
 		public ChatPage()
 		{
 			InitializeComponent();
+		    newMessage = new UnstuckMEMessage();
 			UnstuckME.CurrentChatSession = new UnstuckMEChat()
 			{
 				ChatID = -1
@@ -31,7 +37,7 @@ namespace UnstuckMEUserGUI
 		{
 			foreach (Conversation item in StackPanelConversations.Children.OfType<Conversation>())
 			{
-				if(item.Chat.ChatID == message.ChatID)
+				if (item.Chat.ChatID == message.ChatID)
 				    item.ShowConversation();
 			}
 		}
@@ -71,7 +77,12 @@ namespace UnstuckMEUserGUI
 						if (UnstuckME.CurrentChatSession.ChatID == chat.ChatID)
 						{
 							UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(message, chat);
-							StackPanelMessages.Children.Add(new ChatMessage(temp));
+
+						    if (string.IsNullOrEmpty(message.FilePath))
+						        StackPanelMessages.Children.Add(new ChatMessage(temp));
+						    else
+						        StackPanelMessages.Children.Add(new ChatMessageFile(temp));
+
 							ScrollViewerMessagesBox.ScrollToBottom();
 						}
 					}
@@ -153,45 +164,71 @@ namespace UnstuckMEUserGUI
 			    SendButton_Click(null, null);
 		}
 
-		private void SendMessage(string message)
+		private async void SendMessage(string message)
 		{
 			try
 			{
 				if (UnstuckME.CurrentChatSession.ChatID < 0)
 					throw new Exception();   //If no conversation is chosen
 
-				UnstuckMEMessage sendingMessage = new UnstuckMEMessage()
-				{
-					ChatID = UnstuckME.CurrentChatSession.ChatID,
-					FilePath = string.Empty,
-					Message = message,
-					MessageID = 0,
-					SenderID = UnstuckME.User.UserID,
-					Time = DateTime.Now,
-					Username = UnstuckME.User.FirstName,
-					UsersInConvo = new List<int>()
-				};
+			    newMessage.ChatID = UnstuckME.CurrentChatSession.ChatID;
+			    newMessage.Message = message;
+			    newMessage.MessageID = 0;
+			    newMessage.SenderID = UnstuckME.User.UserID;
+			    newMessage.Time = DateTime.Now;
+			    newMessage.Username = UnstuckME.User.FirstName;
+			    newMessage.UsersInConvo = new List<int>();
 
 				foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
 				{
 					if (user.UserID != UnstuckME.User.UserID)
-					    sendingMessage.UsersInConvo.Add(user.UserID);
+					    newMessage.UsersInConvo.Add(user.UserID);
 				}
 
-				sendingMessage.MessageID = UnstuckME.Server.SendMessage(sendingMessage);
-				UnstuckME.CurrentChatSession.Messages.Add(sendingMessage);
-				UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(sendingMessage, UnstuckME.CurrentChatSession);
-				StackPanelMessages.Children.Add(new ChatMessage(temp));
-				ScrollViewerMessagesBox.ScrollToBottom();
-			}
-			catch(Exception ex)
-			{
-				MessageBox.Show("Chat Send Failed. Error: " + ex.Message, "Failed Message Send", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-			    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.TargetSite.Name);
+			    if (!string.IsNullOrEmpty(newMessage.FilePath))
+			    {
+			        string[] filenames = newMessage.FilePath.Split('\\');
+			        await Task.Factory.StartNew(() => AsyncUploadFile(newMessage.FilePath, filenames[filenames.Length - 1]));
+			    }
+
+                newMessage.MessageID = UnstuckME.Server.SendMessage(newMessage);
+
+                UnstuckME.CurrentChatSession.Messages.Add(newMessage);
+				UnstuckMEGUIChatMessage temp = new UnstuckMEGUIChatMessage(newMessage, UnstuckME.CurrentChatSession);
+
+                if (string.IsNullOrEmpty(newMessage.FilePath))
+			        StackPanelMessages.Children.Add(new ChatMessage(temp));
+			    else
+			        StackPanelMessages.Children.Add(new ChatMessageFile(temp));
+
+                ScrollViewerMessagesBox.ScrollToBottom();
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, ex.TargetSite.Name);
+                UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Chat Send Failed. Error: " + ex.Message, "Failed to Send Message", UnstuckMEBoxImage.Error);
+                messagebox.ShowDialog();
 			}
 		}
 
-		private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
+	    private void AsyncUploadFile(string filepath, string filename)
+	    {
+	        using (FileStream fs = File.Open(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
+	        {
+	            using (MemoryStream ms = new MemoryStream())
+	            {
+	                fs.CopyTo(ms);
+	                ms.Position = 0L;
+	                newMessage.FilePath = UnstuckME.FileStream.SendFile(new UnstuckMEStream(ms.ToArray(), false)
+	                {
+                        UserID = UnstuckME.User.UserID,
+                        Filename = filename
+	                });
+	            }
+	        }
+	    }
+
+        private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
 		{
 			ButtonCreateChat.Visibility = Visibility.Hidden;
 			ButtonCreateChat.IsEnabled = false;
@@ -320,7 +357,29 @@ namespace UnstuckMEUserGUI
 
         private void UploadButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            try
+            {
+                OpenFileDialog uploadFileDialog = new OpenFileDialog()
+                {
+                    AddExtension = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
+                    Multiselect = false,
+                    ValidateNames = true,
+                    CheckPathExists = true,
+                    CheckFileExists = true,
+                    Filter = "All Files (*.*)|*.*",
+                    Title = "Upload File"
+                };
 
+                bool? open = uploadFileDialog.ShowDialog();
+
+                if (open.HasValue && open.Value)
+                    newMessage.FilePath = uploadFileDialog.FileName;
+            }
+            catch (Exception ex)
+            {
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.TargetSite.Name);
+            }
         }
     }
 }
