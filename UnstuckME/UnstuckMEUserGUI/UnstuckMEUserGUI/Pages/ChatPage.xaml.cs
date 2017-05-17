@@ -228,15 +228,15 @@ namespace UnstuckMEUserGUI
 	        }
 	    }
 
-        private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
-		{
-			ButtonCreateChat.Visibility = Visibility.Hidden;
-			ButtonCreateChat.IsEnabled = false;
-			GridConversations.Visibility = Visibility.Hidden;
-			GridConversations.IsEnabled = false;
-			GridNewConversation.Visibility = Visibility.Visible;
-			GridNewConversation.IsEnabled = true;
-		}
+  //      private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
+		//{
+		//	ButtonCreateChat.Visibility = Visibility.Hidden;
+		//	ButtonCreateChat.IsEnabled = false;
+		//	GridConversations.Visibility = Visibility.Hidden;
+		//	GridConversations.IsEnabled = false;
+		//	GridNewConversation.Visibility = Visibility.Visible;
+		//	GridNewConversation.IsEnabled = true;
+		//}
 
 		public void ButtonAddUserDone_Click(object sender, RoutedEventArgs e)
 		{
@@ -244,7 +244,12 @@ namespace UnstuckMEUserGUI
 			ButtonCreateChat.IsEnabled = true;
 			GridConversations.Visibility = Visibility.Visible;
 			GridConversations.IsEnabled = true;
-			GridNewConversation.Visibility = Visibility.Hidden;
+            if (UnstuckME.CurrentChatSession.ChatID != -1)
+            {
+                LeaveCreateChat.Visibility = Visibility.Visible;
+            }
+            LeaveCreateChat.IsEnabled = true;
+            GridNewConversation.Visibility = Visibility.Hidden;
 			GridNewConversation.IsEnabled = false;
 			TextBoxManualUserNameSearch.Text = string.Empty;
 		}
@@ -379,6 +384,84 @@ namespace UnstuckMEUserGUI
             catch (Exception ex)
             {
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, ex.TargetSite.Name);
+            }
+        }
+
+        private void ButtonCreateChat_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonCreateChat.Background = Brushes.LightSteelBlue;
+        }
+
+        private void ButtonCreateChat_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonCreateChat.Background = Brushes.SteelBlue;
+        }
+
+        private void ButtonCreateChat_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ButtonCreateChat.Visibility = Visibility.Hidden;
+            ButtonCreateChat.IsEnabled = false;
+            LeaveCreateChat.Visibility = Visibility.Hidden;
+            LeaveCreateChat.IsEnabled = false;
+            GridConversations.Visibility = Visibility.Hidden;
+            GridConversations.IsEnabled = false;
+            GridNewConversation.Visibility = Visibility.Visible;
+            GridNewConversation.IsEnabled = true;
+        }
+
+        private void LeaveCreateChat_MouseEnter(object sender, MouseEventArgs e)
+        {
+            LeaveCreateChat.Background = Brushes.IndianRed;
+        }
+
+        private void LeaveCreateChat_MouseLeave(object sender, MouseEventArgs e)
+        {
+            LeaveCreateChat.Background = UnstuckME.Red;
+        }
+
+        private void LeaveCreateChat_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            UnstuckMEMessageBox confirm = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, "Are you sure you want to leave the current conversation?", "Leave Conversation", UnstuckMEBoxImage.Information);
+            if(confirm.ShowDialog().Value)
+            {
+                try
+                {
+                    Conversation temp = null;
+                    UnstuckMEChat tempChat = null;
+                    //UnstuckME.Server.LeaveConversation(UnstuckME.User.UserID, UnstuckME.CurrentChatSession.ChatID, UnstuckME.CurrentChatSession.Users);
+                    UnstuckME.Server.LeaveConversation(UnstuckME.User.UserID, UnstuckME.CurrentChatSession.ChatID);
+                    UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Clear();
+                    foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
+                    {
+                        if (chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
+                        {
+                            tempChat = chat;
+                        }
+                    }
+                    foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+                    {
+                        if(convo.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
+                        {
+                            temp = convo;
+                        }
+                    }
+                    UnstuckME.Pages.ChatPage.StackPanelConversations.Children.Remove(temp);
+                    UnstuckME.ChatSessions.Remove(tempChat);
+                    if (UnstuckME.Pages.ChatPage.StackPanelConversations.Children.Count > 0)
+                    {
+                        (UnstuckME.Pages.ChatPage.StackPanelConversations.Children[0] as Conversation).ConversationUserControl_MouseLeftButtonDown(null, null);
+                    }
+                    else
+                    {
+                        UnstuckME.CurrentChatSession.ChatID = -1;
+                        UnstuckME.CurrentChatSession.Messages.Clear();
+                        UnstuckME.CurrentChatSession.Users.Clear();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

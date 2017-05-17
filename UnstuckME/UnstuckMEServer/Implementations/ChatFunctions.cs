@@ -8,6 +8,23 @@ namespace UnstuckMEInterfaces
 {
     public partial class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
     {
+        //public void LeaveConversation(int UserID, int ChatID, List<UnstuckMEChatUser> Users)
+        public void LeaveConversation(int UserID, int ChatID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                db.DeleteUserFromChat(UserID, ChatID);
+            }
+
+            //foreach (UnstuckMEChatUser user in Users)
+            //{
+            //    if (user.UserID != UserID && _connectedClients.ContainsKey(user.UserID))
+            //    {
+                    
+            //    }
+            //}
+        }
+
         /// <summary>
         /// Creates a chat associated with a user.
         /// </summary>

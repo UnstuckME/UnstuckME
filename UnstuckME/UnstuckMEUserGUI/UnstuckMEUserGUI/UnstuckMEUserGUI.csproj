@@ -629,6 +629,7 @@
     <Resource Include="Resources\Document\DocumentPDF.png" />
     <Resource Include="Resources\Document\DocumentRed.png" />
     <Resource Include="Resources\Download\UploadWhite.png" />
+    <Resource Include="Resources\Minus\MinusWhite.png" />
     <Content Include="UnstuckME_Schools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UnstuckME_Schools.edmx</DependentUpon>

@@ -27,14 +27,24 @@ namespace UnstuckMEUserGUI
 
             if (!test.Any())
             {
-                ConversationLabel.Content = "Solo";
+                ConvoLabelText.Text = "Solo";
                 var uri = new Uri("pack://application:,,,/Resources/AddUser/AddUserRed.png");
                 var bitmap = new BitmapImage(uri);
                 ConversationImage.Source = bitmap;
             }
             else if (test.Count() > 1)
             {
-                ConversationLabel.Content = "Group";
+                int count = 0;
+                ConvoLabelText.Text = string.Empty;
+                foreach (var user in test)
+                {
+                    if(count != 0)
+                    {
+                        ConvoLabelText.Text += ", ";
+                    }
+                    ConvoLabelText.Text += user.ConversationName;
+                    count++;
+                }
                 var uri = new Uri("pack://application:,,,/Resources/Group/GroupRed.png");
                 var bitmap = new BitmapImage(uri);
                 ConversationImage.Source = bitmap;
@@ -52,7 +62,7 @@ namespace UnstuckMEUserGUI
                         }
                     }
                 }
-                ConversationLabel.Content = test.First().ConversationName;
+                ConvoLabelText.Text = test.First().ConversationName;
             }
         }
 
@@ -75,7 +85,8 @@ namespace UnstuckMEUserGUI
         {
             UnstuckME.Pages.ChatPage.ButtonAddUserToConvo.Visibility = Visibility.Visible;
             UnstuckME.Pages.ChatPage.ButtonAddUserToConvo.IsEnabled = true;
-            UnstuckME.Pages.ChatPage.LabelConversationName.Content = ConversationLabel.Content;
+            UnstuckME.Pages.ChatPage.LeaveCreateChat.Visibility = Visibility.Visible;
+            UnstuckME.Pages.ChatPage.LabelConversationName.Content = ConvoLabelText.Text;
             foreach (UnstuckMEChatUser user in Chat.Users)
             {
                 if (user.ProfilePicture == null)

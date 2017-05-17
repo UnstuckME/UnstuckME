@@ -14,7 +14,9 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Image x:Name="ConversationImage" Source="/Resources/Group/GroupWhite.png" Width="40" HorizontalAlignment="Left" Cursor="Hand"></Image>
-            <Label x:Name="ConversationLabel" Margin="45,0,0,0" Content="Hello" Foreground="White" MouseLeftButtonDown="ConversationUserControl_MouseLeftButtonDown" VerticalContentAlignment="Center" Padding="8,0,8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Label>
+            <Label x:Name="ConversationLabel" Margin="45,0,0,0" Foreground="White" MouseLeftButtonDown="ConversationUserControl_MouseLeftButtonDown" VerticalContentAlignment="Center" Padding="8,0,8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TextBlock Name="ConvoLabelText" Text="Convo Name" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis"></TextBlock>
+            </Label>
             <Border BorderBrush="DimGray" BorderThickness="1,1,1,1" Background="{x:Null}"></Border>
         </Grid>
         <Grid Grid.Row="1" Background="SteelBlue"></Grid>

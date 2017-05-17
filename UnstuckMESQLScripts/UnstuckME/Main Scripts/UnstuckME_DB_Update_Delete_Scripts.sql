@@ -6,6 +6,8 @@ GO
 /***************************************************
 DROP STORED PROCEDURES
 ***************************************************/
+IF OBJECT_ID('DeleteUserFromChat') is not null
+	DROP PROCEDURE [DeleteUserFromChat];
 IF OBJECT_ID('DeleteUserFromClass') is not null
 	DROP PROCEDURE [DeleteUserFromClass];
 IF OBJECT_ID('DeleteServerAdmin') is not null
@@ -32,9 +34,6 @@ IF OBJECT_ID('DeleteFriend') is not null
 	DROP PROCEDURE DeleteFriend;
 IF OBJECT_ID('RemoveUserFromMentorProgram') is not null
 	DROP PROCEDURE RemoveUserFromMentorProgram;
-
---Photo
-/********************************NEED MORE INFO ON HOW WE ARE STORING PHOTOS*******************************/
 IF OBJECT_ID('UpdateServerAdmin') is not null
 	DROP PROCEDURE UpdateServerAdmin;
 IF OBJECT_ID('UpdateMentorNameByMentorID') is not null
@@ -78,6 +77,22 @@ IF OBJECT_ID('UpdateStickerByChatID') is not null
 GO
 --START CREATION SCRIPTS
 /*********************************************************/
+CREATE PROC [dbo].DeleteUserFromChat
+	(
+		@UserID INT,
+		@ChatID INT
+	)
+AS
+	BEGIN
+		IF (NOT EXISTS(SELECT UserID FROM UserToChat WHERE UserID = @UserID AND ChatID = @ChatID))
+			RETURN 1;
+		ELSE BEGIN
+			DELETE FROM UserToChat 
+			WHERE UserID = @UserID AND ChatID = @ChatID
+			RETURN 0;
+		END
+	END
+GO
 /*********************************************************
 --Delete User From Class Stored Procedure
 *********************************************************/

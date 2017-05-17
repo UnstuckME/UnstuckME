@@ -493,6 +493,10 @@
         <Function Name="DeleteStickerByStickerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StickerID" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeleteUserFromChat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="ChatID" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteUserFromClass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="ClassID" Type="int" Mode="In" />
@@ -1363,6 +1367,10 @@
           <FunctionImport Name="DeleteStickerByStickerID">
             <Parameter Name="StickerID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DeleteUserFromChat">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="ChatID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DeleteUserFromClass">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
@@ -2150,6 +2158,7 @@
           <FunctionImportMapping FunctionImportName="DeleteReviewByReviewID" FunctionName="UnstuckME_DBModel.Store.DeleteReviewByReviewID" />
           <FunctionImportMapping FunctionImportName="DeleteServerAdmin" FunctionName="UnstuckME_DBModel.Store.DeleteServerAdmin" />
           <FunctionImportMapping FunctionImportName="DeleteStickerByStickerID" FunctionName="UnstuckME_DBModel.Store.DeleteStickerByStickerID" />
+          <FunctionImportMapping FunctionImportName="DeleteUserFromChat" FunctionName="UnstuckME_DBModel.Store.DeleteUserFromChat" />
           <FunctionImportMapping FunctionImportName="DeleteUserFromClass" FunctionName="UnstuckME_DBModel.Store.DeleteUserFromClass" />
           <FunctionImportMapping FunctionImportName="DeleteUserPictureByUserID" FunctionName="UnstuckME_DBModel.Store.DeleteUserPictureByUserID" />
           <FunctionImportMapping FunctionImportName="DeleteUserProfileByUserID" FunctionName="UnstuckME_DBModel.Store.DeleteUserProfileByUserID" />

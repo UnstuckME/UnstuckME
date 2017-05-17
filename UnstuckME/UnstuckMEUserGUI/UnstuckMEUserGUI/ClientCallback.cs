@@ -237,5 +237,36 @@ namespace UnstuckMEUserGUI
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Could not add review " + review.ReviewID + " to interface, Source = " + trace.Name);
 	        }
 	    }
+
+        public void ChatUserLeft(int UserID, int ChatID)
+        {
+            UnstuckMEChatUser temp = null;
+            if(UnstuckME.CurrentChatSession.ChatID == ChatID)
+            {
+                foreach (var User in UnstuckME.CurrentChatSession.Users)
+                {
+                    if(User.UserID == UserID)
+                    {
+                        temp = User;
+                    }
+                }
+                UnstuckME.CurrentChatSession.Users.Remove(temp);
+            }
+
+            foreach (var Chat in UnstuckME.ChatSessions)
+            {
+                if(Chat.ChatID == ChatID)
+                {
+                    foreach (var User in Chat.Users)
+                    {
+                        if (User.UserID == UserID)
+                        {
+                            temp = User;
+                        }
+                    }
+                    Chat.Users.Remove(temp);
+                }
+            }
+        }
     }
 }

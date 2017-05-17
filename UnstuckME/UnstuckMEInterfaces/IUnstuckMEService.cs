@@ -8,13 +8,16 @@ namespace UnstuckMEInterfaces
 	[ServiceContract(CallbackContract = typeof(IClient))]
 	public interface IUnstuckMEService
 	{
-	    /// <summary>
-	    /// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
-	    /// </summary>
-	    /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
-	    /// <param name="stickerID">The unique identifier of the sticker that has been accepted.</param>
-	    /// <param name="studentID">The unique identifier of the user who submitted the sticker.</param>
-		[OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true)]
+        //void LeaveConversation(int UserID, int ChatID, List<UnstuckMEChatUser> Users);
+        void LeaveConversation(int UserID, int ChatID);
+        /// <summary>
+        /// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
+        /// </summary>
+        /// <param name="tutorID">The unique identifier of the user who has accepted the sticker.</param>
+        /// <param name="stickerID">The unique identifier of the sticker that has been accepted.</param>
+        /// <param name="studentID">The unique identifier of the user who submitted the sticker.</param>
+        [OperationContract(IsOneWay = true)]
 		void AcceptSticker(int tutorID, int studentID, int stickerID);
 
         /// <summary>

@@ -6,6 +6,8 @@ namespace UnstuckMEInterfaces
     [ServiceContract]
     public interface IClient
     {
+        [OperationContract(IsOneWay = true)]
+        void ChatUserLeft(int UserID, int ChatID);
         /// <summary>
         /// Forces the client to close with a messagebox popup.
         /// </summary>

@@ -20,9 +20,16 @@
             <Grid Grid.Column="0" Grid.Row="0" Background="#336699">
                 <Border BorderBrush="Black" BorderThickness="0,0,0,1"/>
                 <Label Content="Conversations:" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <Button x:Name="ButtonCreateChat" Click="ButtonCreateChat_Click" HorizontalAlignment="Right" BorderThickness="0,0,0,0" Width="30" Height="30" Background="{x:Null}" Cursor="Hand" VerticalAlignment="Center">
+                <!--<Button x:Name="ButtonCreateChat" Click="ButtonCreateChat_Click" HorizontalAlignment="Right" BorderThickness="0,0,0,0" Width="30" Height="30" Background="{x:Null}" Cursor="Hand" VerticalAlignment="Center">
                     <Image Source="/Resources/Plus/PlusWhite.png" Height="15" Width="15" Stretch="UniformToFill"/>
                 </Button>
+                -->
+                <Border x:Name="ButtonCreateChat" MouseEnter="ButtonCreateChat_MouseEnter" MouseLeave="ButtonCreateChat_MouseLeave" MouseLeftButtonDown="ButtonCreateChat_MouseLeftButtonDown" Margin="0,0,5,0" BorderThickness="2,2,2,2" CornerRadius="90" Cursor="Hand" Height="30" Width="30" BorderBrush="DimGray" VerticalAlignment="Center" HorizontalAlignment="Right" Background="SteelBlue">
+                    <Image  Height="15" Width="15" Cursor="Hand" Source="/Resources/Plus/PlusWhite.png"/>
+                </Border>
+                <Border Visibility="Hidden" x:Name="LeaveCreateChat" MouseEnter="LeaveCreateChat_MouseEnter" MouseLeave="LeaveCreateChat_MouseLeave" MouseLeftButtonDown="LeaveCreateChat_MouseLeftButtonDown" Margin="0,0,38,0" BorderThickness="2,2,2,2" CornerRadius="90" Cursor="Hand" Height="30" Width="30" BorderBrush="DimGray" VerticalAlignment="Center" HorizontalAlignment="Right" Background="#993333" ToolTip="Leave Conversation">
+                    <Image  Height="15" Width="15" Cursor="Hand" Source="/Resources/Minus/MinusWhite.png"/>
+                </Border>
             </Grid>
             <Grid x:Name="GridConversations" Visibility="Visible" IsEnabled="True" Grid.Column="0" Grid.Row="1">
                 <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
