@@ -43,8 +43,8 @@
                 <ColumnDefinition Width="225*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
-                <Border BorderBrush="Black" BorderThickness="0,0,1,1">
-                    <Image x:Name="ProfilePicture" Stretch="UniformToFill" Source="/Resources/User/UserBlue.png" HorizontalAlignment="Stretch" Width="Auto" Height="150" VerticalAlignment="Top"/>
+                <Border BorderBrush="Wheat" BorderThickness="1" Margin="5" CornerRadius="2">
+                    <Image x:Name="ProfilePicture" Stretch="UniformToFill" Source="/Resources/User/UserBlue.png" HorizontalAlignment="Center" Width="Auto" Height="150" VerticalAlignment="Center"/>
                 </Border>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
@@ -76,17 +76,24 @@
                 </Grid>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="1">
-                <Grid x:Name="ButtonEditProfile" Cursor="Hand" VerticalAlignment="Top" HorizontalAlignment="Left" Background="SteelBlue" Width="125" Height="35" MouseEnter="ButtonEditProfile_MouseEnter" MouseLeave="ButtonEditProfile_MouseLeave" MouseLeftButtonDown="ButtonEditProfile_MouseLeftButtonDown">
-                    <Border BorderThickness="0" Width="35" HorizontalAlignment="Right">
-                        <Image Source="/Resources/Edit/EditWhite.png" Width="25" Height="25" HorizontalAlignment="Right"/>
-                    </Border>
-                    <Label Content="Edit Profile" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="115" VerticalContentAlignment="Center" Foreground="White"/>
-                    <Border BorderBrush="DimGray" BorderThickness="0,0,2,2"/>
-                </Grid>
-                <Grid x:Name="ButtonDeleteProfile" Cursor="Hand" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="DarkRed" Width="95" Height="30" MouseEnter="ButtonDeleteProfile_MouseEnter" MouseLeave="ButtonDeleteProfile_MouseLeave" MouseLeftButtonDown="ButtonDeleteProfile_MouseLeftButtonDown" Margin="0,0,0,5">
-                    <Label Content="Delete Profile" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="85" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="White"/>
-                    <Border BorderBrush="DimGray" BorderThickness="0,0,2,2"/>
-                </Grid>
+                <Border x:Name="ButtonEditProfile" CornerRadius="4" Cursor="Hand" Margin="0 15 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Background="SteelBlue" Width="125" Height="35" MouseEnter="ButtonEditProfile_MouseEnter" MouseLeave="ButtonEditProfile_MouseLeave" MouseLeftButtonDown="ButtonEditProfile_MouseLeftButtonDown">
+                    <Grid>
+                        <Border BorderThickness="0" Width="35" HorizontalAlignment="Right" Padding=" 0 0 5 0">
+                                <Image Source="/Resources/Edit/EditWhite.png" Width="25" Height="25" HorizontalAlignment="Right"/>
+                        </Border>
+                        <TextBlock Text="Edit Profile" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="13" Padding="10 0 0 0"/>
+                    </Grid>
+                </Border>
+                <Border x:Name="ButtonDeleteProfile" CornerRadius="4" Cursor="Hand" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="DarkRed" Width="125" Height="35" MouseEnter="ButtonDeleteProfile_MouseEnter" MouseLeave="ButtonDeleteProfile_MouseLeave" MouseLeftButtonDown="ButtonDeleteProfile_MouseLeftButtonDown" Margin="0,0,0,15">
+                    <Grid>
+                        <TextBlock Text="Delete Profile"
+                                   FontSize="13"
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   Foreground="White" 
+                                   Padding="10 0 0 0"/>
+                    </Grid>
+                </Border>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Panel.ZIndex="1">
                 <Grid.ColumnDefinitions>
