@@ -52,8 +52,16 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var temp = db.GetUserID(emailAddress).First();
-                return temp ?? -1;
+                try
+                {
+                    var temp = db.GetUserID(emailAddress).First();
+                    return temp ?? -1;
+                }
+                catch(Exception ex)
+                {
+                    UnstuckMeLoggers.UnstuckMEServerEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES_SERVER.DATABASE_RETURN_ERROR, ex.Message);
+                    return -1;
+                }
             }
         }
 
