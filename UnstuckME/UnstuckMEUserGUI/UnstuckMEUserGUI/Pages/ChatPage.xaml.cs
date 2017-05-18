@@ -111,7 +111,7 @@ namespace UnstuckMEUserGUI
 					{
 						for (int i = 0; i < StackPanelMessages.Children.Count; i++)
 						{
-							if (((ChatMessage)StackPanelMessages.Children[i]).Message.MessageID == message.MessageID)
+							if (((ChatMessage)StackPanelMessages.Children[i]).Message.Message.MessageID == message.MessageID)
 							{
 								StackPanelMessages.Children.Remove(StackPanelMessages.Children[i]);
 								break;
@@ -136,9 +136,9 @@ namespace UnstuckMEUserGUI
 					{
 						for (int i = 0; i < StackPanelMessages.Children.Count; i++)
 						{
-							if (((ChatMessage)StackPanelMessages.Children[i]).Message.MessageID == message.MessageID)
+							if (((ChatMessage)StackPanelMessages.Children[i]).Message.Message.MessageID == message.MessageID)
 							{
-								((ChatMessage)StackPanelMessages.Children[i]).Message.Message = message.Message;
+								((ChatMessage)StackPanelMessages.Children[i]).Message.Message.Message = message.Message;
 								((ChatMessage)StackPanelMessages.Children[i]).TextBoxChatMessage.Text = message.Message;
 							    ((ChatMessage)StackPanelMessages.Children[i]).TextBlockChatMessage.Text = message.Message;
                                 break;
@@ -222,8 +222,9 @@ namespace UnstuckMEUserGUI
 	                newMessage.FilePath = UnstuckME.FileStream.SendFile(new UnstuckMEStream(ms.ToArray(), false)
 	                {
                         UserID = UnstuckME.User.UserID,
-                        Filename = filename
+                        Filename = filename,
 	                });
+	                newMessage.FileSize = ms.Length;
 	            }
 	        }
 	    }
@@ -379,7 +380,16 @@ namespace UnstuckMEUserGUI
                 bool? open = uploadFileDialog.ShowDialog();
 
                 if (open.HasValue && open.Value)
-                    newMessage.FilePath = uploadFileDialog.FileName;
+                {
+                    FileInfo file = new FileInfo(uploadFileDialog.FileName);
+                    if (file.Length < 26214400)
+                        newMessage.FilePath = uploadFileDialog.FileName;
+                    else
+                    {
+                        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "The file you have selected exceeds the 25 MB file size limit. Please select a smaller file.", "File Size Too Large", UnstuckMEBoxImage.Error);
+                        messagebox.ShowDialog();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -422,7 +432,7 @@ namespace UnstuckMEUserGUI
         private void LeaveCreateChat_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             UnstuckMEMessageBox confirm = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, "Are you sure you want to leave the current conversation?", "Leave Conversation", UnstuckMEBoxImage.Information);
-            if(confirm.ShowDialog().Value)
+            if (confirm.ShowDialog().Value)
             {
                 try
                 {
@@ -434,23 +444,17 @@ namespace UnstuckMEUserGUI
                     foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
                     {
                         if (chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
-                        {
                             tempChat = chat;
-                        }
                     }
                     foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
                     {
                         if(convo.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
-                        {
                             temp = convo;
-                        }
                     }
                     UnstuckME.Pages.ChatPage.StackPanelConversations.Children.Remove(temp);
                     UnstuckME.ChatSessions.Remove(tempChat);
                     if (UnstuckME.Pages.ChatPage.StackPanelConversations.Children.Count > 0)
-                    {
                         (UnstuckME.Pages.ChatPage.StackPanelConversations.Children[0] as Conversation).ConversationUserControl_MouseLeftButtonDown(null, null);
-                    }
                     else
                     {
                         UnstuckME.CurrentChatSession.ChatID = -1;

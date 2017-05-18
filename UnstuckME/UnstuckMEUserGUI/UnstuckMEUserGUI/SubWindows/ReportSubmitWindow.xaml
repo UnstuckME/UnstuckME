@@ -15,7 +15,7 @@
                 <TextBlock x:Name="Header" Text="Submit Report" FontSize="28" TextAlignment="Center" Foreground="White" />
                 <Border x:Name="DescriptionTextBox" BorderBrush="Snow" BorderThickness="1" Background="Transparent" Height="100" Width="{Binding ActualWidth, ElementName=SubmissionGrid}" VerticalAlignment="Top" Margin="0,50">
                     <Grid x:Name="textblockGrid" Height="{Binding ActualHeight, ElementName=DescriptionTextBox}" Width="{Binding ActualWidth, ElementName=DescriptionTextBox}">
-                        <Label x:Name="ReviewDescription" Foreground="White" Margin="0,0,0,26" ScrollViewer.HorizontalScrollBarVisibility="Auto" BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        <TextBlock x:Name="ReviewDescription" Background="Transparent" TextWrapping="Wrap" Foreground="White" Cursor="Arrow" Text="HELLO WORLD" HorizontalAlignment="Stretch" Padding="10,0,35,15" VerticalAlignment="Top" FontSize="16"/>
                         <TextBlock x:Name="StarRatingTextBlock" Text="Rating: " Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,5" />
                         <controls:Rating x:Name="StarRating" ItemCount="5" Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"
                                      Background="Transparent" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0" />

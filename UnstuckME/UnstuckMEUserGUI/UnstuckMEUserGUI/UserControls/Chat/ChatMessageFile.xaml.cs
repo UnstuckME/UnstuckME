@@ -23,11 +23,12 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             Message = inMessage;
-            TextBoxUserName.Content = inMessage.Username;
-            string[] subfilepaths = Message.FilePath.Split('\\');
+            TextBoxUserName.Content = inMessage.Message.Username;
+            string[] subfilepaths = Message.Message.FilePath.Split('\\');
             FileHyperlink.Inlines.Add(subfilepaths[subfilepaths.Length - 1]);
-            double filesize = UnstuckME.Server.GetFileSize(Message.MessageID);
-            FileSizeLabel.Content = filesize < 1048576 ? Convert.ToSingle(filesize / 1024) + " KB" : Convert.ToSingle(filesize / 1048576) + " MB";
+            FileSizeLabel.Content = Message.Message.FileSize < 1048576 ? 
+                                    Convert.ToSingle(Message.Message.FileSize / 1024) + " KB" : 
+                                    Convert.ToSingle(Message.Message.FileSize / 1048576) + " MB";
             FileInfo file = new FileInfo(FileHyperlink.Inlines.FirstInline.ContentStart.GetTextInRun(LogicalDirection.Forward));
             
             if (file.Extension == ".pdf")
@@ -37,12 +38,12 @@ namespace UnstuckMEUserGUI
                                                                                                     BitmapSizeOptions.FromEmptyOptions());
             }
 
-            if (!string.IsNullOrEmpty(Message.Message))
+            if (!string.IsNullOrEmpty(inMessage.Message.Message))
             {
-                TextBoxChatMessage.Text = inMessage.Message;
-                TextBlockChatMessage.Text = inMessage.Message;
+                TextBoxChatMessage.Text = inMessage.Message.Message;
+                TextBlockChatMessage.Text = inMessage.Message.Message;
                 TextBlockChatMessage.Visibility = Visibility.Visible;
-                EditMessageButton.Visibility = inMessage.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
+                EditMessageButton.Visibility = inMessage.Message.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
             }
             
             ImageProfilePicture.Source = inMessage.ProfilePic;
@@ -64,20 +65,20 @@ namespace UnstuckMEUserGUI
             {
                 UnstuckMEMessage editedMessage = new UnstuckMEMessage()
                 {
-                    ChatID = Message.ChatID,
-                    FilePath = Message.FilePath,
+                    ChatID = Message.Message.ChatID,
+                    FilePath = Message.Message.FilePath,
                     Message = TextBoxChatMessage.Text,
-                    MessageID = Message.MessageID,
-                    SenderID = Message.SenderID,
-                    Time = Message.Time,
-                    Username = Message.Username,
-                    UsersInConvo = Message.UsersInConvo
+                    MessageID = Message.Message.MessageID,
+                    SenderID = Message.Message.SenderID,
+                    Time = Message.Message.Time,
+                    Username = Message.Message.Username,
+                    UsersInConvo = Message.Message.UsersInConvo
                 };
 
                 if (UnstuckME.Server.EditMessage(editedMessage) == Task.FromResult(-1))
                     throw new Exception(string.Format("Failed to edit message {0}", editedMessage.Message));
 
-                Message.Message = TextBoxChatMessage.Text;
+                Message.Message.Message = TextBoxChatMessage.Text;
                 TextBlockChatMessage.Text = TextBoxChatMessage.Text;
                 TextBoxChatMessage.Visibility = Visibility.Collapsed;
                 TextBlockChatMessage.Visibility = Visibility.Visible;
@@ -93,8 +94,8 @@ namespace UnstuckMEUserGUI
 
         private void buttonCancelChanges_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxChatMessage.Text = Message.Message;
-            TextBlockChatMessage.Text = Message.Message;
+            TextBoxChatMessage.Text = Message.Message.Message;
+            TextBlockChatMessage.Text = Message.Message.Message;
             TextBoxChatMessage.Visibility = Visibility.Collapsed;
             TextBlockChatMessage.Visibility = Visibility.Visible;
             buttonSaveChanges.Visibility = Visibility.Collapsed;
@@ -107,14 +108,14 @@ namespace UnstuckMEUserGUI
             {
                 UnstuckMEMessage deleted = new UnstuckMEMessage()
                 {
-                    ChatID = Message.ChatID,
-                    FilePath = Message.FilePath,
-                    Message = Message.Message,
-                    MessageID = Message.MessageID,
-                    SenderID = Message.SenderID,
-                    Time = Message.Time,
-                    Username = Message.Username,
-                    UsersInConvo = Message.UsersInConvo
+                    ChatID = Message.Message.ChatID,
+                    FilePath = Message.Message.FilePath,
+                    Message = Message.Message.Message,
+                    MessageID = Message.Message.MessageID,
+                    SenderID = Message.Message.SenderID,
+                    Time = Message.Message.Time,
+                    Username = Message.Message.Username,
+                    UsersInConvo = Message.Message.UsersInConvo
                 };
 
                 if (UnstuckME.Server.DeleteMessage(deleted) == Task.FromResult(-1))
@@ -145,7 +146,7 @@ namespace UnstuckMEUserGUI
 
                 if (saveDialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    using (UnstuckMEStream _stream = UnstuckME.FileStream.GetFile(Message.MessageID))
+                    using (UnstuckMEStream _stream = UnstuckME.FileStream.GetFile(Message.Message.MessageID))
                     {
                         using (FileStream fs = File.Create(saveDialog.FileName, Convert.ToInt32(_stream.Length), FileOptions.WriteThrough))
                         {

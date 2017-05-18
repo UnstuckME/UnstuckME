@@ -100,6 +100,7 @@ namespace UnstuckME_Classes
 		public int ChatID { get; set; }
 		public string Message { get; set; }
 		public string FilePath { get; set; }
+        public long FileSize { get; set; }
 		public int SenderID { get; set; }
 		public DateTime Time { get; set; }
 		public string Username { get; set; }
@@ -109,33 +110,29 @@ namespace UnstuckME_Classes
 	//This Will be passed into the ChatMessage UserControl everytime a message is submitted.
 	public class UnstuckMEGUIChatMessage
 	{
-		public int ChatID { get; set; }
-		public string FilePath { get; set; }
-		public int MessageID { get; set; }
-		public DateTime Time { get; set; }
-		public string Message { get; set; }
-		public int SenderID { get; set; }
-		public string Username { get; set; }
-		public List<int> UsersInConvo { get; set; }
-		public ImageSource ProfilePic { get; set; }
-
+        public UnstuckMEMessage Message { get; set; }
+        public ImageSource ProfilePic { get; set; }
 
 		public UnstuckMEGUIChatMessage(UnstuckMEMessage inMessage, UnstuckMEChat inChat)
 		{
-			UsersInConvo = new List<int>();
-			ChatID = inMessage.ChatID;
-			FilePath = inMessage.FilePath;
-			MessageID = inMessage.MessageID;
-			Time = inMessage.Time;
-			Message = inMessage.Message;
-			SenderID = inMessage.SenderID;
-			Username = inMessage.Username;
-			foreach (UnstuckMEChatUser user in inChat.Users)
+		    Message = new UnstuckMEMessage
+		    {
+		        UsersInConvo = new List<int>(),
+		        ChatID = inMessage.ChatID,
+		        FilePath = inMessage.FilePath,
+		        MessageID = inMessage.MessageID,
+		        Time = inMessage.Time,
+		        Message = inMessage.Message,
+		        SenderID = inMessage.SenderID,
+		        Username = inMessage.Username
+		    };
+
+		    foreach (UnstuckMEChatUser user in inChat.Users)
 			{
-				if (user.UserID == SenderID)
+				if (user.UserID == Message.SenderID)
 				    ProfilePic = user.ProfilePicture;
 
-			    UsersInConvo.Add(user.UserID);
+			    Message.UsersInConvo.Add(user.UserID);
 			}
 		}
 
