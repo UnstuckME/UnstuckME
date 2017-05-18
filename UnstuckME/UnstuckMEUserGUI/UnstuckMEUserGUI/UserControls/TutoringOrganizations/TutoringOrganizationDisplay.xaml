@@ -6,9 +6,24 @@
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              mc:Ignorable="d" 
              d:DesignHeight="35" d:DesignWidth="250">
+    
     <Grid Background="DimGray">
         <Border BorderBrush="Black" BorderThickness="1,1,1,1"/>
-        <TextBox x:Name="textBoxOrgName" Width="209" Cursor="Arrow" HorizontalAlignment="Left" Text="Tutoring Organization" Padding="5,0,0,0" Foreground="White" VerticalContentAlignment="Center" TextWrapping="NoWrap" IsReadOnly="True" IsReadOnlyCaretVisible="False" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" BorderThickness="0"/>
+        <TextBox x:Name="textBoxOrgName" 
+                 Width="209" 
+                 Cursor="Arrow" 
+                 HorizontalAlignment="Left" 
+                 Text="Tutoring Organization" 
+                 Padding="5,0,0,0" 
+                 Foreground="White" 
+                 VerticalContentAlignment="Center" 
+                 TextWrapping="NoWrap" 
+                 IsReadOnly="True" 
+                 IsReadOnlyCaretVisible="False" 
+                 Background="{x:Null}" 
+                 BorderBrush="{x:Null}" 
+                 SelectionBrush="{x:Null}"
+                 BorderThickness="0"/>
         <Button x:Name="buttonRemoveOrg" Cursor="Hand" Click="buttonRemoveOrg_Click" HorizontalAlignment="Right" Background="{x:Null}" VerticalAlignment="Center" Width="35" Height="35" BorderBrush="{x:Null}" BorderThickness="0">
             <Image Source="/Resources/Xmark/XmarkRed.png" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Button>

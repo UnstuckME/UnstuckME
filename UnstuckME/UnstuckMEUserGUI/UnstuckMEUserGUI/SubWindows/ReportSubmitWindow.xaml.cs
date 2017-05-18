@@ -25,10 +25,10 @@ namespace UnstuckMEUserGUI
         public ReportSubmitWindow(UnstuckMEReview review)
         {
             Owner = UnstuckME.MainWindow;
-            Height = Owner.ActualHeight;
-            Width = Owner.ActualWidth;
-            BackgroundCanvas.Height = Owner.ActualHeight;
-            BackgroundCanvas.Width = Owner.ActualWidth;
+            //Height = Owner.ActualHeight;
+            //Width = Owner.ActualWidth;
+            //BackgroundCanvas.Height = Owner.ActualHeight;
+            //BackgroundCanvas.Width = Owner.ActualWidth;
             InitializeComponent();
             _review = review;
             ReviewDescription.Text = _review.Description;

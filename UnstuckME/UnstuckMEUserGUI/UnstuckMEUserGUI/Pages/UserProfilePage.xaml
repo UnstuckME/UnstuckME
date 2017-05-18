@@ -61,13 +61,16 @@
                              SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,68,0,0" TextWrapping="NoWrap" Grid.Column="0" VerticalContentAlignment="Center"/>
                     <StackPanel x:Name="RatingsStack" Height="105" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                 </Grid>
-                <Grid x:Name="OrganizationGrid" Grid.Column="1">
-                    <Border BorderThickness="0,0,0,0" Background="#336699" Height="35" VerticalAlignment="Top">
+                <Grid x:Name="OrganizationGrid" Grid.Column="1" >
+                    <Border BorderThickness="0,0,0,0" 
+                            Background="#336699" 
+                            Height="35" 
+                            VerticalAlignment="Top">
                         <Label Padding="10,0,0,0" Height="35" FontSize="18" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center" VerticalAlignment="Top" Content="Organizations" Cursor="Arrow"/>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="1,1,0,0">
                         <ScrollViewer BorderBrush="Black" VerticalScrollBarVisibility="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,35,0,0">
-                            <StackPanel x:Name="StackPanelOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                            <StackPanel x:Name="StackPanelOrganization" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="50000"/>
                         </ScrollViewer>
                     </Border>
                 </Grid>
