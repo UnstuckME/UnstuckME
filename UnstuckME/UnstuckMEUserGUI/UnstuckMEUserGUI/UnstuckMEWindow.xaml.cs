@@ -578,7 +578,7 @@ namespace UnstuckMEUserGUI
 		    try
 		    {
 		        UnstuckME.Server.Logout();
-
+                UnstuckME.UserExit = true;
 		        var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
 		        config.AppSettings.Settings["RememberMe"].Value = "false";
 		        config.Save();

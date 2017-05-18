@@ -276,12 +276,17 @@ namespace UnstuckMEUserGUI
 			{
 				try
 				{
+                    if(UnstuckME.ChannelFactory.State != CommunicationState.Opened)
+                    {
+                        UnstuckME.ConnectToServer();
+                    }
 					temp = UnstuckME.Server.UserLoginAttempt(emailAttempt, passwordAttempt);
                     UnstuckME.UPW = passwordAttempt;
 				}
 				catch (Exception exp)
 				{
 				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    MessageBox.Show(exp.Message);
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 					labelInvalidLogin.Content = "Server Unavailable!";
 				}
