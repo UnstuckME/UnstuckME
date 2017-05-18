@@ -27,6 +27,7 @@ namespace UnstuckMEUserGUI.UserControls.Admin
         private void ResolveReportsBtn_Click(object sender, RoutedEventArgs e)
         {
             Window win = new SubWindows.ResolveReportsWindow();
+            win.Topmost = true;
             win.Show();
         }
     }

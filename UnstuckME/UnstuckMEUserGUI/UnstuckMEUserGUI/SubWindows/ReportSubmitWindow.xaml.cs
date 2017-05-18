@@ -13,8 +13,8 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class ReportSubmitWindow : Window
     {
-        private static UnstuckMEReview _review;
-        private static bool _result;
+        private UnstuckMEReview _review;
+        private bool _result;
 
         public bool Result
         {

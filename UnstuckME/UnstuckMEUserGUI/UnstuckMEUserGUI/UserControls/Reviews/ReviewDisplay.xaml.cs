@@ -13,7 +13,7 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class ReviewDisplay : UserControl
 	{
-        private static UnstuckMEReview _review;
+        private UnstuckMEReview _review;
 	    private readonly bool _reported;
 
 		public ReviewDisplay(UnstuckMEReview review, bool reported)

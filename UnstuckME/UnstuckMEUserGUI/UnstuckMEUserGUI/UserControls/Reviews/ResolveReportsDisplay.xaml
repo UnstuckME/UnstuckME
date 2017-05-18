@@ -10,24 +10,24 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto">
             <Grid Height="Auto" Width="Auto" Background="DimGray">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="DescriptionContent" MinHeight="50" MinWidth="350" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" VerticalAlignment="Top" Width="Auto"/>
-                <TextBlock Text="Original Review:" Grid.Row="0"/>
+                <TextBox x:Name="DescriptionContent" Cursor="Arrow" Focusable="False" MinHeight="50" FontSize="16" BorderThickness="0" Margin="10,0,10,0" MaxWidth="350" MinWidth="350" Grid.Row="1" Padding="5,0,5,0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" VerticalAlignment="Top" Width="Auto"/>
+                <TextBlock Text="Original Review:" VerticalAlignment="Center" Padding="5,0,0,0" FontSize="14" Foreground="White" FontWeight="Medium" Grid.Row="0"/>
 
-                <TextBox x:Name="IssueContent" Grid.Row="3" MinHeight="50" MinWidth="350" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" VerticalAlignment="Top" Width="Auto"/>
-                <TextBlock Text="Issue Description:" Grid.Row="2"/>
+                <TextBox x:Name="IssueContent" Cursor="Arrow"  Focusable="False" Padding="5,0,5,0" BorderThickness="0" FontSize="16" Margin="10,0,10,0" Grid.Row="3" MinHeight="50" MinWidth="350" MaxWidth="350" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap" Text="" Background="DimGray" Foreground="White" VerticalAlignment="Top" Width="Auto"/>
+                <TextBlock Text="Issue Description:" VerticalAlignment="Center" Padding="5,0,0,0" FontSize="14" Foreground="White" FontWeight="Medium" Grid.Row="2"/>
 
-                <Button x:Name="OkBtn" Grid.Row="4" Content="That's Fine" Background="Green" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50" Width="150" Click="OkBtn_Click"/>
-                <Button x:Name="NotOkBtn" Grid.Row="4" Grid.Column="1" Background="Red" Content="That's Not Ok" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50" Width="150" Click="NotOkBtn_Click"/>
+                <Button x:Name="OkBtn" Cursor="Hand" Grid.Row="4" Content="That's Fine" Background="#336699" Foreground="White" FontSize="16" FontWeight="Medium" BorderBrush="Black" BorderThickness="1" FontFamily="OpenSans" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="150" Click="OkBtn_Click"/>
+                <Button x:Name="NotOkBtn" Cursor="Hand" Grid.Row="4" Grid.Column="1" Background="#993333" Foreground="White" FontSize="16" FontWeight="Medium" FontFamily="OpenSans" BorderBrush="Black" BorderThickness="1" Content="That's Not Ok" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="150" Click="NotOkBtn_Click"/>
             </Grid>
         </Border>
         
