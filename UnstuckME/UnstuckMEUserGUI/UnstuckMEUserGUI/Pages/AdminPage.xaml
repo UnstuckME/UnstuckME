@@ -13,146 +13,138 @@
 
 
     <ScrollViewer Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
-        <Grid Height="Auto" Width="Auto" Background="DimGray">
+        <Grid Height="Auto" Width="Auto" Background="#336699">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Height="Auto" Width="Auto">
+            
+            
+            <Grid Height="Auto" Width="Auto" Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
-                <Label Name="AddClassLabel" Grid.Row="0" Content="Add Class or" Background="#336699" Foreground="White" FontSize="24"/>
-                <Label Name="AddClassesLabel" Grid.Row="0" Content="Add Classes From File" Width="267" HorizontalAlignment="Left" Foreground="White" FontSize="24" Margin="159,0,0,0" MouseDown="AddRemoveClassesBtn_Click" ToolTip="Click to add from file"/>
-                <TextBox x:Name="CourseCodeTextBox" Grid.Row="1" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" Height="27" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"/>
-                <TextBox x:Name="CourseNumberTextBox" Grid.Row="1" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" Height="27" Margin="159,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="129"/>
-                <TextBox x:Name="CourseDescTextBox" Grid.Row="1" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" Height="27" Margin="323,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="260"/>
-                <Border x:Name="AddSingleClassBtn" Grid.Row="1" Cursor="Hand" MouseLeftButtonDown="AddSingleClassBtn_Click" Height="30" Width="85" CornerRadius="5,5,5,5" Background="#336699" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="619,5,0,5" BorderBrush="Black" BorderThickness="1,1,1,1">
-                    <Label Content="Add Class" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
-                </Border>
-                <GridSplitter Grid.Row="6" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
-            </Grid>
-            <Grid Grid.Row="2" Height="Auto" Width="Auto">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Name="ReportResolutionLabel" Grid.Row="0" Content="Resolve Reports" Background="#336699" Grid.ColumnSpan="2" Foreground="White" FontSize="24"/>
-
-                <Border x:Name="ResolveReportsBtn" Grid.Row="1" Cursor="Hand" MouseLeftButtonDown="ResolveReportsBtn_Click" Height="30" Width="111" CornerRadius="5,5,5,5" Background="#336699" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,3,0,2.8" BorderBrush="Black" BorderThickness="1,1,1,1">
-                    <Label Content="Resolve Issues" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
-                </Border>
-            </Grid>
-
-            <GridSplitter Grid.Row="3" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
-
-            <Grid Grid.Row="4" Height="Auto" Width="Auto">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Name="UserMaitLabel" Grid.Row="0" Content="User Maintenance" Background="#336699" Grid.ColumnSpan="2" Foreground="White" FontSize="24"/>
-                <TextBox x:Name="UserEmailTxtBx" Grid.Row="1" HorizontalAlignment="Stretch" Background="DimGray" Margin="0,1,0,1" Foreground="White" BorderBrush="#336699" BorderThickness="2" Height="27"  TextWrapping="Wrap" ToolTip="User Email" VerticalAlignment="Center"/>
-                <Border x:Name="FindUserBtn" Grid.Row="1" Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="FindUserBtn_Click" Height="30" Width="75" CornerRadius="5,5,5,5" Background="#336699" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="0,1,0,1" BorderBrush="Black" BorderThickness="1,1,1,1">
-                    <Label Content="Find User" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
-                </Border>
-                
-                <Label x:Name="UserRoleLbl" Grid.Row="2" Content="User's Role" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <StackPanel x:Name="btnPan" Grid.Row="3" Height="26" VerticalAlignment="Top" Orientation="Horizontal">
-                    <RadioButton x:Name="DisabledBtn" GroupName="Roles" Foreground="White" Content="Disable" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="62" Checked="DisabledBtn_Checked"/>
-                    <RadioButton x:Name="UserBtn" GroupName="Roles" Foreground="White" Content="User" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="50" Checked="radioButton_Checked"/>
-                    <RadioButton x:Name="ModeratorBtn" GroupName="Roles" Foreground="White" Content="Moderator" HorizontalAlignment="Center" Margin="0,0,0,-0.2" Width="80" Checked="ModeratorBtn_Checked"/>
-                    <RadioButton x:Name="AdminBtn" GroupName="Roles" Content="Administrator" Foreground="White" HorizontalAlignment="Right" Checked="AdminBtn_Checked"/>
-                </StackPanel>
-
-
-                <Label x:Name="labelCreateFirstName" Content="First Name" Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="208" FontSize="12" Height="26" Foreground="White"/>
-                <TextBox TabIndex="0" x:Name="textBoxFirstName" Grid.Row="5" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="27"  TextWrapping="Wrap" VerticalAlignment="Center" Width="275"/>
-                <Label x:Name="labelCreateLastName" Content="Last Name" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="208" Foreground="White" FontSize="12"/>
-                <TextBox TabIndex="1" x:Name="textBoxLastName" Grid.Row="5" Grid.Column="1" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="27"  TextWrapping="Wrap" VerticalAlignment="Center" Width="275"/>
-                <Label x:Name="labelCreateEmailAddress" Content="Email Address" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Width="209" Foreground="White" FontSize="12"/>
-                <TextBox TabIndex="2" x:Name="textBoxEmailAddress" Grid.Row="9" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="27"  TextWrapping="Wrap" VerticalAlignment="Center"/>
-
-                
-                <Border x:Name="ResetPasswordBtn" Grid.Row="9" Grid.Column="1" Cursor="Hand" RenderTransformOrigin="-1.757,-0.891" Margin="0,5,0,5" MouseLeftButtonDown="ResetPasswordBtn_Click" Height="30" Width="207" CornerRadius="5,5,5,5" Background="#336699" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1,1,1,1">
-                    <Label  Content="Reset Users Password" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
-                </Border>
-                
-                <Label x:Name="AverageStudentRanklabel" Content="Average Student Rank" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="169"/>
-                <Label x:Name="AverageTutorRanklabel" Content="Average Tutor Rank" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="169"/>
-                <Label x:Name="AverageStudentRankTxt" Content="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Foreground="White"/>
-                <Label x:Name="AverageTutorRankTxt" Content="0" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="65" Foreground="White"/>
-                <Label x:Name="StudentRatingsNumberlabel" Content="Number of Student Reviews" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Foreground="White"/>
-                <Label x:Name="NumberOfStudentReviews" Content="0" HorizontalAlignment="Left" Grid.Row="13" VerticalAlignment="Top" Width="65" Foreground="White"/>
-                <Label x:Name="TutorRatingsNumberlabel" Content="Number of Tutor Reviews" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Foreground="White"/>
-                <Label x:Name="NumberOfTutorReviews" Content="0" HorizontalAlignment="Left" Grid.Row="13" Grid.Column="1" VerticalAlignment="Top" Width="65" Foreground="White"/>
-                <Button x:Name="CreateUserBtn" Content="Create New User" HorizontalAlignment="Left" Grid.Row="14"  VerticalAlignment="Top" Width="135" Height="50" Click="CreateUserBtn_Click"/>
-                <Button x:Name="UpdateRoleBtn" Content="Update User Info" HorizontalAlignment="Left" Grid.Row="14" Grid.Column="1" VerticalAlignment="Top" Width="156" Click="UpdateRoleBtn_Click" Height="50"/>
-                <Button x:Name="button1" Content="Add/Remove Mentors" HorizontalAlignment="Left" Grid.Row="15"  VerticalAlignment="Top" Width="156" Click="button1_Click"/>
-            </Grid>
-
-            <GridSplitter Grid.Row="5" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
-
-            <Grid Grid.Row="6" Height="Auto" Width="Auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="66*"/>
-                    <ColumnDefinition Width="227*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="button3" Content="Start Admin Chat" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="132" Grid.ColumnSpan="2"/>
-                <Button x:Name="button2" Content="Message All Uers" HorizontalAlignment="Left" Margin="85.505,7,0,0" VerticalAlignment="Top" Width="132" Grid.Column="1"/>
-
-            </Grid>
-
-            <GridSplitter Grid.Row="7" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
-
-            <Grid Grid.Row="8" Height="Auto" Width="Auto">
-                <TextBox x:Name="orgName" HorizontalAlignment="Left" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" Height="27" Margin="10,24,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="274"/>
-                <Button x:Name="AddOrgBtn" Content="Add Org." HorizontalAlignment="Left" Margin="111,75,0,0" VerticalAlignment="Top" Width="75" Click="AddOrgBtn_Click"/>
-                <ScrollViewer Height="307" Width="257" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,120,0,0">
-                    <StackPanel x:Name="StackPanelOrganization" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch"></StackPanel>
-                </ScrollViewer>
-            </Grid>
-            <GridSplitter Grid.Row="7" Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
-
-            <Grid Grid.Row="9" Height="Auto" Width="Auto">
+                <Grid Height="Auto" Width="Auto" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Name="AddClassLabel" Grid.Row="0" Content="Add Classes" Background="#336699" Foreground="White" FontSize="24"/>
+                    <Border x:Name="ClassesAreaBtn" Grid.Row="0" Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="ClassesAreaBtn_MouseLeftButtonDown" CornerRadius="25,25,25,25" Background="#336699" Margin="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="1,1,1,1">
+                        <Label Content="+/-" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
                 </Grid>
+                <Grid x:Name="ClassesContentArea" Height="Auto" Width="Auto" Grid.Row="1" Background="DimGray">
+
+                </Grid>
+                <Grid Height="Auto" Width="Auto" Grid.Row="2">
+                    <GridSplitter Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+                </Grid>
+            </Grid>
+
+            <Grid Height="Auto" Width="Auto" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Height="Auto" Width="Auto" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Name="UserAreaLabel" Grid.Row="0" Content="Users" Background="#336699" Grid.ColumnSpan="2" Foreground="White" FontSize="24"/>
+                    <Border x:Name="UserAreaBtn" Grid.Row="0" Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="UserAreaBtn_MouseLeftButtonDown" CornerRadius="25,25,25,25" Background="#336699" Margin="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="1,1,1,1">
+                        <Label Content="+/-" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                </Grid>
+                <Grid x:Name="UserContentArea" Height="Auto" Width="Auto" Grid.Row="1" Background="DimGray">
+
+                </Grid>
+                <Grid Height="Auto" Width="Auto" Grid.Row="2">
+                    <GridSplitter Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+                </Grid>
+            </Grid>
+
+            <Grid Height="Auto" Width="Auto" Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Height="Auto" Width="Auto" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Name="ReportResolutionLabel" Grid.Row="0" Content="Resolve Reports" Background="#336699" Grid.ColumnSpan="2" Foreground="White" FontSize="24"/>
+                    <Border x:Name="ReportAreaBtn" Grid.Row="0" Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="ReportAreaBtn_MouseLeftButtonDown" CornerRadius="25,25,25,25" Background="#336699" Margin="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="1,1,1,1">
+                        <Label Content="+/-" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                </Grid>
+                <Grid x:Name="ReportsContentArea" Height="Auto" Width="Auto" Grid.Row="1" Background="DimGray">
+
+                </Grid>
+                <Grid Height="Auto" Width="Auto" Grid.Row="2">
+                    <GridSplitter Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+                </Grid>
+            </Grid>
+
+            <Grid Height="Auto" Width="Auto" Grid.Row="3" Background="DimGray">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Height="Auto" Width="Auto" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Name="OrgsResolutionLabel" Grid.Row="0" Content="Organizations" Background="#336699" Grid.ColumnSpan="2" Foreground="White" FontSize="24"/>
+                    <Border x:Name="OrgsAreaBtn" Grid.Row="0" Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="OrgsAreaBtn_MouseLeftButtonDown" CornerRadius="25,25,25,25" Background="#336699" Margin="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="1,1,1,1">
+                        <Label Content="+/-" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                </Grid>
+                    <Grid x:Name="OrgsContentArea" Height="Auto" Width="Auto" Grid.Row="1">
+
+                    </Grid>
+                    <Grid Height="Auto" Width="Auto" Grid.Row="2">
+                        <GridSplitter Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+                    </Grid>
+                </Grid>
+
+            <Grid Height="Auto" Width="Auto" Grid.Row="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Height="Auto" Width="Auto" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Name="ChatsLabel" Grid.Row="0" Content="Admin Chats" Background="#336699" Grid.ColumnSpan="2" Foreground="White" FontSize="24"/>
+                    <Border x:Name="ChatsAreaBtn" Grid.Row="0" Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="ChatsAreaBtn_MouseLeftButtonDown" CornerRadius="25,25,25,25" Background="#336699" Margin="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="Black" BorderThickness="1,1,1,1">
+                        <Label Content="+/-" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    </Border>
+                </Grid>
+                <Grid x:Name="AdminChatsContentArea" Height="Auto" Width="Auto" Grid.Row="1" Background="DimGray">
+
+                </Grid>
+                <Grid Height="Auto" Width="Auto" Grid.Row="2">
+                    <GridSplitter Background="Black" HorizontalAlignment="Stretch" Height="4" VerticalAlignment="Center" Width="Auto"/>
+                </Grid>
+            </Grid>
+
+            
+            
         </Grid>
     </ScrollViewer>
 </Page>

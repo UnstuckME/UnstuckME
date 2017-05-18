@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="UnstuckMEUserGUI.UserControls.Admin.UserArea"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnstuckMEUserGUI.UserControls.Admin"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800">
+    <Grid Height="Auto" Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="UserEmailTxtBx" Grid.Row="1" HorizontalAlignment="Stretch" Background="DimGray" Margin="0,1,0,1" Foreground="White" BorderBrush="#336699" BorderThickness="2" Height="27"  TextWrapping="Wrap" ToolTip="User Email" VerticalAlignment="Center"/>
+        <Border x:Name="FindUserBtn" Grid.Row="1" Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="FindUserBtn_Click" Height="30" Width="75" CornerRadius="5,5,5,5" Background="#336699" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="0,1,0,1" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <Label Content="Find User" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+        </Border>
+
+        <Label x:Name="UserRoleLbl" Grid.Row="2" Content="User's Role" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <StackPanel x:Name="btnPan" Grid.Row="3" Height="26" VerticalAlignment="Top" Orientation="Horizontal">
+            <RadioButton x:Name="DisabledBtn" GroupName="Roles" Foreground="White" Content="Disable" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="62" Checked="DisabledBtn_Checked"/>
+            <RadioButton x:Name="UserBtn" GroupName="Roles" Foreground="White" Content="User" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="50" Checked="radioButton_Checked"/>
+            <RadioButton x:Name="ModeratorBtn" GroupName="Roles" Foreground="White" Content="Moderator" HorizontalAlignment="Center" Margin="0,0,0,-0.2" Width="80" Checked="ModeratorBtn_Checked"/>
+            <RadioButton x:Name="AdminBtn" GroupName="Roles" Content="Administrator" Foreground="White" HorizontalAlignment="Right" Checked="AdminBtn_Checked"/>
+        </StackPanel>
+
+
+        <Label x:Name="labelCreateFirstName" Content="First Name" Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="208" FontSize="12" Height="26" Foreground="White"/>
+        <TextBox TabIndex="0" x:Name="textBoxFirstName" Grid.Row="5" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="27"  TextWrapping="Wrap" VerticalAlignment="Center" Width="275"/>
+        <Label x:Name="labelCreateLastName" Content="Last Name" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="208" Foreground="White" FontSize="12"/>
+        <TextBox TabIndex="1" x:Name="textBoxLastName" Grid.Row="5" Grid.Column="1" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="27"  TextWrapping="Wrap" VerticalAlignment="Center" Width="275"/>
+        <Label x:Name="labelCreateEmailAddress" Content="Email Address" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" Width="209" Foreground="White" FontSize="12"/>
+        <TextBox TabIndex="2" x:Name="textBoxEmailAddress" Grid.Row="9" Background="DimGray" Foreground="White" BorderBrush="#336699" BorderThickness="2" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="27"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+
+
+        <Border x:Name="ResetPasswordBtn" Grid.Row="9" Grid.Column="1" Cursor="Hand" RenderTransformOrigin="-1.757,-0.891" Margin="0,5,0,5" MouseLeftButtonDown="ResetPasswordBtn_Click" Height="30" Width="207" CornerRadius="5,5,5,5" Background="#336699" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <Label  Content="Reset Users Password" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+        </Border>
+
+        <Label x:Name="AverageStudentRanklabel" Content="Average Student Rank" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="169"/>
+        <Label x:Name="AverageTutorRanklabel" Content="Average Tutor Rank" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="169"/>
+        <Label x:Name="AverageStudentRankTxt" Content="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Foreground="White"/>
+        <Label x:Name="AverageTutorRankTxt" Content="0" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="65" Foreground="White"/>
+        <Label x:Name="StudentRatingsNumberlabel" Content="Number of Student Reviews" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Foreground="White"/>
+        <Label x:Name="NumberOfStudentReviews" Content="0" HorizontalAlignment="Left" Grid.Row="13" VerticalAlignment="Top" Width="65" Foreground="White"/>
+        <Label x:Name="TutorRatingsNumberlabel" Content="Number of Tutor Reviews" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" Foreground="White"/>
+        <Label x:Name="NumberOfTutorReviews" Content="0" HorizontalAlignment="Left" Grid.Row="13" Grid.Column="1" VerticalAlignment="Top" Width="65" Foreground="White"/>
+        <Button x:Name="CreateUserBtn" Content="Create New User" HorizontalAlignment="Left" Grid.Row="14"  VerticalAlignment="Top" Width="135" Height="50" Click="CreateUserBtn_Click"/>
+        <Button x:Name="UpdateRoleBtn" Content="Update User Info" HorizontalAlignment="Left" Grid.Row="14" Grid.Column="1" VerticalAlignment="Top" Width="156" Click="UpdateRoleBtn_Click" Height="50"/>
+        <Button x:Name="button1" Content="Add/Remove Mentors" HorizontalAlignment="Left" Grid.Row="15"  VerticalAlignment="Top" Width="156" Click="button1_Click"/>
+    </Grid>
+</UserControl>

@@ -106,6 +106,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControls\Admin\ChatsArea.xaml.cs">
+      <DependentUpon>ChatsArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Admin\ClassesArea.xaml.cs">
+      <DependentUpon>ClassesArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Admin\OrgsArea.xaml.cs">
+      <DependentUpon>OrgsArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Admin\ReportsArea.xaml.cs">
+      <DependentUpon>ReportsArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Admin\UserArea.xaml.cs">
+      <DependentUpon>UserArea.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Chat\ChatMessageFile.xaml.cs">
       <DependentUpon>ChatMessageFile.xaml</DependentUpon>
     </Compile>
@@ -278,6 +293,26 @@
       <DependentUpon>UserMenu.xaml</DependentUpon>
     </Compile>
     <Page Include="SubWindows\ResolveReportsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Admin\ChatsArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Admin\ClassesArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Admin\OrgsArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Admin\ReportsArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Admin\UserArea.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -641,6 +676,7 @@
       <LastGenOutput>UnstuckME_Schools.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
