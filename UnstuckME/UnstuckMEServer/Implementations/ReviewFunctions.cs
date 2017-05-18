@@ -308,7 +308,8 @@ namespace UnstuckMEInterfaces
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                return (from r in db.Reports select r.ReportID) as List<int>;
+                var thing = (from r in db.Reports select r.ReportID);
+                return thing.AsEnumerable().ToList();
             }
         }
 
@@ -323,41 +324,30 @@ namespace UnstuckMEInterfaces
     
                     foreach (var item in target)
                     {
-                        //db.Reports.DeleteOnSubmit(item);
                         db.Reports.Remove(item);
                     }
 
                     try
                     {
-                        //db.SubmitChanges();
                         db.SaveChanges();
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
-                        // Provide for exceptions.
+                        
                     }
                 }
                 else
                 {
-                    //Person result = (from p in Context.Persons
-                    //                 where p.person_id == 5
-                    //                 select p).SingleOrDefault();
-
-                    //result.is_default = false;
-
-                    //Context.SaveChanges();
                     Report target = (from r in db.Reports where r.ReportID == reviewID select r).SingleOrDefault();
                     int reviewToChange = target.ReviewID;
 
                     Review ToChange = (from r in db.Reviews where r.ReviewID == reviewToChange select r).SingleOrDefault();
                     ToChange.Description = "This review fell into an open man hole and was eaten by a sewer gator...";
+                    db.Reports.Remove(target);
                     db.SaveChanges();
                     
                 }
-                //(from r in db.Reports select r.ReportID) as List<int>;
             }
-
         }
         public UnstuckMEReview GetReportedReview(int ReportID)
         {
@@ -372,6 +362,13 @@ namespace UnstuckMEInterfaces
                 //rval.StarRanking = review.StarRanking;
                 rval.StickerID = review.StickerID;
                 return rval;
+            }
+        }
+        public string GetReportDescription(int ReportID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                return (from r in db.Reports where r.ReportID == ReportID select r.ReportDescription).Single();
             }
         }
     }

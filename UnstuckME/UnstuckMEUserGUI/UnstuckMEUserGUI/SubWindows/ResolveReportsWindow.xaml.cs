@@ -27,7 +27,7 @@ namespace UnstuckMEUserGUI.SubWindows
             reports = UnstuckME.Server.GetAllReportedReviewIDs();
             //populate the stack panel with each of the reports
             // show content of the review (stars, words)
-            if (reports != null)
+            if (reports != null && reports.Count > 0)
             {
                 foreach (var item in reports)
                 {

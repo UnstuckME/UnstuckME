@@ -581,6 +581,7 @@ namespace UnstuckMEInterfaces
         /// <param name="reviewID">the id of the review that you want to resolve</param>
         [OperationContract]
         void MarkReportedReviewAsResolved(bool acceptable, int reviewID);
+
         /// <summary>
         /// returns the review that was reported
         /// </summary>
@@ -588,6 +589,14 @@ namespace UnstuckMEInterfaces
         /// <returns></returns>
         [OperationContract]
         UnstuckMEReview GetReportedReview(int ReportID);
+
+        /// <summary>
+        /// returns the description of what the reporting user thought was wrong with a review
+        /// </summary>
+        /// <param name="ReportID"></param>
+        /// <returns></returns>
+        [OperationContract]
+        string GetReportDescription(int ReportID);
 
 	    /// <summary>
 	    /// Gets the size in bytes of file specified by <paramref name="messageID"/>.
