@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnstuckMEUserGUI.SubWindows"
         mc:Ignorable="d"
-        Title="ResolveReportsWindow" Height="300" Width="300">
+        Title="ResolveReportsWindow" Height="Auto" Width="Auto">
     <Grid>
         <StackPanel x:Name="stackPan" Background="DimGray" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto"/>
 
