@@ -357,7 +357,6 @@ namespace UnstuckMEUserGUI
                         if (UnstuckME.Server.AddUserToTutoringOrganization(UnstuckME.User.UserID, org.Value) != Task.FromResult(-1))
                         {
                             temp.buttonRemoveOrg.Visibility = Visibility.Hidden;
-                            temp.Width = 5000;
                             StackPanelOrganization.Children.Add(temp);
                         }
                     }
