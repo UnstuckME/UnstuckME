@@ -30,7 +30,6 @@ namespace UnstuckMEUserGUI
             FileSizeLabel.Content = filesize < 1048576 ? Convert.ToSingle(filesize / 1024) + " KB" : Convert.ToSingle(filesize / 1048576) + " MB";
             FileInfo file = new FileInfo(FileHyperlink.Inlines.FirstInline.ContentStart.GetTextInRun(LogicalDirection.Forward));
             
-            //subfilepaths[subfilepaths.Length - 1].Split('.')[1]   //if file.Extension doesn't work, try this
             if (file.Extension == ".pdf")
             {
                 filetypeImage.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(Properties.Resources.DocumentPDF.GetHbitmap(), 

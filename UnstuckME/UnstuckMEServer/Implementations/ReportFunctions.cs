@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using UnstuckMEServer;
+using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
@@ -33,6 +34,25 @@ namespace UnstuckMEInterfaces
             catch (Exception)
             {
                 return retVal; //If Failure to create report
+            }
+        }
+
+        /// <summary>
+        /// Finds online admins and notifies them that a report has been submitted.
+        /// </summary>
+        /// <param name="reportDescription">The description of the report.</param>
+        /// <param name="flaggerID">The unique identifier of the client who submitted the report.</param>
+        /// <param name="reviewID">The unique idenitifer of the review that is being reported.</param>
+        private void AsyncNotifyAdmin(string reportDescription, int flaggerID, int reviewID)
+        {
+            foreach (var client in _connectedClients)
+            {
+                if (client.Value.User.Privileges == Privileges.Admin)
+                {
+                    string flagger = GetUserDisplayName(flaggerID);
+                    client.Value.Connection.GetMessageFromServer(string.Format("{0} [userID {1}] has reported a review [reviewID = {2}]. The report reads as follows:\n\n{3}",
+                                                                               flagger, flaggerID, reviewID, reportDescription));
+                }
             }
         }
 

@@ -123,6 +123,7 @@ namespace UnstuckMEUserGUI
                     break;
             }
         }
+
         public void SetRatingValue(float inValue)
         {
             StarRankingValue.Value = inValue;

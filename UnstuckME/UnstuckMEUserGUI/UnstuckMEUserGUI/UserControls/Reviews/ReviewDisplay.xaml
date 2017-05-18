@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:UnstuckMEUserGUI"
              xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" 
              mc:Ignorable="d" 
-             Name="Review" MinHeight="80" Width="Auto" MaxHeight="80" d:DesignHeight="80" d:DesignWidth="350">
+             Name="Review" MinHeight="80" d:DesignHeight="80" d:DesignWidth="350">
     <Grid x:Name="ReviewDisplayGrid" Background="Transparent">
         <Border x:Name="DescriptionTextBox" BorderBrush="Black" BorderThickness="1" Background="Transparent" MouseEnter="DescriptionTextBox_MouseEnter" MouseLeave="DescriptionTextBox_MouseLeave">
             <Grid x:Name="textblockGrid" Height="{Binding ActualHeight, ElementName=ReviewDisplayGrid}" Width="{Binding ActualWidth, ElementName=ReviewDisplayGrid}">
@@ -15,7 +15,7 @@
                 <controls:Rating x:Name="StarRating" ItemCount="5" Value="1" Foreground="Gold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsReadOnly="True"
                                  Background="Transparent" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="85,0" IsManipulationEnabled="False">
                     <controls:Rating.LayoutTransform>
-                        <ScaleTransform ScaleX="1.6" ScaleY="1.4"></ScaleTransform>
+                        <ScaleTransform ScaleX="1.6" ScaleY="1.4"/>
                     </controls:Rating.LayoutTransform>
                 </controls:Rating>
                 <Border x:Name="ReportBorder" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="35" Width="70" BorderBrush="Snow" BorderThickness="1" Background="DarkRed" Margin="5,5"

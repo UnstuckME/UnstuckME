@@ -579,22 +579,22 @@ namespace UnstuckMEInterfaces
         /// </summary>
         /// <param name="acceptable">True if this review is ok, false if it is not ok</param>
         /// <param name="reviewID">the id of the review that you want to resolve</param>
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void MarkReportedReviewAsResolved(bool acceptable, int reviewID);
 
         /// <summary>
-        /// returns the review that was reported
+        /// Returns the review that was reported.
         /// </summary>
-        /// <param name="ReportID"></param>
-        /// <returns></returns>
+        /// <param name="ReportID">The unique identifier of the report.</param>
+        /// <returns>The review that has been reported.</returns>
         [OperationContract]
         UnstuckMEReview GetReportedReview(int ReportID);
 
         /// <summary>
-        /// returns the description of what the reporting user thought was wrong with a review
+        /// Returns the description of what the reporting user thought was wrong with a review.
         /// </summary>
-        /// <param name="ReportID"></param>
-        /// <returns></returns>
+        /// <param name="ReportID">The unique identifier of the report.</param>
+        /// <returns>The submitted reason for the report.</returns>
         [OperationContract]
         string GetReportDescription(int ReportID);
 

@@ -304,16 +304,25 @@ namespace UnstuckMEInterfaces
             }
         }
 
+        /// <summary>
+        /// Gets the list of Review IDs that have been reported
+        /// </summary>
+        /// <returns>A list of integers containing the unique identifiers of the reviews that
+        /// have been reported</returns>
         public List<int> GetAllReportedReviewIDs()
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var thing = (from r in db.Reports select r.ReportID);
+                var thing = from r in db.Reports select r.ReportID;
                 return thing.AsEnumerable().ToList();
             }
         }
 
-
+        /// <summary>
+        /// Resolves the review.
+        /// </summary>
+        /// <param name="acceptable">True if this review is ok, false if it is not ok</param>
+        /// <param name="reviewID">the id of the review that you want to resolve</param>
         public void MarkReportedReviewAsResolved(bool acceptable, int reviewID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
@@ -323,9 +332,7 @@ namespace UnstuckMEInterfaces
                     var target = from r in db.Reports where r.ReportID == reviewID select r;
     
                     foreach (var item in target)
-                    {
                         db.Reports.Remove(item);
-                    }
 
                     try
                     {
@@ -333,37 +340,54 @@ namespace UnstuckMEInterfaces
                     }
                     catch (Exception e)
                     {
-                        
+                        Console.WriteLine(e.Message);
                     }
                 }
                 else
                 {
                     Report target = (from r in db.Reports where r.ReportID == reviewID select r).SingleOrDefault();
-                    int reviewToChange = target.ReviewID;
+                    int reviewToChange = target?.ReviewID ?? 0;
 
-                    Review ToChange = (from r in db.Reviews where r.ReviewID == reviewToChange select r).SingleOrDefault();
-                    ToChange.Description = "This review fell into an open man hole and was eaten by a sewer gator...";
-                    db.Reports.Remove(target);
+                    Review toChange = (from r in db.Reviews where r.ReviewID == reviewToChange select r).SingleOrDefault();
+                    if (toChange != null)
+                        toChange.Description = "This review fell into an open man hole and was eaten by a sewer gator...";
+                    if (target != null)
+                        db.Reports.Remove(target);
+
                     db.SaveChanges();
-                    
                 }
             }
         }
+
+        /// <summary>
+        /// Returns the review that was reported.
+        /// </summary>
+        /// <param name="ReportID">The unique identifier of the report.</param>
+        /// <returns>The review that has been reported.</returns>
         public UnstuckMEReview GetReportedReview(int ReportID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                int target = (from r in db.Reports where r.ReportID == ReportID  select r.ReviewID).Single();
+                int target = (from r in db.Reports where r.ReportID == ReportID select r.ReviewID).Single();
                 var review = (from r in db.Reviews where r.ReviewID == target select r).Single();
-                UnstuckMEReview rval = new UnstuckMEReview();
-                rval.Description = review.Description;
-                rval.ReviewerID = review.ReviewerID;
-                rval.ReviewID = review.ReviewID;
-                //rval.StarRanking = review.StarRanking;
-                rval.StickerID = review.StickerID;
+                UnstuckMEReview rval = new UnstuckMEReview
+                {
+                    Description = review.Description,
+                    ReviewerID = review.ReviewerID,
+                    ReviewID = review.ReviewID,
+                    //rval.StarRanking = review.StarRanking,
+                    StickerID = review.StickerID
+                };
+
                 return rval;
             }
         }
+
+        /// <summary>
+        /// Returns the description of what the reporting user thought was wrong with a review.
+        /// </summary>
+        /// <param name="ReportID">The unique identifier of the report.</param>
+        /// <returns>The submitted reason for the report.</returns>
         public string GetReportDescription(int ReportID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
