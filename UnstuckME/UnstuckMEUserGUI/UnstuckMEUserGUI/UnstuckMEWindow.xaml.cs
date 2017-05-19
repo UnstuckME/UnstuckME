@@ -710,11 +710,6 @@ namespace UnstuckMEUserGUI
             ReconnectingWindow reconnect = new ReconnectingWindow();
             reconnect.Show();
         }
-
-        private void TestButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            UnstuckME.ChannelFactory.Abort();
-        }
     }
 
     public class UnstuckMEPages

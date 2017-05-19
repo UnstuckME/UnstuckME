@@ -43,31 +43,12 @@ namespace UnstuckMEUserGUI
 
         private void REWindow_ContentRendered(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    while (UnstuckME.ChannelFactory.State != System.ServiceModel.CommunicationState.Opened)
-            //    {
-            //        UnstuckME.ConnectToServer();
-            //    }
-            //    UserInfo test = new UserInfo();
-            //    test = UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
-            //    this.Close();
-            //    UnstuckME.MainWindow.Show();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
-
-        private void ReconnectButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
             try
             {
                 while (UnstuckME.ChannelFactory.State != System.ServiceModel.CommunicationState.Opened)
                 {
                     UnstuckME.ConnectToServer();
-                    if(_time.Minutes > 5)
+                    if (_time.Minutes > 5)
                     {
                         throw new Exception("Reconnecting Time Exceeded 5 Minutes.");
                     }
@@ -87,22 +68,10 @@ namespace UnstuckMEUserGUI
                 _timer.Stop();
             }
         }
-
-        private void ReconnectButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ReconnectButton.Background = Brushes.IndianRed;
-        }
-
-        private void ReconnectButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ReconnectButton.Background = UnstuckME.Red;
-        }
-
         private void ExitButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            ReconnectButton.Background = Brushes.IndianRed;
+            ExitButton.Background = Brushes.IndianRed;
         }
-
         private void ExitButton_MouseLeave(object sender, MouseEventArgs e)
         {
             ExitButton.Background = UnstuckME.Red;

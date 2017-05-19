@@ -73,9 +73,7 @@
                 <Border x:Name="AdminButton" BorderBrush="LightGray" MouseEnter="AdminButton_MouseEnter" MouseLeave="AdminButton_MouseLeave" MouseLeftButtonDown="AdminButton_MouseLeftButtonDown" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Stretch" BorderThickness="2" Background="#336699" Height="60" Margin="10,270,10,0" Cursor="Hand">
                     <Image Source="Resources/Admin/AdminWhite.png" Width="45" Height="45" ></Image>
                 </Border>
-                <Border x:Name="TestButton" MouseLeftButtonDown="TestButton_MouseLeftButtonDown" Background="#993333" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="35" Margin="5,0,5,50">
-                    <Label Content="Test" FontSize="14" Foreground="White" FontWeight="Medium" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
-                </Border>
+
                 <Border x:Name="ButtonLogout" MouseEnter="ButtonLogout_MouseEnter" MouseLeave="ButtonLogout_MouseLeave" MouseLeftButtonDown="ButtonLogout_MouseLeftButtonDown" Background="#993333" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="35" Margin="5,0,5,10">
                     <Label Content="Logout" FontSize="14" Foreground="White" FontWeight="Medium" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
                 </Border>
