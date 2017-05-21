@@ -9,8 +9,6 @@
 
 namespace UnstuckMEServer
 {
-    using System;
-    
     public partial class ViewAllUsers_Result
     {
         public string DisplayFName { get; set; }

@@ -9,8 +9,6 @@
 
 namespace UnstuckMEServer
 {
-    using System;
-    
     public partial class GetInfoForFriend_Result
     {
         public string DisplayFName { get; set; }

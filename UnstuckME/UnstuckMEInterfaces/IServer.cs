@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
@@ -17,6 +18,6 @@ namespace UnstuckMEInterfaces
         /// <param name="value">Adding a user - pass 0, Removing a user - pass 1.</param>
         /// <param name="user">The user being added or removed from the list of online users.</param>
         [OperationContract]
-        void GetUpdate(int value, UnstuckME_Classes.UserInfo user);
+        void GetUpdate(int value, UserInfo user);
     }
 }

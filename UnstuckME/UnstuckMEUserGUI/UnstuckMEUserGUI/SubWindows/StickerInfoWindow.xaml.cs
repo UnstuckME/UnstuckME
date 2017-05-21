@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Forms;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -39,7 +40,7 @@ namespace UnstuckMEUserGUI
 
         public Point GetMousePosition()
         {
-            System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
+            System.Drawing.Point point = Control.MousePosition;
             return new Point(point.X, point.Y);
         }
 

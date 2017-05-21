@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using UnstuckMEServer;
-using UnstuckME_Classes;
-using System.Security.Cryptography;
 using System.Collections.Concurrent;
-using System.Threading;
-using System.Net;
-using System.Threading.Tasks;
-using System.Net.Mail;
 using System.Configuration;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Configuration;
+using System.Net.Mail;
+using System.Security.Cryptography;
+using System.ServiceModel;
+using System.Threading;
+using System.Threading.Tasks;
+using UnstuckMEServer;
+using UnstuckME_Classes;
 
 namespace UnstuckMEInterfaces
 {
@@ -98,7 +97,7 @@ namespace UnstuckMEInterfaces
 		/// <param name="inSticker">The sticker to be sent to qualified online users.</param>
 		public void SendStickerToClients(UnstuckMEBigSticker inSticker)
 		{
-			UnstuckMEAvailableSticker s = new UnstuckMEAvailableSticker()
+			UnstuckMEAvailableSticker s = new UnstuckMEAvailableSticker
 			{
 				ClassID = inSticker.Class.ClassID,
 				ProblemDescription = inSticker.ProblemDescription,
@@ -267,7 +266,7 @@ namespace UnstuckMEInterfaces
 					}
 			}
 
-			SmtpClient client = new SmtpClient()
+			SmtpClient client = new SmtpClient
 			{
 				Credentials = new NetworkCredential(mailSettings.Network.UserName, mailSettings.Network.Password),
 				DeliveryFormat = mailSettings.DeliveryFormat,

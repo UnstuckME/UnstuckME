@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnstuckMEServer;
 using UnstuckME_Classes;
-using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -155,7 +155,7 @@ namespace UnstuckMEInterfaces
                     {
                         foreach (var message in messages)
                         {
-                            UnstuckMEMessage temp = new UnstuckMEMessage()
+                            UnstuckMEMessage temp = new UnstuckMEMessage
                             {
                                 Message = message.MessageData,
                                 MessageID = message.MessageID,
@@ -195,7 +195,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (var message in messages)
                     {
-                        messagelist.Add(new UnstuckMEMessage()
+                        messagelist.Add(new UnstuckMEMessage
                         {
                             MessageID = message.MessageID,
                             Message = message.MessageData,

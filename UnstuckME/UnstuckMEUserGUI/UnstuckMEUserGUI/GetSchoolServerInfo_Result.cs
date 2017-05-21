@@ -9,8 +9,6 @@
 
 namespace UnstuckMEUserGUI
 {
-    using System;
-    
     public partial class GetSchoolServerInfo_Result
     {
         public string ServerDomain { get; set; }

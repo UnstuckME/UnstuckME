@@ -24,7 +24,7 @@ namespace UnstuckMEInterfaces
                 List<UnstuckMEReview> studentReviewList = new List<UnstuckMEReview>();
                 foreach (var review in studentReviews)
                 {
-                    UnstuckMEReview usReview = new UnstuckMEReview()
+                    UnstuckMEReview usReview = new UnstuckMEReview
                     {
                         ReviewID = review.ReviewID,
                         StickerID = review.StickerID,
@@ -55,7 +55,7 @@ namespace UnstuckMEInterfaces
                 List<UnstuckMEReview> tutorReviewList = new List<UnstuckMEReview>();
                 foreach (var review in tutorReviews)
                 {
-                    UnstuckMEReview usReview = new UnstuckMEReview()
+                    UnstuckMEReview usReview = new UnstuckMEReview
                     {
                         ReviewID = review.ReviewID,
                         StickerID = review.StickerID,
@@ -88,7 +88,7 @@ namespace UnstuckMEInterfaces
 
                     foreach (var review in reviews)
                     {
-                        UnstuckMEReview newReview = new UnstuckMEReview()
+                        UnstuckMEReview newReview = new UnstuckMEReview
                         {
                             ReviewID = review.ReviewID,
                             StickerID = review.StickerID,

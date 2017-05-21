@@ -7,14 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
 namespace UnstuckMEServer
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class Sticker
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Sticker()
         {
             this.Reviews = new HashSet<Review>();
@@ -28,16 +29,16 @@ namespace UnstuckMEServer
         public int StudentID { get; set; }
         public Nullable<int> TutorID { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
-        public System.DateTime SubmitTime { get; set; }
-        public System.DateTime Timeout { get; set; }
+        public DateTime SubmitTime { get; set; }
+        public DateTime Timeout { get; set; }
     
         public virtual Chat Chat { get; set; }
         public virtual Class Class { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         public virtual UserProfile UserProfile1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OfficialMentor> OfficialMentors { get; set; }
     }
 }

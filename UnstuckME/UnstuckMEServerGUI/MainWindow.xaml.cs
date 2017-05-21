@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using UnstuckMEServer;
-using UnstuckMEInterfaces;
-using System.ServiceModel;
+using System.Windows;
+using UnstuckMEServerGUI.ServerGuiSubWindow;
 using UnstuckME_Classes;
 
 namespace UnstuckMEServerGUI
@@ -54,24 +41,21 @@ namespace UnstuckMEServerGUI
 				Process[] pname = Process.GetProcessesByName("UnstuckMEServer");
 				if (pname.Length > 0)
 					throw new InvalidOperationException("Server Is Already Running!");
-				else
-				{                 
-					DirectoryInfo currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-					currentDir = currentDir.Parent.Parent.Parent;                    
-					string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
-					Process startServer = new Process();
-					//startServer.StartInfo.RedirectStandardOutput = true;
-					//startServer.StartInfo.UseShellExecute = false;
-					//startServer.StartInfo.CreateNoWindow = true;
-					startServer.StartInfo.Verb = "runas";
-					startServer.StartInfo.FileName = serverPath;
-					startServer.Start();
+			    DirectoryInfo currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
+			    currentDir = currentDir.Parent.Parent.Parent;                    
+			    string serverPath = currentDir.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe";
+			    Process startServer = new Process();
+			    //startServer.StartInfo.RedirectStandardOutput = true;
+			    //startServer.StartInfo.UseShellExecute = false;
+			    //startServer.StartInfo.CreateNoWindow = true;
+			    startServer.StartInfo.Verb = "runas";
+			    startServer.StartInfo.FileName = serverPath;
+			    startServer.Start();
 
-					ServerRunning window = new ServerRunning(ref Admin);
-                    Application.Current.MainWindow = window;
-                    Close();
-					window.Show();
-				}
+			    ServerRunning window = new ServerRunning(ref Admin);
+			    Application.Current.MainWindow = window;
+			    Close();
+			    window.Show();
 			}
 			catch(InvalidOperationException ex)
 			{
@@ -131,25 +115,25 @@ namespace UnstuckMEServerGUI
 
         private void MenuItemLogout_Click(object sender, RoutedEventArgs e)
         {
-            string unstuckME = System.AppDomain.CurrentDomain.BaseDirectory + System.AppDomain.CurrentDomain.FriendlyName;
+            string unstuckME = AppDomain.CurrentDomain.BaseDirectory + AppDomain.CurrentDomain.FriendlyName;
             Process.Start(unstuckME);
             Application.Current.Shutdown();
         }
 
 		private void UpdateEmailSettings_Click(object sender, RoutedEventArgs e)
 		{
-			ServerGuiSubWindow.EmailSettings window = new ServerGuiSubWindow.EmailSettings(ref Admin);
+			EmailSettings window = new EmailSettings(ref Admin);
 			Application.Current.MainWindow = window;
 			Application.Current.MainWindow.Show();
 		}
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             if (config.AppSettings.Settings["EmailSettingsSet"].Value == "false")
             {
-                ServerGuiSubWindow.EmailSettings window = new ServerGuiSubWindow.EmailSettings(ref Admin);
+                EmailSettings window = new EmailSettings(ref Admin);
                 Application.Current.MainWindow = window;
                 window.Show();
                 window.Focus();

@@ -9,8 +9,6 @@
 
 namespace UnstuckMEServerGUI
 {
-    using System;
-    
     public partial class GetAllOrganizations_Result
     {
         public int MentorID { get; set; }

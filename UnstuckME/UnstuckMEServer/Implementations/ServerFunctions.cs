@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using UnstuckMEServer;
 using UnstuckME_Classes;
@@ -43,7 +42,7 @@ namespace UnstuckMEInterfaces
 
                 if (!oldConnection)
                 {
-                    ConnectedServerAdmin newAdmin = new ConnectedServerAdmin()
+                    ConnectedServerAdmin newAdmin = new ConnectedServerAdmin
                     {
                         Connection = establishedUserConnection,
                         Admin = LoggingInAdmin

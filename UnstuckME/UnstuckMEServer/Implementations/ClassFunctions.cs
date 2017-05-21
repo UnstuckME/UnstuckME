@@ -25,7 +25,7 @@ namespace UnstuckMEInterfaces
                     {
                         foreach (var c in classes)
                         {
-                            UserClass temp = new UserClass()
+                            UserClass temp = new UserClass
                             {
                                 ClassID = c.ClassID,
                                 CourseCode = c.CourseCode,

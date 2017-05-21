@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,7 +31,7 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             catch (Exception exp)
             {
-                var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
             }
 
@@ -55,7 +56,7 @@ namespace UnstuckMEUserGUI.SubWindows
                 }
                 catch (Exception exp)
                 {
-                    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                 }
                 ComboBoxCourseNumberAndName.IsEnabled = true;
@@ -79,7 +80,7 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
 

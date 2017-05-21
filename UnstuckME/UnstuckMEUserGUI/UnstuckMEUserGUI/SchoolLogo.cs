@@ -7,16 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEUserGUI
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class SchoolLogo
     {
         public int LogoID { get; set; }
         public byte[] Logo { get; set; }
-        public Nullable<System.DateTime> LastModified { get; set; }
+        public Nullable<DateTime> LastModified { get; set; }
     
         public virtual School School { get; set; }
     }

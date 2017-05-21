@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServerGUI
 {
-    using System;
-    
     public partial class GetChatMessages_Result
     {
         public Nullable<long> Row { get; set; }
@@ -20,6 +20,6 @@ namespace UnstuckMEServerGUI
         public string MessageData { get; set; }
         public string FilePath { get; set; }
         public int SentBy { get; set; }
-        public System.DateTime SentTime { get; set; }
+        public DateTime SentTime { get; set; }
     }
 }

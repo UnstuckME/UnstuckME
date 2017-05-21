@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using UnstuckME_Classes;
 
 namespace UnstuckMEServerGUI
 {
@@ -38,13 +39,10 @@ namespace UnstuckMEServerGUI
                     bool retVal = KillServer();
                     if (!retVal)
                         throw new Exception("Failure to Kill Server!");
-                    else
-                    {
-                        _channelFactory.Abort();
-                        MainWindow window = new MainWindow(ref Admin);
-                        window.Show();
-                        Close();
-                    }
+                    _channelFactory.Abort();
+                    MainWindow window = new MainWindow(ref Admin);
+                    window.Show();
+                    Close();
                 }
                 catch (Exception ex)
                 {
@@ -100,7 +98,7 @@ namespace UnstuckMEServerGUI
             //labelName.Content = Admin.FirstName + " " + Admin.LastName;
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             try
             {
@@ -228,7 +226,7 @@ namespace UnstuckMEServerGUI
             {
                 try
                 {
-                    AddUser(user.EmailAddress, (Privileges)user.Privileges);
+                    AddUser(user.EmailAddress, user.Privileges);
                 }
                 catch (Exception)
                 { }

@@ -1,9 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using UnstuckME_Classes;
+using Application = System.Windows.Application;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace UnstuckMEUserGUI
 {
@@ -41,7 +46,7 @@ namespace UnstuckMEUserGUI
 
         public Point GetMousePosition()
         {
-            System.Drawing.Point point = System.Windows.Forms.Control.MousePosition;
+            System.Drawing.Point point = Control.MousePosition;
             return new Point(point.X, point.Y);
         }
 
@@ -66,7 +71,7 @@ namespace UnstuckMEUserGUI
                     }
                     temp.UserName = UnstuckME.Server.GetUserDisplayName(temp.UserID);
 
-                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    using (MemoryStream ms = new MemoryStream())
                     {
                         UnstuckME.FileStream.GetProfilePicture(temp.UserID).CopyTo(ms);
                         temp.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;

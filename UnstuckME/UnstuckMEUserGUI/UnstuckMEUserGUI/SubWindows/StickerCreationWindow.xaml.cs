@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -105,7 +106,7 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception exp)
                     {
-                        var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                        var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                         UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                         throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
@@ -117,7 +118,7 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception exp)
                     {
-                        var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                        var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                         UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                         throw new Exception("Sticker Submission Failed, Please make sure you don't already have a Sticker for this class. If problems persists, contact an Administrator.");
                     }
@@ -126,7 +127,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, ex.Message, "Sticker Submission Failure", UnstuckMEBoxImage.Warning);
                 error.ShowDialog();
@@ -162,7 +163,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception exp)
             {
-                var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
             }
 
@@ -213,7 +214,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception exp)
                 {
-                    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                 }
 

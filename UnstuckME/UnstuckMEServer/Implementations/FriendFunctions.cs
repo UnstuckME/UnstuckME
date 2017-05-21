@@ -100,7 +100,7 @@ namespace UnstuckMEInterfaces
 
                     foreach (var friend in dbFriends)
                     {
-                        UnstuckMEChatUser temp = new UnstuckMEChatUser()
+                        UnstuckMEChatUser temp = new UnstuckMEChatUser
                         {
                             ProfilePicture = null,
                             UserName = friend.DisplayFName,

@@ -4,5 +4,7 @@
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0019:Use pattern matching", Justification = "<Pending>", Scope = "member", Target = "~M:UnstuckMEUserGUI.ClassDisplay.Deletebtn_Click(System.Object,System.Windows.RoutedEventArgs)")]
+using System.Diagnostics.CodeAnalysis;
+
+[assembly: SuppressMessage("Style", "IDE0019:Use pattern matching", Justification = "<Pending>", Scope = "member", Target = "~M:UnstuckMEUserGUI.ClassDisplay.Deletebtn_Click(System.Object,System.Windows.RoutedEventArgs)")]
 

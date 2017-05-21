@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
-using System.Configuration;
 
 namespace UnstuckMEServerGUI.ServerGuiSubWindow
 {
@@ -12,8 +12,8 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
     public partial class ChangeDabaseConnectionSettings : Window
     {
         private readonly string schoolName = ConfigurationManager.AppSettings["SchoolName"];
-        private int? m_databaseID = null;
-        private bool useWindowsAuthenfication = false;
+        private int? m_databaseID;
+        private bool useWindowsAuthenfication;
 
         public ChangeDabaseConnectionSettings()
         {
@@ -147,7 +147,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
                                     {
                                         int schoolID = (from Schools in schoolDB.Schools where Schools.SchoolName == schoolName select Schools.SchoolID).First();
 
-                                        Database tempServer = new Database()
+                                        Database tempServer = new Database
                                         {
                                             SchoolID = schoolID,
                                             DatabaseName = textBoxDatabaseName.Text,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,7 +10,6 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using UnstuckMeLoggers;
 using UnstuckME_Classes;
-using System.Threading.Tasks;
 
 namespace UnstuckMEUserGUI
 {
@@ -24,7 +24,7 @@ namespace UnstuckMEUserGUI
 		{
 			InitializeComponent();
 		    newMessage = new UnstuckMEMessage();
-			UnstuckME.CurrentChatSession = new UnstuckMEChat()
+			UnstuckME.CurrentChatSession = new UnstuckMEChat
 			{
 				ChatID = -1
 			};
@@ -111,7 +111,7 @@ namespace UnstuckMEUserGUI
 					{
 						for (int i = 0; i < StackPanelMessages.Children.Count; i++)
 						{
-							if (((ChatMessage)StackPanelMessages.Children[i]).Message.Message.MessageID == message.MessageID)
+							if (((ChatMessage)StackPanelMessages.Children[i]).Message.ChatMessage.MessageID == message.MessageID)
 							{
 								StackPanelMessages.Children.Remove(StackPanelMessages.Children[i]);
 								break;
@@ -136,9 +136,9 @@ namespace UnstuckMEUserGUI
 					{
 						for (int i = 0; i < StackPanelMessages.Children.Count; i++)
 						{
-							if (((ChatMessage)StackPanelMessages.Children[i]).Message.Message.MessageID == message.MessageID)
+							if (((ChatMessage)StackPanelMessages.Children[i]).Message.ChatMessage.MessageID == message.MessageID)
 							{
-								((ChatMessage)StackPanelMessages.Children[i]).Message.Message.Message = message.Message;
+								((ChatMessage)StackPanelMessages.Children[i]).Message.ChatMessage.Message = message.Message;
 								((ChatMessage)StackPanelMessages.Children[i]).TextBoxChatMessage.Text = message.Message;
 							    ((ChatMessage)StackPanelMessages.Children[i]).TextBlockChatMessage.Text = message.Message;
                                 break;
@@ -222,7 +222,7 @@ namespace UnstuckMEUserGUI
 	                newMessage.FilePath = UnstuckME.FileStream.SendFile(new UnstuckMEStream(ms.ToArray(), false)
 	                {
                         UserID = UnstuckME.User.UserID,
-                        Filename = filename,
+                        Filename = filename
 	                });
 	                newMessage.FileSize = ms.Length;
 	            }
@@ -365,7 +365,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                OpenFileDialog uploadFileDialog = new OpenFileDialog()
+                OpenFileDialog uploadFileDialog = new OpenFileDialog
                 {
                     AddExtension = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),

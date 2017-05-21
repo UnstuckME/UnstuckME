@@ -9,8 +9,6 @@
 
 namespace UnstuckMEServerGUI
 {
-    using System;
-    
     public partial class GetUserPasswordAndSalt_Result
     {
         public string UserPassword { get; set; }

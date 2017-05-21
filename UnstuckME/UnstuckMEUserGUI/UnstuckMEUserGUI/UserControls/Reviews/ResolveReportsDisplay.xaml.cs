@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI.UserControls.Reviews
@@ -33,7 +23,7 @@ namespace UnstuckMEUserGUI.UserControls.Reviews
             }
             catch (Exception e)
             {
-                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_SERVER_CONNECTION_ERROR, e.Message, "This error occured while retriving a review for moderation");
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, e.Message, "This error occured while retriving a review for moderation");
             }
             
             DescriptionContent.Text = review.Description;
@@ -43,7 +33,7 @@ namespace UnstuckMEUserGUI.UserControls.Reviews
             }
             catch (Exception e)
             {
-                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_SERVER_CONNECTION_ERROR, e.Message, "This error occured while retriving a review problem description for moderation");
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, e.Message, "This error occured while retriving a review problem description for moderation");
             }
             
         }
@@ -51,13 +41,13 @@ namespace UnstuckMEUserGUI.UserControls.Reviews
         private void OkBtn_Click(object sender, RoutedEventArgs e)
         {
             UnstuckME.Server.MarkReportedReviewAsResolved(true, reportID);
-            this.Visibility = Visibility.Collapsed;
+            Visibility = Visibility.Collapsed;
         }
 
         private void NotOkBtn_Click(object sender, RoutedEventArgs e)
         {
             UnstuckME.Server.MarkReportedReviewAsResolved(false, reportID);
-            this.Visibility = Visibility.Collapsed;
+            Visibility = Visibility.Collapsed;
         }
     }
 }

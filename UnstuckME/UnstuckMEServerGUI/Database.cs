@@ -7,11 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServerGUI
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class Database
     {
         public int DatabaseID { get; set; }

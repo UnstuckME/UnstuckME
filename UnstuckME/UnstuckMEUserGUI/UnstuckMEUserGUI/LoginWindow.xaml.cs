@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,9 +13,13 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using UnstuckME_Classes;
-using UnstuckMEInterfaces;
 using UnstuckMeLoggers;
+using UnstuckMEInterfaces;
+using UnstuckME_Classes;
+using Brush = System.Windows.Media.Brush;
+using Brushes = System.Windows.Media.Brushes;
+using Color = System.Windows.Media.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace UnstuckMEUserGUI
 {
@@ -24,12 +29,12 @@ namespace UnstuckMEUserGUI
 	public partial class LoginWindow : Window
 	{
 		private static List<UnstuckMESchool> _schools;
-		private string m_schoolName = null;
-		private string m_orginalSchoolName = null;
-		private string m_schoolInfoFilePath = null;
-		private string m_verificationCode = null;
+		private string m_schoolName;
+		private string m_orginalSchoolName;
+		private string m_schoolInfoFilePath;
+		private string m_verificationCode;
 		private bool m_contentRendered = true;
-		private short m_failedAttempts = 0;
+		private short m_failedAttempts;
 
 		public LoginWindow()
 		{
@@ -68,7 +73,7 @@ namespace UnstuckMEUserGUI
 			        buttonLogin_Click(null, null);
 				else if (username != string.Empty)
 				{
-					System.Windows.Media.Brush brush = (System.Windows.Media.Brush)new BrushConverter().ConvertFromString("#FFCFCF56");
+					Brush brush = (Brush)new BrushConverter().ConvertFromString("#FFCFCF56");
 
 					textBoxUserName_GotFocus(null, null);
 					textBoxPasswordPreview_GotFocus(null, null);
@@ -83,7 +88,7 @@ namespace UnstuckMEUserGUI
 			{
                 UnstuckMEMessageBox error = new UnstuckMEMessageBox(UnstuckMEBox.OK, "Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur", "Unexpected Error", UnstuckMEBoxImage.Error);
                 error.ShowDialog();
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 			}
 		}
@@ -128,7 +133,7 @@ namespace UnstuckMEUserGUI
 
 		            foreach (var dbschool in dbSchools)
 		            {
-		                UnstuckMESchool newSchool = new UnstuckMESchool()
+		                UnstuckMESchool newSchool = new UnstuckMESchool
 		                {
 		                    SchoolID = dbschool.SchoolID,
 		                    SchoolName = dbschool.SchoolName,
@@ -145,7 +150,7 @@ namespace UnstuckMEUserGUI
 		    }
 		    catch (Exception ex)
 		    {
-		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+		        var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 		        UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK,
                                                                          "Could not connect to the server/database. Please contact an UnstuckME administrator for more help.",
@@ -183,7 +188,7 @@ namespace UnstuckMEUserGUI
 					buttonResetPassword.Visibility = Visibility.Visible;
 				}
 
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 if (ex.Message != "Unable to connect to server")
 					UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 				else
@@ -241,7 +246,7 @@ namespace UnstuckMEUserGUI
 					}
 
 					labelInvalidLogin.Visibility = Visibility.Visible;
-				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message, trace.Name);
 
                     try
@@ -253,7 +258,7 @@ namespace UnstuckMEUserGUI
                     catch (Exception exp2)
                     {
                         MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        trace = new System.Diagnostics.StackTrace(exp2, true).GetFrame(0).GetMethod();
+                        trace = new StackTrace(exp2, true).GetFrame(0).GetMethod();
                         UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message, trace.Name);
                     }
                 }
@@ -285,7 +290,7 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                     MessageBox.Show(exp.Message);
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 					labelInvalidLogin.Content = "Server Unavailable!";
@@ -319,7 +324,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception exp)
 			{
-			    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, exp.Message, trace.Name);
 				validCredentials = false;
 				labelCreateIncorrectCreds.Visibility = Visibility.Visible;
@@ -359,7 +364,7 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception ex)
 				{
-				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 
 					MessageBox.Show(ex.Message, "Account Creation Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -372,7 +377,7 @@ namespace UnstuckMEUserGUI
 					catch (Exception exp)
 					{
 						MessageBox.Show("There is a problem re-connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-					    trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+					    trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                         UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
                         Close();
 					}
@@ -393,7 +398,7 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 				}
 			});
@@ -412,7 +417,7 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 				}
 			});
@@ -437,19 +442,19 @@ namespace UnstuckMEUserGUI
 				}
 				catch (Exception exp)
 				{
-				    var trace = new System.Diagnostics.StackTrace(exp, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(exp, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp.Message, trace.Name);
 				}
 			});
 		}
 		private void buttonCreateAccount_MouseEnter(object sender, MouseEventArgs e)
 		{
-			buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
+			buttonCreateAccount.Foreground = Brushes.Black;
 		}
 
 		private void buttonCreateAccount_MouseLeave(object sender, MouseEventArgs e)
 		{
-			buttonCreateAccount.Foreground = System.Windows.Media.Brushes.White;
+			buttonCreateAccount.Foreground = Brushes.White;
 		}
 
 		private void buttonCreateAccount_Click(object sender, RoutedEventArgs e)
@@ -464,21 +469,21 @@ namespace UnstuckMEUserGUI
 
 		private void buttonCancel_MouseEnter(object sender, MouseEventArgs e)
 		{
-			buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
+			buttonCreateAccount.Foreground = Brushes.Black;
 		}
 
 		private void buttonCancel_MouseLeave(object sender, MouseEventArgs e)
 		{
-			buttonCreateAccount.Foreground = System.Windows.Media.Brushes.White;
+			buttonCreateAccount.Foreground = Brushes.White;
 		}
 		private void buttonCreate_MouseEnter(object sender, MouseEventArgs e)
 		{
-			buttonCreateAccount.Foreground = System.Windows.Media.Brushes.Black;
+			buttonCreateAccount.Foreground = Brushes.Black;
 		}
 
 		private void buttonCreate_MouseLeave(object sender, MouseEventArgs e)
 		{
-			buttonCreateAccount.Foreground = System.Windows.Media.Brushes.White;
+			buttonCreateAccount.Foreground = Brushes.White;
 		}
 
 		private void buttonCancel_Click(object sender, RoutedEventArgs e)
@@ -497,7 +502,7 @@ namespace UnstuckMEUserGUI
 
 		private void AfterUserCreationTextBoxandPasswordBoxUpdate()
 		{
-			textBoxUserName.Foreground = System.Windows.Media.Brushes.Black;
+			textBoxUserName.Foreground = Brushes.Black;
 			textBoxUserName.FontStyle = FontStyles.Normal;
 			textBoxPasswordPreview.Visibility = Visibility.Hidden;
 			textBoxPasswordPreview.IsEnabled = false;
@@ -509,7 +514,7 @@ namespace UnstuckMEUserGUI
 			if (textBoxUserName.Text == "Example@oit.edu")
 			{
 				textBoxUserName.Text = string.Empty;
-				textBoxUserName.Foreground = System.Windows.Media.Brushes.Black;
+				textBoxUserName.Foreground = Brushes.Black;
 				textBoxUserName.FontStyle = FontStyles.Normal;
 			}
 		}
@@ -527,7 +532,7 @@ namespace UnstuckMEUserGUI
 			if (textBoxUserName.Text == string.Empty)
 			{
 				textBoxUserName.Text = "Example@oit.edu";
-				textBoxUserName.Foreground = System.Windows.Media.Brushes.Gray;
+				textBoxUserName.Foreground = Brushes.Gray;
 				textBoxUserName.FontStyle = FontStyles.Italic;
 			}
 		}
@@ -641,7 +646,7 @@ namespace UnstuckMEUserGUI
 				catch (Exception ex)
 				{
 					MessageBox.Show("Unexpected ERROR: Unable to load cached file - Unexpected behavior may occur");
-				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 				}
 			}
@@ -694,7 +699,7 @@ namespace UnstuckMEUserGUI
 			catch (Exception ex)
 			{
 				AccountVerificationCanvas_MouseDown(sender, e as MouseEventArgs);
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "An error occured trying to connect to the server. If this problem persists, please contact an UnstuckME server administrator to resolve this issue. Thank you.", "Email Verification Code Failed to Send", UnstuckMEBoxImage.Warning);
 				messagebox.ShowDialog();
@@ -713,7 +718,7 @@ namespace UnstuckMEUserGUI
 			if (textboxVerificationCode.Text == "xxxxxxxx")
 			{
 				textboxVerificationCode.Text = string.Empty;
-				textboxVerificationCode.Foreground = System.Windows.Media.Brushes.Black;
+				textboxVerificationCode.Foreground = Brushes.Black;
 				textboxVerificationCode.FontStyle = FontStyles.Normal;
 			}
 		}
@@ -723,7 +728,7 @@ namespace UnstuckMEUserGUI
 			if (textboxVerificationCode.Text == string.Empty)
 			{
 				textboxVerificationCode.Text = "xxxxxxxx";
-				textboxVerificationCode.Foreground = System.Windows.Media.Brushes.Gray;
+				textboxVerificationCode.Foreground = Brushes.Gray;
 				textboxVerificationCode.FontStyle = FontStyles.Italic;
 			}
 		}
@@ -731,11 +736,11 @@ namespace UnstuckMEUserGUI
 		private void passwordBoxCreate_PasswordChanged(object sender, RoutedEventArgs e)
 		{
 			if (passwordBoxCreate.Password == string.Empty)
-				passwordBoxCreate.Background = System.Windows.Media.Brushes.White;
+				passwordBoxCreate.Background = Brushes.White;
 			else if (passwordBoxCreate.Password.Length < 3)
-				passwordBoxCreate.Background = System.Windows.Media.Brushes.Red;
+				passwordBoxCreate.Background = Brushes.Red;
 			else
-				passwordBoxCreate.Background = System.Windows.Media.Brushes.Green;
+				passwordBoxCreate.Background = Brushes.Green;
 
 			passwordBoxCreateConfirm_PasswordChanged(sender, e);
 		}
@@ -743,27 +748,27 @@ namespace UnstuckMEUserGUI
 		private void passwordBoxCreateConfirm_PasswordChanged(object sender, RoutedEventArgs e)
 		{
 			if (passwordBoxCreate.Password == string.Empty && passwordBoxCreateConfirm.Password == string.Empty)
-				passwordBoxCreateConfirm.Background = System.Windows.Media.Brushes.White;
-			else if (passwordBoxCreateConfirm.Password == passwordBoxCreate.Password && passwordBoxCreate.Background == System.Windows.Media.Brushes.Green)
-				passwordBoxCreateConfirm.Background = System.Windows.Media.Brushes.Green;
+				passwordBoxCreateConfirm.Background = Brushes.White;
+			else if (passwordBoxCreateConfirm.Password == passwordBoxCreate.Password && passwordBoxCreate.Background == Brushes.Green)
+				passwordBoxCreateConfirm.Background = Brushes.Green;
 			else
-				passwordBoxCreateConfirm.Background = System.Windows.Media.Brushes.Red;
+				passwordBoxCreateConfirm.Background = Brushes.Red;
 		}
 
 		private void textBoxUserName_TextChanged(object sender, TextChangedEventArgs e)
 		{
 		    try
 		    {
-		        System.Windows.Media.Color brush = (System.Windows.Media.Color) System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56");
+		        Color brush = (Color) ColorConverter.ConvertFromString("#FFCFCF56");
 
 		        if ((textBoxUserName.Background as SolidColorBrush).Color == brush)
-		            textBoxUserName.Background = System.Windows.Media.Brushes.White;
+		            textBoxUserName.Background = Brushes.White;
 		        if (!m_contentRendered && (passwordBox.Background as SolidColorBrush).Color == brush)
-		            passwordBox.Background = System.Windows.Media.Brushes.White;
+		            passwordBox.Background = Brushes.White;
 		    }
 		    catch (Exception ex)
 		    {
-		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+		        var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 		    }
 		}
@@ -772,16 +777,16 @@ namespace UnstuckMEUserGUI
 		{
 			try
 			{
-				System.Windows.Media.Color brush = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCFCF56");
+				Color brush = (Color)ColorConverter.ConvertFromString("#FFCFCF56");
 
 				if ((passwordBox.Background as SolidColorBrush).Color == brush)
-					passwordBox.Background = System.Windows.Media.Brushes.White;
+					passwordBox.Background = Brushes.White;
 				if (!m_contentRendered && (textBoxUserName.Background as SolidColorBrush).Color == brush)
-					textBoxUserName.Background = System.Windows.Media.Brushes.White;
+					textBoxUserName.Background = Brushes.White;
 			}
 		    catch (Exception ex)
 		    {
-		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+		        var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 		    }
 		}
@@ -811,7 +816,7 @@ namespace UnstuckMEUserGUI
 						{
 							messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, string.Format("The email address {0} is not associated with an account. Please enter a valid email address.", textBoxUserName.Text), "Email Address Is Not Associated With An Account", UnstuckMEBoxImage.Error);
 							messagebox.ShowDialog();
-						    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+						    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                             UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 
 							try
@@ -823,7 +828,7 @@ namespace UnstuckMEUserGUI
 							catch (Exception exp2)
 							{
 								MessageBox.Show("There is a problem connecting to the server. Please Contact Your Server Administrator. UnstuckME will now close.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
-							    trace = new System.Diagnostics.StackTrace(exp2, true).GetFrame(0).GetMethod();
+							    trace = new StackTrace(exp2, true).GetFrame(0).GetMethod();
                                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, exp2.Message, trace.Name);
                                 Close();
 							}
@@ -838,7 +843,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (Exception ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 				UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "An error occured trying to connect to the server. If this problem persists, please contact an UnstuckME server administrator to resolve this issue. Thank you.", "New Password Email Failed to Send", UnstuckMEBoxImage.Warning);
 				messagebox.ShowDialog();
@@ -847,12 +852,12 @@ namespace UnstuckMEUserGUI
 
 		private void buttonResetPassword_MouseEnter(object sender, MouseEventArgs e)
 		{
-			buttonResetPassword.Foreground = System.Windows.Media.Brushes.Black;
+			buttonResetPassword.Foreground = Brushes.Black;
 		}
 
 		private void buttonResetPassword_MouseLeave(object sender, MouseEventArgs e)
 		{
-			buttonResetPassword.Foreground = System.Windows.Media.Brushes.White;
+			buttonResetPassword.Foreground = Brushes.White;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using UnstuckMeLoggers;
-
 
 namespace UnstuckMEUserGUI.SubWindows
 {
@@ -27,7 +27,7 @@ namespace UnstuckMEUserGUI.SubWindows
                 }
                 catch (Exception ex)
                 {
-                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org, Source = " + trace.Name);
                 }
             }

@@ -20,8 +20,8 @@ namespace UnstuckME_Classes
         private bool _isOpen;       //Is this stream open or closed?
         private const int MemStreamMaxLength = int.MaxValue;
         private int _userID;     //The UnstuckME user information used for processing the stream on the server
-        private string _filename = null;    //The name of the file
-        private string _path = null;        //The full path where the file is located
+        private string _filename;    //The name of the file
+        private string _path;        //The full path where the file is located
 
         /// <summary>
         /// Gets/sets the User ID of the user who the file belongs to

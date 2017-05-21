@@ -7,15 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServer
 {
-    using System;
-    
     public partial class Ryans_GetChatMessage_Result
     {
         public int MessageID { get; set; }
         public string MessageData { get; set; }
         public int SentBy { get; set; }
-        public System.DateTime SentTime { get; set; }
+        public DateTime SentTime { get; set; }
     }
 }

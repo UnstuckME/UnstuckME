@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
 using UnstuckMEUserGUI.SubWindows;
-using System.Threading.Tasks;
+using UnstuckME_Classes;
+using Image = System.Drawing.Image;
 
 namespace UnstuckMEUserGUI
 {
@@ -87,12 +90,12 @@ namespace UnstuckMEUserGUI
             }
             catch (CommunicationException ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
@@ -177,7 +180,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                OpenFileDialog fileBrowser = new OpenFileDialog()
+                OpenFileDialog fileBrowser = new OpenFileDialog
                 {
                     AddExtension = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
@@ -198,12 +201,12 @@ namespace UnstuckMEUserGUI
 					if (file.Length > 26214400)
 						throw new Exception("The image you have selected exceeds the 25 MB limit. Please select a different file that is within the size limit.");
 
-					System.Drawing.Image thumbnail = System.Drawing.Image.FromStream(file);
+					Image thumbnail = Image.FromStream(file);
                     Thumbnail.Convert(ref thumbnail);
 
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        thumbnail.Save(ms, ImageFormat.Jpeg);
                         ms.Seek(0, SeekOrigin.Begin);
 
                         BitmapImage ix = new BitmapImage();
@@ -252,7 +255,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName, Source = " + trace.Name);
                 }
             }
@@ -266,7 +269,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName, Source = " + trace.Name);
                 }
             }
@@ -282,7 +285,7 @@ namespace UnstuckMEUserGUI
                     }
                     catch (Exception ex)
                     {
-                        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                        var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                         UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user Password, Source = " + trace.Name);
                     }
                 }
@@ -331,7 +334,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while attempting to change your profile picture, Source = " + trace.Name);
                 }
             }
@@ -364,7 +367,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
 
@@ -420,7 +423,7 @@ namespace UnstuckMEUserGUI
                 }
                 catch (Exception ex)
                 {
-                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, 
                         string.Format("Server failed to log out user {0}, Source = {1}", UnstuckME.User.EmailAddress, trace.Name));
                     Application.Current.Shutdown();

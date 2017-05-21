@@ -19,7 +19,7 @@ namespace UnstuckMeLoggers
         private const string filePath = "./UserGuiAllErrors.txt";
         private string errorDesc = "No Desc Transmitted";
         private List<ErrContainer> ErrorsList = new List<ErrContainer>();
-        private static UnstuckMEUserEndMasterErrLogger _instance = null;
+        private static UnstuckMEUserEndMasterErrLogger _instance;
 
         private UnstuckMEUserEndMasterErrLogger()
         { }

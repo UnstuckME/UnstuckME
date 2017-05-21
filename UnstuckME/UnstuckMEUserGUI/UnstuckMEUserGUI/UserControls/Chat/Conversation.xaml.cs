@@ -38,10 +38,8 @@ namespace UnstuckMEUserGUI
                 ConvoLabelText.Text = string.Empty;
                 foreach (var user in test)
                 {
-                    if(count != 0)
-                    {
+                    if (count != 0)
                         ConvoLabelText.Text += ", ";
-                    }
                     ConvoLabelText.Text += user.ConversationName;
                     count++;
                 }

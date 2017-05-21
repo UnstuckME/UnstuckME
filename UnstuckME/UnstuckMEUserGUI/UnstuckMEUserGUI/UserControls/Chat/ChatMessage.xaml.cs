@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -17,14 +18,14 @@ namespace UnstuckMEUserGUI
         public ChatMessage(UnstuckMEGUIChatMessage inMessage)
         {
             InitializeComponent();
-            TextBoxUserName.Content = inMessage.Message.Username;
-            TextBoxChatMessage.Text = inMessage.Message.Message;
-            TextBlockChatMessage.Text = inMessage.Message.Message;
+            TextBoxUserName.Content = inMessage.ChatMessage.Username;
+            TextBoxChatMessage.Text = inMessage.ChatMessage.Message;
+            TextBlockChatMessage.Text = inMessage.ChatMessage.Message;
 
             ImageProfilePicture.Source = inMessage.ProfilePic;
             Message = inMessage;
 
-            EditMessageButton.Visibility = inMessage.Message.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
+            EditMessageButton.Visibility = inMessage.ChatMessage.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void EditMessageButton_Click(object sender, RoutedEventArgs e)
@@ -41,22 +42,22 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckMEMessage editedMessage = new UnstuckMEMessage()
+                UnstuckMEMessage editedMessage = new UnstuckMEMessage
                 {
-                    ChatID = Message.Message.ChatID,
-                    FilePath = Message.Message.FilePath,
+                    FilePath = Message.ChatMessage.FilePath,
+                    ChatID = Message.ChatMessage.ChatID,
                     Message = TextBoxChatMessage.Text,
-                    MessageID = Message.Message.MessageID,
-                    SenderID = Message.Message.SenderID,
-                    Time = Message.Message.Time,
-                    Username = Message.Message.Username,
-                    UsersInConvo = Message.Message.UsersInConvo
+                    MessageID = Message.ChatMessage.MessageID,
+                    SenderID = Message.ChatMessage.SenderID,
+                    Time = Message.ChatMessage.Time,
+                    Username = Message.ChatMessage.Username,
+                    UsersInConvo = Message.ChatMessage.UsersInConvo
                 };
 
                 if (UnstuckME.Server.EditMessage(editedMessage) == Task.FromResult(-1))
                     throw new Exception(string.Format("Failed to edit message {0}", editedMessage.Message));
 
-                Message.Message.Message = TextBoxChatMessage.Text;
+                Message.ChatMessage.Message = TextBoxChatMessage.Text;
                 TextBlockChatMessage.Text = TextBoxChatMessage.Text;
                 TextBoxChatMessage.Visibility = Visibility.Collapsed;
                 TextBlockChatMessage.Visibility = Visibility.Visible;
@@ -65,15 +66,15 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
         }
 
         private void buttonCancelChanges_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxChatMessage.Text = Message.Message.Message;
-            TextBlockChatMessage.Text = Message.Message.Message;
+            TextBoxChatMessage.Text = Message.ChatMessage.Message;
+            TextBlockChatMessage.Text = Message.ChatMessage.Message;
             TextBoxChatMessage.Visibility = Visibility.Collapsed;
             TextBlockChatMessage.Visibility = Visibility.Visible;
             buttonSaveChanges.Visibility = Visibility.Collapsed;
@@ -84,16 +85,16 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                UnstuckMEMessage deleted = new UnstuckMEMessage()
+                UnstuckMEMessage deleted = new UnstuckMEMessage
                 {
-                    ChatID = Message.Message.ChatID,
-                    FilePath = Message.Message.FilePath,
-                    Message = Message.Message.Message,
-                    MessageID = Message.Message.MessageID,
-                    SenderID = Message.Message.SenderID,
-                    Time = Message.Message.Time,
-                    Username = Message.Message.Username,
-                    UsersInConvo = Message.Message.UsersInConvo
+                    FilePath = Message.ChatMessage.FilePath,
+                    ChatID = Message.ChatMessage.ChatID,
+                    Message = Message.ChatMessage.Message,
+                    MessageID = Message.ChatMessage.MessageID,
+                    SenderID = Message.ChatMessage.SenderID,
+                    Time = Message.ChatMessage.Time,
+                    Username = Message.ChatMessage.Username,
+                    UsersInConvo = Message.ChatMessage.UsersInConvo
                 };
 
                 if (UnstuckME.Server.DeleteMessage(deleted) == Task.FromResult(-1))
@@ -103,7 +104,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
         }

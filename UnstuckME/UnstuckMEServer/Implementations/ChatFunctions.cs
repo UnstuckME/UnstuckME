@@ -151,7 +151,7 @@ namespace UnstuckMEInterfaces
                         {
                             if (chatItem.HasValue)
                             {
-                                UnstuckMEChat temp = new UnstuckMEChat()
+                                UnstuckMEChat temp = new UnstuckMEChat
                                 {
                                     ChatID = chatItem.Value
                                 };
@@ -187,7 +187,7 @@ namespace UnstuckMEInterfaces
                     {
                         foreach (var member in chatMembers)
                         {
-                            UnstuckMEChatUser temp = new UnstuckMEChatUser()
+                            UnstuckMEChatUser temp = new UnstuckMEChatUser
                             {
                                 UserID = member.UserID,
                                 UserName = member.DisplayFName,

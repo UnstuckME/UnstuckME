@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
+using UnstuckMeLoggers;
 using UnstuckMEServer;
 using UnstuckME_Classes;
-using System.ServiceModel.Channels;
-using System.Collections.Generic;
 
 namespace UnstuckMEInterfaces
 {
@@ -24,7 +25,7 @@ namespace UnstuckMEInterfaces
             {
                 var users = db.GetUserInfo(userID, emailAddress).First();
 
-                UserInfo newClient = new UserInfo()
+                UserInfo newClient = new UserInfo
                 {
                     UserID = users.UserID,
                     FirstName = users.DisplayFName,
@@ -59,7 +60,7 @@ namespace UnstuckMEInterfaces
                 }
                 catch(Exception ex)
                 {
-                    UnstuckMeLoggers.UnstuckMEServerEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES_SERVER.DATABASE_RETURN_ERROR, ex.Message);
+                    UnstuckMEServerEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES_SERVER.DATABASE_RETURN_ERROR, ex.Message);
                     return -1;
                 }
             }

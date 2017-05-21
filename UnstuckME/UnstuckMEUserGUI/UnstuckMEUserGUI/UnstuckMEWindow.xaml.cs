@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -8,8 +10,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
+using UnstuckMEUserGUI.SubWindows;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -243,9 +246,9 @@ namespace UnstuckMEUserGUI
 						Window win;
 						
 						if (needsreview.Value)
-							win = new SubWindows.AddTutorReviewWindow(needsreview.Key);
+							win = new AddTutorReviewWindow(needsreview.Key);
 						else
-							win = new SubWindows.AddStudentReviewWindow(needsreview.Key);
+							win = new AddStudentReviewWindow(needsreview.Key);
 
 						win.ShowDialog();
 						//win.Focus();
@@ -386,7 +389,7 @@ namespace UnstuckMEUserGUI
 			UnstuckME.Pages.StickerPage.StackPanelMyStickers.Children.Add(new MySticker(inSticker));
 		}
 
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		private void Window_Closing(object sender, CancelEventArgs e)
 		{
             UnstuckME.UserExit = true;
 			try
@@ -506,7 +509,7 @@ namespace UnstuckMEUserGUI
 					UnstuckME.Server.InsertUserIntoChat(sticker.StudentID, PreExistingChatID);
 				}
 
-				UnstuckMEMessage temp = new UnstuckMEMessage()
+				UnstuckMEMessage temp = new UnstuckMEMessage
 				{
 					ChatID = PreExistingChatID,
 					FilePath = string.Empty,
@@ -522,7 +525,7 @@ namespace UnstuckMEUserGUI
 				temp.MessageID = UnstuckME.Server.SendMessage(temp);
 				temp.Message = "Your have accepted a Sticker!";
 
-				UnstuckMESticker tempSticker = new UnstuckMESticker()
+				UnstuckMESticker tempSticker = new UnstuckMESticker
 				{
 					ChatID = PreExistingChatID,
 					ClassID = sticker.ClassID,
@@ -579,7 +582,7 @@ namespace UnstuckMEUserGUI
 		    {
 		        UnstuckME.Server.Logout();
                 UnstuckME.UserExit = true;
-		        var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
+		        var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 		        config.AppSettings.Settings["RememberMe"].Value = "false";
 		        config.Save();
 

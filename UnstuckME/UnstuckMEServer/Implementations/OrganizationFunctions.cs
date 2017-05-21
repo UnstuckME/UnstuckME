@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnstuckMEServer;
 using UnstuckME_Classes;
-using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -125,7 +125,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (var org in organizations)
                     {
-                        Organization newOrg = new Organization()
+                        Organization newOrg = new Organization
                         {
                             MentorID = org.MentorID,
                             OrganizationName = org.OrganizationName
@@ -156,7 +156,7 @@ namespace UnstuckMEInterfaces
                     {
                         foreach (var org in userOrgs)
                         {
-                            orgs.Add(new Organization()
+                            orgs.Add(new Organization
                             {
                                 MentorID = org.MentorID,
                                 OrganizationName = org.OrganizationName

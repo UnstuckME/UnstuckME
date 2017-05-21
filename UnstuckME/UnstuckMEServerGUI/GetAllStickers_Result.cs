@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServerGUI
 {
-    using System;
-    
     public partial class GetAllStickers_Result
     {
         public int StickerID { get; set; }
@@ -21,7 +21,7 @@ namespace UnstuckMEServerGUI
         public int ClassID { get; set; }
         public string ProblemDescription { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
-        public System.DateTime SubmitTime { get; set; }
-        public System.DateTime Timeout { get; set; }
+        public DateTime SubmitTime { get; set; }
+        public DateTime Timeout { get; set; }
     }
 }

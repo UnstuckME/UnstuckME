@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.ServiceModel;
 using System.Windows;
 using System.Xml;
@@ -17,8 +18,8 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
     public partial class ChangeUnstuckMEServerIP : Window
     {
         private readonly string m_schoolName = ConfigurationManager.AppSettings["SchoolName"];
-        private int? m_serverID = null;
-        private bool m_pastTest = false;
+        private int? m_serverID;
+        private bool m_pastTest;
         private string m_appConfigDir = string.Empty;
 
         public ChangeUnstuckMEServerIP()
@@ -106,10 +107,10 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
             {
                 switch (address.AddressFamily)
                 {
-                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                    case AddressFamily.InterNetwork:
                         isIPAddress = true;
                         break;
-                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                    case AddressFamily.InterNetworkV6:
                         isIPAddress = true;
                         break;
                     default:

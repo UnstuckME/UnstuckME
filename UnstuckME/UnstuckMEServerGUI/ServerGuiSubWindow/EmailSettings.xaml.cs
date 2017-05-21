@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.Configuration;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using UnstuckME_Classes;
 
@@ -34,8 +26,8 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
 			DirectoryInfo dir = new DirectoryInfo(Directory.GetCurrentDirectory());
-			var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(dir.Parent.Parent.Parent.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe");
-			var mailSettings = (System.Net.Configuration.SmtpSection)config.GetSection("system.net/mailSettings/smtp");
+			var config = ConfigurationManager.OpenExeConfiguration(dir.Parent.Parent.Parent.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe");
+			var mailSettings = (SmtpSection)config.GetSection("system.net/mailSettings/smtp");
 
 			if (mailSettings.DeliveryFormat == SmtpDeliveryFormat.SevenBit)
 				comboboxDeliveryFormat.SelectedIndex = 0;
@@ -124,8 +116,8 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 		private void SetEmailSettings()
 		{
 			DirectoryInfo dir = new DirectoryInfo(Directory.GetCurrentDirectory());
-			var config = System.Configuration.ConfigurationManager.OpenExeConfiguration(dir.Parent.Parent.Parent.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe");
-			var mailSettings = (System.Net.Configuration.SmtpSection)config.GetSection("system.net/mailSettings/smtp");
+			var config = ConfigurationManager.OpenExeConfiguration(dir.Parent.Parent.Parent.FullName + "/UnstuckMEServer/bin/Release/UnstuckMEServer.exe");
+			var mailSettings = (SmtpSection)config.GetSection("system.net/mailSettings/smtp");
 
 			if ((SmtpDeliveryFormat)comboboxDeliveryFormat.SelectedIndex == SmtpDeliveryFormat.SevenBit)
 				mailSettings.DeliveryFormat = SmtpDeliveryFormat.SevenBit;
@@ -147,7 +139,7 @@ namespace UnstuckMEServerGUI.ServerGuiSubWindow
 			mailSettings.SpecifiedPickupDirectory.PickupDirectoryLocation = textboxSpecifiedPickupDirectory.Text;
 			config.Save();
 
-			config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
+			config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 			config.AppSettings.Settings["EmailSettingsSet"].Value = "true";
 			config.Save();
 		}

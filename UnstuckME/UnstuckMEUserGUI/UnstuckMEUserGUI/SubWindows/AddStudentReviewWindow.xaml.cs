@@ -14,6 +14,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
         public AddStudentReviewWindow(int stickerID)
         {
+            Owner = UnstuckME.MainWindow;
             InitializeComponent();
             StarRatingValue.Value = .8;
             

@@ -9,8 +9,6 @@
 
 namespace UnstuckMEUserGUI
 {
-    using System;
-    
     public partial class GetAllSchoolLogos_Result
     {
         public int SchoolID { get; set; }

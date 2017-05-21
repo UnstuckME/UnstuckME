@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using UnstuckME_Classes;
 using UnstuckMEServer;
+using UnstuckME_Classes;
 
 namespace UnstuckMEServerGUI.ServerGuiSubWindow
 {

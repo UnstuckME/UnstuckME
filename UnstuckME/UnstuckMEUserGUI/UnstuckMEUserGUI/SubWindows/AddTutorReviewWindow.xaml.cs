@@ -1,7 +1,7 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using UnstuckMeLoggers;
 using UnstuckME_Classes;
-using System.Threading.Tasks;
 
 namespace UnstuckMEUserGUI.SubWindows
 {
@@ -14,6 +14,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
         public AddTutorReviewWindow(int stickerID)
         {
+            Owner = UnstuckME.MainWindow;
             InitializeComponent();
             StarRatingValue.Value = .8;
 

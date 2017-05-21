@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServerGUI
 {
-    using System;
-    
     public partial class GetActiveStickers_Result
     {
         public string DisplayFName { get; set; }
@@ -25,7 +25,7 @@ namespace UnstuckMEServerGUI
         public string CourseName { get; set; }
         public string ProblemDescription { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
-        public Nullable<System.DateTime> SubmitTime { get; set; }
-        public Nullable<System.DateTime> Timeout { get; set; }
+        public Nullable<DateTime> SubmitTime { get; set; }
+        public Nullable<DateTime> Timeout { get; set; }
     }
 }

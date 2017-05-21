@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -53,8 +55,8 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
-                UnstuckMeLoggers.UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(UnstuckMeLoggers.ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
 

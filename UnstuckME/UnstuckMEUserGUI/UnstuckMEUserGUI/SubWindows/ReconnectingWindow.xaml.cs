@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using UnstuckME_Classes;
 
@@ -45,7 +37,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                while (UnstuckME.ChannelFactory.State != System.ServiceModel.CommunicationState.Opened)
+                while (UnstuckME.ChannelFactory.State != CommunicationState.Opened)
                 {
                     UnstuckME.ConnectToServer();
                     if (_time.Minutes > 5)
@@ -55,7 +47,7 @@ namespace UnstuckMEUserGUI
                 }
                 UserInfo test = new UserInfo();
                 test = UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
-                this.Close();
+                Close();
                 UnstuckME.MainWindow.Show();
             }
             catch (Exception)

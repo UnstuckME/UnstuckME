@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using UnstuckME_Classes;
-using UnstuckMeLoggers;
+using System.Windows.Input;
 using UnstuckMEUserGUI.SubWindows;
+using UnstuckMEUserGUI.UserControls.Admin;
 
 namespace UnstuckMEUserGUI
 {
@@ -22,11 +20,11 @@ namespace UnstuckMEUserGUI
         public AdminPage()
         {
             InitializeComponent();
-            ClassesContentArea.Children.Add(new UserControls.Admin.ClassesArea());
-            UserContentArea.Children.Add(new UserControls.Admin.UserArea());
-            ReportsContentArea.Children.Add(new UserControls.Admin.ReportsArea());
-            AdminChatsContentArea.Children.Add(new UserControls.Admin.ChatsArea());
-            OrgsContentArea.Children.Add(new UserControls.Admin.OrgsArea());
+            ClassesContentArea.Children.Add(new ClassesArea());
+            UserContentArea.Children.Add(new UserArea());
+            ReportsContentArea.Children.Add(new ReportsArea());
+            AdminChatsContentArea.Children.Add(new ChatsArea());
+            OrgsContentArea.Children.Add(new OrgsArea());
 
             classesVisible = false;
             usersVisible = false;
@@ -52,7 +50,7 @@ namespace UnstuckMEUserGUI
             win.Show();
         }
 
-        private void ClassesAreaBtn_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ClassesAreaBtn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (classesVisible)
             {
@@ -66,7 +64,7 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        private void UserAreaBtn_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UserAreaBtn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (usersVisible)
             {
@@ -80,7 +78,7 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        private void ReportAreaBtn_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ReportAreaBtn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (reportsVisible)
             {
@@ -94,7 +92,7 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        private void OrgsAreaBtn_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OrgsAreaBtn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (orgsVisible)
             {
@@ -108,7 +106,7 @@ namespace UnstuckMEUserGUI
             }
         }
 
-        private void ChatsAreaBtn_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ChatsAreaBtn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (chatsVisible)
             {

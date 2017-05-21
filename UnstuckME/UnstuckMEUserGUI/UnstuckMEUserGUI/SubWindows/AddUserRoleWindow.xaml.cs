@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using UnstuckMeLoggers;
 using UnstuckME_Classes;
@@ -10,10 +11,10 @@ namespace UnstuckMEUserGUI.SubWindows
     /// </summary>
     public partial class AddUserRoleWindow : Window
     {
-        private bool isUser = false;
-        private bool isModerator = false;
-        private bool isAdmin = false;
-        private bool isDisabled = false;
+        private bool isUser;
+        private bool isModerator;
+        private bool isAdmin;
+        private bool isDisabled;
         private UserInfo targetUser;
         private int userID = -1;
 
@@ -42,7 +43,7 @@ namespace UnstuckMEUserGUI.SubWindows
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "While attempting a change to the user role an bad email was entered, Source = " + trace.Name);
             }
             if (userID != -1)

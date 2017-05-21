@@ -9,9 +9,6 @@
 
 namespace UnstuckMEServerGUI
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class Server
     {
         public int ServerID { get; set; }

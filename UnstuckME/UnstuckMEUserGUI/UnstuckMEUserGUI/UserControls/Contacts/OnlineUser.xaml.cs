@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.IO;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using UnstuckME_Classes;
@@ -19,7 +20,7 @@ namespace UnstuckMEUserGUI
 
             if (Friend.ProfilePicture == null)
             {
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                using (MemoryStream ms = new MemoryStream())
                 {
                     UnstuckME.FileStream.GetProfilePicture(Friend.UserID).CopyTo(ms);
                     Friend.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;

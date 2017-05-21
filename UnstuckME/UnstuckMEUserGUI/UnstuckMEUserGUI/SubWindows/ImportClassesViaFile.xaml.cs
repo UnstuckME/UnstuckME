@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,11 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.VisualBasic.FileIO;
+using Microsoft.Win32;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI.SubWindows
 {
-    public enum Course { CourseName, CourseCode, CourseNumber, CourseDescItems };
+    public enum Course { CourseName, CourseCode, CourseNumber, CourseDescItems }
 
     /// <summary>
     /// Importing and Creating CSV/TSV code implementation
@@ -29,7 +29,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
         private void buttonCreateCSV_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveDialog = new SaveFileDialog()
+            SaveFileDialog saveDialog = new SaveFileDialog
             {
                 Filter = "Comma Separated Values|*.csv",
                 Title = "Save CSV File Template"
@@ -61,7 +61,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
         private async void buttonUploadCSV_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog()
+            OpenFileDialog fileDialog = new OpenFileDialog
             {
                 Filter = ".csv|*.csv|.tsv|*tsv",
                 Multiselect = true
@@ -77,7 +77,7 @@ namespace UnstuckMEUserGUI.SubWindows
                     {
                         using (TextFieldParser csvParser = new TextFieldParser(path))
                         {
-                            csvParser.CommentTokens = new string[] { "$$$"};
+                            csvParser.CommentTokens = new[] { "$$$"};
                             csvParser.SetDelimiters(",", "\t");
                             csvParser.HasFieldsEnclosedInQuotes = true;
                             csvParser.TrimWhiteSpace = true;
@@ -181,7 +181,7 @@ namespace UnstuckMEUserGUI.SubWindows
 
         TextBlock GenerateWarning(string errMsg, long lineNumber)
         {
-            TextBlock warnTextBox = new TextBlock()
+            TextBlock warnTextBox = new TextBlock
             {
                 Foreground = new SolidColorBrush(Colors.Yellow),
                 Text = "WARNING: on line[" + lineNumber + "] " + errMsg,
@@ -202,7 +202,7 @@ namespace UnstuckMEUserGUI.SubWindows
                 errorTxt += " {" + fields[i] + "}";
             errorTxt += " " + errorMsg;
 
-            TextBlock errorTextBlock = new TextBlock()
+            TextBlock errorTextBlock = new TextBlock
             {
                 Text = errorTxt,
                 Foreground = new SolidColorBrush(Colors.Red),
@@ -227,7 +227,7 @@ namespace UnstuckMEUserGUI.SubWindows
                 }
             }
 
-            TextBlock errorTextBlock = new TextBlock()
+            TextBlock errorTextBlock = new TextBlock
             {
                 Text = errorStmt,
                 Foreground = new SolidColorBrush(Colors.Red),

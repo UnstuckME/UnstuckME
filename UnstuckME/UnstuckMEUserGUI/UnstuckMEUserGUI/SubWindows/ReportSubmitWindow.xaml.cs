@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using UnstuckMeLoggers;
 using UnstuckME_Classes;
-using System.Threading.Tasks;
 
 namespace UnstuckMEUserGUI
 {
@@ -25,14 +26,19 @@ namespace UnstuckMEUserGUI
         public ReportSubmitWindow(UnstuckMEReview review)
         {
             Owner = UnstuckME.MainWindow;
-            //Height = Owner.ActualHeight;
-            //Width = Owner.ActualWidth;
-            //BackgroundCanvas.Height = Owner.ActualHeight;
-            //BackgroundCanvas.Width = Owner.ActualWidth;
             InitializeComponent();
             _review = review;
             ReviewDescription.Text = _review.Description;
             StarRating.Value = _review.StarRanking;
+        }
+
+        private void SubmitReportWindow_ContentRendered(object sender, EventArgs e)
+        {
+            Height = UnstuckME.MainWindow.ActualHeight - 8;
+            Width = UnstuckME.MainWindow.Overlay.ActualWidth;
+            RenderTransform = UnstuckME.MainWindow.RenderTransform;
+            Left = UnstuckME.MainWindow.Left + 8;
+            Top = UnstuckME.MainWindow.Top;
         }
 
         private void ReportBorder_MouseEnter(object sender, MouseEventArgs e)
@@ -60,7 +66,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK,
                                             "An error occured when trying to send the report. Please contact an UnstuckME administrator if this problem persists. Thank you.",

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 
 namespace UnstuckMeLoggers
@@ -9,7 +10,7 @@ namespace UnstuckMeLoggers
         private string filePath = "./ServerAllErrors.txt";
         private string errorDesc = "No Desc Transmitted";
         private List<ErrContainerServer> ErrorsList = new List<ErrContainerServer>();
-        private static UnstuckMEServerEndMasterErrLogger _instance = null;
+        private static UnstuckMEServerEndMasterErrLogger _instance;
 
         private UnstuckMEServerEndMasterErrLogger()
         { }
@@ -34,7 +35,7 @@ namespace UnstuckMeLoggers
         }
         private void OutputErrors()
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath, true))
+            using (StreamWriter file = new StreamWriter(filePath, true))
             {
                 foreach (ErrContainerServer errors in ErrorsList)
                     file.WriteLine(errors.ToString());
@@ -51,10 +52,10 @@ namespace UnstuckMeLoggers
         {
             try
             {
-                System.IO.FileInfo fInfo = new System.IO.FileInfo(filePath);
+                FileInfo fInfo = new FileInfo(filePath);
                 if (fInfo.Length > 100000) //bytes
                 {
-                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath, false))
+                    using (StreamWriter file = new StreamWriter(filePath, false))
                     {
                             file.WriteLine("<FileLastReset=" + DateTime.Now + "/>");
                     }

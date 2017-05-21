@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace UnstuckMEUserGUI.SubWindows
 {
@@ -18,7 +19,7 @@ namespace UnstuckMEUserGUI.SubWindows
         {
             try
             {
-                Microsoft.Win32.OpenFileDialog fileBrowser = new Microsoft.Win32.OpenFileDialog
+                OpenFileDialog fileBrowser = new OpenFileDialog
                 {
                     AddExtension = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),

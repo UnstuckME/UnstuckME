@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI.UserControls.Admin
 {
@@ -32,7 +23,7 @@ namespace UnstuckMEUserGUI.UserControls.Admin
         }
         private void AddOrgBtn_Click(object sender, RoutedEventArgs e)
         {
-            string OrgName = this.orgName.Text;
+            string OrgName = orgName.Text;
 
             if (OrgName != string.Empty)
             {
@@ -43,7 +34,7 @@ namespace UnstuckMEUserGUI.UserControls.Admin
                 }
                 catch (Exception ex)
                 {
-                    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error occured while creating mentor org, Source = " + trace.Name);
                 }
             }

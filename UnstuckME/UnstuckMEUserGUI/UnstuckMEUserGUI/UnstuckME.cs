@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Media;
-using UnstuckME_Classes;
 using UnstuckMEInterfaces;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -25,9 +25,9 @@ namespace UnstuckMEUserGUI
         public static List<UnstuckMEChat> ChatSessions;
         public static UnstuckMEChat CurrentChatSession;
         public static UnstuckMEDirectory ProgramDir;
-        private static int _retryCount = 0;
+        private static int _retryCount;
         public static string UPW = string.Empty;
-        public static bool UserExit = false;
+        public static bool UserExit;
         internal static void ConnectToServer()
         {
             try

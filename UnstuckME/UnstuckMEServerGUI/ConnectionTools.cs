@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace UnstuckMEServerGUI
@@ -38,7 +35,7 @@ namespace UnstuckMEServerGUI
 
                 // add a reference to System.Configuration
                 entityCnxStringBuilder = new EntityConnectionStringBuilder
-                    (System.Configuration.ConfigurationManager
+                    (ConfigurationManager
                         .ConnectionStrings[configNameEf].ConnectionString);
 
                 // init the sqlbuilder with the full EF connectionstring cargo

@@ -7,10 +7,10 @@
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         mc:Ignorable="d"
         AllowsTransparency="True" WindowStyle="None" ShowInTaskbar="False" Background="Transparent" WindowStartupLocation="CenterOwner"
-        Name="SubmitReportWindow" MinWidth="1280" MinHeight="465" Height="465" Width="Auto">
-    <Grid>
+        Name="SubmitReportWindow" MinWidth="1280" MinHeight="465" ContentRendered="SubmitReportWindow_ContentRendered">
+    <Grid Height="{Binding ActualHeight, ElementName=SubmitReportWindow}" Width="{Binding ActualWidth, ElementName=SubmitReportWindow}" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Canvas x:Name="BackgroundCanvas" Background="Black" Opacity="0.7" MouseLeftButtonDown="ReportSubmitWindowGrid_MouseLeftButtonDown"/>
-        <Border x:Name="ReportSubmitBorder" Height="350" Width="350" BorderBrush="Snow" BorderThickness="1" CornerRadius="15" Background="DimGray">
+        <Border x:Name="ReportSubmitBorder" Height="425" Width="425" BorderBrush="Snow" BorderThickness="1" CornerRadius="15" Background="DimGray">
             <Grid x:Name="SubmissionGrid" Background="Transparent">
                 <TextBlock x:Name="Header" Text="Submit Report" FontSize="28" TextAlignment="Center" Foreground="White" />
                 <Border x:Name="DescriptionTextBox" BorderBrush="Snow" BorderThickness="1" Background="Transparent" Height="100" Width="{Binding ActualWidth, ElementName=SubmissionGrid}" VerticalAlignment="Top" Margin="0,50">

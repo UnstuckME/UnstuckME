@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
 using UnstuckMEUserGUI.SubWindows;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI.UserControls.Admin
 {
@@ -23,10 +13,10 @@ namespace UnstuckMEUserGUI.UserControls.Admin
     /// </summary>
     public partial class UserArea : UserControl
     {
-        private bool isUser = false;
-        private bool isModerator = false;
-        private bool isAdmin = false;
-        private bool isDisabled = false;
+        private bool isUser;
+        private bool isModerator;
+        private bool isAdmin;
+        private bool isDisabled;
         private UserInfo targetUser;
         private int userID = -1;
 
@@ -43,7 +33,7 @@ namespace UnstuckMEUserGUI.UserControls.Admin
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "While attempting a change to the user role an bad email was entered, Source = " + trace.Name);
             }
 

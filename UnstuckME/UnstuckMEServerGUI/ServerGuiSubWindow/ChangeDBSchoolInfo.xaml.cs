@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Configuration;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.ServiceModel.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Win32;
 using UnstuckMEServerGUI.ServerGuiSubWindow;
-using System.ServiceModel.Configuration;
-using System.Data.Entity.Core.EntityClient;
-using System.IO;
 
 namespace UnstuckMEServerGUI
 {
@@ -34,7 +35,7 @@ namespace UnstuckMEServerGUI
 		private void buttonBrowse_Click(object sender, RoutedEventArgs e)
 		{
 			//Create the actual browse window
-		    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+		    OpenFileDialog dlg = new OpenFileDialog
 		    {
 		        DefaultExt = ".png",            //Set what file they are trying to upload
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),

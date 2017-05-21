@@ -9,9 +9,6 @@
 
 namespace UnstuckMEServer
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class ServerAdmin
     {
         public int ServerAdminID { get; set; }

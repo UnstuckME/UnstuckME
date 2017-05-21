@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -96,11 +98,25 @@ namespace UnstuckME_Classes
 	//This Represents a Message in an UnstuckMEChat.
 	public class UnstuckMEMessage
 	{
+        private string _filepath = string.Empty;
+
 		public int MessageID { get; set; }
 		public int ChatID { get; set; }
 		public string Message { get; set; }
-		public string FilePath { get; set; }
-        public long FileSize { get; set; }
+
+	    public string FilePath
+	    {
+	        get { return _filepath; }
+	        set
+	        {
+	            _filepath = value;
+
+	            if (!string.IsNullOrEmpty(_filepath))
+	                FileSize = File.Exists(_filepath) ? new FileInfo(_filepath).Length : -1;
+            }
+        }
+
+	    public long FileSize { get; set; }
 		public int SenderID { get; set; }
 		public DateTime Time { get; set; }
 		public string Username { get; set; }
@@ -110,17 +126,18 @@ namespace UnstuckME_Classes
 	//This Will be passed into the ChatMessage UserControl everytime a message is submitted.
 	public class UnstuckMEGUIChatMessage
 	{
-        public UnstuckMEMessage Message { get; set; }
+        public UnstuckMEMessage ChatMessage { get; set; }
         public ImageSource ProfilePic { get; set; }
 
 		public UnstuckMEGUIChatMessage(UnstuckMEMessage inMessage, UnstuckMEChat inChat)
 		{
-		    Message = new UnstuckMEMessage
+		    ChatMessage = new UnstuckMEMessage
 		    {
 		        UsersInConvo = new List<int>(),
 		        ChatID = inMessage.ChatID,
-		        FilePath = inMessage.FilePath,
-		        MessageID = inMessage.MessageID,
+                FilePath = inMessage.FilePath,
+                FileSize = inMessage.FileSize,
+                MessageID = inMessage.MessageID,
 		        Time = inMessage.Time,
 		        Message = inMessage.Message,
 		        SenderID = inMessage.SenderID,
@@ -129,10 +146,10 @@ namespace UnstuckME_Classes
 
 		    foreach (UnstuckMEChatUser user in inChat.Users)
 			{
-				if (user.UserID == Message.SenderID)
+				if (user.UserID == ChatMessage.SenderID)
 				    ProfilePic = user.ProfilePicture;
 
-			    Message.UsersInConvo.Add(user.UserID);
+			    ChatMessage.UsersInConvo.Add(user.UserID);
 			}
 		}
 
@@ -247,10 +264,10 @@ namespace UnstuckME_Classes
 			Bitmap bitmap = new Bitmap(image, newWidth, newHeight);
 			using (Graphics graphics = Graphics.FromImage(bitmap))
 			{
-				graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-				graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-				graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-				graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+				graphics.CompositingQuality = CompositingQuality.HighQuality;
+				graphics.SmoothingMode = SmoothingMode.HighQuality;
+				graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 				graphics.DrawImage(image, 0, 0, newWidth, newHeight);
 			}
 		}
@@ -310,7 +327,7 @@ namespace UnstuckME_Classes
 				}
 				catch (Exception ex)
 				{
-				    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+				    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                     UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 				}
 			}
@@ -354,7 +371,7 @@ namespace UnstuckME_Classes
 			}
 			catch (Exception ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 			}
 
@@ -369,7 +386,7 @@ namespace UnstuckME_Classes
 			}
 			catch (Exception ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
 				return null;
 			}
@@ -406,7 +423,7 @@ namespace UnstuckME_Classes
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_UNABLE_TO_READWRITE, ex.Message, trace.Name);
             }
         }

@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServer
 {
-    using System;
-    
     public partial class GetUserTutoredStickers_Result
     {
         public string DisplayFName { get; set; }
@@ -24,7 +24,7 @@ namespace UnstuckMEServer
         public int StudentID { get; set; }
         public Nullable<int> TutorID { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
-        public System.DateTime SubmitTime { get; set; }
-        public System.DateTime Timeout { get; set; }
+        public DateTime SubmitTime { get; set; }
+        public DateTime Timeout { get; set; }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
-using UnstuckMEInterfaces;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
+using UnstuckMEInterfaces;
+using UnstuckMEUserGUI.SubWindows;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -23,7 +25,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 			}
         }
@@ -59,7 +61,7 @@ namespace UnstuckMEUserGUI
 		    }
 		    catch (Exception ex)
 		    {
-		        var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+		        var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
@@ -76,7 +78,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 			}
         }
@@ -93,7 +95,7 @@ namespace UnstuckMEUserGUI
 			}
 			catch (InvalidOperationException ex)
 			{
-			    var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+			    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
 			}
         }
@@ -110,7 +112,7 @@ namespace UnstuckMEUserGUI
             }
             catch (InvalidOperationException ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
@@ -127,7 +129,7 @@ namespace UnstuckMEUserGUI
             }
             catch (InvalidOperationException ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
             }
         }
@@ -141,7 +143,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                Window window = new SubWindows.AddTutorReviewWindow(stickerID)
+                Window window = new AddTutorReviewWindow(stickerID)
                 {
                     Topmost = true
                 };
@@ -149,7 +151,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to logout and log back in to submit a review on " + stickerID +
                                                                          ". If this does not work, please contact an UnstuckME administrator to resolve this issue.",
@@ -167,7 +169,7 @@ namespace UnstuckMEUserGUI
         {
             try
             {
-                Window window = new SubWindows.AddStudentReviewWindow(stickerID)
+                Window window = new AddStudentReviewWindow(stickerID)
                 {
                     Topmost = true
                 };
@@ -175,7 +177,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
                 UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "You need to logout and log back in to submit a review on " + stickerID +
                                                                          ". If this does not work, please contact an UnstuckME administrator to resolve this issue.",
@@ -211,7 +213,7 @@ namespace UnstuckMEUserGUI
             }
             catch (Exception ex)
             {
-                var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, 
                                                                          "Could not update status of sticker " + stickerID + ", Source = " + trace.Name);
             }
@@ -233,7 +235,7 @@ namespace UnstuckMEUserGUI
 	        }
 	        catch (Exception ex)
 	        {
-	            var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+	            var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Could not add review " + review.ReviewID + " to interface, Source = " + trace.Name);
 	        }
 	    }

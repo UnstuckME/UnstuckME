@@ -7,11 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServerGUI
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class Message
     {
         public int MessageID { get; set; }
@@ -20,7 +19,7 @@ namespace UnstuckMEServerGUI
         public string FilePath { get; set; }
         public bool IsFile { get; set; }
         public int SentBy { get; set; }
-        public System.DateTime SentTime { get; set; }
+        public DateTime SentTime { get; set; }
     
         public virtual Chat Chat { get; set; }
         public virtual UserProfile UserProfile { get; set; }

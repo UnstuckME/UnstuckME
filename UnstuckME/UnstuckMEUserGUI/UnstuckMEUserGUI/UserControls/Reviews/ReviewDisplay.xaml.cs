@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using UnstuckME_Classes;
 using UnstuckMeLoggers;
+using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
 {
@@ -47,7 +48,7 @@ namespace UnstuckMEUserGUI
 	        }
 	        catch (Exception ex)
 	        {
-	            var trace = new System.Diagnostics.StackTrace(ex, true).GetFrame(0).GetMethod();
+	            var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
                 UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
 	        }
 	    }

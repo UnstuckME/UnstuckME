@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnstuckMEServer;
 using UnstuckME_Classes;
-using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -71,7 +71,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (var sticker in stickers)
                     {
-                        UnstuckMESticker usSticker = new UnstuckMESticker()
+                        UnstuckMESticker usSticker = new UnstuckMESticker
                         {
                             StickerID = sticker.StickerID,
                             ClassID = sticker.ClassID,
@@ -107,7 +107,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (var sticker in userStickers)
                     {
-                        UnstuckMESticker usSticker = new UnstuckMESticker()
+                        UnstuckMESticker usSticker = new UnstuckMESticker
                         {
                             StickerID = sticker.StickerID ?? 0,
                             ProblemDescription = sticker.ProblemDescription,
@@ -144,7 +144,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (var sticker in userStickers)
                     {
-                        UnstuckMESticker usSticker = new UnstuckMESticker()
+                        UnstuckMESticker usSticker = new UnstuckMESticker
                         {
                             StickerID = sticker.StickerID,
                             ProblemDescription = sticker.ProblemDescription,
@@ -183,7 +183,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (var sticker in userStickers)
                     {
-                        UnstuckMEAvailableSticker usSticker = new UnstuckMEAvailableSticker()
+                        UnstuckMEAvailableSticker usSticker = new UnstuckMEAvailableSticker
                         {
                             StickerID = sticker.StickerID ?? 0,
                             ProblemDescription = sticker.ProblemDescription,
@@ -220,7 +220,7 @@ namespace UnstuckMEInterfaces
                 {
                     foreach (var sticker in userStickers)
                     {
-                        UnstuckMEAvailableSticker usSticker = new UnstuckMEAvailableSticker()
+                        UnstuckMEAvailableSticker usSticker = new UnstuckMEAvailableSticker
                         {
                             StickerID = sticker.StickerID,
                             ProblemDescription = sticker.ProblemDescription,
@@ -315,7 +315,7 @@ namespace UnstuckMEInterfaces
                     {
                         foreach (var sticker in dbStickers)
                         {
-                            UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker()
+                            UnstuckMEAvailableSticker temp = new UnstuckMEAvailableSticker
                             {
                                 ClassID = sticker.ClassID ?? 0,
                                 CourseCode = sticker.CourseCode,
@@ -406,14 +406,14 @@ namespace UnstuckMEInterfaces
                     var sticker = db.GetStickerInfo(stickerID).First();
 
                     //not sure if this will work
-                    UnstuckMEBigSticker bigsticker = new UnstuckMEBigSticker()
+                    UnstuckMEBigSticker bigsticker = new UnstuckMEBigSticker
                     {
                         StickerID = stickerID,
                         ProblemDescription = sticker.ProblemDescription,
                         StudentID = sticker.StudentID ?? 0,
                         TutorID = sticker.TutorID ?? 0,
                         MinimumStarRanking = sticker.MinimumStarRanking ?? 0,
-                        Class = new UserClass()
+                        Class = new UserClass
                         {
                             ClassID = sticker.ClassID ?? 0,
                             CourseCode = sticker.CourseCode,

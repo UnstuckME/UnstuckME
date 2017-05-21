@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace UnstuckMEServerGUI
 {
-    using System;
-    
     public partial class AdminPullReportsForOptionalUser_Result
     {
         public string DisplayFName { get; set; }
