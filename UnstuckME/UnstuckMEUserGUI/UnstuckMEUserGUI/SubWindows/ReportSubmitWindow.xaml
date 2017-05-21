@@ -21,7 +21,7 @@
                                      Background="Transparent" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0" />
                     </Grid>
                 </Border>
-                <Label x:Name="ReportdescriptionLabel" Content="What is the issue?" Foreground="White" VerticalContentAlignment="Center" />
+                <Label x:Name="ReportdescriptionLabel" Content="What is the issue with this review?" Foreground="White" VerticalContentAlignment="Center" />
                 <TextBox x:Name="Reportdescription" Height="100" Margin="0,120,0,0" />
                 <Border x:Name="ReportBorder" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="DarkRed" Margin="0,0,75,15"
                     MouseEnter="ReportBorder_MouseEnter" MouseLeave="ReportBorder_MouseLeave">

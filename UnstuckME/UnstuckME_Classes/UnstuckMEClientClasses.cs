@@ -110,10 +110,14 @@ namespace UnstuckME_Classes
 	        set
 	        {
 	            _filepath = value;
+	            FileSize = -1;
 
 	            if (!string.IsNullOrEmpty(_filepath))
-	                FileSize = File.Exists(_filepath) ? new FileInfo(_filepath).Length : -1;
-            }
+	            {
+	                if (File.Exists(_filepath))
+	                    FileSize = new FileInfo(_filepath).Length;
+	            }
+	        }
         }
 
 	    public long FileSize { get; set; }

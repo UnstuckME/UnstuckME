@@ -1,0 +1,42 @@
+﻿<Window x:Class="UnstuckMEUserGUI.UploadFileToChatWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnstuckMEUserGUI"
+        mc:Ignorable="d"
+        AllowsTransparency="True" WindowStyle="None" ShowInTaskbar="False" Background="Transparent" WindowStartupLocation="CenterOwner"
+        Name="UploadFileWindow" MinWidth="1280" MinHeight="465" ContentRendered="SubmitReportWindow_ContentRendered">
+    <Grid Height="{Binding ActualHeight, ElementName=UploadFileWindow}" Width="{Binding ActualWidth, ElementName=UploadFileWindow}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Canvas x:Name="BackgroundCanvas" Background="Black" Opacity="0.7" MouseLeftButtonDown="BackgroundCanvas_MouseLeftButtonDown"/>
+        <Border x:Name="FileUploadBorder" Height="300" Width="425" BorderBrush="Snow" BorderThickness="1" CornerRadius="15" Background="DimGray">
+            <Grid x:Name="UploadGrid" Background="Transparent">
+                <TextBlock x:Name="Header" Text="Upload File" FontSize="28" TextAlignment="Center" Foreground="White" />
+                <Border VerticalAlignment="Top" Height="70" Width="325" Margin="50,50" BorderBrush="Gray" BorderThickness="0,2.5,2.5,2.5">
+                    <DockPanel x:Name="fileDockPanel">
+                        <Border DockPanel.Dock="Left" BorderBrush="WhiteSmoke" BorderThickness="5" Width="4" />
+                        <Border Height="45" Width="35" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5" Background="LightGray" CornerRadius="5">
+                            <Image x:Name="filetypeImage" Source="../Resources/Document/DocumentBlue.png" Height="45" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock x:Name="TextblockFile" DockPanel.Dock="Top" Background="Transparent" Foreground="Blue" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" Padding="10,5,0,0" VerticalAlignment="Top">
+                            <Hyperlink x:Name="FileHyperlink"/>
+                        </TextBlock>
+                        <Label x:Name="FileSizeLabel" DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,5,0,0" Foreground="LightGray" FontSize="8" Content="53.06MB"/>
+                    </DockPanel>
+                </Border>
+                <Label x:Name="UploadFileMessageLabel" Content="Comment on the file?" Foreground="White" VerticalContentAlignment="Center" Margin="0,-20,0,0" />
+                <TextBox x:Name="FileComments" Height="100" Margin="0,100,0,0" />
+                <Border x:Name="SubmitBorder" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="SteelBlue" Margin="0,0,75,15"
+                        MouseEnter="SubmitBorder_MouseEnter" MouseLeave="SubmitBorder_MouseLeave">
+                    <Label x:Name="SubmitLabel" Content="Upload" FontSize="10" Foreground="White" Background="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                           Cursor="Hand" MouseLeftButtonDown="SubmitLabel_MouseLeftButtonDown"/>
+                </Border>
+                <Border x:Name="CancelBorder" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="50" BorderBrush="Snow" BorderThickness="1" Background="Green" Margin="0,0,-75,15"
+                        MouseEnter="CancelBorder_MouseEnter" MouseLeave="CancelBorder_MouseLeave">
+                    <Label x:Name="CancelLabel" Content="Cancel" FontSize="10" Foreground="White" Background="Transparent" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                           Cursor="Hand" MouseLeftButtonDown="BackgroundCanvas_MouseLeftButtonDown" />
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

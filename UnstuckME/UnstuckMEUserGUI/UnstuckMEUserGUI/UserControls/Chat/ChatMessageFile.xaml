@@ -40,7 +40,7 @@
                 <TextBlock x:Name="TextblockFile" DockPanel.Dock="Top" Background="Transparent" Foreground="Blue" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" Padding="10,5,0,0" VerticalAlignment="Top">
                     <Hyperlink x:Name="FileHyperlink" Click="FileHyperlink_Click"/>
                 </TextBlock>
-                <Label x:Name="FileSizeLabel" DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,5,0,0" Foreground="Gray" FontSize="8" Content="53.06MB"/>
+                <Label x:Name="FileSizeLabel" DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,5,0,0" Foreground="LightGray" FontSize="8" Content="53.06MB"/>
             </DockPanel>
         </DockPanel>
         <Button x:Name="buttonSaveChanges" Grid.Row="2" Grid.Column="1" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="30" Content="Save" BorderBrush="White" Foreground="White" Background="Green" Click="buttonSaveChanges_Click" Margin="0,0,70,5" />

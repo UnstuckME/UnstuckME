@@ -143,6 +143,7 @@ namespace UnstuckMEUserGUI
                     IsExpandedMode = true,
                     Title = "Save File",
                     EnsurePathExists = true,
+                    DefaultExtension = ".docx",
                     DefaultFileName = FileHyperlink.Inlines.FirstInline.ContentStart.GetTextInRun(LogicalDirection.Forward)
                 };
 

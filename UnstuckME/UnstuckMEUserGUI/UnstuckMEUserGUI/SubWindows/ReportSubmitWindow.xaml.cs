@@ -80,7 +80,7 @@ namespace UnstuckMEUserGUI
 
         private void CancelBorder_MouseEnter(object sender, MouseEventArgs e)
         {
-            CancelBorder.Background = Brushes.GreenYellow;
+            CancelBorder.Background = Brushes.LawnGreen;
         }
 
         private void CancelBorder_MouseLeave(object sender, MouseEventArgs e)

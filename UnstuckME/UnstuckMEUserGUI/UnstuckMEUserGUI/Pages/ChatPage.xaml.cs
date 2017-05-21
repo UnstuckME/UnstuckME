@@ -18,7 +18,7 @@ namespace UnstuckMEUserGUI
 	/// </summary>
 	public partial class ChatPage : Page
 	{
-	    private UnstuckMEMessage newMessage;
+	    internal UnstuckMEMessage newMessage;
 
 		public ChatPage()
 		{
@@ -164,7 +164,7 @@ namespace UnstuckMEUserGUI
 			    SendButton_Click(null, null);
 		}
 
-		private async void SendMessage(string message)
+		public async void SendMessage(string message)
 		{
 			try
 			{
@@ -382,8 +382,13 @@ namespace UnstuckMEUserGUI
                 if (open.HasValue && open.Value)
                 {
                     FileInfo file = new FileInfo(uploadFileDialog.FileName);
+
                     if (file.Length < 26214400)
-                        newMessage.FilePath = uploadFileDialog.FileName;
+                    {
+                        UploadFileToChatWindow uploadFileWindow = new UploadFileToChatWindow(uploadFileDialog.FileName);
+                        uploadFileWindow.ShowDialog();
+                        //newMessage.FilePath = uploadFileDialog.FileName;
+                    }
                     else
                     {
                         UnstuckMEMessageBox messagebox = new UnstuckMEMessageBox(UnstuckMEBox.OK, "The file you have selected exceeds the 25 MB file size limit. Please select a smaller file.", "File Size Too Large", UnstuckMEBoxImage.Error);
