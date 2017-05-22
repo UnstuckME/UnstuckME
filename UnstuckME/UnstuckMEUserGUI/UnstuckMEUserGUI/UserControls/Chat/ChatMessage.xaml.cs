@@ -19,12 +19,11 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             TextBoxUserName.Content = inMessage.ChatMessage.Username;
+            Message = inMessage;
             TextBoxChatMessage.Text = inMessage.ChatMessage.Message;
             TextBlockChatMessage.Text = inMessage.ChatMessage.Message;
 
             ImageProfilePicture.Source = inMessage.ProfilePic;
-            Message = inMessage;
-
             EditMessageButton.Visibility = inMessage.ChatMessage.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
         }
 

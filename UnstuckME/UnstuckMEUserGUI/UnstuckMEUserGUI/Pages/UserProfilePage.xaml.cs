@@ -16,39 +16,50 @@ using UnstuckMeLoggers;
 using UnstuckMEUserGUI.SubWindows;
 using UnstuckME_Classes;
 using Image = System.Drawing.Image;
+using System.ComponentModel;
 
 namespace UnstuckMEUserGUI
 {
     /// <summary>
     /// Interaction logic for UserProfilePage.xaml
     /// </summary>
-    public partial class UserProfilePage : Page
+    public partial class UserProfilePage : Page, INotifyPropertyChanged
     {
         public static StarRanking _studentRanking;
         private static StarRanking _tutorRanking;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string FirstName
         {
             get { return UnstuckME.User.FirstName; }
-            set { UnstuckME.User.FirstName = value; }
+            set
+            {
+                UnstuckME.User.FirstName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FirstName"));
+            }
         }
 
         public string LastName
         {
             get { return UnstuckME.User.LastName; }
-            set { UnstuckME.User.LastName = value; }
+            set
+            {
+                UnstuckME.User.LastName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LastName"));
+            }
         }
 
         public string EmailAddress
         {
             get { return UnstuckME.User.EmailAddress; }
-            set { UnstuckME.User.LastName = value; }
+            set { UnstuckME.User.EmailAddress = value; }
         }
 
         public UserProfilePage()
         {
             InitializeComponent();
-
+            DataContext = this;
             _studentRanking = new StarRanking(StarRanking.BoxColor.Gray);
             _tutorRanking = new StarRanking(StarRanking.BoxColor.Gray);
             RatingsStack.Children.Add(_studentRanking);
@@ -245,34 +256,24 @@ namespace UnstuckMEUserGUI
 
         private void ButtonSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (TextBoxNewFirstName.Text != UnstuckME.User.FirstName && !string.IsNullOrEmpty(TextBoxNewFirstName.Text))
+            try
             {
-                try
-                {
-                    UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, TextBoxNewFirstName.Text, UnstuckME.User.LastName);
-                    FirstName = TextBoxNewFirstName.Text;
-                    TextBoxFirstName.Text = TextBoxNewFirstName.Text;
-                }
-                catch (Exception ex)
-                {
-                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user FName, Source = " + trace.Name);
-                }
+                string newFirstName = TextBoxNewFirstName.Text != UnstuckME.User.FirstName && !string.IsNullOrEmpty(TextBoxNewFirstName.Text) ? TextBoxNewFirstName.Text : UnstuckME.User.FirstName;
+                string newLastName = TextBoxNewLastName.Text != UnstuckME.User.LastName && !string.IsNullOrEmpty(TextBoxNewLastName.Text) ? TextBoxNewLastName.Text : UnstuckME.User.LastName;
+
+                UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, newFirstName, newLastName);
+
+                FirstName = newFirstName;
+                LastName = newLastName;
+                TextBoxNewFirstName.Text = string.Empty;
+                TextBoxNewLastName.Text = string.Empty;
             }
-            if (TextBoxNewLastName.Text != UnstuckME.User.LastName && !string.IsNullOrEmpty(TextBoxNewLastName.Text))
+            catch (Exception ex)
             {
-                try
-                {
-                    UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, UnstuckME.User.FirstName, TextBoxNewLastName.Text);
-                    LastName = TextBoxNewLastName.Text;
-                    TextBoxLastName.Text = TextBoxNewLastName.Text;
-                }
-                catch (Exception ex)
-                {
-                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
-                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing user LName, Source = " + trace.Name);
-                }
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, "Error Occured While changing UserName, Source = " + trace.Name);
             }
+
             if (!string.IsNullOrEmpty(PasswordBoxNewPassword.Password) && !string.IsNullOrEmpty(PasswordBoxConfirm.Password))
             {
                 if (PasswordBoxNewPassword.Password == PasswordBoxConfirm.Password)
@@ -282,6 +283,7 @@ namespace UnstuckMEUserGUI
                         UnstuckME.Server.ChangePassword(UnstuckME.User, PasswordBoxNewPassword.Password);
                         UnstuckME.User.UserPassword = PasswordBoxNewPassword.Password;
                         UnstuckME.UPW = PasswordBoxNewPassword.Password;
+                        PasswordBoxNewPassword.Password = string.Empty;
                     }
                     catch (Exception ex)
                     {

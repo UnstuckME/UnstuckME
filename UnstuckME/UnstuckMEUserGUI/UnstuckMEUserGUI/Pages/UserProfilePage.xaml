@@ -53,11 +53,11 @@
                     <ColumnDefinition Width="450*" MinWidth="450"/>
                 </Grid.ColumnDefinitions>
                 <Grid x:Name="UserInfoGrid" Grid.Column="0">
-                    <TextBox x:Name="TextBoxFirstName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=FirstName}" Cursor="Arrow"
+                    <TextBox x:Name="TextBoxFirstName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding Path=FirstName}" Cursor="Arrow"
                              SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,8,0,0" TextWrapping="NoWrap" Grid.Column="0" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="TextBoxLastName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=LastName}" Cursor="Arrow"
+                    <TextBox x:Name="TextBoxLastName" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding Path=LastName}" Cursor="Arrow"
                              SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,38,0,0" TextWrapping="NoWrap" Grid.Column="0" VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="TextBoxEmailAddress" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding ElementName=UserProfile, Path=EmailAddress}" Cursor="Arrow"
+                    <TextBox x:Name="TextBoxEmailAddress" Padding="10,0,0,0" Height="25" Background="{x:Null}" Foreground="White" VerticalAlignment="Top" Text="{Binding Path=EmailAddress}" Cursor="Arrow"
                              SelectionBrush="{x:Null}" BorderThickness="0,0,0,0" IsReadOnlyCaretVisible="False" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,68,0,0" TextWrapping="NoWrap" Grid.Column="0" VerticalContentAlignment="Center"/>
                     <StackPanel x:Name="RatingsStack" Height="105" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                 </Grid>
