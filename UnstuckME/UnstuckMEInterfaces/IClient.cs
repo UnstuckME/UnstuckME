@@ -6,8 +6,14 @@ namespace UnstuckMEInterfaces
     [ServiceContract]
     public interface IClient
     {
+        /// <summary>
+        /// If a user has left a chat, remove them from the chat in the client.
+        /// </summary>
+        /// <param name="UserID">The unique identifier of the user to remove from the chat.</param>
+        /// <param name="ChatID">The unique identifier of the chat to remove the user from.</param>
         [OperationContract(IsOneWay = true)]
         void ChatUserLeft(int UserID, int ChatID);
+
         /// <summary>
         /// Forces the client to close with a messagebox popup.
         /// </summary>
@@ -97,5 +103,13 @@ namespace UnstuckMEInterfaces
         /// <param name="newstudentRating">The new average student rating of the user.</param>
         [OperationContract(IsOneWay = true)]
         void RecieveReviewAndUpdateRatings(UnstuckMEReview review, float newtutorRating, float newstudentRating);
+
+        /// <summary>
+        /// Finds all the chat messages that a user has sent and changes the name of the sender.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who sent the message.</param>
+        /// <param name="newName">The new name of the user who sent the message.</param>
+        [OperationContract(IsOneWay = true)]
+        void ChangeChatMessageUsernames(int userID, string newName);
     }
 }

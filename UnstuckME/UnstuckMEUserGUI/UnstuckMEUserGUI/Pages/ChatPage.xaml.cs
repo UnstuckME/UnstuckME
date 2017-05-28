@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,10 +22,20 @@ namespace UnstuckMEUserGUI
 	{
 	    internal UnstuckMEMessage newMessage;
 
-		public ChatPage()
+	    internal Button LoadMoreMessagesButton = new Button
+	    {
+	        Height = 20,
+	        Background = Brushes.Transparent,
+	        Foreground = Brushes.White,
+	        Content = "Load More",
+	        FontSize = 9
+	    };
+
+        public ChatPage()
 		{
 			InitializeComponent();
-		    newMessage = new UnstuckMEMessage();
+		    LoadMoreMessagesButton.Click += LoadMoreMessagesButton_Click;
+            newMessage = new UnstuckMEMessage();
 			UnstuckME.CurrentChatSession = new UnstuckMEChat
 			{
 				ChatID = -1
@@ -32,7 +44,9 @@ namespace UnstuckMEUserGUI
 			ButtonAddUserToConvo.IsEnabled = false;
 		}
 
-		//This Box Determines what happens when a user clicks a new message notification.
+        /// <summary>
+        /// This Box Determines what happens when a user clicks a new message notification.
+        /// </summary>
 		public void NotificationCall(UnstuckMEMessage message)
 		{
 			foreach (Conversation item in StackPanelConversations.Children.OfType<Conversation>())
@@ -42,7 +56,31 @@ namespace UnstuckMEUserGUI
 			}
 		}
 
-		private void MessageTextBox_SizeChanged(object sender, SizeChangedEventArgs e)
+	    public void ChangeMessageNames(int userID, string newName)
+	    {
+	        foreach (Conversation chat in StackPanelConversations.Children)
+	        {
+	            foreach (UnstuckMEMessage message in chat.Chat.Messages)
+	            {
+	                if (message.SenderID == userID)
+	                    message.Username = newName;
+	            }
+	        }
+
+	        foreach (ChatMessage message in StackPanelMessages.Children.OfType<ChatMessage>())
+	        {
+	            if (message.Message.ChatMessage.SenderID == userID)
+	                message.Username = newName;
+	        }
+
+	        foreach (ChatMessageFile message in StackPanelMessages.Children.OfType<ChatMessageFile>())
+	        {
+	            if (message.Message.ChatMessage.SenderID == userID)
+	                message.Username = newName;
+	        }
+	    }
+
+        private void MessageTextBox_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			MessageTextBox.CaretIndex = MessageTextBox.Text.Length;
 		}
@@ -229,27 +267,17 @@ namespace UnstuckMEUserGUI
 	        }
 	    }
 
-  //      private void ButtonCreateChat_Click(object sender, RoutedEventArgs e)
-		//{
-		//	ButtonCreateChat.Visibility = Visibility.Hidden;
-		//	ButtonCreateChat.IsEnabled = false;
-		//	GridConversations.Visibility = Visibility.Hidden;
-		//	GridConversations.IsEnabled = false;
-		//	GridNewConversation.Visibility = Visibility.Visible;
-		//	GridNewConversation.IsEnabled = true;
-		//}
-
 		public void ButtonAddUserDone_Click(object sender, RoutedEventArgs e)
 		{
 			ButtonCreateChat.Visibility = Visibility.Visible;
 			ButtonCreateChat.IsEnabled = true;
 			GridConversations.Visibility = Visibility.Visible;
 			GridConversations.IsEnabled = true;
+
             if (UnstuckME.CurrentChatSession.ChatID != -1)
-            {
                 LeaveCreateChat.Visibility = Visibility.Visible;
-            }
-            LeaveCreateChat.IsEnabled = true;
+
+		    LeaveCreateChat.IsEnabled = true;
             GridNewConversation.Visibility = Visibility.Hidden;
 			GridNewConversation.IsEnabled = false;
 			TextBoxManualUserNameSearch.Text = string.Empty;
@@ -353,7 +381,7 @@ namespace UnstuckMEUserGUI
 
         private void UploadButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            UploadButton.BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF7EB4EA"));
+            UploadButton.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF7EB4EA");
         }
 
         private void UploadButton_MouseLeave(object sender, MouseEventArgs e)
@@ -387,7 +415,6 @@ namespace UnstuckMEUserGUI
                     {
                         UploadFileToChatWindow uploadFileWindow = new UploadFileToChatWindow(uploadFileDialog.FileName);
                         uploadFileWindow.ShowDialog();
-                        //newMessage.FilePath = uploadFileDialog.FileName;
                     }
                     else
                     {
@@ -437,13 +464,14 @@ namespace UnstuckMEUserGUI
         private void LeaveCreateChat_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             UnstuckMEMessageBox confirm = new UnstuckMEMessageBox(UnstuckMEBox.YesNo, "Are you sure you want to leave the current conversation?", "Leave Conversation", UnstuckMEBoxImage.Information);
-            if (confirm.ShowDialog().Value)
+            bool? open = confirm.ShowDialog();
+            
+            if (open.HasValue && open.Value)
             {
                 try
                 {
                     Conversation temp = null;
                     UnstuckMEChat tempChat = null;
-                    //UnstuckME.Server.LeaveConversation(UnstuckME.User.UserID, UnstuckME.CurrentChatSession.ChatID, UnstuckME.CurrentChatSession.Users);
                     UnstuckME.Server.LeaveConversation(UnstuckME.User.UserID, UnstuckME.CurrentChatSession.ChatID);
                     UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Clear();
                     foreach (UnstuckMEChat chat in UnstuckME.ChatSessions)
@@ -453,11 +481,13 @@ namespace UnstuckMEUserGUI
                     }
                     foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
                     {
-                        if(convo.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
+                        if (convo.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
                             temp = convo;
                     }
+
                     UnstuckME.Pages.ChatPage.StackPanelConversations.Children.Remove(temp);
                     UnstuckME.ChatSessions.Remove(tempChat);
+
                     if (UnstuckME.Pages.ChatPage.StackPanelConversations.Children.Count > 0)
                         (UnstuckME.Pages.ChatPage.StackPanelConversations.Children[0] as Conversation).ConversationUserControl_MouseLeftButtonDown(null, null);
                     else
@@ -467,10 +497,33 @@ namespace UnstuckMEUserGUI
                         UnstuckME.CurrentChatSession.Users.Clear();
                     }
                 }
-                catch(Exception ex)
+                catch (CommunicationException ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
                 }
+                catch (Exception ex)
+                {
+                    var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                    UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
+                }
+            }
+        }
+
+        private void LoadMoreMessagesButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<UnstuckMEMessage> oldermessages = UnstuckME.Server.GetChatMessages(((ChatMessage)StackPanelMessages.Children[1]).Message.ChatMessage.ChatID, 
+                                                                                    Convert.ToInt16(StackPanelMessages.Children.Count), 
+                                                                                    Convert.ToInt16(StackPanelMessages.Children.Count + 75));
+
+            for (int index = oldermessages.Count - 1; index >= 0; index--)
+            {
+                if (string.IsNullOrEmpty(oldermessages[index].FilePath))
+                    StackPanelMessages.Children.Insert(1, new ChatMessage(new UnstuckMEGUIChatMessage(oldermessages[index], UnstuckME.CurrentChatSession)));
+                else
+                    StackPanelMessages.Children.Insert(1, new ChatMessageFile(new UnstuckMEGUIChatMessage(oldermessages[index], UnstuckME.CurrentChatSession)));
+
+                UnstuckME.CurrentChatSession.Messages.Insert(0, oldermessages[index]);
             }
         }
     }

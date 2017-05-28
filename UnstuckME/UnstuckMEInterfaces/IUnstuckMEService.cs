@@ -8,9 +8,15 @@ namespace UnstuckMEInterfaces
 	[ServiceContract(CallbackContract = typeof(IClient))]
 	public interface IUnstuckMEService
 	{
+        /// <summary>
+        /// User is requesting to leave a conversation.
+        /// </summary>
+        /// <param name="UserID">The unique identifier of the user who is leaving the conversation
+        /// referenced by <paramref name="ChatID"/>.</param>
+        /// <param name="ChatID">The unique identifier of the chat the user wants to leave.</param>
         [OperationContract(IsOneWay = true)]
-        //void LeaveConversation(int UserID, int ChatID, List<UnstuckMEChatUser> Users);
         void LeaveConversation(int UserID, int ChatID);
+
         /// <summary>
         /// Invoked when a tutor accepts a sticker. Updates the TutorID associated with that sticker.
         /// </summary>
@@ -64,14 +70,14 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		int GetUserID(string emailAddress);
 
-		/// <summary>
-		/// Changes the first and last name of the user with the specified email address.
-		/// </summary>
-		/// <param name="emailaddress">The email address of the user.</param>
-		/// <param name="newFirstName">The new first name of the user.</param>
-		/// <param name="newLastName">The new last name of the user.</param>
+	    /// <summary>
+	    /// Changes the first and last name of the user with the specified email address.
+	    /// </summary>
+	    /// <param name="userID">The unique identifier of the user who is requesting to change their name.</param>
+	    /// <param name="newFirstName">The new first name of the user.</param>
+	    /// <param name="newLastName">The new last name of the user.</param>
 		[OperationContract(IsOneWay = true)]
-		void ChangeUserName(string emailaddress, string newFirstName, string newLastName);
+		void ChangeUserName(int userID, string newFirstName, string newLastName);
 
 		/// <summary>
 		/// Attempts to log the user in. Starts by recreating the hashed password, then checks to see if the user is already logged on so
@@ -470,13 +476,14 @@ namespace UnstuckMEInterfaces
 		[OperationContract]
 		Task<int> EditMessage(UnstuckMEMessage message);
 
-		/// <summary>
-		/// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
-		/// </summary>
-		/// <param name="message">The message to be deleted.</param>
-		/// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
+	    /// <summary>
+	    /// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
+	    /// </summary>
+	    /// <param name="deleterID">The unique identifer of the user who has deleted the message.</param>
+	    /// <param name="message">The message to be deleted.</param>
+	    /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
 		[OperationContract]
-		Task<int> DeleteMessage(UnstuckMEMessage message);
+		Task<int> DeleteMessage(int deleterID, UnstuckMEMessage message);
 
 		/// <summary>
 		/// When logging on, checks for any stickers that need reviews. This will only occur if the other member of the
@@ -515,12 +522,25 @@ namespace UnstuckMEInterfaces
         [OperationContract]
 		List<UnstuckMEMessage> Ryans_GetChatMessage(int chatID, int messageID, int numMessages = 20);
 
-		/// <summary>
-		/// Gets all the SentBy ID's of a particualr chat
-		/// </summary>
-		/// <param name="chatID">The Id of a particular chat</param>
-		/// <returns>A list of nullable integers indicating each members ID</returns>
-		[OperationContract]
+        /// <summary>
+        /// Gets a set amount of messages from a chat. By default grabs the first 75 messages of that chat, however if older messages
+        /// need to be gathered, this can be done by providing a value for the firstrow and lastrow parameters.
+        /// </summary>
+        /// <param name="chatID">The unique identifier of the chat to get the number of messages for.</param>
+        /// <param name="firstrow">The first row in the database table of messages to get. Optional parameter, defaults to 0.</param>
+        /// <param name="lastrow">The number of messages to get from the database. Optional parameter, defaults to 75.</param>
+        /// <returns>A list of messages, each containing the unique identifier, message data, time the message was sent,
+        /// the filepath (if it is a file, otherwise will be an empty string), the unique identifier of the chat the message belongs to,
+        /// and the unique identifier and first name of the user who sent the message.</returns>
+        [OperationContract]
+        List<UnstuckMEMessage> GetChatMessages(int chatID, short firstrow = 0, short lastrow = 75);
+
+        /// <summary>
+        /// Gets all the SentBy ID's of a particualr chat
+        /// </summary>
+        /// <param name="chatID">The Id of a particular chat</param>
+        /// <returns>A list of nullable integers indicating each members ID</returns>
+        [OperationContract]
 		List<int?> GetMemberIDsFromChat(int chatID);
 
         /// <summary>

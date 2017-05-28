@@ -14,18 +14,14 @@ namespace UnstuckMEUserGUI
             InitializeComponent();
             Sticker = inSticker;
             ProblemDescription.Text = Sticker.ProblemDescription;
-            if(UnstuckME.User.UserID == Sticker.StudentID)
-            {
+
+            if (UnstuckME.User.UserID == Sticker.StudentID)
                 RoleDescription.Content = "Student";
-            }
-            else if(UnstuckME.User.UserID == Sticker.TutorID)
-            {
+            else if (UnstuckME.User.UserID == Sticker.TutorID)
                 RoleDescription.Content = "Tutor";
-            }
             else
-            {
                 RoleDescription.Content = "N/A";
-            }
+
             StarRatingValue.Value = .5d;
             LabelClassName.Content = Sticker.CourseCode + " " + Sticker.CourseNumber + " " + Sticker.CourseName;
         }

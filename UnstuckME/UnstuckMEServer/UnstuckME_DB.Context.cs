@@ -7,13 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
-
 namespace UnstuckMEServer
 {
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
+    
     public partial class UnstuckME_DBEntities : DbContext
     {
         public UnstuckME_DBEntities()
@@ -1050,32 +1051,6 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateCourseNumberByClassID", classIDParameter, courseNumberParameter);
         }
     
-        public virtual int UpdateDisplayFNameByUserID(Nullable<int> userID, string displayFName)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var displayFNameParameter = displayFName != null ?
-                new ObjectParameter("DisplayFName", displayFName) :
-                new ObjectParameter("DisplayFName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateDisplayFNameByUserID", userIDParameter, displayFNameParameter);
-        }
-    
-        public virtual int UpdateDisplayLNameByUserID(Nullable<int> userID, string displayLName)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var displayLNameParameter = displayLName != null ?
-                new ObjectParameter("DisplayLName", displayLName) :
-                new ObjectParameter("DisplayLName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateDisplayLNameByUserID", userIDParameter, displayLNameParameter);
-        }
-    
         public virtual int UpdateEmailAddressByUserID(Nullable<int> userID, string emailAddress)
         {
             var userIDParameter = userID.HasValue ?
@@ -1251,6 +1226,23 @@ namespace UnstuckMEServer
                 new ObjectParameter("UserID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("UpdateUserAverageRank", userIDParameter);
+        }
+    
+        public virtual int UpdateUserName(Nullable<int> userID, string displayFName, string displayLName)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var displayFNameParameter = displayFName != null ?
+                new ObjectParameter("DisplayFName", displayFName) :
+                new ObjectParameter("DisplayFName", typeof(string));
+    
+            var displayLNameParameter = displayLName != null ?
+                new ObjectParameter("DisplayLName", displayLName) :
+                new ObjectParameter("DisplayLName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserName", userIDParameter, displayFNameParameter, displayLNameParameter);
         }
     
         public virtual int UpdateUserPasswordByUserID(Nullable<int> userID, string userPassword)

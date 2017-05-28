@@ -39,8 +39,8 @@ namespace UnstuckMEUserGUI
             FileInfo file = new FileInfo(_filepath);
             FileHyperlink.Inlines.Add(file.Name);
             FileSizeLabel.Content = file.Length < 1048576 ?
-                Convert.ToSingle(file.Length / 1024) + " KB" :
-                Convert.ToSingle(file.Length / 1048576) + " MB";
+                                    Convert.ToSingle(file.Length / 1024) + " KB" :
+                                    Convert.ToSingle(file.Length / 1048576) + " MB";
 
             if (file.Extension == ".pdf")
             {

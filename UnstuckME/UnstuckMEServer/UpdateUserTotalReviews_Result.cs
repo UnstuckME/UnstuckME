@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace UnstuckMEServer
 {
+    using System;
+    
     public partial class UpdateUserTotalReviews_Result
     {
         public int ReviewID { get; set; }

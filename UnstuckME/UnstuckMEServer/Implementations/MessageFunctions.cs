@@ -100,16 +100,17 @@ namespace UnstuckMEInterfaces
         /// <summary>
         /// Deletes a message. Is broadcasted to the other online users in the chat once it is deleted.
         /// </summary>
+        /// <param name="deleterID">The unique identifer of the user who has deleted the message.</param>
         /// <param name="message">The message to be deleted.</param>
         /// <returns>Returns 0 if successful, -1 if unsuccessful.</returns>
-        public async Task<int> DeleteMessage(UnstuckMEMessage message)
+        public async Task<int> DeleteMessage(int deleterID, UnstuckMEMessage message)
         {
             try
             {
                 using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
                 {
                     db.DeleteMessageByMessageID(message.MessageID);
-                    await Task.Factory.StartNew(() => AsyncDeleteMessage(message));
+                    await Task.Factory.StartNew(() => AsyncDeleteMessage(deleterID, message));
 
                     return 0;
                 }
@@ -124,12 +125,13 @@ namespace UnstuckMEInterfaces
         /// Asyncronously gets all the online users who can see the message that has been deleted and 
         /// removes it from their interface.
         /// </summary>
+        /// <param name="deleterID">The unique identifer of the user who has deleted the message.</param>
         /// <param name="message">The message to be deleted.</param>
-        private void AsyncDeleteMessage(UnstuckMEMessage message)
+        private void AsyncDeleteMessage(int deleterID, UnstuckMEMessage message)
         {
             foreach (var client in _connectedClients)
             {
-                if (message.SenderID != client.Key && message.UsersInConvo.Contains(client.Key))
+                if (deleterID != client.Key && message.UsersInConvo.Contains(client.Key))
                     client.Value.Connection.DeleteChatMessage(message);
             }
         }
@@ -138,13 +140,13 @@ namespace UnstuckMEInterfaces
         /// Gets a set amount of messages from a chat. By default grabs the first 75 messages of that chat, however if older messages
         /// need to be gathered, this can be done by providing a value for the firstrow and lastrow parameters.
         /// </summary>
-        /// <param name="chatID"></param>
+        /// <param name="chatID">The unique identifier of the chat to get the number of messages for.</param>
         /// <param name="firstrow">The first row in the database table of messages to get. Optional parameter, defaults to 0.</param>
         /// <param name="lastrow">The number of messages to get from the database. Optional parameter, defaults to 75.</param>
         /// <returns>A list of messages, each containing the unique identifier, message data, time the message was sent,
         /// the filepath (if it is a file, otherwise will be an empty string), the unique identifier of the chat the message belongs to,
         /// and the unique identifier and first name of the user who sent the message.</returns>
-        protected List<UnstuckMEMessage> GetChatMessages(int chatID, short firstrow = 0, short lastrow = 75)
+        public List<UnstuckMEMessage> GetChatMessages(int chatID, short firstrow = 0, short lastrow = 75)
         {
             try
             {

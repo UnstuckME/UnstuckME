@@ -6,6 +6,7 @@ using System.ServiceModel.Channels;
 using UnstuckMeLoggers;
 using UnstuckMEServer;
 using UnstuckME_Classes;
+using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
@@ -69,20 +70,34 @@ namespace UnstuckMEInterfaces
         /// <summary>
         /// Changes the first and last name of the user with the specified email address.
         /// </summary>
-        /// <param name="emailaddress">The email address of the user.</param>
+        /// <param name="userID">The unique identifier of the user who is requesting to change their name.</param>
         /// <param name="newFirstName">The new first name of the user.</param>
         /// <param name="newLastName">The new last name of the user.</param>
-        public void ChangeUserName(string emailaddress, string newFirstName, string newLastName)
+        public async void ChangeUserName(int userID, string newFirstName, string newLastName)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
-                var users = (from b in db.UserProfiles
-                             where b.EmailAddress == emailaddress
-                             select b).First();
+                db.UpdateUserName(userID, newFirstName, newLastName);
+                await Task.Factory.StartNew(() => AsyncChangeMessageSenderName(userID, newFirstName));
+            }
+        }
 
-                users.DisplayFName = newFirstName;
-                users.DisplayLName = newLastName;
-                db.SaveChanges();
+        /// <summary>
+        /// Asynchronously sends the new first name of the user who are in conversations with online clients.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who changed their name.</param>
+        /// <param name="newFirstName">The new first name of the user.</param>
+        private void AsyncChangeMessageSenderName(int userID, string newFirstName)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var chatmembers = db.GetAllChatsAUserIsPartOF(userID);
+
+                foreach (var client in _connectedClients)
+                {
+                    if (chatmembers.Contains(client.Key))
+                        client.Value.Connection.ChangeChatMessageUsernames(client.Key, newFirstName);
+                }
             }
         }
 

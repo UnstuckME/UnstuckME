@@ -27,6 +27,16 @@ namespace UnstuckMEUserGUI
             EditMessageButton.Visibility = inMessage.ChatMessage.SenderID == UnstuckME.User.UserID ? Visibility.Visible : Visibility.Collapsed;
         }
 
+        internal string Username
+        {
+            get { return Message.ChatMessage.Username; }
+            set
+            {
+                Message.ChatMessage.Username = value;
+                TextBoxUserName.Content = value;
+            }
+        }
+
         private void EditMessageButton_Click(object sender, RoutedEventArgs e)
         {
             TextBoxChatMessage.Visibility = Visibility.Visible;
@@ -96,7 +106,7 @@ namespace UnstuckMEUserGUI
                     UsersInConvo = Message.ChatMessage.UsersInConvo
                 };
 
-                if (UnstuckME.Server.DeleteMessage(deleted) == Task.FromResult(-1))
+                if (UnstuckME.Server.DeleteMessage(UnstuckME.User.UserID, deleted) == Task.FromResult(-1))
                     throw new Exception(string.Format("Failed to delete message {0}", deleted.MessageID));
 
                 UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Remove(this);

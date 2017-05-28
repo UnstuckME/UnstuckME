@@ -9,6 +9,8 @@
 
 namespace UnstuckMEServer
 {
+    using System;
+    
     public partial class GetUsersInAClass_Result
     {
         public int UserID { get; set; }

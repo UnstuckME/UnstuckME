@@ -706,14 +706,6 @@
           <Parameter Name="ClassID" Type="int" Mode="In" />
           <Parameter Name="CourseNumber" Type="smallint" Mode="In" />
         </Function>
-        <Function Name="UpdateDisplayFNameByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="DisplayFName" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="UpdateDisplayLNameByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
-          <Parameter Name="DisplayLName" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="UpdateEmailAddressByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
@@ -767,6 +759,11 @@
         </Function>
         <Function Name="UpdateUserAverageRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="DisplayFName" Type="varchar" Mode="In" />
+          <Parameter Name="DisplayLName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="UpdateUserPasswordByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -1579,14 +1576,6 @@
             <Parameter Name="ClassID" Mode="In" Type="Int32" />
             <Parameter Name="CourseNumber" Mode="In" Type="Int16" />
           </FunctionImport>
-          <FunctionImport Name="UpdateDisplayFNameByUserID">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="DisplayFName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateDisplayLNameByUserID">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="DisplayLName" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="UpdateEmailAddressByUserID">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="EmailAddress" Mode="In" Type="String" />
@@ -1640,6 +1629,11 @@
           </FunctionImport>
           <FunctionImport Name="UpdateUserAverageRank" ReturnType="Collection(Double)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateUserName">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="DisplayFName" Mode="In" Type="String" />
+            <Parameter Name="DisplayLName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UpdateUserPasswordByUserID">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -2577,8 +2571,6 @@
           <FunctionImportMapping FunctionImportName="UpdateCourseCodeByClassID" FunctionName="UnstuckME_DBModel.Store.UpdateCourseCodeByClassID" />
           <FunctionImportMapping FunctionImportName="UpdateCourseNameByClassID" FunctionName="UnstuckME_DBModel.Store.UpdateCourseNameByClassID" />
           <FunctionImportMapping FunctionImportName="UpdateCourseNumberByClassID" FunctionName="UnstuckME_DBModel.Store.UpdateCourseNumberByClassID" />
-          <FunctionImportMapping FunctionImportName="UpdateDisplayFNameByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateDisplayFNameByUserID" />
-          <FunctionImportMapping FunctionImportName="UpdateDisplayLNameByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateDisplayLNameByUserID" />
           <FunctionImportMapping FunctionImportName="UpdateEmailAddressByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateEmailAddressByUserID" />
           <FunctionImportMapping FunctionImportName="UpdateMentorNameByMentorID" FunctionName="UnstuckME_DBModel.Store.UpdateMentorNameByMentorID" />
           <FunctionImportMapping FunctionImportName="UpdateMessageByMessageID" FunctionName="UnstuckME_DBModel.Store.UpdateMessageByMessageID" />
@@ -2592,6 +2584,7 @@
           <FunctionImportMapping FunctionImportName="UpdateTimeoutByStickerIDAndSeconds" FunctionName="UnstuckME_DBModel.Store.UpdateTimeoutByStickerIDAndSeconds" />
           <FunctionImportMapping FunctionImportName="UpdateTutorIDByTutorIDAndStickerID" FunctionName="UnstuckME_DBModel.Store.UpdateTutorIDByTutorIDAndStickerID" />
           <FunctionImportMapping FunctionImportName="UpdateUserAverageRank" FunctionName="UnstuckME_DBModel.Store.UpdateUserAverageRank" />
+          <FunctionImportMapping FunctionImportName="UpdateUserName" FunctionName="UnstuckME_DBModel.Store.UpdateUserName" />
           <FunctionImportMapping FunctionImportName="UpdateUserPasswordByUserID" FunctionName="UnstuckME_DBModel.Store.UpdateUserPasswordByUserID" />
           <FunctionImportMapping FunctionImportName="UpdateUserTotalReviews" FunctionName="UnstuckME_DBModel.Store.UpdateUserTotalReviews">
             <ResultMapping>

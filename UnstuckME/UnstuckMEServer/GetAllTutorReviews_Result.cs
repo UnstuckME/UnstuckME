@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace UnstuckMEServer
 {
+    using System;
+    
     public partial class GetAllTutorReviews_Result
     {
         public int StickerID { get; set; }

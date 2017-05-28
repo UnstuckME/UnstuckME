@@ -17,6 +17,7 @@ using UnstuckMEUserGUI.SubWindows;
 using UnstuckME_Classes;
 using Image = System.Drawing.Image;
 using System.ComponentModel;
+using System.Threading;
 
 namespace UnstuckMEUserGUI
 {
@@ -261,7 +262,7 @@ namespace UnstuckMEUserGUI
                 string newFirstName = TextBoxNewFirstName.Text != UnstuckME.User.FirstName && !string.IsNullOrEmpty(TextBoxNewFirstName.Text) ? TextBoxNewFirstName.Text : UnstuckME.User.FirstName;
                 string newLastName = TextBoxNewLastName.Text != UnstuckME.User.LastName && !string.IsNullOrEmpty(TextBoxNewLastName.Text) ? TextBoxNewLastName.Text : UnstuckME.User.LastName;
 
-                UnstuckME.Server.ChangeUserName(UnstuckME.User.EmailAddress, newFirstName, newLastName);
+                UnstuckME.Server.ChangeUserName(UnstuckME.User.UserID, newFirstName, newLastName);
 
                 FirstName = newFirstName;
                 LastName = newLastName;

@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace UnstuckMEServer
 {
+    using System;
+    
     public partial class GetUsersOverallStarRank_Result
     {
         public string DisplayFName { get; set; }

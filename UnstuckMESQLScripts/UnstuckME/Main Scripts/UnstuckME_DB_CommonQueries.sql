@@ -543,15 +543,14 @@ create proc GetChatMessages
 ) as
 begin
 	select * from (
-		select ROW_NUMBER() over (order by SentTime desc, MessageID desc) as [Row],
-			MessageID, DisplayFName, DisplayLName, MessageData, FilePath, SentBy, SentTime
-		from UserProfile join UserToChat	on UserProfile.UserID = UserToChat.UserID
-			join Chat						on UserToChat.ChatID = Chat.ChatID
-			join [Messages]					on Chat.ChatID = [Messages].ChatID
-		where UserToChat.ChatID = @chatid and UserProfile.UserID = [Messages].SentBy
-	) as [ChatMessages]
-	where [Row] between @startrow and @endrow
-	order by [Row] desc
+		select ROW_NUMBER() over (order by SentTime desc, MessageID desc) as [Row], * from (
+			select distinct MessageID, DisplayFName, DisplayLName, MessageData, FilePath, SentBy, SentTime
+			from UserProfile join [Messages]	on UserProfile.UserID = [Messages].SentBy
+				join UserToChat					on UserToChat.ChatID = [Messages].ChatID
+			where UserToChat.ChatID = @chatid
+		) as ChatMessages) as DMs
+	where DMs.[Row] between @startrow and @endrow
+	order by DMs.[Row] desc
 end;
 
 /**************************************************************************

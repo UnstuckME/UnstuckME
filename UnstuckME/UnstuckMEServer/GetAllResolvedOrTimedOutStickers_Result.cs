@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace UnstuckMEServer
 {
+    using System;
+    
     public partial class GetAllResolvedOrTimedOutStickers_Result
     {
         public string DisplayFName { get; set; }
@@ -24,7 +24,7 @@ namespace UnstuckMEServer
         public string CourseName { get; set; }
         public string ProblemDescription { get; set; }
         public Nullable<double> MinimumStarRanking { get; set; }
-        public DateTime SubmitTime { get; set; }
-        public DateTime Timeout { get; set; }
+        public System.DateTime SubmitTime { get; set; }
+        public System.DateTime Timeout { get; set; }
     }
 }

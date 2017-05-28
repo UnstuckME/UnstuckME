@@ -240,35 +240,88 @@ namespace UnstuckMEUserGUI
 	        }
 	    }
 
+        /// <summary>
+        /// If a user has left a chat, remove them from the chat in the client.
+        /// </summary>
+        /// <param name="UserID">The unique identifier of the user to remove from the chat.</param>
+        /// <param name="ChatID">The unique identifier of the chat to remove the user from.</param>
         public void ChatUserLeft(int UserID, int ChatID)
         {
-            UnstuckMEChatUser temp = null;
-            if(UnstuckME.CurrentChatSession.ChatID == ChatID)
+            try
             {
-                foreach (var User in UnstuckME.CurrentChatSession.Users)
+                UnstuckMEChatUser temp = null;
+
+                if (UnstuckME.CurrentChatSession.ChatID == ChatID)
                 {
-                    if(User.UserID == UserID)
+                    lock (UnstuckME.CurrentChatSession.Users)
                     {
-                        temp = User;
+                        foreach (var user in UnstuckME.CurrentChatSession.Users)
+                        {
+                            if (user.UserID == UserID)
+                                temp = user;
+                        }
+                        UnstuckME.CurrentChatSession.Users.Remove(temp);
                     }
                 }
-                UnstuckME.CurrentChatSession.Users.Remove(temp);
-            }
 
-            foreach (var Chat in UnstuckME.ChatSessions)
-            {
-                if(Chat.ChatID == ChatID)
+                foreach (var chat in UnstuckME.ChatSessions)
                 {
-                    foreach (var User in Chat.Users)
+                    if (chat.ChatID == ChatID)
                     {
-                        if (User.UserID == UserID)
+                        lock (chat.Users)
                         {
-                            temp = User;
+                            foreach (var user in chat.Users)
+                            {
+                                if (user.UserID == UserID)
+                                    temp = user;
+                            }
+                            chat.Users.Remove(temp);
                         }
                     }
-                    Chat.Users.Remove(temp);
+                }
+
+                foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+                {
+                    if (convo.Chat.ChatID == ChatID)
+                    {
+                        lock (convo)
+                        {
+                            foreach (var user in convo.Chat.Users)
+                            {
+                                if (user.UserID == UserID)
+                                    temp = user;
+                            }
+                            convo.Chat.Users.Remove(temp);
+                            convo.SetConversationLabel();
+                            if (UnstuckME.CurrentChatSession.ChatID == ChatID)
+                                UnstuckME.Pages.ChatPage.LabelConversationName.Content = convo.ConvoLabelText.Text;
+                        }
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
+            }
         }
+
+	    /// <summary>
+	    /// Finds all the chat messages that a user has sent and changes the name of the sender.
+	    /// </summary>
+	    /// <param name="userID">The unique identifier of the user who sent the message.</param>
+	    /// <param name="newName">The new name of the user who sent the message.</param>
+        public void ChangeChatMessageUsernames(int userID, string newName)
+	    {
+	        try
+	        {
+	            UnstuckME.Pages.ChatPage.ChangeMessageNames(userID, newName);
+	        }
+	        catch (Exception ex)
+	        {
+	            var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+	            UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_GUI_INTERACTION_ERROR, ex.Message, trace.Name);
+	        }
+	    }
     }
 }

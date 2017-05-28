@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace UnstuckMEServer
 {
+    using System;
+    
     public partial class GetReportsSubmittedByUser_Result
     {
         public int ReportID { get; set; }

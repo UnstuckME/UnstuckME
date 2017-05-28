@@ -90,9 +90,7 @@ namespace UnstuckME_Classes
 		public string UserName { get; set; }
 		public ImageSource ProfilePicture { get; set; }
 		public string EmailAddress { get; set; }
-        
         public byte[] UnProccessPhot { get; set; }
-        
 	}
 
 	//This Represents a Message in an UnstuckMEChat.

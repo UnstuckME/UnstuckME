@@ -21,7 +21,12 @@ namespace UnstuckMEUserGUI
         {
             InitializeComponent();
             Chat = inChat;
-            var test = from a in inChat.Users
+            SetConversationLabel();
+        }
+
+        public void SetConversationLabel()
+        {
+            var test = from a in Chat.Users
                        where a.UserID != UnstuckME.User.UserID
                        select new { ConversationName = a.UserName };
 
@@ -102,7 +107,10 @@ namespace UnstuckMEUserGUI
                 }
             }
             UnstuckME.CurrentChatSession = Chat;
+            int messagecount = UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Count;
             UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Clear();
+            if (messagecount % 75 == 0)
+                UnstuckME.Pages.ChatPage.StackPanelMessages.Children.Add(UnstuckME.Pages.ChatPage.LoadMoreMessagesButton);
             foreach (UnstuckMEMessage message in Chat.Messages)
             {
                 UnstuckMEGUIChatMessage guiMessage = new UnstuckMEGUIChatMessage(message, Chat);

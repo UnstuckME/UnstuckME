@@ -21,14 +21,7 @@ namespace UnstuckMEUserGUI
             _time = TimeSpan.Zero;
             _timer = new DispatcherTimer(new TimeSpan(0, 0, 0, 1), DispatcherPriority.Normal, delegate
             {
-                if(_time.Seconds < 10)
-                {
-                    TimerLabel.Content = string.Format("{0}:0{1}", _time.Minutes, _time.Seconds);
-                }
-                else
-                {
-                    TimerLabel.Content = string.Format("{0}:{1}", _time.Minutes, _time.Seconds);
-                }
+                TimerLabel.Content = string.Format(_time.Seconds < 10 ? "{0}:0{1}" : "{0}:{1}", _time.Minutes, _time.Seconds);
                 _time = _time.Add(TimeSpan.FromSeconds(1));
             }, Application.Current.Dispatcher);
         }
@@ -41,12 +34,10 @@ namespace UnstuckMEUserGUI
                 {
                     UnstuckME.ConnectToServer();
                     if (_time.Minutes > 5)
-                    {
                         throw new Exception("Reconnecting Time Exceeded 5 Minutes.");
-                    }
                 }
-                UserInfo test = new UserInfo();
-                test = UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
+
+                UnstuckME.Server.UserLoginAttempt(UnstuckME.User.EmailAddress, UnstuckME.UPW);
                 Close();
                 UnstuckME.MainWindow.Show();
             }

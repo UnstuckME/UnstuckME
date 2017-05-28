@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 
 namespace UnstuckMEUserGUI
@@ -60,14 +63,26 @@ namespace UnstuckMEUserGUI
 
                 foreach (UnstuckMEChatUser user in UnstuckME.CurrentChatSession.Users)
                     temp.UsersInConvo.Add(user.UserID);
+                foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+                {
+                    if (convo.Chat.ChatID == UnstuckME.CurrentChatSession.ChatID)
+                    {
+                        convo.Chat.Users = UnstuckME.CurrentChatSession.Users;
+                        convo.SetConversationLabel();
+                        UnstuckME.Pages.ChatPage.LabelConversationName.Content = convo.ConvoLabelText.Text;
+                    }
+                }
 
                 temp.MessageID = UnstuckME.Server.SendMessage(temp);
                 UnstuckME.Pages.ChatPage.AddMessage(temp);
                 //Removes Sticker From Stack Panel
-                ((StackPanel)Parent).Children.Remove(this);
+                ((StackPanel) Parent).Children.Remove(this);
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
+            }
         }
     }
 }

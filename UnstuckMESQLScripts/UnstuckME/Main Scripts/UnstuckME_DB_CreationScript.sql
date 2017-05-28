@@ -126,8 +126,7 @@ GO
 --Create Classes Table
 CREATE TABLE Picture
 	(UserID				INT						NOT NULL	REFERENCES UserProfile(UserID),
-	FilePath			VARCHAR(MAX)			DEFAULT NULL,
-	Photo				VARBINARY(MAX)			NULL
+	FilePath			VARCHAR(MAX)			DEFAULT NULL
 	PRIMARY KEY (UserID))	
 GO	
 

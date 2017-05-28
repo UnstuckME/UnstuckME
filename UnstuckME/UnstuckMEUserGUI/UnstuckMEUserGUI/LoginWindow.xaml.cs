@@ -281,11 +281,9 @@ namespace UnstuckMEUserGUI
 			{
 				try
 				{
-                    if(UnstuckME.ChannelFactory.State != CommunicationState.Opened)
-                    {
+                    if (UnstuckME.ChannelFactory.State != CommunicationState.Opened)
                         UnstuckME.ConnectToServer();
-                    }
-					temp = UnstuckME.Server.UserLoginAttempt(emailAttempt, passwordAttempt);
+				    temp = UnstuckME.Server.UserLoginAttempt(emailAttempt, passwordAttempt);
                     UnstuckME.UPW = passwordAttempt;
 				}
 				catch (Exception exp)

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using UnstuckMeLoggers;
 using UnstuckME_Classes;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using System.IO;
 
 namespace UnstuckMEUserGUI
 {
@@ -15,30 +18,29 @@ namespace UnstuckMEUserGUI
     /// </summary>
     public partial class AddUserToConversationWindow : Window
     {
-        public UnstuckMEChat CurrentChat;
-        public List<UnstuckMEChatUser> ConversationContactList;
+        private UnstuckMEChat CurrentChat;
 
         public AddUserToConversationWindow(UnstuckMEChat inCurrentChat)
         {
             InitializeComponent();
 
             CurrentChat = inCurrentChat;
-            ConversationContactList = UnstuckME.FriendsList.ToList();
-
+            List<UnstuckMEChatUser> conversationContactList = UnstuckME.FriendsList.ToList();
             List<UnstuckMEChatUser> alreadyInChatList = new List<UnstuckMEChatUser>();
-            foreach (UnstuckMEChatUser friend in ConversationContactList)
+
+            foreach (UnstuckMEChatUser friend in conversationContactList)
             {
                 foreach (UnstuckMEChatUser user in CurrentChat.Users)
                 {
-                    if(friend.UserID == user.UserID)
+                    if (friend.UserID == user.UserID)
                         alreadyInChatList.Add(friend);
                 }
             }
 
             foreach (UnstuckMEChatUser alreadyInChatUser in alreadyInChatList)
-                ConversationContactList.Remove(alreadyInChatUser);
+                conversationContactList.Remove(alreadyInChatUser);
 
-            foreach (UnstuckMEChatUser friend in ConversationContactList)
+            foreach (UnstuckMEChatUser friend in conversationContactList)
                 StackPanelFriendsList.Children.Add(new ContactAddToConversation(friend));
         }
 
@@ -85,7 +87,7 @@ namespace UnstuckMEUserGUI
             LabelInvalidUsername.Visibility = Visibility.Hidden;
             try
             {
-                if (TextBoxManualSearch.Text == UnstuckME.User.EmailAddress)
+                if (string.Equals(TextBoxManualSearch.Text, UnstuckME.User.EmailAddress, StringComparison.CurrentCultureIgnoreCase))
                     throw new Exception("Cannot Add Yourself");
 
                 if (UnstuckME.Server.IsValidUser(TextBoxManualSearch.Text) && TextBoxManualSearch.Text.Length > 6)
@@ -109,19 +111,44 @@ namespace UnstuckMEUserGUI
                         Username = UnstuckME.User.FirstName,
                         UsersInConvo = new List<int>()
                     };
+                    UnstuckMEChatUser contact = new UnstuckMEChatUser
+                    {
+                        UserID = userID,
+                        UserName = UnstuckME.Server.GetUserDisplayName(userID),
+                        EmailAddress = TextBoxManualSearch.Text
+                    };
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        UnstuckME.FileStream.GetProfilePicture(contact.UserID).CopyTo(ms);
+                        contact.ProfilePicture = UnstuckME.ImageConverter.ConvertFrom(ms.ToArray()) as ImageSource;
+                    }
+
+                    CurrentChat.Users.Add(contact);
 
                     foreach (UnstuckMEChatUser user in CurrentChat.Users)
                         temp.UsersInConvo.Add(user.UserID);
+                    foreach (Conversation convo in UnstuckME.Pages.ChatPage.StackPanelConversations.Children.OfType<Conversation>())
+                    {
+                        if (convo.Chat.ChatID == CurrentChat.ChatID)
+                        {
+                            convo.Chat.Users = CurrentChat.Users;
+                            convo.SetConversationLabel();
+                            if (UnstuckME.CurrentChatSession.ChatID == CurrentChat.ChatID)
+                                UnstuckME.Pages.ChatPage.LabelConversationName.Content = convo.ConvoLabelText.Text;
+                        }
+                    }
 
                     temp.MessageID = UnstuckME.Server.SendMessage(temp);
                     UnstuckME.Pages.ChatPage.AddMessage(temp);
                 }
                 else
-                    throw new Exception();
+                    LabelInvalidUsername.Visibility = Visibility.Visible;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 LabelInvalidUsername.Visibility = Visibility.Visible;
+                var trace = new StackTrace(ex, true).GetFrame(0).GetMethod();
+                UnstuckMEUserEndMasterErrLogger.GetInstance().WriteError(ERR_TYPES.USER_SERVER_CONNECTION_ERROR, ex.Message, trace.Name);
             }
         }
     }

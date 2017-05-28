@@ -38,10 +38,8 @@ IF OBJECT_ID('UpdateServerAdmin') is not null
 	DROP PROCEDURE UpdateServerAdmin;
 IF OBJECT_ID('UpdateMentorNameByMentorID') is not null
 	DROP PROCEDURE UpdateMentorNameByMentorID;
-IF OBJECT_ID('UpdateDisplayFNameByUserID') is not null
-	DROP PROCEDURE UpdateDisplayFNameByUserID;
-IF OBJECT_ID('UpdateDisplayLNameByUserID') is not null
-	DROP PROCEDURE UpdateDisplayLNameByUserID;
+IF OBJECT_ID('UpdateUserName') is not null
+	DROP PROCEDURE UpdateUserName;
 IF OBJECT_ID('UpdateEmailAddressByUserID') is not null
 	DROP PROCEDURE UpdateEmailAddressByUserID;
 IF OBJECT_ID('UpdateUserPasswordByUserID') is not null
@@ -481,33 +479,12 @@ AS
 GO
 
 /*********************************************************
---Update User First Name
+--Update User Name
 *********************************************************/
-CREATE PROC [dbo].[UpdateDisplayFNameByUserID]
+CREATE PROC [dbo].[UpdateUserName]
     (
     @UserID INT,
-	@DisplayFName VARCHAR(30)
-    )
-AS
-    BEGIN
-        IF  (NOT Exists(SELECT UserID FROM UserProfile WHERE UserID = @UserID))
-            RETURN 1;
-        ELSE
-            BEGIN
-				UPDATE UserProfile
-				SET DisplayFName = @DisplayFName
-				WHERE UserID = @userID;
-                RETURN 0;
-            END
-    END
-GO
-
-/*********************************************************
---Update User Last Name
-*********************************************************/
-CREATE PROC [dbo].[UpdateDisplayLNameByUserID]
-    (
-    @UserID INT,
+	@DisplayFName VARCHAR(30),
 	@DisplayLName VARCHAR(30)
     )
 AS
@@ -517,7 +494,8 @@ AS
         ELSE
             BEGIN
 				UPDATE UserProfile
-				SET DisplayLName = @DisplayLName
+				SET DisplayFName = @DisplayFName,
+					DisplayLName = @DisplayLName
 				WHERE UserID = @userID;
                 RETURN 0;
             END

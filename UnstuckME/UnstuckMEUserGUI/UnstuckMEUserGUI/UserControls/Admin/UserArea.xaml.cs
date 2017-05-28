@@ -240,7 +240,7 @@ namespace UnstuckMEUserGUI.UserControls.Admin
             {
                 try
                 {
-                    UnstuckME.Server.ChangeUserName(targetUser.EmailAddress, textBoxFirstName.Text, textBoxLastName.Text);
+                    UnstuckME.Server.ChangeUserName(targetUser.UserID, textBoxFirstName.Text, textBoxLastName.Text);
                 }
                 catch (Exception ex)
                 {

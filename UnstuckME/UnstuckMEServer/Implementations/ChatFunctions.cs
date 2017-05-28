@@ -3,26 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using UnstuckMEServer;
 using UnstuckME_Classes;
+using System.Threading.Tasks;
 
 namespace UnstuckMEInterfaces
 {
     public partial class UnstuckMEService : IUnstuckMEService, IUnstuckMEServer, IUnstuckMEFileStream
     {
-        //public void LeaveConversation(int UserID, int ChatID, List<UnstuckMEChatUser> Users)
-        public void LeaveConversation(int UserID, int ChatID)
+        /// <summary>
+        /// User is requesting to leave a conversation.
+        /// </summary>
+        /// <param name="UserID">The unique identifier of the user who is leaving the conversation
+        /// referenced by <paramref name="ChatID"/>.</param>
+        /// <param name="ChatID">The unique identifier of the chat the user wants to leave.</param>
+        public async void LeaveConversation(int UserID, int ChatID)
         {
             using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
             {
                 db.DeleteUserFromChat(UserID, ChatID);
+                await Task.Factory.StartNew(() => AsyncRemoveUserFromConversation(UserID, ChatID));
             }
+        }
 
-            //foreach (UnstuckMEChatUser user in Users)
-            //{
-            //    if (user.UserID != UserID && _connectedClients.ContainsKey(user.UserID))
-            //    {
-                    
-            //    }
-            //}
+        /// <summary>
+        /// Asychronously reomves a user from an online user's chat.
+        /// </summary>
+        /// <param name="UserID">The unique identifier of the user who is leaving the conversation
+        /// referenced by <paramref name="ChatID"/>.</param>
+        /// <param name="ChatID">The unique identifier of the chat the user wants to leave.</param>
+        private void AsyncRemoveUserFromConversation(int UserID, int ChatID)
+        {
+            using (UnstuckME_DBEntities db = new UnstuckME_DBEntities())
+            {
+                var chatmembers = db.GetAllMembersOfAChat(ChatID).ToList();
+
+                foreach (var chatmember in chatmembers)
+                {
+                    if (_connectedClients.ContainsKey(chatmember.UserID))
+                        _connectedClients[chatmember.UserID].Connection.ChatUserLeft(UserID, ChatID);
+                }
+            }
         }
 
         /// <summary>
