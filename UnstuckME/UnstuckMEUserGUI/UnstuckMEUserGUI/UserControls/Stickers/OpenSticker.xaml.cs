@@ -52,12 +52,12 @@ namespace UnstuckMEUserGUI
 
         private void ButtonUnTutor_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonUnTutor.Background = Brushes.IndianRed;
+            //ButtonUnTutor.Background = Brushes.IndianRed;
         }
 
         private void ButtonUnTutor_MouseLeave(object sender, MouseEventArgs e)
         {
-            ButtonUnTutor.Background = Brushes.White;
+            //ButtonUnTutor.Background = Brushes.White;
         }
 
         private void ButtonUnTutor_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

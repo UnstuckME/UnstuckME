@@ -58,7 +58,7 @@ namespace UnstuckMEUserGUI
                     sticker.Sticker.TutorID = null;
                     sticker.LabelTutorName.Content = "Currently Not Tutored";
                     sticker.ButtonCompleted.Visibility = Visibility.Hidden;
-                    sticker.ButtonDelete.Visibility = Visibility.Visible;
+                    //sticker.ButtonDelete.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace UnstuckMEUserGUI
                     sticker.Sticker.TutorID = UnstuckME.Server.GetSticker(stickerID).TutorID;
                     sticker.LabelTutorName.Content = UnstuckME.Server.GetUserDisplayName(sticker.Sticker.TutorID.Value);
                     sticker.ButtonCompleted.Visibility = Visibility.Visible;
-                    sticker.ButtonDelete.Visibility = Visibility.Collapsed;
+                    //sticker.ButtonDelete.Visibility = Visibility.Collapsed;
                 }
             }
         }

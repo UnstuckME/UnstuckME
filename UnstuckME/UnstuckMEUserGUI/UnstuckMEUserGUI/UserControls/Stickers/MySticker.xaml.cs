@@ -38,7 +38,7 @@ namespace UnstuckMEUserGUI
                     if (Sticker.TutorID.HasValue)
                     {
                         LabelTutorName.Content = "Tutor: " + UnstuckME.Server.GetUserDisplayName(Sticker.TutorID.Value);
-                        ButtonDelete.Visibility = Visibility.Collapsed;
+                        //ButtonDelete.Visibility = Visibility.Collapsed;
                         if (UnstuckME.Server.BeenReviewed(Sticker.StickerID, UnstuckME.User.UserID))
                             ButtonCompleted.Visibility = Visibility.Hidden;
                     }
@@ -83,12 +83,12 @@ namespace UnstuckMEUserGUI
 
         private void ButtonDelete_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonDelete.Background = Brushes.IndianRed;
+            //ButtonDelete.Background = Brushes.IndianRed;
         }
 
         private void ButtonDelete_MouseLeave(object sender, MouseEventArgs e)
         {
-            ButtonDelete.Background = Brushes.White;
+            //ButtonDelete.Background = Brushes.White;
         }
     }
 }

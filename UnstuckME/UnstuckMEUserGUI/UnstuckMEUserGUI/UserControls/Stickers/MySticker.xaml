@@ -14,9 +14,9 @@
             <Border x:Name="ButtonCompleted" MouseEnter="ButtonCompleted_MouseEnter" MouseLeave="ButtonCompleted_MouseLeave" Cursor="Hand" MouseLeftButtonDown="ButtonCompleted_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" Width="90" Margin="0,0,10,5" Background="DarkGreen">
                 <Label Foreground="White" Content="Complete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
             </Border>
-            <Border x:Name="ButtonDelete" Cursor="Hand" MouseEnter="ButtonDelete_MouseEnter" MouseLeave="ButtonDelete_MouseLeave" MouseLeftButtonDown="ButtonRemove_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Margin="0,5,10,0" Background="White" ToolTip="Delete sticker" CornerRadius="15">
+            <!--<Border x:Name="ButtonDelete" Cursor="Hand" MouseEnter="ButtonDelete_MouseEnter" MouseLeave="ButtonDelete_MouseLeave" MouseLeftButtonDown="ButtonRemove_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Margin="0,5,10,0" Background="White" ToolTip="Delete sticker" CornerRadius="15">
                 <Image Source="..\..\Resources/Close/CloseRed.png" />
-            </Border>
+            </Border>-->
         </Grid>
     </Border>
 </UserControl>

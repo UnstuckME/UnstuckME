@@ -14,9 +14,9 @@
             <Border x:Name="ButtonCompleted" Cursor="Hand" MouseEnter="ButtonCompleted_MouseEnter" MouseLeave="ButtonCompleted_MouseLeave" MouseLeftButtonDown="ButtonCompleted_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" Width="90" Margin="0,0,10,5" Background="DarkGreen">
                 <Label Foreground="White" Content="Complete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
             </Border>
-            <Border x:Name="ButtonUnTutor" Cursor="Hand" MouseEnter="ButtonUnTutor_MouseEnter" MouseLeave="ButtonUnTutor_MouseLeave" MouseLeftButtonDown="ButtonUnTutor_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Margin="0,5,10,0" Background="White" ToolTip="Untutor sticker" CornerRadius="15">
+            <!--<Border x:Name="ButtonUnTutor" Cursor="Hand" MouseEnter="ButtonUnTutor_MouseEnter" MouseLeave="ButtonUnTutor_MouseLeave" MouseLeftButtonDown="ButtonUnTutor_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Margin="0,5,10,0" Background="White" ToolTip="Untutor sticker" CornerRadius="15">
                 <Image Source="..\..\Resources/Close/CloseRed.png" />
-            </Border>
+            </Border>-->
         </Grid>
     </Border>
 </UserControl>
