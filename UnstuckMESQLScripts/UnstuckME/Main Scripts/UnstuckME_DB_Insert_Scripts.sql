@@ -322,18 +322,18 @@ GO
 CREATE PROC [dbo].[UpdateProfilePicture]
     (
 	@UserID		INT,
-	@Photo		VARBINARY(MAX)
+	@Filepath	VARCHAR(MAX)
     )
 AS
     BEGIN
         IF (NOT Exists(Select UserID from Picture WHERE UserID = @UserID))
         BEGIN
 			INSERT INTO Picture
-			VALUES (@UserID, @Photo);
+			VALUES (@UserID, @Filepath);
 		END
         ELSE BEGIN
 			UPDATE Picture
-			SET Photo = @Photo
+			SET FilePath = @Filepath
 			WHERE @UserID = UserID;
 			RETURN 0;
 		END
@@ -397,7 +397,7 @@ AS
 			SELECT 1;
         ELSE BEGIN
 			INSERT INTO [Messages]
-			VALUES (@ChatID, @Message, @FilePath, 0, @UserID, GETDATE())
+			VALUES (@ChatID, @Message, @FilePath, @UserID, GETDATE())
 			SET @NewMessageID = @@IDENTITY
 			SELECT @NewMessageID
 		END

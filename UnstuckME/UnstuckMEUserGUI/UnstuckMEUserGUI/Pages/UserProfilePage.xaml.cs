@@ -419,10 +419,10 @@ namespace UnstuckMEUserGUI
                 try
                 {
                     UnstuckME.Server.Logout();
-                    UnstuckME.Server.DeleteUserAccount(UnstuckME.User.UserID);
-                    Application.Current.MainWindow.Close();
+                    UnstuckME.MainWindow.Close();
                     Application.Current.MainWindow = new LoginWindow();
                     Application.Current.MainWindow.Show();
+                    UnstuckME.Server.DeleteUserAccount(UnstuckME.User.UserID);
                 }
                 catch (Exception ex)
                 {

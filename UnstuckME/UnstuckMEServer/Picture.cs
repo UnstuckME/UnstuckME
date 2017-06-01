@@ -15,7 +15,7 @@ namespace UnstuckMEServer
     public partial class Picture
     {
         public int UserID { get; set; }
-        public byte[] Photo { get; set; }
+        public string FilePath { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
     }

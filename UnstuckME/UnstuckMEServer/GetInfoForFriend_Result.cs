@@ -15,6 +15,5 @@ namespace UnstuckMEServer
     {
         public string DisplayFName { get; set; }
         public string EmailAddress { get; set; }
-        public byte[] Photo { get; set; }
     }
 }

@@ -702,29 +702,6 @@ AS
 GO
 
 /*********************************************************
---Update Terms Offered
-*********************************************************/
---CREATE PROC [dbo].[UpdateTermsOfferedByClassID]
---    (
---    @ClassID INT,
---	@TermOffered TINYINT
---    )
---AS
---    BEGIN
---        IF  (NOT Exists(SELECT ClassID FROM Classes WHERE ClassID = @ClassID))
---            RETURN 1;
---        ELSE
---            BEGIN
---				UPDATE Classes
---				SET TermOffered = @TermOffered
---				WHERE ClassID = @ClassID;
---                RETURN 0;
---            END
-
---    END
---GO
-
-/*********************************************************
 --Update Review Star Ranking
 *********************************************************/
 CREATE PROC [dbo].[UpdateStarRankingByReviewID]

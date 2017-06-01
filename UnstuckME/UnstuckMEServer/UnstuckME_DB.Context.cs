@@ -602,13 +602,13 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetNumMsgsInAChat", chatIDParameter);
         }
     
-        public virtual ObjectResult<byte[]> GetProfilePicture(Nullable<int> userid)
+        public virtual ObjectResult<string> GetProfilePicture(Nullable<int> userid)
         {
             var useridParameter = userid.HasValue ?
                 new ObjectParameter("userid", userid) :
                 new ObjectParameter("userid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<byte[]>("GetProfilePicture", useridParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetProfilePicture", useridParameter);
         }
     
         public virtual ObjectResult<GetReportsSubmittedByUser_Result> GetReportsSubmittedByUser(Nullable<int> userid)
@@ -1103,17 +1103,17 @@ namespace UnstuckMEServer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdatePrivilegesByUserID", userIDParameter, privilegesParameter);
         }
     
-        public virtual int UpdateProfilePicture(Nullable<int> userID, byte[] photo)
+        public virtual int UpdateProfilePicture(Nullable<int> userID, string filepath)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            var photoParameter = photo != null ?
-                new ObjectParameter("Photo", photo) :
-                new ObjectParameter("Photo", typeof(byte[]));
+            var filepathParameter = filepath != null ?
+                new ObjectParameter("Filepath", filepath) :
+                new ObjectParameter("Filepath", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateProfilePicture", userIDParameter, photoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateProfilePicture", userIDParameter, filepathParameter);
         }
     
         public virtual int UpdateReviewDescriptionByReviewID(Nullable<int> reviewID, string description)

@@ -305,7 +305,7 @@ go
 create proc GetProfilePicture
 (	@userid int ) as
 begin
-	select Photo
+	select FilePath
 	from Picture join UserProfile	on UserProfile.UserID = Picture.UserID
 	where UserProfile.UserID = @userid;
 end;
@@ -591,9 +591,8 @@ Create proc GetInfoForFriend
 	@userID int
 )as
 begin
-	select DisplayFName, EmailAddress, Photo
-	from UserProfile join Picture 
-	on UserProfile.userID = Picture.userID
+	select DisplayFName, EmailAddress
+	from UserProfile
 	where UserProfile.UserID = @userID;
 end;
 

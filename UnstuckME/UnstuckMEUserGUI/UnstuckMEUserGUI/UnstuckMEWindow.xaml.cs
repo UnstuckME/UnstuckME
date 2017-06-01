@@ -586,9 +586,9 @@ namespace UnstuckMEUserGUI
 		        config.AppSettings.Settings["RememberMe"].Value = "false";
 		        config.Save();
 
+		        Close();
 		        Application.Current.MainWindow = new LoginWindow();
 		        Application.Current.MainWindow.Show();
-		        Close();
 		    }
 		    catch (Exception ex)
 		    {
